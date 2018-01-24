@@ -18,7 +18,18 @@ y_pred = a * X_ + b
 loss = tf.constant(0.5) * tf.reduce_sum(tf.square(y_pred - y_))
 
 # 反向传播，利用TensorFlow的梯度下降优化器自动计算并更新变量（模型参数）的梯度
-train_op = tf.train.GradientDescentOptimizer(learning_rate=learning_rate_).minimize(loss)
+# train_op = tf.train.GradientDescentOptimizer(learning_rate=learning_rate_).minimize(loss)
+
+# 利用TensorFlow的求导函数 tf.gradients(ys, xs) 求出a，b的导数
+grad_a, grad_b = tf.gradients(loss, [a, b])
+
+# 手动更新参数
+new_a = a - learning_rate_ * grad_a
+new_b = b - learning_rate_ * grad_b
+update_a = tf.assign(a, new_a)
+update_b = tf.assign(b, new_b)
+
+train_op = [update_a, update_b] 
 
 num_epoch = 10000
 learning_rate = 1e-3
