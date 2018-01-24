@@ -64,7 +64,7 @@ release = '0.1'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = 'en'
+language = 'zh_CN'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -131,19 +131,22 @@ latex_elements = {
 
     # Additional stuff for the LaTeX preamble.
     #
-    # 'preamble': '',
+    'preamble': r'\usepackage{ctex}',
 
     # Latex figure (float) alignment
     #
     # 'figure_align': 'htbp',
+
+    # Remove blank pages
+    'classoptions': ',openany,oneside'
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'TensorFlow-cn.tex', '简单粗暴TensorFlow Documentation',
-     '李锡涵', 'manual'),
+    (master_doc, 'TensorFlow-cn.tex', '简单粗暴TensorFlow',
+     author, 'manual'),
 ]
 
 
@@ -152,7 +155,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'tensorflow', '简单粗暴TensorFlow Documentation',
+    (master_doc, 'tensorflow', '简单粗暴TensorFlow',
      [author], 1)
 ]
 
@@ -163,7 +166,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'TensorFlow', '简单粗暴TensorFlow Documentation',
+    (master_doc, 'TensorFlow', '简单粗暴TensorFlow',
      author, 'TensorFlow', 'One line description of project.',
      'Miscellaneous'),
 ]

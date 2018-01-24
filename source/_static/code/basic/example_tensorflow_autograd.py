@@ -20,7 +20,7 @@ loss = tf.constant(0.5) * tf.reduce_sum(tf.square(y_pred - y_))
 # 反向传播，利用TensorFlow的梯度下降优化器自动计算并更新变量（模型参数）的梯度
 # train_op = tf.train.GradientDescentOptimizer(learning_rate=learning_rate_).minimize(loss)
 
-# 利用TensorFlow的求导函数 tf.gradients(ys, xs) 求出a，b的导数
+# 利用TensorFlow的求导函数 tf.gradients(ys, xs) 求出损失函数loss关于a，b的偏导数
 grad_a, grad_b = tf.gradients(loss, [a, b])
 
 # 手动更新参数
