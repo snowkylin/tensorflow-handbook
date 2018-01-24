@@ -18,7 +18,11 @@
    basic
    ops
    models
+
+   visualization
    debugging
+   
+
    distributed
    dynamic   
    code
