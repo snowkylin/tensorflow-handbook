@@ -100,5 +100,9 @@ TensorFlow的动态图支持 *
 自动求导与优化器
 ^^^^^^^^^^^^^^^^^^^^^
 
+变量的范围（Scope）
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+https://tensorflow.google.cn/versions/master/api_docs/python/tf/variable_scope
+
 保存和恢复模型
 ^^^^^^^^^^^^^^^^^^^^^
