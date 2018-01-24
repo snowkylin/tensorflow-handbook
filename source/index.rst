@@ -6,7 +6,7 @@
 简单粗暴TensorFlow
 ======================
 
-本文档为未完成版本。**未经作者允许，不得外传！**
+本文档为未完成版本，内容会随时更改修订。**未经作者允许，不得外传！**
 
 .. toctree::
    :maxdepth: 2
@@ -18,9 +18,9 @@
    basic
    ops
    models
-   distributed
-   dynamic
    debugging
+   distributed
+   dynamic   
    code
    appendix
 

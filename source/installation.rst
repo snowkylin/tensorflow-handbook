@@ -10,14 +10,14 @@ TensorFlow的具体安装步骤可参考官方网站上的说明（https://tenso
 1. 检查自己的电脑是否具有NVIDIA显卡。如有，建议安装GPU版本的TensorFlow，以利用GPU强大的计算加速能力 [注]_ ，否则可以安装CPU版本。具体而言，该显卡的CUDA Compute Capability须不低于3.0，可以到 `NVIDIA的官方网站 <https://developer.nvidia.com/cuda-gpus/>`_ 查询自己所用显卡的CUDA Compute Capability；
 2. 安装Python环境。此处建议安装Anaconda，这是一个开源的Python发行版本，提供了一个完整的科学计算环境，包括NumPy、SciPy等常用科学计算库。当然，你有权选择自己喜欢的Python环境。注意截至本手册撰写时，TensorFlow在Windows下的安装仅支持Python 3.X版本；
 
- * 安装Anaconda时，可以选择将Anaconda目录添加到系统的PATH中（虽然安装程序不推荐这样做），这样可以直接在命令行环境下使用Anaconda的各项功能。当然，不添加的话也可以使用开始菜单中的Anaconda Prompt进入命令行的Anaconda环境。
+   * 安装Anaconda时，可以选择将Anaconda目录添加到系统的PATH中（虽然安装程序不推荐这样做），这样可以直接在命令行环境下使用Anaconda的各项功能。当然，不添加的话也可以使用开始菜单中的Anaconda Prompt进入命令行的Anaconda环境。
 
 3. （针对GPU版本）安装NVIDIA显卡驱动程序、 `CUDA Toolkit <https://developer.nvidia.com/cuda-downloads>`_ 和 `cuDNN <https://developer.nvidia.com/cudnn>`_ 。值得注意的事项有：
 
- * 建议的顺序是：先安装最新版NVIDIA显卡驱动程序，再安装CUDA（安装时不要选择同时安装驱动），最后安装cuDNN。CUDA附带的显卡驱动程序可能过旧；
- * 在Linux系统（如Ubuntu）下安装NVIDIA显卡驱动程序往往不会一帆风顺，注意在安装前禁用系统自带的开源显卡驱动、禁用主板的Secure Boot功能。更详细的指导可以参考 `这篇文章 <https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/>`_ ；
- * CUDA Toolkit和cuDNN的版本一定要与TensorFlow官方网站安装说明的版本一致，注意官方网站安装说明里要求安装的版本可能并非最新版本。截至本手册撰写时，TensorFlow版本为1.4，其使用的版本为CUDA Toolkit 8.0和cuDNN v6.0，而此时NVIDIA网站上的最新版本为CUDA Toolkit 9.1和cuDNN v7.0；
- * cuDNN的安装方式比较特殊，你需要手动将下载的安装包复制到CUDA的安装目录下。
+   * 建议的顺序是：先安装最新版NVIDIA显卡驱动程序，再安装CUDA（安装时不要选择同时安装驱动），最后安装cuDNN。CUDA附带的显卡驱动程序可能过旧；
+   * 在Linux系统（如Ubuntu）下安装NVIDIA显卡驱动程序往往不会一帆风顺，注意在安装前禁用系统自带的开源显卡驱动、禁用主板的Secure Boot功能。更详细的指导可以参考 `这篇文章 <https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/>`_ ；
+   * CUDA Toolkit和cuDNN的版本一定要与TensorFlow官方网站安装说明的版本一致，注意官方网站安装说明里要求安装的版本可能并非最新版本。截至本手册撰写时，TensorFlow版本为1.4，其使用的版本为CUDA Toolkit 8.0和cuDNN v6.0，而此时NVIDIA网站上的最新版本为CUDA Toolkit 9.1和cuDNN v7.0；
+   * cuDNN的安装方式比较特殊，你需要手动将下载的安装包复制到CUDA的安装目录下。
 
 .. [注] GPU加速的效果与GPU的性能有关，如果CPU性能较好（例如4核的英特尔酷睿i7）但GPU仅有入门级的性能，其实速度提升不大，大概1-2倍。不过如果GPU性能强大的话（例如，本手册写作时，NVIDIA GeForce GTX 1080或NVIDIA GeForce TITAN系列是市场上性能较强大的显卡型号），十几倍甚至更高的加速效果也是可以达到的。同时，GPU的加速效果与任务本身也有关。入门级的TensorFlow模型往往不需要太高的计算性能，CPU版本的TensorFlow足以胜任，因此可以待到掌握TensorFlow的基本知识后，再决定是否购入更高级的GPU以得到更快的训练速度。
 

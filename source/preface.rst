@@ -10,7 +10,9 @@
 
 在整本手册中，带“*”的部分均为选读。
 
-本手册的名称《简单粗暴TensorFlow》是向我的好友兼同学Chris Wu编写的《简单粗暴LaTeX》（https://github.com/wklchris/Note-by-LaTeX）致敬。该手册清晰精炼，是LaTeX领域不可多得的中文资料，也是我在编写这一技术文档时所学习的对象。
+本手册的暂定名称《简单粗暴TensorFlow》是向我的好友兼同学Chris Wu编写的《简单粗暴LaTeX》（https://github.com/wklchris/Note-by-LaTeX）致敬。该手册清晰精炼，是LaTeX领域不可多得的中文资料，也是我在编写这一技术文档时所学习的对象。
+
+|
 
 雪麒·拉撒路
 
