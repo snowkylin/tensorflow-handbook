@@ -1,6 +1,8 @@
 TensorFlow基本概念
 ======================
 
+.. https://www.datacamp.com/community/tutorials/tensorflow-tutorial
+
 TensorFlow，顾名思义，就是Tensor（张量）进行Flow（流动）的过程。所谓张量，即对向量（一维）和矩阵（二维）的一种推广，类似于多维数组。而张量的流动则是基于数据流图（Dataflow Graph，也称计算图Computational Graph）。一个典型的TensorFlow程序由以下几个部分组成：
 
 1. 定义一个数据流图（在深度学习中往往称之为“模型”），其中往往包含大量的变量（深度学习中“模型的待训练参数”）；
@@ -102,7 +104,7 @@ TensorFlow的动态图支持 *
 
 变量的范围（Scope）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-https://tensorflow.google.cn/versions/master/api_docs/python/tf/variable_scope
+..  https://tensorflow.google.cn/versions/master/api_docs/python/tf/variable_scope
 
-保存和恢复模型
-^^^^^^^^^^^^^^^^^^^^^
+保存、恢复和持久化
+^^^^^^^^^^^^^^^^^^^^^^^^^^^

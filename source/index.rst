@@ -20,8 +20,7 @@
    models
 
    visualization
-   debugging
-   
+   debugging   
 
    distributed
    dynamic   
