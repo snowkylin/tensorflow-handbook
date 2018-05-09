@@ -16,6 +16,54 @@ TensorFlow，顾名思义，就是Tensor（张量）进行Flow（流动）的过
 
 在对TensorFlow的具体概念，如张量（Tensor）、数据流图（Dataflow Graph）、变量（Variable）、优化器（Optimizer）等进行具体介绍之前，本手册先举一个具体的例子，以让读者能对TensorFlow的基本运作方式有一个直观的理解。
 
+基础示例：TensorFlow 1+1
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+TensorFlow本质上是一个符号式的（基于计算图的）计算框架。这里以计算1+1作为Hello World的示例。
+
+.. literalinclude:: ../source/_static/code/basic/1plus1.py      
+
+输出::
+    
+    2
+
+上面这个程序只能计算1+1，以下程序通过 ``tf.placeholder()`` （占位符张量）和 ``sess.run()`` 的 ``feed_dict=`` 参数展示了如何使用TensorFlow计算任意两个数的和：
+
+.. literalinclude:: ../source/_static/code/basic/aplusb.py      
+
+运行程序::
+
+    >>> a = 2
+    >>> b = 3
+    a + b = 5
+
+变量（Variable）是一种特殊类型的张量，使用 ``tf.get_variable()`` 建立，与编程语言中的变量很相似。使用变量前需要先初始化，变量的值可以在计算图的计算过程中被修改。以下示例如何建立一个变量，将其值初始化为0，并逐次累加1。
+
+.. literalinclude:: ../source/_static/code/basic/variable.py
+
+输出::
+
+    1.0
+    2.0
+    3.0
+    4.0
+    5.0
+
+以下代码和上述代码等价，在声明变量时指定初始化器，并通过 ``tf.global_variables_initializer()`` 一次性初始化所有变量，在实际工程中更常用：
+
+.. literalinclude:: ../source/_static/code/basic/variable_with_initializer.py
+
+矩阵乃至张量运算是科学计算（包括机器学习）的基本操作。以下程序展示如何计算两个矩阵 :math:`\begin{bmatrix} 1 & 1 & 1 \\ 1 & 1 & 1 \end{bmatrix}` 和 :math:`\begin{bmatrix} 1 & 1 \\ 1 & 1 \\ 1 & 1 \end{bmatrix}` 的乘积：
+
+.. literalinclude:: ../source/_static/code/basic/AmatmulB.py
+
+输出::
+
+    [[3. 3.]
+     [3. 3.]]
+
+Placeholder（占位符张量）和Variable（变量张量）也同样可以为向量、矩阵乃至更高维的张量。
+
 基础示例：线性回归
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -46,7 +94,7 @@ NumPy：命令式编程
 TensorFlow：符号式编程
 ----------------------------
 
-TensorFlow使用 **符号式编程** 来进行数值运算。首先，我们需要将待计算的过程抽象为数据流图，将输入、运算和输出都用符号化的节点来表达。然后，我们将数据不断地送入输入节点，让数据沿着数据流图进行计算和流动，最终到达我们需要的特定输出节点。以下代码展示了如何基于TensorFlow的符号式编程方法完成与前节相同的任务。其中， ``tf.placeholder()`` 即可以视为一种“符号化的输入节点”，而 ``sess.run(output_node, feed_dict={input_node: data})`` 可以视作将数据送入输入节点，沿着数据流图计算并到达输出节点并返回值的过程。
+TensorFlow使用 **符号式编程** 来进行数值运算。首先，我们需要将待计算的过程抽象为数据流图，将输入、运算和输出都用符号化的节点来表达。然后，我们将数据不断地送入输入节点，让数据沿着数据流图进行计算和流动，最终到达我们需要的特定输出节点。以下代码展示了如何基于TensorFlow的符号式编程方法完成与前节相同的任务。其中， ``tf.placeholder()`` 即可以视为一种“符号化的输入节点”，使用 ``tf.get_variable()`` 定义模型的参数（Variable类型的张量可以使用 ``tf.assign()`` 进行赋值），而 ``sess.run(output_node, feed_dict={input_node: data})`` 可以视作将数据送入输入节点，沿着数据流图计算并到达输出节点并返回值的过程。
 
 .. literalinclude:: ../source/_static/code/basic/example_tensorflow.py
     :lines: 9-
@@ -93,7 +141,7 @@ TensorFlow的动态图支持 *
 .. [注1] 其实线性回归是有解析解的。这里使用梯度下降方法只是为了展示TensorFlow的运作方式。
 .. [注2] 此处的损失函数为均方差 :math:`L(x) = \frac{1}{2} \sum_{i=1}^5 (ax_i + b - y_i)^2`。其关于参数 ``a`` 和 ``b`` 的偏导数为 :math:`\frac{\partial L}{\partial a} = \sum_{i=1}^5 (ax_i + b - y) x_i`，:math:`\frac{\partial L}{\partial b} = \sum_{i=1}^5 (ax_i + b - y)`
 
-变量、常量与占位符
+张量（变量、常量与占位符）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 会话与计算图

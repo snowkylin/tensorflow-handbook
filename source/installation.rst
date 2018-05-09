@@ -15,8 +15,8 @@ TensorFlow的具体安装步骤可参考官方网站上的说明（https://tenso
 3. （针对GPU版本）安装NVIDIA显卡驱动程序、 `CUDA Toolkit <https://developer.nvidia.com/cuda-downloads>`_ 和 `cuDNN <https://developer.nvidia.com/cudnn>`_ 。值得注意的事项有：
 
    * 建议的顺序是：先安装最新版NVIDIA显卡驱动程序，再安装CUDA（安装时不要选择同时安装驱动），最后安装cuDNN。CUDA附带的显卡驱动程序可能过旧；
-   * 在Linux系统（如Ubuntu）下安装NVIDIA显卡驱动程序往往不会一帆风顺，注意在安装前禁用系统自带的开源显卡驱动、禁用主板的Secure Boot功能。更详细的指导可以参考 `这篇文章 <https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/>`_ ；
-   * CUDA Toolkit和cuDNN的版本一定要与TensorFlow官方网站安装说明的版本一致，注意官方网站安装说明里要求安装的版本可能并非最新版本。截至本手册撰写时，TensorFlow版本为1.4，其使用的版本为CUDA Toolkit 8.0和cuDNN v6.0，而此时NVIDIA网站上的最新版本为CUDA Toolkit 9.1和cuDNN v7.0；
+   * 在Ubuntu下有一个很简易的驱动安装方法：在系统设置（System Setting）里面选软件与更新（Software & Updates），然后点选Additional Drivers里面的“Using NVIDIA binary driver”选项并点选右下角的“Apply Changes”即可，系统即会自动安装NVIDIA驱动。否则，NVIDIA显卡驱动程序在Linux系统上的安装往往不会一帆风顺，注意在安装前禁用系统自带的开源显卡驱动Nouveau、禁用主板的Secure Boot功能。更详细的指导可以参考 `这篇文章 <https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/>`_ ；
+   * CUDA Toolkit和cuDNN的版本一定要与TensorFlow官方网站安装说明的版本一致，注意官方网站安装说明里要求安装的版本可能并非最新版本；
    * cuDNN的安装方式比较特殊，你需要手动将下载的安装包复制到CUDA的安装目录下。
 
 .. [注] GPU加速的效果与GPU的性能有关，如果CPU性能较好（例如4核的英特尔酷睿i7）但GPU仅有入门级的性能，其实速度提升不大，大概1-2倍。不过如果GPU性能强大的话（例如，本手册写作时，NVIDIA GeForce GTX 1080或NVIDIA GeForce TITAN系列是市场上性能较强大的显卡型号），十几倍甚至更高的加速效果也是可以达到的。同时，GPU的加速效果与任务本身也有关。入门级的TensorFlow模型往往不需要太高的计算性能，CPU版本的TensorFlow足以胜任，因此可以待到掌握TensorFlow的基本知识后，再决定是否购入更高级的GPU以得到更快的训练速度。
