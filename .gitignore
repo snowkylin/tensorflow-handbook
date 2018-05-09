@@ -2,3 +2,5 @@
 build
 reference
 teaching
+workspace.code-workspace
+source/_static/code/.idea

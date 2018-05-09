@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 import tensorflow.contrib.eager as tfe
-tfe.enable_eager_execution()
+tf.enable_eager_execution()
 
 X_raw = np.array([2013, 2014, 2015, 2016, 2017], dtype=np.float32)
 y_raw = np.array([12000, 14000, 15000, 16500, 17500], dtype=np.float32)
@@ -26,7 +26,7 @@ num_epoch = 10000
 optimizer = tf.train.GradientDescentOptimizer(learning_rate=1e-3)
 for e in range(num_epoch):
     # 前向传播
-    y_pred = a * X + b
+    # y_pred = a * X + b
 
     # 反向传播，利用Eager模式下的tfe.implicit_gradients()自动计算梯度
     grad = grad_fn(X, y)
