@@ -1,6 +1,9 @@
 .vscode
+book
 build
 reference
 teaching
 workspace.code-workspace
+source/.vscode
+source/_future
 source/_static/code/.idea
