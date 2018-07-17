@@ -1,68 +1,89 @@
-TensorFlow基本概念
+TensorFlow基础
 ======================
 
-.. https://www.datacamp.com/community/tutorials/tensorflow-tutorial
+.. 
+    https://www.datacamp.com/community/tutorials/tensorflow-tutorial
 
-TensorFlow，顾名思义，就是Tensor（张量）进行Flow（流动）的过程。所谓张量，即对向量（一维）和矩阵（二维）的一种推广，类似于多维数组。而张量的流动则是基于数据流图（Dataflow Graph，也称计算图Computational Graph）。一个典型的TensorFlow程序由以下几个部分组成：
+    TensorFlow，顾名思义，就是Tensor（张量）进行Flow（流动）的过程。所谓张量，即对向量（一维）和矩阵（二维）的一种推广，类似于多维数组。而张量的流动则是基于数据流图（Dataflow Graph，也称计算图Computational Graph）。一个典型的TensorFlow程序由以下几个部分组成：
 
-1. 定义一个数据流图（在深度学习中往往称之为“模型”），其中往往包含大量的变量（深度学习中“模型的待训练参数”）；
-2. 反复进行以下步骤：
+    1. 定义一个数据流图（在深度学习中往往称之为“模型”），其中往往包含大量的变量（深度学习中“模型的待训练参数”）；
+    2. 反复进行以下步骤：
 
-   1. 将训练数据转换为张量，并送入数据流图进行计算（前向传播）；
-   #. 计算损失函数的值，并对各变量求偏导数（反向传播）；
-   #. 使用梯度下降或其他优化器（Optimizer）对变量进行更新以减小损失函数的值（即“对参数进行训练”）。
+    1. 将训练数据转换为张量，并送入数据流图进行计算（前向传播）；
+    #. 计算损失函数的值，并对各变量求偏导数（反向传播）；
+    #. 使用梯度下降或其他优化器（Optimizer）对变量进行更新以减小损失函数的值（即“对参数进行训练”）。
 
-在步骤2重复足够多的次数（训练足够长的时间）后，损失函数达到较小的值并保持稳定，即完成了模型的训练。
+    在步骤2重复足够多的次数（训练足够长的时间）后，损失函数达到较小的值并保持稳定，即完成了模型的训练。
 
-在对TensorFlow的具体概念，如张量（Tensor）、数据流图（Dataflow Graph）、变量（Variable）、优化器（Optimizer）等进行具体介绍之前，本手册先举一个具体的例子，以让读者能对TensorFlow的基本运作方式有一个直观的理解。
+    在对TensorFlow的具体概念，如张量（Tensor）、数据流图（Dataflow Graph）、变量（Variable）、优化器（Optimizer）等进行具体介绍之前，本手册先举一个具体的例子，以让读者能对TensorFlow的基本运作方式有一个直观的理解。
 
-基础示例：TensorFlow 1+1
+本章介绍TensorFlow的基本操作。
+
+前置知识：
+
+* `Python基本操作 <http://www.runoob.com/python3/python3-tutorial.html>`_ （赋值、分支及循环语句、使用import导入库）；
+* `Python的With语句 <https://www.ibm.com/developerworks/cn/opensource/os-cn-pythonwith/index.html>`_ ；
+* `NumPy <https://docs.scipy.org/doc/numpy/user/quickstart.html>`_ ，Python下常用的科学计算库。TensorFlow与之结合紧密；
+* `向量 <https://zh.wikipedia.org/wiki/%E5%90%91%E9%87%8F>`_ 和 `矩阵 <https://zh.wikipedia.org/wiki/%E7%9F%A9%E9%98%B5>`_ 运算（矩阵的加减法、矩阵与向量相乘、矩阵与矩阵相乘、矩阵的转置等。测试题：:math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \times \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = ?`）；
+* `函数的导数 <http://old.pep.com.cn/gzsx/jszx_1/czsxtbjxzy/qrzptgjzxjc/dzkb/dscl/>`_ ，`多元函数求导 <https://zh.wikipedia.org/wiki/%E5%81%8F%E5%AF%BC%E6%95%B0>`_ （测试题：:math:`f(x, y) = x^2 + xy + y^2, \frac{\partial f}{\partial x} = ?, \frac{\partial f}{\partial y} = ?`）；
+* `线性回归 <http://old.pep.com.cn/gzsx/jszx_1/czsxtbjxzy/qrzptgjzxjc/dzkb/dscl/>`_ ；
+* `梯度下降方法 <https://zh.wikipedia.org/wiki/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95>`_ 求函数的局部最小值。
+
+TensorFlow 1+1
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-TensorFlow本质上是一个符号式的（基于计算图的）计算框架。这里以计算1+1作为Hello World的示例。
+我们可以先简单地将TensorFlow视为一个科学计算库（类似于Python下的NumPy）。这里以计算 :math:`1+1` 和 :math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \times \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix}` 作为Hello World的示例。
 
-.. literalinclude:: ../source/_static/code/basic/1plus1.py      
+.. literalinclude:: ../source/_static/code/basic/eager/1plus1.py  
 
 输出::
     
-    2
+    tf.Tensor(2, shape=(), dtype=int32)
+    tf.Tensor(
+    [[19 22]
+    [43 50]], shape=(2, 2), dtype=int32)
 
-上面这个程序只能计算1+1，以下程序通过 ``tf.placeholder()`` （占位符张量）和 ``sess.run()`` 的 ``feed_dict=`` 参数展示了如何使用TensorFlow计算任意两个数的和：
+以上代码声明了 ``a``、``b``、``A``、``B`` 四个 **张量** （Tensor），并使用了 ``tf.add()`` 和 ``tf.matmul()`` 两个 **操作** （Operation）对张量进行了加法和矩阵乘法运算，运算结果即时存储于 ``c``、``C`` 两个张量内。张量的重要属性是其形状（shape）和类型（dtype）。这里 ``a``、``b``、``c`` 是纯量，形状为空，类型为int32；``A``、``B``、``C`` 为2×2的矩阵，形状为 ``(2, 2)``，类型为int32。
 
-.. literalinclude:: ../source/_static/code/basic/aplusb.py      
+在机器学习中，我们经常需要计算函数的导数。TensorFlow提供了强大的 **自动求导机制** 来计算导数。以下代码展示了如何使用 ``tf.GradientTape()`` 计算函数 :math:`y(x) = x^2` 在 :math:`x = 3` 时的导数：
 
-运行程序::
+.. literalinclude:: ../source/_static/code/basic/eager/grad.py  
+    :lines: 1-8
 
-    >>> a = 2
-    >>> b = 3
-    a + b = 5
+输出::
+    
+    [array([9.], dtype=float32), array([6.], dtype=float32)]
 
-变量（Variable）是一种特殊类型的张量，使用 ``tf.get_variable()`` 建立，与编程语言中的变量很相似。使用变量前需要先初始化，变量的值可以在计算图的计算过程中被修改。以下示例如何建立一个变量，将其值初始化为0，并逐次累加1。
+这里 ``x`` 是一个初始化为3的 **变量** （Variable），使用 ``tf.get_variable()`` 声明。与普通张量一样，变量同样具有形状（shape）和类型（dtype）属性，不过使用变量需要有一个初始化过程，可以通过在 ``tf.get_variable()`` 中指定 ``initializer`` 参数来指定所使用的初始化器。这里使用 ``tf.constant_initializer(3.)`` 将变量 ``x`` 初始化为float32类型的 ``3.`` [#f0]_。变量与普通张量的一个重要区别是其默认能够被TensorFlow的自动求导机制所求导，因此往往被用于定义机器学习模型的参数。 ``tf.GradientTape()`` 是一个自动求导的记录器，在其中的变量和计算步骤都会被自动记录。上面的示例中，变量 ``x`` 和计算步骤 ``y = tf.square(x)`` 被自动记录，因此可以通过 ``y_grad = tape.gradient(y, x)`` 求张量 ``y`` 对变量 ``x`` 的导数。
 
-.. literalinclude:: ../source/_static/code/basic/variable.py
+在机器学习中，更加常见的是对多元函数求偏导数，以及对向量或矩阵的求导。这些对于TensorFlow也不在话下。以下代码展示了如何使用 ``tf.GradientTape()`` 计算函数 :math:`L(w, b) = \|Xw + b - y\|^2` 在 :math:`w = (1, 2)^T, b = 1` 时分别对 :math:`w, b` 的偏导数。其中 :math:`X = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix},  y = \begin{bmatrix} 1 \\ 2\end{bmatrix}`。
+
+.. literalinclude:: ../source/_static/code/basic/eager/grad.py  
+    :lines: 10-17
 
 输出::
 
-    1.0
-    2.0
-    3.0
-    4.0
-    5.0
+    [62.5, array([[35.],
+       [50.]], dtype=float32), array([15.], dtype=float32)]
 
-以下代码和上述代码等价，在声明变量时指定初始化器，并通过 ``tf.global_variables_initializer()`` 一次性初始化所有变量，在实际工程中更常用：
+这里， ``tf.square()`` 操作代表对输入张量的每一个元素求平方，不改变张量形状。 ``tf.reduce_sum()`` 操作代表对输入张量的所有元素求和，输出一个形状为空的纯量张量（可以通过 ``axis`` 参数来指定求和的维度，不指定则默认对所有元素求和）。TensorFlow中有大量的张量操作API，包括数学运算、张量形状操作（如 ``tf.reshape()``）、切片和连接（如 ``tf.concat()``）等多种类型，可以通过查阅TensorFlow的官方API文档 [#f3]_ 来进一步了解。
 
-.. literalinclude:: ../source/_static/code/basic/variable_with_initializer.py
+从输出可见，TensorFlow帮助我们计算出了
 
-矩阵乃至张量运算是科学计算（包括机器学习）的基本操作。以下程序展示如何计算两个矩阵 :math:`\begin{bmatrix} 1 & 1 & 1 \\ 1 & 1 & 1 \end{bmatrix}` 和 :math:`\begin{bmatrix} 1 & 1 \\ 1 & 1 \\ 1 & 1 \end{bmatrix}` 的乘积：
+.. math::
 
-.. literalinclude:: ../source/_static/code/basic/AmatmulB.py
+    L((1, 2)^T, 1) &= 62.5
+    
+    \frac{\partial L(w, b)}{\partial w} |_{w = (1, 2)^T, b = 1} &= \begin{bmatrix} 35 \\ 50\end{bmatrix}
+    
+    \frac{\partial L(w, b)}{\partial b} |_{w = (1, 2)^T, b = 1} &= 15
 
-输出::
+..
+    以上的自动求导机制结合 **优化器** ，可以计算函数的极值。这里以线性回归示例（本质是求 :math:`\min_{w, b} L = (Xw + b - y)^2` ，具体原理见 :ref:`后节 <linear-regression>` ）：
 
-    [[3. 3.]
-     [3. 3.]]
+    .. literalinclude:: ../source/_static/code/basic/eager/regression.py  
 
-Placeholder（占位符张量）和Variable（变量张量）也同样可以为向量、矩阵乃至更高维的张量。
+.. _linear-regression:
 
 基础示例：线性回归
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -78,81 +99,78 @@ Placeholder（占位符张量）和Variable（变量张量）也同样可以为�
 
 首先，我们定义数据，进行基本的归一化操作。
 
-.. literalinclude:: ../source/_static/code/basic/example_numpy.py
+.. literalinclude:: ../source/_static/code/basic/example/numpy.py
     :lines: 1-7
 
-接下来，我们使用梯度下降的方法来求两个参数的值 [注1]_。
+接下来，我们使用梯度下降方法来求线性模型中两个参数 ``a`` 和 ``b`` 的值 [#f1]_。
 
-NumPy：命令式编程
+回顾机器学习的基础知识，对于多元函数 :math:`f(x)` 求局部极小值，`梯度下降 <https://zh.wikipedia.org/wiki/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95>`_ 的过程如下：
+
+* 初始化自变量为 :math:`x_0` ， :math:`k=0` 
+* 迭代进行下列步骤直到满足收敛条件：
+
+    * 求函数 :math:`f(x)` 关于自变量的梯度 :math:`\nabla f(x_k)` 
+    * 更新自变量： :math:`x_{k+1} = x_{k} - \gamma \nabla f(x_k)` 。这里 :math:`\gamma` 是学习率（也就是梯度下降一次迈出的“步子”大小）
+    * :math:`k \leftarrow k+1` 
+
+接下来，我们考虑如何使用程序来实现梯度下降方法，求得线性回归的解 :math:`\min_{a, b} L(a, b) = \sum_{i=1}^n(ax_i + b - y_i)^2` 。
+
+NumPy
 -----------------------
 
-在介绍TensorFlow之前，先展示如何以我们最熟悉的命令式编程，通过代码的逐行执行演算来进行线性回归。在这里，我们使用NumPy这一通用的科学计算库来进行计算。NumPy提供了多维数组支持，可以表示向量、矩阵以及更高维的张量。同时，也提供了大量支持在多维数组上进行操作的函数（比如下面的 ``np.dot()`` 是求内积， ``np.sum()`` 是求和）。在这方面，NumPy和MATLAB比较类似。在以下代码中，我们手工求损失函数关于参数 ``a`` 和 ``b`` 的偏导数 [注2]_，并使用梯度下降法反复迭代，最终获得 ``a`` 和 ``b`` 的值。
+机器学习模型的实现并不是TensorFlow的专利。事实上，对于简单的模型，即使使用常规的科学计算库或者工具也可以求解。在这里，我们使用NumPy这一通用的科学计算库来实现梯度下降方法。NumPy提供了多维数组支持，可以表示向量、矩阵以及更高维的张量。同时，也提供了大量支持在多维数组上进行操作的函数（比如下面的 ``np.dot()`` 是求内积， ``np.sum()`` 是求和）。在这方面，NumPy和MATLAB比较类似。在以下代码中，我们手工求损失函数关于参数 ``a`` 和 ``b`` 的偏导数 [#f2]_，并使用梯度下降法反复迭代，最终获得 ``a`` 和 ``b`` 的值。
 
-.. literalinclude:: ../source/_static/code/basic/example_numpy.py
+.. literalinclude:: ../source/_static/code/basic/example/numpy.py
     :lines: 9-
 
-TensorFlow：符号式编程
-----------------------------
+然而，你或许已经可以注意到，使用常规的科学计算库实现机器学习模型有两个痛点：
 
-TensorFlow使用 **符号式编程** 来进行数值运算。首先，我们需要将待计算的过程抽象为数据流图，将输入、运算和输出都用符号化的节点来表达。然后，我们将数据不断地送入输入节点，让数据沿着数据流图进行计算和流动，最终到达我们需要的特定输出节点。以下代码展示了如何基于TensorFlow的符号式编程方法完成与前节相同的任务。其中， ``tf.placeholder()`` 即可以视为一种“符号化的输入节点”，使用 ``tf.get_variable()`` 定义模型的参数（Variable类型的张量可以使用 ``tf.assign()`` 进行赋值），而 ``sess.run(output_node, feed_dict={input_node: data})`` 可以视作将数据送入输入节点，沿着数据流图计算并到达输出节点并返回值的过程。
+- 经常需要手工求函数关于参数的偏导数。如果是简单的函数或许还好，但一旦函数的形式变得复杂（尤其是深度学习模型），手工求导的过程将变得非常痛苦，甚至不可行。
+- 经常需要手工根据求导的结果更新参数。这里使用了最基础的梯度下降方法，因此参数的更新还较为容易。但如果使用更加复杂的参数更新方法（例如Adam或者Adagrad），这个更新过程的编写同样会非常繁杂。
 
-.. literalinclude:: ../source/_static/code/basic/example_tensorflow.py
-    :lines: 9-
+而TensorFlow等深度学习框架的出现很大程度上解决了这些痛点，为机器学习模型的实现带来了很大的便利。
 
-TensorFlow的自动求导机制
--------------------------------
+TensorFlow
+--------------------------------------------------------
 
-在上面的两个示例中，我们都是手工计算获得损失函数关于各参数的偏导数。但当模型和损失函数都变得十分复杂时（尤其是深度学习模型），这种手动求导的工程量就难以接受了。TensorFlow提供了 **自动求导机制** ，免去了手工计算导数的繁琐。我们可以将上节中的两行手工计算导数的代码
+TensorFlow的 **Eager Execution（动态图）模式** [#f4]_ 与上述NumPy的运行方式十分类似，然而提供了更快速的运算（GPU支持）、自动求导、优化器等一系列对深度学习非常重要的功能。以下展示了如何使用TensorFlow计算线性回归。可以注意到，程序的结构和前述NumPy的实现非常类似。这里，TensorFlow帮助我们做了两件重要的工作：
 
-.. literalinclude:: ../source/_static/code/basic/example_tensorflow.py
-    :lines: 21-23
+* 使用 ``tape.gradient(ys, xs)`` 自动计算梯度；
+* 使用 ``optimizer.apply_gradients(grads_and_vars)`` 自动更新模型参数。
 
-替换为
+.. literalinclude:: ../source/_static/code/basic/example/tensorflow_eager_autograd.py
+    :lines: 12-29
 
-.. literalinclude:: ../source/_static/code/basic/example_tensorflow_autograd.py
-    :lines: 23-24
+在这里，我们使用了前文的方式计算了损失函数关于参数的偏导数。同时，使用 ``tf.train.GradientDescentOptimizer(learning_rate=1e-3)`` 声明了一个梯度下降 **优化器** （Optimizer），其学习率为1e-3。优化器可以帮助我们根据计算出的求导结果更新模型参数，从而最小化某个特定的损失函数，具体使用方式是调用其 ``apply_gradients()`` 方法。
 
-计算结果将不会改变。
+注意到这里，更新模型参数的方法 ``optimizer.apply_gradients()`` 需要提供参数 ``grads_and_vars``，即待更新的变量（如上述代码中的 ``variables`` ）及损失函数关于这些变量的偏导数（如上述代码中的 ``grads`` ）。具体而言，这里需要传入一个Python列表（List），列表中的每个元素是一个（变量的偏导数，变量）对。比如这里是 ``[(grad_w, w), (grad_b, b)]`` 。我们通过 ``grads = tape.gradient(loss, variables)`` 求出tape中记录的 ``loss`` 关于 ``variables = [w, b]`` 中每个变量的偏导数，也就是 ``grads = [grad_w, grad_b]``，再使用Python的 ``zip()`` 函数将 ``grads = [grad_w, grad_b]`` 和 ``vars = [w, b]`` 拼装在一起，就可以组合出所需的参数了。
 
-甚至不仅于此，TensorFlow附带有多种 **优化器** （optimizer），可以将求导和梯度更新一并完成。我们可以将上节的代码
+在实际应用中，我们编写的模型往往比这里一行就能写完的线性模型 ``y_pred = tf.matmul(X, w) + b`` 要复杂得多。所以，我们往往会编写一个模型类，然后在需要调用的时候使用 ``y_pred = model(X)`` 进行调用。关于模型类的编写方式可见 :doc:`下章 <../models>`。
 
-.. literalinclude:: ../source/_static/code/basic/example_tensorflow.py
-    :lines: 21-31
+..
+    本章小结
+    ^^^^^^^^^^^^^^^^^^^^^^^
 
-整体替换为
 
-.. code-block:: python
+.. [#f0] Python中可以使用整数后加小数点表示将该整数定义为浮点数类型。例如 ``3.`` 代表浮点数 ``3.0``。
+.. [#f3] 主要可以参考 `Tensor Transformations <https://www.tensorflow.org/versions/r1.9/api_guides/python/array_ops>`_ 和 `Math <https://www.tensorflow.org/versions/r1.9/api_guides/python/math_ops>`_ 两个页面。可以注意到，TensorFlow的张量操作API在形式上和Python下流行的科学计算库NumPy非常类似，如果对后者有所了解的话可以快速上手。
+.. [#f1] 其实线性回归是有解析解的。这里使用梯度下降方法只是为了展示TensorFlow的运作方式。
+.. [#f2] 此处的损失函数为均方差 :math:`L(x) = \frac{1}{2} \sum_{i=1}^5 (ax_i + b - y_i)^2`。其关于参数 ``a`` 和 ``b`` 的偏导数为 :math:`\frac{\partial L}{\partial a} = \sum_{i=1}^5 (ax_i + b - y) x_i`，:math:`\frac{\partial L}{\partial b} = \sum_{i=1}^5 (ax_i + b - y)`
+.. [#f4] 与Eager Execution相对的是Graph Execution（静态图）模式，即TensorFlow在2018年3月的1.8版本发布之前所主要使用的模式。本手册以面向快速迭代开发的动态模式为主，但会在附录中介绍静态图模式的基本使用，供需要的读者查阅。
 
-    optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate_)
-    grad = optimizer.compute_gradients(loss)
-    train_op = optimizer.apply_gradients(grad)
+..  
+    张量（变量、常量与占位符）
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-这里，我们先实例化了一个TensorFlow中的梯度下降优化器 ``tf.train.GradientDescentOptimizer()`` 并设置学习率。然后利用其 ``compute_gradients(loss)`` 方法求出 ``loss`` 对所有变量（参数）的梯度。最后通过 ``apply_gradients(grad)`` 方法，根据前面算出的梯度来梯度下降更新变量（参数）。
+    会话与计算图
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-以上三行代码等价于下面一行代码：
+    自动求导与优化器
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: python
+    变量的范围（Scope）
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ..  https://tensorflow.google.cn/versions/master/api_docs/python/tf/variable_scope
 
-    train_op = tf.train.GradientDescentOptimizer(learning_rate=learning_rate_).minimize(loss)
-
-TensorFlow的动态图支持 *
-------------------------------
-
-.. [注1] 其实线性回归是有解析解的。这里使用梯度下降方法只是为了展示TensorFlow的运作方式。
-.. [注2] 此处的损失函数为均方差 :math:`L(x) = \frac{1}{2} \sum_{i=1}^5 (ax_i + b - y_i)^2`。其关于参数 ``a`` 和 ``b`` 的偏导数为 :math:`\frac{\partial L}{\partial a} = \sum_{i=1}^5 (ax_i + b - y) x_i`，:math:`\frac{\partial L}{\partial b} = \sum_{i=1}^5 (ax_i + b - y)`
-
-张量（变量、常量与占位符）
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-会话与计算图
-^^^^^^^^^^^^^^^^^^
-
-自动求导与优化器
-^^^^^^^^^^^^^^^^^^^^^
-
-变量的范围（Scope）
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-..  https://tensorflow.google.cn/versions/master/api_docs/python/tf/variable_scope
-
-保存、恢复和持久化
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    保存、恢复和持久化
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
