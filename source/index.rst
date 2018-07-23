@@ -4,21 +4,25 @@
    contain the root `toctree` directive.
 
 ==================================================================
-简单粗暴TensorFlow
+简单粗暴TensorFlow | Simple TensorFlow
 ==================================================================
 
-本文档为未完成版本，内容会随时更改修订。**Please keep it internal at this time.**
+本文档为未完成版本，内容会随时更改修订，目前请不要扩散。
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+This document is unfinished, content will be updated rapidly. Please keep it internal at this time.
 
-   preface
-   installation
-   basic
-   models
-   extended
-   static
++----------------------+-----------------------+
+| .. toctree::         | .. toctree::          |
+|    :maxdepth: 2      |    :maxdepth: 2       |
+|    :caption: 目录    |    :caption: Contents |
+|                      |                       |
+|    zh/preface        |    en/preface         |
+|    zh/installation   |    en/installation    |
+|    zh/basic          |    en/basic           |
+|    zh/models         |    en/models          |
+|    zh/extended       |    en/extended        |
+|    zh/static         |    en/static          |
++----------------------+-----------------------+
 
 ..  
    preface

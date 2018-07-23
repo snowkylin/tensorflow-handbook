@@ -1,1 +1,1 @@
-sphinx-autobuild source build\html
+sphinx-autobuild --open-browser source build\html
