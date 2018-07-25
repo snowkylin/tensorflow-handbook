@@ -3,7 +3,7 @@ tf.enable_eager_execution()
 
 a = tf.constant(1)
 b = tf.constant(1)
-c = tf.add(a, b)    # 也可以直接写 c = a + b，两者等价
+c = tf.add(a, b)    # c = a + b is equivalent.
 
 print(c)
 
