@@ -1,5 +1,5 @@
-TensorFlow Models
-=================
+TensorFlow模型
+================
 
 .. _linear:
 
@@ -10,7 +10,7 @@ TensorFlow Models
 * `Python面向对象 <http://www.runoob.com/python3/python3-class.html>`_ （在Python内定义类和方法、类的继承、构造和析构函数，`使用super()函数调用父类方法 <http://www.runoob.com/python/python-func-super.html>`_ ，`使用__call__()方法对实例进行调用 <https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319098638265527beb24f7840aa97de564ccc7f20f6000>`_ 等）；
 * 多层感知机、卷积神经网络、循环神经网络和强化学习（每节之前给出参考资料）。
 
-Model and Layer
+模型（Model）与层（Layer）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ..  https://www.tensorflow.org/programmers_guide/eager
 
@@ -33,7 +33,7 @@ Model and Layer
 
 上一章中简单的线性模型 ``y_pred = tf.matmul(X, w) + b`` ，我们可以通过模型类的方式编写如下：
 
-.. literalinclude:: ../_static/code/en/model/linear/linear.py
+.. literalinclude:: ../_static/code/zh/model/linear/linear.py
 
 这里，我们没有显式地声明 ``w`` 和 ``b`` 两个变量并写出 ``y_pred = tf.matmul(X, w) + b`` 这一线性变换，而是在初始化部分实例化了一个全连接层（ ``tf.keras.layers.Dense`` ），并在call方法中对这个层进行调用。全连接层封装了 ``output = activation(tf.matmul(input, kernel) + bias)`` 这一线性变换+激活函数的计算操作，以及 ``kernel`` 和 ``bias`` 两个变量。当不指定激活函数时（即 ``activation(x) = x`` ），这个全连接层就等价于我们上述的线性变换。顺便一提，全连接层可能是我们编写模型时使用最频繁的层。
 
@@ -41,7 +41,7 @@ Model and Layer
 
 .. _mlp:
 
-Basic Example: Multilayer Perceptron
+基础示例：多层感知机（MLP）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 我们从编写一个最简单的 `多层感知机 <https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8>`_ （Multilayer Perceptron, MLP）开始，介绍TensorFlow的模型编写方式。这里，我们使用多层感知机完成MNIST手写体数字图片数据集 [LeCun1998]_ 的分类任务。
@@ -53,17 +53,17 @@ Basic Example: Multilayer Perceptron
 
 先进行预备工作，实现一个简单的 ``DataLoader`` 类来读取MNIST数据集数据。
 
-.. literalinclude:: ../_static/code/en/model/mlp/main.py
+.. literalinclude:: ../_static/code/zh/model/mlp/main.py
     :lines: 13-23
 
 多层感知机的模型类实现与上面的线性模型类似，所不同的地方在于层数增加了（顾名思义，“多层”感知机），以及引入了非线性激活函数（这里使用了 `ReLU函数 <https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0>`_ ， 即下方的 ``activation=tf.nn.relu`` ）。该模型输入一个向量（比如这里是拉直的1×784手写体数字图片），输出10维的信号，分别代表这张图片属于0到9的概率。这里我们加入了一个predict方法，对图片对应的数字进行预测。在预测的时候，选择概率最大的数字进行预测输出。
 
-.. literalinclude:: ../_static/code/en/model/mlp/mlp.py
+.. literalinclude:: ../_static/code/zh/model/mlp/mlp.py
     :lines: 4-17
 
 定义一些模型超参数：
 
-.. literalinclude:: ../_static/code/en/model/mlp/main.py
+.. literalinclude:: ../_static/code/zh/model/mlp/main.py
     :lines: 8-10
 
 实例化模型，数据读取类和优化器：
@@ -84,12 +84,12 @@ Basic Example: Multilayer Perceptron
 
 具体代码实现如下：
 
-.. literalinclude:: ../_static/code/en/model/mlp/main.py
+.. literalinclude:: ../_static/code/zh/model/mlp/main.py
     :lines: 32-39
 
 接下来，我们使用验证集测试模型性能。具体而言，比较验证集上模型预测的结果与真实结果，输出预测正确的样本数占总样本数的比例：
 
-.. literalinclude:: ../_static/code/en/model/mlp/main.py
+.. literalinclude:: ../_static/code/zh/model/mlp/main.py
     :lines: 41-43
 
 输出结果::
@@ -98,8 +98,8 @@ Basic Example: Multilayer Perceptron
 
 可以注意到，使用这样简单的模型，已经可以达到95%左右的准确率。
 
-Convolutional Neural Network (CNN)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+卷积神经网络（CNN）
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 `卷积神经网络 <https://zh.wikipedia.org/wiki/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C>`_ （Convolutional Neural Network, CNN）是一种类似于人类视网膜结构的人工神经网络，包含一个或多个卷积层（Convolutional Layer）、池化层（Pooling Layer）和全连接层（Dense Layer）。具体原理建议可以参考台湾大学李宏毅教授的《机器学习》课程的 `Convolutional Neural Network <https://www.bilibili.com/video/av10590361/?p=21>`_ 一章。
 
@@ -110,7 +110,7 @@ Convolutional Neural Network (CNN)
 
     CNN结构图示
 
-.. literalinclude:: ../_static/code/en/model/cnn/cnn.py
+.. literalinclude:: ../_static/code/zh/model/cnn/cnn.py
     :lines: 4-37
 
 将前节的 ``model = MLP()`` 更换成 ``model = CNN()`` ，输出如下::
@@ -119,7 +119,7 @@ Convolutional Neural Network (CNN)
 
 可以发现准确率有非常显著的提高。事实上，通过改变模型的网络结构（比如加入Dropout层防止过拟合），准确率还有进一步提升的空间。
 
-Recurrent Neural Network (RNN)
+循环神经网络（RNN）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 循环神经网络（Recurrent Neural Network, RNN）是一种适宜于处理序列数据的神经网络，被广泛用于语言模型、文本生成、机器翻译等。关于RNN的原理，可以参考：
@@ -139,7 +139,7 @@ Recurrent Neural Network (RNN)
 
 首先，还是实现一个简单的 ``DataLoader`` 类来读取文本，并以字符为单位进行编码。
 
-.. literalinclude:: ../_static/code/en/model/rnn/rnn.py
+.. literalinclude:: ../_static/code/zh/model/rnn/rnn.py
     :lines: 37-55
 
 接下来进行模型的实现。在 ``__init__`` 方法中我们实例化一个常用的 ``BasicLSTMCell`` 单元，以及一个线性变换用的全连接层，我们首先对序列进行One Hot操作，即将编码i变换为一个n维向量，其第i位为1，其余均为0。这里n为字符种类数num_char。变换后的序列张量形状为[num_batch, seq_length, num_chars]。接下来，我们将序列从头到尾依序送入RNN单元，即将当前时间t的RNN单元状态 ``state`` 和t时刻的序列 ``inputs[:, t, :]`` 送入RNN单元，得到当前时间的输出 ``output`` 和下一个时间t+1的RNN单元状态。取RNN单元最后一次的输出，通过全连接层变换到num_chars维，即作为模型的输出。
@@ -158,7 +158,7 @@ Recurrent Neural Network (RNN)
 
 具体实现如下：
 
-.. literalinclude:: ../_static/code/en/model/rnn/rnn.py
+.. literalinclude:: ../_static/code/zh/model/rnn/rnn.py
     :lines: 13-27
 
 训练过程与前节基本一致，在此复述：
@@ -169,17 +169,17 @@ Recurrent Neural Network (RNN)
 - 计算损失函数关于模型变量的导数；
 - 使用优化器更新模型参数以最小化损失函数。
 
-.. literalinclude:: ../_static/code/en/model/rnn/rnn.py
+.. literalinclude:: ../_static/code/zh/model/rnn/rnn.py
     :lines: 58-68
 
 关于文本生成的过程有一点需要特别注意。之前，我们一直使用 ``tf.argmax()`` 函数，将对应概率最大的值作为预测值。然而对于文本生成而言，这样的预测方式过于绝对，会使得生成的文本失去丰富性。于是，我们使用 ``np.random.choice()`` 函数按照生成的概率分布取样。这样，即使是对应概率较小的字符，也有机会被取样到。同时，我们加入一个 ``temperture`` 参数控制分布的形状，参数值越大则分布越平缓（最大值和最小值的差值越小），生成文本的丰富度越高；参数值越小则分布越陡峭，生成文本的丰富度越低。
 
-.. literalinclude:: ../_static/code/en/model/rnn/rnn.py
+.. literalinclude:: ../_static/code/zh/model/rnn/rnn.py
     :lines: 29-34
 
 通过这种方式进行“滚雪球”式的连续预测，即可得到生成文本。
 
-.. literalinclude:: ../_static/code/en/model/rnn/rnn.py
+.. literalinclude:: ../_static/code/zh/model/rnn/rnn.py
     :lines: 70-77
 
 生成的文本如下::
@@ -206,7 +206,7 @@ Recurrent Neural Network (RNN)
     arn inneves to sya" natorne. hag open reals whicame oderedte,[fingo is
     zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey tomm--whach 
 
-Deep Reinforcement learning (DRL)
+深度强化学习（DRL）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 `强化学习 <https://zh.wikipedia.org/wiki/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0>`_ （Reinforcement learning，RL）强调如何基于环境而行动，以取得最大化的预期利益。结合了深度学习技术后的强化学习更是如虎添翼。这两年广为人知的AlphaGo即是深度强化学习的典型应用。深度强化学习的基础知识可参考：
@@ -251,11 +251,11 @@ Deep Reinforcement learning (DRL)
 
 以下代码展示了如何使用深度强化学习中的Deep Q-Learning方法来训练模型。
 
-.. literalinclude:: ../_static/code/en/model/rl/rl.py
+.. literalinclude:: ../_static/code/zh/model/rl/rl.py
 
 .. _custom_layer:
 
-Custom Layer *
+自定义层 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 可能你还会问，如果现有的这些层无法满足我的要求，我需要定义自己的层怎么办？
@@ -282,22 +282,22 @@ Custom Layer *
 
 例如，如果我们要自己实现一个 :ref:`本章第一节 <linear>` 中的全连接层，但指定输出维度为1，可以按如下方式编写，在 ``build`` 方法中创建两个变量，并在 ``call`` 方法中使用创建的变量进行运算：
 
-.. literalinclude:: ../_static/code/en/model/custom_layer/linear.py
+.. literalinclude:: ../_static/code/zh/model/custom_layer/linear.py
     :lines: 9-21
     
 使用相同的方式，可以调用我们自定义的层 ``LinearLayer``：
 
-.. literalinclude:: ../_static/code/en/model/custom_layer/linear.py
+.. literalinclude:: ../_static/code/zh/model/custom_layer/linear.py
     :lines: 24-31
 
-Graph Execution Mode *
+Graph Execution模式 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 事实上，只要在编写模型的时候稍加注意，以上的模型都是可以同时兼容Eager Execution模式和Graph Execution模式的。注意，在Graph Execution模式下， ``model(input_tensor)`` 只需运行一次以完成图的建立操作。
 
 例如，通过以下代码，同样可以调用 :ref:`本章第一节 <linear>` 建立的线性模型并进行线性回归：
 
-.. literalinclude:: ../_static/code/en/model/custom_layer/linear.py
+.. literalinclude:: ../_static/code/zh/model/custom_layer/linear.py
     :lines: 48-59
 
 .. [LeCun1998] Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. "Gradient-based learning applied to document recognition." Proceedings of the IEEE, 86(11):2278-2324, November 1998. http://yann.lecun.com/exdb/mnist/
