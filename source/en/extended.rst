@@ -1,5 +1,5 @@
-TensorFlow Extension
-====================
+TensorFlow扩展
+================
 
 本章介绍一些最为常用的TensorFlow扩展功能。虽然这些功能称不上“必须”，但能让模型训练和调用的过程更加方便。
 
@@ -8,8 +8,8 @@ TensorFlow Extension
 * `Python的序列化模块Pickle <http://www.runoob.com/python3/python3-inputoutput.html>`_ （非必须）
 * `Python的特殊函数参数**kwargs <https://eastlakeside.gitbooks.io/interpy-zh/content/args_kwargs/Usage_kwargs.html>`_ （非必须）
 
-Checkpoint: Save and Restore Variables
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Checkpoint：变量的保存与恢复
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 很多时候，我们希望在模型训练完成后能将训练好的参数（变量）保存起来。在需要使用模型的其他地方载入模型和参数，就能直接得到训练好的模型。可能你第一个想到的是用Python的序列化模块 ``pickle`` 存储 ``model.variables``。但不幸的是，TensorFlow的变量类型 ``ResourceVariable`` 并不能被序列化。
 
@@ -71,12 +71,12 @@ Checkpoint: Save and Restore Variables
 
 最后提供一个实例，以前章的 :ref:`多层感知机模型 <mlp>` 为例展示模型变量的保存和载入：
 
-.. literalinclude:: ../_static/code/en/extended/save_and_restore/mnist.py
+.. literalinclude:: ../_static/code/zh/extended/save_and_restore/mnist.py
 
 在代码目录下建立save文件夹并运行代码进行训练后，save文件夹内将会存放每隔100个batch保存一次的模型变量数据。将第7行改为 ``model = 'test'`` 并再次运行代码，将直接使用最后一次保存的变量值恢复模型并在测试集上测试模型性能，可以直接获得95%左右的准确率。
 
-TensorBoard: Visualization of Training Process
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TensorBoard：训练过程可视化
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 有时，你希望查看模型训练过程中各个参数的变化情况（例如损失函数loss的值）。虽然可以通过命令行输出来查看，但有时显得不够直观。而TensorBoard就是一个能够帮助我们将训练过程可视化的工具。
 
@@ -119,9 +119,9 @@ TensorBoard的使用有以下注意事项：
 
 最后提供一个实例，以前章的 :ref:`多层感知机模型 <mlp>` 为例展示TensorBoard的使用：
 
-.. literalinclude:: ../_static/code/en/extended/tensorboard/mnist.py
+.. literalinclude:: ../_static/code/zh/extended/tensorboard/mnist.py
 
-GPU Allocation
+GPU的使用与分配
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 很多时候的场景是：实验室/公司研究组里有许多学生/研究员都需要使用GPU，但多卡的机器只有一台，这时就需要注意如何分配显卡资源。

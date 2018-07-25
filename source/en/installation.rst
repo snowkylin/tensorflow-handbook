@@ -1,78 +1,79 @@
-TensorFlow Installation
-=========================
+TensorFlow安装
+================
 
-The latest installation guide for TensorFlow can be found on its official website (https://tensorflow.google.com/install). TensorFlow supports a variety of programming languages such as Python, Java, Go, C, and various operating systems such as Windows, OSX, and Linux. Python language is used here and below.
+TensorFlow的最新安装步骤可参考官方网站上的说明（https://tensorflow.google.cn/install）。TensorFlow支持Python、Java、Go、C等多种编程语言以及Windows、OSX、Linux等多种操作系统，此处及后文均以主流的Python语言为准。
 
-Two ways of installing is provided below for readers of different levels.
+以下提供简易安装和正式安装两种途径，供不同层级的读者选用。
 
-Simple Installation
-^^^^^^^^^^^^^^^^^^^^^
-If you just install a simple environment that runs on your own computer without a GPU and you don't want to spend too much energy on the environment configuration, it is recommended to install it according to the following steps (take Windows system as an example):
+简易安装
+^^^^^^^^^^^^
+如果只是安装一个运行在自己电脑上的，无需GPU的简易环境，不希望在环境配置上花费太多精力，建议按以下步骤安装（以Windows系统为例）：
 
-- Download and install the Python integration environment `Anaconda <https://www.anaconda.com/download/>`_ (Python 3.6 version);
-- Download and install the Python IDE `PyCharm <http://www.jetbrains.com/pycharm/>`_ (Community version, or students can apply for the Professional version of the free license);
-- Open "Anaconda Prompt" in the start menu and type ``pip install tensorflow``.
+- 下载并安装Python集成环境 `Anaconda <https://www.anaconda.com/download/>`_ （Python 3.6版本）；
+- 下载并安装Python的IDE `PyCharm <http://www.jetbrains.com/pycharm/>`_ （Community版本，或学生可申请Professional版本的免费授权）；
+- 打开开始菜单中的“Anaconda Prompt”，输入 ``pip install tensorflow``。
 
-Detailed Installation Guide
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-This section contains more details on the installation (such as establishing a conda environment) and the environment configuration method of the GPU version of TensorFlow.
+完毕。
 
-Environment Setting
+正式安装
+^^^^^^^^^^^^
+该部分包含了更多安装上的细节（如建立conda环境），以及GPU版本TensorFlow的环境配置方法。
+
+安装前的环境配置
 -------------------------------
-Before you officially install TensorFlow, you need to configure the right environment for it. Proceed as follows:
+正式安装TensorFlow前，需要为其配置合适的环境。步骤如下：
 
-1. Check if your computer has an NVIDIA graphics card. If so, it is recommended to install the GPU version of TensorFlow to take advantage of the GPU's powerful computational acceleration [#f1]_, otherwise the CPU version can be installed. Specifically, the CUDA Compute Capability of the graphics card must be at least 3.0. You can check the CUDA Compute Capability of your graphics card on `the official website of NVIDIA <https://developer.nvidia.com/cuda-gpus/>`_;
-2. Install the Python environment. It is recommended to install Anaconda, an open source Python distribution that provides a complete scientific computing environment, including common scientific computing libraries such as NumPy and SciPy. Of course, you have the right to choose your favorite Python environment. Note that as of this writing, TensorFlow's installation under Windows only supports the Python 3.X version;
+1. 检查自己的电脑是否具有NVIDIA显卡。如有，建议安装GPU版本的TensorFlow，以利用GPU强大的计算加速能力 [#f1]_ ，否则可以安装CPU版本。具体而言，该显卡的CUDA Compute Capability须不低于3.0，可以到 `NVIDIA的官方网站 <https://developer.nvidia.com/cuda-gpus/>`_ 查询自己所用显卡的CUDA Compute Capability；
+2. 安装Python环境。此处建议安装Anaconda，这是一个开源的Python发行版本，提供了一个完整的科学计算环境，包括NumPy、SciPy等常用科学计算库。当然，你有权选择自己喜欢的Python环境。注意截至本手册撰写时，TensorFlow在Windows下的安装仅支持Python 3.X版本；
 
-    * When installing Anaconda, you can choose to add the Anaconda directory to your system's PATH (although the installer does not recommend this), so you can use Anaconda's features directly in the command line environment. Of course, if you don't add it, you can use the Anaconda Prompt in the start menu to enter the command line Anaconda environment.
+   * 安装Anaconda时，可以选择将Anaconda目录添加到系统的PATH中（虽然安装程序不推荐这样做），这样可以直接在命令行环境下使用Anaconda的各项功能。当然，不添加的话也可以使用开始菜单中的Anaconda Prompt进入命令行的Anaconda环境。
 
-3. (For GPU version) Install NVIDIA graphics driver, `CUDA Toolkit <https://developer.nvidia.com/cuda-downloads>`_ and `cuDNN <https://developer.nvidia.com/cudnn>`_. Some things to note are:
+3. （针对GPU版本）安装NVIDIA显卡驱动程序、 `CUDA Toolkit <https://developer.nvidia.com/cuda-downloads>`_ 和 `cuDNN <https://developer.nvidia.com/cudnn>`_ 。值得注意的事项有：
 
-    * The recommended order is: first install the latest version of NVIDIA graphics driver, then install CUDA (do not choose to install the driver at the same time), and finally install cuDNN. The graphics card driver included with CUDA may be too old;
-    * There is a very simple driver installation method under Ubuntu: select Software & Updates in System Setting, then click the "Using NVIDIA binary driver" option in Additional Drivers and click on the lower right corner. The "Apply Changes" can be installed, the system will automatically install the NVIDIA driver. Otherwise, the installation of NVIDIA graphics driver on Linux system will not be smooth, pay attention to disable the system's own open source graphics driver Nouveau, disable the motherboard's Secure Boot function before installation. For more detailed guidance, please refer to `this article <https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/>`_ ;
-    * The version of CUDA Toolkit and cuDNN must be consistent with the version of the TensorFlow official website installation instructions. Note that the version required to be installed in the official website installation instructions may not be the latest version;
-    * cuDNN is installed in a special way. You need to manually copy the downloaded installation package to the CUDA installation directory.
+   * 建议的顺序是：先安装最新版NVIDIA显卡驱动程序，再安装CUDA（安装时不要选择同时安装驱动），最后安装cuDNN。CUDA附带的显卡驱动程序可能过旧；
+   * 在Ubuntu下有一个很简易的驱动安装方法：在系统设置（System Setting）里面选软件与更新（Software & Updates），然后点选Additional Drivers里面的“Using NVIDIA binary driver”选项并点选右下角的“Apply Changes”即可，系统即会自动安装NVIDIA驱动。否则，NVIDIA显卡驱动程序在Linux系统上的安装往往不会一帆风顺，注意在安装前禁用系统自带的开源显卡驱动Nouveau、禁用主板的Secure Boot功能。更详细的指导可以参考 `这篇文章 <https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/>`_ ；
+   * CUDA Toolkit和cuDNN的版本一定要与TensorFlow官方网站安装说明的版本一致，注意官方网站安装说明里要求安装的版本可能并非最新版本；
+   * cuDNN的安装方式比较特殊，你需要手动将下载的安装包复制到CUDA的安装目录下。
 
-
-Installation
+安装
 ----------------
 
-The installation process in Anaconda environment is as follows (take Windows system as an example):
+在Anaconda环境下的安装过程如下（以Windows系统为例）：
 
-1. Create a new conda environment called ``tensorflow``
-
-::
-
-    Conda create -n tensorflow python=X.X # Note that X.X here fills in the version of your own Python environment, such as 3.6
-
-2. Activate the environment
+1. 新建一个叫做 ``tensorflow`` 的conda环境
 
 ::
 
-    Activate tensorflow
+    conda create -n tensorflow python=X.X # 注意这里的X.X填写自己Python环境的版本，例如3.6
 
-3. Install TensorFlow using pip
+2. 激活环境
 
-Install the CPU version
 ::
 
-    Pip install tensorflow
+    activate tensorflow
 
-Install GPU version
+3. 使用pip安装TensorFlow
+
+安装CPU版本
 ::
 
-    Pip install tensorflow-gpu
+    pip install tensorflow
 
-If necessary, you can also install the Nightly version of TensorFlow, which has some of the latest features compared to the official version (for example, before TensorFlow version 1.8, the Eager Execution mode used in this manual is only available in the Nightly version), however Stability may be slightly weaker. Run ``pip install tf-nightly`` (CPU version) or ``pip install tf-nightly-gpu`` (GPU version) in a new virtual environment. Note that if you install a GPU version, it often requires installation of CUDA and cuDNN that are newer than the official version requirements. Fortunately, different versions of CUDA and cuDNN can coexist.
+安装GPU版本
+::
 
-If you use the pip command to install slowly, you can try the TensorFlow image of the `Tsinghua University open source software image station <https://mirrors.tuna.tsinghua.edu.cn/help/tensorflow/>`_.
+    pip install tensorflow-gpu
 
-The First Program
-^^^^^^^^^^^^^^^^^
+如有需要，也可以安装TensorFlow的Nightly版本，该版本较之于正式版本会具有一些最新的特性（例如在TensorFlow 1.8版本以前，本手册主要使用的Eager Execution模式只在Nightly版本中提供），然而稳定度可能稍弱。在一个新的虚拟环境里运行 ``pip install tf-nightly`` （CPU版本）或 ``pip install tf-nightly-gpu`` （GPU版本）即可。注意，若安装GPU版本，其往往要求安装比正式版要求中更新的CUDA和cuDNN。好在CUDA和cuDNN的不同版本是可以共存的。
 
-After the installation is complete, let's write a simple program to verify the installation.
+如果使用pip命令安装速度较慢，可以尝试 `清华大学开源软件镜像站的TensorFlow镜像 <https://mirrors.tuna.tsinghua.edu.cn/help/tensorflow/>`_。
 
-Enter ``activate tensorflow`` at the command line. Go to the previously created conda environment with TensorFlow installed, then type ``python`` into the Python environment and enter the following code line by line:
+第一个程序
+^^^^^^^^^^^^^^^
+
+安装完毕后，我们来编写一个简单的程序来验证安装。
+
+在命令行下输入 ``activate tensorflow`` 进入之前建立的安装有TensorFlow的conda环境，再输入 ``python`` 进入Python环境，逐行输入以下代码：
 
 .. code-block:: python
 
@@ -85,14 +86,14 @@ Enter ``activate tensorflow`` at the command line. Go to the previously created 
 
     print(C)
 
-If you can finally output::
+如果能够最终输出::
 
     tf.Tensor(
     [[19 22]
     [43 50]], shape=(2, 2), dtype=int32)
 
-The TensorFlow has been successfully installed. Some TensorFlow prompts may be output during the operation, which is normal.
+说明TensorFlow已安装成功。运行途中可能会输出一些TensorFlow的提示信息，属于正常现象。
 
-The Python language is used here. The introductory tutorial on the Python language can be found at http://www.runoob.com/python3/python3-tutorial.html or https://www.liaoxuefeng.com. The default reader will be used after this manual. Have the basic knowledge of the Python language. Without being nervous, the Python language is easy to use, and TensorFlow itself does not use too many advanced features of the Python language. For Python IDEs, it is recommended to use `PyCharm <http://www.jetbrains.com/pycharm/>`_ . If you are a student and have a .edu-terminated mailbox, you can apply for a free license `here <http://www.jetbrains.com/student/>`_ . If not, you can also download the community version of PyCharm, the main features are not much different.
+此处使用的是Python语言，关于Python语言的入门教程可以参考 http://www.runoob.com/python3/python3-tutorial.html 或 https://www.liaoxuefeng.com ，本手册之后将默认读者拥有Python语言的基本知识。不用紧张，Python语言易于上手，而TensorFlow本身也不会用到Python语言的太多高级特性。关于Python的IDE，建议使用 `PyCharm <http://www.jetbrains.com/pycharm/>`_ 。如果你是学生并有.edu结尾的邮箱的话，可以在 `这里 <http://www.jetbrains.com/student/>`_ 申请免费的授权。如果没有，也可以下载社区版本的PyCharm，主要功能差别不大。
 
-.. [#f1] The effect of GPU acceleration is related to the model type and the performance of the GPU. If the CPU performance is high, but the GPU only has entry-level performance, the speed is not much improved, about 1-2 times. However, if the GPU performance is strong (for example, when writing this manual, NVIDIA GeForce GTX 1080 Ti or NVIDIA GeForce TITAN series is a high performance graphics card on the market), for a specific model, more than ten times or more acceleration can be Reached. At the same time, the acceleration effect of the GPU is also related to the task itself. The entry-level TensorFlow model often does not require too much computational performance. The CPU version of TensorFlow is sufficient, so you can wait until you have mastered the basics of TensorFlow before deciding whether to purchase a more advanced GPU for faster training.
+.. [#f1] GPU加速的效果与模型类型和GPU的性能有关，如果CPU性能较高，但GPU仅有入门级的性能，其实速度提升不大，大概1-2倍。不过如果GPU性能强大的话（例如，本手册写作时，NVIDIA GeForce GTX 1080 Ti或NVIDIA GeForce TITAN系列是市场上性能较强大的显卡型号），对于特定模型，十几倍甚至更高的加速效果也是可以达到的。同时，GPU的加速效果与任务本身也有关。入门级的TensorFlow模型往往不需要太高的计算性能，CPU版本的TensorFlow足以胜任，因此可以待到掌握TensorFlow的基本知识后，再决定是否购入更高级的GPU以得到更快的训练速度。
