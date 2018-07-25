@@ -4,8 +4,10 @@
    contain the root `toctree` directive.
 
 ==================================================================
-简单粗暴TensorFlow | Simple TensorFlow
+简单粗暴TensorFlow | A Concise Handbook of TensorFlow
 ==================================================================
+
+*基于Eager Execution | Based on Eager Execution*
 
 本文档为未完成版本，内容会随时更改修订，目前请不要扩散。
 
