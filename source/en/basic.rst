@@ -156,7 +156,7 @@ In application, we will usually adopt much more complex models instead of the li
 .. [#f3] Mainly reference `Tensor Transformations <https://www.tensorflow.org/versions/r1.9/api_guides/python/array_ops>`_ and `Math <https://www.tensorflow.org/versions/r1.9/api_guides/python/math_ops>`_. Note that the tensor operation API of TensorFlow is very similar to Numpy, thus one can get started on TensorFlow rather quickly if knowing about the latter.
 .. [#f1] In fact there is a analytic solution for the linear regression. We use gradient descent here just for showing you how TensorFlow works.
 .. [#f2] The loss function here is its mean variance :math:`L(x) = \frac{1}{2} \sum_{i=1}^5 (ax_i + b - y_i)^2` whose partial derivatives with respect to ``a`` and ``b`` are :math:`\frac{\partial L}{\partial a} = \sum_{i=1}^5 (ax_i + b - y) x_i` and :math:`\frac{\partial L}{\partial b} = \sum_{i=1}^5 (ax_i + b - y)`.
-.. [#f4] The opposite of Eager Execution is Graph Execution that TensorFlow adopts before version 1.8 in Mar 2018. This guidebook is mainly written for Eager Execution development, however the basic usage of Graph Execution is also attached in the appendices in case of need.
+.. [#f4] The opposite of Eager Execution is Graph Execution that TensorFlow adopts before version 1.8 in Mar 2018. This handbook is mainly written for fast iterative development, however the basic usage of the static Graph Execution is also attached in the appendices in case of need.
 
 ..  
     Tensors (Variables, Constants and Placeholders)
