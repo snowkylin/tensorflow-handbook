@@ -22,7 +22,7 @@ Terminal::
     >>> b = 3
     a + b = 5
 
-``Variable`` is a special type of tensor，which is builded using ``tf.get_variable()``. Just as variables in normal progamming language, a ``Variable`` should be initialized before used and its value can be modified during computation. The following example shows how to create a ``Variable``, initialize its value to 0, and increment by one.
+**Variable** is a special type of tensor，which is builded using ``tf.get_variable()``. Just as variables in normal progamming language, a ``Variable`` should be initialized before used and its value can be modified during computation. The following example shows how to create a ``Variable``, initialize its value to 0, and increment by one.
 
 .. literalinclude:: ../_static/code/en/basic/graph/variable.py
 
