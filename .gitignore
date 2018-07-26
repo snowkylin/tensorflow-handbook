@@ -4,6 +4,7 @@ build
 reference
 teaching
 workspace.code-workspace
+__pycache__/
 source/.vscode
 source/_future
 source/_static/code/.idea
