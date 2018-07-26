@@ -26,6 +26,24 @@ This document is unfinished, content will be updated rapidly. Please keep it int
 |    zh/static         |    en/static          |
 +----------------------+-----------------------+
 
+..
+    .. toctree:: 
+        zh/preface
+        zh/installation
+        zh/basic
+        zh/models
+        zh/extended 
+        zh/static
+
+..
+    .. toctree:: 
+        en/preface
+        en/installation
+        en/basic
+        en/models
+        en/extended 
+        en/static
+
 ..  
    preface
    introduction
