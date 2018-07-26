@@ -12,10 +12,10 @@ learning_rate = 1e-3
 
 class RNN(tf.keras.Model):
     def __init__(self, num_chars):
-        super(RNN, self).__init__()
+        super().__init__()
         self.num_chars = num_chars
         self.cell = tf.nn.rnn_cell.BasicLSTMCell(num_units=256)
-        self.dense = tf.layers.Dense(units=self.num_chars)
+        self.dense = tf.keras.layers.Dense(units=self.num_chars)
 
     def call(self, inputs):
         batch_size, seq_length = tf.shape(inputs)
@@ -28,7 +28,7 @@ class RNN(tf.keras.Model):
 
     def predict(self, inputs, temperature=1.):
         batch_size, _ = tf.shape(inputs)
-        logits = self.call(inputs)
+        logits = self(inputs)
         prob = tf.nn.softmax(logits / temperature).numpy()
         return np.array([np.random.choice(self.num_chars, p=prob[i, :])
                          for i in range(batch_size.numpy())])

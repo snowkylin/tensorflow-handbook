@@ -18,7 +18,7 @@ final_epsilon = 0.01
 # Q-network用于拟合Q函数，和前节的多层感知机类似。输入state，输出各个action下的Q-value（CartPole下为2维）。
 class QNetwork(tf.keras.Model):
     def __init__(self):
-        super(QNetwork, self).__init__()
+        super().__init__()
         self.dense1 = tf.keras.layers.Dense(units=24, activation=tf.nn.relu)
         self.dense2 = tf.keras.layers.Dense(units=24, activation=tf.nn.relu)
         self.dense3 = tf.keras.layers.Dense(units=2)
@@ -30,7 +30,7 @@ class QNetwork(tf.keras.Model):
         return x
 
     def predict(self, inputs):
-        q_values = self.call(inputs)
+        q_values = self(inputs)
         return tf.argmax(q_values, axis=-1)
 
 

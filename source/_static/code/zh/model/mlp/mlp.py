@@ -3,7 +3,7 @@ import tensorflow as tf
 
 class MLP(tf.keras.Model):
     def __init__(self):
-        super(MLP, self).__init__()
+        super().__init__()
         self.dense1 = tf.keras.layers.Dense(units=100, activation=tf.nn.relu)
         self.dense2 = tf.keras.layers.Dense(units=10)
 

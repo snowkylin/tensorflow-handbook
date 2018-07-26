@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
-from model.mlp.mlp import MLP
-from model.cnn.cnn import CNN
+from en.model.mlp.mlp import MLP
+from en.model.cnn.cnn import CNN
 
 tf.enable_eager_execution()
 model_type = 'CNN'
