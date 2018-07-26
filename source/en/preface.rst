@@ -1,7 +1,7 @@
 Preface
 =========
 
-Mar 30th, 2018, Google held the second TensorFlow Dev Summit in Mountain View, California and officially published TensorFlow version 1.8. I was fortunate to attend the summit with Google's sponsorship, witnessing this milestone new version release. Lots of new functions being added and supported shows the ambition of TensorFlow. Meanwhile Eager Execution that has been tested since 2017 fall, was finally added officially in this version and became the recommended tutorial mode to TensorFlow by official.
+On Mar 30th, 2018, Google held the second TensorFlow Dev Summit in Mountain View, California and announced the official release of TensorFlow version 1.8. I was fortunate to attend the summit with Google's sponsorship, witnessing the release of this milestone new version. Lots of new functions being added and supported shows the ambition of TensorFlow. Meanwhile, Eager Execution, which has been tested since 2017 fall, was finally included officially in this version and became the recommended mode for newcomers of TensorFlow.
 
     The easiest way to get started with TensorFlow is using Eager Execution.
     
