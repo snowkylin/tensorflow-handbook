@@ -8,7 +8,7 @@ y = np.array([[10.0], [20.0]], dtype=np.float32)
 
 class LinearLayer(tf.keras.layers.Layer):
     def __init__(self):
-        super(LinearLayer, self).__init__()
+        super().__init__()
 
     def build(self, input_shape):     # here input_shape is a TensorShape
         self.w = self.add_variable(name='w',
@@ -23,7 +23,7 @@ class LinearLayer(tf.keras.layers.Layer):
 
 class Linear(tf.keras.Model):
     def __init__(self):
-        super(Linear, self).__init__()
+        super().__init__()
         self.layer = LinearLayer()
 
     def call(self, input):

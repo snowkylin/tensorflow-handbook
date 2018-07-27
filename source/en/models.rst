@@ -14,7 +14,7 @@ TensorFlow模型
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ..  https://www.tensorflow.org/programmers_guide/eager
 
-如上一章所述，为了增强代码的可复用性，我们往往会将模型编写为类，然后在模型调用的地方使用 ``y_pred = model(X)`` 的形式进行调用。 **模型类** 的形式非常简单，主要包含 ``__init__()`` （构造函数，初始化）和 ``call(input)`` （模型调用）两个方法，但也可以根据需要增加自定义的方法。
+如上一章所述，为了增强代码的可复用性，我们往往会将模型编写为类，然后在模型调用的地方使用 ``y_pred = model(X)`` 的形式进行调用。 **模型类** 的形式非常简单，主要包含 ``__init__()`` （构造函数，初始化）和 ``call(input)`` （模型调用）两个方法，但也可以根据需要增加自定义的方法。 [#call]_ 
 
 .. code-block:: python
 
@@ -38,6 +38,8 @@ TensorFlow模型
 这里，我们没有显式地声明 ``w`` 和 ``b`` 两个变量并写出 ``y_pred = tf.matmul(X, w) + b`` 这一线性变换，而是在初始化部分实例化了一个全连接层（ ``tf.keras.layers.Dense`` ），并在call方法中对这个层进行调用。全连接层封装了 ``output = activation(tf.matmul(input, kernel) + bias)`` 这一线性变换+激活函数的计算操作，以及 ``kernel`` 和 ``bias`` 两个变量。当不指定激活函数时（即 ``activation(x) = x`` ），这个全连接层就等价于我们上述的线性变换。顺便一提，全连接层可能是我们编写模型时使用最频繁的层。
 
 如果我们需要显式地声明自己的变量并使用变量进行自定义运算，请参考 :ref:`自定义层 <custom_layer>`。
+
+.. [#call] 在Python类中，对类的实例 ``myClass`` 进行形如 ``myClass()`` 的调用等价于 ``myClass.__call__()`` 。在这里，我们的模型继承了 ``tf.keras.Model`` 这一父类。该父类中包含 ``__call__()`` 的定义，其中调用了 ``call()`` 方法，同时进行了一些keras的内部操作。这里，我们通过继承 ``tf.keras.Model`` 并重载 ``call()`` 方法，即可在保持keras结构的同时加入模型调用的代码。具体请见本章初“前置知识”的 ``__call__()`` 部分。
 
 .. _mlp:
 
@@ -129,7 +131,7 @@ TensorFlow模型
 - LSTM原理：`Understanding LSTM Networks <https://colah.github.io/posts/2015-08-Understanding-LSTMs/>`_
 - RNN序列生成：[Graves2013]_
 
-这里，我们使用RNN来进行尼采风格文本的自动生成。
+这里，我们使用RNN来进行尼采风格文本的自动生成。 [#rnn_reference]_
 
 这个任务的本质其实预测一段英文文本的接续字母的概率分布。比如，我们有以下句子::
 
@@ -206,6 +208,8 @@ TensorFlow模型
     arn inneves to sya" natorne. hag open reals whicame oderedte,[fingo is
     zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey tomm--whach 
 
+.. [#rnn_reference] 此处的任务及实现参考了 https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py
+
 深度强化学习（DRL）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -266,7 +270,7 @@ TensorFlow模型
 
     class MyLayer(tf.keras.layers.Layer):
         def __init__(self):
-            super(LinearLayer, self).__init__()
+            super().__init__()
             # 初始化代码
 
         def build(self, input_shape):     # input_shape 是一个 TensorShape 类型对象，提供输入的形状
@@ -293,12 +297,14 @@ TensorFlow模型
 Graph Execution模式 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-事实上，只要在编写模型的时候稍加注意，以上的模型都是可以同时兼容Eager Execution模式和Graph Execution模式的。注意，在Graph Execution模式下， ``model(input_tensor)`` 只需运行一次以完成图的建立操作。
+事实上，只要在编写模型的时候稍加注意，以上的模型都是可以同时兼容Eager Execution模式和Graph Execution模式的 [#rnn_exception]_ 。注意，在Graph Execution模式下， ``model(input_tensor)`` 只需运行一次以完成图的建立操作。
 
 例如，通过以下代码，同样可以调用 :ref:`本章第一节 <linear>` 建立的线性模型并进行线性回归：
 
 .. literalinclude:: ../_static/code/zh/model/custom_layer/linear.py
     :lines: 48-59
+
+.. [#rnn_exception] 除了本章实现的RNN模型以外。在RNN模型的实现中，我们通过Eager Execution动态获取了seq_length的长度，使得我们可以方便地动态控制RNN的展开长度。然而Graph Execution不支持这一点，为了达到相同的效果，我们需要固定seq_length的长度，或者使用 ``tf.nn.dynamic_rnn`` （ `文档 <https://www.tensorflow.org/api_docs/python/tf/nn/dynamic_rnn>`_ ）。
 
 .. [LeCun1998] Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. "Gradient-based learning applied to document recognition." Proceedings of the IEEE, 86(11):2278-2324, November 1998. http://yann.lecun.com/exdb/mnist/
 .. [Graves2013] Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.
