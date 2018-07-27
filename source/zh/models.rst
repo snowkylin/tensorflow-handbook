@@ -270,7 +270,7 @@ TensorFlow模型
 
     class MyLayer(tf.keras.layers.Layer):
         def __init__(self):
-            super(LinearLayer, self).__init__()
+            super().__init__()
             # 初始化代码
 
         def build(self, input_shape):     # input_shape 是一个 TensorShape 类型对象，提供输入的形状
@@ -297,12 +297,14 @@ TensorFlow模型
 Graph Execution模式 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-事实上，只要在编写模型的时候稍加注意，以上的模型都是可以同时兼容Eager Execution模式和Graph Execution模式的。注意，在Graph Execution模式下， ``model(input_tensor)`` 只需运行一次以完成图的建立操作。
+事实上，只要在编写模型的时候稍加注意，以上的模型都是可以同时兼容Eager Execution模式和Graph Execution模式的 [#rnn_exception]_ 。注意，在Graph Execution模式下， ``model(input_tensor)`` 只需运行一次以完成图的建立操作。
 
 例如，通过以下代码，同样可以调用 :ref:`本章第一节 <linear>` 建立的线性模型并进行线性回归：
 
 .. literalinclude:: ../_static/code/zh/model/custom_layer/linear.py
     :lines: 48-59
+
+.. [#rnn_exception] 除了本章实现的RNN模型以外。在RNN模型的实现中，我们通过Eager Execution动态获取了seq_length的长度，使得我们可以方便地动态控制RNN的展开长度。然而Graph Execution不支持这一点，为了达到相同的效果，我们需要固定seq_length的长度，或者使用 ``tf.nn.dynamic_rnn`` （ `文档 <https://www.tensorflow.org/api_docs/python/tf/nn/dynamic_rnn>`_ ）。
 
 .. [LeCun1998] Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. "Gradient-based learning applied to document recognition." Proceedings of the IEEE, 86(11):2278-2324, November 1998. http://yann.lecun.com/exdb/mnist/
 .. [Graves2013] Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.
