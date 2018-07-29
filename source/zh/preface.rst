@@ -20,7 +20,7 @@
 
 在整本手册中，带“*”的部分均为选读。
 
-本手册的暂定名称《简单粗暴TensorFlow》是向我的好友兼同学Chris Wu编写的《简单粗暴 :math:`\text{\LaTeX}` 》（https://github.com/wklchris/Note-by-LaTeX）致敬。该手册清晰精炼，是 :math:`\text{\LaTeX}` 领域不可多得的中文资料，也是我在编写这一技术文档时所学习的对象。本手册最初是在我的好友Ji'an Li所组织的深度学习研讨小组中，由我作为预备知识的讲义而编写和使用。好友们的才学卓著与无私分享的品格也是编写此拙作的重要助力。
+本手册的暂定名称《简单粗暴TensorFlow》是向我的好友兼同学Chris Wu编写的《简单粗暴 :math:`\text{\LaTeX}` 》（https://github.com/wklchris/Note-by-LaTeX）致敬。该手册清晰精炼，是 :math:`\text{\LaTeX}` 领域不可多得的中文资料，也是我在编写这一技术文档时所学习的对象。本手册最初是在我的好友Ji-An Li所组织的深度学习研讨小组中，由我作为预备知识的讲义而编写和使用。好友们的才学卓著与无私分享的品格也是编写此拙作的重要助力。
 
 感谢Google中国Developer Relations团队的Lu Cheng以及Google TensorFlow团队的Tiezhen Wang对本手册编写的大力支持与宝贵意见。
 
