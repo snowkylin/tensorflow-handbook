@@ -20,7 +20,9 @@ The main features of this handbook are:
 
 The parts marked "*" are optional in this handbook.
 
-This handbook is tentatively named as "A Concise Handbook of TensorFlow" in order to pay a tribute to the book "A Concise Handbook of :math:`\text{\LaTeX}`" written by my friend and colleague Chris Wu. The latter is a rare Chinese material about :math:`\text{\LaTeX}`. I also learned from it while I was writing this handbook. This handbook was initially written and used by meself as a prerequisite handout in a deep learning seminar organized by my friend Ji-An Li. Our friends' wise and selflessness also prompted me to finish this work.
+This handbook is tentatively named as "A Concise Handbook of TensorFlow" in order to pay a tribute to the book "A Concise Handbook of :math:`\text{\LaTeX}`" written by my friend and colleague Chris Wu. The latter is a rare Chinese material about :math:`\text{\LaTeX}`. I also learned from it while I was writing this handbook. This handbook was initially written and used by meself as a prerequisite handout in a deep learning seminar organized by my friend Ji-An Li. My friends' wise and selflessness also prompted me to finish this work.
+
+The English version of this handbook is translated by my friend Zida Jin (Chapter 1-4) and Ming (Chapter 5-6), and revised by Ji-An Li and me. Thanks to my friend's hard work and supportance to this handbook.
 
 Thanks to Lu Cheng from Google China Developer Relations Team and Tiezhen Wang from Google TensorFlow Team for providing great supports and suggestions on this work.
 
