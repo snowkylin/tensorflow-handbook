@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>简单粗暴TensorFlow &mdash; 简单粗暴TensorFlow 0.3 alpha 文档</title>
+  <title>简单粗暴TensorFlow | A Concise Handbook of TensorFlow &mdash; 简单粗暴TensorFlow 0.3 alpha 文档</title>
   
 
   
@@ -36,7 +36,7 @@
               href="genindex.html"/>
         <link rel="search" title="搜索" href="search.html"/>
     <link rel="top" title="简单粗暴TensorFlow 0.3 alpha 文档" href="#"/>
-        <link rel="next" title="前言" href="preface.html"/> 
+        <link rel="next" title="前言" href="zh/preface.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -89,14 +89,23 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">目录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="preface.html">前言</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">TensorFlow安装</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="models.html">TensorFlow模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extended.html">TensorFlow扩展</a></li>
-<li class="toctree-l1"><a class="reference internal" href="static.html">附录：静态的TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/installation.html">TensorFlow安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/models.html">TensorFlow模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/extended.html">TensorFlow扩展</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/static.html">附录：静态的TensorFlow</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="en/preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/installation.html">TensorFlow Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/basic.html">TensorFlow Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/models.html">TensorFlow模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/extended.html">TensorFlow Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/static.html">Appendix: Static TensorFlow</a></li>
 </ul>
 
             
@@ -141,7 +150,7 @@
     
       <li><a href="#">Docs</a> &raquo;</li>
         
-      <li>简单粗暴TensorFlow</li>
+      <li>简单粗暴TensorFlow | A Concise Handbook of TensorFlow</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -160,47 +169,98 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="tensorflow">
-<h1>简单粗暴TensorFlow<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
-<p>本文档为未完成版本，内容会随时更改修订。<strong>Please keep it internal at this time.</strong></p>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents:</span></p>
+  <div class="section" id="tensorflow-a-concise-handbook-of-tensorflow">
+<h1>简单粗暴TensorFlow | A Concise Handbook of TensorFlow<a class="headerlink" href="#tensorflow-a-concise-handbook-of-tensorflow" title="永久链接至标题">¶</a></h1>
+<p><em>基于Eager Execution | Based on Eager Execution</em></p>
+<p>本文档为未完成版本，内容会随时更改修订，目前请不要扩散。</p>
+<p>This document is unfinished, content will be updated rapidly. Please keep it internal at this time.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="49%" />
+<col width="51%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><div class="toctree-wrapper first last compound">
+<p class="caption"><span class="caption-text">目录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="preface.html">前言</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">TensorFlow安装</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#id1">简易安装</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#id2">正式安装</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#id8">第一个程序</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/installation.html">TensorFlow安装</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zh/installation.html#id1">简易安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/installation.html#id2">正式安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/installation.html#id8">第一个程序</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow基础</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="basic.html#tensorflow-1-1">TensorFlow 1+1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basic.html#linear-regression">基础示例：线性回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/basic.html">TensorFlow基础</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic.html#tensorflow-1-1">TensorFlow 1+1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic.html#linear-regression">基础示例：线性回归</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="models.html">TensorFlow模型</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="models.html#model-layer">模型（Model）与层（Layer）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models.html#mlp">基础示例：多层感知机（MLP）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models.html#cnn">卷积神经网络（CNN）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models.html#rnn">循环神经网络（RNN）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models.html#drl">深度强化学习（DRL）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models.html#custom-layer">自定义层 *</a></li>
-<li class="toctree-l2"><a class="reference internal" href="models.html#graph-execution">Graph Execution模式 *</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/models.html">TensorFlow模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zh/models.html#model-layer">模型（Model）与层（Layer）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/models.html#mlp">基础示例：多层感知机（MLP）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/models.html#cnn">卷积神经网络（CNN）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/models.html#rnn">循环神经网络（RNN）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/models.html#drl">深度强化学习（DRL）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/models.html#custom-layer">自定义层 *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/models.html#graph-execution">Graph Execution模式 *</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="extended.html">TensorFlow扩展</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="extended.html#checkpoint">Checkpoint：变量的保存与恢复</a></li>
-<li class="toctree-l2"><a class="reference internal" href="extended.html#tensorboard">TensorBoard：训练过程可视化</a></li>
-<li class="toctree-l2"><a class="reference internal" href="extended.html#gpu">GPU的使用与分配</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/extended.html">TensorFlow扩展</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zh/extended.html#checkpoint">Checkpoint：变量的保存与恢复</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/extended.html#tensorboard">TensorBoard：训练过程可视化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/extended.html#gpu">GPU的使用与分配</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="static.html">附录：静态的TensorFlow</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="static.html#tensorflow-1-1">TensorFlow 1+1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="static.html#id1">基础示例：线性回归</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/static.html">附录：静态的TensorFlow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zh/static.html#tensorflow-1-1">TensorFlow 1+1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/static.html#id3">基础示例：线性回归</a></li>
 </ul>
 </li>
 </ul>
 </div>
+</td>
+<td><div class="toctree-wrapper first last compound">
+<p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="en/preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/installation.html">TensorFlow Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="en/installation.html#simple-installation">Simple Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/installation.html#full-installation">Full Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/installation.html#first-program">First Program</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="en/basic.html">TensorFlow Basic</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="en/basic.html#tensorflow-1-1">TensorFlow 1+1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/basic.html#a-plain-example-linear-regression">A plain example: Linear regression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="en/models.html">TensorFlow模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="en/models.html#model-layer">模型（Model）与层（Layer）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/models.html#mlp">基础示例：多层感知机（MLP）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/models.html#cnn">卷积神经网络（CNN）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/models.html#rnn">循环神经网络（RNN）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/models.html#drl">深度强化学习（DRL）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/models.html#custom-layer">自定义层 *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/models.html#graph-execution">Graph Execution模式 *</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="en/extended.html">TensorFlow Extensions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="en/extended.html#checkpoint-saving-and-restoring-variables">Checkpoint：Saving and Restoring Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/extended.html#tensorboard-visualization-of-the-training-process">TensorBoard: Visualization of the Training Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/extended.html#gpu-usage-and-allocation">GPU Usage and Allocation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="en/static.html">Appendix: Static TensorFlow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="en/static.html#tensorflow-1-1">TensorFlow 1+1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/static.html#basic-example-linear-regression">Basic Example: Linear Regression</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
 <div class="section" id="indices-and-tables">
 <h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="永久链接至标题">¶</a></h2>
 <ul class="simple">
@@ -221,7 +281,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="preface.html" class="btn btn-neutral float-right" title="前言" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="zh/preface.html" class="btn btn-neutral float-right" title="前言" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>

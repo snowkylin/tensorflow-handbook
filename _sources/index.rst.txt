@@ -4,21 +4,45 @@
    contain the root `toctree` directive.
 
 ==================================================================
-简单粗暴TensorFlow
+简单粗暴TensorFlow | A Concise Handbook of TensorFlow
 ==================================================================
 
-本文档为未完成版本，内容会随时更改修订。**Please keep it internal at this time.**
+*基于Eager Execution | Based on Eager Execution*
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+本文档为未完成版本，内容会随时更改修订，目前请不要扩散。
 
-   preface
-   installation
-   basic
-   models
-   extended
-   static
+This document is unfinished, content will be updated rapidly. Please keep it internal at this time.
+
++----------------------+-----------------------+
+| .. toctree::         | .. toctree::          |
+|    :maxdepth: 2      |    :maxdepth: 2       |
+|    :caption: 目录    |    :caption: Contents |
+|                      |                       |
+|    zh/preface        |    en/preface         |
+|    zh/installation   |    en/installation    |
+|    zh/basic          |    en/basic           |
+|    zh/models         |    en/models          |
+|    zh/extended       |    en/extended        |
+|    zh/static         |    en/static          |
++----------------------+-----------------------+
+
+..
+    .. toctree:: 
+        zh/preface
+        zh/installation
+        zh/basic
+        zh/models
+        zh/extended 
+        zh/static
+
+..
+    .. toctree:: 
+        en/preface
+        en/installation
+        en/basic
+        en/models
+        en/extended 
+        en/static
 
 ..  
    preface
