@@ -16,12 +16,12 @@ class Linear(tf.keras.Model):
         return output
 
 
-# 以下代码结构与前节类似
+# The structure of the following codes is similar to the previous one.
 model = Linear()
 optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)
 for i in range(100):
     with tf.GradientTape() as tape:
-        y_pred = model(X)      # 调用模型
+        y_pred = model(X)      # Call the model.
         loss = tf.reduce_mean(tf.square(y_pred - y))
     grads = tape.gradient(loss, model.variables)
     optimizer.apply_gradients(grads_and_vars=zip(grads, model.variables))
