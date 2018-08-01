@@ -19,7 +19,7 @@ class RNN(tf.keras.Model):
 
     def call(self, inputs):
         batch_size, seq_length = tf.shape(inputs)
-        inputs = tf.one_hot(inputs, depth=self.num_chars)       # [batch_size, seq_length, num_chars]
+        inputs = tf.one_hot(inputs, depth=self.num_chars)       # [batch_size, seq_length, num_chars].
         state = self.cell.zero_state(batch_size=batch_size, dtype=tf.float32)
         for t in range(seq_length.numpy()):
             output, state = self.cell(inputs[:, t, :], state)
@@ -52,7 +52,7 @@ class DataLoader():
             index = np.random.randint(0, len(self.text) - seq_length)
             seq.append(self.text[index:index+seq_length])
             next_char.append(self.text[index+seq_length])
-        return np.array(seq), np.array(next_char)       # [num_batch, seq_length], [num_batch]
+        return np.array(seq), np.array(next_char)       # [num_batch, seq_length], [num_batch].
 
 
 data_loader = DataLoader()
