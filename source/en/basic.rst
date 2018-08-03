@@ -17,7 +17,7 @@ TensorFlow Basic
 
     Before introducing a variety of concepts in TensorFlow such as Tensor, Dataflow Graph, Variable, Optimizer and so on, we give an example first in this handbook so as to provide readers with an intuitive comprehension.
 
-This chapter introduces basic operations in TensorFlow.
+This chapter describes basic operations in TensorFlow.
 
 Prerequisites:
 
