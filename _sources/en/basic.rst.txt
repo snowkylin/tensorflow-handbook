@@ -17,7 +17,7 @@ TensorFlow Basic
 
     Before introducing a variety of concepts in TensorFlow such as Tensor, Dataflow Graph, Variable, Optimizer and so on, we give an example first in this handbook so as to provide readers with an intuitive comprehension.
 
-This chapter introduces basic operations in TensorFlow.
+This chapter describes basic operations in TensorFlow.
 
 Prerequisites:
 
@@ -85,7 +85,7 @@ As we can see from the output, TensorFlow helps us figure out that
 
 .. _linear-regression:
 
-A plain example: Linear regression
+Basic Example: Linear Regression
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Let's consider a practical problem. The house prices of a city between 2013 and 2017 are given by the following table:
