@@ -10,7 +10,7 @@ class LinearLayer(tf.keras.layers.Layer):
     def __init__(self):
         super().__init__()
 
-    def build(self, input_shape):     # here input_shape is a TensorShape
+    def build(self, input_shape):     # Here input_shape is a TensorShape.
         self.w = self.add_variable(name='w',
             shape=[input_shape[-1], 1], initializer=tf.zeros_initializer())
         self.b = self.add_variable(name='b',
