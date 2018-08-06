@@ -8,7 +8,7 @@ Prerequisites:
 * `Python serialization module Pickle <http://www.runoob.com/python3/python3-inputoutput.html>`_ (not required)
 * `Python special function parameters **kwargs <https://eastlakeside.gitbooks.io/interpy-zh/content/args_kwargs/Usage_kwargs.html>`_ (not required)
 
-Checkpoint：Saving and Restoring Variables
+Checkpoint: Saving and Restoring Variables
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Usually, we hope to save the trained parameters (variables) after the model training is completed. By loading the model and parameters when you need model, you can get the trained model directly. Perhaps the first thing you think of is to store ``model.variables`` with the Python serialization module ``pickle``. But unfortunately, TensorFlow's variable type ``ResourceVariable`` cannot be serialized.
@@ -45,7 +45,7 @@ When you need to reload previously saved parameters for models elsewhere, you ne
 
 Then the model variables are restored. ``save_path_with_prefix_and_index`` is the directory + prefix + number of the previously saved file. For example, calling ``checkpoint.restore('./save/model.ckpt-1')`` will load the file with the prefix ``model.ckpt`` and sequence number 1 to restore the model.
 
-When saving multiple files, we often want to load the most recent one. You can use an assistant function ``tf.train.latest_checkpoint(save_path)`` to return the file name of the most recent checkpoint in the directory. For example, if there are 10 saved files from ``model.ckpt-1.index`` to ``model.ckpt-10.index`` in the save directory, ``tf.train.latest_checkpoint('./save') `` then returns ``./save/model.ckpt-10``.
+When saving multiple files, we often want to load the most recent one. You can use an assistant function ``tf.train.latest_checkpoint(save_path)`` to return the file name of the most recent checkpoint in the directory. For example, if there are 10 saved files from ``model.ckpt-1.index`` to ``model.ckpt-10.index`` in the save directory, ``tf.train.latest_checkpoint('./save')`` then returns ``./save/model.ckpt-10`` .
 
 In general, the typical framework for restoring and saving variables is as follows:
 
