@@ -103,7 +103,7 @@ Note that we can easily get an accuracy of 95% with even a simple model like thi
 Convolutional Neural Networks (CNN)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The `Convolutional Neural Network <https://en.wikipedia.org/wiki/Convolutional_neural_network>`_ is an artificial neural network resembled as the human retina. It consists of one or more convolutional layers, pooling layers and dense layers. For detailed theories please refer to the `Convolutional Neural Network <https://www.bilibili.com/video/av10590361/?p=21>`_ chapter of the `Machine Learning` course by Professor Li Hongyi of Taiwan University.
+The `Convolutional Neural Network <https://en.wikipedia.org/wiki/Convolutional_neural_network>`_ is an artificial neural network resembled as the animal `visual system <https://en.wikipedia.org/wiki/Visual_system>`_ . It consists of one or more convolutional layers, pooling layers and dense layers. For detailed theories please refer to the `Convolutional Neural Network <https://www.bilibili.com/video/av10590361/?p=21>`_ chapter of the `Machine Learning` course by Professor Li Hongyi of National Taiwan University.
 
 The specific implementation is as follows, which is very similar to MLP with some convolutional layers and pooling layers added.
 
