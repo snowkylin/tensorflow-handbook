@@ -245,7 +245,7 @@
 <div class="section" id="mlp">
 <span id="id3"></span><h2>基础示例：多层感知机（MLP）<a class="headerlink" href="#mlp" title="永久链接至标题">¶</a></h2>
 <p>我们从编写一个最简单的 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8">多层感知机</a> （Multilayer Perceptron, MLP）开始，介绍TensorFlow的模型编写方式。这里，我们使用多层感知机完成MNIST手写体数字图片数据集 <a class="reference internal" href="#lecun1998" id="id5">[LeCun1998]</a> 的分类任务。</p>
-<div class="figure align-center" id="id17">
+<div class="figure align-center" id="id18">
 <img alt="../_images/mnist_0-91.png" src="../_images/mnist_0-91.png" />
 <p class="caption"><span class="caption-text">MNIST手写体数字图片示例</span></p>
 </div>
@@ -325,9 +325,9 @@
 </div>
 <div class="section" id="cnn">
 <h2>卷积神经网络（CNN）<a class="headerlink" href="#cnn" title="永久链接至标题">¶</a></h2>
-<p><a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C">卷积神经网络</a> （Convolutional Neural Network, CNN）是一种类似于人类视网膜结构的人工神经网络，包含一个或多个卷积层（Convolutional Layer）、池化层（Pooling Layer）和全连接层（Dense Layer）。具体原理建议可以参考台湾大学李宏毅教授的《机器学习》课程的 <a class="reference external" href="https://www.bilibili.com/video/av10590361/?p=21">Convolutional Neural Network</a> 一章。</p>
+<p><a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C">卷积神经网络</a> （Convolutional Neural Network, CNN）是一种结构类似于人类或动物的 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E8%A7%86%E8%A7%89%E7%B3%BB%E7%BB%9F">视觉系统</a> 的人工神经网络，包含一个或多个卷积层（Convolutional Layer）、池化层（Pooling Layer）和全连接层（Dense Layer）。具体原理建议可以参考台湾大学李宏毅教授的《机器学习》课程的 <a class="reference external" href="https://www.bilibili.com/video/av10590361/?p=21">Convolutional Neural Network</a> 一章。</p>
 <p>具体的实现见下，和MLP很类似，只是新加入了一些卷积层和池化层。</p>
-<div class="figure align-center" id="id18">
+<div class="figure align-center" id="id19">
 <img alt="../_images/cnn1.png" src="../_images/cnn1.png" />
 <p class="caption"><span class="caption-text">CNN结构图示</span></p>
 </div>
@@ -380,9 +380,9 @@
 <li><a class="reference external" href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">Recurrent Neural Networks Tutorial, Part 1 – Introduction to RNNs</a></li>
 <li>台湾大学李宏毅教授的《机器学习》课程的 <a class="reference external" href="https://www.bilibili.com/video/av10590361/?p=36">Recurrent Neural Network (part 1)</a> <a class="reference external" href="https://www.bilibili.com/video/av10590361/?p=37">Recurrent Neural Network (part 2)</a> 两部分。</li>
 <li>LSTM原理：<a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></li>
-<li>RNN序列生成：<a class="reference internal" href="#graves2013" id="id7">[Graves2013]</a></li>
+<li>RNN序列生成：<a class="reference internal" href="#graves2013" id="id8">[Graves2013]</a></li>
 </ul>
-<p>这里，我们使用RNN来进行尼采风格文本的自动生成。 <a class="footnote-reference" href="#rnn-reference" id="id8">[2]</a></p>
+<p>这里，我们使用RNN来进行尼采风格文本的自动生成。 <a class="footnote-reference" href="#rnn-reference" id="id9">[2]</a></p>
 <p>这个任务的本质其实预测一段英文文本的接续字母的概率分布。比如，我们有以下句子:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">I</span> <span class="n">am</span> <span class="n">a</span> <span class="n">studen</span>
 </pre></div>
@@ -411,11 +411,11 @@
 </pre></div>
 </div>
 <p>接下来进行模型的实现。在 <code class="docutils literal"><span class="pre">__init__</span></code> 方法中我们实例化一个常用的 <code class="docutils literal"><span class="pre">BasicLSTMCell</span></code> 单元，以及一个线性变换用的全连接层，我们首先对序列进行One Hot操作，即将编码i变换为一个n维向量，其第i位为1，其余均为0。这里n为字符种类数num_char。变换后的序列张量形状为[num_batch, seq_length, num_chars]。接下来，我们将序列从头到尾依序送入RNN单元，即将当前时间t的RNN单元状态 <code class="docutils literal"><span class="pre">state</span></code> 和t时刻的序列 <code class="docutils literal"><span class="pre">inputs[:,</span> <span class="pre">t,</span> <span class="pre">:]</span></code> 送入RNN单元，得到当前时间的输出 <code class="docutils literal"><span class="pre">output</span></code> 和下一个时间t+1的RNN单元状态。取RNN单元最后一次的输出，通过全连接层变换到num_chars维，即作为模型的输出。</p>
-<div class="figure align-center" id="id19">
+<div class="figure align-center" id="id20">
 <a class="reference internal image-reference" href="../_images/rnn_single1.jpg"><img alt="../_images/rnn_single1.jpg" src="../_images/rnn_single1.jpg" style="width: 30%;" /></a>
 <p class="caption"><span class="caption-text"><code class="docutils literal"><span class="pre">output,</span> <span class="pre">state</span> <span class="pre">=</span> <span class="pre">self.cell(inputs[:,</span> <span class="pre">t,</span> <span class="pre">:],</span> <span class="pre">state)</span></code> 图示</span></p>
 </div>
-<div class="figure align-center" id="id20">
+<div class="figure align-center" id="id21">
 <a class="reference internal image-reference" href="../_images/rnn1.jpg"><img alt="../_images/rnn1.jpg" src="../_images/rnn1.jpg" style="width: 50%;" /></a>
 <p class="caption"><span class="caption-text">RNN流程图示</span></p>
 </div>
@@ -505,7 +505,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <table class="docutils footnote" frame="void" id="rnn-reference" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id8">[2]</a></td><td>此处的任务及实现参考了 <a class="reference external" href="https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py">https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id9">[2]</a></td><td>此处的任务及实现参考了 <a class="reference external" href="https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py">https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py</a></td></tr>
 </tbody>
 </table>
 </div>
@@ -514,10 +514,10 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <p><a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0">强化学习</a> （Reinforcement learning，RL）强调如何基于环境而行动，以取得最大化的预期利益。结合了深度学习技术后的强化学习更是如虎添翼。这两年广为人知的AlphaGo即是深度强化学习的典型应用。深度强化学习的基础知识可参考：</p>
 <ul class="simple">
 <li><a class="reference external" href="https://ai.intel.com/demystifying-deep-reinforcement-learning/">Demystifying Deep Reinforcement Learning</a> （<a class="reference external" href="https://snowkylin.github.io/rl/2017/01/04/Reinforcement-Learning.html">中文编译</a>）</li>
-<li><a class="reference internal" href="#mnih2013" id="id11">[Mnih2013]</a></li>
+<li><a class="reference internal" href="#mnih2013" id="id12">[Mnih2013]</a></li>
 </ul>
 <p>这里，我们使用深度强化学习玩CartPole（平衡杆）游戏。简单说，我们需要让模型控制杆的左右运动，以让其一直保持竖直平衡状态。</p>
-<div class="figure align-center" id="id21">
+<div class="figure align-center" id="id22">
 <a class="reference internal image-reference" href="../_images/cartpole1.gif"><img alt="../_images/cartpole1.gif" src="../_images/cartpole1.gif" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">CartPole游戏</span></p>
 </div>
@@ -616,7 +616,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </div>
 </div>
 <div class="section" id="custom-layer">
-<span id="id14"></span><h2>自定义层 *<a class="headerlink" href="#custom-layer" title="永久链接至标题">¶</a></h2>
+<span id="id15"></span><h2>自定义层 *<a class="headerlink" href="#custom-layer" title="永久链接至标题">¶</a></h2>
 <p>可能你还会问，如果现有的这些层无法满足我的要求，我需要定义自己的层怎么办？</p>
 <p>事实上，我们不仅可以继承 <code class="docutils literal"><span class="pre">tf.keras.Model</span></code> 编写自己的模型类，也可以继承 <code class="docutils literal"><span class="pre">tf.keras.layers.Layer</span></code> 编写自己的层。</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyLayer</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
@@ -666,7 +666,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </div>
 <div class="section" id="graph-execution">
 <h2>Graph Execution模式 *<a class="headerlink" href="#graph-execution" title="永久链接至标题">¶</a></h2>
-<p>事实上，只要在编写模型的时候稍加注意，以上的模型都是可以同时兼容Eager Execution模式和Graph Execution模式的 <a class="footnote-reference" href="#rnn-exception" id="id15">[3]</a> 。注意，在Graph Execution模式下， <code class="docutils literal"><span class="pre">model(input_tensor)</span></code> 只需运行一次以完成图的建立操作。</p>
+<p>事实上，只要在编写模型的时候稍加注意，以上的模型都是可以同时兼容Eager Execution模式和Graph Execution模式的 <a class="footnote-reference" href="#rnn-exception" id="id16">[3]</a> 。注意，在Graph Execution模式下， <code class="docutils literal"><span class="pre">model(input_tensor)</span></code> 只需运行一次以完成图的建立操作。</p>
 <p>例如，通过以下代码，同样可以调用 <a class="reference internal" href="#linear"><span class="std std-ref">本章第一节</span></a> 建立的线性模型并进行线性回归：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>    <span class="n">model</span> <span class="o">=</span> <span class="n">Linear</span><span class="p">()</span>
     <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
@@ -685,7 +685,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <table class="docutils footnote" frame="void" id="rnn-exception" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id15">[3]</a></td><td>除了本章实现的RNN模型以外。在RNN模型的实现中，我们通过Eager Execution动态获取了seq_length的长度，使得我们可以方便地动态控制RNN的展开长度。然而Graph Execution不支持这一点，为了达到相同的效果，我们需要固定seq_length的长度，或者使用 <code class="docutils literal"><span class="pre">tf.nn.dynamic_rnn</span></code> （ <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/nn/dynamic_rnn">文档</a> ）。</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id16">[3]</a></td><td>除了本章实现的RNN模型以外。在RNN模型的实现中，我们通过Eager Execution动态获取了seq_length的长度，使得我们可以方便地动态控制RNN的展开长度。然而Graph Execution不支持这一点，为了达到相同的效果，我们需要固定seq_length的长度，或者使用 <code class="docutils literal"><span class="pre">tf.nn.dynamic_rnn</span></code> （ <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/nn/dynamic_rnn">文档</a> ）。</td></tr>
 </tbody>
 </table>
 <table class="docutils citation" frame="void" id="lecun1998" rules="none">
@@ -700,13 +700,13 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <table class="docutils citation" frame="void" id="graves2013" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id7">[Graves2013]</a></td><td>Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id8">[Graves2013]</a></td><td>Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.</td></tr>
 </tbody>
 </table>
 <table class="docutils citation" frame="void" id="mnih2013" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id11">[Mnih2013]</a></td><td>Mnih, Volodymyr, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. “Playing Atari with Deep Reinforcement Learning.” ArXiv:1312.5602 [Cs], December 19, 2013. http://arxiv.org/abs/1312.5602.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id12">[Mnih2013]</a></td><td>Mnih, Volodymyr, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. “Playing Atari with Deep Reinforcement Learning.” ArXiv:1312.5602 [Cs], December 19, 2013. http://arxiv.org/abs/1312.5602.</td></tr>
 </tbody>
 </table>
 </div>

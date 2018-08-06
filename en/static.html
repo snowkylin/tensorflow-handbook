@@ -103,11 +103,11 @@
 <li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">TensorFlow Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow Basic</a></li>
-<li class="toctree-l1"><a class="reference internal" href="models.html">TensorFlow模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">TensorFlow Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extended.html">TensorFlow Extensions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Appendix: Static TensorFlow</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#tensorflow-1-1">TensorFlow 1+1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#basic-example-linear-regression">Basic Example: Linear Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a-basic-example-linear-regression">A Basic Example: Linear Regression</a></li>
 </ul>
 </li>
 </ul>
@@ -273,8 +273,8 @@
 </div>
 <p>Placeholders and Variables are also allowed to be vector, matrix and even higher dimentional tensor.</p>
 </div>
-<div class="section" id="basic-example-linear-regression">
-<h2>Basic Example: Linear Regression<a class="headerlink" href="#basic-example-linear-regression" title="永久链接至标题">¶</a></h2>
+<div class="section" id="a-basic-example-linear-regression">
+<h2>A Basic Example: Linear Regression<a class="headerlink" href="#a-basic-example-linear-regression" title="永久链接至标题">¶</a></h2>
 <p>Unlike previous NumPy and Eager Execution mode, TensorFlow’s Graph Execution mode uses <strong>symbolic programming</strong> for numerical operations. First, we need to abstract the computational processes into a Dataflow Graph, and represent the inputs, operations and outputs with symbolized nodes. Then, we continually send the data to the input nodes, let the data be calculated and flow along the dataflow graph, and finally reach the specific output nodes we want. The following code shows how to accomplish the same task as the code does in previous section based on TensorFlow’s symbolic programming approach, where <code class="docutils literal"><span class="pre">tf.placeholder()</span></code> can be regarded as a kind of “symbolic input node”, using <code class="docutils literal"><span class="pre">tf.get_variable()</span></code> to define the parameters of the model (the tensor of the Variable type can be assigned using <code class="docutils literal"><span class="pre">tf.assign()</span></code>), and <code class="docutils literal"><span class="pre">sess.run(output_node,</span> <span class="pre">feed_dict={input_node:</span> <span class="pre">data})</span></code> can be thought of as a process which sends data to the input node, calculates along the dataflow graph and reach the output node and eventually return values.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 

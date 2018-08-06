@@ -49,7 +49,7 @@ Output::
 
 Placeholders and Variables are also allowed to be vector, matrix and even higher dimentional tensor.
 
-Basic Example: Linear Regression
+A Basic Example: Linear Regression
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Unlike previous NumPy and Eager Execution mode, TensorFlow's Graph Execution mode uses **symbolic programming** for numerical operations. First, we need to abstract the computational processes into a Dataflow Graph, and represent the inputs, operations and outputs with symbolized nodes. Then, we continually send the data to the input nodes, let the data be calculated and flow along the dataflow graph, and finally reach the specific output nodes we want. The following code shows how to accomplish the same task as the code does in previous section based on TensorFlow's symbolic programming approach, where ``tf.placeholder()`` can be regarded as a kind of "symbolic input node", using ``tf.get_variable()`` to define the parameters of the model (the tensor of the Variable type can be assigned using ``tf.assign()``), and ``sess.run(output_node, feed_dict={input_node: data})`` can be thought of as a process which sends data to the input node, calculates along the dataflow graph and reach the output node and eventually return values.
