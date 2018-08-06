@@ -234,7 +234,7 @@
 </pre></div>
 </div>
 <p>Here we didn’t explicitly declare two variables <code class="docutils literal"><span class="pre">W</span></code> and <code class="docutils literal"><span class="pre">b</span></code> or write the linear transformation <code class="docutils literal"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">tf.matmul(X,</span> <span class="pre">w)</span> <span class="pre">+</span> <span class="pre">b</span></code>, but instead instantiated a densely-connected layer (<code class="docutils literal"><span class="pre">tf.keras.layers.Dense</span></code>) in the initialization and called this layer in the “call” method. The densely-connected layer encapsulates the <code class="docutils literal"><span class="pre">output</span> <span class="pre">=</span> <span class="pre">activation(tf.matmul(input,</span> <span class="pre">kernel)</span> <span class="pre">+</span> <span class="pre">bias)</span></code> linear transformation, the activation function, and two variables <code class="docutils literal"><span class="pre">kernel</span></code> and <code class="docutils literal"><span class="pre">bias</span></code>. This densely-connected layer would be equivalent to the aforementioned linear transformation if the activation function is not specified (i.e. <code class="docutils literal"><span class="pre">activation(x)</span> <span class="pre">=</span> <span class="pre">x</span></code>). By the way, the densely-connected layer may be the most frequent in our daily model coding.</p>
-<p>Please refer to <a class="reference internal" href="#custom-layer"><span class="std std-ref">Custom Layers</span></a> if you need to declare variables explicitly and customize operations.</p>
+<p>Please refer to <a class="reference internal" href="../zh/models.html#custom-layer"><span class="std std-ref">Custom Layers</span></a> if you need to declare variables explicitly and customize operations.</p>
 <table class="docutils footnote" frame="void" id="call" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -380,7 +380,7 @@
 <li><a class="reference external" href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">Recurrent Neural Networks Tutorial, Part 1 – Introduction to RNNs</a>.</li>
 <li><a class="reference external" href="https://www.bilibili.com/video/av10590361/?p=36">Recurrent Neural Network (part 1)</a>  and <a class="reference external" href="https://www.bilibili.com/video/av10590361/?p=37">Recurrent Neural Network (part 2)</a> from the <cite>Machine Learning</cite> course by Professor Li Hongyi of Taiwan University.</li>
 <li>The principles of LSTM: <a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a>.</li>
-<li>Generation of RNN sequences：<a class="reference internal" href="#graves2013" id="id3">[Graves2013]</a>.</li>
+<li>Generation of RNN sequences：<a class="reference internal" href="../zh/models.html#graves2013" id="id3">[Graves2013]</a>.</li>
 </ul>
 <p>Here we use RNN to generate a piece of Nietzsche style text. <a class="footnote-reference" href="#rnn-reference" id="id4">[2]</a></p>
 <p>This task essentially predicts the probability distribution of the following alphabet of a given English text segment. For example, we have the following sentence:</p>
@@ -514,7 +514,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Reinforcement_learning">Reinforcement Learning</a> focuses on how to act in the environment in order to maximize the expected benefits. It becomes more powerful if combined with the deep learning technique. The recently famous AlphaGo is a typical application of the deep reinforcement learning. For its basic knowledge please refer to:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://ai.intel.com/demystifying-deep-reinforcement-learning/">Demystifying Deep Reinforcement Learning</a>.</li>
-<li><a class="reference internal" href="#mnih2013" id="id5">[Mnih2013]</a>.</li>
+<li><a class="reference internal" href="../zh/models.html#mnih2013" id="id5">[Mnih2013]</a>.</li>
 </ul>
 <p>Here, we use the deep reinforcement learning to learn how to play CartPole. To be simple, our model needs to control the pole to keep it in a straight balance state.</p>
 <div class="figure align-center" id="id11">
@@ -634,7 +634,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
         <span class="k">return</span> <span class="n">output</span>
 </pre></div>
 </div>
-<p>For example, if we want to implement a dense layer in <a class="reference internal" href="#linear"><span class="std std-ref">the first section of this chapter</span></a> with a specified output dimension of 1, we can write as below, creating two variables in the <code class="docutils literal"><span class="pre">build</span></code> method and do operations on them:</p>
+<p>For example, if we want to implement a dense layer in <a class="reference internal" href="../zh/models.html#linear"><span class="std std-ref">the first section of this chapter</span></a> with a specified output dimension of 1, we can write as below, creating two variables in the <code class="docutils literal"><span class="pre">build</span></code> method and do operations on them:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LinearLayer</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -665,7 +665,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <div class="section" id="graph-execution-mode">
 <h2>Graph Execution Mode *<a class="headerlink" href="#graph-execution-mode" title="永久链接至标题">¶</a></h2>
 <p>In fact, these models above will be compatible with both Eager Execution mode and Graph Execution mode if we write them more carefully <a class="footnote-reference" href="#rnn-exception" id="id6">[3]</a>. Please notice, <code class="docutils literal"><span class="pre">model(input_tensor)</span></code> is only needed to run once for building a graph under Graph Execution mode.</p>
-<p>For example, we can also call the linear model built in <a class="reference internal" href="#linear"><span class="std std-ref">the first section of this chapter</span></a> and do linear regression by the following codes:</p>
+<p>For example, we can also call the linear model built in <a class="reference internal" href="../zh/models.html#linear"><span class="std std-ref">the first section of this chapter</span></a> and do linear regression by the following codes:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>    <span class="n">model</span> <span class="o">=</span> <span class="n">Linear</span><span class="p">()</span>
     <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
     <span class="n">X_placeholder</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
