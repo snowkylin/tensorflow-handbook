@@ -85,7 +85,7 @@ As we can see from the output, TensorFlow helps us figure out that
 
 .. _linear-regression:
 
-Basic Example: Linear Regression
+A Basic Example: Linear Regression
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Let's consider a practical problem. The house prices of a city between 2013 and 2017 are given by the following table:
