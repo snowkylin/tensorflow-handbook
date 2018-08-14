@@ -43,7 +43,7 @@ Please refer to :ref:`Custom Layers <custom_layer>` if you need to declare varia
 
 .. _mlp:
 
-A basic Example: Multiple Layer Perceptrons (MLP)
+A Basic Example: Multilayer Perceptrons (MLP)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Let's begin with implementing a simple `Multilayer Perceptron <https://en.wikipedia.org/wiki/Multilayer_perceptron>`_ as an introduction of writing models in TensorFlow. Here we use the multilayer perceptron to classify the MNIST handwriting digit image dataset.
