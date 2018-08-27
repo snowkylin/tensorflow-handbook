@@ -46,7 +46,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = '简单粗暴TensorFlow'
+# project = '简单粗暴TensorFlow'
+project = 'A Concise Handbook of TensorFlow'
 copyright = '2018, Xihan Li（雪麒）'
 author = 'Xihan Li（雪麒）'
 
@@ -64,7 +65,8 @@ release = '0.3 beta'
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = 'zh_CN'
+# language = 'zh_CN'
+language = 'en_US'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -145,7 +147,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'TensorFlow-cn.tex', '简单粗暴TensorFlow',
+    # (master_doc, 'TensorFlow-cn.tex', '简单粗暴TensorFlow',
+    (master_doc, 'TensorFlow-cn.tex', 'A Concise Handbook of TensorFlow',
      author, 'manual'),
 ]
 
