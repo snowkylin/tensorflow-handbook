@@ -9,9 +9,32 @@
 
 *基于Eager Execution | Based on Eager Execution*
 
-本文档为未完成版本，内容会随时更改修订，目前请不要扩散。
+..
+    本文档为未完成版本，内容会随时更改修订，目前请不要扩散。
 
-This document is unfinished, content will be updated rapidly. Please keep it internal at this time.
+    This document is unfinished, content will be updated rapidly. Please keep it internal at this time.
+
+本手册是一篇精简的TensorFlow入门指导，基于TensorFlow的Eager Execution（动态图）模式，力图让具备一定机器学习及Python基础的开发者们快速上手TensorFlow。
+
+友情提醒：如果发现阅读中有难以理解的部分，请检查自己对每章的“前置知识”部分是否有清楚的理解。
+
+答疑区 - TensorFlow中文社区“简单粗暴TensorFlow”版面： https://www.tensorflowers.cn/b/48
+（如果您对本教程有任何疑问，请至TensorFlow中文社区的该版面发问）
+
+PDF下载：https://www.tensorflowers.cn/t/6230
+
+GitHub: https://github.com/snowkylin/TensorFlow-cn
+
+This handbook is a concise introduction to TensorFlow based on TensorFlow's Eager Execution mode, trying to help developers get started with TensorFlow quickly with some basic machine learning and Python knowledge.
+
+Friendly reminder: If you find something difficult to understand in reading, please check if you have a clear understanding of the "Prerequisites" part of each chapter.
+
+Q&A area - TensorFlow Chinese community "A Concise Handbook of TensorFlow" forum: https://www.tensorflowers.cn/b/48 
+(If you have any questions about this tutorial, please ask in this forum of the TensorFlow Chinese community)
+
+PDF download: https://www.tensorflowers.cn/t/6230
+
+GitHub: https://github.com/snowkylin/TensorFlow-cn
 
 +----------------------+-----------------------+
 | .. toctree::         | .. toctree::          |

@@ -15,7 +15,7 @@
 
 * 主要基于TensorFlow最新的Eager Execution（动态图）模式，以便于模型的快速迭代开发。但依然会包含传统的Graph Execution模式，代码上尽可能兼容两者；
 * 定位以教学及工具书为主，编排以TensorFlow的各项概念和功能为核心，力求能够让TensorFlow开发者快速查阅。各章相对独立，不一定需要按顺序阅读。正文中不会出现太多关于深度学习和机器学习的理论介绍，但会提供若干阅读推荐以便初学者掌握相关基础知识；
-* 代码实现均进行仔细推敲，力图简洁高效和表意清晰。模型实现均统一使用 `TensorFlow官方文档 <https://www.tensorflow.org/programmers_guide/eager#build_a_model>`_ 最新提出的继承 ``tf.keras.Model`` 和 ``tf.keras.layers.Layer`` 的方式（在其他技术文档中鲜少介绍），保证代码的高度可复用性。每个完整项目的总行数均不超过80行，让读者可以快速理解并举一反三；
+* 代码实现均进行仔细推敲，力图简洁高效和表意清晰。模型实现均统一使用 `TensorFlow官方文档 <https://www.tensorflow.org/programmers_guide/eager#build_a_model>`_ 最新提出的继承 ``tf.keras.Model`` 和 ``tf.keras.layers.Layer`` 的方式（在其他技术文档中鲜少介绍），保证代码的高度可复用性。每个完整项目的代码总行数均不过百行，让读者可以快速理解并举一反三；
 * 注重详略，少即是多，不追求巨细靡遗和面面俱到，不进行大篇幅的细节论述。
 
 在整本手册中，带“*”的部分均为选读。
@@ -24,7 +24,7 @@
 
 本手册的英文版由我的好友Zida Jin（1-4章）和Ming（5-6章）翻译，并由Ji-An Li和笔者审校。三位朋友牺牲了自己的大量宝贵时间翻译和校对本手册，同时Ji-An Li亦对本手册的教学内容和代码细节提供了诸多宝贵意见。我谨向好友们为本手册的辛勤付出致以衷心的感谢。
 
-衷心感谢Google中国开发者关系团队和TensorFlow工程团队的成员们对本手册编写所提供的帮助。其中包括开发者关系团队的Luke Cheng在本手册写作全程提供的思路启发和持续鼓励，开发者关系团队的Rui Li在本手册宣发及推广上提供的大力支持，以及TensorFlow团队的Tiezhen Wang在本手册工程细节方面提供的诸多建议和补充。
+衷心感谢Google中国开发者关系团队和TensorFlow工程团队的成员们对本手册编写所提供的帮助。其中包括开发者关系团队的Luke Cheng在本手册写作全程提供的思路启发和持续鼓励，开发者关系团队的Rui Li, Pryce Mu和TensorFlow社群维护的小伙伴们在本手册宣发及推广上提供的大力支持，以及TensorFlow团队的Tiezhen Wang在本手册工程细节方面提供的诸多建议和补充。
 
 关于本手册的意见和建议，欢迎在 https://github.com/snowkylin/TensorFlow-cn/issues 提交。这是一个开源项目，您的宝贵意见将促进本手册的持续更新。
 
