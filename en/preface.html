@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Preface &mdash; 简单粗暴TensorFlow 0.3 alpha 文档</title>
+  <title>Preface &mdash; 简单粗暴TensorFlow 0.3 beta 文档</title>
   
 
   
@@ -35,9 +35,9 @@
         <link rel="index" title="索引"
               href="../genindex.html"/>
         <link rel="search" title="搜索" href="../search.html"/>
-    <link rel="top" title="简单粗暴TensorFlow 0.3 alpha 文档" href="../index.html"/>
+    <link rel="top" title="简单粗暴TensorFlow 0.3 beta 文档" href="../index.html"/>
         <link rel="next" title="TensorFlow Installation" href="installation.html"/>
-        <link rel="prev" title="附录：静态的TensorFlow" href="../zh/static.html"/> 
+        <link rel="prev" title="简单粗暴TensorFlow | A Concise Handbook of TensorFlow" href="../index.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -90,17 +90,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">目录</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../zh/preface.html">前言</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../zh/installation.html">TensorFlow安装</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../zh/basic.html">TensorFlow基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../zh/models.html">TensorFlow模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../zh/extended.html">TensorFlow扩展</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../zh/static.html">附录：静态的TensorFlow</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Contents</span></p>
-<ul class="current">
+              <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Preface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">TensorFlow Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow Basic</a></li>
@@ -183,18 +173,18 @@
 <ul class="simple">
 <li>This book is mainly based on the most up-to-date Eager Execution mode in TensorFlow for fast iterative development of models. However, traditional Graph Execution mode is also included and we will do our best to make the codes provided in this book compatible with both modes.</li>
 <li>We position this book mainly as a tutorial and handbook, and arrange the concepts and functions of TensorFlow as the core part, for TensorFlow developers to refer quickly. Chapters are relatively independent with one another, therefore it’s not necessary to read this book in a sequential order. There won’t be much theory of deep learning and machine learning in the text, however some recommendation is still provided for beginners to grasp related basic knowledge.</li>
-<li>All codes are carefully written in order to be concise and efficient. All models are implemented based on the <code class="docutils literal"><span class="pre">tf.keras.Model</span></code> and <code class="docutils literal"><span class="pre">tf.keras.layers.Layer</span></code> methods, which just proposed by <a class="reference external" href="https://www.tensorflow.org/programmers_guide/eager#build_a_model">TensorFlow official documentation</a> and are barely introduced in other technical documentations. This implementation guarantees high reusability. Each project is written by codes fewer than 80 lines for readers to understand and practice quickly.</li>
+<li>All codes are carefully written in order to be concise and efficient. All models are implemented based on the <code class="docutils literal"><span class="pre">tf.keras.Model</span></code> and <code class="docutils literal"><span class="pre">tf.keras.layers.Layer</span></code> methods, which just proposed by <a class="reference external" href="https://www.tensorflow.org/programmers_guide/eager#build_a_model">TensorFlow official documentation</a> and are barely introduced in other technical documentations. This implementation guarantees high reusability. Each project is written by codes fewer than 100 lines for readers to understand and practice quickly.</li>
 <li>Less is more. No all-rounded or large blocks of details.</li>
 </ul>
 <p>The parts marked “*” are optional in this handbook.</p>
 <p>This handbook is tentatively named as “A Concise Handbook of TensorFlow” in order to pay a tribute to the book “A Concise Handbook of <img class="math" src="../_images/math/6f0c4f2f1d6fa0f53d8d4083d8229a70fc659cd3.png" alt="\text{\LaTeX}"/>” written by my friend and colleague Chris Wu. The latter is a rare Chinese material about <img class="math" src="../_images/math/6f0c4f2f1d6fa0f53d8d4083d8229a70fc659cd3.png" alt="\text{\LaTeX}"/>. I also learned from it while I was writing this handbook. This handbook was initially written and used by meself as a prerequisite handout in a deep learning seminar organized by my friend Ji-An Li. My friends’ wise and selflessness also prompted me to finish this work.</p>
 <p>The English version of this handbook is translated by my friend Zida Jin (Chapter 1-4) and Ming (Chapter 5-6), and revised by Ji-An Li and me. My three friends sacrificed a lot of valuable time to translate and proofread this handbook. Ji-An Li also provided valuable comments on the teaching content and code details of this manual. I would like to express my heartfelt thanks to my friends for their hard work.</p>
-<p>I am grateful to the members of the Google China Developer Relations team and the TensorFlow engineering team for their help in writing this handbook. Among them, Luke Cheng of the Developer Relations team provided inspiration and continuous encouragement throughout the writing of this manual. Rui Li of the Developer Relations team provided strong support in the promotion of this manual, as well as Tiezhen Wang of TensorFlow team provided many suggestions to the engineering details of the manual.</p>
+<p>I am grateful to the members of the Google China Developer Relations team and the TensorFlow engineering team for their help in writing this handbook. Among them, Luke Cheng of the Developer Relations team provided inspiration and continuous encouragement throughout the writing of this manual. Rui Li and Pryce Mu of the Developer Relations team provided strong support in the promotion of this manual, as well as Tiezhen Wang of TensorFlow team provided many suggestions to the engineering details of the manual.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p>Xihan Li (Snowkylin)</p>
-<p>Jul 2018 in Yanyuan</p>
+<p>August 2018 in Yanyuan</p>
 </div>
 
 
@@ -210,7 +200,7 @@
         <a href="installation.html" class="btn btn-neutral float-right" title="TensorFlow Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../zh/static.html" class="btn btn-neutral" title="附录：静态的TensorFlow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../index.html" class="btn btn-neutral" title="简单粗暴TensorFlow | A Concise Handbook of TensorFlow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -241,7 +231,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.3 alpha',
+            VERSION:'0.3 beta',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
