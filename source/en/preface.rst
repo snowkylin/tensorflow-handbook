@@ -15,7 +15,7 @@ The main features of this handbook are:
 
 * This book is mainly based on the most up-to-date Eager Execution mode in TensorFlow for fast iterative development of models. However, traditional Graph Execution mode is also included and we will do our best to make the codes provided in this book compatible with both modes.
 * We position this book mainly as a tutorial and handbook, and arrange the concepts and functions of TensorFlow as the core part, for TensorFlow developers to refer quickly. Chapters are relatively independent with one another, therefore it's not necessary to read this book in a sequential order. There won't be much theory of deep learning and machine learning in the text, however some recommendation is still provided for beginners to grasp related basic knowledge.
-* All codes are carefully written in order to be concise and efficient. All models are implemented based on the ``tf.keras.Model`` and ``tf.keras.layers.Layer`` methods, which just proposed by `TensorFlow official documentation <https://www.tensorflow.org/programmers_guide/eager#build_a_model>`_ and are barely introduced in other technical documentations. This implementation guarantees high reusability. Each project is written by codes fewer than 80 lines for readers to understand and practice quickly.
+* All codes are carefully written in order to be concise and efficient. All models are implemented based on the ``tf.keras.Model`` and ``tf.keras.layers.Layer`` methods, which just proposed by `TensorFlow official documentation <https://www.tensorflow.org/programmers_guide/eager#build_a_model>`_ and are barely introduced in other technical documentations. This implementation guarantees high reusability. Each project is written by codes fewer than 100 lines for readers to understand and practice quickly.
 * Less is more. No all-rounded or large blocks of details.
 
 The parts marked "*" are optional in this handbook.
@@ -24,10 +24,10 @@ This handbook is tentatively named as "A Concise Handbook of TensorFlow" in orde
 
 The English version of this handbook is translated by my friend Zida Jin (Chapter 1-4) and Ming (Chapter 5-6), and revised by Ji-An Li and me. My three friends sacrificed a lot of valuable time to translate and proofread this handbook. Ji-An Li also provided valuable comments on the teaching content and code details of this manual. I would like to express my heartfelt thanks to my friends for their hard work.
 
-I am grateful to the members of the Google China Developer Relations team and the TensorFlow engineering team for their help in writing this handbook. Among them, Luke Cheng of the Developer Relations team provided inspiration and continuous encouragement throughout the writing of this manual. Rui Li of the Developer Relations team provided strong support in the promotion of this manual, as well as Tiezhen Wang of TensorFlow team provided many suggestions to the engineering details of the manual.
+I am grateful to the members of the Google China Developer Relations team and the TensorFlow engineering team for their help in writing this handbook. Among them, Luke Cheng of the Developer Relations team provided inspiration and continuous encouragement throughout the writing of this manual. Rui Li and Pryce Mu of the Developer Relations team provided strong support in the promotion of this manual, as well as Tiezhen Wang of TensorFlow team provided many suggestions to the engineering details of the manual.
 
 |
 
 Xihan Li (Snowkylin)
 
-Jul 2018 in Yanyuan
+August 2018 in Yanyuan
