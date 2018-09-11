@@ -54,12 +54,12 @@ A Basic Example: Linear Regression
 
 Unlike previous NumPy and Eager Execution mode, TensorFlow's Graph Execution mode uses **symbolic programming** for numerical operations. First, we need to abstract the computational processes into a Dataflow Graph, and represent the inputs, operations and outputs with symbolized nodes. Then, we continually send the data to the input nodes, let the data be calculated and flow along the dataflow graph, and finally reach the specific output nodes we want. The following code shows how to accomplish the same task as the code does in previous section based on TensorFlow's symbolic programming approach, where ``tf.placeholder()`` can be regarded as a kind of "symbolic input node", using ``tf.get_variable()`` to define the parameters of the model (the tensor of the Variable type can be assigned using ``tf.assign()``), and ``sess.run(output_node, feed_dict={input_node: data})`` can be thought of as a process which sends data to the input node, calculates along the dataflow graph and reach the output node and eventually return values.
 
-.. literalinclude:: ../_static/code/en/basic/example/tensorflow.py
+.. literalinclude:: ../_static/code/en/basic/example/tensorflow_manual_grad.py
     :lines: 9-
 
 In the two examples above, we manually calculated the partial derivatives of the loss function with regard to each parameter. But when both the model and the loss function become very complicated (especially in deep learning models), the workload of manual derivation is unacceptable. TensorFlow provides an **automatic derivation mechanism** that eliminates the hassle of manually calculating derivatives, using TensorFlow's derivation function ``tf.gradients(ys, xs)`` to compute the partial derivatives of the loss function with regard to a and b. Thus, the two lines of code in the previous section for calculating derivatives manually,
 
-.. literalinclude:: ../_static/code/en/basic/example/tensorflow.py
+.. literalinclude:: ../_static/code/en/basic/example/tensorflow_manual_grad.py
     :lines: 21-23
 
 could be replaced by
@@ -72,7 +72,7 @@ and the result won't change.
 
 Moreover，TensorFlow has many kinds of **optimizer**, which can complete derivation and gradient update together at the same time. The code in the previous section,
 
-.. literalinclude:: ../_static/code/en/basic/example/tensorflow.py
+.. literalinclude:: ../_static/code/en/basic/example/tensorflow_manual_grad.py
     :lines: 21-31
 
 could be replaced by

@@ -95,12 +95,13 @@
 <li class="toctree-l1"><a class="reference internal" href="preface.html">前言</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow安装</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">简易安装</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">正式安装</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">安装前的环境配置</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">正式安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">安装前的环境配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">安装</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id8">第一个程序</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">第一个程序</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">升级到新版本</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow基础</a></li>
@@ -188,19 +189,20 @@
 <p>如果只是安装一个运行在自己电脑上的，无需GPU的简易环境，不希望在环境配置上花费太多精力，建议按以下步骤安装（以Windows系统为例）：</p>
 <ul class="simple">
 <li>下载并安装Python集成环境 <a class="reference external" href="https://www.anaconda.com/download/">Anaconda</a> （Python 3.6版本）；</li>
-<li>下载并安装Python的IDE <a class="reference external" href="http://www.jetbrains.com/pycharm/">PyCharm</a> （Community版本，或学生可申请Professional版本的免费授权）；</li>
-<li>打开开始菜单中的“Anaconda Prompt”，输入 <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">tensorflow</span></code>。</li>
+<li>下载并安装Python的IDE <a class="reference external" href="http://www.jetbrains.com/pycharm/">PyCharm</a> （Community版本，或学生可申请Professional版本的 <a class="reference external" href="https://sales.jetbrains.com/hc/zh-cn/articles/207154369">免费授权</a>）；</li>
+<li>打开开始菜单中的“Anaconda Prompt”，输入 <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">tensorflow</span></code>；</li>
+<li>启动PyCharm，新建工程（使用默认python interpreter），在工程内新建一个Python文件。</li>
 </ul>
 <p>完毕。</p>
 </div>
-<div class="section" id="id2">
-<h2>正式安装<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<p>该部分包含了更多安装上的细节（如建立conda环境），以及GPU版本TensorFlow的环境配置方法。</p>
 <div class="section" id="id3">
-<h3>安装前的环境配置<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<h2>正式安装<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>该部分包含了更多安装上的细节（如建立conda环境），以及GPU版本TensorFlow的环境配置方法。</p>
+<div class="section" id="id4">
+<h3>安装前的环境配置<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
 <p>正式安装TensorFlow前，需要为其配置合适的环境。步骤如下：</p>
 <ol class="arabic simple">
-<li>检查自己的电脑是否具有NVIDIA显卡。如有，建议安装GPU版本的TensorFlow，以利用GPU强大的计算加速能力 <a class="footnote-reference" href="#f1" id="id4">[1]</a> ，否则可以安装CPU版本。具体而言，该显卡的CUDA Compute Capability须不低于3.0，可以到 <a class="reference external" href="https://developer.nvidia.com/cuda-gpus/">NVIDIA的官方网站</a> 查询自己所用显卡的CUDA Compute Capability；</li>
+<li>检查自己的电脑是否具有NVIDIA显卡。如有，建议安装GPU版本的TensorFlow，以利用GPU强大的计算加速能力 <a class="footnote-reference" href="#f1" id="id5">[1]</a> ，否则可以安装CPU版本。具体而言，该显卡的CUDA Compute Capability须不低于3.0，可以到 <a class="reference external" href="https://developer.nvidia.com/cuda-gpus/">NVIDIA的官方网站</a> 查询自己所用显卡的CUDA Compute Capability；</li>
 <li>安装Python环境。此处建议安装Anaconda，这是一个开源的Python发行版本，提供了一个完整的科学计算环境，包括NumPy、SciPy等常用科学计算库。当然，你有权选择自己喜欢的Python环境。注意截至本手册撰写时，TensorFlow在Windows下的安装仅支持Python 3.X版本；<ul>
 <li>安装Anaconda时，可以选择将Anaconda目录添加到系统的PATH中（虽然安装程序不推荐这样做），这样可以直接在命令行环境下使用Anaconda的各项功能。当然，不添加的话也可以使用开始菜单中的Anaconda Prompt进入命令行的Anaconda环境。</li>
 </ul>
@@ -214,8 +216,8 @@
 </li>
 </ol>
 </div>
-<div class="section" id="id6">
-<h3>安装<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id7">
+<h3>安装<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
 <p>在Anaconda环境下的安装过程如下（以Windows系统为例）：</p>
 <ol class="arabic simple">
 <li>新建一个叫做 <code class="docutils literal"><span class="pre">tensorflow</span></code> 的conda环境</li>
@@ -244,8 +246,8 @@
 <p>如果使用pip命令安装速度较慢，可以尝试 <a class="reference external" href="https://mirrors.tuna.tsinghua.edu.cn/help/tensorflow/">清华大学开源软件镜像站的TensorFlow镜像</a>。</p>
 </div>
 </div>
-<div class="section" id="id8">
-<h2>第一个程序<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id9">
+<h2>第一个程序<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
 <p>安装完毕后，我们来编写一个简单的程序来验证安装。</p>
 <p>在命令行下输入 <code class="docutils literal"><span class="pre">activate</span> <span class="pre">tensorflow</span></code> 进入之前建立的安装有TensorFlow的conda环境，再输入 <code class="docutils literal"><span class="pre">python</span></code> 进入Python环境，逐行输入以下代码：</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
@@ -269,9 +271,25 @@
 <table class="docutils footnote" frame="void" id="f1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[1]</a></td><td>GPU加速的效果与模型类型和GPU的性能有关，如果CPU性能较高，但GPU仅有入门级的性能，其实速度提升不大，大概1-2倍。不过如果GPU性能强大的话（例如，本手册写作时，NVIDIA GeForce GTX 1080 Ti或NVIDIA GeForce TITAN系列是市场上性能较强大的显卡型号），对于特定模型，十几倍甚至更高的加速效果也是可以达到的。同时，GPU的加速效果与任务本身也有关。入门级的TensorFlow模型往往不需要太高的计算性能，CPU版本的TensorFlow足以胜任，因此可以待到掌握TensorFlow的基本知识后，再决定是否购入更高级的GPU以得到更快的训练速度。</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id5">[1]</a></td><td>GPU加速的效果与模型类型和GPU的性能有关，如果CPU性能较高，但GPU仅有入门级的性能，其实速度提升不大，大概1-2倍。不过如果GPU性能强大的话（例如，本手册写作时，NVIDIA GeForce GTX 1080 Ti或NVIDIA GeForce TITAN系列是市场上性能较强大的显卡型号），对于特定模型，十几倍甚至更高的加速效果也是可以达到的。同时，GPU的加速效果与任务本身也有关。入门级的TensorFlow模型往往不需要太高的计算性能，CPU版本的TensorFlow足以胜任，因此可以待到掌握TensorFlow的基本知识后，再决定是否购入更高级的GPU以得到更快的训练速度。</td></tr>
 </tbody>
 </table>
+</div>
+<div class="section" id="id12">
+<h2>升级到新版本<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
+<p>TensorFlow的版本频繁更新，如果希望升级当前的TensorFlow版本，请进入安装有TensorFlow的conda环境下输入:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span> <span class="o">--</span><span class="n">upgrade</span>
+</pre></div>
+</div>
+<p>如果你想安装特定版本的TensorFlow，请输入:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">==</span><span class="mf">1.8</span><span class="o">.</span><span class="mi">0</span>   <span class="c1"># 1.8.0为指定版本</span>
+</pre></div>
+</div>
+<p>升级有风险，可能出现升级后TensorFlow导入出错的情况，比较简单的方式是删除当前conda环境后重新安装一遍。以下conda命令可能会有用:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">new_env_name</span> <span class="o">--</span><span class="n">clone</span> <span class="n">old_env_name</span>   <span class="c1"># 备份当前conda环境</span>
+<span class="n">conda</span> <span class="n">env</span> <span class="n">remove</span> <span class="o">-</span><span class="n">n</span> <span class="n">tensorflow</span>                          <span class="c1"># 删除名为tensorflow的conda环境</span>
+</pre></div>
+</div>
 </div>
 </div>
 

@@ -14,7 +14,7 @@ data_loader = DataLoader()
 def train():
     model = MLP()
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
-    checkpoint = tf.train.Checkpoint(myAwesomeModel=model)      # 实例化Checkpoint，设置保存对象为model
+    checkpoint = tf.train.Checkpoint(myAwesomeModel=model)      # Instantiation of Checkpoint, set `model` as object to be saved
     for batch_index in range(num_batches):
         X, y = data_loader.get_batch(batch_size)
         with tf.GradientTape() as tape:
@@ -23,14 +23,14 @@ def train():
             print("batch %d: loss %f" % (batch_index, loss.numpy()))
         grads = tape.gradient(loss, model.variables)
         optimizer.apply_gradients(grads_and_vars=zip(grads, model.variables))
-        if (batch_index + 1) % 100 == 0:                        # 每隔100个Batch保存一次
-            checkpoint.save('./save/model.ckpt')                # 保存模型参数到文件
+        if (batch_index + 1) % 100 == 0:                        # save every 100 batches
+            checkpoint.save('./save/model.ckpt')                # save model to .ckpt file
 
 
 def test():
     model_to_be_restored = MLP()
-    checkpoint = tf.train.Checkpoint(myAwesomeModel=model_to_be_restored)      # 实例化Checkpoint，设置恢复对象为新建立的模型model_to_be_restored
-    checkpoint.restore(tf.train.latest_checkpoint('./save'))    # 从文件恢复模型参数
+    checkpoint = tf.train.Checkpoint(myAwesomeModel=model_to_be_restored)      # Instantiation of Checkpoint, set newly initialized model `model_to_be_restored` to be the object to be restored
+    checkpoint.restore(tf.train.latest_checkpoint('./save'))    # restore parameters of model from file
     num_eval_samples = np.shape(data_loader.eval_labels)[0]
     y_pred = model_to_be_restored.predict(tf.constant(data_loader.eval_data)).numpy()
     print("test accuracy: %f" % (sum(y_pred == data_loader.eval_labels) / num_eval_samples))

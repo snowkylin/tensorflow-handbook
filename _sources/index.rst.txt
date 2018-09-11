@@ -25,12 +25,14 @@ PDF下载：https://www.tensorflowers.cn/t/6230
 
 GitHub: https://github.com/snowkylin/TensorFlow-cn
 
-This handbook is a concise introduction to TensorFlow based on TensorFlow's Eager Execution mode, trying to help developers get started with TensorFlow quickly with some basic machine learning and Python knowledge.
+This handbook is a concise introduction to TensorFlow based on Eager Execution mode, trying to help developers get started with TensorFlow quickly with some basic machine learning and Python knowledge.
 
-Friendly reminder: If you find something difficult to understand in reading, please check if you have a clear understanding of the "Prerequisites" part of each chapter.
+Friendly reminder: If you find something difficult to understand in reading, please check the "Prerequisites" part of each chapter.
 
-Q&A area - TensorFlow Chinese community "A Concise Handbook of TensorFlow" forum: https://www.tensorflowers.cn/b/48 
-(If you have any questions about this tutorial, please ask in this forum of the TensorFlow Chinese community)
+Q&A area
+
+- (Chinese) TensorFlow Chinese community "A Concise Handbook of TensorFlow" forum: https://www.tensorflowers.cn/b/48 
+- (English) https://github.com/snowkylin/TensorFlow-cn/issues
 
 PDF download: https://www.tensorflowers.cn/t/6230
 

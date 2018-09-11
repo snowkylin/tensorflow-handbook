@@ -185,11 +185,12 @@
 <p>We provide both simple and full installation methods for readers with different requirements.</p>
 <div class="section" id="simple-installation">
 <h2>Simple Installation<a class="headerlink" href="#simple-installation" title="永久链接至标题">¶</a></h2>
-<p>You’d better follow these steps if you only want to install TensorFlow on your personal computer without GPU or spending too much effort configuring the environment (taking Windows as an example):</p>
+<p>You can follow these steps if you only want to install TensorFlow on your personal computer without GPU or you do not want to spend too much effort configuring the environment:</p>
 <ul class="simple">
-<li>Download and install Python IDE <a class="reference external" href="https://www.anaconda.com/download/">Anaconda</a> (with Python Ver 3.6);</li>
-<li>Download and install Python IDE <a class="reference external" href="http://www.jetbrains.com/pycharm/">PyCharm</a> (Community version, students can apply for free Professional versions)</li>
-<li>Run <code class="docutils literal"><span class="pre">Anaconda</span> <span class="pre">Prompt</span></code> in the Start Menu, enter and execute <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">tensorflow</span></code>.</li>
+<li>Download and install Python distribution <a class="reference external" href="https://www.anaconda.com/download/">Anaconda</a> (with Python Ver 3.6).</li>
+<li>Download and install Python IDE <a class="reference external" href="http://www.jetbrains.com/pycharm/">PyCharm</a> (Community version. Students can apply for <a class="reference external" href="https://www.jetbrains.com/student/">licenses of Professional version for free</a>).</li>
+<li>Run <code class="docutils literal"><span class="pre">Anaconda</span> <span class="pre">Prompt</span></code> in the Start Menu (Windows), enter and execute <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">tensorflow</span></code>.</li>
+<li>Start PyCharm, create a project with default python interpreter, and create a python file in the project.</li>
 </ul>
 <p>And done.</p>
 </div>
@@ -200,7 +201,7 @@
 <h3>Environment configuration before installation<a class="headerlink" href="#environment-configuration-before-installation" title="永久链接至标题">¶</a></h3>
 <p>Before installing TensorFlow, we need to set up a proper environment with the following steps:</p>
 <ol class="arabic simple">
-<li>Check if your computer has an NVIDIA graphics card and install the GPU version of TensorFlow in order to take advantages of its powerful capability of computation acceleration, or, just install CPU version if not so. To be more specific, the CUDA Computing Capability of your graphics card that you can check on <a class="reference external" href="https://developer.nvidia.com/cuda-gpus/">NVIDIA official website</a> should not be less than 3.0.</li>
+<li>Check if your computer has an NVIDIA graphics card and install the GPU version of TensorFlow in order to take advantages of its powerful capability of computation acceleration <a class="footnote-reference" href="#f1" id="id1">[1]</a> , or, just install CPU version if not so. To be more specific, the CUDA Computing Capability of your graphics card that you can check on <a class="reference external" href="https://developer.nvidia.com/cuda-gpus/">NVIDIA official website</a> should not be less than 3.0.</li>
 <li>Install the Python environment. Anaconda is recommended. It is an open-source release version of Python that provides a full environment for scientific computation including common libraries such as NumPy and SciPy, or you can choose your favorite ones of course. Note that TensorFlow only supports Python Ver 3.X under Windows when we write this handbook.<ul>
 <li>You can choose to add the directory of Anaconda into the PATH (though not recommended by the installation wizard). It enables you to call all Anaconda commands under command line or Powershell directly. You can always call them under the Anaconda Prompt started in the Start Menu.</li>
 </ul>
@@ -269,7 +270,7 @@
 <table class="docutils footnote" frame="void" id="f1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label">[1]</td><td>The effect of acceleration is relative to the GPU performance. It won’t be satisfactory if you have a high performance CPU and a beginner level GPU where the acceleration rate will be like 1-2. However, the acceleration rate may reach 10 or even higher under specific models if you have a powerful GPU (e.g. NVIDIA GeForce GTX 1080 Ti or NVIDIA GeForce TITAN Series are powerful graphics card types when this handbook was being written). Meanwhile, the acceleration rate is also influenced by the running task itself. The beginner level models of TensorFlow do not require too much performance as the CPU version is adequate. You may determine if you will purchase a higher level graphics card to get faster training speed after you master the basics of TensorFlow.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>The effect of acceleration is relative to the GPU performance. It won’t be satisfactory if you have a high performance CPU and a beginner level GPU where the acceleration rate will be like 1-2. However, the acceleration rate may reach 10 or even higher under specific models if you have a powerful GPU (e.g. NVIDIA GeForce GTX 1080 Ti or NVIDIA GeForce TITAN Series are powerful graphics card types when this handbook was being written). Meanwhile, the acceleration rate is also influenced by the running task itself. The beginner level models of TensorFlow do not require too much performance as the CPU version is adequate. You may determine if you will purchase a higher level graphics card to get faster training speed after you master the basics of TensorFlow.</td></tr>
 </tbody>
 </table>
 </div>
