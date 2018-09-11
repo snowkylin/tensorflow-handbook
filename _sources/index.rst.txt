@@ -18,25 +18,9 @@
 
 友情提醒：如果发现阅读中有难以理解的部分，请检查自己对每章的“前置知识”部分是否有清楚的理解。
 
-答疑区 - TensorFlow中文社区“简单粗暴TensorFlow”版面： https://www.tensorflowers.cn/b/48
-（如果您对本教程有任何疑问，请至TensorFlow中文社区的该版面发问）
-
-PDF下载：https://www.tensorflowers.cn/t/6230
-
-GitHub: https://github.com/snowkylin/TensorFlow-cn
-
 This handbook is a concise introduction to TensorFlow based on Eager Execution mode, trying to help developers get started with TensorFlow quickly with some basic machine learning and Python knowledge.
 
 Friendly reminder: If you find something difficult to understand in reading, please check the "Prerequisites" part of each chapter.
-
-Q&A area
-
-- (Chinese) TensorFlow Chinese community "A Concise Handbook of TensorFlow" forum: https://www.tensorflowers.cn/b/48 
-- (English) https://github.com/snowkylin/TensorFlow-cn/issues
-
-PDF download: https://www.tensorflowers.cn/t/6230
-
-GitHub: https://github.com/snowkylin/TensorFlow-cn
 
 +----------------------+-----------------------+
 | .. toctree::         | .. toctree::          |
@@ -68,6 +52,30 @@ GitHub: https://github.com/snowkylin/TensorFlow-cn
         en/models
         en/extended 
         en/static
+
+答疑区 
+
+- （中文）TensorFlow中文社区“简单粗暴TensorFlow”版面： https://www.tensorflowers.cn/b/48 （中文的疑问和建议请来此处，将以中文回答和讨论。欢迎使用中文的开发者们前来TensorFlow中文社区交流讨论）
+- （英文）https://github.com/snowkylin/TensorFlow-cn/releases （英文的疑问或建议可在GitHub issue中提出，会以英文回答）
+
+PDF下载：
+
+- 中文版：https://www.tensorflowers.cn/t/6230 （同时也有英文版下载）
+- 英文版：https://github.com/snowkylin/TensorFlow-cn/releases
+
+GitHub: https://github.com/snowkylin/TensorFlow-cn
+
+Q&A area
+
+- (Chinese) TensorFlow Chinese community "A Concise Handbook of TensorFlow" forum: https://www.tensorflowers.cn/b/48 
+- (English) https://github.com/snowkylin/TensorFlow-cn/issues
+
+PDF download: 
+
+- Chinese version: https://www.tensorflowers.cn/t/6230
+- English version: https://github.com/snowkylin/TensorFlow-cn/releases
+
+GitHub: https://github.com/snowkylin/TensorFlow-cn
 
 ..  
    preface
