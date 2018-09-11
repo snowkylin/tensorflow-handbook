@@ -14,7 +14,7 @@ data_loader = DataLoader()
 def train():
     model = MLP()
     optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
-    checkpoint = tf.train.Checkpoint(myAwesomeModel=model)      # Instantiation of Checkpoint, set `model` as object to be saved
+    checkpoint = tf.train.Checkpoint(myAwesomeModel=model)      # instantiate a Checkpoint, set `model` as object to be saved
     for batch_index in range(num_batches):
         X, y = data_loader.get_batch(batch_size)
         with tf.GradientTape() as tape:
@@ -29,7 +29,7 @@ def train():
 
 def test():
     model_to_be_restored = MLP()
-    checkpoint = tf.train.Checkpoint(myAwesomeModel=model_to_be_restored)      # Instantiation of Checkpoint, set newly initialized model `model_to_be_restored` to be the object to be restored
+    checkpoint = tf.train.Checkpoint(myAwesomeModel=model_to_be_restored)      # instantiate a Checkpoint, set newly initialized model `model_to_be_restored` to be the object to be restored
     checkpoint.restore(tf.train.latest_checkpoint('./save'))    # restore parameters of model from file
     num_eval_samples = np.shape(data_loader.eval_labels)[0]
     y_pred = model_to_be_restored.predict(tf.constant(data_loader.eval_data)).numpy()
