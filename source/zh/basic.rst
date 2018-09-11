@@ -99,7 +99,7 @@ TensorFlow 1+1
 
 首先，我们定义数据，进行基本的归一化操作。
 
-.. literalinclude:: ../_static/code/zh/basic/example/numpy.py
+.. literalinclude:: ../_static/code/zh/basic/example/numpy_manual_grad.py
     :lines: 1-7
 
 接下来，我们使用梯度下降方法来求线性模型中两个参数 ``a`` 和 ``b`` 的值 [#f1]_。
@@ -120,7 +120,7 @@ NumPy
 
 机器学习模型的实现并不是TensorFlow的专利。事实上，对于简单的模型，即使使用常规的科学计算库或者工具也可以求解。在这里，我们使用NumPy这一通用的科学计算库来实现梯度下降方法。NumPy提供了多维数组支持，可以表示向量、矩阵以及更高维的张量。同时，也提供了大量支持在多维数组上进行操作的函数（比如下面的 ``np.dot()`` 是求内积， ``np.sum()`` 是求和）。在这方面，NumPy和MATLAB比较类似。在以下代码中，我们手工求损失函数关于参数 ``a`` 和 ``b`` 的偏导数 [#f2]_，并使用梯度下降法反复迭代，最终获得 ``a`` 和 ``b`` 的值。
 
-.. literalinclude:: ../_static/code/zh/basic/example/numpy.py
+.. literalinclude:: ../_static/code/zh/basic/example/numpy_manual_grad.py
     :lines: 9-
 
 然而，你或许已经可以注意到，使用常规的科学计算库实现机器学习模型有两个痛点：
