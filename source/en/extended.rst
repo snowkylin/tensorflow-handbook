@@ -71,7 +71,7 @@ By the way, ``tf.train.Checkpoint`` is more powerful than the ``tf.train.Saver``
 
 Finally, an example is provided. The previous chapter's :ref:`multilayer perceptron model <mlp>` shows the preservation and loading of model variables:
 
-.. literalinclude:: ../_static/code/zh/extended/save_and_restore/mnist.py
+.. literalinclude:: ../_static/code/en/extended/save_and_restore/mnist.py
 
 After the save folder is created in the source directory and the model is trained, the model variable data stored every 100 batches will be stored in the save folder. Change line 7 to ``model = 'test'`` and run the code again. The model will be restored directly using the last saved variable value and tested on the test set. You can directly get an accuracy of about 95%.
 
@@ -119,7 +119,7 @@ When using TensorBoard, please notice the following notes:
 
 Finally, we provide an example of the previous chapter's :ref:`multilayer perceptron model <mlp>` showing the use of TensorBoard:
 
-.. literalinclude:: ../_static/code/zh/extended/tensorboard/mnist.py
+.. literalinclude:: ../_static/code/en/extended/tensorboard/mnist.py
 
 GPU Usage and Allocation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
