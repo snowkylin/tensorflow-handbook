@@ -99,7 +99,7 @@ Now we want to do linear regression on the given data, i.e. using the linear mod
 
 First, we define and normalize the data.
 
-.. literalinclude:: ../_static/code/en/basic/example/numpy.py
+.. literalinclude:: ../_static/code/en/basic/example/numpy_manual_grad.py
     :lines: 1-7
 
 Then, we use gradient descent to evaluate these two parameters ``a`` and ``b`` in the linear model [#f1]_.
@@ -120,7 +120,7 @@ NumPy
 
 The implementation of machine learning models is not a patent of TensorFlow. In fact, even most common scientific calculators or tools can solve simple models. Here, we use Numpy, a general library for scientific computation, to implement gradient descent. Numpy supports multidimensional arrays to represent vectors, matrices and tensors with more dimensions. Meanwhile, it also supports lots of operations on multidimensional arrays (e.g. ``np.dot()`` calculates the inner products and ``np.sum()`` adds up all the elements). In this way Numpy is somewhat like MATLAB. In the following codes, we evaluate the partial derivatives of loss function with respect to the parameters ``a`` and ``b`` manually [#f2]_, and then iterate by gradient descent to acquire the value of ``a`` and ``b`` eventually.
 
-.. literalinclude:: ../_static/code/en/basic/example/numpy.py
+.. literalinclude:: ../_static/code/en/basic/example/numpy_manual_grad.py
     :lines: 9-
 
 However, you may have noticed that there are several pain points using common libraries for scientific computation to implement machine learning models:

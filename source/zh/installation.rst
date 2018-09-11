@@ -10,8 +10,9 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 如果只是安装一个运行在自己电脑上的，无需GPU的简易环境，不希望在环境配置上花费太多精力，建议按以下步骤安装（以Windows系统为例）：
 
 - 下载并安装Python集成环境 `Anaconda <https://www.anaconda.com/download/>`_ （Python 3.6版本）；
-- 下载并安装Python的IDE `PyCharm <http://www.jetbrains.com/pycharm/>`_ （Community版本，或学生可申请Professional版本的免费授权）；
-- 打开开始菜单中的“Anaconda Prompt”，输入 ``pip install tensorflow``。
+- 下载并安装Python的IDE `PyCharm <http://www.jetbrains.com/pycharm/>`_ （Community版本，或学生可申请Professional版本的 `免费授权 <https://sales.jetbrains.com/hc/zh-cn/articles/207154369>`_）；
+- 打开开始菜单中的“Anaconda Prompt”，输入 ``pip install tensorflow``；
+- 启动PyCharm，新建工程（使用默认python interpreter），在工程内新建一个Python文件。
 
 完毕。
 
@@ -97,3 +98,19 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 此处使用的是Python语言，关于Python语言的入门教程可以参考 http://www.runoob.com/python3/python3-tutorial.html 或 https://www.liaoxuefeng.com ，本手册之后将默认读者拥有Python语言的基本知识。不用紧张，Python语言易于上手，而TensorFlow本身也不会用到Python语言的太多高级特性。关于Python的IDE，建议使用 `PyCharm <http://www.jetbrains.com/pycharm/>`_ 。如果你是学生并有.edu结尾的邮箱的话，可以在 `这里 <http://www.jetbrains.com/student/>`_ 申请免费的授权。如果没有，也可以下载社区版本的PyCharm，主要功能差别不大。
 
 .. [#f1] GPU加速的效果与模型类型和GPU的性能有关，如果CPU性能较高，但GPU仅有入门级的性能，其实速度提升不大，大概1-2倍。不过如果GPU性能强大的话（例如，本手册写作时，NVIDIA GeForce GTX 1080 Ti或NVIDIA GeForce TITAN系列是市场上性能较强大的显卡型号），对于特定模型，十几倍甚至更高的加速效果也是可以达到的。同时，GPU的加速效果与任务本身也有关。入门级的TensorFlow模型往往不需要太高的计算性能，CPU版本的TensorFlow足以胜任，因此可以待到掌握TensorFlow的基本知识后，再决定是否购入更高级的GPU以得到更快的训练速度。
+
+升级到新版本
+^^^^^^^^^^^^^^^^^^^^^
+
+TensorFlow的版本频繁更新，如果希望升级当前的TensorFlow版本，请进入安装有TensorFlow的conda环境下输入::
+
+    pip install tensorflow --upgrade
+
+如果你想安装特定版本的TensorFlow，请输入::
+
+    pip install tensorflow==1.8.0   # 1.8.0为指定版本
+
+升级有风险，可能出现升级后TensorFlow导入出错的情况，比较简单的方式是删除当前conda环境后重新安装一遍。以下conda命令可能会有用::
+
+    conda create --name new_env_name --clone old_env_name   # 备份当前conda环境
+    conda env remove -n tensorflow                          # 删除名为tensorflow的conda环境
