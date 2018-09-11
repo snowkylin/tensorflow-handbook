@@ -7,11 +7,12 @@ We provide both simple and full installation methods for readers with different 
 
 Simple Installation
 ^^^^^^^^^^^^^^^^^^^^^^
-You'd better follow these steps if you only want to install TensorFlow on your personal computer without GPU or spending too much effort configuring the environment (taking Windows as an example):
+You can follow these steps if you only want to install TensorFlow on your personal computer without GPU or you do not want to spend too much effort configuring the environment:
 
-- Download and install Python IDE `Anaconda <https://www.anaconda.com/download/>`_ (with Python Ver 3.6);
-- Download and install Python IDE `PyCharm <http://www.jetbrains.com/pycharm/>`_ (Community version, students can apply for free Professional versions)
-- Run ``Anaconda Prompt`` in the Start Menu, enter and execute ``pip install tensorflow``.
+- Download and install Python distribution `Anaconda <https://www.anaconda.com/download/>`_ (with Python Ver 3.6).
+- Download and install Python IDE `PyCharm <http://www.jetbrains.com/pycharm/>`_ (Community version. Students can apply for `licenses of Professional version for free <https://www.jetbrains.com/student/>`_).
+- Run ``Anaconda Prompt`` in the Start Menu (Windows), enter and execute ``pip install tensorflow``.
+- Start PyCharm, create a project with default python interpreter, and create a python file in the project.
 
 And done.
 
@@ -23,7 +24,7 @@ Environment configuration before installation
 ------------------------------------------------
 Before installing TensorFlow, we need to set up a proper environment with the following steps:
 
-1. Check if your computer has an NVIDIA graphics card and install the GPU version of TensorFlow in order to take advantages of its powerful capability of computation acceleration, or, just install CPU version if not so. To be more specific, the CUDA Computing Capability of your graphics card that you can check on `NVIDIA official website <https://developer.nvidia.com/cuda-gpus/>`_ should not be less than 3.0.
+1. Check if your computer has an NVIDIA graphics card and install the GPU version of TensorFlow in order to take advantages of its powerful capability of computation acceleration [#f1]_ , or, just install CPU version if not so. To be more specific, the CUDA Computing Capability of your graphics card that you can check on `NVIDIA official website <https://developer.nvidia.com/cuda-gpus/>`_ should not be less than 3.0.
 2. Install the Python environment. Anaconda is recommended. It is an open-source release version of Python that provides a full environment for scientific computation including common libraries such as NumPy and SciPy, or you can choose your favorite ones of course. Note that TensorFlow only supports Python Ver 3.X under Windows when we write this handbook.
 
    * You can choose to add the directory of Anaconda into the PATH (though not recommended by the installation wizard). It enables you to call all Anaconda commands under command line or Powershell directly. You can always call them under the Anaconda Prompt started in the Start Menu.
