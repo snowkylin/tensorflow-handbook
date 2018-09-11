@@ -110,6 +110,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#first-program">First Program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrade-to-a-new-version">Upgrade to A New Version</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow Basic</a></li>
@@ -266,13 +267,31 @@
 </pre></div>
 </div>
 <p>We can draw conclusions that TensorFlow was successfully installed. It’s normal for the program to output some prompt messages when running.</p>
-<p>Here we use Python. You can get Python tutorials on <a class="reference external" href="https://docs.python.org/3/tutorial/">https://docs.python.org/3/tutorial/</a>. From now on we assume that readers are familiar with the basics of Python. Relax, Python is easy to handle and advanced features of Python will be barely involved in TensorFlow. We recommend you to use <a class="reference external" href="http://www.jetbrains.com/pycharm/">PyCharm</a> as your Python IDE. If you are a student with an email address ended with .edu, you can apply for a free license here &lt;<a class="reference external" href="http://www.jetbrains.com/student/">http://www.jetbrains.com/student/</a>&gt;`_. You can always download PyCharm Community version whose main functions do not differ that much from the former if you do not meet the aforementioned criteria.</p>
+<p>Here we use Python. You can get Python tutorials on <a class="reference external" href="https://docs.python.org/3/tutorial/">https://docs.python.org/3/tutorial/</a>. From now on we assume that readers are familiar with the basics of Python. Relax, Python is easy to handle and advanced features of Python will be barely involved in TensorFlow. We recommend you to use <a class="reference external" href="http://www.jetbrains.com/pycharm/">PyCharm</a> as your Python IDE. If you are a student with an email address ended with .edu, you can apply for a free license <a class="reference external" href="http://www.jetbrains.com/student/">here</a>. You can always download PyCharm Community version whose main functions do not differ that much from the former if you do not meet the aforementioned criteria.</p>
 <table class="docutils footnote" frame="void" id="f1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>The effect of acceleration is relative to the GPU performance. It won’t be satisfactory if you have a high performance CPU and a beginner level GPU where the acceleration rate will be like 1-2. However, the acceleration rate may reach 10 or even higher under specific models if you have a powerful GPU (e.g. NVIDIA GeForce GTX 1080 Ti or NVIDIA GeForce TITAN Series are powerful graphics card types when this handbook was being written). Meanwhile, the acceleration rate is also influenced by the running task itself. The beginner level models of TensorFlow do not require too much performance as the CPU version is adequate. You may determine if you will purchase a higher level graphics card to get faster training speed after you master the basics of TensorFlow.</td></tr>
 </tbody>
 </table>
+</div>
+<div class="section" id="upgrade-to-a-new-version">
+<h2>Upgrade to A New Version<a class="headerlink" href="#upgrade-to-a-new-version" title="永久链接至标题">¶</a></h2>
+<p>TensorFlow is updated frequently. If you want to upgrade TensorFlow, please enter the conda environment with TensorFlow installed and type the following command</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span> <span class="o">--</span><span class="n">upgrade</span>
+</pre></div>
+</div>
+<p>If you want to install a specific version of TensorFlow, please type</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">==</span><span class="mf">1.8</span><span class="o">.</span><span class="mi">0</span>      <span class="c1"># here 1.8.0 is the specified version</span>
+</pre></div>
+</div>
+<p>Upgrade of TensorFlow can be risky, and there may be errors whe you import TensorFlow after the upgrade. The simpler way is to delete the current conda environment and reinstall it. The following conda commands may be useful:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="nb">list</span>                                             <span class="c1"># List all packages and versions in the current conda environment</span>
+<span class="n">conda</span> <span class="n">env</span> <span class="nb">list</span>                                         <span class="c1"># List all conda environments</span>
+<span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">new_env_name</span> <span class="o">--</span><span class="n">clone</span> <span class="n">old_env_name</span>  <span class="c1"># Backup the current conda environment `old_env_name` to `new_env_name`</span>
+<span class="n">conda</span> <span class="n">env</span> <span class="n">remove</span> <span class="o">-</span><span class="n">n</span> <span class="n">tensorflow</span>                         <span class="c1"># Delete the conda environment named `tensorflow`</span>
+</pre></div>
+</div>
 </div>
 </div>
 

@@ -102,15 +102,23 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 升级到新版本
 ^^^^^^^^^^^^^^^^^^^^^
 
-TensorFlow的版本频繁更新，如果希望升级当前的TensorFlow版本，请进入安装有TensorFlow的conda环境下输入::
+TensorFlow的版本频繁更新，如果希望升级当前的TensorFlow版本，请进入安装有TensorFlow的conda环境下输入
+
+::
 
     pip install tensorflow --upgrade
 
-如果你想安装特定版本的TensorFlow，请输入::
+如果你想安装特定版本的TensorFlow，请输入
+
+::
 
     pip install tensorflow==1.8.0   # 1.8.0为指定版本
 
-升级有风险，可能出现升级后TensorFlow导入出错的情况，比较简单的方式是删除当前conda环境后重新安装一遍。以下conda命令可能会有用::
+升级有风险，可能出现升级后TensorFlow导入出错的情况，比较简单的方式是删除当前conda环境后重新安装一遍。以下conda命令可能会有用
 
-    conda create --name new_env_name --clone old_env_name   # 备份当前conda环境
-    conda env remove -n tensorflow                          # 删除名为tensorflow的conda环境
+::
+
+    conda list                                              # 列出当前conda环境下所有package及版本
+    conda env list                                          # 列出所有conda环境
+    conda create --name new_env_name --clone old_env_name   # 备份当前conda环境`old_env_name`到`new_env_name`
+    conda env remove -n tensorflow                          # 删除名为`tensorflow`的conda环境

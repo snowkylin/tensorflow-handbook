@@ -1,5 +1,5 @@
 TensorFlow Installation
-================
+=======================
 
 The most up-to-date installation method can be acquired through the official website (https://tensorflow.google.cn/install). TensorFlow supports multiple programming languages like Python, Java and Go and a variety of operating systems like Windows, OSX and Linux. We prefer Python in this handbook.
 
@@ -95,6 +95,28 @@ If the output is::
 
 We can draw conclusions that TensorFlow was successfully installed. It's normal for the program to output some prompt messages when running.
 
-Here we use Python. You can get Python tutorials on https://docs.python.org/3/tutorial/. From now on we assume that readers are familiar with the basics of Python. Relax, Python is easy to handle and advanced features of Python will be barely involved in TensorFlow. We recommend you to use `PyCharm <http://www.jetbrains.com/pycharm/>`_ as your Python IDE. If you are a student with an email address ended with .edu, you can apply for a free license here <http://www.jetbrains.com/student/>`_. You can always download PyCharm Community version whose main functions do not differ that much from the former if you do not meet the aforementioned criteria.
+Here we use Python. You can get Python tutorials on https://docs.python.org/3/tutorial/. From now on we assume that readers are familiar with the basics of Python. Relax, Python is easy to handle and advanced features of Python will be barely involved in TensorFlow. We recommend you to use `PyCharm <http://www.jetbrains.com/pycharm/>`_ as your Python IDE. If you are a student with an email address ended with .edu, you can apply for a free license `here <http://www.jetbrains.com/student/>`_. You can always download PyCharm Community version whose main functions do not differ that much from the former if you do not meet the aforementioned criteria.
 
 .. [#f1] The effect of acceleration is relative to the GPU performance. It won't be satisfactory if you have a high performance CPU and a beginner level GPU where the acceleration rate will be like 1-2. However, the acceleration rate may reach 10 or even higher under specific models if you have a powerful GPU (e.g. NVIDIA GeForce GTX 1080 Ti or NVIDIA GeForce TITAN Series are powerful graphics card types when this handbook was being written). Meanwhile, the acceleration rate is also influenced by the running task itself. The beginner level models of TensorFlow do not require too much performance as the CPU version is adequate. You may determine if you will purchase a higher level graphics card to get faster training speed after you master the basics of TensorFlow.
+
+Upgrade to A New Version
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+TensorFlow is updated frequently. If you want to upgrade TensorFlow, please enter the conda environment with TensorFlow installed and type the following command
+
+::
+
+    pip install tensorflow --upgrade
+
+If you want to install a specific version of TensorFlow, please type
+
+::
+
+    pip install tensorflow==1.8.0      # here 1.8.0 is the specified version
+
+Upgrade of TensorFlow can be risky, and there may be errors whe you import TensorFlow after the upgrade. The simpler way is to delete the current conda environment and reinstall it. The following conda commands may be useful::
+
+    conda list                                             # List all packages and versions in the current conda environment
+    conda env list                                         # List all conda environments
+    conda create --name new_env_name --clone old_env_name  # Backup the current conda environment `old_env_name` to `new_env_name`
+    conda env remove -n tensorflow                         # Delete the conda environment named `tensorflow`

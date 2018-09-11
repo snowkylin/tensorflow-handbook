@@ -277,17 +277,19 @@
 </div>
 <div class="section" id="id12">
 <h2>升级到新版本<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
-<p>TensorFlow的版本频繁更新，如果希望升级当前的TensorFlow版本，请进入安装有TensorFlow的conda环境下输入:</p>
+<p>TensorFlow的版本频繁更新，如果希望升级当前的TensorFlow版本，请进入安装有TensorFlow的conda环境下输入</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span> <span class="o">--</span><span class="n">upgrade</span>
 </pre></div>
 </div>
-<p>如果你想安装特定版本的TensorFlow，请输入:</p>
+<p>如果你想安装特定版本的TensorFlow，请输入</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">==</span><span class="mf">1.8</span><span class="o">.</span><span class="mi">0</span>   <span class="c1"># 1.8.0为指定版本</span>
 </pre></div>
 </div>
-<p>升级有风险，可能出现升级后TensorFlow导入出错的情况，比较简单的方式是删除当前conda环境后重新安装一遍。以下conda命令可能会有用:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">new_env_name</span> <span class="o">--</span><span class="n">clone</span> <span class="n">old_env_name</span>   <span class="c1"># 备份当前conda环境</span>
-<span class="n">conda</span> <span class="n">env</span> <span class="n">remove</span> <span class="o">-</span><span class="n">n</span> <span class="n">tensorflow</span>                          <span class="c1"># 删除名为tensorflow的conda环境</span>
+<p>升级有风险，可能出现升级后TensorFlow导入出错的情况，比较简单的方式是删除当前conda环境后重新安装一遍。以下conda命令可能会有用</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="nb">list</span>                                              <span class="c1"># 列出当前conda环境下所有package及版本</span>
+<span class="n">conda</span> <span class="n">env</span> <span class="nb">list</span>                                          <span class="c1"># 列出所有conda环境</span>
+<span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">new_env_name</span> <span class="o">--</span><span class="n">clone</span> <span class="n">old_env_name</span>   <span class="c1"># 备份当前conda环境`old_env_name`到`new_env_name`</span>
+<span class="n">conda</span> <span class="n">env</span> <span class="n">remove</span> <span class="o">-</span><span class="n">n</span> <span class="n">tensorflow</span>                          <span class="c1"># 删除名为`tensorflow`的conda环境</span>
 </pre></div>
 </div>
 </div>
