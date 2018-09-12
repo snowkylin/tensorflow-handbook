@@ -365,6 +365,7 @@
 
     <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
         <span class="n">logits</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">logits</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>By substituting <code class="docutils literal"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">MLP()</span></code> in the last chapter with <code class="docutils literal"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">CNN()</span></code>, we get the following output:</p>
