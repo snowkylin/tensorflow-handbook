@@ -113,7 +113,7 @@ TensorFlow模型
     CNN结构图示
 
 .. literalinclude:: ../_static/code/zh/model/cnn/cnn.py
-    :lines: 4-37
+    :lines: 4-38
 
 将前节的 ``model = MLP()`` 更换成 ``model = CNN()`` ，输出如下::
 
