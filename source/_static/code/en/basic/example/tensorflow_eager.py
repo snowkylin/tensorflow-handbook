@@ -18,15 +18,15 @@ b = tfe.Variable(0., name='b')
 num_epoch = 10000
 learning_rate = 1e-3
 for e in range(num_epoch):
-    # 前向传播
+    # Forward propagation
     y_pred = a * X + b
     loss = 0.5 * tf.reduce_sum(tf.square(y_pred - y)) # loss = 0.5 * np.sum(np.square(a * X + b - y))
 
-    # 反向传播，手动计算变量（模型参数）的梯度
+    # Back propagation, calculate gradient of variables(model parameters) manually
     grad_a = tf.reduce_sum((y_pred - y) * X)
     grad_b = tf.reduce_sum(y_pred - y)
 
-    # 更新参数
+    # Update parameters
     a, b = a - learning_rate * grad_a, b - learning_rate * grad_b
 
 print(a, b)

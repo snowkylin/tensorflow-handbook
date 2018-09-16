@@ -1,10 +1,10 @@
 import tensorflow as tf
 
-# 定义一个“计算图”
-a = tf.constant(1)  # 定义一个常量Tensor（张量）
+# Defince a "Computation Graph"
+a = tf.constant(1)  # Defince a constant Tensor
 b = tf.constant(1)
-c = a + b  # 等价于 c = tf.add(a, b)，c是张量a和张量b通过Add这一Operation（操作）所形成的新张量
+c = a + b  # Equal to c = tf.add(a, b)，c is a new Tensor created by Tensor a and Tesor b's add Operation
 
-sess = tf.Session()     # 实例化一个Session（会话）
-c_ = sess.run(c)        # 通过Session的run()方法对计算图里的节点（张量）进行实际的计算
+sess = tf.Session()     # Initailize a Session
+c_ = sess.run(c)        # Session的run() will do actually computation to the nodes (Tensor) in the Computation Graph
 print(c_)
