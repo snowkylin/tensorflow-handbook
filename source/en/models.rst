@@ -113,7 +113,7 @@ The specific implementation is as follows, which is very similar to MLP except s
     Figure of the CNN structure
 
 .. literalinclude:: ../_static/code/en/model/cnn/cnn.py
-    :lines: 4-37
+    :lines: 4-38
 
 By substituting ``model = MLP()`` in the last chapter with ``model = CNN()``, we get the following output::
 
