@@ -142,7 +142,7 @@ TensorFlow模型
 首先，还是实现一个简单的 ``DataLoader`` 类来读取文本，并以字符为单位进行编码。
 
 .. literalinclude:: ../_static/code/zh/model/rnn/rnn.py
-    :lines: 37-55
+    :lines: 31-49
 
 接下来进行模型的实现。在 ``__init__`` 方法中我们实例化一个常用的 ``BasicLSTMCell`` 单元，以及一个线性变换用的全连接层，我们首先对序列进行One Hot操作，即将编码i变换为一个n维向量，其第i位为1，其余均为0。这里n为字符种类数num_char。变换后的序列张量形状为[num_batch, seq_length, num_chars]。接下来，我们将序列从头到尾依序送入RNN单元，即将当前时间t的RNN单元状态 ``state`` 和t时刻的序列 ``inputs[:, t, :]`` 送入RNN单元，得到当前时间的输出 ``output`` 和下一个时间t+1的RNN单元状态。取RNN单元最后一次的输出，通过全连接层变换到num_chars维，即作为模型的输出。
 
@@ -161,7 +161,7 @@ TensorFlow模型
 具体实现如下：
 
 .. literalinclude:: ../_static/code/zh/model/rnn/rnn.py
-    :lines: 13-27
+    :lines: 7-21
 
 训练过程与前节基本一致，在此复述：
 
@@ -172,17 +172,17 @@ TensorFlow模型
 - 使用优化器更新模型参数以最小化损失函数。
 
 .. literalinclude:: ../_static/code/zh/model/rnn/rnn.py
-    :lines: 58-68
+    :lines: 59-69
 
 关于文本生成的过程有一点需要特别注意。之前，我们一直使用 ``tf.argmax()`` 函数，将对应概率最大的值作为预测值。然而对于文本生成而言，这样的预测方式过于绝对，会使得生成的文本失去丰富性。于是，我们使用 ``np.random.choice()`` 函数按照生成的概率分布取样。这样，即使是对应概率较小的字符，也有机会被取样到。同时，我们加入一个 ``temperature`` 参数控制分布的形状，参数值越大则分布越平缓（最大值和最小值的差值越小），生成文本的丰富度越高；参数值越小则分布越陡峭，生成文本的丰富度越低。
 
 .. literalinclude:: ../_static/code/zh/model/rnn/rnn.py
-    :lines: 29-34
+    :lines: 23-28
 
 通过这种方式进行“滚雪球”式的连续预测，即可得到生成文本。
 
 .. literalinclude:: ../_static/code/zh/model/rnn/rnn.py
-    :lines: 70-77
+    :lines: 71-78
 
 生成的文本如下::
 
