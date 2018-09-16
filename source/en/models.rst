@@ -142,7 +142,7 @@ This sentence (sequence) has 13 characters (including spaces) in total. Based on
 First, we still implement a simple ``DataLoader`` class to read text and encode it in characters.
 
 .. literalinclude:: ../_static/code/en/model/rnn/rnn.py
-    :lines: 37-55
+    :lines: 31-49
 
 Then we implement the model. We instantiate a common ``BasicLSTMCell`` unit and a dense layer for linear transformation in the ``__init__`` method. We first do an One-Hot operation on the sequence, i.e. transforming the code i into an n dimensional vector with the value 1 on the i-th position and value 0 elsewhere. Here n is the number of characters. The shape of the transformed sequence tensor is [num_batch, seq_length, num_chars]. After that, we will feed the sequences one by one into the RNN unit, i.e. feeding the state of the RNN unit ``state`` and sequences ``inputs[:, t, :]`` of the current time t into the RNN unit, and get the output of the current time ``output`` and the RNN unit state of the next time t+1. We take the last output of the RNN unit, transform it into num_chars dimensional one through a dense layer, and consider it as the model output.
 
@@ -161,7 +161,7 @@ Then we implement the model. We instantiate a common ``BasicLSTMCell`` unit and 
 The implementation is as follows:
 
 .. literalinclude:: ../_static/code/en/model/rnn/rnn.py
-    :lines: 13-27
+    :lines: 7-21
 
 The training process is almost the same with the previous chapter, which we reiterate here:
 
@@ -172,17 +172,17 @@ The training process is almost the same with the previous chapter, which we reit
 - Update the model parameters in order to minimize the loss.
 
 .. literalinclude:: ../_static/code/en/model/rnn/rnn.py
-    :lines: 58-68
+    :lines: 59-69
 
 There is one thing we should notice about the process of text generation is that earlier we used the ``tf.argmax()`` function to regard the value with the maximum likelihood as the prediction. However, this method of prediction will be too rigid for text generation which also deprives the richness of the generated text. Thus, we use the ``np.random.choice()`` function for sampling based on the generated probability distribution by which even characters with small likelihood can still be possible to be sampled. Meanwhile we introduce the ``temperature`` parameter to control the shape of the distribution. Larger the value, flatter the distribution (smaller difference between the maximum and the minimum) and richer the generated text. Vice versa.
 
 .. literalinclude:: ../_static/code/en/model/rnn/rnn.py
-    :lines: 29-34
+    :lines: 23-28
 
 We can get the generated text by this step-by-step continuing prediction.
 
 .. literalinclude:: ../_static/code/en/model/rnn/rnn.py
-    :lines: 70-77
+    :lines: 71-78
 
 The generated text is as follows::
 
