@@ -180,13 +180,13 @@
 <p>Essentially, TensorFlow is a symbolic computational framework (based on computational graph). Here is a “Hello World” example of computing 1+1.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
-<span class="c1"># 定义一个“计算图”</span>
-<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 定义一个常量Tensor（张量）</span>
+<span class="c1"># Defince a &quot;Computation Graph&quot;</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Defince a constant Tensor</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>  <span class="c1"># 等价于 c = tf.add(a, b)，c是张量a和张量b通过Add这一Operation（操作）所形成的新张量</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>  <span class="c1"># Equal to c = tf.add(a, b)，c is a new Tensor created by Tensor a and Tesor b&#39;s add Operation</span>
 
-<span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>     <span class="c1"># 实例化一个Session（会话）</span>
-<span class="n">c_</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>        <span class="c1"># 通过Session的run()方法对计算图里的节点（张量）进行实际的计算</span>
+<span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>     <span class="c1"># Initailize a Session</span>
+<span class="n">c_</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>        <span class="c1"># Session的run() will do actually computation to the nodes (Tensor) in the Computation Graph</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">c_</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -197,15 +197,15 @@
 <p>The program above is capable of computing 1+1 only, the following program, however, shows how to use TensorFlow to compute the sum of any two numbers through the parameter <code class="docutils literal"><span class="pre">feed_dict=</span></code> of <code class="docutils literal"><span class="pre">tf.placeholder()</span></code> and <code class="docutils literal"><span class="pre">sess.run()</span></code>:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
-<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>  <span class="c1"># 定义一个占位符Tensor</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>  <span class="c1"># Define a placeholder Tensor</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
 
-<span class="n">a_</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;a = &quot;</span><span class="p">)</span>  <span class="c1"># 从终端读入一个整数并放入变量a_</span>
+<span class="n">a_</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;a = &quot;</span><span class="p">)</span>  <span class="c1"># Read an Integer from terminal and put it into a_</span>
 <span class="n">b_</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;b = &quot;</span><span class="p">)</span>
 
 <span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-<span class="n">c_</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="n">a_</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">b_</span><span class="p">})</span>  <span class="c1"># feed_dict参数传入为了计算c所需要的张量的值</span>
+<span class="n">c_</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="n">a_</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">b_</span><span class="p">})</span>  <span class="c1"># feed_dict will input Tensors&#39; value needed by computing c</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a + b = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">c_</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -219,15 +219,15 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[])</span>
-<span class="n">initializer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>   <span class="c1"># tf.assign(x, y)返回一个“将张量y的值赋给变量x”的操作</span>
-<span class="n">a_plus_1</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span>    <span class="c1"># 等价于 a + tf.constant(1)</span>
+<span class="n">initializer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>   <span class="c1"># tf.assign(x, y) will return a operation “assign Tensor y&#39;s value to Tensor x”</span>
+<span class="n">a_plus_1</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span>    <span class="c1"># Equal to a + tf.constant(1)</span>
 <span class="n">plus_one_op</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">a_plus_1</span><span class="p">)</span>
 
 <span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
 <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">initializer</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plus_one_op</span><span class="p">)</span>                   <span class="c1"># 对变量a执行加一操作</span>
-    <span class="n">a_</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>                        <span class="c1"># 获得变量a的值并存入a_</span>
+    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plus_one_op</span><span class="p">)</span>                   <span class="c1"># Do plus one operation to a</span>
+    <span class="n">a_</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>                        <span class="c1"># Calculate a‘s value and put the result to a_</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">a_</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -242,12 +242,12 @@
 <p>The following code is equivalent to the code shown above. It specifies the initializer upon declaring variables and initializes all variables at once by <code class="docutils literal"><span class="pre">tf.global_variables_initializer()</span></code>, which is used more often in practical projects:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
-<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">)</span>   <span class="c1"># 指定初始化器为全0初始化</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">)</span>   <span class="c1"># Made initializer as a all zero initializer</span>
 <span class="n">a_plus_1</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="n">plus_one_op</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">a_plus_1</span><span class="p">)</span>
 
 <span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-<span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span> <span class="c1"># 初始化所有变量</span>
+<span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span> <span class="c1"># Initailize all the </span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
     <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plus_one_op</span><span class="p">)</span>
     <span class="n">a_</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
@@ -257,7 +257,7 @@
 <p>Matrix and tensor calculation is the basic operation in scientific computation (including Machine Learning). The program shown below is to demonstrate how to calculate the product of the two matrices <img class="math" src="../_images/math/69c816dc1d0fedcc2a375b2ea3439d272cc07eeb.png" alt="\begin{bmatrix} 1 &amp; 1 &amp; 1 \\ 1 &amp; 1 &amp; 1 \end{bmatrix}"/> and <img class="math" src="../_images/math/61dbb28cf077ed543a9d7329a18cb1dcbe33b576.png" alt="\begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 1 \\ 1 &amp; 1 \end{bmatrix}"/>:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
-<span class="n">A</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>   <span class="c1"># tf.ones(shape)定义了一个形状为shape的全1矩阵</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>   <span class="c1"># tf.ones(shape) defines a all one matrix with shape</span>
 <span class="n">B</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
 <span class="n">C</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
 
@@ -278,7 +278,7 @@
 <p>Unlike previous NumPy and Eager Execution mode, TensorFlow’s Graph Execution mode uses <strong>symbolic programming</strong> for numerical operations. First, we need to abstract the computational processes into a Dataflow Graph, and represent the inputs, operations and outputs with symbolized nodes. Then, we continually send the data to the input nodes, let the data be calculated and flow along the dataflow graph, and finally reach the specific output nodes we want. The following code shows how to accomplish the same task as the code does in previous section based on TensorFlow’s symbolic programming approach, where <code class="docutils literal"><span class="pre">tf.placeholder()</span></code> can be regarded as a kind of “symbolic input node”, using <code class="docutils literal"><span class="pre">tf.get_variable()</span></code> to define the parameters of the model (the tensor of the Variable type can be assigned using <code class="docutils literal"><span class="pre">tf.assign()</span></code>), and <code class="docutils literal"><span class="pre">sess.run(output_node,</span> <span class="pre">feed_dict={input_node:</span> <span class="pre">data})</span></code> can be thought of as a process which sends data to the input node, calculates along the dataflow graph and reach the output node and eventually return values.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
-<span class="c1"># 定义数据流图</span>
+<span class="c1"># Define data flow gragh</span>
 <span class="n">learning_rate_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 <span class="n">X_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
 <span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
@@ -288,33 +288,33 @@
 <span class="n">y_pred</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">X_</span> <span class="o">+</span> <span class="n">b</span>
 <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">))</span>
 
-<span class="c1"># 反向传播，手动计算变量（模型参数）的梯度</span>
+<span class="c1"># Back propagation, calculate gradient of variables(model parameters) manually</span>
 <span class="n">grad_a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)</span> <span class="o">*</span> <span class="n">X_</span><span class="p">)</span>
 <span class="n">grad_b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)</span>
 
-<span class="c1"># 梯度下降法，手动更新参数</span>
+<span class="c1"># Gradient descent, update parameters manually</span>
 <span class="n">new_a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">learning_rate_</span> <span class="o">*</span> <span class="n">grad_a</span>
 <span class="n">new_b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">learning_rate_</span> <span class="o">*</span> <span class="n">grad_b</span>
 <span class="n">update_a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">new_a</span><span class="p">)</span>
 <span class="n">update_b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">new_b</span><span class="p">)</span>
 
 <span class="n">train_op</span> <span class="o">=</span> <span class="p">[</span><span class="n">update_a</span><span class="p">,</span> <span class="n">update_b</span><span class="p">]</span> 
-<span class="c1"># 数据流图定义到此结束</span>
-<span class="c1"># 注意，直到目前，我们都没有进行任何实质的数据计算，仅仅是定义了一个数据图</span>
+<span class="c1"># End of defining of data flow gragh</span>
+<span class="c1"># Attention, until now, we haven&#39;t do any actually data calculation, just defined a data flow gragh</span>
 
 <span class="n">num_epoch</span> <span class="o">=</span> <span class="mi">10000</span>
 <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">1e-3</span>
 <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
-    <span class="c1"># 初始化变量a和b</span>
+    <span class="c1"># Initialize variables a and b</span>
     <span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-    <span class="c1"># 循环将数据送入上面建立的数据流图中进行计算和更新变量</span>
+    <span class="c1"># Put data in the data flow gragh created above to calculate and update variables</span>
     <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epoch</span><span class="p">):</span>
         <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">train_op</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">X_</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span> <span class="n">learning_rate_</span><span class="p">:</span> <span class="n">learning_rate</span><span class="p">})</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]))</span>
 </pre></div>
 </div>
 <p>In the two examples above, we manually calculated the partial derivatives of the loss function with regard to each parameter. But when both the model and the loss function become very complicated (especially in deep learning models), the workload of manual derivation is unacceptable. TensorFlow provides an <strong>automatic derivation mechanism</strong> that eliminates the hassle of manually calculating derivatives, using TensorFlow’s derivation function <code class="docutils literal"><span class="pre">tf.gradients(ys,</span> <span class="pre">xs)</span></code> to compute the partial derivatives of the loss function with regard to a and b. Thus, the two lines of code in the previous section for calculating derivatives manually,</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 反向传播，手动计算变量（模型参数）的梯度</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Back propagation, calculate gradient of variables(model parameters) manually</span>
 <span class="n">grad_a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)</span> <span class="o">*</span> <span class="n">X_</span><span class="p">)</span>
 <span class="n">grad_b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)</span>
 </pre></div>
@@ -325,11 +325,11 @@
 </div>
 <p>and the result won’t change.</p>
 <p>Moreover，TensorFlow has many kinds of <strong>optimizer</strong>, which can complete derivation and gradient update together at the same time. The code in the previous section,</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 反向传播，手动计算变量（模型参数）的梯度</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Back propagation, calculate gradient of variables(model parameters) manually</span>
 <span class="n">grad_a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)</span> <span class="o">*</span> <span class="n">X_</span><span class="p">)</span>
 <span class="n">grad_b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)</span>
 
-<span class="c1"># 梯度下降法，手动更新参数</span>
+<span class="c1"># Gradient descent, update parameters manually</span>
 <span class="n">new_a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">learning_rate_</span> <span class="o">*</span> <span class="n">grad_a</span>
 <span class="n">new_b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">learning_rate_</span> <span class="o">*</span> <span class="n">grad_b</span>
 <span class="n">update_a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">new_a</span><span class="p">)</span>
@@ -361,7 +361,7 @@
 <span class="n">y_pred</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">X_</span> <span class="o">+</span> <span class="n">b</span>
 <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">))</span>
 
-<span class="c1"># 反向传播，利用TensorFlow的梯度下降优化器自动计算并更新变量（模型参数）的梯度</span>
+<span class="c1"># Back propagation，calculate and update gradient of varaibles(model parameters) with TensorFlow&#39;s GradientDescentOptimier </span>
 <span class="n">train_op</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate_</span><span class="p">)</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
 
 <span class="n">num_epoch</span> <span class="o">=</span> <span class="mi">10000</span>

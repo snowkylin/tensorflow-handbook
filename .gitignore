@@ -7,3 +7,5 @@ workspace.code-workspace
 source/.vscode
 source/_future
 source/_static/code/.idea
+__pycache__/
+*.py[cod]
