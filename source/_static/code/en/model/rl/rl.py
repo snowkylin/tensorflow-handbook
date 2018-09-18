@@ -54,7 +54,7 @@ for episode_id in range(num_episodes):
             action = action[0]
         next_state, reward, done, info = env.step(action)               # Let the environment to execute the action, get the next state of the action, the reward of the action, whether the game is done and extra information.
         reward = -10. if done else reward                               # Give a large negative reward if the game is over.
-        replay_buffer.append((state, action, reward, next_state, done)) # Put the (state, action, reward, next_state) quad back into the experience replay pool.
+        replay_buffer.append((state, action, reward, next_state, 1 if done else 0)) # Put the (state, action, reward, next_state) quad back into the experience replay pool.
         state = next_state
 
         if done:                                                        # Exit this round and enter the next episode if the game is over.
@@ -62,8 +62,13 @@ for episode_id in range(num_episodes):
             break
 
         if len(replay_buffer) >= batch_size:
-            batch_state, batch_action, batch_reward, batch_next_state, batch_done = \
-                [np.array(a, dtype=np.float32) for a in zip(*random.sample(replay_buffer, batch_size))] # Randomly take a batch quad from the experience replay pool.
+            # Randomly take a batch quad from the experience replay pool and transform them to NumPy array respectively.
+            batch_state, batch_action, batch_reward, batch_next_state, batch_done = zip(
+                *random.sample(replay_buffer, batch_size))
+            batch_state, batch_reward, batch_next_state, batch_done = \
+                [np.array(a, dtype=np.float32) for a in [batch_state, batch_reward, batch_next_state, batch_done]]
+            batch_action = np.array(batch_action, dtype=np.int32)
+
             q_value = model(tf.constant(batch_next_state, dtype=tf.float32))
             y = batch_reward + (gamma * tf.reduce_max(q_value, axis=1)) * (1 - batch_done)  # Calculate y according to the method in the paper.
             with tf.GradientTape() as tape:

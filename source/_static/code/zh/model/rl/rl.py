@@ -54,7 +54,7 @@ for episode_id in range(num_episodes):
             action = action[0]
         next_state, reward, done, info = env.step(action)               # 让环境执行动作，获得执行完动作的下一个状态，动作的奖励，游戏是否已结束以及额外信息
         reward = -10. if done else reward                               # 如果游戏Game Over，给予大的负奖励
-        replay_buffer.append((state, action, reward, next_state, done)) # 将(state, action, reward, next_state)的四元组（外加done标签表示是否结束）放入经验重放池
+        replay_buffer.append((state, action, reward, next_state, 1 if done else 0)) # 将(state, action, reward, next_state)的四元组（外加done标签表示是否结束）放入经验重放池
         state = next_state
 
         if done:                                                        # 游戏结束则退出本轮循环，进行下一个episode
@@ -62,8 +62,13 @@ for episode_id in range(num_episodes):
             break
 
         if len(replay_buffer) >= batch_size:
-            batch_state, batch_action, batch_reward, batch_next_state, batch_done = \
-                [np.array(a, dtype=np.float32) for a in zip(*random.sample(replay_buffer, batch_size))] # 从经验回放池中随机取一个batch的四元组
+            # 从经验回放池中随机取一个batch的四元组，并分别转换为NumPy数组
+            batch_state, batch_action, batch_reward, batch_next_state, batch_done = zip(
+                *random.sample(replay_buffer, batch_size))
+            batch_state, batch_reward, batch_next_state, batch_done = \
+                [np.array(a, dtype=np.float32) for a in [batch_state, batch_reward, batch_next_state, batch_done]]
+            batch_action = np.array(batch_action, dtype=np.int32)
+
             q_value = model(tf.constant(batch_next_state, dtype=tf.float32))
             y = batch_reward + (gamma * tf.reduce_max(q_value, axis=1)) * (1 - batch_done)  # 按照论文计算y值
             with tf.GradientTape() as tape:
