@@ -1,4 +1,4 @@
-# 简单粗暴TensorFlow | A Concise Handbook of TensorFlow
+# 简单粗暴TensorFlow 2.0 | A Concise Handbook of TensorFlow 2.0
 
 *基于Eager Execution | Based on Eager Execution*
 
@@ -6,7 +6,7 @@
 
 备用地址 | Alternative URL：https://snowkylin.github.io/TensorFlow-cn/
 
-作者 | Author: Xihan Li (snowkylin)
+作者 | Author: Xihan Li (snowkylin), Zhuohuan Li, Jinpeng Zhu
 
 英文版译者 | Translators of English version: Zida Jin, Ming, Ji-An Li, Xihan Li
 
