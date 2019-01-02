@@ -19,20 +19,23 @@ TensorFlow基础
 
 本章介绍TensorFlow的基本操作。
 
-前置知识：
+.. admonition:: 前置知识
 
-* `Python基本操作 <http://www.runoob.com/python3/python3-tutorial.html>`_ （赋值、分支及循环语句、使用import导入库）；
-* `Python的With语句 <https://www.ibm.com/developerworks/cn/opensource/os-cn-pythonwith/index.html>`_ ；
-* `NumPy <https://docs.scipy.org/doc/numpy/user/quickstart.html>`_ ，Python下常用的科学计算库。TensorFlow与之结合紧密；
-* `向量 <https://zh.wikipedia.org/wiki/%E5%90%91%E9%87%8F>`_ 和 `矩阵 <https://zh.wikipedia.org/wiki/%E7%9F%A9%E9%98%B5>`_ 运算（矩阵的加减法、矩阵与向量相乘、矩阵与矩阵相乘、矩阵的转置等。测试题：:math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \times \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = ?`）；
-* `函数的导数 <http://old.pep.com.cn/gzsx/jszx_1/czsxtbjxzy/qrzptgjzxjc/dzkb/dscl/>`_ ，`多元函数求导 <https://zh.wikipedia.org/wiki/%E5%81%8F%E5%AF%BC%E6%95%B0>`_ （测试题：:math:`f(x, y) = x^2 + xy + y^2, \frac{\partial f}{\partial x} = ?, \frac{\partial f}{\partial y} = ?`）；
-* `线性回归 <http://old.pep.com.cn/gzsx/jszx_1/czsxtbjxzy/qrzptgjzxjc/dzkb/dscl/>`_ ；
-* `梯度下降方法 <https://zh.wikipedia.org/wiki/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95>`_ 求函数的局部最小值。
+    * `Python基本操作 <http://www.runoob.com/python3/python3-tutorial.html>`_ （赋值、分支及循环语句、使用import导入库）；
+    * `Python的With语句 <https://www.ibm.com/developerworks/cn/opensource/os-cn-pythonwith/index.html>`_ ；
+    * `NumPy <https://docs.scipy.org/doc/numpy/user/quickstart.html>`_ ，Python下常用的科学计算库。TensorFlow与之结合紧密；
+    * `向量 <https://zh.wikipedia.org/wiki/%E5%90%91%E9%87%8F>`_ 和 `矩阵 <https://zh.wikipedia.org/wiki/%E7%9F%A9%E9%98%B5>`_ 运算（矩阵的加减法、矩阵与向量相乘、矩阵与矩阵相乘、矩阵的转置等。测试题：:math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \times \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = ?`）；
+    * `函数的导数 <http://old.pep.com.cn/gzsx/jszx_1/czsxtbjxzy/qrzptgjzxjc/dzkb/dscl/>`_ ，`多元函数求导 <https://zh.wikipedia.org/wiki/%E5%81%8F%E5%AF%BC%E6%95%B0>`_ （测试题：:math:`f(x, y) = x^2 + xy + y^2, \frac{\partial f}{\partial x} = ?, \frac{\partial f}{\partial y} = ?`）；
+    * `线性回归 <http://old.pep.com.cn/gzsx/jszx_1/czsxtbjxzy/qrzptgjzxjc/dzkb/dscl/>`_ ；
+    * `梯度下降方法 <https://zh.wikipedia.org/wiki/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95>`_ 求函数的局部最小值。
 
 TensorFlow 1+1
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 我们可以先简单地将TensorFlow视为一个科学计算库（类似于Python下的NumPy）。这里以计算 :math:`1+1` 和 :math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \times \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix}` 作为Hello World的示例。
+
+.. warning:: 本手册基于TensorFlow的Eager Execution模式。在TensorFlow 1.X版本中， **必须** 在导入TensorFlow库后调用 ``tf.enable_eager_execution()`` 函数以启用Eager Execution模式。在TensorFlow 2.0版本中，Eager Execution模式将成为默认模式，无需额外调用 ``tf.enable_eager_execution()`` 函数。
+
 
 .. literalinclude:: ../_static/code/zh/basic/eager/1plus1.py  
 
@@ -45,6 +48,9 @@ TensorFlow 1+1
 
 以上代码声明了 ``a``、``b``、``A``、``B`` 四个 **张量** （Tensor），并使用了 ``tf.add()`` 和 ``tf.matmul()`` 两个 **操作** （Operation）对张量进行了加法和矩阵乘法运算，运算结果即时存储于 ``c``、``C`` 两个张量内。张量的重要属性是其形状（shape）和类型（dtype）。这里 ``a``、``b``、``c`` 是纯量，形状为空，类型为int32；``A``、``B``、``C`` 为2×2的矩阵，形状为 ``(2, 2)``，类型为int32。
 
+自动求导机制
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 在机器学习中，我们经常需要计算函数的导数。TensorFlow提供了强大的 **自动求导机制** 来计算导数。以下代码展示了如何使用 ``tf.GradientTape()`` 计算函数 :math:`y(x) = x^2` 在 :math:`x = 3` 时的导数：
 
 .. literalinclude:: ../_static/code/zh/basic/eager/grad.py  
@@ -54,7 +60,9 @@ TensorFlow 1+1
     
     [array([9.], dtype=float32), array([6.], dtype=float32)]
 
-这里 ``x`` 是一个初始化为3的 **变量** （Variable），使用 ``tf.get_variable()`` 声明。与普通张量一样，变量同样具有形状（shape）和类型（dtype）属性，不过使用变量需要有一个初始化过程，可以通过在 ``tf.get_variable()`` 中指定 ``initializer`` 参数来指定所使用的初始化器。这里使用 ``tf.constant_initializer(3.)`` 将变量 ``x`` 初始化为float32类型的 ``3.`` [#f0]_。变量与普通张量的一个重要区别是其默认能够被TensorFlow的自动求导机制所求导，因此往往被用于定义机器学习模型的参数。 ``tf.GradientTape()`` 是一个自动求导的记录器，在其中的变量和计算步骤都会被自动记录。上面的示例中，变量 ``x`` 和计算步骤 ``y = tf.square(x)`` 被自动记录，因此可以通过 ``y_grad = tape.gradient(y, x)`` 求张量 ``y`` 对变量 ``x`` 的导数。
+这里 ``x`` 是一个初始化为3的 **变量** （Variable），使用 ``tf.get_variable()`` 声明。与普通张量一样，变量同样具有形状（shape）和类型（dtype）属性，不过使用变量需要有一个初始化过程，可以通过在 ``tf.get_variable()`` 中指定 ``initializer`` 参数来指定所使用的初始化器。这里使用 ``tf.constant_initializer(3.)`` 将变量 ``x`` 初始化为float32类型的 ``3.`` [#f0]_。变量与普通张量的一个重要区别是其默认能够被TensorFlow的自动求导机制所求导，因此往往被用于定义机器学习模型的参数。
+
+``tf.GradientTape()`` 是一个自动求导的记录器，在其中的变量和计算步骤都会被自动记录。在上面的示例中，变量 ``x`` 和计算步骤 ``y = tf.square(x)`` 被自动记录，因此可以通过 ``y_grad = tape.gradient(y, x)`` 求张量 ``y`` 对变量 ``x`` 的导数。
 
 在机器学习中，更加常见的是对多元函数求偏导数，以及对向量或矩阵的求导。这些对于TensorFlow也不在话下。以下代码展示了如何使用 ``tf.GradientTape()`` 计算函数 :math:`L(w, b) = \|Xw + b - y\|^2` 在 :math:`w = (1, 2)^T, b = 1` 时分别对 :math:`w, b` 的偏导数。其中 :math:`X = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix},  y = \begin{bmatrix} 1 \\ 2\end{bmatrix}`。
 
@@ -115,8 +123,8 @@ TensorFlow 1+1
 
 接下来，我们考虑如何使用程序来实现梯度下降方法，求得线性回归的解 :math:`\min_{a, b} L(a, b) = \sum_{i=1}^n(ax_i + b - y_i)^2` 。
 
-NumPy
------------------------
+NumPy下的线性回归
+-------------------------------------------
 
 机器学习模型的实现并不是TensorFlow的专利。事实上，对于简单的模型，即使使用常规的科学计算库或者工具也可以求解。在这里，我们使用NumPy这一通用的科学计算库来实现梯度下降方法。NumPy提供了多维数组支持，可以表示向量、矩阵以及更高维的张量。同时，也提供了大量支持在多维数组上进行操作的函数（比如下面的 ``np.dot()`` 是求内积， ``np.sum()`` 是求和）。在这方面，NumPy和MATLAB比较类似。在以下代码中，我们手工求损失函数关于参数 ``a`` 和 ``b`` 的偏导数 [#f2]_，并使用梯度下降法反复迭代，最终获得 ``a`` 和 ``b`` 的值。
 
@@ -130,8 +138,8 @@ NumPy
 
 而TensorFlow等深度学习框架的出现很大程度上解决了这些痛点，为机器学习模型的实现带来了很大的便利。
 
-TensorFlow
---------------------------------------------------------
+TensorFlow下的线性回归
+-------------------------------------------
 
 TensorFlow的 **Eager Execution（动态图）模式** [#f4]_ 与上述NumPy的运行方式十分类似，然而提供了更快速的运算（GPU支持）、自动求导、优化器等一系列对深度学习非常重要的功能。以下展示了如何使用TensorFlow计算线性回归。可以注意到，程序的结构和前述NumPy的实现非常类似。这里，TensorFlow帮助我们做了两件重要的工作：
 
