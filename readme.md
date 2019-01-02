@@ -23,3 +23,15 @@ PDF下载 | PDF download :
 
 - (中文 | Chinese): https://www.tensorflowers.cn/b/48
 - (英文 | English): https://github.com/snowkylin/TensorFlow-cn/issues
+
+## DEVELOPING
+
+### Install
+
+```sh
+# https://www.ibm.com/developerworks/cn/opensource/os-sphinx-documentation/index.html
+pip install sphinx
+
+# for theme
+pip install sphinx_rtd_theme
+```
