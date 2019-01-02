@@ -16,33 +16,48 @@
 
 本手册是一篇精简的TensorFlow入门指导，基于TensorFlow的Eager Execution（动态图）模式，力图让具备一定机器学习及Python基础的开发者们快速上手TensorFlow。
 
-友情提醒：如果发现阅读中有难以理解的部分，请检查自己对每章的“前置知识”部分是否有清楚的理解。
+This handbook is a concise introduction to TensorFlow based on Eager Execution mode, trying to help developers with some basic machine learning and Python knowledge to get started with TensorFlow quickly.
 
-This handbook is a concise introduction to TensorFlow based on Eager Execution mode, trying to help developers get started with TensorFlow quickly with some basic machine learning and Python knowledge.
+..
+    .. hint:: 这是一本TensorFlow技术手册，而不是一本机器学习/深度学习原理入门手册。如果发现阅读中有难以理解的部分，请检查每章的“前置知识”部分，这里提供了一些机器学习原理的入门资料链接。
+        
+        This is a TensorFlow technical handbook rather than a tutorial for machine learning or deep learning theories. If you find something difficult to understand in reading, please check the "Prerequisites" part of each chapter, where some good basic machine learning documents are provided by url links.
 
-Friendly reminder: If you find something difficult to understand in reading, please check the "Prerequisites" part of each chapter.
 
-+----------------------+-----------------------+
-| .. toctree::         | .. toctree::          |
-|    :maxdepth: 2      |    :maxdepth: 2       |
-|    :caption: 目录    |    :caption: Contents |
-|                      |                       |
-|    zh/preface        |    en/preface         |
-|    zh/installation   |    en/installation    |
-|    zh/basic          |    en/basic           |
-|    zh/models         |    en/models          |
-|    zh/extended       |    en/extended        |
-|    zh/static         |    en/static          |
-+----------------------+-----------------------+
++------------------------+------------------------+
+| .. toctree::           | .. toctree::           |
+|    :maxdepth: 2        |    :maxdepth: 2        |
+|    :caption: 目录      |    :caption: Contents  |
+|                        |                        |
+|    zh/preface          |    en/preface          |
+|    zh/introduction     |    en/introduction     |
+|    zh/installation     |    en/installation     |
+|    zh/basic            |    en/basic            |
+|    zh/models           |    en/models           |
+|    zh/extended         |    en/extended         |
+|    zh/deployment       |    en/deployment       |
+|    zh/training         |    en/training         |
+|    zh/static           |    en/static           |
+|    zh/swift            |    en/swift            |
+|    zh/reuse            |    en/reuse            |
+|    zh/probability      |    en/probability      |
+|    zh/config           |    en/config           |
+|    zh/recommended_books|    en/recommended_books|
++------------------------+------------------------+
 
 ..
     .. toctree:: 
         zh/preface
+        zh/introduction
         zh/installation
         zh/basic
         zh/models
         zh/extended 
+        zh/deployment
+        zh/training 
         zh/static
+        zh/reuse
+        zh/recommended_books
 
 ..
     .. toctree:: 
