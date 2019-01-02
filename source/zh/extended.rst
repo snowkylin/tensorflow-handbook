@@ -1,12 +1,10 @@
-TensorFlow扩展
-================
+TensorFlow持久化与可视化
+=====================================
 
-本章介绍一些最为常用的TensorFlow扩展功能。虽然这些功能称不上“必须”，但能让模型训练和调用的过程更加方便。
+.. admonition:: 前置知识
 
-前置知识：
-
-* `Python的序列化模块Pickle <http://www.runoob.com/python3/python3-inputoutput.html>`_ （非必须）
-* `Python的特殊函数参数**kwargs <https://eastlakeside.gitbooks.io/interpy-zh/content/args_kwargs/Usage_kwargs.html>`_ （非必须）
+    * `Python的序列化模块Pickle <http://www.runoob.com/python3/python3-inputoutput.html>`_ （非必须）
+    * `Python的特殊函数参数**kwargs <https://eastlakeside.gitbooks.io/interpy-zh/content/args_kwargs/Usage_kwargs.html>`_ （非必须）
 
 Checkpoint：变量的保存与恢复
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -33,7 +31,9 @@ Checkpoint：变量的保存与恢复
 
     checkpoint.save(save_path_with_prefix)
 
-就可以。 ``save_path_with_prefix`` 是保存文件的目录+前缀。例如，在源代码目录建立一个名为save的文件夹并调用一次 ``checkpoint.save('./save/model.ckpt')`` ，我们就可以在可以在save目录下发现名为 ``checkpoint`` 、  ``model.ckpt-1.index`` 、 ``model.ckpt-1.data-00000-of-00001`` 的三个文件，这些文件就记录了变量信息。``checkpoint.save()`` 方法可以运行多次，每运行一次都会得到一个.index文件和.data文件，序号依次累加。
+就可以。 ``save_path_with_prefix`` 是保存文件的目录+前缀。
+
+.. note:: 例如，在源代码目录建立一个名为save的文件夹并调用一次 ``checkpoint.save('./save/model.ckpt')`` ，我们就可以在可以在save目录下发现名为 ``checkpoint`` 、  ``model.ckpt-1.index`` 、 ``model.ckpt-1.data-00000-of-00001`` 的三个文件，这些文件就记录了变量信息。``checkpoint.save()`` 方法可以运行多次，每运行一次都会得到一个.index文件和.data文件，序号依次累加。
 
 当在其他地方需要为模型重新载入之前保存的参数时，需要再次实例化一个checkpoint，同时保持键名的一致。再调用checkpoint的restore方法。就像下面这样：
 
@@ -67,7 +67,8 @@ Checkpoint：变量的保存与恢复
     checkpoint.restore(tf.train.latest_checkpoint('./save'))    # 从文件恢复模型参数
     # 模型使用代码
 
-顺便一提， ``tf.train.Checkpoint`` 与以前版本常用的 ``tf.train.Saver`` 相比，强大之处在于其支持在Eager Execution下“延迟”恢复变量。具体而言，当调用了 ``checkpoint.restore()`` ，但模型中的变量还没有被建立的时候，Checkpoint可以等到变量被建立的时候再进行数值的恢复。Eager Execution下，模型中各个层的初始化和变量的建立是在模型第一次被调用的时候才进行的（好处在于可以根据输入的张量形状而自动确定变量形状，无需手动指定）。这意味着当模型刚刚被实例化的时候，其实里面还一个变量都没有，这时候使用以往的方式去恢复变量数值是一定会报错的。比如，你可以试试在train.py调用 ``tf.keras.Model`` 的 ``save_weight()`` 方法保存model的参数，并在test.py中实例化model后立即调用 ``load_weight()`` 方法，就会出错，只有当调用了一遍model之后再运行 ``load_weight()`` 方法才能得到正确的结果。可见， ``tf.train.Checkpoint`` 在这种情况下可以给我们带来相当大的便利。另外， ``tf.train.Checkpoint`` 同时也支持Graph Execution模式。
+
+.. note:: ``tf.train.Checkpoint`` 与以前版本常用的 ``tf.train.Saver`` 相比，强大之处在于其支持在Eager Execution下“延迟”恢复变量。具体而言，当调用了 ``checkpoint.restore()`` ，但模型中的变量还没有被建立的时候，Checkpoint可以等到变量被建立的时候再进行数值的恢复。Eager Execution下，模型中各个层的初始化和变量的建立是在模型第一次被调用的时候才进行的（好处在于可以根据输入的张量形状而自动确定变量形状，无需手动指定）。这意味着当模型刚刚被实例化的时候，其实里面还一个变量都没有，这时候使用以往的方式去恢复变量数值是一定会报错的。比如，你可以试试在train.py调用 ``tf.keras.Model`` 的 ``save_weight()`` 方法保存model的参数，并在test.py中实例化model后立即调用 ``load_weight()`` 方法，就会出错，只有当调用了一遍model之后再运行 ``load_weight()`` 方法才能得到正确的结果。可见， ``tf.train.Checkpoint`` 在这种情况下可以给我们带来相当大的便利。另外， ``tf.train.Checkpoint`` 同时也支持Graph Execution模式。
 
 最后提供一个实例，以前章的 :ref:`多层感知机模型 <mlp>` 为例展示模型变量的保存和载入：
 
@@ -88,9 +89,11 @@ Checkpoint：变量的保存与恢复
 TensorBoard：训练过程可视化
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. attention:: 目前，Eager Execution模式下的TensorBoard支持尚在 `tf.contrib.summary <https://www.tensorflow.org/api_docs/python/tf/contrib/summary>`_ 内，可能以后会有较多变化，因此这里只做简单示例。
+
 有时，你希望查看模型训练过程中各个参数的变化情况（例如损失函数loss的值）。虽然可以通过命令行输出来查看，但有时显得不够直观。而TensorBoard就是一个能够帮助我们将训练过程可视化的工具。
 
-目前，Eager Execution模式下的TensorBoard支持尚在 `tf.contrib.summary <https://www.tensorflow.org/api_docs/python/tf/contrib/summary>`_ 内，可能以后会有较多变化，因此这里只做简单示例。首先在代码目录下建立一个文件夹（如./tensorboard）存放TensorBoard的记录文件，并在代码中实例化一个记录器：
+首先在代码目录下建立一个文件夹（如./tensorboard）存放TensorBoard的记录文件，并在代码中实例化一个记录器：
 
 .. code-block:: python
     
@@ -131,40 +134,3 @@ TensorBoard的使用有以下注意事项：
 
 .. literalinclude:: ../_static/code/zh/extended/tensorboard/mnist.py
 
-GPU的使用与分配
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-很多时候的场景是：实验室/公司研究组里有许多学生/研究员都需要使用GPU，但多卡的机器只有一台，这时就需要注意如何分配显卡资源。
-
-命令 ``nvidia-smi`` 可以查看机器上现有的GPU及使用情况（在Windows下，将 ``C:\Program Files\NVIDIA Corporation\NVSMI`` 加入Path环境变量中即可，或Windows 10下可使用任务管理器的“性能”标签查看显卡信息）。
-
-使用环境变量 ``CUDA_VISIBLE_DEVICES`` 可以控制程序所使用的GPU。假设发现四卡的机器上显卡0,1使用中，显卡2,3空闲，Linux终端输入::
-
-    export CUDA_VISIBLE_DEVICES=2,3
-
-或在代码中加入
-
-.. code-block:: python
-
-    import os
-    os.environ['CUDA_VISIBLE_DEVICES'] = "2,3"
-
-即可指定程序只在显卡2,3上运行。
-
-默认情况下，TensorFlow将使用几乎所有可用的显存，以避免内存碎片化所带来的性能损失。可以通过 ``tf.ConfigProto`` 类来设置TensorFlow使用显存的策略。具体方式是实例化一个 ``tf.ConfigProto`` 类，设置参数，并在运行 ``tf.enable_eager_execution()`` 时指定Config参数。以下代码通过 ``allow_growth`` 选项设置TensorFlow仅在需要时申请显存空间：
-
-.. code-block:: python
-
-    config = tf.ConfigProto()
-    config.gpu_options.allow_growth = True
-    tf.enable_eager_execution(config=config)
-
-以下代码通过 ``per_process_gpu_memory_fraction`` 选项设置TensorFlow固定消耗40%的GPU显存：
-
-.. code-block:: python
-
-    config = tf.ConfigProto()
-    config.gpu_options.per_process_gpu_memory_fraction = 0.4
-    tf.enable_eager_execution(config=config)
-
-Graph Execution下，也可以在实例化新的session时传入 tf.ConfigPhoto 类来进行设置。
