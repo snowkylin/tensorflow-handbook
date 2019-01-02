@@ -36,7 +36,6 @@ TensorFlow 1+1
 
 .. warning:: 本手册基于TensorFlow的Eager Execution模式。在TensorFlow 1.X版本中， **必须** 在导入TensorFlow库后调用 ``tf.enable_eager_execution()`` 函数以启用Eager Execution模式。在TensorFlow 2.0版本中，Eager Execution模式将成为默认模式，无需额外调用 ``tf.enable_eager_execution()`` 函数。
 
-
 .. literalinclude:: ../_static/code/zh/basic/eager/1plus1.py  
 
 输出::
