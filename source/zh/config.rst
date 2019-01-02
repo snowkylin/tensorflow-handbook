@@ -41,3 +41,6 @@ Graph Execution下，也可以在实例化新的session时传入 tf.ConfigPhoto 
 
 使用Docker部署TensorFlow环境
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+在Colab中使用TensorFlow
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

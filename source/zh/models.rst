@@ -18,7 +18,6 @@ TensorFlow模型
 如上一章所述，为了增强代码的可复用性，我们往往会将模型编写为类，然后在模型调用的地方使用 ``y_pred = model(X)`` 的形式进行调用。 **模型类** 的形式非常简单，主要包含 ``__init__()`` （构造函数，初始化）和 ``call(input)`` （模型调用）两个方法，但也可以根据需要增加自定义的方法。 [#call]_ 
 
 .. code-block:: python
-    :linenos:
 
     class MyModel(tf.keras.Model):
         def __init__(self):
