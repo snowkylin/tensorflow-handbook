@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TensorFlow概述 &mdash; 简单粗暴TensorFlow 0.4 alpha 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="TensorFlow安装" href="installation.html" />
+    <link rel="prev" title="前言" href="preface.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 简单粗暴TensorFlow
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">目录</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="preface.html">前言</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow概述</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">学生和研究者：模型的建立与训练</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">开发者和工程师：模型的调用与部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">TensorFlow能帮助我们做什么？</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">TensorFlow安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">TensorFlow模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extended.html">TensorFlow持久化与可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment.html">TensorFlow模型部署</a></li>
+<li class="toctree-l1"><a class="reference internal" href="training.html">TensorFlow大规模训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="static.html">附录1：静态的TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="swift.html">附录2：TensorFlow for Swift</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reuse.html">附录3：TensorFlow预训练模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="probability.html">附录4：TensorFlow Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">附录5：TensorFlow环境配置与管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recommended_books.html">附录6：参考资料与推荐阅读</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../en/preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/installation.html">TensorFlow Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/basic.html">TensorFlow Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/models.html">TensorFlow Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/extended.html">TensorFlow Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/static.html">Appendix: Static TensorFlow</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">简单粗暴TensorFlow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>TensorFlow概述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/zh/introduction.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorflow">
+<h1>TensorFlow概述<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
+<p>当我们在说“我想要学习一个深度学习框架”，或者“我想学习TensorFlow”、“我想学习TensorFlow 2.0”的时候，我们究竟想要学到什么？事实上，对于不同群体，可能会有相当不同的预期。</p>
+<div class="section" id="id1">
+<h2>学生和研究者：模型的建立与训练<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>如果你是一个初学机器学习/深度学习的学生，你可能已经啃完了Andrew Ng的机器学习公开课或者斯坦福的 <a class="reference external" href="http://ufldl.stanford.edu/wiki/index.php/UFLDL_Tutorial">UFIDL Tutorial</a> ，亦或是正在上学校里的深度学习课程。你可能也已经了解了链式求导法则和梯度下降法，知道了若干种损失函数，并且对卷积神经网络（CNN）、循环神经网络（RNN）和强化学习的理论也有了一些大致的认识。然而——你依然不知道这些模型在计算机中具体要如何实现。这时，你希望能有一个程序库，帮助你把书本上的公式和算法运用于实践。</p>
+<p>具体而言，以最常见的有监督学习（supervised learning）为例。假设你已经掌握了一个模型 <span class="math notranslate nohighlight">\(\hat{y} = f(x, \theta)\)</span> （x、y为输入和输出， <span class="math notranslate nohighlight">\(\theta\)</span> 为模型参数），确定了一个损失函数 <span class="math notranslate nohighlight">\(L(y, \hat{y})\)</span> ，并获得了一批数据 <span class="math notranslate nohighlight">\(X\)</span>  和相对应的标签 <span class="math notranslate nohighlight">\(Y\)</span> 。这时，你会希望有一个程序库，帮助你实现下列事情：</p>
+<ul class="simple">
+<li>用计算机程序表示出向量、矩阵和张量等数学概念，并方便地进行运算；</li>
+<li>方便地建立模型 <span class="math notranslate nohighlight">\(f(x, \theta)\)</span> 和损失函数 <span class="math notranslate nohighlight">\(L(y, \hat{y}) = L(y, f(x, \theta))\)</span> 。给定输入 <span class="math notranslate nohighlight">\(x_0 \in X\)</span> ，对应的标签 <span class="math notranslate nohighlight">\(y_0 \in Y\)</span> 和当前迭代轮的参数值 <span class="math notranslate nohighlight">\(\theta_0\)</span> ，能够方便地计算出模型预测值 <span class="math notranslate nohighlight">\(\hat{y_0} = f(x_0, \theta_0)\)</span> ，并计算损失函数的值 <span class="math notranslate nohighlight">\(L_0 = L(y_0, \hat{y_0}) = L(y_0, f(x_0, \theta_0))\)</span> ；</li>
+<li>自动将损失函数 <span class="math notranslate nohighlight">\(L\)</span> 求已知 <span class="math notranslate nohighlight">\(x_0\)</span>、<span class="math notranslate nohighlight">\(y_0\)</span>、<span class="math notranslate nohighlight">\(\theta_0\)</span> 时对模型参数 <span class="math notranslate nohighlight">\(\theta\)</span> 的偏导数值，即计算 <span class="math notranslate nohighlight">\(\theta_0' = \frac{\partial L}{\partial \theta} |_{x = x_0, y = y_0, \theta = \theta_0}\)</span> ，无需人工推导求导结果（这意味着，这个程序库需要支持某种意义上的“符号计算”，表现在能够记录下运算的全过程，这样才能根据链式法则进行反向求导）；</li>
+<li>根据所求出的偏导数 <span class="math notranslate nohighlight">\(\theta_0'\)</span> 的值，方便地调用一些优化方法更新当前迭代轮的模型参数 <span class="math notranslate nohighlight">\(\theta_0\)</span> ，得到下一迭代轮的模型参数 <span class="math notranslate nohighlight">\(\theta_1\)</span> （比如梯度下降法， <span class="math notranslate nohighlight">\(\theta_1 = \theta_0 - \alpha \theta_0'\)</span> ， <span class="math notranslate nohighlight">\(\alpha\)</span> 为学习率）。</li>
+</ul>
+<p>更抽象一些地说，这个你所希望的程序库需要能做到：</p>
+<ul class="simple">
+<li>数学概念和运算的程序化表达；</li>
+<li>对任意可导函数 <span class="math notranslate nohighlight">\(f(x)\)</span> ，求在自变量 <span class="math notranslate nohighlight">\(x = x_0\)</span> 给定时的梯度 <span class="math notranslate nohighlight">\(\nabla f | _{x = x_0}\)</span> （“符号计算”的能力）。</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>开发者和工程师：模型的调用与部署<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>如果你是一位在IT行业沉淀多年的开发者或者工程师，你可能已经对大学期间学到的数学知识不再熟悉（“多元函数……求偏微分？那是什么东西？”）。然而，你可能希望在你的产品中加入一些与人工智能相关的功能，抑或需要将已有的深度学习模型部署到各种场景中。具体而言，包括：</p>
+<ul class="simple">
+<li>如何导出训练好的模型？</li>
+<li>如何在本机使用已有的预训练模型？</li>
+<li>如何在服务器、移动端、嵌入式设备甚至网页上高效运行模型？</li>
+<li>……</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>TensorFlow能帮助我们做什么？<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>TensorFlow可以为以上的这些需求提供完整的解决方案。具体而言，TensorFlow包含以下特性：</p>
+<ul class="simple">
+<li><strong>模型的建立与调试：</strong> 使用动态图模式Eager Execution和著名的神经网络高层API框架Keras，结合可视化工具TensorBoard，简易、快速地建立和调试模型；</li>
+<li><strong>模型的训练：</strong> 支持CPU/单GPU/单机多卡GPU/多机集群/TPU训练模型，充分利用海量数据和计算资源进行高效训练；</li>
+<li><strong>模型的部署：</strong> 通过TensorFlow Serving、TensorFlow Lite、TensorFlow.js等组件，使TensorFlow模型能够无缝地部署到服务器、移动端、嵌入式端和网页端等多种使用场景；</li>
+<li><strong>预训练模型调用：</strong> 通过TensorFlow Hub和Tensor2Tensor，可以方便地调用预训练完毕的已有成熟模型。</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="installation.html" class="btn btn-neutral float-right" title="TensorFlow安装" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="preface.html" class="btn btn-neutral" title="前言" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
