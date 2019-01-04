@@ -1,7 +1,7 @@
 TensorFlow安装
 ===================
 
-TensorFlow的最新安装步骤可参考官方网站上的说明（https://tensorflow.google.cn/install）。TensorFlow支持Python、Java、Go、C等多种编程语言以及Windows、OSX、Linux等多种操作系统，此处及后文均以主流的Python 3.6为准。
+TensorFlow的最新安装步骤可参考官方网站上的说明（https://tensorflow.google.cn/install）。TensorFlow支持Python、Java、Go、C等多种编程语言以及Windows、OSX、Linux等多种操作系统，此处及后文均以主流的Python 3.6为准。关于在容器环境中部署TensorFlow的方法，见附录中 :ref:`install_by_docker` 。
 
 ..
     .. tip:: 如果只是安装一个运行在自己电脑上的，**无需GPU加速计算** 的简易环境，不希望在环境配置上花费太多精力，可以按以下步骤简易安装（以Windows系统为例）：
@@ -35,17 +35,17 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 
 ::
 
-    conda install tensorflow-gpu    # TensorFlow GPU版本
+    conda install tensorflow-gpu    # TensorFlow GPU版本，需要具有NVIDIA显卡及正确安装驱动程序，详情见下
 
 .. tip:: 
 
-    1. 使用conda包管理器安装GPU版本的TensorFlow时，会自动安装对应版本的CUDA Toolkit和cuDNN；
+    1. 使用conda包管理器安装GPU版本的TensorFlow时，会自动安装对应版本的CUDA Toolkit和cuDNN。Anaconda也包含Python包管理器pip，但使用pip安装GPU版本的TensorFlow时将不会自动安装CUDA Toolkit和cuDNN，你需要按照 `TensorFlow官方网站上的说明 <https://www.tensorflow.org/install/gpu>`_ 进行手动安装；
     2. 在Windows下，需要打开开始菜单中的“Anaconda Prompt”进入Anaconda的命令行环境；
     3. 在国内，推荐使用 `清华大学开源软件镜像站的Anaconda镜像 <https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/>`_ ，将显著提高下载速度。
 
 .. admonition:: conda包管理器
 
-    conda包管理器是Anaconda自带的Python包管理器，可以帮助我们轻松地安装各种Python包（包括TensorFlow）。常用命令如下：
+    conda包管理器是Anaconda自带的包管理器，可以帮助我们轻松地安装各种Python包（包括TensorFlow）。常用命令如下：
 
     ::
 
@@ -65,6 +65,8 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
         conda deactivate                    # 退出当前的Python虚拟环境
         conda env remove --name [env-name]  # 删除名为[env-name]的Python虚拟环境
         conda env list                      # 列出所有Python虚拟环境
+
+.. _gpu_tensorflow:
 
 .. admonition:: GPU版本的TensorFlow
 

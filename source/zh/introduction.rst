@@ -33,3 +33,10 @@ TensorFlow概述
 TensorFlow能帮助我们做什么？
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+TensorFlow可以为以上的这些需求提供完整的解决方案。具体而言，TensorFlow包含以下特性：
+
+* **模型的建立与调试：** 使用动态图模式Eager Execution和著名的神经网络高层API框架Keras，结合可视化工具TensorBoard，简易、快速地建立和调试模型；
+* **模型的训练：** 支持CPU/单GPU/单机多卡GPU/多机集群/TPU训练模型，充分利用海量数据和计算资源进行高效训练；
+* **模型的部署：** 通过TensorFlow Serving、TensorFlow Lite、TensorFlow.js等组件，使TensorFlow模型能够无缝地部署到服务器、移动端、嵌入式端和网页端等多种使用场景；
+* **预训练模型调用：** 通过TensorFlow Hub和Tensor2Tensor，可以方便地调用预训练完毕的已有成熟模型。
+
