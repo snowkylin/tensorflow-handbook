@@ -26,6 +26,7 @@
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
     <link rel="next" title="前言" href="zh/preface.html" /> 
@@ -95,8 +96,9 @@
 <li class="toctree-l1"><a class="reference internal" href="zh/swift.html">附录2：TensorFlow for Swift</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/reuse.html">附录3：TensorFlow预训练模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/probability.html">附录4：TensorFlow Probability</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/config.html">附录5：TensorFlow环境配置与管理</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/recommended_books.html">附录6：参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/custom_op.html">附录5：TensorFlow自定义运算操作</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/config.html">附录6：TensorFlow环境配置与管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/recommended_books.html">附录7：参考资料与推荐阅读</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contents</span></p>
 <ul>
@@ -215,6 +217,7 @@
 <li class="toctree-l2"><a class="reference internal" href="zh/models.html#drl">深度强化学习（DRL）</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/models.html#custom-layer">自定义层 *</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/models.html#graph-execution">Graph Execution模式 *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/models.html#keras-sequential">Keras Sequential模式建立模型 *</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zh/extended.html">TensorFlow持久化与可视化</a><ul>
@@ -223,7 +226,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zh/deployment.html">TensorFlow模型部署</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="zh/deployment.html#id1">模型的导出</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/deployment.html#savedmodel">模型的导出：SavedModel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/deployment.html#tensorflow-serving">服务器部署模型：TensorFlow Serving</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/deployment.html#tensorflow-lite">移动/嵌入式端部署模型：TensorFlow Lite</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/deployment.html#tensorflow-js">网页端部署模型：TensorFlow.js</a></li>
@@ -231,7 +234,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zh/training.html">TensorFlow大规模训练</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zh/training.html#id1">分布式TensorFlow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/training.html#tputensorflow">TPU上的TensorFlow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/training.html#tputensorflow">使用TPU训练TensorFlow模型</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zh/static.html">附录1：静态的TensorFlow</a><ul>
@@ -246,13 +249,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zh/probability.html">附录4：TensorFlow Probability</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/config.html">附录5：TensorFlow环境配置与管理</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="zh/custom_op.html">附录5：TensorFlow自定义运算操作</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/config.html">附录6：TensorFlow环境配置与管理</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zh/config.html#gpu">GPU的使用与分配</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/config.html#dockertensorflow">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/config.html#colabtensorflow">在Colab中使用TensorFlow</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="zh/recommended_books.html">附录6：参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/recommended_books.html">附录7：参考资料与推荐阅读</a></li>
 </ul>
 </div>
 </td>

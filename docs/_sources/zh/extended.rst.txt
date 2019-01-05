@@ -7,7 +7,7 @@ TensorFlow持久化与可视化
     * `Python的特殊函数参数**kwargs <https://eastlakeside.gitbooks.io/interpy-zh/content/args_kwargs/Usage_kwargs.html>`_ （非必须）
 
 Checkpoint：变量的保存与恢复
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 很多时候，我们希望在模型训练完成后能将训练好的参数（变量）保存起来。在需要使用模型的其他地方载入模型和参数，就能直接得到训练好的模型。可能你第一个想到的是用Python的序列化模块 ``pickle`` 存储 ``model.variables``。但不幸的是，TensorFlow的变量类型 ``ResourceVariable`` 并不能被序列化。
 
@@ -87,7 +87,7 @@ Checkpoint：变量的保存与恢复
 
 
 TensorBoard：训练过程可视化
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. attention:: 目前，Eager Execution模式下的TensorBoard支持尚在 `tf.contrib.summary <https://www.tensorflow.org/api_docs/python/tf/contrib/summary>`_ 内，可能以后会有较多变化，因此这里只做简单示例。
 

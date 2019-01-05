@@ -1,4 +1,4 @@
-附录5：TensorFlow环境配置与管理
+附录6：TensorFlow环境配置与管理
 ============================================
 
 GPU的使用与分配
@@ -44,7 +44,7 @@ Graph Execution下，也可以在实例化新的session时传入 tf.ConfigPhoto 
 使用Docker部署TensorFlow环境
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. hint:: 本部分面向没有Docker经验的读者。对于已能熟练操作Docker的读者，可直接参考 `TensorFlow官方文档 <https://www.tensorflow.org/install/docker>`_ 进行部署。
+.. hint:: 本部分面向没有Docker经验的读者。对于已熟悉Docker的读者，可直接参考 `TensorFlow官方文档 <https://www.tensorflow.org/install/docker>`_ 进行部署。
 
 Docker是轻量级的容器（Container）环境，通过将程序放在虚拟的“容器”或者说“保护层”中运行，既避免了配置各种库、依赖和环境变量的麻烦，又克服了虚拟机资源占用多、启动慢的缺点。使用Docker部署TensorFlow的步骤如下：
 
@@ -80,7 +80,7 @@ Linux下通过以下命令启动Docker服务：
 
 ::
 
-    docker container run -it --rm tensorflow/tensorflow:latest-py3 bash
+    docker container run -it tensorflow/tensorflow:latest-py3 bash
 
 .. hint::  ``docker container run`` 命令的部分选项如下：
 
@@ -91,7 +91,7 @@ Linux下通过以下命令启动Docker服务：
 
     * ``--rm`` ：当容器中的进程运行完毕后自动删除容器。
     * ``tensorflow/tensorflow:latest-py3`` ：新容器基于的映像。如果本地不存在指定的映像，会自动从公有仓库下载。
-    * ``bash`` 在容器中运行的命令（进程）。
+    * ``bash`` 在容器中运行的命令（进程）。Bash是大多数Linux系统的默认Shell。
 
 **GPU版本的TensorFlow：**
 
@@ -99,11 +99,32 @@ Linux下通过以下命令启动Docker服务：
 
 .. warning:: 当前nvidia-docker仅支持Linux。
 
-安装完毕后，在 ``docker container run`` 命令中添加 ``--runtime=nvidia`` 选项，即：
+安装完毕后，在 ``docker container run`` 命令中添加 ``--runtime=nvidia`` 选项，并基于具有GPU支持的TensorFlow Docker映像启动容器即可，即：
 
 ::
 
-    docker container run -it --rm --runtime=nvidia tensorflow/tensorflow:latest-gpu-py3 bash
+    docker container run -it --runtime=nvidia tensorflow/tensorflow:latest-gpu-py3 bash
+
+.. admonition:: Docker常用命令
+
+    映像（image）相关操作：
+
+    ::
+
+        docker image pull [image_name]  # 从仓库中拉取映像[image_name]到本机 
+        docker image ls                 # 列出所有本地映像
+        docker image rm [image_name]    # 删除名为[image_name]的本地映像
+
+    容器（container）相关操作：
+
+    ::
+        
+        docker container run [image_name] [command] # 基于[image_name]映像建立并启动容器，并运行[command]
+        docker container ls                         # 列出本机正在运行的容器
+                                                    # （加入--all参数列出所有容器，包括已停止运行的容器）
+        docker container rm [container_id]          # 删除ID为[container_id]的容器
+
+    Docker入门教程可参考 `阮一峰的Docker入门教程 <http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html>`_ 和 `Docker Cheat Sheet <https://www.docker.com/sites/default/files/Docker_CheatSheet_08.09.2016_0.pdf>`_ 。
 
 在Colab中使用TensorFlow
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

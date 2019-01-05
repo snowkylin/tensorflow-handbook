@@ -15,32 +15,48 @@ TensorFlow模型
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ..  https://www.tensorflow.org/programmers_guide/eager
 
-如上一章所述，为了增强代码的可复用性，我们往往会将模型编写为类，然后在模型调用的地方使用 ``y_pred = model(X)`` 的形式进行调用。 **模型类** 的形式非常简单，主要包含 ``__init__()`` （构造函数，初始化）和 ``call(input)`` （模型调用）两个方法，但也可以根据需要增加自定义的方法。 [#call]_ 
+在TensorFlow中，推荐使用Keras构建模型。Keras是一个广为流行的高级神经网络API，简单、快速而不失灵活性，现已得到TensorFlow的官方内置和全面支持。
+
+Keras有两个重要的概念： **模型（Model）** 和 **层（Layer）** 。层将各种计算流程和变量进行了封装（例如基本的全连接层，CNN的卷积层、池化层等），而模型则将各种层进行组织和连接，并封装成一个整体，描述了如何将输入数据通过各种层以及运算而得到输出。在需要模型调用的时候，使用 ``y_pred = model(X)`` 的形式即可。Keras在 ``tf.keras.layers`` 下内置了深度学习中大量常用的的预定义层，同时也允许我们自定义层。
+
+Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 这个Python类来定义自己的模型。在继承类中，我们需要重写 ``__init__()`` （构造函数，初始化）和 ``call(input)`` （模型调用）两个方法，同时也可以根据需要增加自定义的方法。
 
 .. code-block:: python
 
     class MyModel(tf.keras.Model):
         def __init__(self):
             super().__init__()     # Python 2 下使用 super(MyModel, self).__init__()
-            # 此处添加初始化代码（包含call方法中会用到的层）
+            # 此处添加初始化代码（包含call方法中会用到的层），例如
+            # layer1 = tf.keras.layers.BuiltInLayer(...)
+            # layer2 = MyCustomLayer(...)
 
-        def call(self, inputs):
-            # 此处添加模型调用的代码（处理输入并返回输出）
+        def call(self, input):
+            # 此处添加模型调用的代码（处理输入并返回输出），例如
+            # x = layer1(input)
+            # output = layer2(x)
             return output
 
-在这里，我们的模型类继承了 ``tf.keras.Model`` 。Keras是一个用Python编写的高级神经网络API，现已得到TensorFlow的官方支持和内置。继承 ``tf.keras.Model`` 的一个好处在于我们可以使用父类的若干方法和属性，例如在实例化类后可以通过 ``model.variables`` 这一属性直接获得模型中的所有变量，免去我们一个个显式指定变量的麻烦。
+        # 还可以添加自定义的方法
 
-同时，我们引入 **“层”（Layer）** 的概念，层可以视为比模型粒度更细的组件单位，将计算流程和变量进行了封装。我们可以使用层来快速搭建模型。
+.. figure:: ../_static/image/model/model.png
+    :width: 50%
+    :align: center
+
+    Keras模型类定义示意图
+
+.. hint:: 继承 ``tf.keras.Model`` 后，我们同时可以使用父类的若干方法和属性，例如在实例化类 ``model = Model()`` 后，可以通过 ``model.variables`` 这一属性直接获得模型中的所有变量，免去我们一个个显式指定变量的麻烦。
 
 上一章中简单的线性模型 ``y_pred = tf.matmul(X, w) + b`` ，我们可以通过模型类的方式编写如下：
 
 .. literalinclude:: ../_static/code/zh/model/linear/linear.py
 
-这里，我们没有显式地声明 ``w`` 和 ``b`` 两个变量并写出 ``y_pred = tf.matmul(X, w) + b`` 这一线性变换，而是在初始化部分实例化了一个全连接层（ ``tf.keras.layers.Dense`` ），并在call方法中对这个层进行调用。全连接层封装了 ``output = activation(tf.matmul(input, kernel) + bias)`` 这一线性变换+激活函数的计算操作，以及 ``kernel`` 和 ``bias`` 两个变量。当不指定激活函数时（即 ``activation(x) = x`` ），这个全连接层就等价于我们上述的线性变换。顺便一提，全连接层可能是我们编写模型时使用最频繁的层。
+这里，我们没有显式地声明 ``w`` 和 ``b`` 两个变量并写出 ``y_pred = tf.matmul(X, w) + b`` 这一线性变换，而是在初始化部分实例化了一个全连接层（ ``tf.keras.layers.Dense`` ），并在call方法中对这个层进行调用。全连接层封装了 ``output = activation(tf.matmul(input, kernel) + bias)`` 这一线性变换+激活函数的计算操作，以及 ``kernel`` 和 ``bias`` 两个变量。当不指定激活函数时（即 ``activation(x) = x`` ），这个全连接层即为 ``output = tf.matmul(input, kernel) + bias`` ，可见等价于我们上述的线性变换。顺便一提，全连接层可能是我们编写模型时使用最频繁的层。
 
-如果我们需要显式地声明自己的变量并使用变量进行自定义运算，请参考 :ref:`自定义层 <custom_layer>`。
+如果需要显式地声明自己的变量并使用变量进行自定义运算，或者希望了解Keras层的内部原理，请参考 :ref:`自定义层 <custom_layer>`。
 
-.. [#call] 在Python类中，对类的实例 ``myClass`` 进行形如 ``myClass()`` 的调用等价于 ``myClass.__call__()`` 。在这里，我们的模型继承了 ``tf.keras.Model`` 这一父类。该父类中包含 ``__call__()`` 的定义，其中调用了 ``call()`` 方法，同时进行了一些keras的内部操作。这里，我们通过继承 ``tf.keras.Model`` 并重载 ``call()`` 方法，即可在保持keras结构的同时加入模型调用的代码。具体请见本章初“前置知识”的 ``__call__()`` 部分。
+.. admonition:: 为什么是重载 ``call()`` 方法而不是  ``__call__()`` 方法？
+
+    在Python中，对类的实例 ``myClass`` 进行形如 ``myClass()`` 的调用等价于 ``myClass.__call__()`` （具体请见本章初“前置知识”的 ``__call__()`` 部分）。那么看起来，为了使用 ``y_pred = model(X)`` 的形式调用模型类，应该重写 ``__call__()`` 方法才对呀？原因是Keras在模型调用的前后还需要有一些自己的内部操作，所以暴露出一个专门用于重载的 ``call()`` 方法。 ``tf.keras.Model`` 这一父类已经包含 ``__call__()`` 的定义。 ``__call__()`` 中主要调用了 ``call()`` 方法，同时还需要在进行一些keras的内部操作。这里，我们通过继承 ``tf.keras.Model`` 并重载 ``call()`` 方法，即可在保持keras结构的同时加入模型调用的代码。
 
 .. _mlp:
 
@@ -322,6 +338,9 @@ Graph Execution模式 *
     :lines: 48-59
 
 .. [#rnn_exception] 除了本章实现的RNN模型以外。在RNN模型的实现中，我们通过Eager Execution动态获取了seq_length的长度，使得我们可以方便地动态控制RNN的展开长度。然而Graph Execution不支持这一点，为了达到相同的效果，我们需要固定seq_length的长度，或者使用 ``tf.nn.dynamic_rnn`` （ `文档 <https://www.tensorflow.org/api_docs/python/tf/nn/dynamic_rnn>`_ ）。
+
+Keras Sequential模式建立模型 *
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. [LeCun1998] Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. "Gradient-based learning applied to document recognition." Proceedings of the IEEE, 86(11):2278-2324, November 1998. http://yann.lecun.com/exdb/mnist/
 .. [Graves2013] Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.

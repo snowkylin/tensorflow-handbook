@@ -26,6 +26,7 @@
 
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="TensorFlow持久化与可视化" href="extended.html" />
@@ -96,6 +97,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#drl">深度强化学习（DRL）</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#custom-layer">自定义层 *</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#graph-execution">Graph Execution模式 *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keras-sequential">Keras Sequential模式建立模型 *</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="extended.html">TensorFlow持久化与可视化</a></li>
@@ -105,8 +107,9 @@
 <li class="toctree-l1"><a class="reference internal" href="swift.html">附录2：TensorFlow for Swift</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reuse.html">附录3：TensorFlow预训练模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="probability.html">附录4：TensorFlow Probability</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">附录5：TensorFlow环境配置与管理</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recommended_books.html">附录6：参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_op.html">附录5：TensorFlow自定义运算操作</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">附录6：TensorFlow环境配置与管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recommended_books.html">附录7：参考资料与推荐阅读</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contents</span></p>
 <ul>
@@ -192,19 +195,33 @@
 </div>
 <div class="section" id="model-layer">
 <h2>模型（Model）与层（Layer）<a class="headerlink" href="#model-layer" title="永久链接至标题">¶</a></h2>
-<p>如上一章所述，为了增强代码的可复用性，我们往往会将模型编写为类，然后在模型调用的地方使用 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">model(X)</span></code> 的形式进行调用。 <strong>模型类</strong> 的形式非常简单，主要包含 <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> （构造函数，初始化）和 <code class="docutils literal notranslate"><span class="pre">call(input)</span></code> （模型调用）两个方法，但也可以根据需要增加自定义的方法。 <a class="footnote-reference" href="#id2" id="id1">[1]</a></p>
+<p>在TensorFlow中，推荐使用Keras构建模型。Keras是一个广为流行的高级神经网络API，简单、快速而不失灵活性，现已得到TensorFlow的官方内置和全面支持。</p>
+<p>Keras有两个重要的概念： <strong>模型（Model）</strong> 和 <strong>层（Layer）</strong> 。层将各种计算流程和变量进行了封装（例如基本的全连接层，CNN的卷积层、池化层等），而模型则将各种层进行组织和连接，并封装成一个整体，描述了如何将输入数据通过各种层以及运算而得到输出。在需要模型调用的时候，使用 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">model(X)</span></code> 的形式即可。Keras在 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code> 下内置了深度学习中大量常用的的预定义层，同时也允许我们自定义层。</p>
+<p>Keras模型以类的形式呈现，我们可以通过继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 这个Python类来定义自己的模型。在继承类中，我们需要重写 <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> （构造函数，初始化）和 <code class="docutils literal notranslate"><span class="pre">call(input)</span></code> （模型调用）两个方法，同时也可以根据需要增加自定义的方法。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>     <span class="c1"># Python 2 下使用 super(MyModel, self).__init__()</span>
-        <span class="c1"># 此处添加初始化代码（包含call方法中会用到的层）</span>
+        <span class="c1"># 此处添加初始化代码（包含call方法中会用到的层），例如</span>
+        <span class="c1"># layer1 = tf.keras.layers.BuiltInLayer(...)</span>
+        <span class="c1"># layer2 = MyCustomLayer(...)</span>
 
-    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
-        <span class="c1"># 此处添加模型调用的代码（处理输入并返回输出）</span>
+    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+        <span class="c1"># 此处添加模型调用的代码（处理输入并返回输出），例如</span>
+        <span class="c1"># x = layer1(input)</span>
+        <span class="c1"># output = layer2(x)</span>
         <span class="k">return</span> <span class="n">output</span>
+
+    <span class="c1"># 还可以添加自定义的方法</span>
 </pre></div>
 </div>
-<p>在这里，我们的模型类继承了 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 。Keras是一个用Python编写的高级神经网络API，现已得到TensorFlow的官方支持和内置。继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的一个好处在于我们可以使用父类的若干方法和属性，例如在实例化类后可以通过 <code class="docutils literal notranslate"><span class="pre">model.variables</span></code> 这一属性直接获得模型中的所有变量，免去我们一个个显式指定变量的麻烦。</p>
-<p>同时，我们引入 <strong>“层”（Layer）</strong> 的概念，层可以视为比模型粒度更细的组件单位，将计算流程和变量进行了封装。我们可以使用层来快速搭建模型。</p>
+<div class="figure align-center" id="id18">
+<a class="reference internal image-reference" href="../_images/model.png"><img alt="../_images/model.png" src="../_images/model.png" style="width: 50%;" /></a>
+<p class="caption"><span class="caption-text">Keras模型类定义示意图</span></p>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">提示</p>
+<p class="last">继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 后，我们同时可以使用父类的若干方法和属性，例如在实例化类 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">Model()</span></code> 后，可以通过 <code class="docutils literal notranslate"><span class="pre">model.variables</span></code> 这一属性直接获得模型中的所有变量，免去我们一个个显式指定变量的麻烦。</p>
+</div>
 <p>上一章中简单的线性模型 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">tf.matmul(X,</span> <span class="pre">w)</span> <span class="pre">+</span> <span class="pre">b</span></code> ，我们可以通过模型类的方式编写如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="n">tf</span><span class="o">.</span><span class="n">enable_eager_execution</span><span class="p">()</span>
@@ -236,17 +253,15 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>这里，我们没有显式地声明 <code class="docutils literal notranslate"><span class="pre">w</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 两个变量并写出 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">tf.matmul(X,</span> <span class="pre">w)</span> <span class="pre">+</span> <span class="pre">b</span></code> 这一线性变换，而是在初始化部分实例化了一个全连接层（ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），并在call方法中对这个层进行调用。全连接层封装了 <code class="docutils literal notranslate"><span class="pre">output</span> <span class="pre">=</span> <span class="pre">activation(tf.matmul(input,</span> <span class="pre">kernel)</span> <span class="pre">+</span> <span class="pre">bias)</span></code> 这一线性变换+激活函数的计算操作，以及 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 两个变量。当不指定激活函数时（即 <code class="docutils literal notranslate"><span class="pre">activation(x)</span> <span class="pre">=</span> <span class="pre">x</span></code> ），这个全连接层就等价于我们上述的线性变换。顺便一提，全连接层可能是我们编写模型时使用最频繁的层。</p>
-<p>如果我们需要显式地声明自己的变量并使用变量进行自定义运算，请参考 <a class="reference internal" href="#custom-layer"><span class="std std-ref">自定义层</span></a>。</p>
-<table class="docutils footnote" frame="void" id="id2" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>在Python类中，对类的实例 <code class="docutils literal notranslate"><span class="pre">myClass</span></code> 进行形如 <code class="docutils literal notranslate"><span class="pre">myClass()</span></code> 的调用等价于 <code class="docutils literal notranslate"><span class="pre">myClass.__call__()</span></code> 。在这里，我们的模型继承了 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 这一父类。该父类中包含 <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> 的定义，其中调用了 <code class="docutils literal notranslate"><span class="pre">call()</span></code> 方法，同时进行了一些keras的内部操作。这里，我们通过继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 并重载 <code class="docutils literal notranslate"><span class="pre">call()</span></code> 方法，即可在保持keras结构的同时加入模型调用的代码。具体请见本章初“前置知识”的 <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> 部分。</td></tr>
-</tbody>
-</table>
+<p>这里，我们没有显式地声明 <code class="docutils literal notranslate"><span class="pre">w</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 两个变量并写出 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">tf.matmul(X,</span> <span class="pre">w)</span> <span class="pre">+</span> <span class="pre">b</span></code> 这一线性变换，而是在初始化部分实例化了一个全连接层（ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），并在call方法中对这个层进行调用。全连接层封装了 <code class="docutils literal notranslate"><span class="pre">output</span> <span class="pre">=</span> <span class="pre">activation(tf.matmul(input,</span> <span class="pre">kernel)</span> <span class="pre">+</span> <span class="pre">bias)</span></code> 这一线性变换+激活函数的计算操作，以及 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 两个变量。当不指定激活函数时（即 <code class="docutils literal notranslate"><span class="pre">activation(x)</span> <span class="pre">=</span> <span class="pre">x</span></code> ），这个全连接层即为 <code class="docutils literal notranslate"><span class="pre">output</span> <span class="pre">=</span> <span class="pre">tf.matmul(input,</span> <span class="pre">kernel)</span> <span class="pre">+</span> <span class="pre">bias</span></code> ，可见等价于我们上述的线性变换。顺便一提，全连接层可能是我们编写模型时使用最频繁的层。</p>
+<p>如果需要显式地声明自己的变量并使用变量进行自定义运算，或者希望了解Keras层的内部原理，请参考 <a class="reference internal" href="#custom-layer"><span class="std std-ref">自定义层</span></a>。</p>
+<div class="admonition-call-call admonition">
+<p class="first admonition-title">为什么是重载 <code class="docutils literal notranslate"><span class="pre">call()</span></code> 方法而不是  <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> 方法？</p>
+<p class="last">在Python中，对类的实例 <code class="docutils literal notranslate"><span class="pre">myClass</span></code> 进行形如 <code class="docutils literal notranslate"><span class="pre">myClass()</span></code> 的调用等价于 <code class="docutils literal notranslate"><span class="pre">myClass.__call__()</span></code> （具体请见本章初“前置知识”的 <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> 部分）。那么看起来，为了使用 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">model(X)</span></code> 的形式调用模型类，应该重写 <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> 方法才对呀？原因是Keras在模型调用的前后还需要有一些自己的内部操作，所以暴露出一个专门用于重载的 <code class="docutils literal notranslate"><span class="pre">call()</span></code> 方法。 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 这一父类已经包含 <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> 的定义。 <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> 中主要调用了 <code class="docutils literal notranslate"><span class="pre">call()</span></code> 方法，同时还需要在进行一些keras的内部操作。这里，我们通过继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 并重载 <code class="docutils literal notranslate"><span class="pre">call()</span></code> 方法，即可在保持keras结构的同时加入模型调用的代码。</p>
+</div>
 </div>
 <div class="section" id="mlp">
-<span id="id3"></span><h2>基础示例：多层感知机（MLP）<a class="headerlink" href="#mlp" title="永久链接至标题">¶</a></h2>
+<span id="id1"></span><h2>基础示例：多层感知机（MLP）<a class="headerlink" href="#mlp" title="永久链接至标题">¶</a></h2>
 <p>我们从编写一个最简单的 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8">多层感知机</a> （Multilayer Perceptron, MLP），或者说“多层全连接神经网络”开始，介绍TensorFlow的模型编写方式。</p>
 <div class="admonition- admonition">
 <p class="first admonition-title">基础知识和原理</p>
@@ -255,8 +270,8 @@
 <li>斯坦福课程 <a class="reference external" href="http://cs231n.github.io/">CS231n: Convolutional Neural Networks for Visual Recognition</a> 中的“Neural Networks Part 1 ~ 3”部分。</li>
 </ul>
 </div>
-<p>这里，我们使用多层感知机完成MNIST手写体数字图片数据集 <a class="reference internal" href="#lecun1998" id="id6">[LeCun1998]</a> 的分类任务。</p>
-<div class="figure align-center" id="id20">
+<p>这里，我们使用多层感知机完成MNIST手写体数字图片数据集 <a class="reference internal" href="#lecun1998" id="id4">[LeCun1998]</a> 的分类任务。</p>
+<div class="figure align-center" id="id19">
 <img alt="../_images/mnist_0-91.png" src="../_images/mnist_0-91.png" />
 <p class="caption"><span class="caption-text">MNIST手写体数字图片示例</span></p>
 </div>
@@ -345,7 +360,7 @@
 </ul>
 </div>
 <p>具体的实现见下，和MLP很类似，只是新加入了一些卷积层和池化层。</p>
-<div class="figure align-center" id="id21">
+<div class="figure align-center" id="id20">
 <img alt="../_images/cnn1.png" src="../_images/cnn1.png" />
 <p class="caption"><span class="caption-text">CNN结构图示</span></p>
 </div>
@@ -401,10 +416,10 @@
 <li><a class="reference external" href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">Recurrent Neural Networks Tutorial, Part 1 – Introduction to RNNs</a></li>
 <li>台湾大学李宏毅教授的《机器学习》课程的 <a class="reference external" href="https://www.bilibili.com/video/av10590361/?p=36">Recurrent Neural Network (part 1)</a> <a class="reference external" href="https://www.bilibili.com/video/av10590361/?p=37">Recurrent Neural Network (part 2)</a> 两部分。</li>
 <li>LSTM原理：<a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></li>
-<li>RNN序列生成：<a class="reference internal" href="#graves2013" id="id10">[Graves2013]</a></li>
+<li>RNN序列生成：<a class="reference internal" href="#graves2013" id="id8">[Graves2013]</a></li>
 </ul>
 </div>
-<p>这里，我们使用RNN来进行尼采风格文本的自动生成。 <a class="footnote-reference" href="#rnn-reference" id="id11">[2]</a></p>
+<p>这里，我们使用RNN来进行尼采风格文本的自动生成。 <a class="footnote-reference" href="#rnn-reference" id="id9">[1]</a></p>
 <p>这个任务的本质其实预测一段英文文本的接续字母的概率分布。比如，我们有以下句子:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">I</span> <span class="n">am</span> <span class="n">a</span> <span class="n">studen</span>
 </pre></div>
@@ -433,11 +448,11 @@
 </pre></div>
 </div>
 <p>接下来进行模型的实现。在 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 方法中我们实例化一个常用的 <code class="docutils literal notranslate"><span class="pre">BasicLSTMCell</span></code> 单元，以及一个线性变换用的全连接层，我们首先对序列进行One Hot操作，即将编码i变换为一个n维向量，其第i位为1，其余均为0。这里n为字符种类数num_char。变换后的序列张量形状为[num_batch, seq_length, num_chars]。接下来，我们将序列从头到尾依序送入RNN单元，即将当前时间t的RNN单元状态 <code class="docutils literal notranslate"><span class="pre">state</span></code> 和t时刻的序列 <code class="docutils literal notranslate"><span class="pre">inputs[:,</span> <span class="pre">t,</span> <span class="pre">:]</span></code> 送入RNN单元，得到当前时间的输出 <code class="docutils literal notranslate"><span class="pre">output</span></code> 和下一个时间t+1的RNN单元状态。取RNN单元最后一次的输出，通过全连接层变换到num_chars维，即作为模型的输出。</p>
-<div class="figure align-center" id="id22">
+<div class="figure align-center" id="id21">
 <a class="reference internal image-reference" href="../_images/rnn_single1.jpg"><img alt="../_images/rnn_single1.jpg" src="../_images/rnn_single1.jpg" style="width: 30%;" /></a>
 <p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">output,</span> <span class="pre">state</span> <span class="pre">=</span> <span class="pre">self.cell(inputs[:,</span> <span class="pre">t,</span> <span class="pre">:],</span> <span class="pre">state)</span></code> 图示</span></p>
 </div>
-<div class="figure align-center" id="id23">
+<div class="figure align-center" id="id22">
 <a class="reference internal image-reference" href="../_images/rnn1.jpg"><img alt="../_images/rnn1.jpg" src="../_images/rnn1.jpg" style="width: 50%;" /></a>
 <p class="caption"><span class="caption-text">RNN流程图示</span></p>
 </div>
@@ -527,7 +542,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <table class="docutils footnote" frame="void" id="rnn-reference" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id11">[2]</a></td><td>此处的任务及实现参考了 <a class="reference external" href="https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py">https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id9">[1]</a></td><td>此处的任务及实现参考了 <a class="reference external" href="https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py">https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py</a></td></tr>
 </tbody>
 </table>
 </div>
@@ -538,11 +553,11 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <p class="first admonition-title">基础知识和原理</p>
 <ul class="last simple">
 <li><a class="reference external" href="https://ai.intel.com/demystifying-deep-reinforcement-learning/">Demystifying Deep Reinforcement Learning</a> （<a class="reference external" href="https://snowkylin.github.io/rl/2017/01/04/Reinforcement-Learning.html">中文编译</a>）</li>
-<li><a class="reference internal" href="#mnih2013" id="id14">[Mnih2013]</a></li>
+<li><a class="reference internal" href="#mnih2013" id="id12">[Mnih2013]</a></li>
 </ul>
 </div>
 <p>这里，我们使用深度强化学习玩CartPole（平衡杆）游戏。简单说，我们需要让模型控制杆的左右运动，以让其一直保持竖直平衡状态。</p>
-<div class="figure align-center" id="id24">
+<div class="figure align-center" id="id23">
 <a class="reference internal image-reference" href="../_images/cartpole1.gif"><img alt="../_images/cartpole1.gif" src="../_images/cartpole1.gif" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">CartPole游戏</span></p>
 </div>
@@ -646,7 +661,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </div>
 </div>
 <div class="section" id="custom-layer">
-<span id="id17"></span><h2>自定义层 *<a class="headerlink" href="#custom-layer" title="永久链接至标题">¶</a></h2>
+<span id="id15"></span><h2>自定义层 *<a class="headerlink" href="#custom-layer" title="永久链接至标题">¶</a></h2>
 <p>可能你还会问，如果现有的这些层无法满足我的要求，我需要定义自己的层怎么办？</p>
 <p>事实上，我们不仅可以继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 编写自己的模型类，也可以继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 编写自己的层。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyLayer</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
@@ -696,7 +711,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </div>
 <div class="section" id="graph-execution">
 <h2>Graph Execution模式 *<a class="headerlink" href="#graph-execution" title="永久链接至标题">¶</a></h2>
-<p>事实上，只要在编写模型的时候稍加注意，以上的模型都是可以同时兼容Eager Execution模式和Graph Execution模式的 <a class="footnote-reference" href="#rnn-exception" id="id18">[3]</a> 。注意，在Graph Execution模式下， <code class="docutils literal notranslate"><span class="pre">model(input_tensor)</span></code> 只需运行一次以完成图的建立操作。</p>
+<p>事实上，只要在编写模型的时候稍加注意，以上的模型都是可以同时兼容Eager Execution模式和Graph Execution模式的 <a class="footnote-reference" href="#rnn-exception" id="id16">[2]</a> 。注意，在Graph Execution模式下， <code class="docutils literal notranslate"><span class="pre">model(input_tensor)</span></code> 只需运行一次以完成图的建立操作。</p>
 <p>例如，通过以下代码，同样可以调用 <a class="reference internal" href="#linear"><span class="std std-ref">本章第一节</span></a> 建立的线性模型并进行线性回归：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">model</span> <span class="o">=</span> <span class="n">Linear</span><span class="p">()</span>
     <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
@@ -715,13 +730,16 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <table class="docutils footnote" frame="void" id="rnn-exception" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id18">[3]</a></td><td>除了本章实现的RNN模型以外。在RNN模型的实现中，我们通过Eager Execution动态获取了seq_length的长度，使得我们可以方便地动态控制RNN的展开长度。然而Graph Execution不支持这一点，为了达到相同的效果，我们需要固定seq_length的长度，或者使用 <code class="docutils literal notranslate"><span class="pre">tf.nn.dynamic_rnn</span></code> （ <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/nn/dynamic_rnn">文档</a> ）。</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id16">[2]</a></td><td>除了本章实现的RNN模型以外。在RNN模型的实现中，我们通过Eager Execution动态获取了seq_length的长度，使得我们可以方便地动态控制RNN的展开长度。然而Graph Execution不支持这一点，为了达到相同的效果，我们需要固定seq_length的长度，或者使用 <code class="docutils literal notranslate"><span class="pre">tf.nn.dynamic_rnn</span></code> （ <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/nn/dynamic_rnn">文档</a> ）。</td></tr>
 </tbody>
 </table>
+</div>
+<div class="section" id="keras-sequential">
+<h2>Keras Sequential模式建立模型 *<a class="headerlink" href="#keras-sequential" title="永久链接至标题">¶</a></h2>
 <table class="docutils citation" frame="void" id="lecun1998" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id6">[LeCun1998]</a></td><td><ol class="first last upperalpha simple" start="25">
+<tr><td class="label"><a class="fn-backref" href="#id4">[LeCun1998]</a></td><td><ol class="first last upperalpha simple" start="25">
 <li>LeCun, L. Bottou, Y. Bengio, and P. Haffner. “Gradient-based learning applied to document recognition.” Proceedings of the IEEE, 86(11):2278-2324, November 1998. <a class="reference external" href="http://yann.lecun.com/exdb/mnist/">http://yann.lecun.com/exdb/mnist/</a></li>
 </ol>
 </td></tr>
@@ -730,13 +748,13 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <table class="docutils citation" frame="void" id="graves2013" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id10">[Graves2013]</a></td><td>Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id8">[Graves2013]</a></td><td>Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.</td></tr>
 </tbody>
 </table>
 <table class="docutils citation" frame="void" id="mnih2013" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id14">[Mnih2013]</a></td><td>Mnih, Volodymyr, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. “Playing Atari with Deep Reinforcement Learning.” ArXiv:1312.5602 [Cs], December 19, 2013. http://arxiv.org/abs/1312.5602.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id12">[Mnih2013]</a></td><td>Mnih, Volodymyr, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. “Playing Atari with Deep Reinforcement Learning.” ArXiv:1312.5602 [Cs], December 19, 2013. http://arxiv.org/abs/1312.5602.</td></tr>
 </tbody>
 </table>
 </div>
