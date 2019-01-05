@@ -26,6 +26,7 @@
 
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="TensorFlow大规模训练" href="training.html" />
@@ -91,7 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="models.html">TensorFlow模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extended.html">TensorFlow持久化与可视化</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow模型部署</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">模型的导出</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#savedmodel">模型的导出：SavedModel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tensorflow-serving">服务器部署模型：TensorFlow Serving</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tensorflow-lite">移动/嵌入式端部署模型：TensorFlow Lite</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tensorflow-js">网页端部署模型：TensorFlow.js</a></li>
@@ -102,8 +103,9 @@
 <li class="toctree-l1"><a class="reference internal" href="swift.html">附录2：TensorFlow for Swift</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reuse.html">附录3：TensorFlow预训练模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="probability.html">附录4：TensorFlow Probability</a></li>
-<li class="toctree-l1"><a class="reference internal" href="config.html">附录5：TensorFlow环境配置与管理</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recommended_books.html">附录6：参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_op.html">附录5：TensorFlow自定义运算操作</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">附录6：TensorFlow环境配置与管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recommended_books.html">附录7：参考资料与推荐阅读</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contents</span></p>
 <ul>
@@ -179,8 +181,8 @@
             
   <div class="section" id="tensorflow">
 <h1>TensorFlow模型部署<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
-<div class="section" id="id1">
-<h2>模型的导出<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<div class="section" id="savedmodel">
+<h2>模型的导出：SavedModel<a class="headerlink" href="#savedmodel" title="永久链接至标题">¶</a></h2>
 </div>
 <div class="section" id="tensorflow-serving">
 <h2>服务器部署模型：TensorFlow Serving<a class="headerlink" href="#tensorflow-serving" title="永久链接至标题">¶</a></h2>

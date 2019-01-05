@@ -35,7 +35,9 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 
 ::
 
-    conda install tensorflow-gpu    # TensorFlow GPU版本，需要具有NVIDIA显卡及正确安装驱动程序，详情见下
+    conda install tensorflow-gpu    # TensorFlow GPU版本，需要具有NVIDIA显卡及正确安装驱动程序，详见下文
+
+等待片刻即安装完毕。
 
 .. tip:: 
 
