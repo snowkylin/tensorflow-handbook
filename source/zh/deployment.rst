@@ -3,6 +3,7 @@ TensorFlow模型部署
 
 模型的导出：SavedModel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TODO: 2.0 eager + Keras Sequential save model way
 
 模型的导出：Keras Sequential save方法
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
