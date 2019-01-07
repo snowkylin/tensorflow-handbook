@@ -150,9 +150,9 @@ TensorFlow的 **Eager Execution（动态图）模式** [#f4]_ 与上述NumPy的�
 
 在这里，我们使用了前文的方式计算了损失函数关于参数的偏导数。同时，使用 ``tf.train.GradientDescentOptimizer(learning_rate=1e-3)`` 声明了一个梯度下降 **优化器** （Optimizer），其学习率为1e-3。优化器可以帮助我们根据计算出的求导结果更新模型参数，从而最小化某个特定的损失函数，具体使用方式是调用其 ``apply_gradients()`` 方法。
 
-注意到这里，更新模型参数的方法 ``optimizer.apply_gradients()`` 需要提供参数 ``grads_and_vars``，即待更新的变量（如上述代码中的 ``variables`` ）及损失函数关于这些变量的偏导数（如上述代码中的 ``grads`` ）。具体而言，这里需要传入一个Python列表（List），列表中的每个元素是一个（变量的偏导数，变量）对。比如这里是 ``[(grad_w, w), (grad_b, b)]`` 。我们通过 ``grads = tape.gradient(loss, variables)`` 求出tape中记录的 ``loss`` 关于 ``variables = [w, b]`` 中每个变量的偏导数，也就是 ``grads = [grad_w, grad_b]``，再使用Python的 ``zip()`` 函数将 ``grads = [grad_w, grad_b]`` 和 ``vars = [w, b]`` 拼装在一起，就可以组合出所需的参数了。
+注意到这里，更新模型参数的方法 ``optimizer.apply_gradients()`` 需要提供参数 ``grads_and_vars``，即待更新的变量（如上述代码中的 ``variables`` ）及损失函数关于这些变量的偏导数（如上述代码中的 ``grads`` ）。具体而言，这里需要传入一个Python列表（List），列表中的每个元素是一个（变量的偏导数，变量）对。比如这里是 ``[(grad_a, a), (grad_b, b)]`` 。我们通过 ``grads = tape.gradient(loss, variables)`` 求出tape中记录的 ``loss`` 关于 ``variables = [a, b]`` 中每个变量的偏导数，也就是 ``grads = [grad_a, grad_b]``，再使用Python的 ``zip()`` 函数将 ``grads = [grad_a, grad_b]`` 和 ``variables = [a, b]`` 拼装在一起，就可以组合出所需的参数了。
 
-在实际应用中，我们编写的模型往往比这里一行就能写完的线性模型 ``y_pred = tf.matmul(X, w) + b`` 要复杂得多。所以，我们往往会编写一个模型类，然后在需要调用的时候使用 ``y_pred = model(X)`` 进行调用。关于模型类的编写方式可见 :doc:`下章 <models>`。
+.. hint:: 在实际应用中，我们编写的模型往往比这里一行就能写完的线性模型 ``y_pred = a * X + b`` （模型参数为 ``variables = [a, b]`` ）要复杂得多。所以，我们往往会编写并实例化一个模型类 ``model = Model()`` ，然后使用 ``y_pred = model(X)`` 调用模型，使用 ``model.variables`` 获取模型参数。关于模型类的编写方式可见 :doc:`"TensorFlow模型"一章 <models>`。
 
 ..
     本章小结
