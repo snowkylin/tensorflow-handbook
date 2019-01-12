@@ -11,7 +11,7 @@ Checkpoint：变量的保存与恢复
 
 很多时候，我们希望在模型训练完成后能将训练好的参数（变量）保存起来。在需要使用模型的其他地方载入模型和参数，就能直接得到训练好的模型。可能你第一个想到的是用Python的序列化模块 ``pickle`` 存储 ``model.variables``。但不幸的是，TensorFlow的变量类型 ``ResourceVariable`` 并不能被序列化。
 
-好在TensorFlow提供了 `tf.train.Checkpoint <https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint>`_ 这一强大的变量保存与恢复类，可以使用其 ``save()`` 和 ``restore()`` 方法将TensorFlow中所有包含Checkpointable State的对象进行保存和恢复。具体而言，``tf.train.Optimizer`` 实现, ``tf.Variable``, ``tf.keras.Layer`` 实现或者 ``tf.keras.Model`` 实现都可以被保存。其使用方法非常简单，我们首先声明一个Checkpoint：
+好在TensorFlow提供了 `tf.train.Checkpoint <https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint>`_ 这一强大的变量保存与恢复类，可以使用其 ``save()`` 和 ``restore()`` 方法将TensorFlow中所有包含Checkpointable State的对象进行保存和恢复。具体而言，``tf.train.Optimizer`` 、 ``tf.Variable`` 、 ``tf.keras.Layer`` 或者 ``tf.keras.Model`` 实例都可以被保存。其使用方法非常简单，我们首先声明一个Checkpoint：
 
 .. code-block:: python
 

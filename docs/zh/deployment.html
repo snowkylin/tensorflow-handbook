@@ -92,11 +92,14 @@
 <li class="toctree-l1"><a class="reference internal" href="models.html">TensorFlow模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extended.html">TensorFlow持久化与可视化</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow模型部署</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#savedmodel">模型的导出：SavedModel</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#keras-sequential-save">模型的导出：Keras Sequential save方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">模型的导出</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#savedmodel">SavedModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keras-sequential-save">Keras Sequential save方法</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#tensorflow-serving">服务器部署模型：TensorFlow Serving</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tensorflow-lite">移动/嵌入式端部署模型：TensorFlow Lite</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">模型转换</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">模型转换</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#android">Android部署</a></li>
 </ul>
 </li>
@@ -104,6 +107,9 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="training.html">TensorFlow大规模训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application/rl.html">（仅纸质版）TensorFlow智能物资调度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application/rnn.html">（仅纸质版）TensorFlow.js在线聊天机器人</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application/prob.html">（仅纸质版）TensorFlow Probability异常文本检测</a></li>
 <li class="toctree-l1"><a class="reference internal" href="static.html">附录1：静态的TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="swift.html">附录2：TensorFlow for Swift</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reuse.html">附录3：TensorFlow预训练模型</a></li>
@@ -186,12 +192,14 @@
             
   <div class="section" id="tensorflow">
 <h1>TensorFlow模型部署<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2>模型的导出<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <div class="section" id="savedmodel">
-<h2>模型的导出：SavedModel<a class="headerlink" href="#savedmodel" title="永久链接至标题">¶</a></h2>
+<h3>SavedModel<a class="headerlink" href="#savedmodel" title="永久链接至标题">¶</a></h3>
 <p>TODO: 2.0 eager + Keras Sequential save model way</p>
 </div>
 <div class="section" id="keras-sequential-save">
-<h2>模型的导出：Keras Sequential save方法<a class="headerlink" href="#keras-sequential-save" title="永久链接至标题">¶</a></h2>
+<h3>Keras Sequential save方法<a class="headerlink" href="#keras-sequential-save" title="永久链接至标题">¶</a></h3>
 <p>我们以keras模型训练和保存为例进行讲解，如下是keras官方的mnist模型训练样例。</p>
 <p>源码地址:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keras</span><span class="o">-</span><span class="n">team</span><span class="o">/</span><span class="n">keras</span><span class="o">/</span><span class="n">blob</span><span class="o">/</span><span class="n">master</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">mnist_cnn</span><span class="o">.</span><span class="n">py</span>
@@ -315,13 +323,14 @@
 <p>执行过程会比较久，执行结束后，会产生在当前目录产生`mnist_cnn.h5`文件（HDF5格式），就是keras训练后模型，其中已经包含了训练后的模型结构和权重等信息。</p>
 <p>该模型可以在服务器端，可以直接通过keras.models.load_model(“mnist_cnn.h5”)加载，然后进行推理；在移动设备需要将HDF5模型文件转换为TensorFlow Lite的格式，然后提供相应平台提供的Interpreter加载，然后进行推理。</p>
 </div>
+</div>
 <div class="section" id="tensorflow-serving">
 <h2>服务器部署模型：TensorFlow Serving<a class="headerlink" href="#tensorflow-serving" title="永久链接至标题">¶</a></h2>
 </div>
 <div class="section" id="tensorflow-lite">
 <h2>移动/嵌入式端部署模型：TensorFlow Lite<a class="headerlink" href="#tensorflow-lite" title="永久链接至标题">¶</a></h2>
-<div class="section" id="id1">
-<h3>模型转换<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id2">
+<h3>模型转换<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
 <p>使用TensorFlow训练好的模型，因为模型太大、运行效率比较低，不能直接在移动端部署，需要通过工具转化为Flat Buffer格式的模型。</p>
 <p>谷歌提供了多种转换方式：</p>
 <ul class="simple">
