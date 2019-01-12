@@ -97,6 +97,9 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="deployment.html">TensorFlow模型部署</a></li>
 <li class="toctree-l1"><a class="reference internal" href="training.html">TensorFlow大规模训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application/rl.html">（仅纸质版）TensorFlow智能物资调度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application/rnn.html">（仅纸质版）TensorFlow.js在线聊天机器人</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application/prob.html">（仅纸质版）TensorFlow Probability异常文本检测</a></li>
 <li class="toctree-l1"><a class="reference internal" href="static.html">附录1：静态的TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="swift.html">附录2：TensorFlow for Swift</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reuse.html">附录3：TensorFlow预训练模型</a></li>
@@ -189,7 +192,7 @@
 <div class="section" id="checkpoint">
 <h2>Checkpoint：变量的保存与恢复<a class="headerlink" href="#checkpoint" title="永久链接至标题">¶</a></h2>
 <p>很多时候，我们希望在模型训练完成后能将训练好的参数（变量）保存起来。在需要使用模型的其他地方载入模型和参数，就能直接得到训练好的模型。可能你第一个想到的是用Python的序列化模块 <code class="docutils literal notranslate"><span class="pre">pickle</span></code> 存储 <code class="docutils literal notranslate"><span class="pre">model.variables</span></code>。但不幸的是，TensorFlow的变量类型 <code class="docutils literal notranslate"><span class="pre">ResourceVariable</span></code> 并不能被序列化。</p>
-<p>好在TensorFlow提供了 <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint">tf.train.Checkpoint</a> 这一强大的变量保存与恢复类，可以使用其 <code class="docutils literal notranslate"><span class="pre">save()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">restore()</span></code> 方法将TensorFlow中所有包含Checkpointable State的对象进行保存和恢复。具体而言，<code class="docutils literal notranslate"><span class="pre">tf.train.Optimizer</span></code> 实现, <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code>, <code class="docutils literal notranslate"><span class="pre">tf.keras.Layer</span></code> 实现或者 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 实现都可以被保存。其使用方法非常简单，我们首先声明一个Checkpoint：</p>
+<p>好在TensorFlow提供了 <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint">tf.train.Checkpoint</a> 这一强大的变量保存与恢复类，可以使用其 <code class="docutils literal notranslate"><span class="pre">save()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">restore()</span></code> 方法将TensorFlow中所有包含Checkpointable State的对象进行保存和恢复。具体而言，<code class="docutils literal notranslate"><span class="pre">tf.train.Optimizer</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.keras.Layer</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 实例都可以被保存。其使用方法非常简单，我们首先声明一个Checkpoint：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">checkpoint</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Checkpoint</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
 </pre></div>
 </div>
