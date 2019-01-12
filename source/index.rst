@@ -37,6 +37,9 @@ This handbook is a concise introduction to TensorFlow based on Eager Execution m
 |    zh/extended         |    en/extended         |
 |    zh/deployment       |    en/deployment       |
 |    zh/training         |    en/training         |
+|    zh/application/rl   |    en/application/rl   |
+|    zh/application/rnn  |    en/application/rnn  |
+|    zh/application/prob |    en/application/prob |
 |    zh/static           |    en/static           |
 |    zh/swift            |    en/swift            |
 |    zh/reuse            |    en/reuse            |
