@@ -1,0 +1,6 @@
+{
+    "restructuredtext.confPath": "source",
+    "restructuredtext.builtDocumentationPath" : "build/html",
+    "restructuredtext.updateOnTextChanged"    : "true",
+    "restructuredtext.sphinxBuildPath"        : "sphinx-build"
+}
