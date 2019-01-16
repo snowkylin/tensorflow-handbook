@@ -162,7 +162,9 @@ Android部署
 
 **加载模型**
 
-使用如下函数将`mnist_cnn.tflite`文件加载到memory-map中，作为Interpreter实例化的输入::
+使用如下函数将`mnist_cnn.tflite`文件加载到memory-map中，作为Interpreter实例化的输入
+
+.. code-block:: java
 
     private static final String MODEL_PATH = "mnist_cnn.tflite";
 
@@ -176,13 +178,17 @@ Android部署
         return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength);
     }
 
-实例化Interpreter，其中this为当前acitivity::
+实例化Interpreter，其中this为当前acitivity
+
+.. code-block:: java
 
     tflite = new Interpreter(loadModelFile(this));
 
 **运行输入**
 
-我们使用mnist test测试集中的某张图片作为输入，mnist图像大小28*28，单像素。这样我们输入的数据需要设置成如下格式::
+我们使用mnist test测试集中的某张图片作为输入，mnist图像大小28*28，单像素。这样我们输入的数据需要设置成如下格式
+
+.. code-block:: java
 
     /** A ByteBuffer to hold image data, to be feed into Tensorflow Lite as inputs. */
     private ByteBuffer imgData = null;
@@ -199,7 +205,9 @@ Android部署
         imgData.order(ByteOrder.nativeOrder());
     }
 
-将mnist图片转化成ByteBuffer，并保持到imgData中::
+将mnist图片转化成ByteBuffer，并保持到imgData中
+
+.. code-block:: java
 
     /** Preallocated buffers for storing image data in. */
     private int[] intValues = new int[DIM_IMG_WIDTH * DIM_IMG_HEIGHT];
@@ -228,7 +236,9 @@ convertBitmapToByteBuffer的输出即为模型运行的输入。
 
 **运行输出**
 
-定义一个1*10的多维数组，因为我们只有1个batch和10个label（TODO：need double check），具体代码如下::
+定义一个1*10的多维数组，因为我们只有1个batch和10个label（TODO：need double check），具体代码如下
+
+.. code-block:: java
 
     private float[][] labelProbArray = new float[1][10];
 
@@ -236,11 +246,15 @@ convertBitmapToByteBuffer的输出即为模型运行的输入。
 
 **运行及结果处理**
 
-开始运行模型，具体代码如下::
+开始运行模型，具体代码如下
+
+.. code-block:: java
 
     tflite.run(imgData, labelProbArray);
 
-针对某个图片，运行后labelProbArray的内容如下，也就是各个label识别的概率::
+针对某个图片，运行后labelProbArray的内容如下，也就是各个label识别的概率
+
+.. code-block:: java
 
     index 0 prob is 0.0
     index 1 prob is 0.0
