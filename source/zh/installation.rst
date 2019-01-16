@@ -76,7 +76,7 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 
     在安装GPU版本的TensorFlow前，你需要具有一块不太旧的NVIDIA显卡 [#gpu_version]_ ，以及正确安装NVIDIA显卡驱动程序。
 
-    NVIDIA显卡驱动程序在Linux系统上的安装往往不会一帆风顺。对于Ubuntu系统，有一个很简易的NVIDIA驱动安装方法：在系统设置（System Setting）里面选软件与更新（Software & Updates），然后点选Additional Drivers里面的“Using NVIDIA binary driver”选项并点选右下角的“Apply Changes”即可，系统即会自动安装NVIDIA驱动。如果需要在Linux下手动安装NVIDIA驱动，注意在安装前禁用系统自带的开源显卡驱动Nouveau、禁用主板的Secure Boot功能。更详细的指导可以参考 `这篇文章 <https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/>`_ 。
+    NVIDIA显卡驱动程序在Linux系统上的安装往往不会一帆风顺。对于Ubuntu系统，有一个很简易的NVIDIA驱动安装方法：在系统设置（System Setting）里面选软件与更新（Software & Updates），然后点选Additional Drivers里面的“Using NVIDIA binary driver”选项并点选右下角的“Apply Changes”即可，系统即会自动安装NVIDIA驱动。如果需要在Linux下手动安装NVIDIA驱动，注意在安装前禁用系统自带的开源显卡驱动Nouveau、禁用主板的Secure Boot功能、停用桌面环境、删除原有NVIDIA驱动程序，然后即可在 `NVIDIA官方网站 <https://www.nvidia.com/Download/index.aspx?lang=en-us>`_ 下载驱动程序（为 ``.run`` 文件），并使用 ``sudo bash DRIVER_FILE_NAME.run`` 命令安装驱动。安装完后可使用 ``nvidia-smi`` 命令检查是否安装成功。更详细的指导可以参考 `这篇文章 <https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/>`_ 和 `这篇中文博客 <https://blog.csdn.net/wf19930209/article/details/81877822>`_ 。
 
     .. [#gpu_version] 具体而言，该显卡的CUDA Compute Capability须不低于3.0，可以到 `NVIDIA的官方网站 <https://developer.nvidia.com/cuda-gpus/>`_ 查询自己所用显卡的CUDA Compute Capability。
 
@@ -109,3 +109,7 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 此处使用的是Python语言，关于Python语言的入门教程可以参考 `runoob网站的Python 3教程 <http://www.runoob.com/python3/python3-tutorial.html>`_ 或 `廖雪峰的Python教程 <https://www.liaoxuefeng.com>`_ ，本手册之后将默认读者拥有Python语言的基本知识。不用紧张，Python语言易于上手，而TensorFlow本身也不会用到Python语言的太多高级特性。关于Python的IDE，建议使用 `PyCharm <http://www.jetbrains.com/pycharm/>`_ 。
 
 .. tip:: 如果你是学生并有.edu结尾的邮箱的话，可以在 `这里 <http://www.jetbrains.com/student/>`_ 申请PyCharm的免费Professional版本授权。
+
+    对于TensorFlow开发而言，PyCharm的Professonal版本非常有用的一个特性是 **远程调试** （Remote Debugging）。当你编写程序的终端机性能有限，但又有一台可远程ssh访问的高性能计算机（一般具有高性能GPU）时，远程调试功能可以让你在终端机编写程序的同时，在远程计算机上调试和运行程序（尤其是训练模型）。你在终端机上对代码和数据的修改可以自动同步到远程机，在实际使用的过程中如同在远程机上编写程序一般，与串流游戏有异曲同工之妙。不过远程调试对网络的稳定性要求高，如果需要长时间训练模型，建议登录远程机终端直接训练（Linux下结合 ``nohup`` 命令 [#nohup]_ ，让进程在后端运行，不受终端退出的影响）。远程调试功能的具体配置步骤见 `PyCharm文档 <https://www.jetbrains.com/help/pycharm/remote-debugging-with-product.html>`_ 。
+
+    .. [#nohup] 关于  ``nohup`` 命令可参考 https://www.ibm.com/developerworks/cn/linux/l-cn-nohup/
