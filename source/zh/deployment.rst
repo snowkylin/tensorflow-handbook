@@ -152,13 +152,19 @@ dot是一种graph description language，可以同graphz的dot命令转化为pdf
 这样就转化为一个一张图了，很明显的可以看到如下信息：
 
 入口：
-conv2d_1_input
-Type: Float [1×28×28×1]
-MinMax: [0, 255]
+
+.. code-block:: bash
+
+    conv2d_1_input
+    Type: Float [1×28×28×1]
+    MinMax: [0, 255]
 
 出口：
-dense_2/Softmax
-Type: Float [1×10]
+
+.. code-block:: bash
+
+    dense_2/Softmax
+    Type: Float [1×10]
 
 TODO: mean和std尚未理解清楚，待研究
 
