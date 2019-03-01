@@ -109,7 +109,9 @@ Keras Sequential save方法
                           [--dump_graphviz_dir DUMP_GRAPHVIZ_DIR]
                           [--dump_graphviz_video]
 
-模型的导出：Keras Sequential save方法中产生的模型文件，可以使用如下命令处理::
+模型的导出：Keras Sequential save方法中产生的模型文件，可以使用如下命令处理：
+
+.. code-block:: bash
 
     tflite_convert --keras_model_file=./mnist_cnn.h5 --output_file=./mnist_cnn.tflite
 
@@ -117,6 +119,54 @@ Keras Sequential save方法
 
 .. warning:: 这里只介绍了keras HDF5格式模型的转换，其他模型转换建议参考：https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/convert/cmdline_examples.md
 
+还有一种quantization的转化方法，这种转化命令如下：
+
+.. code-block:: bash
+
+    tflite_convert \
+      --output_file=keras_mnist_quantized_uint8.tflite \
+      --keras_model_file=mnist_cnn.h5 \
+      --inference_type=QUANTIZED_UINT8 \
+      --mean_values=128 \
+      --std_dev_values=127 \
+      --default_ranges_min=0 \
+      --default_ranges_max=255 \
+      --input_arrays=conv2d_1_input \
+      --output_arrays=dense_2/Softmax
+
+细心的读者肯定会问，上图中有很多参数是怎么来的呢？我们可以使用tflite_convert的获得模型具体结构，命令如下：
+
+.. code-block:: bash
+
+    tflite_convert \
+      --output_file=keras_mnist.dot \
+      --output_format=GRAPHVIZ_DOT \
+      --keras_model_file=mnist_cnn.h5
+
+dot是一种graph description language，可以同graphz的dot命令转化为pdf或svg等可视化图。
+
+.. code-block:: bash
+
+    dot -Tpdf -O keras_mnist.dot
+
+这样就转化为一个一张图了，很明显的可以看到如下信息：
+
+入口：
+
+.. code-block:: bash
+
+    conv2d_1_input
+    Type: Float [1×28×28×1]
+    MinMax: [0, 255]
+
+出口：
+
+.. code-block:: bash
+
+    dense_2/Softmax
+    Type: Float [1×10]
+
+TODO: mean和std尚未理解清楚，待研究
 
 Android部署
 -----------------------------
