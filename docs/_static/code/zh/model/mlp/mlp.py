@@ -4,7 +4,7 @@ import tensorflow as tf
 class MLP(tf.keras.Model):
     def __init__(self):
         super().__init__()
-        self.flatten = tf.keras.layers.Flatten()
+        self.flatten = tf.keras.layers.Flatten()    # Flatten层将除第一维（batch_size）以外的维度展平
         self.dense1 = tf.keras.layers.Dense(units=100, activation=tf.nn.relu)
         self.dense2 = tf.keras.layers.Dense(units=10)
 
