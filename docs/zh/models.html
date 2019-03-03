@@ -17,13 +17,21 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -31,21 +39,16 @@
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="TensorFlow持久化与可视化" href="extended.html" />
     <link rel="prev" title="TensorFlow基础" href="basic.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -98,11 +101,15 @@
 <li class="toctree-l2"><a class="reference internal" href="#custom-layer">自定义层 *</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#graph-execution">Graph Execution模式 *</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#keras-sequential">Keras Sequential模式建立模型 *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keras-model-compile-fit-evaluate">使用Keras Model的 <code class="docutils literal notranslate"><span class="pre">compile</span></code> 、 <code class="docutils literal notranslate"><span class="pre">fit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> 方法训练和评估模型 *</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="extended.html">TensorFlow持久化与可视化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deployment.html">TensorFlow模型部署</a></li>
 <li class="toctree-l1"><a class="reference internal" href="training.html">TensorFlow大规模训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application/rl.html">（仅纸质版）TensorFlow智能物资调度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application/rnn.html">（仅纸质版）TensorFlow.js在线聊天机器人</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application/prob.html">（仅纸质版）TensorFlow Probability异常文本检测</a></li>
 <li class="toctree-l1"><a class="reference internal" href="static.html">附录1：静态的TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="swift.html">附录2：TensorFlow for Swift</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reuse.html">附录3：TensorFlow预训练模型</a></li>
@@ -214,15 +221,12 @@
     <span class="c1"># 还可以添加自定义的方法</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id18">
+<div class="figure align-center" id="id20">
 <a class="reference internal image-reference" href="../_images/model.png"><img alt="../_images/model.png" src="../_images/model.png" style="width: 50%;" /></a>
 <p class="caption"><span class="caption-text">Keras模型类定义示意图</span></p>
 </div>
-<div class="admonition hint">
-<p class="first admonition-title">提示</p>
-<p class="last">继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 后，我们同时可以使用父类的若干方法和属性，例如在实例化类 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">Model()</span></code> 后，可以通过 <code class="docutils literal notranslate"><span class="pre">model.variables</span></code> 这一属性直接获得模型中的所有变量，免去我们一个个显式指定变量的麻烦。</p>
-</div>
-<p>上一章中简单的线性模型 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">tf.matmul(X,</span> <span class="pre">w)</span> <span class="pre">+</span> <span class="pre">b</span></code> ，我们可以通过模型类的方式编写如下：</p>
+<p>继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 后，我们同时可以使用父类的若干方法和属性，例如在实例化类 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">Model()</span></code> 后，可以通过 <code class="docutils literal notranslate"><span class="pre">model.variables</span></code> 这一属性直接获得模型中的所有变量，免去我们一个个显式指定变量的麻烦。</p>
+<p>上一章中简单的线性模型 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> ，我们可以通过模型类的方式编写如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="n">tf</span><span class="o">.</span><span class="n">enable_eager_execution</span><span class="p">()</span>
 
@@ -233,8 +237,12 @@
 <span class="k">class</span> <span class="nc">Linear</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">(),</span>
-            <span class="n">bias_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span>
+            <span class="n">units</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">activation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">kernel_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">(),</span>
+            <span class="n">bias_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">()</span>
+        <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
@@ -246,22 +254,42 @@
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
     <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
-        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>      <span class="c1"># 调用模型</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>      <span class="c1"># 调用模型 y_pred = model(X) 而不是显式写出 y_pred = a * X + b</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y</span><span class="p">))</span>
-    <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+    <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>    <span class="c1"># 使用 model.variables 这一属性直接获得模型中的所有变量</span>
     <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>这里，我们没有显式地声明 <code class="docutils literal notranslate"><span class="pre">w</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 两个变量并写出 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">tf.matmul(X,</span> <span class="pre">w)</span> <span class="pre">+</span> <span class="pre">b</span></code> 这一线性变换，而是在初始化部分实例化了一个全连接层（ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），并在call方法中对这个层进行调用。全连接层封装了 <code class="docutils literal notranslate"><span class="pre">output</span> <span class="pre">=</span> <span class="pre">activation(tf.matmul(input,</span> <span class="pre">kernel)</span> <span class="pre">+</span> <span class="pre">bias)</span></code> 这一线性变换+激活函数的计算操作，以及 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 两个变量。当不指定激活函数时（即 <code class="docutils literal notranslate"><span class="pre">activation(x)</span> <span class="pre">=</span> <span class="pre">x</span></code> ），这个全连接层即为 <code class="docutils literal notranslate"><span class="pre">output</span> <span class="pre">=</span> <span class="pre">tf.matmul(input,</span> <span class="pre">kernel)</span> <span class="pre">+</span> <span class="pre">bias</span></code> ，可见等价于我们上述的线性变换。顺便一提，全连接层可能是我们编写模型时使用最频繁的层。</p>
-<p>如果需要显式地声明自己的变量并使用变量进行自定义运算，或者希望了解Keras层的内部原理，请参考 <a class="reference internal" href="#custom-layer"><span class="std std-ref">自定义层</span></a>。</p>
+<p>这里，我们没有显式地声明 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 两个变量并写出 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> 这一线性变换，而是建立了一个继承了 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的模型类 <code class="docutils literal notranslate"><span class="pre">Linear</span></code> 。这个类在初始化部分实例化了一个 <strong>全连接层</strong> （ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），并在call方法中对这个层进行调用，实现了线性变换的计算。如果需要显式地声明自己的变量并使用变量进行自定义运算，或者希望了解Keras层的内部原理，请参考 <a class="reference internal" href="#custom-layer"><span class="std std-ref">自定义层</span></a>。</p>
+<div class="admonition-keras admonition">
+<p class="first admonition-title">Keras的全连接层：线性变换+激活函数</p>
+<p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense">全连接层</a> （Dense Layer，<code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ）是Keras中最基础和常用的层之一。给定输入张量 <code class="docutils literal notranslate"><span class="pre">input</span> <span class="pre">=</span> <span class="pre">[batch_size,</span> <span class="pre">input_dim]</span></code> ，该层对输入张量进行 <code class="docutils literal notranslate"><span class="pre">output</span> <span class="pre">=</span> <span class="pre">activation(tf.matmul(input,</span> <span class="pre">kernel)</span> <span class="pre">+</span> <span class="pre">bias)</span></code> 这一线性变换+激活函数的计算操作，输出形状为 <code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">units]</span></code> 的二维张量。</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../_images/dense.png"><img alt="../_images/dense.png" src="../_images/dense.png" style="width: 60%;" /></a>
+</div>
+<p>其包含的主要参数如下：</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">units</span></code> ：输出张量的维度；</li>
+<li><code class="docutils literal notranslate"><span class="pre">activation</span></code> ：激活函数，默认为无激活函数（ <code class="docutils literal notranslate"><span class="pre">a(x)</span> <span class="pre">=</span> <span class="pre">x</span></code> ）。常用的激活函数包括 <code class="docutils literal notranslate"><span class="pre">tf.nn.relu</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.nn.tanh</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.nn.sigmoid</span></code> ；</li>
+<li><code class="docutils literal notranslate"><span class="pre">use_bias</span></code> ：是否加入偏置向量 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 。默认为 <code class="docutils literal notranslate"><span class="pre">True</span></code> ；</li>
+<li><code class="docutils literal notranslate"><span class="pre">kernel_initializer</span></code> 、 <code class="docutils literal notranslate"><span class="pre">bias_initializer</span></code> ：权重矩阵 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和偏置向量 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 两个变量的初始化器。默认为 <code class="docutils literal notranslate"><span class="pre">tf.glorot_uniform_initializer</span></code> <a class="footnote-reference" href="#glorot" id="id2">[1]</a> 。设置为 <code class="docutils literal notranslate"><span class="pre">tf.zeros_initializer</span></code> 表示将两个变量均初始化为全0；</li>
+</ul>
+<p>以及包含权重矩阵 <code class="docutils literal notranslate"><span class="pre">kernel</span> <span class="pre">=</span> <span class="pre">[input_dim,</span> <span class="pre">units]</span></code> 和偏置向量 <code class="docutils literal notranslate"><span class="pre">bias</span> <span class="pre">=</span> <span class="pre">[units]</span></code> 两个变量，相当于上述的 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 。</p>
+<table class="last docutils footnote" frame="void" id="glorot" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[1]</a></td><td>Keras中的很多层都默认使用 <code class="docutils literal notranslate"><span class="pre">tf.glorot_uniform_initializer</span></code> 初始化变量，关于该初始化器可参考 <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/glorot_uniform_initializer">https://www.tensorflow.org/api_docs/python/tf/glorot_uniform_initializer</a> 。</td></tr>
+</tbody>
+</table>
+</div>
 <div class="admonition-call-call admonition">
-<p class="first admonition-title">为什么是重载 <code class="docutils literal notranslate"><span class="pre">call()</span></code> 方法而不是  <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> 方法？</p>
+<p class="first admonition-title">为什么模型类是重载 <code class="docutils literal notranslate"><span class="pre">call()</span></code> 方法而不是  <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> 方法？</p>
 <p class="last">在Python中，对类的实例 <code class="docutils literal notranslate"><span class="pre">myClass</span></code> 进行形如 <code class="docutils literal notranslate"><span class="pre">myClass()</span></code> 的调用等价于 <code class="docutils literal notranslate"><span class="pre">myClass.__call__()</span></code> （具体请见本章初“前置知识”的 <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> 部分）。那么看起来，为了使用 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">model(X)</span></code> 的形式调用模型类，应该重写 <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> 方法才对呀？原因是Keras在模型调用的前后还需要有一些自己的内部操作，所以暴露出一个专门用于重载的 <code class="docutils literal notranslate"><span class="pre">call()</span></code> 方法。 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 这一父类已经包含 <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> 的定义。 <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> 中主要调用了 <code class="docutils literal notranslate"><span class="pre">call()</span></code> 方法，同时还需要在进行一些keras的内部操作。这里，我们通过继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 并重载 <code class="docutils literal notranslate"><span class="pre">call()</span></code> 方法，即可在保持keras结构的同时加入模型调用的代码。</p>
 </div>
 </div>
 <div class="section" id="mlp">
-<span id="id1"></span><h2>基础示例：多层感知机（MLP）<a class="headerlink" href="#mlp" title="永久链接至标题">¶</a></h2>
+<span id="id3"></span><h2>基础示例：多层感知机（MLP）<a class="headerlink" href="#mlp" title="永久链接至标题">¶</a></h2>
 <p>我们从编写一个最简单的 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8">多层感知机</a> （Multilayer Perceptron, MLP），或者说“多层全连接神经网络”开始，介绍TensorFlow的模型编写方式。</p>
 <div class="admonition- admonition">
 <p class="first admonition-title">基础知识和原理</p>
@@ -270,35 +298,46 @@
 <li>斯坦福课程 <a class="reference external" href="http://cs231n.github.io/">CS231n: Convolutional Neural Networks for Visual Recognition</a> 中的“Neural Networks Part 1 ~ 3”部分。</li>
 </ul>
 </div>
-<p>这里，我们使用多层感知机完成MNIST手写体数字图片数据集 <a class="reference internal" href="#lecun1998" id="id4">[LeCun1998]</a> 的分类任务。</p>
-<div class="figure align-center" id="id19">
+<p>这里，我们使用多层感知机完成MNIST手写体数字图片数据集 <a class="reference internal" href="#lecun1998" id="id6">[LeCun1998]</a> 的分类任务。</p>
+<div class="figure align-center" id="id21">
 <img alt="../_images/mnist_0-91.png" src="../_images/mnist_0-91.png" />
 <p class="caption"><span class="caption-text">MNIST手写体数字图片示例</span></p>
 </div>
 <p>先进行预备工作，实现一个简单的 <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code> 类来读取MNIST数据集数据。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DataLoader</span><span class="p">():</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">mnist</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">learn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;mnist&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">images</span>                                 <span class="c1"># np.array [55000, 784]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">train_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">mnist</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>   <span class="c1"># np.array [55000] of int32</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">eval_data</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">images</span>                                   <span class="c1"># np.array [10000, 784]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">eval_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">mnist</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>     <span class="c1"># np.array [10000] of int32</span>
+        <span class="n">mnist</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">mnist</span>
+        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_label</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_label</span><span class="p">)</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>      <span class="c1"># [60000, 28, 28, 1]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>        <span class="c1"># [10000, 28, 28, 1]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">train_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_label</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>    <span class="c1"># [60000]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_label</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>      <span class="c1"># [10000]</span>
 
     <span class="k">def</span> <span class="nf">get_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
         <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">batch_size</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="p">:],</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_labels</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="p">:],</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_label</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>多层感知机的模型类实现与上面的线性模型类似，所不同的地方在于层数增加了（顾名思义，“多层”感知机），以及引入了非线性激活函数（这里使用了 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0">ReLU函数</a> ， 即下方的 <code class="docutils literal notranslate"><span class="pre">activation=tf.nn.relu</span></code> ）。该模型输入一个向量（比如这里是拉直的1×784手写体数字图片），输出10维的信号，分别代表这张图片属于0到9的概率。这里我们加入了一个predict方法，对图片对应的数字进行预测。在预测的时候，选择概率最大的数字进行预测输出。</p>
+<div class="admonition hint">
+<p class="first admonition-title">提示</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">mnist</span> <span class="pre">=</span> <span class="pre">tf.keras.datasets.mnist</span></code> 将从网络上自动下载MNIST数据集并加载。如果运行时出现网络连接错误，可以从 <a class="reference external" href="https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz">https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz</a> 或 <a class="reference external" href="https://s3.amazonaws.com/img-datasets/mnist.npz">https://s3.amazonaws.com/img-datasets/mnist.npz</a> 下载MNIST数据集 <code class="docutils literal notranslate"><span class="pre">mnist.npz</span></code> 文件，并放置于用户目录的 <code class="docutils literal notranslate"><span class="pre">.keras/dataset</span></code> 目录下（Windows下用户目录为 <code class="docutils literal notranslate"><span class="pre">C:\Users\用户名</span></code> ，Linux下用户目录为 <code class="docutils literal notranslate"><span class="pre">/home/用户名</span></code> ）。</p>
+</div>
+<div class="admonition-tensorflow admonition">
+<p class="first admonition-title">TensorFlow的图像数据表示</p>
+<p class="last">在TensorFlow中，图像数据集的一种典型表示是 <code class="docutils literal notranslate"><span class="pre">[图像数目，长，宽，色彩通道数]</span></code> 的四维张量。在上面的 <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code> 类中， <code class="docutils literal notranslate"><span class="pre">self.train_data</span></code> 和 <code class="docutils literal notranslate"><span class="pre">self.test_data</span></code> 分别载入了60,000和10,000张大小为 <code class="docutils literal notranslate"><span class="pre">28*28</span></code> 的手写体数字图片。由于这里读入的是灰度图片，色彩通道数为1（彩色RGB图像色彩通道数为3），所以我们使用 <code class="docutils literal notranslate"><span class="pre">np.expand_dims()</span></code> 函数为图像数据手动在最后添加一维通道。</p>
+</div>
+<p>多层感知机的模型类实现与上面的线性模型类似，所不同的地方在于层数增加了（顾名思义，“多层”感知机），以及引入了非线性激活函数（这里使用了 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0">ReLU函数</a> ， 即下方的 <code class="docutils literal notranslate"><span class="pre">activation=tf.nn.relu</span></code> ）。该模型输入一个向量（比如这里是拉直的 <code class="docutils literal notranslate"><span class="pre">1×784</span></code> 手写体数字图片），输出10维的信号，分别代表这张图片属于0到9的概率。这里我们加入了一个 <code class="docutils literal notranslate"><span class="pre">predict</span></code> 方法，对图片对应的数字进行预测。在预测的时候，选择概率最大的数字进行预测输出。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flatten</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>         <span class="c1"># [batch_size, 28, 28, 1]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>    <span class="c1"># [batch_size, 784]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>          <span class="c1"># [batch_size, 100]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>          <span class="c1"># [batch_size, 10]</span>
         <span class="k">return</span> <span class="n">x</span>
 
     <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
@@ -327,20 +366,20 @@
 <li>使用优化器更新模型参数以最小化损失函数。</li>
 </ul>
 <p>具体代码实现如下：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">batch_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_batches</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">batch_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_batches</span><span class="p">):</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">get_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
     <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
-        <span class="n">y_logit_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+        <span class="n">y_logit_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_softmax_cross_entropy</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">logits</span><span class="o">=</span><span class="n">y_logit_pred</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;batch </span><span class="si">%d</span><span class="s2">: loss </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">batch_index</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
     <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
-    <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>接下来，我们使用验证集测试模型性能。具体而言，比较验证集上模型预测的结果与真实结果，输出预测正确的样本数占总样本数的比例：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">num_eval_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">eval_labels</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">eval_data</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;test accuracy: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">==</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">eval_labels</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_eval_samples</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">num_test_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_label</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>输出结果:</p>
@@ -360,7 +399,7 @@
 </ul>
 </div>
 <p>具体的实现见下，和MLP很类似，只是新加入了一些卷积层和池化层。</p>
-<div class="figure align-center" id="id20">
+<div class="figure align-center" id="id22">
 <img alt="../_images/cnn1.png" src="../_images/cnn1.png" />
 <p class="caption"><span class="caption-text">CNN结构图示</span></p>
 </div>
@@ -386,7 +425,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
-        <span class="n">inputs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>                  <span class="c1"># [batch_size, 28, 28, 32]</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pool1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>                       <span class="c1"># [batch_size, 14, 14, 32]</span>
         <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>                       <span class="c1"># [batch_size, 14, 14, 64]</span>
@@ -416,10 +454,10 @@
 <li><a class="reference external" href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">Recurrent Neural Networks Tutorial, Part 1 – Introduction to RNNs</a></li>
 <li>台湾大学李宏毅教授的《机器学习》课程的 <a class="reference external" href="https://www.bilibili.com/video/av10590361/?p=36">Recurrent Neural Network (part 1)</a> <a class="reference external" href="https://www.bilibili.com/video/av10590361/?p=37">Recurrent Neural Network (part 2)</a> 两部分。</li>
 <li>LSTM原理：<a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></li>
-<li>RNN序列生成：<a class="reference internal" href="#graves2013" id="id8">[Graves2013]</a></li>
+<li>RNN序列生成：<a class="reference internal" href="#graves2013" id="id10">[Graves2013]</a></li>
 </ul>
 </div>
-<p>这里，我们使用RNN来进行尼采风格文本的自动生成。 <a class="footnote-reference" href="#rnn-reference" id="id9">[1]</a></p>
+<p>这里，我们使用RNN来进行尼采风格文本的自动生成。 <a class="footnote-reference" href="#rnn-reference" id="id11">[2]</a></p>
 <p>这个任务的本质其实预测一段英文文本的接续字母的概率分布。比如，我们有以下句子:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">I</span> <span class="n">am</span> <span class="n">a</span> <span class="n">studen</span>
 </pre></div>
@@ -448,11 +486,11 @@
 </pre></div>
 </div>
 <p>接下来进行模型的实现。在 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 方法中我们实例化一个常用的 <code class="docutils literal notranslate"><span class="pre">BasicLSTMCell</span></code> 单元，以及一个线性变换用的全连接层，我们首先对序列进行One Hot操作，即将编码i变换为一个n维向量，其第i位为1，其余均为0。这里n为字符种类数num_char。变换后的序列张量形状为[num_batch, seq_length, num_chars]。接下来，我们将序列从头到尾依序送入RNN单元，即将当前时间t的RNN单元状态 <code class="docutils literal notranslate"><span class="pre">state</span></code> 和t时刻的序列 <code class="docutils literal notranslate"><span class="pre">inputs[:,</span> <span class="pre">t,</span> <span class="pre">:]</span></code> 送入RNN单元，得到当前时间的输出 <code class="docutils literal notranslate"><span class="pre">output</span></code> 和下一个时间t+1的RNN单元状态。取RNN单元最后一次的输出，通过全连接层变换到num_chars维，即作为模型的输出。</p>
-<div class="figure align-center" id="id21">
+<div class="figure align-center" id="id23">
 <a class="reference internal image-reference" href="../_images/rnn_single1.jpg"><img alt="../_images/rnn_single1.jpg" src="../_images/rnn_single1.jpg" style="width: 30%;" /></a>
 <p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">output,</span> <span class="pre">state</span> <span class="pre">=</span> <span class="pre">self.cell(inputs[:,</span> <span class="pre">t,</span> <span class="pre">:],</span> <span class="pre">state)</span></code> 图示</span></p>
 </div>
-<div class="figure align-center" id="id22">
+<div class="figure align-center" id="id24">
 <a class="reference internal image-reference" href="../_images/rnn1.jpg"><img alt="../_images/rnn1.jpg" src="../_images/rnn1.jpg" style="width: 50%;" /></a>
 <p class="caption"><span class="caption-text">RNN流程图示</span></p>
 </div>
@@ -542,7 +580,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <table class="docutils footnote" frame="void" id="rnn-reference" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id9">[1]</a></td><td>此处的任务及实现参考了 <a class="reference external" href="https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py">https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id11">[2]</a></td><td>此处的任务及实现参考了 <a class="reference external" href="https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py">https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py</a></td></tr>
 </tbody>
 </table>
 </div>
@@ -553,11 +591,11 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <p class="first admonition-title">基础知识和原理</p>
 <ul class="last simple">
 <li><a class="reference external" href="https://ai.intel.com/demystifying-deep-reinforcement-learning/">Demystifying Deep Reinforcement Learning</a> （<a class="reference external" href="https://snowkylin.github.io/rl/2017/01/04/Reinforcement-Learning.html">中文编译</a>）</li>
-<li><a class="reference internal" href="#mnih2013" id="id12">[Mnih2013]</a></li>
+<li><a class="reference internal" href="#mnih2013" id="id14">[Mnih2013]</a></li>
 </ul>
 </div>
 <p>这里，我们使用深度强化学习玩CartPole（平衡杆）游戏。简单说，我们需要让模型控制杆的左右运动，以让其一直保持竖直平衡状态。</p>
-<div class="figure align-center" id="id23">
+<div class="figure align-center" id="id25">
 <a class="reference internal image-reference" href="../_images/cartpole1.gif"><img alt="../_images/cartpole1.gif" src="../_images/cartpole1.gif" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">CartPole游戏</span></p>
 </div>
@@ -659,9 +697,16 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
             <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">))</span>       <span class="c1"># 计算梯度并更新参数</span>
 </pre></div>
 </div>
+<p>对于不同的任务（或者说环境），我们需要根据任务的特点，设计不同的状态以及采取合适的网络来拟合Q函数。例如，如果我们考虑经典的打砖块游戏（Gym环境库中的  <a class="reference external" href="https://gym.openai.com/envs/Breakout-v0/">Breakout-v0</a>  ），每一次执行动作（挡板向左、向右或不动），都会返回一个 <code class="docutils literal notranslate"><span class="pre">210</span> <span class="pre">*</span> <span class="pre">160</span> <span class="pre">*</span> <span class="pre">3</span></code> 的RGB图片，表示当前屏幕画面。为了给打砖块游戏这个任务设计合适的状态表示，我们有以下分析：</p>
+<ul class="simple">
+<li>砖块的颜色信息并不是很重要，画面转换成灰度也不影响操作，因此可以去除状态中的颜色信息（即将图片转为灰度表示）；</li>
+<li>小球移动的信息很重要，如果只知道单帧画面而不知道小球往哪边运动，即使是人也很难判断挡板应当移动的方向。因此，必须在状态中加入表征小球运动方向的信息。一个简单的方式是将当前帧与前面几帧的画面进行叠加，得到一个 <code class="docutils literal notranslate"><span class="pre">210</span> <span class="pre">*</span> <span class="pre">160</span> <span class="pre">*</span> <span class="pre">X</span></code> （X为叠加帧数）的状态表示；</li>
+<li>每帧的分辨率不需要特别高，只要能大致表征方块、小球和挡板的位置以做出决策即可，因此对于每帧的长宽可做适当压缩。</li>
+</ul>
+<p>而考虑到我们需要从图像信息中提取特征，使用CNN作为拟合Q函数的网络将更为适合。</p>
 </div>
 <div class="section" id="custom-layer">
-<span id="id15"></span><h2>自定义层 *<a class="headerlink" href="#custom-layer" title="永久链接至标题">¶</a></h2>
+<span id="id17"></span><h2>自定义层 *<a class="headerlink" href="#custom-layer" title="永久链接至标题">¶</a></h2>
 <p>可能你还会问，如果现有的这些层无法满足我的要求，我需要定义自己的层怎么办？</p>
 <p>事实上，我们不仅可以继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 编写自己的模型类，也可以继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 编写自己的层。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyLayer</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
@@ -711,7 +756,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </div>
 <div class="section" id="graph-execution">
 <h2>Graph Execution模式 *<a class="headerlink" href="#graph-execution" title="永久链接至标题">¶</a></h2>
-<p>事实上，只要在编写模型的时候稍加注意，以上的模型都是可以同时兼容Eager Execution模式和Graph Execution模式的 <a class="footnote-reference" href="#rnn-exception" id="id16">[2]</a> 。注意，在Graph Execution模式下， <code class="docutils literal notranslate"><span class="pre">model(input_tensor)</span></code> 只需运行一次以完成图的建立操作。</p>
+<p>事实上，只要在编写模型的时候稍加注意，以上的模型都是可以同时兼容Eager Execution模式和Graph Execution模式的 <a class="footnote-reference" href="#rnn-exception" id="id18">[3]</a> 。注意，在Graph Execution模式下， <code class="docutils literal notranslate"><span class="pre">model(input_tensor)</span></code> 只需运行一次以完成图的建立操作。</p>
 <p>例如，通过以下代码，同样可以调用 <a class="reference internal" href="#linear"><span class="std std-ref">本章第一节</span></a> 建立的线性模型并进行线性回归：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">model</span> <span class="o">=</span> <span class="n">Linear</span><span class="p">()</span>
     <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
@@ -730,16 +775,20 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <table class="docutils footnote" frame="void" id="rnn-exception" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id16">[2]</a></td><td>除了本章实现的RNN模型以外。在RNN模型的实现中，我们通过Eager Execution动态获取了seq_length的长度，使得我们可以方便地动态控制RNN的展开长度。然而Graph Execution不支持这一点，为了达到相同的效果，我们需要固定seq_length的长度，或者使用 <code class="docutils literal notranslate"><span class="pre">tf.nn.dynamic_rnn</span></code> （ <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/nn/dynamic_rnn">文档</a> ）。</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id18">[3]</a></td><td>除了本章实现的RNN模型以外。在RNN模型的实现中，我们通过Eager Execution动态获取了seq_length的长度，使得我们可以方便地动态控制RNN的展开长度。然而Graph Execution不支持这一点，为了达到相同的效果，我们需要固定seq_length的长度，或者使用 <code class="docutils literal notranslate"><span class="pre">tf.nn.dynamic_rnn</span></code> （ <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/nn/dynamic_rnn">文档</a> ）。</td></tr>
 </tbody>
 </table>
 </div>
 <div class="section" id="keras-sequential">
 <h2>Keras Sequential模式建立模型 *<a class="headerlink" href="#keras-sequential" title="永久链接至标题">¶</a></h2>
+<p>在很多时候，我们只需要建立一个结构相对简单和典型、各个层之间仅顺序相连的神经网络（比如上文中的MLP和CNN）。这时，Keras给我们提供了一种更为简单的模型建立方式。</p>
+</div>
+<div class="section" id="keras-model-compile-fit-evaluate">
+<h2>使用Keras Model的 <code class="docutils literal notranslate"><span class="pre">compile</span></code> 、 <code class="docutils literal notranslate"><span class="pre">fit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> 方法训练和评估模型 *<a class="headerlink" href="#keras-model-compile-fit-evaluate" title="永久链接至标题">¶</a></h2>
 <table class="docutils citation" frame="void" id="lecun1998" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[LeCun1998]</a></td><td><ol class="first last upperalpha simple" start="25">
+<tr><td class="label"><a class="fn-backref" href="#id6">[LeCun1998]</a></td><td><ol class="first last upperalpha simple" start="25">
 <li>LeCun, L. Bottou, Y. Bengio, and P. Haffner. “Gradient-based learning applied to document recognition.” Proceedings of the IEEE, 86(11):2278-2324, November 1998. <a class="reference external" href="http://yann.lecun.com/exdb/mnist/">http://yann.lecun.com/exdb/mnist/</a></li>
 </ol>
 </td></tr>
@@ -748,13 +797,13 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <table class="docutils citation" frame="void" id="graves2013" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id8">[Graves2013]</a></td><td>Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id10">[Graves2013]</a></td><td>Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.</td></tr>
 </tbody>
 </table>
 <table class="docutils citation" frame="void" id="mnih2013" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id12">[Mnih2013]</a></td><td>Mnih, Volodymyr, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. “Playing Atari with Deep Reinforcement Learning.” ArXiv:1312.5602 [Cs], December 19, 2013. http://arxiv.org/abs/1312.5602.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id14">[Mnih2013]</a></td><td>Mnih, Volodymyr, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. “Playing Atari with Deep Reinforcement Learning.” ArXiv:1312.5602 [Cs], December 19, 2013. http://arxiv.org/abs/1312.5602.</td></tr>
 </tbody>
 </table>
 </div>
@@ -771,7 +820,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
         <a href="extended.html" class="btn btn-neutral float-right" title="TensorFlow持久化与可视化" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="basic.html" class="btn btn-neutral" title="TensorFlow基础" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="basic.html" class="btn btn-neutral float-left" title="TensorFlow基础" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -797,28 +846,16 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
