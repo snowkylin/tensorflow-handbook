@@ -17,13 +17,21 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
@@ -31,21 +39,16 @@
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="TensorFlow模型" href="models.html" />
     <link rel="prev" title="TensorFlow安装" href="installation.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -102,6 +105,9 @@
 <li class="toctree-l1"><a class="reference internal" href="extended.html">TensorFlow持久化与可视化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deployment.html">TensorFlow模型部署</a></li>
 <li class="toctree-l1"><a class="reference internal" href="training.html">TensorFlow大规模训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application/rl.html">（仅纸质版）TensorFlow智能物资调度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application/rnn.html">（仅纸质版）TensorFlow.js在线聊天机器人</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application/prob.html">（仅纸质版）TensorFlow Probability异常文本检测</a></li>
 <li class="toctree-l1"><a class="reference internal" href="static.html">附录1：静态的TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="swift.html">附录2：TensorFlow for Swift</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reuse.html">附录3：TensorFlow预训练模型</a></li>
@@ -378,11 +384,16 @@
 </pre></div>
 </div>
 <p>在这里，我们使用了前文的方式计算了损失函数关于参数的偏导数。同时，使用 <code class="docutils literal notranslate"><span class="pre">tf.train.GradientDescentOptimizer(learning_rate=1e-3)</span></code> 声明了一个梯度下降 <strong>优化器</strong> （Optimizer），其学习率为1e-3。优化器可以帮助我们根据计算出的求导结果更新模型参数，从而最小化某个特定的损失函数，具体使用方式是调用其 <code class="docutils literal notranslate"><span class="pre">apply_gradients()</span></code> 方法。</p>
-<p>注意到这里，更新模型参数的方法 <code class="docutils literal notranslate"><span class="pre">optimizer.apply_gradients()</span></code> 需要提供参数 <code class="docutils literal notranslate"><span class="pre">grads_and_vars</span></code>，即待更新的变量（如上述代码中的 <code class="docutils literal notranslate"><span class="pre">variables</span></code> ）及损失函数关于这些变量的偏导数（如上述代码中的 <code class="docutils literal notranslate"><span class="pre">grads</span></code> ）。具体而言，这里需要传入一个Python列表（List），列表中的每个元素是一个（变量的偏导数，变量）对。比如这里是 <code class="docutils literal notranslate"><span class="pre">[(grad_a,</span> <span class="pre">a),</span> <span class="pre">(grad_b,</span> <span class="pre">b)]</span></code> 。我们通过 <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">tape.gradient(loss,</span> <span class="pre">variables)</span></code> 求出tape中记录的 <code class="docutils literal notranslate"><span class="pre">loss</span></code> 关于 <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> 中每个变量的偏导数，也就是 <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">[grad_a,</span> <span class="pre">grad_b]</span></code>，再使用Python的 <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函数将 <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">[grad_a,</span> <span class="pre">grad_b]</span></code> 和 <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> 拼装在一起，就可以组合出所需的参数了。</p>
-<div class="admonition hint">
-<p class="first admonition-title">提示</p>
-<p class="last">在实际应用中，我们编写的模型往往比这里一行就能写完的线性模型 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> （模型参数为 <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> ）要复杂得多。所以，我们往往会编写并实例化一个模型类 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">Model()</span></code> ，然后使用 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">model(X)</span></code> 调用模型，使用 <code class="docutils literal notranslate"><span class="pre">model.variables</span></code> 获取模型参数。关于模型类的编写方式可见 <a class="reference internal" href="models.html"><span class="doc">“TensorFlow模型”一章</span></a>。</p>
+<p>注意到这里，更新模型参数的方法 <code class="docutils literal notranslate"><span class="pre">optimizer.apply_gradients()</span></code> 需要提供参数 <code class="docutils literal notranslate"><span class="pre">grads_and_vars</span></code>，即待更新的变量（如上述代码中的 <code class="docutils literal notranslate"><span class="pre">variables</span></code> ）及损失函数关于这些变量的偏导数（如上述代码中的 <code class="docutils literal notranslate"><span class="pre">grads</span></code> ）。具体而言，这里需要传入一个Python列表（List），列表中的每个元素是一个 <code class="docutils literal notranslate"><span class="pre">（变量的偏导数，变量）</span></code> 对。比如这里是 <code class="docutils literal notranslate"><span class="pre">[(grad_a,</span> <span class="pre">a),</span> <span class="pre">(grad_b,</span> <span class="pre">b)]</span></code> 。我们通过 <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">tape.gradient(loss,</span> <span class="pre">variables)</span></code> 求出tape中记录的 <code class="docutils literal notranslate"><span class="pre">loss</span></code> 关于 <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> 中每个变量的偏导数，也就是 <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">[grad_a,</span> <span class="pre">grad_b]</span></code>，再使用Python的 <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函数将 <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">[grad_a,</span> <span class="pre">grad_b]</span></code> 和 <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> 拼装在一起，就可以组合出所需的参数了。</p>
+<div class="admonition-python-zip admonition">
+<p class="first admonition-title">Python的 <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函数</p>
+<p><code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函数是Python的内置函数。用自然语言描述这个函数的功能很绕口，但如果举个例子就很容易理解了：如果 <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5]</span></code>， <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">[2,</span> <span class="pre">4,</span> <span class="pre">6]</span></code>，那么 <code class="docutils literal notranslate"><span class="pre">zip(a,</span> <span class="pre">b)</span> <span class="pre">=</span> <span class="pre">[(1,</span> <span class="pre">2),</span> <span class="pre">(3,</span> <span class="pre">4),</span> <span class="pre">...,</span> <span class="pre">(5,</span> <span class="pre">6)]</span></code> 。即“将可迭代的对象作为参数，将对象中对应的元素打包成一个个元组，然后返回由这些元组组成的列表”。在Python 3中， <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函数返回的是一个对象，需要调用 <code class="docutils literal notranslate"><span class="pre">list()</span></code> 来将对象转换成列表。</p>
+<div class="last figure align-center" id="id17">
+<a class="reference internal image-reference" href="../_images/zip.jpg"><img alt="../_images/zip.jpg" src="../_images/zip.jpg" style="width: 60%;" /></a>
+<p class="caption"><span class="caption-text">Python的 <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函数图示</span></p>
 </div>
+</div>
+<p>在实际应用中，我们编写的模型往往比这里一行就能写完的线性模型 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> （模型参数为 <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> ）要复杂得多。所以，我们往往会编写并实例化一个模型类 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">Model()</span></code> ，然后使用 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">model(X)</span></code> 调用模型，使用 <code class="docutils literal notranslate"><span class="pre">model.variables</span></code> 获取模型参数。关于模型类的编写方式可见 <a class="reference internal" href="models.html"><span class="doc">“TensorFlow模型”一章</span></a>。</p>
 <table class="docutils footnote" frame="void" id="f0" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -428,7 +439,7 @@
         <a href="models.html" class="btn btn-neutral float-right" title="TensorFlow模型" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="installation.html" class="btn btn-neutral" title="TensorFlow安装" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="installation.html" class="btn btn-neutral float-left" title="TensorFlow安装" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -454,28 +465,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
