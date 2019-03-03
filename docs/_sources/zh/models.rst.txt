@@ -54,7 +54,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 .. admonition:: Keras的全连接层：线性变换+激活函数
 
-    `全连接层 <https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense>`_ （Dense Layer，``tf.keras.layers.Dense`` ）是Keras中最基础和常用的层之一。给定输入张量 ``input = [batch_size, input_dim]`` ，该层对输入张量进行 ``output = activation(tf.matmul(input, kernel) + bias)`` 这一线性变换+激活函数的计算操作，输出形状为 ``[batch_size, units]`` 的二维张量。
+    `全连接层 <https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense>`_ （Fully-connected Layer，``tf.keras.layers.Dense`` ）是Keras中最基础和常用的层之一。给定输入张量 ``input = [batch_size, input_dim]`` ，该层对输入张量进行 ``output = activation(tf.matmul(input, kernel) + bias)`` 这一线性变换+激活函数的计算操作，输出形状为 ``[batch_size, units]`` 的二维张量。
     
     .. figure:: ../_static/image/model/dense.png
         :width: 60%
@@ -67,9 +67,12 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
     * ``use_bias`` ：是否加入偏置向量 ``bias`` 。默认为 ``True`` ；
     * ``kernel_initializer`` 、 ``bias_initializer`` ：权重矩阵 ``kernel`` 和偏置向量 ``bias`` 两个变量的初始化器。默认为 ``tf.glorot_uniform_initializer`` [#glorot]_ 。设置为 ``tf.zeros_initializer`` 表示将两个变量均初始化为全0；
     
-    以及包含权重矩阵 ``kernel = [input_dim, units]`` 和偏置向量 ``bias = [units]`` 两个变量，相当于上述的 ``a`` 和 ``b`` 。
+    以及包含权重矩阵 ``kernel = [input_dim, units]`` 和偏置向量 ``bias = [units]`` [#broadcast]_ 两个变量，相当于上述的 ``a`` 和 ``b`` 。
+
+    这里着重从数学矩阵运算和线性变换的角度描述了全连接层。基于神经元建模的描述可参考 :ref:`后文介绍 <neuron>` 。
 
     .. [#glorot] Keras中的很多层都默认使用 ``tf.glorot_uniform_initializer`` 初始化变量，关于该初始化器可参考 https://www.tensorflow.org/api_docs/python/tf/glorot_uniform_initializer 。
+    .. [#broadcast] 你可能会注意到， ``tf.matmul(input, kernel)`` 的结果是一个形状为 ``[batch_size, units]`` 的二维矩阵，这个二维矩阵要如何与形状为 ``[units]`` 的一维偏置向量bias相加呢？事实上，这里是TensorFlow的Broadcasting机制在起作用，该加法运算相当于将二维矩阵的每一行加上了 ``Bias`` 。Broadcasting机制的具体介绍可见 https://www.tensorflow.org/xla/broadcasting 。
 
 .. admonition:: 为什么模型类是重载 ``call()`` 方法而不是  ``__call__()`` 方法？
 
@@ -110,6 +113,12 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 .. literalinclude:: ../_static/code/zh/model/mlp/mlp.py
     :lines: 4-19
 
+.. figure:: ../_static/image/model/mlp.png
+    :width: 80%
+    :align: center
+
+    MLP模型示意图
+
 定义一些模型超参数：
 
 .. literalinclude:: ../_static/code/zh/model/mlp/main.py
@@ -147,10 +156,32 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 可以注意到，使用这样简单的模型，已经可以达到95%左右的准确率。
 
+.. _neuron:
+
+.. admonition:: 神经网络的基本单位：神经元 [#order]_
+
+    如果我们将上面的神经网络放大来看，详细研究计算过程，比如取第二层的第k个计算单元，可以得到示意图如下：
+
+    .. figure:: ../_static/image/model/neuron.png
+        :width: 80%
+        :align: center
+
+    该计算单元 :math:`Q_k` 有100个权值参数 :math:`w_{0k}, w_{1k}, ..., w_{99k}` 和1个偏置参数 :math:`b_k` 。将第1层中所有的100个计算单元 :math:`P_0, P_1, ..., P_{99}` 的值作为输入，分别按权值 :math:`w_{ik}` 加和（即 :math:`\sum_{i=0}^{99} w_{ik} P_i` ），并加上偏置值 :math:`b_k` ，然后送入激活函数 :math:`f` 进行计算，即得到输出结果。
+
+    事实上，这种结构和真实的神经细胞（神经元）类似。神经元由树突、胞体和轴突构成。树突接受其他神经元传来的信号作为输入（一个神经元可以有数千甚至上万树突），胞体对电位信号进行整合，而产生的信号则通过轴突传到神经末梢的突触，传播到下一个（或多个）神经元。
+
+    .. figure:: ../_static/image/model/real_neuron.png
+        :width: 80%
+        :align: center
+
+        神经细胞模式图（修改自 Quasar Jarosz at English Wikipedia [CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)]）
+
+    .. [#order] 事实上，应当是先有神经元建模的概念，再有基于人工神经元和层结构的人工神经网络。但由于本手册着重介绍TensorFlow的使用方法，所以调换了介绍顺序。
+
 卷积神经网络（CNN）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-`卷积神经网络 <https://zh.wikipedia.org/wiki/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C>`_ （Convolutional Neural Network, CNN）是一种结构类似于人类或动物的 `视觉系统 <https://zh.wikipedia.org/wiki/%E8%A7%86%E8%A7%89%E7%B3%BB%E7%BB%9F>`_ 的人工神经网络，包含一个或多个卷积层（Convolutional Layer）、池化层（Pooling Layer）和全连接层（Dense Layer）。
+`卷积神经网络 <https://zh.wikipedia.org/wiki/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C>`_ （Convolutional Neural Network, CNN）是一种结构类似于人类或动物的 `视觉系统 <https://zh.wikipedia.org/wiki/%E8%A7%86%E8%A7%89%E7%B3%BB%E7%BB%9F>`_ 的人工神经网络，包含一个或多个卷积层（Convolutional Layer）、池化层（Pooling Layer）和全连接层（Fully-connected Layer）。
 
 .. admonition:: 基础知识和原理
     
