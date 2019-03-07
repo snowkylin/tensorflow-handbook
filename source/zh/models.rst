@@ -1,5 +1,5 @@
-TensorFlow模型
-================
+TensorFlow模型建立与训练
+========================================
 
 .. _linear:
 
@@ -15,7 +15,7 @@ TensorFlow模型
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ..  https://www.tensorflow.org/programmers_guide/eager
 
-在TensorFlow中，推荐使用Keras构建模型。Keras是一个广为流行的高级神经网络API，简单、快速而不失灵活性，现已得到TensorFlow的官方内置和全面支持。
+在TensorFlow中，推荐使用Keras（ ``tf.keras`` ）构建模型。Keras是一个广为流行的高级神经网络API，简单、快速而不失灵活性，现已得到TensorFlow的官方内置和全面支持。
 
 Keras有两个重要的概念： **模型（Model）** 和 **层（Layer）** 。层将各种计算流程和变量进行了封装（例如基本的全连接层，CNN的卷积层、池化层等），而模型则将各种层进行组织和连接，并封装成一个整体，描述了如何将输入数据通过各种层以及运算而得到输出。在需要模型调用的时候，使用 ``y_pred = model(X)`` 的形式即可。Keras在 ``tf.keras.layers`` 下内置了深度学习中大量常用的的预定义层，同时也允许我们自定义层。
 
@@ -398,6 +398,8 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 Graph Execution模式 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+在TensorFlow 2.0中，推荐使用 ``@tf.function`` （而非1.X中的Session）实现Graph Execution。
+
 事实上，只要在编写模型的时候稍加注意，以上的模型都是可以同时兼容Eager Execution模式和Graph Execution模式的 [#rnn_exception]_ 。注意，在Graph Execution模式下， ``model(input_tensor)`` 只需运行一次以完成图的建立操作。
 
 例如，通过以下代码，同样可以调用 :ref:`本章第一节 <linear>` 建立的线性模型并进行线性回归：
@@ -407,16 +409,28 @@ Graph Execution模式 *
 
 .. [#rnn_exception] 除了本章实现的RNN模型以外。在RNN模型的实现中，我们通过Eager Execution动态获取了seq_length的长度，使得我们可以方便地动态控制RNN的展开长度。然而Graph Execution不支持这一点，为了达到相同的效果，我们需要固定seq_length的长度，或者使用 ``tf.nn.dynamic_rnn`` （ `文档 <https://www.tensorflow.org/api_docs/python/tf/nn/dynamic_rnn>`_ ）。
 
-Keras Sequential模式建立模型 *
+Keras Pipeline *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+https://medium.com/tensorflow/what-are-symbolic-and-imperative-apis-in-tensorflow-2-0-dfccecb01021
+
+以上示例使用了Keras的Subclassing API建立模型。
+
+Keras Sequential API模式建立模型
+-------------------------------------------
 
 在很多时候，我们只需要建立一个结构相对简单和典型、各个层之间仅顺序相连的神经网络（比如上文中的MLP和CNN）。这时，Keras给我们提供了一种更为简单的模型建立方式。
 
-使用Keras Model的 ``compile`` 、 ``fit`` 和 ``evaluate`` 方法训练和评估模型 *
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Keras Functional API模式建立模型
+-------------------------------------------
 
+https://www.tensorflow.org/alpha/guide/keras/functional
 
+使用Keras Model的 ``compile`` 、 ``fit`` 和 ``evaluate`` 方法训练和评估模型
+--------------------------------------------------------------------------------------
 
+自定义Metrics和Loss
+-------------------------------------------
 
 .. [LeCun1998] Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. "Gradient-based learning applied to document recognition." Proceedings of the IEEE, 86(11):2278-2324, November 1998. http://yann.lecun.com/exdb/mnist/
 .. [Graves2013] Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.
