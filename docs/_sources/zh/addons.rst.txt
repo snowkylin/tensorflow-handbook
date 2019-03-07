@@ -1,5 +1,7 @@
-附录4：TensorFlow Addons
+附录4：TensorFlow库和扩展
 ========================================
+
+https://www.tensorflow.org/resources/libraries-extensions
 
 TensorFlow Probability：贝叶斯框架
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
