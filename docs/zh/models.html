@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TensorFlow模型 &mdash; 简单粗暴TensorFlow 0.4 alpha 文档</title>
+  <title>TensorFlow模型建立与训练 &mdash; 简单粗暴TensorFlow 0.4 alpha 文档</title>
   
 
   
@@ -24,6 +24,7 @@
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/js/custom.js"></script>
         <script type="text/javascript" src="../_static/translations.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
@@ -37,7 +38,7 @@
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="TensorFlow持久化与可视化" href="extended.html" />
+    <link rel="next" title="TensorFlow工具" href="extended.html" />
     <link rel="prev" title="TensorFlow基础" href="basic.html" /> 
 </head>
 
@@ -92,7 +93,7 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">TensorFlow概述</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">TensorFlow安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow基础</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow模型</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow模型建立与训练</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#model-layer">模型（Model）与层（Layer）</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#mlp">基础示例：多层感知机（MLP）</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#cnn">卷积神经网络（CNN）</a></li>
@@ -100,11 +101,16 @@
 <li class="toctree-l2"><a class="reference internal" href="#drl">深度强化学习（DRL）</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#custom-layer">自定义层 *</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#graph-execution">Graph Execution模式 *</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#keras-sequential">Keras Sequential模式建立模型 *</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#keras-model-compile-fit-evaluate">使用Keras Model的 <code class="docutils literal notranslate"><span class="pre">compile</span></code> 、 <code class="docutils literal notranslate"><span class="pre">fit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> 方法训练和评估模型 *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keras-pipeline">Keras Pipeline *</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#keras-sequential-api">Keras Sequential API模式建立模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keras-functional-api">Keras Functional API模式建立模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keras-model-compile-fit-evaluate">使用Keras Model的 <code class="docutils literal notranslate"><span class="pre">compile</span></code> 、 <code class="docutils literal notranslate"><span class="pre">fit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> 方法训练和评估模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#metricsloss">自定义Metrics和Loss</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="extended.html">TensorFlow持久化与可视化</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extended.html">TensorFlow工具</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deployment.html">TensorFlow模型部署</a></li>
 <li class="toctree-l1"><a class="reference internal" href="training.html">TensorFlow大规模训练</a></li>
 <li class="toctree-l1"><a class="reference internal" href="application/rl.html">（仅纸质版）TensorFlow智能物资调度</a></li>
@@ -112,8 +118,8 @@
 <li class="toctree-l1"><a class="reference internal" href="application/prob.html">（仅纸质版）TensorFlow Probability异常文本检测</a></li>
 <li class="toctree-l1"><a class="reference internal" href="static.html">附录1：静态的TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="swift.html">附录2：TensorFlow for Swift</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reuse.html">附录3：TensorFlow预训练模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="probability.html">附录4：TensorFlow Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reuse.html">附录3：TensorFlow资源重用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="addons.html">附录4：TensorFlow Addons</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_op.html">附录5：TensorFlow自定义运算操作</a></li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">附录6：TensorFlow环境配置与管理</a></li>
 <li class="toctree-l1"><a class="reference internal" href="recommended_books.html">附录7：参考资料与推荐阅读</a></li>
@@ -171,7 +177,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>TensorFlow模型</li>
+      <li>TensorFlow模型建立与训练</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -191,7 +197,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="tensorflow">
-<h1>TensorFlow模型<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
+<h1>TensorFlow模型建立与训练<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
 <p id="linear">本章介绍如何使用TensorFlow快速搭建动态模型。</p>
 <div class="admonition- admonition">
 <p class="first admonition-title">前置知识</p>
@@ -202,7 +208,7 @@
 </div>
 <div class="section" id="model-layer">
 <h2>模型（Model）与层（Layer）<a class="headerlink" href="#model-layer" title="永久链接至标题">¶</a></h2>
-<p>在TensorFlow中，推荐使用Keras构建模型。Keras是一个广为流行的高级神经网络API，简单、快速而不失灵活性，现已得到TensorFlow的官方内置和全面支持。</p>
+<p>在TensorFlow中，推荐使用Keras（ <code class="docutils literal notranslate"><span class="pre">tf.keras</span></code> ）构建模型。Keras是一个广为流行的高级神经网络API，简单、快速而不失灵活性，现已得到TensorFlow的官方内置和全面支持。</p>
 <p>Keras有两个重要的概念： <strong>模型（Model）</strong> 和 <strong>层（Layer）</strong> 。层将各种计算流程和变量进行了封装（例如基本的全连接层，CNN的卷积层、池化层等），而模型则将各种层进行组织和连接，并封装成一个整体，描述了如何将输入数据通过各种层以及运算而得到输出。在需要模型调用的时候，使用 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">model(X)</span></code> 的形式即可。Keras在 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code> 下内置了深度学习中大量常用的的预定义层，同时也允许我们自定义层。</p>
 <p>Keras模型以类的形式呈现，我们可以通过继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 这个Python类来定义自己的模型。在继承类中，我们需要重写 <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> （构造函数，初始化）和 <code class="docutils literal notranslate"><span class="pre">call(input)</span></code> （模型调用）两个方法，同时也可以根据需要增加自定义的方法。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
@@ -264,7 +270,7 @@
 <p>这里，我们没有显式地声明 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 两个变量并写出 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> 这一线性变换，而是建立了一个继承了 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的模型类 <code class="docutils literal notranslate"><span class="pre">Linear</span></code> 。这个类在初始化部分实例化了一个 <strong>全连接层</strong> （ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），并在call方法中对这个层进行调用，实现了线性变换的计算。如果需要显式地声明自己的变量并使用变量进行自定义运算，或者希望了解Keras层的内部原理，请参考 <a class="reference internal" href="#custom-layer"><span class="std std-ref">自定义层</span></a>。</p>
 <div class="admonition-keras admonition">
 <p class="first admonition-title">Keras的全连接层：线性变换+激活函数</p>
-<p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense">全连接层</a> （Fully-connected Layer，<code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ）是Keras中最基础和常用的层之一。给定输入张量 <code class="docutils literal notranslate"><span class="pre">input</span> <span class="pre">=</span> <span class="pre">[batch_size,</span> <span class="pre">input_dim]</span></code> ，该层对输入张量进行 <code class="docutils literal notranslate"><span class="pre">output</span> <span class="pre">=</span> <span class="pre">activation(tf.matmul(input,</span> <span class="pre">kernel)</span> <span class="pre">+</span> <span class="pre">bias)</span></code> 这一线性变换+激活函数的计算操作，输出形状为 <code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">units]</span></code> 的二维张量。</p>
+<p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense">全连接层</a> （Fully-connected Layer，<code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ）是Keras中最基础和常用的层之一。给定输入张量 <code class="docutils literal notranslate"><span class="pre">input</span> <span class="pre">=</span> <span class="pre">[batch_size,</span> <span class="pre">input_dim]</span></code> ，该层对输入张量首先进行 <code class="docutils literal notranslate"><span class="pre">tf.matmul(input,</span> <span class="pre">kernel)</span> <span class="pre">+</span> <span class="pre">bias</span></code> 的线性变换，然后对线性变换后张量的每个元素通过激活函数 <code class="docutils literal notranslate"><span class="pre">activation</span></code> ，输出形状为 <code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">units]</span></code> 的二维张量。</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../_images/dense.png"><img alt="../_images/dense.png" src="../_images/dense.png" style="width: 60%;" /></a>
 </div>
@@ -410,6 +416,7 @@
 <a class="reference internal image-reference" href="../_images/real_neuron.png"><img alt="../_images/real_neuron.png" src="../_images/real_neuron.png" style="width: 80%;" /></a>
 <p class="caption"><span class="caption-text">神经细胞模式图（修改自 Quasar Jarosz at English Wikipedia [CC BY-SA 3.0 (<a class="reference external" href="https://creativecommons.org/licenses/by-sa/3.0">https://creativecommons.org/licenses/by-sa/3.0</a>)]）</span></p>
 </div>
+<p>上面的计算单元，可以被视作对神经元结构的数学建模。在上面的例子里，第二层的每一个计算单元（人工神经元）有100个权值参数和1个偏置参数，而第二层计算单元的数目是10个，因此这一个全连接层的总参数量为100*10个权值参数和10个偏置参数。事实上，这正是该全连接层中的两个变量 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 的形状。仔细研究一下，你会发现，这里基于神经元建模的介绍与上文基于矩阵计算的介绍是等价的。</p>
 <table class="last docutils footnote" frame="void" id="order" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -786,6 +793,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </div>
 <div class="section" id="graph-execution">
 <h2>Graph Execution模式 *<a class="headerlink" href="#graph-execution" title="永久链接至标题">¶</a></h2>
+<p>在TensorFlow 2.0中，推荐使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> （而非1.X中的Session）实现Graph Execution。</p>
 <p>事实上，只要在编写模型的时候稍加注意，以上的模型都是可以同时兼容Eager Execution模式和Graph Execution模式的 <a class="footnote-reference" href="#rnn-exception" id="id20">[5]</a> 。注意，在Graph Execution模式下， <code class="docutils literal notranslate"><span class="pre">model(input_tensor)</span></code> 只需运行一次以完成图的建立操作。</p>
 <p>例如，通过以下代码，同样可以调用 <a class="reference internal" href="#linear"><span class="std std-ref">本章第一节</span></a> 建立的线性模型并进行线性回归：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">model</span> <span class="o">=</span> <span class="n">Linear</span><span class="p">()</span>
@@ -809,12 +817,23 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </tbody>
 </table>
 </div>
-<div class="section" id="keras-sequential">
-<h2>Keras Sequential模式建立模型 *<a class="headerlink" href="#keras-sequential" title="永久链接至标题">¶</a></h2>
+<div class="section" id="keras-pipeline">
+<h2>Keras Pipeline *<a class="headerlink" href="#keras-pipeline" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="https://medium.com/tensorflow/what-are-symbolic-and-imperative-apis-in-tensorflow-2-0-dfccecb01021">https://medium.com/tensorflow/what-are-symbolic-and-imperative-apis-in-tensorflow-2-0-dfccecb01021</a></p>
+<p>以上示例使用了Keras的Subclassing API建立模型。</p>
+<div class="section" id="keras-sequential-api">
+<h3>Keras Sequential API模式建立模型<a class="headerlink" href="#keras-sequential-api" title="永久链接至标题">¶</a></h3>
 <p>在很多时候，我们只需要建立一个结构相对简单和典型、各个层之间仅顺序相连的神经网络（比如上文中的MLP和CNN）。这时，Keras给我们提供了一种更为简单的模型建立方式。</p>
 </div>
+<div class="section" id="keras-functional-api">
+<h3>Keras Functional API模式建立模型<a class="headerlink" href="#keras-functional-api" title="永久链接至标题">¶</a></h3>
+<p><a class="reference external" href="https://www.tensorflow.org/alpha/guide/keras/functional">https://www.tensorflow.org/alpha/guide/keras/functional</a></p>
+</div>
 <div class="section" id="keras-model-compile-fit-evaluate">
-<h2>使用Keras Model的 <code class="docutils literal notranslate"><span class="pre">compile</span></code> 、 <code class="docutils literal notranslate"><span class="pre">fit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> 方法训练和评估模型 *<a class="headerlink" href="#keras-model-compile-fit-evaluate" title="永久链接至标题">¶</a></h2>
+<h3>使用Keras Model的 <code class="docutils literal notranslate"><span class="pre">compile</span></code> 、 <code class="docutils literal notranslate"><span class="pre">fit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> 方法训练和评估模型<a class="headerlink" href="#keras-model-compile-fit-evaluate" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="metricsloss">
+<h3>自定义Metrics和Loss<a class="headerlink" href="#metricsloss" title="永久链接至标题">¶</a></h3>
 <table class="docutils citation" frame="void" id="lecun1998" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -838,6 +857,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </table>
 </div>
 </div>
+</div>
 
 
            </div>
@@ -847,7 +867,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="extended.html" class="btn btn-neutral float-right" title="TensorFlow持久化与可视化" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="extended.html" class="btn btn-neutral float-right" title="TensorFlow工具" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="basic.html" class="btn btn-neutral float-left" title="TensorFlow基础" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

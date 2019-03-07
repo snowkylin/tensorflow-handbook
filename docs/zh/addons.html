@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>附录3：TensorFlow资源重用 &mdash; 简单粗暴TensorFlow 0.4 alpha 文档</title>
+  <title>附录4：TensorFlow Addons &mdash; 简单粗暴TensorFlow 0.4 alpha 文档</title>
   
 
   
@@ -38,8 +38,8 @@
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="附录4：TensorFlow Addons" href="addons.html" />
-    <link rel="prev" title="附录2：TensorFlow for Swift" href="swift.html" /> 
+    <link rel="next" title="附录5：TensorFlow自定义运算操作" href="custom_op.html" />
+    <link rel="prev" title="附录3：TensorFlow资源重用" href="reuse.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -102,13 +102,12 @@
 <li class="toctree-l1"><a class="reference internal" href="application/prob.html">（仅纸质版）TensorFlow Probability异常文本检测</a></li>
 <li class="toctree-l1"><a class="reference internal" href="static.html">附录1：静态的TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="swift.html">附录2：TensorFlow for Swift</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">附录3：TensorFlow资源重用</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#tensorflow-hub">TensorFlow Hub</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#tensorflow-datasets">TensorFlow Datasets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#tensor2tensor">Tensor2Tensor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reuse.html">附录3：TensorFlow资源重用</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">附录4：TensorFlow Addons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tensorflow-probability">TensorFlow Probability：贝叶斯框架</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tf-agents">TF-Agents：强化学习框架</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="addons.html">附录4：TensorFlow Addons</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_op.html">附录5：TensorFlow自定义运算操作</a></li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">附录6：TensorFlow环境配置与管理</a></li>
 <li class="toctree-l1"><a class="reference internal" href="recommended_books.html">附录7：参考资料与推荐阅读</a></li>
@@ -166,13 +165,13 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>附录3：TensorFlow资源重用</li>
+      <li>附录4：TensorFlow Addons</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/zh/reuse.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/zh/addons.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -185,60 +184,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="tensorflow">
-<h1>附录3：TensorFlow资源重用<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
-<div class="section" id="tensorflow-hub">
-<h2>TensorFlow Hub<a class="headerlink" href="#tensorflow-hub" title="永久链接至标题">¶</a></h2>
-<p>TF Hub目的是为了更好复用已训练好的模型，可节省海量的训练时间和计算资源。预训练好的模型，可以进行直接部署，也可以进行迁移学习（Transfer Learning）。</p>
-<p>本书是使用TF Hub中的Inception V3模型，针对mnist图像进行迁移学习。
-mnist图像资源获取地址：<a class="reference external" href="https://github.com/dpinthinker/mnist_image_png_jpeg">https://github.com/dpinthinker/mnist_image_png_jpeg</a></p>
-<p>具体操作方法参考https://www.tensorflow.org/hub/tutorials/image_retraining，如下</p>
-<ol class="arabic simple">
-<li>获取retrain.py脚本</li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -LO https://github.com/tensorflow/hub/raw/master/examples/image_retraining/retrain.py
-</pre></div>
+  <div class="section" id="tensorflow-addons">
+<h1>附录4：TensorFlow Addons<a class="headerlink" href="#tensorflow-addons" title="永久链接至标题">¶</a></h1>
+<div class="section" id="tensorflow-probability">
+<h2>TensorFlow Probability：贝叶斯框架<a class="headerlink" href="#tensorflow-probability" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="https://www.tensorflow.org/probability">https://www.tensorflow.org/probability</a></p>
 </div>
-<ol class="arabic simple" start="2">
-<li>进行迁移学习，该过程会持续很长时间，停止后可以增量训练</li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python retrain.py --image_dir your_mnist_img_path
-</pre></div>
-</div>
-<p>默认生成的模型在/tmp/output_graph.pb，对应的label数据在/tmp/output_labels.txt。</p>
-<ol class="arabic simple" start="3">
-<li>获取label_imange.py脚本</li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -LO https://github.com/tensorflow/tensorflow/raw/master/tensorflow/examples/label_image/label_image.py
-</pre></div>
-</div>
-<ol class="arabic simple" start="4">
-<li>对迁移学习训练完的模型进行验证</li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python label_image.py <span class="se">\</span>
---graph<span class="o">=</span>/tmp/output_graph.pb <span class="se">\</span>
---labels<span class="o">=</span>/tmp/output_labels.txt <span class="se">\</span>
---input_layer<span class="o">=</span>Placeholder <span class="se">\</span>
---output_layer<span class="o">=</span>final_result <span class="se">\</span>
---image<span class="o">=</span>your_mnist_test_img_&lt;number&gt;.jpg
-</pre></div>
-</div>
-<p>结果如下：</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="m">3</span> <span class="m">0</span>.92819667
-<span class="m">2</span> <span class="m">0</span>.027902907
-<span class="m">5</span> <span class="m">0</span>.018210107
-<span class="m">9</span> <span class="m">0</span>.010902734
-<span class="m">7</span> <span class="m">0</span>.0056838035
-</pre></div>
-</div>
-<p>这里产生的模型output_graph.pb，在移动端部署章节会被使用到。</p>
-</div>
-<div class="section" id="tensorflow-datasets">
-<h2>TensorFlow Datasets<a class="headerlink" href="#tensorflow-datasets" title="永久链接至标题">¶</a></h2>
-<p><a class="reference external" href="https://www.tensorflow.org/datasets/">https://www.tensorflow.org/datasets/</a></p>
-</div>
-<div class="section" id="tensor2tensor">
-<h2>Tensor2Tensor<a class="headerlink" href="#tensor2tensor" title="永久链接至标题">¶</a></h2>
+<div class="section" id="tf-agents">
+<h2>TF-Agents：强化学习框架<a class="headerlink" href="#tf-agents" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="https://github.com/tensorflow/agents">https://github.com/tensorflow/agents</a></p>
 </div>
 </div>
 
@@ -250,10 +204,10 @@ mnist图像资源获取地址：<a class="reference external" href="https://gith
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="addons.html" class="btn btn-neutral float-right" title="附录4：TensorFlow Addons" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="custom_op.html" class="btn btn-neutral float-right" title="附录5：TensorFlow自定义运算操作" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="swift.html" class="btn btn-neutral float-left" title="附录2：TensorFlow for Swift" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="reuse.html" class="btn btn-neutral float-left" title="附录3：TensorFlow资源重用" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
