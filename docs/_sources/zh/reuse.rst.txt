@@ -1,4 +1,4 @@
-附录3：TensorFlow预训练模型
+附录3：TensorFlow资源重用
 ============================================
 
 TensorFlow Hub
@@ -53,6 +53,11 @@ mnist图像资源获取地址：https://github.com/dpinthinker/mnist_image_png_j
     7 0.0056838035
 
 这里产生的模型output_graph.pb，在移动端部署章节会被使用到。
+
+TensorFlow Datasets
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+https://www.tensorflow.org/datasets/
 
 Tensor2Tensor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
