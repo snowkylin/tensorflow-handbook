@@ -1,4 +1,4 @@
-TensorFlow持久化与可视化
+TensorFlow工具
 =====================================
 
 .. admonition:: 前置知识
@@ -133,4 +133,7 @@ TensorBoard的使用有以下注意事项：
 最后提供一个实例，以前章的 :ref:`多层感知机模型 <mlp>` 为例展示TensorBoard的使用：
 
 .. literalinclude:: ../_static/code/zh/extended/tensorboard/mnist.py
+
+``tf.data`` ：数据预处理
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
