@@ -1,5 +1,5 @@
-TensorFlow模型
-================
+TensorFlow模型建立与训练
+========================================
 
 .. _linear:
 
@@ -15,7 +15,7 @@ TensorFlow模型
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ..  https://www.tensorflow.org/programmers_guide/eager
 
-在TensorFlow中，推荐使用Keras构建模型。Keras是一个广为流行的高级神经网络API，简单、快速而不失灵活性，现已得到TensorFlow的官方内置和全面支持。
+在TensorFlow中，推荐使用Keras（ ``tf.keras`` ）构建模型。Keras是一个广为流行的高级神经网络API，简单、快速而不失灵活性，现已得到TensorFlow的官方内置和全面支持。
 
 Keras有两个重要的概念： **模型（Model）** 和 **层（Layer）** 。层将各种计算流程和变量进行了封装（例如基本的全连接层，CNN的卷积层、池化层等），而模型则将各种层进行组织和连接，并封装成一个整体，描述了如何将输入数据通过各种层以及运算而得到输出。在需要模型调用的时候，使用 ``y_pred = model(X)`` 的形式即可。Keras在 ``tf.keras.layers`` 下内置了深度学习中大量常用的的预定义层，同时也允许我们自定义层。
 
@@ -44,17 +44,37 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
     Keras模型类定义示意图
 
-.. hint:: 继承 ``tf.keras.Model`` 后，我们同时可以使用父类的若干方法和属性，例如在实例化类 ``model = Model()`` 后，可以通过 ``model.variables`` 这一属性直接获得模型中的所有变量，免去我们一个个显式指定变量的麻烦。
+继承 ``tf.keras.Model`` 后，我们同时可以使用父类的若干方法和属性，例如在实例化类 ``model = Model()`` 后，可以通过 ``model.variables`` 这一属性直接获得模型中的所有变量，免去我们一个个显式指定变量的麻烦。
 
-上一章中简单的线性模型 ``y_pred = tf.matmul(X, w) + b`` ，我们可以通过模型类的方式编写如下：
+上一章中简单的线性模型 ``y_pred = a * X + b`` ，我们可以通过模型类的方式编写如下：
 
 .. literalinclude:: ../_static/code/zh/model/linear/linear.py
 
-这里，我们没有显式地声明 ``w`` 和 ``b`` 两个变量并写出 ``y_pred = tf.matmul(X, w) + b`` 这一线性变换，而是在初始化部分实例化了一个全连接层（ ``tf.keras.layers.Dense`` ），并在call方法中对这个层进行调用。全连接层封装了 ``output = activation(tf.matmul(input, kernel) + bias)`` 这一线性变换+激活函数的计算操作，以及 ``kernel`` 和 ``bias`` 两个变量。当不指定激活函数时（即 ``activation(x) = x`` ），这个全连接层即为 ``output = tf.matmul(input, kernel) + bias`` ，可见等价于我们上述的线性变换。顺便一提，全连接层可能是我们编写模型时使用最频繁的层。
+这里，我们没有显式地声明 ``a`` 和 ``b`` 两个变量并写出 ``y_pred = a * X + b`` 这一线性变换，而是建立了一个继承了 ``tf.keras.Model`` 的模型类 ``Linear`` 。这个类在初始化部分实例化了一个 **全连接层** （ ``tf.keras.layers.Dense`` ），并在call方法中对这个层进行调用，实现了线性变换的计算。如果需要显式地声明自己的变量并使用变量进行自定义运算，或者希望了解Keras层的内部原理，请参考 :ref:`自定义层 <custom_layer>`。
 
-如果需要显式地声明自己的变量并使用变量进行自定义运算，或者希望了解Keras层的内部原理，请参考 :ref:`自定义层 <custom_layer>`。
+.. admonition:: Keras的全连接层：线性变换+激活函数
 
-.. admonition:: 为什么是重载 ``call()`` 方法而不是  ``__call__()`` 方法？
+    `全连接层 <https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense>`_ （Fully-connected Layer，``tf.keras.layers.Dense`` ）是Keras中最基础和常用的层之一。给定输入张量 ``input = [batch_size, input_dim]`` ，该层对输入张量首先进行 ``tf.matmul(input, kernel) + bias`` 的线性变换，然后对线性变换后张量的每个元素通过激活函数 ``activation`` ，输出形状为 ``[batch_size, units]`` 的二维张量。
+    
+    .. figure:: ../_static/image/model/dense.png
+        :width: 60%
+        :align: center
+
+    其包含的主要参数如下：
+    
+    * ``units`` ：输出张量的维度；
+    * ``activation`` ：激活函数，默认为无激活函数（ ``a(x) = x`` ）。常用的激活函数包括 ``tf.nn.relu`` 、 ``tf.nn.tanh`` 和 ``tf.nn.sigmoid`` ；
+    * ``use_bias`` ：是否加入偏置向量 ``bias`` 。默认为 ``True`` ；
+    * ``kernel_initializer`` 、 ``bias_initializer`` ：权重矩阵 ``kernel`` 和偏置向量 ``bias`` 两个变量的初始化器。默认为 ``tf.glorot_uniform_initializer`` [#glorot]_ 。设置为 ``tf.zeros_initializer`` 表示将两个变量均初始化为全0；
+    
+    以及包含权重矩阵 ``kernel = [input_dim, units]`` 和偏置向量 ``bias = [units]`` [#broadcast]_ 两个变量，相当于上述的 ``a`` 和 ``b`` 。
+
+    这里着重从数学矩阵运算和线性变换的角度描述了全连接层。基于神经元建模的描述可参考 :ref:`后文介绍 <neuron>` 。
+
+    .. [#glorot] Keras中的很多层都默认使用 ``tf.glorot_uniform_initializer`` 初始化变量，关于该初始化器可参考 https://www.tensorflow.org/api_docs/python/tf/glorot_uniform_initializer 。
+    .. [#broadcast] 你可能会注意到， ``tf.matmul(input, kernel)`` 的结果是一个形状为 ``[batch_size, units]`` 的二维矩阵，这个二维矩阵要如何与形状为 ``[units]`` 的一维偏置向量bias相加呢？事实上，这里是TensorFlow的Broadcasting机制在起作用，该加法运算相当于将二维矩阵的每一行加上了 ``Bias`` 。Broadcasting机制的具体介绍可见 https://www.tensorflow.org/xla/broadcasting 。
+
+.. admonition:: 为什么模型类是重载 ``call()`` 方法而不是  ``__call__()`` 方法？
 
     在Python中，对类的实例 ``myClass`` 进行形如 ``myClass()`` 的调用等价于 ``myClass.__call__()`` （具体请见本章初“前置知识”的 ``__call__()`` 部分）。那么看起来，为了使用 ``y_pred = model(X)`` 的形式调用模型类，应该重写 ``__call__()`` 方法才对呀？原因是Keras在模型调用的前后还需要有一些自己的内部操作，所以暴露出一个专门用于重载的 ``call()`` 方法。 ``tf.keras.Model`` 这一父类已经包含 ``__call__()`` 的定义。 ``__call__()`` 中主要调用了 ``call()`` 方法，同时还需要在进行一些keras的内部操作。这里，我们通过继承 ``tf.keras.Model`` 并重载 ``call()`` 方法，即可在保持keras结构的同时加入模型调用的代码。
 
@@ -80,12 +100,24 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 先进行预备工作，实现一个简单的 ``DataLoader`` 类来读取MNIST数据集数据。
 
 .. literalinclude:: ../_static/code/zh/model/mlp/main.py
-    :lines: 13-23
+    :lines: 13-24
 
-多层感知机的模型类实现与上面的线性模型类似，所不同的地方在于层数增加了（顾名思义，“多层”感知机），以及引入了非线性激活函数（这里使用了 `ReLU函数 <https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0>`_ ， 即下方的 ``activation=tf.nn.relu`` ）。该模型输入一个向量（比如这里是拉直的1×784手写体数字图片），输出10维的信号，分别代表这张图片属于0到9的概率。这里我们加入了一个predict方法，对图片对应的数字进行预测。在预测的时候，选择概率最大的数字进行预测输出。
+.. hint:: ``mnist = tf.keras.datasets.mnist`` 将从网络上自动下载MNIST数据集并加载。如果运行时出现网络连接错误，可以从 https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz 或 https://s3.amazonaws.com/img-datasets/mnist.npz 下载MNIST数据集 ``mnist.npz`` 文件，并放置于用户目录的 ``.keras/dataset`` 目录下（Windows下用户目录为 ``C:\Users\用户名`` ，Linux下用户目录为 ``/home/用户名`` ）。
+
+.. admonition:: TensorFlow的图像数据表示
+    
+    在TensorFlow中，图像数据集的一种典型表示是 ``[图像数目，长，宽，色彩通道数]`` 的四维张量。在上面的 ``DataLoader`` 类中， ``self.train_data`` 和 ``self.test_data`` 分别载入了60,000和10,000张大小为 ``28*28`` 的手写体数字图片。由于这里读入的是灰度图片，色彩通道数为1（彩色RGB图像色彩通道数为3），所以我们使用 ``np.expand_dims()`` 函数为图像数据手动在最后添加一维通道。
+
+多层感知机的模型类实现与上面的线性模型类似，所不同的地方在于层数增加了（顾名思义，“多层”感知机），以及引入了非线性激活函数（这里使用了 `ReLU函数 <https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0>`_ ， 即下方的 ``activation=tf.nn.relu`` ）。该模型输入一个向量（比如这里是拉直的 ``1×784`` 手写体数字图片），输出10维的信号，分别代表这张图片属于0到9的概率。这里我们加入了一个 ``predict`` 方法，对图片对应的数字进行预测。在预测的时候，选择概率最大的数字进行预测输出。
 
 .. literalinclude:: ../_static/code/zh/model/mlp/mlp.py
-    :lines: 4-17
+    :lines: 4-19
+
+.. figure:: ../_static/image/model/mlp.png
+    :width: 80%
+    :align: center
+
+    MLP模型示意图
 
 定义一些模型超参数：
 
@@ -124,10 +156,34 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 可以注意到，使用这样简单的模型，已经可以达到95%左右的准确率。
 
+.. _neuron:
+
+.. admonition:: 神经网络的基本单位：神经元 [#order]_
+
+    如果我们将上面的神经网络放大来看，详细研究计算过程，比如取第二层的第k个计算单元，可以得到示意图如下：
+
+    .. figure:: ../_static/image/model/neuron.png
+        :width: 80%
+        :align: center
+
+    该计算单元 :math:`Q_k` 有100个权值参数 :math:`w_{0k}, w_{1k}, ..., w_{99k}` 和1个偏置参数 :math:`b_k` 。将第1层中所有的100个计算单元 :math:`P_0, P_1, ..., P_{99}` 的值作为输入，分别按权值 :math:`w_{ik}` 加和（即 :math:`\sum_{i=0}^{99} w_{ik} P_i` ），并加上偏置值 :math:`b_k` ，然后送入激活函数 :math:`f` 进行计算，即得到输出结果。
+
+    事实上，这种结构和真实的神经细胞（神经元）类似。神经元由树突、胞体和轴突构成。树突接受其他神经元传来的信号作为输入（一个神经元可以有数千甚至上万树突），胞体对电位信号进行整合，而产生的信号则通过轴突传到神经末梢的突触，传播到下一个（或多个）神经元。
+
+    .. figure:: ../_static/image/model/real_neuron.png
+        :width: 80%
+        :align: center
+
+        神经细胞模式图（修改自 Quasar Jarosz at English Wikipedia [CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)]）
+
+    上面的计算单元，可以被视作对神经元结构的数学建模。在上面的例子里，第二层的每一个计算单元（人工神经元）有100个权值参数和1个偏置参数，而第二层计算单元的数目是10个，因此这一个全连接层的总参数量为100*10个权值参数和10个偏置参数。事实上，这正是该全连接层中的两个变量 ``kernel`` 和 ``bias`` 的形状。仔细研究一下，你会发现，这里基于神经元建模的介绍与上文基于矩阵计算的介绍是等价的。
+    
+    .. [#order] 事实上，应当是先有神经元建模的概念，再有基于人工神经元和层结构的人工神经网络。但由于本手册着重介绍TensorFlow的使用方法，所以调换了介绍顺序。
+
 卷积神经网络（CNN）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-`卷积神经网络 <https://zh.wikipedia.org/wiki/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C>`_ （Convolutional Neural Network, CNN）是一种结构类似于人类或动物的 `视觉系统 <https://zh.wikipedia.org/wiki/%E8%A7%86%E8%A7%89%E7%B3%BB%E7%BB%9F>`_ 的人工神经网络，包含一个或多个卷积层（Convolutional Layer）、池化层（Pooling Layer）和全连接层（Dense Layer）。
+`卷积神经网络 <https://zh.wikipedia.org/wiki/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C>`_ （Convolutional Neural Network, CNN）是一种结构类似于人类或动物的 `视觉系统 <https://zh.wikipedia.org/wiki/%E8%A7%86%E8%A7%89%E7%B3%BB%E7%BB%9F>`_ 的人工神经网络，包含一个或多个卷积层（Convolutional Layer）、池化层（Pooling Layer）和全连接层（Fully-connected Layer）。
 
 .. admonition:: 基础知识和原理
     
@@ -149,6 +205,10 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
     test accuracy: 0.988100
 
 可以发现准确率有非常显著的提高。事实上，通过改变模型的网络结构（比如加入Dropout层防止过拟合），准确率还有进一步提升的空间。
+
+.. admonition:: 卷积层和池化层的工作原理
+
+    
 
 循环神经网络（RNN）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -290,6 +350,14 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 .. literalinclude:: ../_static/code/zh/model/rl/rl.py
 
+对于不同的任务（或者说环境），我们需要根据任务的特点，设计不同的状态以及采取合适的网络来拟合Q函数。例如，如果我们考虑经典的打砖块游戏（Gym环境库中的  `Breakout-v0 <https://gym.openai.com/envs/Breakout-v0/>`_  ），每一次执行动作（挡板向左、向右或不动），都会返回一个 ``210 * 160 * 3`` 的RGB图片，表示当前屏幕画面。为了给打砖块游戏这个任务设计合适的状态表示，我们有以下分析：
+
+* 砖块的颜色信息并不是很重要，画面转换成灰度也不影响操作，因此可以去除状态中的颜色信息（即将图片转为灰度表示）；
+* 小球移动的信息很重要，如果只知道单帧画面而不知道小球往哪边运动，即使是人也很难判断挡板应当移动的方向。因此，必须在状态中加入表征小球运动方向的信息。一个简单的方式是将当前帧与前面几帧的画面进行叠加，得到一个 ``210 * 160 * X`` （X为叠加帧数）的状态表示；
+* 每帧的分辨率不需要特别高，只要能大致表征方块、小球和挡板的位置以做出决策即可，因此对于每帧的长宽可做适当压缩。
+
+而考虑到我们需要从图像信息中提取特征，使用CNN作为拟合Q函数的网络将更为适合。
+
 .. _custom_layer:
 
 自定义层 *
@@ -330,6 +398,8 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 Graph Execution模式 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+在TensorFlow 2.0中，推荐使用 ``@tf.function`` （而非1.X中的Session）实现Graph Execution。
+
 事实上，只要在编写模型的时候稍加注意，以上的模型都是可以同时兼容Eager Execution模式和Graph Execution模式的 [#rnn_exception]_ 。注意，在Graph Execution模式下， ``model(input_tensor)`` 只需运行一次以完成图的建立操作。
 
 例如，通过以下代码，同样可以调用 :ref:`本章第一节 <linear>` 建立的线性模型并进行线性回归：
@@ -339,7 +409,7 @@ Graph Execution模式 *
 
 .. [#rnn_exception] 除了本章实现的RNN模型以外。在RNN模型的实现中，我们通过Eager Execution动态获取了seq_length的长度，使得我们可以方便地动态控制RNN的展开长度。然而Graph Execution不支持这一点，为了达到相同的效果，我们需要固定seq_length的长度，或者使用 ``tf.nn.dynamic_rnn`` （ `文档 <https://www.tensorflow.org/api_docs/python/tf/nn/dynamic_rnn>`_ ）。
 
-Keras Sequential模式建立模型 *
+Keras Pipeline *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 序列到序列模型（Sequence to Sequence, SEQ2SEQ）是一种基于RNN的Encoder-Decoder结构，它也是现在谷歌应用于线上机器翻译的算法，翻译质量已经和人类水平不相上下。
@@ -636,6 +706,26 @@ Chat 程序……
     > faint
     Bot:
 
+
+https://medium.com/tensorflow/what-are-symbolic-and-imperative-apis-in-tensorflow-2-0-dfccecb01021
+
+以上示例使用了Keras的Subclassing API建立模型。
+
+Keras Sequential API模式建立模型
+-------------------------------------------
+
+在很多时候，我们只需要建立一个结构相对简单和典型、各个层之间仅顺序相连的神经网络（比如上文中的MLP和CNN）。这时，Keras给我们提供了一种更为简单的模型建立方式。
+
+Keras Functional API模式建立模型
+-------------------------------------------
+
+https://www.tensorflow.org/alpha/guide/keras/functional
+
+使用Keras Model的 ``compile`` 、 ``fit`` 和 ``evaluate`` 方法训练和评估模型
+--------------------------------------------------------------------------------------
+
+自定义Metrics和Loss
+-------------------------------------------
 
 .. [LeCun1998] Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. "Gradient-based learning applied to document recognition." Proceedings of the IEEE, 86(11):2278-2324, November 1998. http://yann.lecun.com/exdb/mnist/
 .. [Graves2013] Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.

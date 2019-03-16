@@ -109,7 +109,9 @@ Keras Sequential save方法
                           [--dump_graphviz_dir DUMP_GRAPHVIZ_DIR]
                           [--dump_graphviz_video]
 
-模型的导出：Keras Sequential save方法中产生的模型文件，可以使用如下命令处理::
+模型的导出：Keras Sequential save方法中产生的模型文件，可以使用如下命令处理：
+
+.. code-block:: bash
 
     tflite_convert --keras_model_file=./mnist_cnn.h5 --output_file=./mnist_cnn.tflite
 
@@ -117,6 +119,54 @@ Keras Sequential save方法
 
 .. warning:: 这里只介绍了keras HDF5格式模型的转换，其他模型转换建议参考：https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/convert/cmdline_examples.md
 
+还有一种quantization的转化方法，这种转化命令如下：
+
+.. code-block:: bash
+
+    tflite_convert \
+      --output_file=keras_mnist_quantized_uint8.tflite \
+      --keras_model_file=mnist_cnn.h5 \
+      --inference_type=QUANTIZED_UINT8 \
+      --mean_values=128 \
+      --std_dev_values=127 \
+      --default_ranges_min=0 \
+      --default_ranges_max=255 \
+      --input_arrays=conv2d_1_input \
+      --output_arrays=dense_2/Softmax
+
+细心的读者肯定会问，上图中有很多参数是怎么来的呢？我们可以使用tflite_convert的获得模型具体结构，命令如下：
+
+.. code-block:: bash
+
+    tflite_convert \
+      --output_file=keras_mnist.dot \
+      --output_format=GRAPHVIZ_DOT \
+      --keras_model_file=mnist_cnn.h5
+
+dot是一种graph description language，可以同graphz的dot命令转化为pdf或svg等可视化图。
+
+.. code-block:: bash
+
+    dot -Tpdf -O keras_mnist.dot
+
+这样就转化为一个一张图了，很明显的可以看到如下信息：
+
+入口：
+
+.. code-block:: bash
+
+    conv2d_1_input
+    Type: Float [1×28×28×1]
+    MinMax: [0, 255]
+
+出口：
+
+.. code-block:: bash
+
+    dense_2/Softmax
+    Type: Float [1×10]
+
+TODO: mean和std尚未理解清楚，待研究
 
 Android部署
 -----------------------------
@@ -162,7 +212,9 @@ Android部署
 
 **加载模型**
 
-使用如下函数将`mnist_cnn.tflite`文件加载到memory-map中，作为Interpreter实例化的输入::
+使用如下函数将`mnist_cnn.tflite`文件加载到memory-map中，作为Interpreter实例化的输入
+
+.. code-block:: java
 
     private static final String MODEL_PATH = "mnist_cnn.tflite";
 
@@ -176,13 +228,17 @@ Android部署
         return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength);
     }
 
-实例化Interpreter，其中this为当前acitivity::
+实例化Interpreter，其中this为当前acitivity
+
+.. code-block:: java
 
     tflite = new Interpreter(loadModelFile(this));
 
 **运行输入**
 
-我们使用mnist test测试集中的某张图片作为输入，mnist图像大小28*28，单像素。这样我们输入的数据需要设置成如下格式::
+我们使用mnist test测试集中的某张图片作为输入，mnist图像大小28*28，单像素。这样我们输入的数据需要设置成如下格式
+
+.. code-block:: java
 
     /** A ByteBuffer to hold image data, to be feed into Tensorflow Lite as inputs. */
     private ByteBuffer imgData = null;
@@ -199,7 +255,9 @@ Android部署
         imgData.order(ByteOrder.nativeOrder());
     }
 
-将mnist图片转化成ByteBuffer，并保持到imgData中::
+将mnist图片转化成ByteBuffer，并保持到imgData中
+
+.. code-block:: java
 
     /** Preallocated buffers for storing image data in. */
     private int[] intValues = new int[DIM_IMG_WIDTH * DIM_IMG_HEIGHT];
@@ -228,7 +286,9 @@ convertBitmapToByteBuffer的输出即为模型运行的输入。
 
 **运行输出**
 
-定义一个1*10的多维数组，因为我们只有1个batch和10个label（TODO：need double check），具体代码如下::
+定义一个1*10的多维数组，因为我们只有1个batch和10个label（TODO：need double check），具体代码如下
+
+.. code-block:: java
 
     private float[][] labelProbArray = new float[1][10];
 
@@ -236,11 +296,15 @@ convertBitmapToByteBuffer的输出即为模型运行的输入。
 
 **运行及结果处理**
 
-开始运行模型，具体代码如下::
+开始运行模型，具体代码如下
+
+.. code-block:: java
 
     tflite.run(imgData, labelProbArray);
 
-针对某个图片，运行后labelProbArray的内容如下，也就是各个label识别的概率::
+针对某个图片，运行后labelProbArray的内容如下，也就是各个label识别的概率
+
+.. code-block:: java
 
     index 0 prob is 0.0
     index 1 prob is 0.0

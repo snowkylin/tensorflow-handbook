@@ -1,1 +1,1 @@
-sphinx-autobuild --open-browser source build/html
+sphinx-autobuild --open-browser --ignore "*.xml" source build/html
