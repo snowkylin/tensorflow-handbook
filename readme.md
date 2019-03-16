@@ -34,4 +34,7 @@ pip install sphinx
 
 # for theme
 pip install sphinx_rtd_theme
+
+# for auto build
+pip install sphinx_autobuild
 ```

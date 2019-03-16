@@ -17,40 +17,88 @@ Keras Sequential save方法
     
     https://github.com/keras-team/keras/blob/master/examples/mnist_cnn.py
 
-具体如下::
+引用源码如下
+
+.. code-block:: python
+
+    '''Trains a simple convnet on the MNIST dataset.
     
-    COPYRIGHT
+    Gets to 99.25% test accuracy after 12 epochs
+    (there is still a lot of margin for parameter tuning).
+    16 seconds per epoch on a GRID K520 GPU.
+    '''
+    
+    from __future__ import print_function
+    import keras
+    from keras.datasets import mnist
+    from keras.models import Sequential
+    from keras.layers import Dense, Dropout, Flatten
+    from keras.layers import Conv2D, MaxPooling2D
+    from keras import backend as K
+    
+    batch_size = 128
+    num_classes = 10
+    epochs = 12
+    
+    # input image dimensions
+    img_rows, img_cols = 28, 28
+    
+    # the data, split between train and test sets
+    (x_train, y_train), (x_test, y_test) = mnist.load_data()
+    
+    if K.image_data_format() == 'channels_first':
+        x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)
+        x_test = x_test.reshape(x_test.shape[0], 1, img_rows, img_cols)
+        input_shape = (1, img_rows, img_cols)
+    else:
+        x_train = x_train.reshape(x_train.shape[0], img_rows, img_cols, 1)
+        x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)
+        input_shape = (img_rows, img_cols, 1)
+    
+    x_train = x_train.astype('float32')
+    x_test = x_test.astype('float32')
+    x_train /= 255
+    x_test /= 255
+    print('x_train shape:', x_train.shape)
+    print(x_train.shape[0], 'train samples')
+    print(x_test.shape[0], 'test samples')
+    
+    # convert class vectors to binary class matrices
+    y_train = keras.utils.to_categorical(y_train, num_classes)
+    y_test = keras.utils.to_categorical(y_test, num_classes)
+    
+    model = Sequential()
+    model.add(Conv2D(32, kernel_size=(3, 3),
+                     activation='relu',
+                     input_shape=input_shape))
+    model.add(Conv2D(64, (3, 3), activation='relu'))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.25))
+    model.add(Flatten())
+    model.add(Dense(128, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(num_classes, activation='softmax'))
+    
+    model.compile(loss=keras.losses.categorical_crossentropy,
+                  optimizer=keras.optimizers.Adadelta(),
+                  metrics=['accuracy'])
+    
+    model.fit(x_train, y_train,
+              batch_size=batch_size,
+              epochs=epochs,
+              verbose=1,
+              validation_data=(x_test, y_test))
+    score = model.evaluate(x_test, y_test, verbose=0)
+    print('Test loss:', score[0])
+    print('Test accuracy:', score[1])
 
-    All contributions by François Chollet:
-    Copyright (c) 2015 - 2018, François Chollet.
-    All rights reserved.
+以上代码，是基于keras的Sequential构建了多层的卷积神经网络，并进行训练。
 
-    All contributions by Google:
-    Copyright (c) 2015 - 2018, Google, Inc.
-    All rights reserved.
-
-    All contributions by Microsoft:
-    Copyright (c) 2017 - 2018, Microsoft, Inc.
-    All rights reserved.
-
-    All other contributions:
-    Copyright (c) 2015 - 2018, the respective contributors.
-    All rights reserved.
-
-    Each contributor holds copyright over their respective contributions.
-    The project versioning (Git) records all such contribution source information.
-
-    LICENSE
-
-    The MIT License (MIT)
-
-.. literalinclude:: ../_static/code/zh/deployment/modelsave/mnist_cnn.py
-
-可使用如下命令拷贝到本地::
+为了方便起见可使用如下命令拷贝到本地::
 
     curl -LO https://raw.githubusercontent.com/keras-team/keras/master/examples/mnist_cnn.py
 
-并在最后加上如下一行代码::
+然后，在最后加上如下一行代码（主要是对keras训练完毕的模型进行保存）::
 
     model.save('mnist_cnn.h5')
 
@@ -61,9 +109,9 @@ Keras Sequential save方法
 
 .. warning:: 该过程需要连接网络获取mnist.npz文件（https://s3.amazonaws.com/img-datasets/mnist.npz），会被保存到$HOME/.keras/datasets/。如果网络连接存在问题，可以通过其他方式获取mnist.npz后，直接保存到该目录即可。
 
-执行过程会比较久，执行结束后，会产生在当前目录产生`mnist_cnn.h5`文件（HDF5格式），就是keras训练后模型，其中已经包含了训练后的模型结构和权重等信息。
+执行过程会比较久，执行结束后，会在当前目录产生`mnist_cnn.h5`文件（HDF5格式），就是keras训练后的模型，其中已经包含了训练后的模型结构和权重等信息。
 
-该模型可以在服务器端，可以直接通过keras.models.load_model("mnist_cnn.h5")加载，然后进行推理；在移动设备需要将HDF5模型文件转换为TensorFlow Lite的格式，然后提供相应平台提供的Interpreter加载，然后进行推理。
+在服务器端，可以直接通过keras.models.load_model("mnist_cnn.h5")加载，然后进行推理；在移动设备需要将HDF5模型文件转换为TensorFlow Lite的格式，然后通过相应平台的Interpreter加载，然后进行推理。
 
 服务器部署模型：TensorFlow Serving
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -72,15 +120,9 @@ Keras Sequential save方法
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 模型转换
 --------------------------------------------
-使用TensorFlow训练好的模型，因为模型太大、运行效率比较低，不能直接在移动端部署，需要通过工具转化为Flat Buffer格式的模型。
+由于移动设备空间和计算能力受限，使用TensorFlow训练好的模型，模型太大、运行效率比较低，不能直接在移动端部署。
 
-谷歌提供了多种转换方式：
-
-* tflight_convert：>= TensorFlow 1.9
-* TOCO：>= TensorFlow 1.7
-* 通过代码转换
-
-我们使用最新的tflight_convert，其实在通过pip安装TensorFlow时一起安装，可以直接使用。
+故在移动端部署的时候，需要使用tflight_convert转化格式，其在通过pip安装TensorFlow时一起安装。tflight_convert会把原模型转换为FlatBuffer格式。
 
 在终端执行如下命令::
 
@@ -109,7 +151,9 @@ Keras Sequential save方法
                           [--dump_graphviz_dir DUMP_GRAPHVIZ_DIR]
                           [--dump_graphviz_video]
 
-模型的导出：Keras Sequential save方法中产生的模型文件，可以使用如下命令处理::
+模型的导出：Keras Sequential save方法中产生的模型文件，可以使用如下命令处理：
+
+.. code-block:: bash
 
     tflite_convert --keras_model_file=./mnist_cnn.h5 --output_file=./mnist_cnn.tflite
 
@@ -117,6 +161,88 @@ Keras Sequential save方法
 
 .. warning:: 这里只介绍了keras HDF5格式模型的转换，其他模型转换建议参考：https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/convert/cmdline_examples.md
 
+Quantization 模型转换
+--------------------------------------------
+
+还有一种quantization的转化方法，这种转化命令如下：
+
+.. code-block:: bash
+
+    tflite_convert \
+      --output_file=keras_mnist_quantized_uint8.tflite \
+      --keras_model_file=mnist_cnn.h5 \
+      --inference_type=QUANTIZED_UINT8 \
+      --mean_values=128 \
+      --std_dev_values=127 \
+      --default_ranges_min=0 \
+      --default_ranges_max=255 \
+      --input_arrays=conv2d_1_input \
+      --output_arrays=dense_2/Softmax
+
+细心的读者肯定会问，上图中有很多参数是怎么来的呢？我们可以使用tflite_convert的获得模型具体结构，命令如下：
+
+.. code-block:: bash
+
+    tflite_convert \
+      --output_file=keras_mnist.dot \
+      --output_format=GRAPHVIZ_DOT \
+      --keras_model_file=mnist_cnn.h5
+
+dot是一种graph description language，可以用graphz的dot命令转化为pdf或png等可视化图。
+
+.. code-block:: bash
+
+    dot -Tpng -O keras_mnist.dot
+
+这样就转化为一张图了，如下：
+
+.. figure:: ../_static/image/deployment/keras_mnist.dot.png
+    :width: 80%
+    :align: center
+
+很明显的可以看到如下信息：
+
+入口：
+
+.. code-block:: bash
+
+    conv2d_1_input
+    Type: Float [1×28×28×1]
+    MinMax: [0, 255]
+
+出口：
+
+.. code-block:: bash
+
+    dense_2/Softmax
+    Type: Float [1×10]
+
+因此，可以知道
+
+``--input_arrays`` 就是 ``conv2d_1_input``
+
+``--output_arrays`` 就是 ``dense_2/Softmax``
+
+``--default_ranges_min`` 就是 ``0``
+
+``--default_ranges_max`` 就是 ``255``
+
+
+关于``--mean_values``和``--std_dev_values``的用途::
+
+    QUANTIZED_UINT8的quantized模型期望的输入是[0,255], 需要有个跟原始的float类型输入有个对应关系。
+
+    mean_values和std_dev_values就是为了实现这个对应关系
+
+    mean_values对应float的float_min
+
+    std_dev_values对应255 / (float_max - float_min)
+
+因此，可以知道
+
+``--mean_values``就是``0``
+
+``--std_dev_values``就是``1``
 
 Android部署
 -----------------------------
