@@ -409,38 +409,35 @@ Graph Execution模式 *
 
 .. [#rnn_exception] 除了本章实现的RNN模型以外。在RNN模型的实现中，我们通过Eager Execution动态获取了seq_length的长度，使得我们可以方便地动态控制RNN的展开长度。然而Graph Execution不支持这一点，为了达到相同的效果，我们需要固定seq_length的长度，或者使用 ``tf.nn.dynamic_rnn`` （ `文档 <https://www.tensorflow.org/api_docs/python/tf/nn/dynamic_rnn>`_ ）。
 
-Keras Pipeline *
+序列到序列（Seq2Seq） *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-序列到序列模型（Sequence to Sequence, SEQ2SEQ）是一种基于RNN的Encoder-Decoder结构，它也是现在谷歌应用于线上机器翻译的算法，翻译质量已经和人类水平不相上下。
+序列到序列模型（Sequence to Sequence, SEQ2SEQ）是一种基于 RNN 的 Encoder-Decoder 结构，它也是现在谷歌应用于线上机器翻译的算法，翻译质量已经和人类水平不相上下。
 
-这里通过Keras Sequential模式建立一个闲聊对话机器人（SEQ2SEQ）。它使用Encoder-Decoder结构，简单的来说就是算法包含两部分，一个负责对输入的信息进行Encoding，将输入转换为向量形式；然后由Decoder对这个向量进行解码，还原为输出序列。
+这里通过 Keras 自定义模型建立一个闲聊对话模型（Seq2Seq）。它使用 Encoder-Decoder 结构，简单的来说就是算法包含两部分，一个负责对输入的信息进行 Encoding，将输入转换为向量形式；然后由 Decoder 对这个向量进行解码，还原为输出序列。
 
-关于SEQ2SEQ的原理，可以参考：
+关于 Seq2Seq 的原理和介绍，可以参考 Keras 的博客：A ten-minute introduction to sequence-to-sequence learning in Keras。地址： https://blog.keras.io/a-ten-minute-introduction-to-sequence-to-sequence-learning-in-keras.html
 
-- To be added
-- To be added
-
-这里，我们使用SEQ2SEQ来实现一个闲聊（Chit Chat）对话机器人。除了闲聊机器人（输入一句话，输出一句回复）之外，它也可以被直接应用于解决其他类似问题，比如：翻译（输入一句英文，输出一句中文）、摘要（输入一篇文章，输出一份总结）、作诗（输入几个关键字，输出一首短诗）、对对联（输入上联，输出下联），等等。
+这里，我们使用 Seq2Seq 来实现一个闲聊（ChitChat）对话机器人。除了闲聊任务（输入一句话，输出一句回复）之外，它也可以被直接应用于解决其他类似问题，比如：翻译（输入一句英文，输出一句中文）、摘要（输入一篇文章，输出一份总结）、作诗（输入几个关键字，输出一首短诗）、对对联（输入上联，输出下联），等等。
 
 这个任务对比与之前的RNN尼采风格文本生成，区别在于我们预测的不再是文本的连续字母概率分布，而是通过一个序列，来预测另外一个对应的完整序列。举例来说，针对一句常见的打招呼::
 
     How are you
 
 
-这个句子（序列）一共有3个单词。当我们听到这个由3个单词组成的句子后，根据我们的习惯，我们最倾向与回复的一句话是"Fine thank you"。我们希望建立这样的模型，输入num_batch个由编码后单词和字符组成的，长为max_length的序列，输入张量形状为[num_batch, max_length]，输出与这个序列对应的序列（如聊天回复、翻译等）中单词和字符的概率分布，概率分布的维度为词汇表大小voc_size，输出张量形状为[num_batch, max_length, voc_size]。
+这个句子（序列）一共有3个单词。当我们听到这个由3个单词组成的句子后，根据我们的习惯，我们最倾向与回复的一句话是 "Fine thank you"。我们希望建立这样的模型，输入 num_batch 个由编码后单词和字符组成的，长为 max_length 的序列，输入张量形状为 [num_batch, max_length]，输出与这个序列对应的序列（如聊天回复、翻译等）中单词和字符的概率分布，概率分布的维度为词汇表大小 voc_size，输出张量形状为 [num_batch, max_length, voc_size]。
 
 首先，还是实现一个简单的 ``DataLoader`` 类来读取文本，
 
 .. code-block:: python
 
-    DATASET_URL = 'https://github.com/huan/concise-chit-chat/releases/download/v0.0.1/dataset.txt.gz'
-    DATASET_FILE_NAME = 'concise-chit-chat-dataset.txt.gz'
-    LATENT_UNIT_NUM = 100
-    EMBEDDING_DIM = 50
-    MAX_LEN = 20
-    DONE = '\a'
-    GO = '\b'
+    DATASET_URL = 'https://github.com/huan/python-concise-chitchat/releases/download/v0.0.1/dataset.txt.gz'
+    DATASET_FILE_NAME = 'concise-chitchat-dataset.txt.gz'
+    LATENT_UNIT_NUM = 256
+    EMBEDDING_DIM = 64
+    MAX_LEN = 10
+    START_TOKEN = '\t'
+    END_TOKEN = '\n'
 
 
     class DataLoader():
@@ -471,9 +468,9 @@ Keras Pipeline *
             query_list, response_list = [], []
             for line in raw_text.strip('\n').split('\n'):
                 query, response = line.split('\t')
+                query_list.append('{} {} {}'.format(START_TOKEN, query, END_TOKEN))
                 query, response = self.preprocess(query), self.preprocess(response)
-                query_list.append('{} {} {}'.format(GO, query, DONE))
-                response_list.append('{} {} {}'.format(GO, response, DONE))
+                response_list.append('{} {} {}'.format(START_TOKEN, response, END_TOKEN))
             return np.array(query_list), np.array(response_list)
 
 其次，我们还需要基于 `DataLoader` 加载的文本数据，建立一个词汇表 `Vocabulary` 来负责管理以下5项任务：
@@ -487,8 +484,8 @@ Keras Pipeline *
 
     class Vocabulary:
         def __init__(self, text):
+            self.tokenizer.fit_on_texts([START_TOKEN, END_TOKEN] + re.split(r'[\s\t\n]', text))
             self.tokenizer = tf.keras.preprocessing.text.Tokenizer(filters='')
-            self.tokenizer.fit_on_texts([GO, DONE] + re.split(r'[\s\t\n]', text))
             self.size = 1 + len(self.tokenizer.word_index.keys())
 
         def texts_to_padded_sequences(self, text_list):
@@ -513,8 +510,8 @@ Keras Pipeline *
             self.embedding = tf.keras.layers.Embedding(
                 input_dim=self.voc_size, output_dim=EMBEDDING_DIM, mask_zero=True)
             self.encoder = ChitEncoder(embedding=self.embedding)
+                indice_go=self.word_index[START_TOKEN], voc_size=self.voc_size)
             self.decoder = ChatDecoder(embedding=self.embedding,
-                indice_go=self.word_index[GO], voc_size=self.voc_size)
 
         def call(self, inputs, teacher_forcing_targets=None, training=None):
             context = self.encoder(inputs)
@@ -647,7 +644,7 @@ ChatDecoder子模型输入num_batch个上下文信息张量 `context` 。在 `__
             for t in range(1, MAX_LEN):
                 output = outputs[t]
                 indice = self.__logit_to_indice(output, temperature=temperature)
-                if indice == self.word_index[DONE]:
+                if indice == self.word_index[END_TOKEN]:
                     break
                 response_indices.append(indice)
             return response_indices
@@ -680,8 +677,8 @@ Chat 程序……
             query = input('> ').lower()
             if query == 'q' or query == 'quit':
                 break
+            query = '{} {} {}'.format(START_TOKEN, query, END_TOKEN)
             query = data_loader.preprocess(query)
-            query = '{} {} {}'.format(GO, query, DONE)
 
             query_sequence = vocabulary.texts_to_padded_sequences([query])[0]
             response_sequence = chitchat.predict(query_sequence, temperature=0.5)
@@ -689,7 +686,7 @@ Chat 程序……
             response_word_list = [
                 index_word[indice]
                 for indice in response_sequence
-                if indice != 0 and indice != word_index[DONE]
+                if indice != 0 and indice != word_index[END_TOKEN]
             ]
 
             print('Bot:', ' '.join(response_word_list))
@@ -706,6 +703,9 @@ Chat 程序……
     > faint
     Bot:
 
+
+Keras Pipeline *
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 https://medium.com/tensorflow/what-are-symbolic-and-imperative-apis-in-tensorflow-2-0-dfccecb01021
 
