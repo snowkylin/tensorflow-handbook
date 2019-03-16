@@ -23,7 +23,6 @@ class CNN(tf.keras.Model):
         self.dense2 = tf.keras.layers.Dense(units=10)
 
     def call(self, inputs):
-        inputs = tf.reshape(inputs, [-1, 28, 28, 1])
         x = self.conv1(inputs)                  # [batch_size, 28, 28, 32]
         x = self.pool1(x)                       # [batch_size, 14, 14, 32]
         x = self.conv2(x)                       # [batch_size, 14, 14, 64]

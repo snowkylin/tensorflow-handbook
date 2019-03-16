@@ -43,7 +43,7 @@ This handbook is a concise introduction to TensorFlow based on Eager Execution m
 |    zh/static           |    en/static           |
 |    zh/swift            |    en/swift            |
 |    zh/reuse            |    en/reuse            |
-|    zh/probability      |    en/probability      |
+|    zh/addons           |    en/addons           |
 |    zh/custom_op        |    en/custom_op        |
 |    zh/config           |    en/config           |
 |    zh/recommended_books|    en/recommended_books|

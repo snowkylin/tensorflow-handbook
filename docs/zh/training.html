@@ -17,35 +17,39 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/js/custom.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="附录1：静态的TensorFlow" href="static.html" />
+    <link rel="next" title="（仅纸质版）TensorFlow智能物资调度" href="application/rl.html" />
     <link rel="prev" title="TensorFlow模型部署" href="deployment.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -89,18 +93,21 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">TensorFlow概述</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">TensorFlow安装</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="models.html">TensorFlow模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extended.html">TensorFlow持久化与可视化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">TensorFlow模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extended.html">TensorFlow工具</a></li>
 <li class="toctree-l1"><a class="reference internal" href="deployment.html">TensorFlow模型部署</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow大规模训练</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">分布式TensorFlow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tputensorflow">使用TPU训练TensorFlow模型</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="application/rl.html">（仅纸质版）TensorFlow智能物资调度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application/rnn.html">（仅纸质版）TensorFlow.js在线聊天机器人</a></li>
+<li class="toctree-l1"><a class="reference internal" href="application/prob.html">（仅纸质版）TensorFlow Probability异常文本检测</a></li>
 <li class="toctree-l1"><a class="reference internal" href="static.html">附录1：静态的TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="swift.html">附录2：TensorFlow for Swift</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reuse.html">附录3：TensorFlow预训练模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="probability.html">附录4：TensorFlow Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reuse.html">附录3：TensorFlow资源重用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="addons.html">附录4：TensorFlow库和扩展</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_op.html">附录5：TensorFlow自定义运算操作</a></li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">附录6：TensorFlow环境配置与管理</a></li>
 <li class="toctree-l1"><a class="reference internal" href="recommended_books.html">附录7：参考资料与推荐阅读</a></li>
@@ -195,10 +202,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="static.html" class="btn btn-neutral float-right" title="附录1：静态的TensorFlow" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="application/rl.html" class="btn btn-neutral float-right" title="（仅纸质版）TensorFlow智能物资调度" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="deployment.html" class="btn btn-neutral" title="TensorFlow模型部署" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="deployment.html" class="btn btn-neutral float-left" title="TensorFlow模型部署" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -224,28 +231,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

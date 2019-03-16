@@ -5,3 +5,21 @@
 .rst-content .admonition-title code {
     background-color: #ffffff
 }
+
+.collapsible:after {
+    content: '\002B';
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    float: right;
+    margin-left: 5px;
+}
+
+.collapsible:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+  
+.active:after {
+    content: "\2212";
+}
