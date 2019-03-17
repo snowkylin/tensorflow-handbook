@@ -1,2 +1,4 @@
-附录2：TensorFlow for Swift
+附录8：TensorFlow in Swift
 =======================================
+
+TODO: 第一版来不及写，留给第二版进行补充
