@@ -409,7 +409,6 @@ Graph Execution模式 *
 
 .. [#rnn_exception] 除了本章实现的RNN模型以外。在RNN模型的实现中，我们通过Eager Execution动态获取了seq_length的长度，使得我们可以方便地动态控制RNN的展开长度。然而Graph Execution不支持这一点，为了达到相同的效果，我们需要固定seq_length的长度，或者使用 ``tf.nn.dynamic_rnn`` （ `文档 <https://www.tensorflow.org/api_docs/python/tf/nn/dynamic_rnn>`_ ）。
 
-
 Keras Pipeline *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
