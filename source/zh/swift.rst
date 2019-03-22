@@ -1,2 +1,4 @@
-附录2：TensorFlow for Swift
+附录8：TensorFlow in Swift
 =======================================
+
+5-10页，最基本的SWIFT使用入门。

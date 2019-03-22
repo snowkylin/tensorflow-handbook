@@ -6,3 +6,5 @@ TensorFlow大规模训练
 
 使用TPU训练TensorFlow模型
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+5-10页，最基本的 Google Cloud TPU 使用入门。
