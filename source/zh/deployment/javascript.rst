@@ -34,7 +34,7 @@ Tensorflow.js 支持 GPU 硬件加速。在 Node.js 环境中，如果有 CUDA �
 在浏览器中使用 Tensorflow.js
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. figure:: ../_static/image/javascript/chrome-ml.gif
+.. figure:: ../_static/image/javascript/chrome-ml.png
     :width: 60%
     :align: center
 
@@ -49,7 +49,7 @@ Tensorflow.js可以让我们直接在浏览器中加载Tensorflow，让用户立
 
 通过这些优势，Tensorflow.js将带给开发者带来极高的灵活性。比如我们可以在手机上打开浏览器，通过手机摄像头检测视频中用户的身体动作姿势，然后通过对图片数据库中类似身体动作姿势的检索，给用户显示一个最能够和他当前动作相似的照片。这就是Google Creative Lab在2018年7月发布的Move Mirror。在Move Mirror的运行过程中，数据没有上传到服务器，所有的运算都是在手机本地，基于手机的CPU/GPU完成的，而这项技术，将使Servreless与AI应用结合起来成为可能。
 
-.. figure:: ../_static/image/javascript/move-mirror.gif
+.. figure:: ../_static/image/javascript/move-mirror.jpg
     :width: 60%
     :align: center
 
@@ -167,7 +167,7 @@ Move Mirror 所使用的 PoseNet 地址：https://github.com/tensorflow/tfjs-mod
 
 然后，完成以下四个步骤即可完成配置：
 
-1. 确认 Node.js 版本
+1. 确认 Node.js 版本::
 
     $ node --verion
     v10.5.0
@@ -175,12 +175,12 @@ Move Mirror 所使用的 PoseNet 地址：https://github.com/tensorflow/tfjs-mod
     $ npm --version
     6.4.1
 
-2. 建立 Tensorflow.js 项目目录
+2. 建立 Tensorflow.js 项目目录::
 
     $ mkdir tfjs
     $ cd tfjs
 
-3. 安装 Tensorflow.js
+3. 安装 Tensorflow.js::
 
     # 初始化项目管理文件 package.json
     $ npm init -y
@@ -194,7 +194,7 @@ Move Mirror 所使用的 PoseNet 地址：https://github.com/tensorflow/tfjs-mod
     # 安装 tfjs-node-gpu 库，支持 CUDA GPU 加速
     $ npm install @tensorflow/tfjs-node-gpu
 
-4. 确认 Node.js 和 Tensorflow.js 工作正常
+4. 确认 Node.js 和 Tensorflow.js 工作正常::
 
     $ node
     > require('@tensorflow/tfjs').version
@@ -223,23 +223,23 @@ Move Mirror 所使用的 PoseNet 地址：https://github.com/tensorflow/tfjs-mod
 Tensorflow.js转换器tensorflowjs_converter
 -------------------------------------------
 
-`tensorflowjs_converter`可以将Python存储的模型格式，转换为JavaScript可以直接调用的模型格式。
+``tensorflowjs_converter`` 可以将Python存储的模型格式，转换为JavaScript可以直接调用的模型格式。
 
-安装`tensorflowjs_converter`：
+安装 ``tensorflowjs_converter`` ::
 
     $ pip install tensorflowjs
 
 
-`tensorflowjs_converter`的使用细节，可以通过`--help`参数查看程序帮助：
+``tensorflowjs_converter`` 的使用细节，可以通过 ``--help`` 参数查看程序帮助::
 
     $ tensorflowjs_converter --help
 
-以下我们以MobilenetV1为例，看一下如何对模型文件进行转换操作，并将可以被Tensorflow.js加载的模型文件，存放到`/mobilenet/tfjs_model`目录下。
+以下我们以MobilenetV1为例，看一下如何对模型文件进行转换操作，并将可以被Tensorflow.js加载的模型文件，存放到 ``/mobilenet/tfjs_model`` 目录下。
 
 转换 SavedModel
 -------------------------------------------
 
-将`/mobilenet/saved_model`转换到`/mobilenet/tfjs_model`：
+将 ``/mobilenet/saved_model`` 转换到 ``/mobilenet/tfjs_model`` ::
 
     tensorflowjs_converter \
         --input_format=tf_saved_model \
@@ -251,7 +251,7 @@ Tensorflow.js转换器tensorflowjs_converter
 转换 Frozen Model
 -------------------------------------------
 
-将`/mobilenet/frozen_model.pb`转换到`/mobilenet/tfjs_model`：
+将 ``/mobilenet/frozen_model.pb`` 转换到 ``/mobilenet/tfjs_model`` ::
 
     tensorflowjs_converter \
         --input_format=tf_frozen_model \
@@ -262,7 +262,7 @@ Tensorflow.js转换器tensorflowjs_converter
 转换 Hub Model
 -------------------------------------------
 
-将`https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/classification/1`转换到`/mobilenet/tfjs_model`：
+将 ``https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/classification/1`` 转换到 ``/mobilenet/tfjs_model`` ::
 
     tensorflowjs_converter \
         --input_format=tf_hub \
@@ -272,7 +272,7 @@ Tensorflow.js转换器tensorflowjs_converter
 转换 Keras Model
 -------------------------------------------
 
-将`/tmp/model.h5`转换到`/tmp/tfjs_model`：
+将 ``/tmp/model.h5`` 转换到 ``/tmp/tfjs_model`` ::
 
     $ tensorflowjs_converter \
         --input_format keras \
@@ -282,7 +282,7 @@ Tensorflow.js转换器tensorflowjs_converter
 用JavaScript加载和运行
 -------------------------------------------
 
-为了加载转换完成的模型文件，我们需要安装`tfjs-converter`和`@tensorflow/tfjs`模块：
+为了加载转换完成的模型文件，我们需要安装 ``tfjs-converter`` 和 ``@tensorflow/tfjs`` 模块::
 
     $ npm install @tensorflow/tfjs
 
@@ -313,8 +313,8 @@ Python性能基准
 
 Python代码运行一次推理：
 
-1. 在CPU上需要时间为56.6ms
-1. 在GPU上需要时间为2.82ms
+* 在CPU上需要时间为56.6ms
+* 在GPU上需要时间为2.82ms
 
 我们将Python代码运行所需要的时间，设为基准1。
 
@@ -329,8 +329,8 @@ Python代码运行一次推理：
 
 Tensorflow.js在浏览器中运行一次推理：
 
-1. 在CPU上需要时间为97.3ms
-1. 在GPU(WebGL)上需要时间为10.8ms
+* 在CPU上需要时间为97.3ms
+* 在GPU (WebGL)上需要时间为10.8ms
 
 与Python代码基准相比，浏览器中的 Tensorflow.js 在 CPU 上的运行时间为基准的1.7倍，在 GPU(WebGL) 上运行的时间为基准的3.8倍。
 
@@ -345,7 +345,7 @@ Node.js性能
 
 Tensorflow.js 在 Node.js 运行一次推理：
 
-1. 在 CPU 上需要时间为56.23ms
-1. 在 GPU(CUDA) 上需要时间为3.12ms
+* 在 CPU 上需要时间为56.23ms
+* 在 GPU (CUDA) 上需要时间为3.12ms
 
 与 Python 代码基准相比，Node.js 的 Tensorflow.js 在 CPU 上的运行时间与基准相同，在 GPU（CUDA） 上运行的时间是基准的1.1倍。

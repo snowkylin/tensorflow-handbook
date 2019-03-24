@@ -1,4 +1,4 @@
-附录1：静态的TensorFlow
+静态的TensorFlow
 ======================================
 
 TensorFlow 1+1

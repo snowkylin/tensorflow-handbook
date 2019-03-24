@@ -23,45 +23,79 @@ This handbook is a concise introduction to TensorFlow based on Eager Execution m
         
         This is a TensorFlow technical handbook rather than a tutorial for machine learning or deep learning theories. If you find something difficult to understand in reading, please check the "Prerequisites" part of each chapter, where some good basic machine learning documents are provided by url links.
 
-
-+------------------------+------------------------+
-| .. toctree::           | .. toctree::           |
-|    :maxdepth: 2        |    :maxdepth: 2        |
-|    :caption: 目录      |    :caption: Contents  |
-|                        |                        |
-|    zh/preface          |    en/preface          |
-|    zh/introduction     |    en/introduction     |
-|    zh/installation     |    en/installation     |
-|    zh/basic            |    en/basic            |
-|    zh/models           |    en/models           |
-|    zh/extended         |    en/extended         |
-|    zh/deployment       |    en/deployment       |
-|    zh/training         |    en/training         |
-|    zh/application/rl   |    en/application/rl   |
-|    zh/application/rnn  |    en/application/rnn  |
-|    zh/application/prob |    en/application/prob |
-|    zh/static           |    en/static           |
-|    zh/swift            |    en/swift            |
-|    zh/reuse            |    en/reuse            |
-|    zh/addons           |    en/addons           |
-|    zh/custom_op        |    en/custom_op        |
-|    zh/config           |    en/config           |
-|    zh/recommended_books|    en/recommended_books|
-+------------------------+------------------------+
-
 ..
-    .. toctree:: 
-        zh/preface
-        zh/introduction
-        zh/installation
-        zh/basic
-        zh/models
-        zh/extended 
-        zh/deployment
-        zh/training 
-        zh/static
-        zh/reuse
-        zh/recommended_books
+    +------------------------+------------------------+
+    | .. toctree::           | .. toctree::           |
+    |    :maxdepth: 2        |    :maxdepth: 2        |
+    |    :caption: 目录      |    :caption: Contents  |
+    |                        |                        |
+    |    zh/preface          |    en/preface          |
+    |    zh/introduction     |    en/introduction     |
+    |    zh/installation     |    en/installation     |
+    |    zh/basic            |    en/basic            |
+    |    zh/models           |    en/models           |
+    |    zh/extended         |    en/extended         |
+    |    zh/deployment       |    en/deployment       |
+    |    zh/javascript       |    en/javascript       |
+    |    zh/training         |    en/training         |
+    |    zh/application/rl   |    en/application/rl   |
+    |    zh/application/rnn  |    en/application/rnn  |
+    |    zh/application/prob |    en/application/prob |
+    |    zh/static           |    en/static           |
+    |    zh/swift            |    en/swift            |
+    |    zh/reuse            |    en/reuse            |
+    |    zh/addons           |    en/addons           |
+    |    zh/custom_op        |    en/custom_op        |
+    |    zh/config           |    en/config           |
+    |    zh/recommended_books|    en/recommended_books|
+    +------------------------+------------------------+
+
+.. toctree:: 
+    :maxdepth: 2
+    :caption: 目录
+
+    zh/preface
+    zh/introduction
+
+.. toctree:: 
+    :maxdepth: 2
+    :caption: 基础
+
+    zh/basic/installation
+    zh/basic/basic
+    zh/basic/models
+    zh/basic/extended 
+
+.. toctree:: 
+    :maxdepth: 2
+    :caption: 部署
+
+    zh/deployment/export
+    zh/deployment/serving
+    zh/deployment/lite
+    zh/deployment/javascript
+
+.. toctree:: 
+    :maxdepth: 2
+    :caption: 应用
+
+    zh/application/rl
+    zh/application/seq2seq-python
+    zh/application/seq2seq-javascript
+    zh/application/seq2seq-swift
+
+.. toctree:: 
+    :maxdepth: 2
+    :caption: 附录
+
+    zh/appendix/static
+    zh/appendix/swift
+    zh/appendix/reuse
+    zh/appendix/addons
+    zh/appendix/training 
+    zh/appendix/custom_op
+    zh/appendix/config 
+    zh/appendix/recommended_books
 
 ..
     .. toctree:: 
