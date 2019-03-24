@@ -1,4 +1,4 @@
-附录4：TensorFlow库和扩展
+TensorFlow库和扩展
 ========================================
 
 https://www.tensorflow.org/resources/libraries-extensions
