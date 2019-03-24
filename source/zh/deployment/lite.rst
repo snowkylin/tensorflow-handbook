@@ -79,7 +79,7 @@ dot是一种graph description language，可以用graphz的dot命令转化为pdf
 
 这样就转化为一张图了，如下：
 
-.. figure:: ../_static/image/deployment/keras_mnist.dot.png
+.. figure:: /_static/image/deployment/keras_mnist.dot.png
     :width: 80%
     :align: center
 

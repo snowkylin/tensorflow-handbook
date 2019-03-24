@@ -15,13 +15,13 @@ TensorFlow in JavaScript
 Tensorflow.js 简介
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. figure:: ../_static/image/javascript/tensorflow-js.gif
+.. figure:: /_static/image/javascript/tensorflow-js.gif
     :width: 60%
     :align: center
 
 Tensorflow.js 是 Tensorflow 的 JavaScript 版本，支持GPU硬件加速，可以运行在 Node.js 或浏览器环境中。它不但支持完全基于 JavaScript 从头开发、训练和部署模型，也可以用来运行已有的 Python 版 Tensorflow 模型，或者基于现有的模型进行继续训练。
 
-.. figure:: ../_static/image/javascript/architecture.gif
+.. figure:: /_static/image/javascript/architecture.gif
     :width: 60%
     :align: center
 
@@ -34,7 +34,7 @@ Tensorflow.js 支持 GPU 硬件加速。在 Node.js 环境中，如果有 CUDA �
 在浏览器中使用 Tensorflow.js
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. figure:: ../_static/image/javascript/chrome-ml.png
+.. figure:: /_static/image/javascript/chrome-ml.png
     :width: 60%
     :align: center
 
@@ -42,14 +42,14 @@ Tensorflow.js可以让我们直接在浏览器中加载Tensorflow，让用户立
 
 浏览器中进行机器学习，相对比与服务器端来讲，将拥有以下四大优势：
 
-* 不行要安装软件或驱动（打开浏览器即可使用）；
+* 不需要安装软件或驱动（打开浏览器即可使用）；
 * 可以通过浏览器进行更加方便的人机交互；
 * 可以通过手机浏览器，调用手机硬件的各种传感器（如：GPS、电子罗盘、加速度传感器、摄像头等）；
 * 用户的数据可以无需上传到服务器，在本地即可完成所需操作。
 
-通过这些优势，Tensorflow.js将带给开发者带来极高的灵活性。比如我们可以在手机上打开浏览器，通过手机摄像头检测视频中用户的身体动作姿势，然后通过对图片数据库中类似身体动作姿势的检索，给用户显示一个最能够和他当前动作相似的照片。这就是Google Creative Lab在2018年7月发布的Move Mirror。在Move Mirror的运行过程中，数据没有上传到服务器，所有的运算都是在手机本地，基于手机的CPU/GPU完成的，而这项技术，将使Servreless与AI应用结合起来成为可能。
+通过这些优势，Tensorflow.js 将带给开发者带来极高的灵活性。比如我们可以在手机上打开浏览器，通过手机摄像头检测视频中用户的身体动作姿势，然后通过对图片数据库中类似身体动作姿势的检索，给用户显示一个最能够和他当前动作相似的照片。这就是 Google Creative Lab 在2018年7月发布的 Move Mirror。在 Move Mirror 的运行过程中，数据没有上传到服务器，所有的运算都是在手机本地，基于手机的CPU/GPU完成的，而这项技术，将使Servreless与AI应用结合起来成为可能。
 
-.. figure:: ../_static/image/javascript/move-mirror.jpg
+.. figure:: /_static/image/javascript/move-mirror.jpg
     :width: 60%
     :align: center
 
@@ -58,7 +58,7 @@ Move Mirror 所使用的 PoseNet 地址：https://github.com/tensorflow/tfjs-mod
 一个浏览器中的基本的线性回归模型
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-在 Tensorflow 基础章节中，我们已经用 Python 实现过，针对某城市在2013年-2017年的房价的任务，通过对该数据进行线性回归，即使用线性模型 y = ax + b 来拟合上述数据，此处 a 和 b 是待求的参数。
+在 Tensorflow 基础章节中，我们已经用 Python 实现过，针对某城市在2013年-2017年的房价的任务，通过对该数据进行线性回归，即使用线性模型 :math:`y = ax + b` 来拟合上述数据，此处 :math:`a` 和 :math:`b` 是待求的参数。
 
 下面我们改用 Tensorflow.js 来实现一个 JavaScript 版本。
 
@@ -78,10 +78,10 @@ Move Mirror 所使用的 PoseNet 地址：https://github.com/tensorflow/tfjs-mod
                     .div(ysRaw.max().sub(ysRaw.min()))
 
 
-接下来，我们来求线性模型中两个参数 a 和 b 的值。
+接下来，我们来求线性模型中两个参数 ``a`` 和 ``b`` 的值。
 
-使用 `loss()` 计算损失；
-使用 `optimizer.minimize()` 自动更新模型参数。
+使用 ``loss()`` 计算损失；
+使用 ``optimizer.minimize()`` 自动更新模型参数。
 
 .. code-block:: javascript
 
@@ -110,6 +110,8 @@ Move Mirror 所使用的 PoseNet 地址：https://github.com/tensorflow/tfjs-mod
 
 
 从下面的输出样例中我们可以看到，已经拟合的比较接近了。
+
+::
 
     a: 0.9339302778244019, b: 0.08108722418546677
     x: 0, pred: 0.08, true: 0.00
@@ -163,7 +165,7 @@ Move Mirror 所使用的 PoseNet 地址：https://github.com/tensorflow/tfjs-mod
 在服务器端使用 Tensorflow.js
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-服务器端使用 JavaScript ，首先需要按照 [NodeJS.org](https://nodejs.org) 官网的说明，完成安装最新版本的 Node.js 。
+服务器端使用 JavaScript ，首先需要按照 `NodeJS.org <https://nodejs.org>`_ 官网的说明，完成安装最新版本的 Node.js 。
 
 然后，完成以下四个步骤即可完成配置：
 
@@ -205,7 +207,7 @@ Move Mirror 所使用的 PoseNet 地址：https://github.com/tensorflow/tfjs-mod
       tfjs: '1.0.1' }
     > 
 
-如果你看到了上面的 `tfjs-core`, `tfjs-data`, `tfjs-layers` 和 `tfjs-converter` 的输出信息，那么就说明环境配置没有问题了。
+如果你看到了上面的 ``tfjs-core``, ``tfjs-data``, ``tfjs-layers`` 和 ``tfjs-converter`` 的输出信息，那么就说明环境配置没有问题了。
 
 
 通过 Tensorflow.js 加载 Python 模型
@@ -323,7 +325,7 @@ Python代码运行一次推理：
 
 在浏览器中，Tensorflow.js 可以使用 WebGL 进行硬件加速，将 GPU 资源使用起来。
 
-.. figure:: ../_static/image/javascript/performance-browser.gif
+.. figure:: /_static/image/javascript/performance-browser.gif
     :width: 60%
     :align: center
 
@@ -339,7 +341,7 @@ Node.js性能
 
 在 Node.js 中，Tensorflow.js 使用 Tensorflow 的 C Binding ，所以基本上可以达到和 Python 接近的效果。
 
-.. figure:: ../_static/image/javascript/performance-node.gif
+.. figure:: /_static/image/javascript/performance-node.gif
     :width: 60%
     :align: center
 

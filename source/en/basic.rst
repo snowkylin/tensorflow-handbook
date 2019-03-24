@@ -34,7 +34,7 @@ TensorFlow 1+1
 
 TensorFlow can be simply regarded as a library of scientific calculation (like Numpy in Python). Here we calculate :math:`1+1` and :math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \times \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix}` as our first example.
 
-.. literalinclude:: ../_static/code/en/basic/eager/1plus1.py  
+.. literalinclude:: /_static/code/en/basic/eager/1plus1.py  
 
 Output::
     
@@ -47,7 +47,7 @@ The code above declares four **tensors** named ``a``, ``b``, ``A`` and ``B``. It
 
 In machine learning, it's common to differentiate functions. TensorFlow provides us with the powerful **Automatic Differentiation Mechanism** for differentiation. The following codes show how to utilize ``tf.GradientTape()`` to get the slope of :math:`y(x) = x^2` at :math:`x = 3`.
 
-.. literalinclude:: ../_static/code/en/basic/eager/grad.py  
+.. literalinclude:: /_static/code/en/basic/eager/grad.py  
     :lines: 1-8
 
 Output::
@@ -58,7 +58,7 @@ Here ``x`` is a **variable** initialized to 3, declared by ``tf.get_variable()``
 
 In machine learning, calculating the derivatives of a multivariable function, a vector or a matrix is a more common case, which is a piece cake for TensorFlow. The following codes show how to utilize ``tf.GradientTape()`` to differentiate :math:`L(w, b) = \|Xw + b - y\|^2` with respect to :math:`w` and :math:`b` at :math:`w = (1, 2)^T, b = 1`.
 
-.. literalinclude:: ../_static/code/en/basic/eager/grad.py  
+.. literalinclude:: /_static/code/en/basic/eager/grad.py  
     :lines: 10-17
 
 Output::
@@ -81,7 +81,7 @@ As we can see from the output, TensorFlow helps us figure out that
 ..
     By combining the automatic differentiation mechanism above with an **optimizer**, we can evaluate the extrema of a function. Here we use linear regression as an example (Evaluating :math:`\min_{w, b} L = (Xw + b - y)^2` essentially, :ref:`The next paragraph <linear-regression>` reveals the principles):
 
-    .. literalinclude:: ../_static/code/en/basic/eager/regression.py  
+    .. literalinclude:: /_static/code/en/basic/eager/regression.py  
 
 .. _linear-regression:
 
@@ -99,7 +99,7 @@ Now we want to do linear regression on the given data, i.e. using the linear mod
 
 First, we define and normalize the data.
 
-.. literalinclude:: ../_static/code/en/basic/example/numpy_manual_grad.py
+.. literalinclude:: /_static/code/en/basic/example/numpy_manual_grad.py
     :lines: 1-7
 
 Then, we use gradient descent to evaluate these two parameters ``a`` and ``b`` in the linear model [#f1]_.
@@ -120,7 +120,7 @@ NumPy
 
 The implementation of machine learning models is not a patent of TensorFlow. In fact, even most common scientific calculators or tools can solve simple models. Here, we use Numpy, a general library for scientific computation, to implement gradient descent. Numpy supports multidimensional arrays to represent vectors, matrices and tensors with more dimensions. Meanwhile, it also supports lots of operations on multidimensional arrays (e.g. ``np.dot()`` calculates the inner products and ``np.sum()`` adds up all the elements). In this way Numpy is somewhat like MATLAB. In the following codes, we evaluate the partial derivatives of loss function with respect to the parameters ``a`` and ``b`` manually [#f2]_, and then iterate by gradient descent to acquire the value of ``a`` and ``b`` eventually.
 
-.. literalinclude:: ../_static/code/en/basic/example/numpy_manual_grad.py
+.. literalinclude:: /_static/code/en/basic/example/numpy_manual_grad.py
     :lines: 9-
 
 However, you may have noticed that there are several pain points using common libraries for scientific computation to implement machine learning models:
@@ -138,7 +138,7 @@ The **Eager Execution Mode** of TensorFlow [#f4]_ have very similar operations a
 * Using ``tape.gradient(ys, xs)`` to get the gradients automatically;
 * Using ``optimizer.apply_gradients(grads_and_vars)`` to update parameters automatically.
 
-.. literalinclude:: ../_static/code/en/basic/example/tensorflow_eager_autograd.py
+.. literalinclude:: /_static/code/en/basic/example/tensorflow_eager_autograd.py
     :lines: 12-29
 
 Here, we use the aforementioned approach to calculate the partial derivatives of the loss function with respect to each parameter, while we also use ``tf.train.GradientDescentOptimizer(learning_rate=1e-3)`` to declare an **optimizer** for graident descent with a learning rate of 1e-3. The optimizer can help us update parameters based on the result of differentiation in order to minimize a specific loss function by calling its ``apply_gradients()`` interface.

@@ -36,7 +36,7 @@ TensorFlow 1+1
 
 .. warning:: 本手册基于TensorFlow的Eager Execution模式。在TensorFlow 1.X版本中， **必须** 在导入TensorFlow库后调用 ``tf.enable_eager_execution()`` 函数以启用Eager Execution模式。在TensorFlow 2.0版本中，Eager Execution模式将成为默认模式，无需额外调用 ``tf.enable_eager_execution()`` 函数。
 
-.. literalinclude:: ../_static/code/zh/basic/eager/1plus1.py  
+.. literalinclude:: /_static/code/zh/basic/eager/1plus1.py  
 
 输出::
     
@@ -52,7 +52,7 @@ TensorFlow 1+1
 
 在机器学习中，我们经常需要计算函数的导数。TensorFlow提供了强大的 **自动求导机制** 来计算导数。以下代码展示了如何使用 ``tf.GradientTape()`` 计算函数 :math:`y(x) = x^2` 在 :math:`x = 3` 时的导数：
 
-.. literalinclude:: ../_static/code/zh/basic/eager/grad.py  
+.. literalinclude:: /_static/code/zh/basic/eager/grad.py  
     :lines: 1-8
 
 输出::
@@ -65,7 +65,7 @@ TensorFlow 1+1
 
 在机器学习中，更加常见的是对多元函数求偏导数，以及对向量或矩阵的求导。这些对于TensorFlow也不在话下。以下代码展示了如何使用 ``tf.GradientTape()`` 计算函数 :math:`L(w, b) = \|Xw + b - y\|^2` 在 :math:`w = (1, 2)^T, b = 1` 时分别对 :math:`w, b` 的偏导数。其中 :math:`X = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix},  y = \begin{bmatrix} 1 \\ 2\end{bmatrix}`。
 
-.. literalinclude:: ../_static/code/zh/basic/eager/grad.py  
+.. literalinclude:: /_static/code/zh/basic/eager/grad.py  
     :lines: 10-17
 
 输出::
@@ -88,7 +88,7 @@ TensorFlow 1+1
 ..
     以上的自动求导机制结合 **优化器** ，可以计算函数的极值。这里以线性回归示例（本质是求 :math:`\min_{w, b} L = (Xw + b - y)^2` ，具体原理见 :ref:`后节 <linear-regression>` ）：
 
-    .. literalinclude:: ../_static/code/zh/basic/eager/regression.py  
+    .. literalinclude:: /_static/code/zh/basic/eager/regression.py  
 
 .. _linear-regression:
 
@@ -106,7 +106,7 @@ TensorFlow 1+1
 
 首先，我们定义数据，进行基本的归一化操作。
 
-.. literalinclude:: ../_static/code/zh/basic/example/numpy_manual_grad.py
+.. literalinclude:: /_static/code/zh/basic/example/numpy_manual_grad.py
     :lines: 1-7
 
 接下来，我们使用梯度下降方法来求线性模型中两个参数 ``a`` 和 ``b`` 的值 [#f1]_。
@@ -127,7 +127,7 @@ NumPy下的线性回归
 
 机器学习模型的实现并不是TensorFlow的专利。事实上，对于简单的模型，即使使用常规的科学计算库或者工具也可以求解。在这里，我们使用NumPy这一通用的科学计算库来实现梯度下降方法。NumPy提供了多维数组支持，可以表示向量、矩阵以及更高维的张量。同时，也提供了大量支持在多维数组上进行操作的函数（比如下面的 ``np.dot()`` 是求内积， ``np.sum()`` 是求和）。在这方面，NumPy和MATLAB比较类似。在以下代码中，我们手工求损失函数关于参数 ``a`` 和 ``b`` 的偏导数 [#f2]_，并使用梯度下降法反复迭代，最终获得 ``a`` 和 ``b`` 的值。
 
-.. literalinclude:: ../_static/code/zh/basic/example/numpy_manual_grad.py
+.. literalinclude:: /_static/code/zh/basic/example/numpy_manual_grad.py
     :lines: 9-
 
 然而，你或许已经可以注意到，使用常规的科学计算库实现机器学习模型有两个痛点：
@@ -145,7 +145,7 @@ TensorFlow的 **Eager Execution（动态图）模式** [#f4]_ 与上述NumPy的�
 * 使用 ``tape.gradient(ys, xs)`` 自动计算梯度；
 * 使用 ``optimizer.apply_gradients(grads_and_vars)`` 自动更新模型参数。
 
-.. literalinclude:: ../_static/code/zh/basic/example/tensorflow_eager_autograd.py
+.. literalinclude:: /_static/code/zh/basic/example/tensorflow_eager_autograd.py
     :lines: 12-29
 
 在这里，我们使用了前文的方式计算了损失函数关于参数的偏导数。同时，使用 ``tf.train.GradientDescentOptimizer(learning_rate=1e-3)`` 声明了一个梯度下降 **优化器** （Optimizer），其学习率为1e-3。优化器可以帮助我们根据计算出的求导结果更新模型参数，从而最小化某个特定的损失函数，具体使用方式是调用其 ``apply_gradients()`` 方法。
@@ -156,7 +156,7 @@ TensorFlow的 **Eager Execution（动态图）模式** [#f4]_ 与上述NumPy的�
 
     ``zip()`` 函数是Python的内置函数。用自然语言描述这个函数的功能很绕口，但如果举个例子就很容易理解了：如果 ``a = [1, 3, 5]``， ``b = [2, 4, 6]``，那么 ``zip(a, b) = [(1, 2), (3, 4), ..., (5, 6)]`` 。即“将可迭代的对象作为参数，将对象中对应的元素打包成一个个元组，然后返回由这些元组组成的列表”。在Python 3中， ``zip()`` 函数返回的是一个对象，需要调用 ``list()`` 来将对象转换成列表。
 
-    .. figure:: ../_static/image/basic/zip.jpg
+    .. figure:: /_static/image/basic/zip.jpg
         :width: 60%
         :align: center
 
