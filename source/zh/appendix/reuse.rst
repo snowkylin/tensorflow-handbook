@@ -1,4 +1,4 @@
-附录3：TensorFlow资源重用
+TensorFlow资源重用
 ============================================
 
 TensorFlow Hub
