@@ -1,0 +1,495 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tensorflow Python 闲聊机器人 &mdash; 简单粗暴TensorFlow 0.4 alpha 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Tensorflow JavaScript 闲聊对话模型" href="seq2seq-javascript.html" />
+    <link rel="prev" title="TensorFlow智能物资调度" href="rl.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴TensorFlow
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/extended.html">TensorFlow工具</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript</a></li>
+</ul>
+<p class="caption"><span class="caption-text">应用</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="rl.html">TensorFlow智能物资调度</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tensorflow Python 闲聊机器人</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seq2seq-javascript.html">Tensorflow JavaScript 闲聊对话模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="seq2seq-swift.html">TensorFlow Swift 闲聊机器人</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/static.html">静态的TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">TensorFlow in Swift</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/reuse.html">TensorFlow资源重用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/addons.html">TensorFlow库和扩展</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/training.html">TensorFlow大规模训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/custom_op.html">TensorFlow自定义运算操作</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/config.html">TensorFlow环境配置与管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴TensorFlow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Tensorflow Python 闲聊机器人</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/zh/application/seq2seq-python.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorflow-python">
+<h1>Tensorflow Python 闲聊机器人<a class="headerlink" href="#tensorflow-python" title="永久链接至标题">¶</a></h1>
+<p>在本章，我们实现一个可以用来闲聊的对话模型。这个对话模型将基于序列到序列（Seq2Seq）来对电影台词中的对话数据进行训练。</p>
+<p>序列到序列模型（Sequence to Sequence, SEQ2SEQ）是一种基于 RNN 的 Encoder-Decoder 结构，它也是现在谷歌应用于线上机器翻译的算法，翻译质量已经和人类水平不相上下。</p>
+<p>这里通过 Keras 自定义模型建立一个闲聊对话模型（Seq2Seq）。它使用 Encoder-Decoder 结构，简单的来说就是算法包含两部分，一个负责对输入的信息进行 Encoding，将输入转换为向量形式；然后由 Decoder 对这个向量进行解码，还原为输出序列。</p>
+<p>关于 Seq2Seq 的原理和介绍，可以参考 Keras 的博客：A ten-minute introduction to sequence-to-sequence learning in Keras。地址： <a class="reference external" href="https://blog.keras.io/a-ten-minute-introduction-to-sequence-to-sequence-learning-in-keras.html">https://blog.keras.io/a-ten-minute-introduction-to-sequence-to-sequence-learning-in-keras.html</a></p>
+<p>这里，我们使用 Seq2Seq 来实现一个闲聊（ChitChat）对话机器人。除了闲聊任务（输入一句话，输出一句回复）之外，它也可以被直接应用于解决其他类似问题，比如：翻译（输入一句英文，输出一句中文）、摘要（输入一篇文章，输出一份总结）、作诗（输入几个关键字，输出一首短诗）、对对联（输入上联，输出下联），等等。</p>
+<p>这个任务对比与之前的RNN尼采风格文本生成，区别在于我们预测的不再是文本的连续字母概率分布，而是通过一个序列，来预测另外一个对应的完整序列。举例来说，针对一句常见的打招呼:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">How</span> <span class="n">are</span> <span class="n">you</span>
+</pre></div>
+</div>
+<p>这个句子（序列）一共有3个单词。当我们听到这个由3个单词组成的句子后，根据我们的习惯，我们最倾向与回复的一句话是 “Fine thank you”。我们希望建立这样的模型，输入 num_batch 个由编码后单词和字符组成的，长为 max_length 的序列，输入张量形状为 [num_batch, max_length]，输出与这个序列对应的序列（如聊天回复、翻译等）中单词和字符的概率分布，概率分布的维度为词汇表大小 voc_size，输出张量形状为 [num_batch, max_length, voc_size]。</p>
+<p>首先，还是实现一个简单的 <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code> 类来读取文本，</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">DATASET_URL</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/huan/python-concise-chitchat/releases/download/v0.0.1/dataset.txt.gz&#39;</span>
+<span class="n">DATASET_FILE_NAME</span> <span class="o">=</span> <span class="s1">&#39;concise-chitchat-dataset.txt.gz&#39;</span>
+<span class="n">START_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span>
+<span class="n">END_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+<span class="k">class</span> <span class="nc">DataLoader</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dataset_file</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span><span class="n">DATASET_FILE_NAME</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">DATASET_URL</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">dataset_file</span><span class="p">,</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">raw_text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queries</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">responses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parse_raw_text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raw_text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">queries</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">):</span>
+        <span class="n">batch_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">queries</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+        <span class="n">batch_queries</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queries</span><span class="p">[</span><span class="n">batch_indices</span><span class="p">]</span>
+        <span class="n">batch_responses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">responses</span><span class="p">[</span><span class="n">batch_indices</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">batch_queries</span><span class="p">,</span> <span class="n">batch_responses</span>
+
+    <span class="k">def</span> <span class="nf">__parse_raw_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">query_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">response_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">raw_text</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
+            <span class="n">query</span><span class="p">,</span> <span class="n">response</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">query_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+            <span class="n">response_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;{} {} {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">START_TOKEN</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">END_TOKEN</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">query_list</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">response_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>其次，我们还需要基于 <cite>DataLoader</cite> 加载的文本数据，建立一个词汇表 <cite>Vocabulary</cite> 来负责管理以下5项任务：</p>
+<ol class="arabic simple">
+<li>将所有单词和标点符号进行编码；</li>
+<li>记录词汇表大小；</li>
+<li>建立单词到编码数字，以及编码数字到单词的映射字典；</li>
+<li>负责将文本句子转化为填充后的编码序列，形状为[batch_size, max_length]；</li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">MAX_LEN</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="k">class</span> <span class="nc">Vocabulary</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">Tokenizer</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">fit_on_texts</span><span class="p">([</span><span class="n">END_TOKEN</span><span class="p">,</span> <span class="n">START_TOKEN</span><span class="p">]</span> <span class="o">+</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\n\s\t]&#39;</span><span class="p">,</span><span class="n">text</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">word_index</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">texts_to_padded_sequences</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_list</span><span class="p">):</span>
+        <span class="n">sequence_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">texts_to_sequences</span><span class="p">(</span><span class="n">text_list</span><span class="p">)</span>
+        <span class="n">padded_sequences</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">preprocessing</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">pad_sequences</span><span class="p">(</span>
+            <span class="n">sequence_list</span><span class="p">,</span> <span class="n">maxlen</span><span class="o">=</span><span class="n">MAX_LEN</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">,</span><span class="n">truncating</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">padded_sequences</span>
+</pre></div>
+</div>
+<p>接下来进行模型的实现。我们建立一个ChitChat模型。ChitChat 模型是一个 Seq2Seq 的模型，主要由 ChitEncoder 和 ChatDecoder 组成。</p>
+<p>ChitEncoder 子模型输入 num_batch 个由编码后单词和字符组成的，长为 max_length 的序列，输入张量形状为 [num_batch, max_length]，输出与这个序列对应的上下文张量。为了简化代码，我们这里只使用一个最基本的 GRU 单元，没有使用可以获得更佳效果的双向RNN、注意力机制等方法。在 <cite>__init__</cite> 方法中我们实例化一个常用的 <cite>GRU</cite> 单元，并将其设置为 <cite>return_state=True</cite> 来获得最终的状态输出，我们首先对序列进行 GRU 操作，即将编码序列变换为 GRU 最终输出的状态 ，并将其作为代表编码序列的上下文信息 <cite>context</cite> ，作为模型的输出。</p>
+<p><cite>ChitEncoder</cite> 子模型具体实现如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">RNN_UNIT_NUM</span> <span class="o">=</span> <span class="mi">512</span>
+<span class="n">EMBEDDING_DIM</span> <span class="o">=</span> <span class="mi">512</span>
+
+<span class="k">class</span> <span class="nc">ChitEncoder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gru</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">GRU</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="n">RNN_UNIT_NUM</span><span class="p">,</span>
+            <span class="n">return_sequences</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">return_state</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+        <span class="p">[</span><span class="n">outputs</span><span class="p">,</span> <span class="n">state</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gru</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">state</span>
+</pre></div>
+</div>
+<p>ChatDecoder 子模型输入 num_batch 个编码后的一个单词或字符的 Embedding，和当前的上下文信息张量 <cite>initial_state</cite> 两个信息构成，输入张量形状分别为 [num_batch, 1, EMBEDDING_DIM]，和 [num_batch, RNN_UNIT_NUM]。在 <cite>__init__</cite> 方法中我们保存词汇表容量 <cite>voc_size</cite> ，实例化一个常用的 <cite>GRU</cite> 单元，并将其设置为输出单元状态 <cite>return_state=True</cite> 来获得 GRU 的状态输出，以及一个全连接层 <cite>Dense</cite> 单元，负责将 GRU 的输出变换为最终的单词字符分布概率，并将其作为这个上下文信息对应的单词符号序列概率分布张量，作为模型的输出，形状为[num_batch, 1, voc_size]。</p>
+<p><cite>ChitDecoder</cite> 子模型具体实现如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ChatDecoder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">voc_size</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">voc_size</span> <span class="o">=</span> <span class="n">voc_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gru</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">GRU</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="n">RNN_UNIT_NUM</span><span class="p">,</span> <span class="n">return_state</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">voc_size</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">initial_state</span><span class="p">):</span>
+        <span class="n">outputs</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gru</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">initial_state</span><span class="o">=</span><span class="p">[</span><span class="n">initial_state</span><span class="p">])</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">state</span>
+</pre></div>
+</div>
+<p>构建 ChitChat 模型将基于上面的两个 ChitEncoder 和 ChatDecoder 子模型。在 <cite>__init__</cite> 方法中我们将 <cite>Vocabulary</cite> 中的词汇到编码字典 <cite>word_index</cite> 和编码到词汇字典 <cite>index_word</cite> ，以及词汇量 <cite>voc_size</cite> 保存备用，实例化一个词向量的 <cite>Embedding</cite> 单元，以及一个 <cite>ChitEncoder</cite> 子模型和对应的 <cite>ChatDecoder</cite> 子模型。<cite>ChatDecoder</cite> 子模型中需要使用词汇表尺寸，我们通过构造参数传给它。</p>
+<p>模型的工作流程为：我们首先对输入序列通过 <cite>Embedding</cite> 层进行词向量转换，然后进行 Encoder 操作，即将编码序列 <cite>inputs</cite> 的词嵌入向量，变换为一个上下文向量 <cite>encoder_hidden_state</cite> 。然后，我们进入解码流程：将 START_TOKEN 词向量和 <cite>encoder_hidden_state</cite> 作为解码器的首次输入，解码得到解码器的输出编码张量 <cite>decoder_outputs</cite>，以及状态张量 <cite>decoder_state</cite>。接下来将 <cite>decoder_outputs</cite> 和 <cite>decoder_state</cite> 重复输入解码器，即可不断得到新的 <cite>decoder_outputs</cite> 即作为模型的输出，直到 <cite>decoder_outputs</cite> 解码出来的字符为 END_TOKEN 为止。最终输出的张量形状为[num_batch, max_length, voc_size]。</p>
+<p><cite>ChitChat</cite> 模型具体实现如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ChitChat</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocabulary</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word_index</span> <span class="o">=</span> <span class="n">vocabulary</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">word_index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_word</span> <span class="o">=</span> <span class="n">vocabulary</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">index_word</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">voc_size</span> <span class="o">=</span> <span class="n">vocabulary</span><span class="o">.</span><span class="n">size</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">indice_sos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_index</span><span class="p">[</span><span class="n">START_TOKEN</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indice_eos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_index</span><span class="p">[</span><span class="n">END_TOKEN</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span>
+            <span class="n">input_dim</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">voc_size</span><span class="p">,</span><span class="n">output_dim</span><span class="o">=</span><span class="n">EMBEDDING_DIM</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">ChitEncoder</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span> <span class="o">=</span> <span class="n">ChatDecoder</span><span class="p">(</span><span class="n">voc_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">voc_size</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">teacher_forcing_targets</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">inputs</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">encoder_outputs</span><span class="p">,</span> <span class="n">encoder_hidden_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">)</span>
+
+        <span class="n">batch_sos_one_hot</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> \
+            <span class="o">*</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indice_sos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">voc_size</span><span class="p">)]</span>
+
+        <span class="n">decoder_output</span> <span class="o">=</span> <span class="n">batch_sos_one_hot</span>
+        <span class="n">decoder_state</span> <span class="o">=</span> <span class="n">encoder_hidden_state</span>
+
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">voc_size</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">MAX_LEN</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">training</span> <span class="ow">and</span> <span class="n">teacher_forcing_targets</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">target_indice</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span>
+                    <span class="n">teacher_forcing_targets</span><span class="p">[:,</span> <span class="n">t</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">target_indice</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">decoder_output</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">decoder_inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">target_indice</span><span class="p">)</span>
+            <span class="n">decoder_output</span><span class="p">,</span> <span class="n">decoder_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span><span class="p">(</span>
+                <span class="n">inputs</span><span class="o">=</span><span class="n">decoder_inputs</span><span class="p">,</span>
+                <span class="n">initial_state</span><span class="o">=</span><span class="n">decoder_state</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">outputs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">outputs</span><span class="p">,</span> <span class="n">decoder_output</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">outputs</span>
+</pre></div>
+</div>
+<p>训练过程与本书的 RNN 模型训练基本一致，在此复述：</p>
+<ul class="simple">
+<li>从DataLoader中随机取一批训练数据；</li>
+<li>将这批数据送入模型，计算出模型的预测值；</li>
+<li>将模型预测值与真实值进行比较，计算损失函数（loss）；</li>
+<li>计算损失函数关于模型变量的导数；</li>
+<li>使用优化器更新模型参数以最小化损失函数。</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">LEARNING_RATE</span> <span class="o">=</span> <span class="mf">1e-3</span>
+<span class="n">NUM_STEP</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">BATCH_SIZE</span> <span class="o">=</span> <span class="mi">64</span>
+
+<span class="k">def</span> <span class="nf">loss_function</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">training</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">teacher_forcing_targets</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">y_without_sos</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:],</span>
+        <span class="n">tf</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">fill</span><span class="p">([</span><span class="n">BATCH_SIZE</span><span class="p">],</span> <span class="mf">0.</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">sparse_softmax_cross_entropy_with_logits</span><span class="p">(</span>
+        <span class="n">labels</span><span class="o">=</span><span class="n">y_without_sos</span><span class="p">,</span> <span class="n">logits</span><span class="o">=</span><span class="n">predictions</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">grad</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
+        <span class="n">loss_value</span> <span class="o">=</span> <span class="n">loss_function</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss_value</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+
+<span class="n">data_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">()</span>
+<span class="n">vocabulary</span> <span class="o">=</span> <span class="n">Vocabulary</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">raw_text</span><span class="p">)</span>
+<span class="n">chitchat</span> <span class="o">=</span> <span class="n">ChitChat</span><span class="p">(</span><span class="n">vocabulary</span><span class="o">=</span><span class="n">vocabulary</span><span class="p">)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">LEARNING_RATE</span><span class="p">)</span>
+<span class="n">checkpoint</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Checkpoint</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">chitchat</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">batch_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NUM_STEP</span><span class="p">):</span>
+    <span class="n">queries</span><span class="p">,</span> <span class="n">responses</span> <span class="o">=</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">get_batch</span><span class="p">(</span><span class="n">BATCH_SIZE</span><span class="p">)</span>
+
+    <span class="n">queries_sequences</span> <span class="o">=</span> <span class="n">vocabulary</span><span class="o">.</span><span class="n">texts_to_padded_sequences</span><span class="p">(</span><span class="n">queries</span><span class="p">)</span>
+    <span class="n">responses_sequences</span> <span class="o">=</span> <span class="n">vocabulary</span><span class="o">.</span><span class="n">texts_to_padded_sequences</span><span class="p">(</span><span class="n">responses</span><span class="p">)</span>
+
+    <span class="n">grads</span> <span class="o">=</span> <span class="n">grad</span><span class="p">(</span><span class="n">chitchat</span><span class="p">,</span> <span class="n">queries_sequences</span><span class="p">,</span> <span class="n">responses_sequences</span><span class="p">)</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">chitchat</span><span class="o">.</span><span class="n">variables</span><span class="p">))</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;step </span><span class="si">%d</span><span class="s2">: loss </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">batch_index</span><span class="p">,</span>
+        <span class="n">loss</span><span class="p">(</span><span class="n">chitchat</span><span class="p">,</span> <span class="n">queries_sequences</span><span class="p">,</span> <span class="n">responses_sequences</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+
+<span class="n">checkpoint</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;./checkpoints&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>训练时，可以通过输出了解模型的loss:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">step</span> <span class="mi">0</span><span class="p">:</span> <span class="n">loss</span> <span class="mf">2.019347</span>
+<span class="n">step</span> <span class="mi">10</span><span class="p">:</span> <span class="n">loss</span> <span class="mf">1.798050</span>
+<span class="n">step</span> <span class="mi">20</span><span class="p">:</span> <span class="n">loss</span> <span class="mf">1.87050</span>
+<span class="n">step</span> <span class="mi">30</span><span class="p">:</span> <span class="n">loss</span> <span class="mf">1.758132</span>
+<span class="n">step</span> <span class="mi">40</span><span class="p">:</span> <span class="n">loss</span> <span class="mf">1.821826</span>
+</pre></div>
+</div>
+<p>模型训练完成后，我们通过 <cite>checkpoint.save()</cite> 函数将模型的参数存在 <cite>./checkpoints</cite> 目录中。最后，我们需要一个用来对话的程序，来测试实际效果。我们来给 ChitChat 增加 predict 方法：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ChitChat</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="c1"># ... append the following code to previous code</span>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+        <span class="n">inputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+        <span class="n">response_indices</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">MAX_LEN</span><span class="p">):</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+            <span class="n">indice</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">indice</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">indice_eos</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">response_indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">indice</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response_indices</span>
+</pre></div>
+</div>
+<p>然后，我们就可以实现一个简单的 Chat 程序。具体实现如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">()</span>
+<span class="n">vocabulary</span> <span class="o">=</span> <span class="n">Vocabulary</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">raw_text</span><span class="p">)</span>
+
+<span class="n">chitchat</span> <span class="o">=</span> <span class="n">ChitChat</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)</span>
+<span class="n">checkpoint</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Checkpoint</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">chitchat</span><span class="p">)</span>
+<span class="n">checkpoint</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">latest_checkpoint</span><span class="p">(</span><span class="s1">&#39;./checkpoints&#39;</span><span class="p">))</span>
+
+<span class="n">index_word</span> <span class="o">=</span> <span class="n">vocabulary</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">index_word</span>
+<span class="n">word_index</span> <span class="o">=</span> <span class="n">vocabulary</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">word_index</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;&gt; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">query</span> <span class="o">==</span> <span class="s1">&#39;q&#39;</span> <span class="ow">or</span> <span class="n">query</span> <span class="o">==</span> <span class="s1">&#39;quit&#39;</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">preprocess</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+        <span class="n">query_sequence</span> <span class="o">=</span> <span class="n">vocabulary</span><span class="o">.</span><span class="n">texts_to_padded_sequences</span><span class="p">([</span><span class="n">query</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">response_sequence</span> <span class="o">=</span> <span class="n">chitchat</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">query_sequence</span><span class="p">)</span>
+
+        <span class="n">response_word_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">index_word</span><span class="p">[</span><span class="n">indice</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">indice</span> <span class="ow">in</span> <span class="n">response_sequence</span>
+            <span class="k">if</span> <span class="n">indice</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">indice</span> <span class="o">!=</span> <span class="n">word_index</span><span class="p">[</span><span class="n">END_TOKEN</span><span class="p">]</span>
+        <span class="p">]</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Bot:&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">response_word_list</span><span class="p">))</span>
+
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;OOV: Please use simple words with the ChitChat Bot!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>最终生成的对话的界面将会是这样子的:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt; how are you ?
+Bot: fine .
+&gt; where are you ?
+Bot: i don t know .
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="seq2seq-javascript.html" class="btn btn-neutral float-right" title="Tensorflow JavaScript 闲聊对话模型" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="rl.html" class="btn btn-neutral float-left" title="TensorFlow智能物资调度" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
