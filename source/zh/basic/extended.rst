@@ -72,7 +72,7 @@ Checkpoint：变量的保存与恢复
 
 最后提供一个实例，以前章的 :ref:`多层感知机模型 <mlp>` 为例展示模型变量的保存和载入：
 
-.. literalinclude:: ../_static/code/zh/extended/save_and_restore/mnist.py
+.. literalinclude:: /_static/code/zh/extended/save_and_restore/mnist.py
 
 在代码目录下建立save文件夹并运行代码进行训练后，save文件夹内将会存放每隔100个batch保存一次的模型变量数据。将第7行改为 ``model = 'test'`` 并再次运行代码，将直接使用最后一次保存的变量值恢复模型并在测试集上测试模型性能，可以直接获得95%左右的准确率。
 
@@ -119,7 +119,7 @@ TensorBoard：训练过程可视化
 
 然后使用浏览器访问命令行程序所输出的网址（一般是http://计算机名称:6006），即可访问TensorBoard的可视界面，如下图所示：
 
-.. figure:: ../_static/image/extended/tensorboard.png
+.. figure:: /_static/image/extended/tensorboard.png
     :width: 100%
     :align: center
 
@@ -132,7 +132,7 @@ TensorBoard的使用有以下注意事项：
 
 最后提供一个实例，以前章的 :ref:`多层感知机模型 <mlp>` 为例展示TensorBoard的使用：
 
-.. literalinclude:: ../_static/code/zh/extended/tensorboard/mnist.py
+.. literalinclude:: /_static/code/zh/extended/tensorboard/mnist.py
 
 ``tf.data`` ：数据预处理
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
