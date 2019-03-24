@@ -38,7 +38,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
         # 还可以添加自定义的方法
 
-.. figure:: ../_static/image/model/model.png
+.. figure:: /_static/image/model/model.png
     :width: 50%
     :align: center
 
@@ -48,7 +48,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 上一章中简单的线性模型 ``y_pred = a * X + b`` ，我们可以通过模型类的方式编写如下：
 
-.. literalinclude:: ../_static/code/zh/model/linear/linear.py
+.. literalinclude:: /_static/code/zh/model/linear/linear.py
 
 这里，我们没有显式地声明 ``a`` 和 ``b`` 两个变量并写出 ``y_pred = a * X + b`` 这一线性变换，而是建立了一个继承了 ``tf.keras.Model`` 的模型类 ``Linear`` 。这个类在初始化部分实例化了一个 **全连接层** （ ``tf.keras.layers.Dense`` ），并在call方法中对这个层进行调用，实现了线性变换的计算。如果需要显式地声明自己的变量并使用变量进行自定义运算，或者希望了解Keras层的内部原理，请参考 :ref:`自定义层 <custom_layer>`。
 
@@ -56,7 +56,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
     `全连接层 <https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense>`_ （Fully-connected Layer，``tf.keras.layers.Dense`` ）是Keras中最基础和常用的层之一。给定输入张量 ``input = [batch_size, input_dim]`` ，该层对输入张量首先进行 ``tf.matmul(input, kernel) + bias`` 的线性变换，然后对线性变换后张量的每个元素通过激活函数 ``activation`` ，输出形状为 ``[batch_size, units]`` 的二维张量。
     
-    .. figure:: ../_static/image/model/dense.png
+    .. figure:: /_static/image/model/dense.png
         :width: 60%
         :align: center
 
@@ -92,14 +92,14 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 这里，我们使用多层感知机完成MNIST手写体数字图片数据集 [LeCun1998]_ 的分类任务。
 
-.. figure:: ../_static/image/model/mnist_0-9.png
+.. figure:: /_static/image/model/mnist_0-9.png
     :align: center
 
     MNIST手写体数字图片示例
 
 先进行预备工作，实现一个简单的 ``DataLoader`` 类来读取MNIST数据集数据。
 
-.. literalinclude:: ../_static/code/zh/model/mlp/main.py
+.. literalinclude:: /_static/code/zh/model/mlp/main.py
     :lines: 13-24
 
 .. hint:: ``mnist = tf.keras.datasets.mnist`` 将从网络上自动下载MNIST数据集并加载。如果运行时出现网络连接错误，可以从 https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz 或 https://s3.amazonaws.com/img-datasets/mnist.npz 下载MNIST数据集 ``mnist.npz`` 文件，并放置于用户目录的 ``.keras/dataset`` 目录下（Windows下用户目录为 ``C:\Users\用户名`` ，Linux下用户目录为 ``/home/用户名`` ）。
@@ -110,10 +110,10 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 多层感知机的模型类实现与上面的线性模型类似，所不同的地方在于层数增加了（顾名思义，“多层”感知机），以及引入了非线性激活函数（这里使用了 `ReLU函数 <https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0>`_ ， 即下方的 ``activation=tf.nn.relu`` ）。该模型输入一个向量（比如这里是拉直的 ``1×784`` 手写体数字图片），输出10维的信号，分别代表这张图片属于0到9的概率。这里我们加入了一个 ``predict`` 方法，对图片对应的数字进行预测。在预测的时候，选择概率最大的数字进行预测输出。
 
-.. literalinclude:: ../_static/code/zh/model/mlp/mlp.py
+.. literalinclude:: /_static/code/zh/model/mlp/mlp.py
     :lines: 4-19
 
-.. figure:: ../_static/image/model/mlp.png
+.. figure:: /_static/image/model/mlp.png
     :width: 80%
     :align: center
 
@@ -121,7 +121,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 定义一些模型超参数：
 
-.. literalinclude:: ../_static/code/zh/model/mlp/main.py
+.. literalinclude:: /_static/code/zh/model/mlp/main.py
     :lines: 8-10
 
 实例化模型，数据读取类和优化器：
@@ -142,12 +142,12 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 具体代码实现如下：
 
-.. literalinclude:: ../_static/code/zh/model/mlp/main.py
+.. literalinclude:: /_static/code/zh/model/mlp/main.py
     :lines: 32-39
 
 接下来，我们使用验证集测试模型性能。具体而言，比较验证集上模型预测的结果与真实结果，输出预测正确的样本数占总样本数的比例：
 
-.. literalinclude:: ../_static/code/zh/model/mlp/main.py
+.. literalinclude:: /_static/code/zh/model/mlp/main.py
     :lines: 41-43
 
 输出结果::
@@ -162,7 +162,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
     如果我们将上面的神经网络放大来看，详细研究计算过程，比如取第二层的第k个计算单元，可以得到示意图如下：
 
-    .. figure:: ../_static/image/model/neuron.png
+    .. figure:: /_static/image/model/neuron.png
         :width: 80%
         :align: center
 
@@ -170,7 +170,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
     事实上，这种结构和真实的神经细胞（神经元）类似。神经元由树突、胞体和轴突构成。树突接受其他神经元传来的信号作为输入（一个神经元可以有数千甚至上万树突），胞体对电位信号进行整合，而产生的信号则通过轴突传到神经末梢的突触，传播到下一个（或多个）神经元。
 
-    .. figure:: ../_static/image/model/real_neuron.png
+    .. figure:: /_static/image/model/real_neuron.png
         :width: 80%
         :align: center
 
@@ -192,12 +192,12 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 具体的实现见下，和MLP很类似，只是新加入了一些卷积层和池化层。
 
-.. figure:: ../_static/image/model/cnn.png
+.. figure:: /_static/image/model/cnn.png
     :align: center
 
     CNN结构图示
 
-.. literalinclude:: ../_static/code/zh/model/cnn/cnn.py
+.. literalinclude:: /_static/code/zh/model/cnn/cnn.py
     :lines: 4-38
 
 将前节的 ``model = MLP()`` 更换成 ``model = CNN()`` ，输出如下::
@@ -232,18 +232,18 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 首先，还是实现一个简单的 ``DataLoader`` 类来读取文本，并以字符为单位进行编码。
 
-.. literalinclude:: ../_static/code/zh/model/rnn/rnn.py
+.. literalinclude:: /_static/code/zh/model/rnn/rnn.py
     :lines: 31-49
 
 接下来进行模型的实现。在 ``__init__`` 方法中我们实例化一个常用的 ``BasicLSTMCell`` 单元，以及一个线性变换用的全连接层，我们首先对序列进行One Hot操作，即将编码i变换为一个n维向量，其第i位为1，其余均为0。这里n为字符种类数num_char。变换后的序列张量形状为[num_batch, seq_length, num_chars]。接下来，我们将序列从头到尾依序送入RNN单元，即将当前时间t的RNN单元状态 ``state`` 和t时刻的序列 ``inputs[:, t, :]`` 送入RNN单元，得到当前时间的输出 ``output`` 和下一个时间t+1的RNN单元状态。取RNN单元最后一次的输出，通过全连接层变换到num_chars维，即作为模型的输出。
 
-.. figure:: ../_static/image/model/rnn_single.jpg
+.. figure:: /_static/image/model/rnn_single.jpg
     :width: 30%
     :align: center
 
     ``output, state = self.cell(inputs[:, t, :], state)`` 图示
 
-.. figure:: ../_static/image/model/rnn.jpg
+.. figure:: /_static/image/model/rnn.jpg
     :width: 50%
     :align: center
 
@@ -251,7 +251,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 具体实现如下：
 
-.. literalinclude:: ../_static/code/zh/model/rnn/rnn.py
+.. literalinclude:: /_static/code/zh/model/rnn/rnn.py
     :lines: 7-21
 
 训练过程与前节基本一致，在此复述：
@@ -262,17 +262,17 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 - 计算损失函数关于模型变量的导数；
 - 使用优化器更新模型参数以最小化损失函数。
 
-.. literalinclude:: ../_static/code/zh/model/rnn/rnn.py
+.. literalinclude:: /_static/code/zh/model/rnn/rnn.py
     :lines: 59-69
 
 关于文本生成的过程有一点需要特别注意。之前，我们一直使用 ``tf.argmax()`` 函数，将对应概率最大的值作为预测值。然而对于文本生成而言，这样的预测方式过于绝对，会使得生成的文本失去丰富性。于是，我们使用 ``np.random.choice()`` 函数按照生成的概率分布取样。这样，即使是对应概率较小的字符，也有机会被取样到。同时，我们加入一个 ``temperature`` 参数控制分布的形状，参数值越大则分布越平缓（最大值和最小值的差值越小），生成文本的丰富度越高；参数值越小则分布越陡峭，生成文本的丰富度越低。
 
-.. literalinclude:: ../_static/code/zh/model/rnn/rnn.py
+.. literalinclude:: /_static/code/zh/model/rnn/rnn.py
     :lines: 23-28
 
 通过这种方式进行“滚雪球”式的连续预测，即可得到生成文本。
 
-.. literalinclude:: ../_static/code/zh/model/rnn/rnn.py
+.. literalinclude:: /_static/code/zh/model/rnn/rnn.py
     :lines: 71-78
 
 生成的文本如下::
@@ -315,7 +315,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 .. only:: html
 
-    .. figure:: ../_static/image/model/cartpole.gif
+    .. figure:: /_static/image/model/cartpole.gif
         :width: 500
         :align: center
 
@@ -323,7 +323,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 .. only:: latex
 
-    .. figure:: ../_static/image/model/cartpole.png
+    .. figure:: /_static/image/model/cartpole.png
         :width: 500
         :align: center
 
@@ -348,7 +348,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 以下代码展示了如何使用深度强化学习中的Deep Q-Learning方法来训练模型。
 
-.. literalinclude:: ../_static/code/zh/model/rl/rl.py
+.. literalinclude:: /_static/code/zh/model/rl/rl.py
 
 对于不同的任务（或者说环境），我们需要根据任务的特点，设计不同的状态以及采取合适的网络来拟合Q函数。例如，如果我们考虑经典的打砖块游戏（Gym环境库中的  `Breakout-v0 <https://gym.openai.com/envs/Breakout-v0/>`_  ），每一次执行动作（挡板向左、向右或不动），都会返回一个 ``210 * 160 * 3`` 的RGB图片，表示当前屏幕画面。为了给打砖块游戏这个任务设计合适的状态表示，我们有以下分析：
 
@@ -387,12 +387,12 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 例如，如果我们要自己实现一个 :ref:`本章第一节 <linear>` 中的全连接层，但指定输出维度为1，可以按如下方式编写，在 ``build`` 方法中创建两个变量，并在 ``call`` 方法中使用创建的变量进行运算：
 
-.. literalinclude:: ../_static/code/zh/model/custom_layer/linear.py
+.. literalinclude:: /_static/code/zh/model/custom_layer/linear.py
     :lines: 9-21
     
 使用相同的方式，可以调用我们自定义的层 ``LinearLayer``：
 
-.. literalinclude:: ../_static/code/zh/model/custom_layer/linear.py
+.. literalinclude:: /_static/code/zh/model/custom_layer/linear.py
     :lines: 24-31
 
 Graph Execution模式 *
@@ -404,7 +404,7 @@ Graph Execution模式 *
 
 例如，通过以下代码，同样可以调用 :ref:`本章第一节 <linear>` 建立的线性模型并进行线性回归：
 
-.. literalinclude:: ../_static/code/zh/model/custom_layer/linear.py
+.. literalinclude:: /_static/code/zh/model/custom_layer/linear.py
     :lines: 48-59
 
 .. [#rnn_exception] 除了本章实现的RNN模型以外。在RNN模型的实现中，我们通过Eager Execution动态获取了seq_length的长度，使得我们可以方便地动态控制RNN的展开长度。然而Graph Execution不支持这一点，为了达到相同的效果，我们需要固定seq_length的长度，或者使用 ``tf.nn.dynamic_rnn`` （ `文档 <https://www.tensorflow.org/api_docs/python/tf/nn/dynamic_rnn>`_ ）。

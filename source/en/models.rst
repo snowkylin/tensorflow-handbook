@@ -33,7 +33,7 @@ Meanwhile, we introduce the concept of **layers**. Layers can be regarded as fin
 
 The simple linear model ``y_pred = tf.matmul(X, w) + b`` mentioned in the last chapter can be implemented through model classes:
 
-.. literalinclude:: ../_static/code/en/model/linear/linear.py
+.. literalinclude:: /_static/code/en/model/linear/linear.py
 
 Here we didn't explicitly declare two variables ``W`` and ``b`` or write the linear transformation ``y_pred = tf.matmul(X, w) + b``, but instead instantiated a densely-connected layer (``tf.keras.layers.Dense``) in the initialization and called this layer in the "call" method. The densely-connected layer encapsulates the ``output = activation(tf.matmul(input, kernel) + bias)`` linear transformation, the activation function, and two variables ``kernel`` and ``bias``. This densely-connected layer would be equivalent to the aforementioned linear transformation if the activation function is not specified (i.e. ``activation(x) = x``). By the way, the densely-connected layer may be the most frequent in our daily model coding.
 
@@ -48,24 +48,24 @@ A Basic Example: Multilayer Perceptrons (MLP)
 
 Let's begin with implementing a simple `Multilayer Perceptron <https://en.wikipedia.org/wiki/Multilayer_perceptron>`_ as an introduction of writing models in TensorFlow. Here we use the multilayer perceptron to classify the MNIST handwriting digit image dataset.
 
-.. figure:: ../_static/image/model/mnist_0-9.png
+.. figure:: /_static/image/model/mnist_0-9.png
     :align: center
 
     An image example of MNIST handwriting digits.
 
 Before the main course, we implement a simple ``DataLoader`` class for loading the MNIST dataset.
 
-.. literalinclude:: ../_static/code/en/model/mlp/main.py
+.. literalinclude:: /_static/code/en/model/mlp/main.py
     :lines: 13-23
 
 The implementation of the multilayer perceptron model class is similar to the aforementioned linear model class except the former has more layers (as its name "multilayer" suggests) and introduces a nonlinear activation function (here `ReLU function <https://en.wikipedia.org/wiki/Rectifier_(neural_networks)>`_ is used by the code ``activation=tf.nn.relu`` below). This model receives a vector (like a flattened 1*784 handwriting digit image here) and outputs a 10 dimensional signal representing the probability of this image being 0 to 9, respectively. Here we introduce a "predict" method which predicts the handwriting digits. It chooses the digit with the maximum likelihood as an output.
 
-.. literalinclude:: ../_static/code/en/model/mlp/mlp.py
+.. literalinclude:: /_static/code/en/model/mlp/mlp.py
     :lines: 4-17
 
 Define some hyperparameters for the model:
 
-.. literalinclude:: ../_static/code/en/model/mlp/main.py
+.. literalinclude:: /_static/code/en/model/mlp/main.py
     :lines: 8-10
 
 Instantiate the model, the data loader class and the optimizer:
@@ -86,12 +86,12 @@ And iterate the following steps:
 
 The code implementation is as follows:
 
-.. literalinclude:: ../_static/code/en/model/mlp/main.py
+.. literalinclude:: /_static/code/en/model/mlp/main.py
     :lines: 32-39
 
 Then, we will use the validation dataset to examine the performance of this model. To be specific, we will compare the predictions with the answers on the validation dateset, and output the ratio of correct predictions:
 
-.. literalinclude:: ../_static/code/en/model/mlp/main.py
+.. literalinclude:: /_static/code/en/model/mlp/main.py
     :lines: 41-43
 
 Output::
@@ -107,12 +107,12 @@ The `Convolutional Neural Network <https://en.wikipedia.org/wiki/Convolutional_n
 
 The specific implementation is as follows, which is very similar to MLP except some new convolutional layers and pooling layers.
 
-.. figure:: ../_static/image/model/cnn.png
+.. figure:: /_static/image/model/cnn.png
     :align: center
 
     Figure of the CNN structure
 
-.. literalinclude:: ../_static/code/en/model/cnn/cnn.py
+.. literalinclude:: /_static/code/en/model/cnn/cnn.py
     :lines: 4-38
 
 By substituting ``model = MLP()`` in the last chapter with ``model = CNN()``, we get the following output::
@@ -141,18 +141,18 @@ This sentence (sequence) has 13 characters (including spaces) in total. Based on
 
 First, we still implement a simple ``DataLoader`` class to read text and encode it in characters.
 
-.. literalinclude:: ../_static/code/en/model/rnn/rnn.py
+.. literalinclude:: /_static/code/en/model/rnn/rnn.py
     :lines: 31-49
 
 Then we implement the model. We instantiate a common ``BasicLSTMCell`` unit and a dense layer for linear transformation in the ``__init__`` method. We first do an One-Hot operation on the sequence, i.e. transforming the code i into an n dimensional vector with the value 1 on the i-th position and value 0 elsewhere. Here n is the number of characters. The shape of the transformed sequence tensor is [num_batch, seq_length, num_chars]. After that, we will feed the sequences one by one into the RNN unit, i.e. feeding the state of the RNN unit ``state`` and sequences ``inputs[:, t, :]`` of the current time t into the RNN unit, and get the output of the current time ``output`` and the RNN unit state of the next time t+1. We take the last output of the RNN unit, transform it into num_chars dimensional one through a dense layer, and consider it as the model output.
 
-.. figure:: ../_static/image/model/rnn_single.jpg
+.. figure:: /_static/image/model/rnn_single.jpg
     :width: 30%
     :align: center
 
     Figure of ``output, state = self.cell(inputs[:, t, :], state)``
 
-.. figure:: ../_static/image/model/rnn.jpg
+.. figure:: /_static/image/model/rnn.jpg
     :width: 50%
     :align: center
 
@@ -160,7 +160,7 @@ Then we implement the model. We instantiate a common ``BasicLSTMCell`` unit and 
 
 The implementation is as follows:
 
-.. literalinclude:: ../_static/code/en/model/rnn/rnn.py
+.. literalinclude:: /_static/code/en/model/rnn/rnn.py
     :lines: 7-21
 
 The training process is almost the same with the previous chapter, which we reiterate here:
@@ -171,17 +171,17 @@ The training process is almost the same with the previous chapter, which we reit
 - Differentiate the loss function with respect to model parameters;
 - Update the model parameters in order to minimize the loss.
 
-.. literalinclude:: ../_static/code/en/model/rnn/rnn.py
+.. literalinclude:: /_static/code/en/model/rnn/rnn.py
     :lines: 59-69
 
 There is one thing we should notice about the process of text generation is that earlier we used the ``tf.argmax()`` function to regard the value with the maximum likelihood as the prediction. However, this method of prediction will be too rigid for text generation which also deprives the richness of the generated text. Thus, we use the ``np.random.choice()`` function for sampling based on the generated probability distribution by which even characters with small likelihood can still be possible to be sampled. Meanwhile we introduce the ``temperature`` parameter to control the shape of the distribution. Larger the value, flatter the distribution (smaller difference between the maximum and the minimum) and richer the generated text. Vice versa.
 
-.. literalinclude:: ../_static/code/en/model/rnn/rnn.py
+.. literalinclude:: /_static/code/en/model/rnn/rnn.py
     :lines: 23-28
 
 We can get the generated text by this step-by-step continuing prediction.
 
-.. literalinclude:: ../_static/code/en/model/rnn/rnn.py
+.. literalinclude:: /_static/code/en/model/rnn/rnn.py
     :lines: 71-78
 
 The generated text is as follows::
@@ -222,7 +222,7 @@ Here, we use the deep reinforcement learning to learn how to play CartPole. To b
 
 .. only:: html
 
-    .. figure:: ../_static/image/model/cartpole.gif
+    .. figure:: /_static/image/model/cartpole.gif
         :width: 500
         :align: center
 
@@ -230,7 +230,7 @@ Here, we use the deep reinforcement learning to learn how to play CartPole. To b
 
 .. only:: latex
 
-    .. figure:: ../_static/image/model/cartpole.png
+    .. figure:: /_static/image/model/cartpole.png
         :width: 500
         :align: center
 
@@ -255,7 +255,7 @@ Therefore our task is to train a model that can predict good actions based on th
 
 The following code shows how to use the Deep Q-Learning in deep reinforcement learning to train the model.
 
-.. literalinclude:: ../_static/code/en/model/rl/rl.py
+.. literalinclude:: /_static/code/en/model/rl/rl.py
 
 .. _custom_layer:
 
@@ -284,12 +284,12 @@ In fact, we can not only inherit from ``tf.keras.Model`` to write your own model
 
 For example, if we want to implement a dense layer in :ref:`the first section of this chapter <linear>` with a specified output dimension of 1, we can write as below, creating two variables in the ``build`` method and do operations on them:
 
-.. literalinclude:: ../_static/code/en/model/custom_layer/linear.py
+.. literalinclude:: /_static/code/en/model/custom_layer/linear.py
     :lines: 9-21
     
 With the same way, we can call our custom layers ``LinearLayer``:
 
-.. literalinclude:: ../_static/code/en/model/custom_layer/linear.py
+.. literalinclude:: /_static/code/en/model/custom_layer/linear.py
     :lines: 24-31
 
 Graph Execution Mode *
@@ -299,7 +299,7 @@ In fact, these models above will be compatible with both Eager Execution mode an
 
 For example, we can also call the linear model built in :ref:`the first section of this chapter <linear>` and do linear regression by the following codes:
 
-.. literalinclude:: ../_static/code/en/model/custom_layer/linear.py
+.. literalinclude:: /_static/code/en/model/custom_layer/linear.py
     :lines: 48-59
 
 .. [#rnn_exception] In addition to the RNN model implemented in this chapter, we get the length of seq_length dynamically under Eager Execution, which enables us to easily control the expanding length of RNN dynamically, which is not supported by Graph Execution. In order to reach the same effect, we need to fix the length of seq_length or use ``tf.nn.dynamic_rnn`` instead (`Documentation <https://www.tensorflow.org/api_docs/python/tf/nn/dynamic_rnn>`_).

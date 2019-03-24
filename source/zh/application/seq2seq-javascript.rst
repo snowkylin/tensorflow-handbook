@@ -220,7 +220,7 @@ Tensorflow JavaScript 闲聊对话模型
 
 请注意这三个模型中，只有第一个模型  ``seq2seqModel``  是用来训练参数所需要的，所以训练的的时候使用这个模型。而另外的两个模型 ``encoderModel`` 和 ``decoderModel`` ，使我们用来预测的时候需要使用的。这三个模型共享所有的 Layers 参数。
 
- ``seq2seqModel`` 模型的输入包含两个，一个是 Encoder 的输入，另外一个是 Decoder 的输入。模型的输出是我们数据集的输出。
+``seq2seqModel`` 模型的输入包含两个，一个是 Encoder 的输入，另外一个是 Decoder 的输入。模型的输出是我们数据集的输出。
 
 .. code-block:: javascript
 
@@ -256,7 +256,7 @@ Tensorflow JavaScript 闲聊对话模型
       name: 'seq2seqModel',
     })
 
-用来训练的 seq2seqModel 模型建立完毕后，即可基于模型的 ``fitDataset`` 函数进行训练：
+用来训练的 ``seq2seqModel`` 模型建立完毕后，即可基于模型的 ``fitDataset`` 函数进行训练：
 
 .. code-block:: javascript
     await seq2seqModel.fitDataset(
@@ -305,7 +305,7 @@ Encoder子模型输入 ``numBatch`` 个由编码后单词和字符组成的，�
       outputs: encoderState,
     })
 
-deocoderModel 的输入有两个，分别是 t 时刻的 token indice，和对应的解码器 ``state``；输出也有两个，分别是 t+1 时刻的 token 的 voc 分布概率，和对应的解码器 ``state`` ：
+``deocoderModel`` 的输入有两个，分别是 t 时刻的 token indice，和对应的解码器 ``state``；输出也有两个，分别是 t+1 时刻的 token 的 voc 分布概率，和对应的解码器 ``state`` ：
 
 ``decoderModel`` 子模型具体实现如下：
 
