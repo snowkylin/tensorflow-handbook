@@ -20,13 +20,23 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'0.4 alpha',
+              LANGUAGE:'zh_CN',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -197,7 +207,7 @@
 <div class="section" id="id1">
 <h2>模型转换<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <p>由于移动设备空间和计算能力受限，使用TensorFlow训练好的模型，模型太大、运行效率比较低，不能直接在移动端部署。</p>
-<p>故在移动端部署的时候，需要使用tflight_convert转化格式，其在通过pip安装TensorFlow时一起安装。tflight_convert会把原模型转换为FlatBuffer格式。</p>
+<p>故在移动端部署的时候，需要使用 <code class="docutils literal notranslate"><span class="pre">tflight_convert</span></code> 转化格式，其在通过pip安装TensorFlow时一起安装。 <code class="docutils literal notranslate"><span class="pre">tflight_convert</span></code> 会把原模型转换为FlatBuffer格式。</p>
 <p>在终端执行如下命令:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tflight_convert</span> <span class="o">-</span><span class="n">h</span>
 </pre></div>
@@ -229,7 +239,7 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tflite_convert --keras_model_file<span class="o">=</span>./mnist_cnn.h5 --output_file<span class="o">=</span>./mnist_cnn.tflite
 </pre></div>
 </div>
-<p>到此，我们已经得到一个可以运行的TensorFlow Lite模型了，即`mnist_cnn.tflite`。</p>
+<p>到此，我们已经得到一个可以运行的TensorFlow Lite模型了，即 <code class="docutils literal notranslate"><span class="pre">mnist_cnn.tflite</span></code> 。</p>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
 <p class="last">这里只介绍了keras HDF5格式模型的转换，其他模型转换建议参考：<a class="reference external" href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/convert/cmdline_examples.md">https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/convert/cmdline_examples.md</a></p>
@@ -250,7 +260,7 @@
   --output_arrays<span class="o">=</span>dense_2/Softmax
 </pre></div>
 </div>
-<p>细心的读者肯定会问，上图中有很多参数是怎么来的呢？我们可以使用tflite_convert的获得模型具体结构，命令如下：</p>
+<p>细心的读者肯定会问，上图中有很多参数是怎么来的呢？我们可以使用 <code class="docutils literal notranslate"><span class="pre">tflite_convert</span></code> 获得模型具体结构，命令如下：</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tflite_convert <span class="se">\</span>
   --output_file<span class="o">=</span>keras_mnist.dot <span class="se">\</span>
   --output_format<span class="o">=</span>GRAPHVIZ_DOT <span class="se">\</span>
@@ -282,7 +292,7 @@ Type: Float <span class="o">[</span><span class="m">1</span>×10<span class="o">
 <p><code class="docutils literal notranslate"><span class="pre">--output_arrays</span></code> 就是 <code class="docutils literal notranslate"><span class="pre">dense_2/Softmax</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">--default_ranges_min</span></code> 就是 <code class="docutils literal notranslate"><span class="pre">0</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">--default_ranges_max</span></code> 就是 <code class="docutils literal notranslate"><span class="pre">255</span></code></p>
-<p>关于``–mean_values``和``–std_dev_values``的用途:</p>
+<p>关于 <code class="docutils literal notranslate"><span class="pre">--mean_values</span></code> 和 <code class="docutils literal notranslate"><span class="pre">--std_dev_values</span></code> 的用途:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>QUANTIZED_UINT8的quantized模型期望的输入是[0,255], 需要有个跟原始的float类型输入有个对应关系。
 
 mean_values和std_dev_values就是为了实现这个对应关系
@@ -293,14 +303,14 @@ std_dev_values对应255 / (float_max - float_min)
 </pre></div>
 </div>
 <p>因此，可以知道</p>
-<p><code class="docutils literal notranslate"><span class="pre">--mean_values``就是``0</span></code></p>
-<p><code class="docutils literal notranslate"><span class="pre">--std_dev_values``就是``1</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">--mean_values</span></code> 就是 <code class="docutils literal notranslate"><span class="pre">0</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">--std_dev_values</span></code> 就是 <code class="docutils literal notranslate"><span class="pre">1</span></code></p>
 </div>
 <div class="section" id="android">
 <h2>Android部署<a class="headerlink" href="#android" title="永久链接至标题">¶</a></h2>
 <p>现在开始在Android环境部署，对于国内的读者，需要先给Android Studio配置proxy，因为gradle编译环境需要获取相应的资源，请大家自行解决，这里不再赘述。</p>
 <p><strong>配置app/build.gradle</strong></p>
-<p>新建一个Android Project，打开app/build.gradle添加如下信息:</p>
+<p>新建一个Android Project，打开 <code class="docutils literal notranslate"><span class="pre">app/build.gradle</span></code> 添加如下信息:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">android</span> <span class="p">{</span>
     <span class="n">aaptOptions</span> <span class="p">{</span>
         <span class="n">noCompress</span> <span class="s2">&quot;tflite&quot;</span>
@@ -319,19 +329,20 @@ std_dev_values对应255 / (float_max - float_min)
 </pre></div>
 </div>
 <p>其中，</p>
-<p>1、aaptOptions设置tflite文件不压缩，确保后面tflite文件可以被Interpreter正确加载。
-2、org.tensorflow:tensorflow-lite的最新版本号
-注: 可以在这里查询https://bintray.com/google/tensorflow/tensorflow-lite</p>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">aaptOptions</span></code> 设置tflite文件不压缩，确保后面tflite文件可以被Interpreter正确加载。</li>
+<li><code class="docutils literal notranslate"><span class="pre">org.tensorflow:tensorflow-lite</span></code> 的最新版本号可以在这里查询 <a class="reference external" href="https://bintray.com/google/tensorflow/tensorflow-lite">https://bintray.com/google/tensorflow/tensorflow-lite</a></li>
+</ol>
 <p>设置好后，sync和build整个工程，如果build成功说明，配置成功。</p>
 <p><strong>添加tflite文件到assets文件夹</strong></p>
-<p>在app目录先新建assets目录，并将`mnist_cnn.tflite`文件保存到assets目录。重新编译apk，检查新编译出来的apk的assets文件夹是否有`mnist_cnn.tflite`文件。</p>
+<p>在app目录先新建assets目录，并将 <code class="docutils literal notranslate"><span class="pre">mnist_cnn.tflite</span></code> 文件保存到assets目录。重新编译apk，检查新编译出来的apk的assets文件夹是否有 <code class="docutils literal notranslate"><span class="pre">mnist_cnn.tflite</span></code> 文件。</p>
 <p>使用apk analyzer查看新编译出来的apk，存在如下目录即编译打包成功:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">assets</span>
      <span class="o">|</span><span class="n">__mnist_cnn</span><span class="o">.</span><span class="n">tflite</span>
 </pre></div>
 </div>
 <p><strong>加载模型</strong></p>
-<p>使用如下函数将`mnist_cnn.tflite`文件加载到memory-map中，作为Interpreter实例化的输入</p>
+<p>使用如下函数将 <code class="docutils literal notranslate"><span class="pre">mnist_cnn.tflite</span></code> 文件加载到memory-map中，作为Interpreter实例化的输入</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">MODEL_PATH</span> <span class="o">=</span> <span class="s">&quot;mnist_cnn.tflite&quot;</span><span class="o">;</span>
 
 <span class="cm">/** Memory-map the model file in Assets. */</span>
@@ -367,7 +378,7 @@ std_dev_values对应255 / (float_max - float_min)
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>将mnist图片转化成ByteBuffer，并保持到imgData中</p>
+<p>将mnist图片转化成 <code class="docutils literal notranslate"><span class="pre">ByteBuffer</span></code> ，并保持到 <code class="docutils literal notranslate"><span class="pre">imgData</span></code> 中</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/** Preallocated buffers for storing image data in. */</span>
 <span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">intValues</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">DIM_IMG_WIDTH</span> <span class="o">*</span> <span class="n">DIM_IMG_HEIGHT</span><span class="o">];</span>
 
@@ -392,7 +403,7 @@ std_dev_values对应255 / (float_max - float_min)
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>convertBitmapToByteBuffer的输出即为模型运行的输入。</p>
+<p><code class="docutils literal notranslate"><span class="pre">convertBitmapToByteBuffer</span></code> 的输出即为模型运行的输入。</p>
 <p><strong>运行输出</strong></p>
 <p>定义一个1*10的多维数组，因为我们只有1个batch和10个label（TODO：need double check），具体代码如下</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">private</span> <span class="kt">float</span><span class="o">[][]</span> <span class="n">labelProbArray</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">float</span><span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="mi">10</span><span class="o">];</span>
@@ -404,7 +415,7 @@ std_dev_values对应255 / (float_max - float_min)
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">tflite</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">imgData</span><span class="o">,</span> <span class="n">labelProbArray</span><span class="o">);</span>
 </pre></div>
 </div>
-<p>针对某个图片，运行后labelProbArray的内容如下，也就是各个label识别的概率</p>
+<p>针对某个图片，运行后 <code class="docutils literal notranslate"><span class="pre">labelProbArray</span></code> 的内容如下，也就是各个label识别的概率</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">index</span> <span class="mi">0</span> <span class="n">prob</span> <span class="n">is</span> <span class="mf">0.0</span>
 <span class="n">index</span> <span class="mi">1</span> <span class="n">prob</span> <span class="n">is</span> <span class="mf">0.0</span>
 <span class="n">index</span> <span class="mi">2</span> <span class="n">prob</span> <span class="n">is</span> <span class="mf">0.0</span>

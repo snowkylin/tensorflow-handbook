@@ -81,10 +81,6 @@ div.sphinxsidebar input {
     font-size: 1em;
 }
 
-div.sphinxsidebar #searchbox form.search {
-    overflow: hidden;
-}
-
 div.sphinxsidebar #searchbox input[type="text"] {
     float: left;
     width: 80%;
@@ -430,13 +426,6 @@ table.field-list td, table.field-list th {
     -webkit-hyphens: manual;
     hyphens: manual;
 }
-
-/* -- hlist styles ---------------------------------------------------------- */
-
-table.hlist td {
-    vertical-align: top;
-}
-
 
 /* -- other body styles ----------------------------------------------------- */
 
