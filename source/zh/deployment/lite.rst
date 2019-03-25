@@ -5,7 +5,7 @@ TensorFlow Lite
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 由于移动设备空间和计算能力受限，使用TensorFlow训练好的模型，模型太大、运行效率比较低，不能直接在移动端部署。
 
-故在移动端部署的时候，需要使用tflight_convert转化格式，其在通过pip安装TensorFlow时一起安装。tflight_convert会把原模型转换为FlatBuffer格式。
+故在移动端部署的时候，需要使用 ``tflight_convert`` 转化格式，其在通过pip安装TensorFlow时一起安装。 ``tflight_convert`` 会把原模型转换为FlatBuffer格式。
 
 在终端执行如下命令::
 
@@ -40,7 +40,7 @@ TensorFlow Lite
 
     tflite_convert --keras_model_file=./mnist_cnn.h5 --output_file=./mnist_cnn.tflite
 
-到此，我们已经得到一个可以运行的TensorFlow Lite模型了，即`mnist_cnn.tflite`。
+到此，我们已经得到一个可以运行的TensorFlow Lite模型了，即 ``mnist_cnn.tflite`` 。
 
 .. warning:: 这里只介绍了keras HDF5格式模型的转换，其他模型转换建议参考：https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/convert/cmdline_examples.md
 
@@ -62,7 +62,7 @@ Quantization 模型转换
       --input_arrays=conv2d_1_input \
       --output_arrays=dense_2/Softmax
 
-细心的读者肯定会问，上图中有很多参数是怎么来的呢？我们可以使用tflite_convert的获得模型具体结构，命令如下：
+细心的读者肯定会问，上图中有很多参数是怎么来的呢？我们可以使用 ``tflite_convert`` 获得模型具体结构，命令如下：
 
 .. code-block:: bash
 
@@ -111,7 +111,7 @@ dot是一种graph description language，可以用graphz的dot命令转化为pdf
 ``--default_ranges_max`` 就是 ``255``
 
 
-关于``--mean_values``和``--std_dev_values``的用途::
+关于 ``--mean_values`` 和 ``--std_dev_values`` 的用途::
 
     QUANTIZED_UINT8的quantized模型期望的输入是[0,255], 需要有个跟原始的float类型输入有个对应关系。
 
@@ -123,9 +123,9 @@ dot是一种graph description language，可以用graphz的dot命令转化为pdf
 
 因此，可以知道
 
-``--mean_values``就是``0``
+``--mean_values`` 就是 ``0``
 
-``--std_dev_values``就是``1``
+``--std_dev_values`` 就是 ``1``
 
 Android部署
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -134,7 +134,7 @@ Android部署
 
 **配置app/build.gradle**
 
-新建一个Android Project，打开app/build.gradle添加如下信息::
+新建一个Android Project，打开 ``app/build.gradle`` 添加如下信息::
 
     android {
         aaptOptions {
@@ -154,15 +154,14 @@ Android部署
 
 其中，
 
-1、aaptOptions设置tflite文件不压缩，确保后面tflite文件可以被Interpreter正确加载。
-2、org.tensorflow:tensorflow-lite的最新版本号
-注: 可以在这里查询https://bintray.com/google/tensorflow/tensorflow-lite
+#. ``aaptOptions`` 设置tflite文件不压缩，确保后面tflite文件可以被Interpreter正确加载。
+#. ``org.tensorflow:tensorflow-lite`` 的最新版本号可以在这里查询 https://bintray.com/google/tensorflow/tensorflow-lite
 
 设置好后，sync和build整个工程，如果build成功说明，配置成功。
 
 **添加tflite文件到assets文件夹**
 
-在app目录先新建assets目录，并将`mnist_cnn.tflite`文件保存到assets目录。重新编译apk，检查新编译出来的apk的assets文件夹是否有`mnist_cnn.tflite`文件。
+在app目录先新建assets目录，并将 ``mnist_cnn.tflite`` 文件保存到assets目录。重新编译apk，检查新编译出来的apk的assets文件夹是否有 ``mnist_cnn.tflite`` 文件。
 
 使用apk analyzer查看新编译出来的apk，存在如下目录即编译打包成功::
 
@@ -171,7 +170,7 @@ Android部署
 
 **加载模型**
 
-使用如下函数将`mnist_cnn.tflite`文件加载到memory-map中，作为Interpreter实例化的输入
+使用如下函数将 ``mnist_cnn.tflite`` 文件加载到memory-map中，作为Interpreter实例化的输入
 
 .. code-block:: java
 
@@ -214,7 +213,7 @@ Android部署
         imgData.order(ByteOrder.nativeOrder());
     }
 
-将mnist图片转化成ByteBuffer，并保持到imgData中
+将mnist图片转化成 ``ByteBuffer`` ，并保持到 ``imgData`` 中
 
 .. code-block:: java
 
@@ -241,7 +240,7 @@ Android部署
         }
     }
 
-convertBitmapToByteBuffer的输出即为模型运行的输入。
+``convertBitmapToByteBuffer`` 的输出即为模型运行的输入。
 
 **运行输出**
 
@@ -261,7 +260,7 @@ convertBitmapToByteBuffer的输出即为模型运行的输入。
 
     tflite.run(imgData, labelProbArray);
 
-针对某个图片，运行后labelProbArray的内容如下，也就是各个label识别的概率
+针对某个图片，运行后 ``labelProbArray`` 的内容如下，也就是各个label识别的概率
 
 .. code-block:: java
 

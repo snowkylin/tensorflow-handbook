@@ -291,6 +291,7 @@ Tensorflow.js转换器tensorflowjs_converter
 然后，我们就可以通过JavaScript来加载Tensorflow模型了！
 
 .. code-block:: javascript
+
     import * as tf from '@tensorflow/tfjs';
 
     const MODEL_URL = 'model_directory/model.json';
@@ -350,4 +351,4 @@ Tensorflow.js 在 Node.js 运行一次推理：
 * 在 CPU 上需要时间为56.23ms
 * 在 GPU (CUDA) 上需要时间为3.12ms
 
-与 Python 代码基准相比，Node.js 的 Tensorflow.js 在 CPU 上的运行时间与基准相同，在 GPU（CUDA） 上运行的时间是基准的1.1倍。
+与 Python 代码基准相比，Node.js 的 Tensorflow.js 在 CPU 上的运行时间与基准相同，在 GPU (CUDA) 上运行的时间是基准的1.1倍。
