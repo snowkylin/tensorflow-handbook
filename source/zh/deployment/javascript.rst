@@ -335,7 +335,7 @@ Tensorflow.js在浏览器中运行一次推理：
 * 在CPU上需要时间为97.3ms
 * 在GPU (WebGL)上需要时间为10.8ms
 
-与Python代码基准相比，浏览器中的 Tensorflow.js 在 CPU 上的运行时间为基准的1.7倍，在 GPU(WebGL) 上运行的时间为基准的3.8倍。
+与Python代码基准相比，浏览器中的 Tensorflow.js 在 CPU 上的运行时间为基准的1.7倍，在 GPU (WebGL) 上运行的时间为基准的3.8倍。
 
 Node.js性能
 ------------------------------
