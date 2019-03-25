@@ -254,6 +254,11 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 .. literalinclude:: /_static/code/zh/model/rnn/rnn.py
     :lines: 7-21
 
+定义一些模型超参数：
+
+.. literalinclude:: ../_static/code/zh/model/rnn/rnn.py
+    :lines: 54-57
+
 训练过程与前节基本一致，在此复述：
 
 - 从DataLoader中随机取一批训练数据；

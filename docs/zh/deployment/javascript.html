@@ -20,13 +20,23 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'0.4 alpha',
+              LANGUAGE:'zh_CN',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -468,6 +478,18 @@ $ npm install @tensorflow/tfjs-node-gpu
 </pre></div>
 </div>
 <p>然后，我们就可以通过JavaScript来加载Tensorflow模型了！</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">tf</span> <span class="nx">from</span> <span class="s1">&#39;@tensorflow/tfjs&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">MODEL_URL</span> <span class="o">=</span> <span class="s1">&#39;model_directory/model.json&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">model</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">loadGraphModel</span><span class="p">(</span><span class="nx">MODEL_URL</span><span class="p">);</span>
+<span class="c1">// 对Keras或者tfjs原生的层模型，使用下面的加载函数:</span>
+<span class="c1">// const model = await tf.loadLayersModel(MODEL_URL);</span>
+
+<span class="kr">const</span> <span class="nx">cat</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;cat&#39;</span><span class="p">);</span>
+<span class="nx">model</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="nx">tf</span><span class="p">.</span><span class="nx">browser</span><span class="p">.</span><span class="nx">fromPixels</span><span class="p">(</span><span class="nx">cat</span><span class="p">))</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="id4">
@@ -507,7 +529,7 @@ $ npm install @tensorflow/tfjs-node-gpu
 <li>在 CPU 上需要时间为56.23ms</li>
 <li>在 GPU (CUDA) 上需要时间为3.12ms</li>
 </ul>
-<p>与 Python 代码基准相比，Node.js 的 Tensorflow.js 在 CPU 上的运行时间与基准相同，在 GPU（CUDA） 上运行的时间是基准的1.1倍。</p>
+<p>与 Python 代码基准相比，Node.js 的 Tensorflow.js 在 CPU 上的运行时间与基准相同，在 GPU (CUDA) 上运行的时间是基准的1.1倍。</p>
 </div>
 </div>
 </div>
