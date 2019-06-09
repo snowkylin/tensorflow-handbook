@@ -5,24 +5,28 @@ import numpy as np
 
 
 class RNN(tf.keras.Model):
-    def __init__(self, num_chars):
+    def __init__(self, num_chars, seq_length):
         super().__init__()
         self.num_chars = num_chars
-        self.cell = tf.nn.rnn_cell.BasicLSTMCell(num_units=256)
+        self.seq_length = seq_length
+        self.cell = tf.keras.layers.LSTMCell(units=256)
         self.dense = tf.keras.layers.Dense(units=self.num_chars)
 
-    def call(self, inputs):
+    def call(self, inputs, from_logits=False):
         batch_size, seq_length = tf.shape(inputs)
         inputs = tf.one_hot(inputs, depth=self.num_chars)       # [batch_size, seq_length, num_chars]
-        state = self.cell.zero_state(batch_size=batch_size, dtype=tf.float32)
-        for t in range(seq_length.numpy()):
+        state = self.cell.get_initial_state(batch_size=batch_size, dtype=tf.float32)
+        for t in range(self.seq_length):
             output, state = self.cell(inputs[:, t, :], state)
-        output = self.dense(output)
-        return output
+        logits = self.dense(output)
+        if from_logits:
+            return logits
+        else:
+            return tf.nn.softmax(logits)
 
     def predict(self, inputs, temperature=1.):
         batch_size, _ = tf.shape(inputs)
-        logits = self(inputs)
+        logits = self(inputs, from_logits=True)
         prob = tf.nn.softmax(logits / temperature).numpy()
         return np.array([np.random.choice(self.num_chars, p=prob[i, :])
                          for i in range(batch_size.numpy())])
@@ -50,20 +54,20 @@ class DataLoader():
 
 
 if __name__ == '__main__':
-    tf.enable_eager_execution()
-    num_batches = 10000
+    num_batches = 1000
     seq_length = 40
     batch_size = 50
     learning_rate = 1e-3
 
     data_loader = DataLoader()
-    model = RNN(len(data_loader.chars))
-    optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
+    model = RNN(len(data_loader.chars), seq_length)
+    optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
     for batch_index in range(num_batches):
         X, y = data_loader.get_batch(seq_length, batch_size)
         with tf.GradientTape() as tape:
-            y_logit_pred = model(X)
-            loss = tf.losses.sparse_softmax_cross_entropy(labels=y, logits=y_logit_pred)
+            y_pred = model(X)
+            loss = tf.keras.losses.sparse_categorical_crossentropy(y_true=y, y_pred=y_pred)
+            loss = tf.reduce_mean(loss)
             print("batch %d: loss %f" % (batch_index, loss.numpy()))
         grads = tape.gradient(loss, model.variables)
         optimizer.apply_gradients(grads_and_vars=zip(grads, model.variables))
@@ -76,3 +80,4 @@ if __name__ == '__main__':
             y_pred = model.predict(X, diversity)
             print(data_loader.indices_char[y_pred[0]], end='', flush=True)
             X = np.concatenate([X[:, 1:], np.expand_dims(y_pred, axis=1)], axis=-1)
+        print("\n")

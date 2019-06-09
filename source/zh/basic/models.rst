@@ -108,10 +108,19 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
     
     在TensorFlow中，图像数据集的一种典型表示是 ``[图像数目，长，宽，色彩通道数]`` 的四维张量。在上面的 ``DataLoader`` 类中， ``self.train_data`` 和 ``self.test_data`` 分别载入了60,000和10,000张大小为 ``28*28`` 的手写体数字图片。由于这里读入的是灰度图片，色彩通道数为1（彩色RGB图像色彩通道数为3），所以我们使用 ``np.expand_dims()`` 函数为图像数据手动在最后添加一维通道。
 
-多层感知机的模型类实现与上面的线性模型类似，所不同的地方在于层数增加了（顾名思义，“多层”感知机），以及引入了非线性激活函数（这里使用了 `ReLU函数 <https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0>`_ ， 即下方的 ``activation=tf.nn.relu`` ）。该模型输入一个向量（比如这里是拉直的 ``1×784`` 手写体数字图片），输出10维的信号，分别代表这张图片属于0到9的概率。这里我们加入了一个 ``predict`` 方法，对图片对应的数字进行预测。在预测的时候，选择概率最大的数字进行预测输出。
+多层感知机的模型类实现与上面的线性模型类似，所不同的地方在于层数增加了（顾名思义，“多层”感知机），以及引入了非线性激活函数（这里使用了 `ReLU函数 <https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0>`_ ， 即下方的 ``activation=tf.nn.relu`` ）。该模型输入一个向量（比如这里是拉直的 ``1×784`` 手写体数字图片），输出10维的向量，分别代表这张图片属于0到9的概率。这里我们加入了一个 ``predict`` 方法，对图片对应的数字进行预测。在预测的时候，选择概率最大的数字进行预测输出。
 
 .. literalinclude:: /_static/code/zh/model/mlp/mlp.py
     :lines: 4-19
+
+.. admonition:: softmax函数
+
+    这里，因为我们希望输出“输入图片分别属于0到9的概率”，也就是一个10维的离散概率分布，所以我们希望这个10维向量至少满足两个条件：
+
+    * 该向量中的每个元素均在 :math:`[0, 1]` 之间；
+    * 该向量的所有元素之和为1。
+
+    为了使得模型的输出能始终满足这两个条件，我们使用 `Softmax函数 <https://zh.wikipedia.org/wiki/Softmax%E5%87%BD%E6%95%B0>`_ （归一化指数函数， ``tf.nn.softmax`` ）对模型的原始输出进行归一化。其形式为 :math:`\sigma(\mathbf{z})_j = \frac{e^{z_j}}{\sum_{k=1}^K e^{z_k}}` 。不仅如此，softmax函数能够凸显原始向量中最大的值，并抑制远低于最大值的其他分量，这也是该函数被称作softmax函数的原因（即平滑化的argmax函数）。
 
 .. figure:: /_static/image/model/mlp.png
     :width: 80%
@@ -144,6 +153,30 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 .. literalinclude:: /_static/code/zh/model/mlp/main.py
     :lines: 32-39
+
+.. admonition:: 交叉熵（cross entropy）
+
+    你或许注意到了，在这里，我们没有显式地写出一个损失函数，而是使用了 ``tf.keras.losses`` 中的 ``sparse_categorical_crossentropy`` （交叉熵）函数，将模型的预测值 ``y_pred`` 与真实的标签值 ``y`` 作为函数参数传入，由Keras帮助我们计算损失函数的值。
+
+    交叉熵作为损失函数，在分类问题中被广泛应用。其离散形式为 :math:`H(y, \hat{y}) = -\sum_{i=1}^{n}y_i \log(\hat{y_i})` ，其中 :math:`y` 为真实概率分布， :math:`\hat{y}` 为预测概率分布， :math:`n` 为分类任务的类别个数。预测概率分布与真实分布越接近，则交叉熵的值越小，反之则越大。更具体的介绍及其在机器学习中的应用可参考 `这篇博客文章 <https://blog.csdn.net/tsyccnh/article/details/79163834>`_ 。
+    
+    在 ``tf.keras`` 中，有两个交叉熵相关的损失函数 ``tf.keras.losses.categorical_crossentropy`` 和 ``tf.keras.losses.sparse_categorical_crossentropy`` 。其中sparse的含义是，真实的标签值 ``y_true`` 可以直接传入int类型的标签类别。具体而言：
+
+    .. code-block:: python
+
+        loss = tf.keras.losses.sparse_categorical_crossentropy(y_true=y, y_pred=y_pred)
+
+    与
+
+    .. code-block:: python
+    
+        loss = tf.keras.losses.categorical_crossentropy(
+            y_true=tf.one_hot(y, depth=tf.shape(y_pred)[-1]), 
+            y_pred=y_pred
+        )
+
+    的结果相同。
+    
 
 接下来，我们使用验证集测试模型性能。具体而言，比较验证集上模型预测的结果与真实结果，输出预测正确的样本数占总样本数的比例：
 
@@ -208,7 +241,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 .. admonition:: 卷积层和池化层的工作原理
 
-    
+
 
 循环神经网络（RNN）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

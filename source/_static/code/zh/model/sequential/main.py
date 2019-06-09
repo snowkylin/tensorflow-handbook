@@ -1,18 +1,44 @@
 import tensorflow as tf
-mnist = tf.keras.datasets.mnist
+from zh.model.utils import MNISTLoader
 
-(x_train, y_train),(x_test, y_test) = mnist.load_data()
-x_train, x_test = x_train / 255.0, x_test / 255.0
 
-model = tf.keras.models.Sequential([
-  tf.keras.layers.Flatten(),
-  tf.keras.layers.Dense(512, activation=tf.nn.relu),
-  tf.keras.layers.Dropout(0.2),
-  tf.keras.layers.Dense(10, activation=tf.nn.softmax)
-])
-model.compile(optimizer='adam',
-              loss='sparse_categorical_crossentropy',
-              metrics=['accuracy'])
+# model = tf.keras.models.Sequential([
+#     tf.keras.layers.Flatten(),
+#     tf.keras.layers.Dense(100, activation=tf.nn.relu),
+#     tf.keras.layers.Dense(10),
+#     tf.keras.layers.Softmax()
+# ])
+# model = tf.keras.models.Sequential([
+#     tf.keras.layers.Conv2D(
+#         filters=32,             # 卷积核数目
+#         kernel_size=[5, 5],     # 感受野大小
+#         padding="same",         # padding策略
+#         activation=tf.nn.relu   # 激活函数
+#     ),
+#     tf.keras.layers.MaxPool2D(pool_size=[2, 2], strides=2),
+#     tf.keras.layers.Conv2D(
+#         filters=64,
+#         kernel_size=[5, 5],
+#         padding="same",
+#         activation=tf.nn.relu
+#     ),
+#     tf.keras.layers.MaxPool2D(pool_size=[2, 2], strides=2),
+#     tf.keras.layers.Reshape(target_shape=(7 * 7 * 64,)),
+#     tf.keras.layers.Dense(units=1024, activation=tf.nn.relu),
+#     tf.keras.layers.Dense(units=10),
+#     tf.keras.layers.Softmax()
+# ])
+from zh.model.cnn.cnn import CNN
+from 
 
-model.fit(x_train, y_train, epochs=1)
-print(model.evaluate(x_test, y_test))   # loss value and metric value
+model = CNN()
+model.compile(
+    optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
+    loss=tf.keras.losses.SparseCategoricalCrossentropy(),
+    metrics=['accuracy']
+)
+
+
+data_loader = MNISTLoader()
+model.fit(data_loader.train_data, data_loader.train_label, epochs=1)
+print(model.evaluate(data_loader.test_data, data_loader.test_label))
