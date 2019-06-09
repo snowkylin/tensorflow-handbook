@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 ==================================================================
-简单粗暴TensorFlow | A Concise Handbook of TensorFlow
+简单粗暴TensorFlow 2.0 | A Concise Handbook of TensorFlow 2.0
 ==================================================================
 
 *基于Eager Execution | Based on Eager Execution*
@@ -14,9 +14,13 @@
 
     This document is unfinished, content will be updated rapidly. Please keep it internal at this time.
 
-本手册是一篇精简的TensorFlow入门指导，基于TensorFlow的Eager Execution（动态图）模式，力图让具备一定机器学习及Python基础的开发者们快速上手TensorFlow。
+本手册是一篇精简的TensorFlow 2.0入门指导，基于TensorFlow的Eager Execution（动态图）模式，力图让具备一定机器学习及Python基础的开发者们快速上手TensorFlow 2.0。
 
-This handbook is a concise introduction to TensorFlow based on Eager Execution mode, trying to help developers with some basic machine learning and Python knowledge to get started with TensorFlow quickly.
+本文的所有代码基于TensorFlow 2.0 beta版本。
+
+This handbook is a concise introduction to TensorFlow 2.0 based on Eager Execution mode, trying to help developers with some basic machine learning and Python knowledge to get started with TensorFlow 2.0 quickly.
+
+The code of this handbook is based on TensorFlow 2.0 beta.
 
 ..
     .. hint:: 这是一本TensorFlow技术手册，而不是一本机器学习/深度学习原理入门手册。如果发现阅读中有难以理解的部分，请检查每章的“前置知识”部分，这里提供了一些机器学习原理的入门资料链接。
@@ -92,10 +96,12 @@ This handbook is a concise introduction to TensorFlow based on Eager Execution m
     zh/appendix/swift
     zh/appendix/reuse
     zh/appendix/addons
+    zh/appendix/optimization
     zh/appendix/training 
     zh/appendix/custom_op
     zh/appendix/config 
     zh/appendix/recommended_books
+    zh/appendix/terms
 
 ..
     .. toctree:: 
