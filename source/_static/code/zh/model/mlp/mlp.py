@@ -12,7 +12,8 @@ class MLP(tf.keras.Model):
         x = self.flatten(inputs)    # [batch_size, 784]
         x = self.dense1(x)          # [batch_size, 100]
         x = self.dense2(x)          # [batch_size, 10]
-        return x
+        output = tf.nn.softmax(x)
+        return output
 
     def predict(self, inputs):
         logits = self(inputs)
