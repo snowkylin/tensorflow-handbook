@@ -1,7 +1,5 @@
 import numpy as np
 import tensorflow as tf
-import tensorflow.contrib.eager as tfe
-tf.enable_eager_execution()
 
 X_raw = np.array([2013, 2014, 2015, 2016, 2017], dtype=np.float32)
 y_raw = np.array([12000, 14000, 15000, 16500, 17500], dtype=np.float32)
@@ -12,12 +10,12 @@ y = (y_raw - y_raw.min()) / (y_raw.max() - y_raw.min())
 X = tf.constant(X)
 y = tf.constant(y)
 
-a = tf.get_variable('a', dtype=tf.float32, shape=[], initializer=tf.zeros_initializer)
-b = tf.get_variable('b', dtype=tf.float32, shape=[], initializer=tf.zeros_initializer)
+a = tf.Variable(initial_value=0.)
+b = tf.Variable(initial_value=0.)
 variables = [a, b]
 
 num_epoch = 10000
-optimizer = tf.train.GradientDescentOptimizer(learning_rate=1e-3)
+optimizer = tf.keras.optimizers.SGD(learning_rate=1e-3)
 for e in range(num_epoch):
     # 使用tf.GradientTape()记录损失函数的梯度信息
     with tf.GradientTape() as tape:

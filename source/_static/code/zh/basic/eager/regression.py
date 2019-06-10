@@ -1,14 +1,13 @@
 import tensorflow as tf
-tf.enable_eager_execution()
 
 X = tf.constant([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
 y = tf.constant([[10.0], [20.0]])
 
-w = tf.get_variable('w', shape=[3, 1], initializer=tf.zeros_initializer())
-b = tf.get_variable('b', shape=[1], initializer=tf.zeros_initializer())
+w = tf.Variable(initial_value=tf.zeros([3., 1.]))
+b = tf.Variable(initial_value=[0.])
 variables = [w, b]
 
-optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)
+optimizer = tf.keras.optimizers.Adam(learning_rate=0.01)
 
 for i in range(100):
     with tf.GradientTape() as tape:

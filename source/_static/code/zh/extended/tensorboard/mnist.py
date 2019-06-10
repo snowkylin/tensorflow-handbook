@@ -1,5 +1,5 @@
 import tensorflow as tf
-from zh.model.mlp.mlp import MLP
+from zh.model.mnist.mlp import MLP
 from zh.model.utils import DataLoader
 
 tf.enable_eager_execution()
