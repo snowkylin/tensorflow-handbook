@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; 简单粗暴TensorFlow 0.4 alpha 文档</title>
+  <title>TensorFlow性能优化 &mdash; 简单粗暴TensorFlow 0.4 alpha 文档</title>
   
 
   
@@ -20,23 +20,13 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -47,7 +37,9 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
-    <link rel="search" title="搜索" href="../../search.html" /> 
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="TensorFlow大规模训练" href="training.html" />
+    <link rel="prev" title="TensorFlow库和扩展" href="addons.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -122,15 +114,17 @@
 <li class="toctree-l1"><a class="reference internal" href="../application/seq2seq-swift.html">TensorFlow Swift 闲聊机器人</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="static.html">静态的TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="swift.html">TensorFlow in Swift</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reuse.html">TensorFlow资源重用</a></li>
 <li class="toctree-l1"><a class="reference internal" href="addons.html">TensorFlow库和扩展</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow性能优化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="training.html">TensorFlow大规模训练</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_op.html">TensorFlow自定义运算操作</a></li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">TensorFlow环境配置与管理</a></li>
 <li class="toctree-l1"><a class="reference internal" href="recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms.html">术语中英对照表</a></li>
 </ul>
 
             
@@ -176,7 +170,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>&lt;no title&gt;</li>
+      <li>TensorFlow性能优化</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -195,12 +189,28 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  
+  <div class="section" id="tensorflow">
+<h1>TensorFlow性能优化<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
+<p>尽量减少operation的个数，尽量多用矩阵或者张量运算而不是for循环，这样可以让后端更有空间对你的模型计算进行并行优化，计算机做矩阵张量运算是有很高效的方法的（这点和MATLAB很像）</p>
+<p>相对于模型的训练而言，有时候预处理反而是一件更为耗时的工作，搞不好训练只花1秒结果准备数据花了5秒，这时候你再怎么提高模型性能都没辙，优化预处理的步骤以及调整pipeline才是关键。这方面tf.data或许可以帮到你的忙，可以参考这篇文章。 <a class="reference external" href="https://www.tensorflow.org/guide/performance/datasets">https://www.tensorflow.org/guide/performance/datasets</a></p>
+<p>模型本身的类型也会对性能有影响，一个非常不严谨的大致印象是加速效率CNN&gt;RNN&gt;RL。CNN相对比较好GPU加速，RNN因为存在时间依赖的序列结构，很多运算必须顺序进行，因此GPU带来的性能提升相对较少。RL（增强学习）不仅存在时间依赖的序列结构，还要频繁和环境交互，GPU带来的提升就更为有限。由于CPU和GPU之间的切换本身需要耗费资源，有些时候使用GPU进行强化学习反而性能明显次于CPU，尤其是模型本身较小而交互特别频繁的场景（比如非联合动作的多智能体强化学习）。</p>
+<p>总之，模型运行得慢，不见得一定是机器性能不够好的缘故，在购买高性能硬件的时候可以多思考一下自己有没有充分使用现有硬件的性能，或者借/租一台高性能机器（如GCP）看看性能到底能提升多少。（当然如果只是想找个买新机器的借口的话当我没说）</p>
+</div>
+
 
            </div>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="training.html" class="btn btn-neutral float-right" title="TensorFlow大规模训练" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="addons.html" class="btn btn-neutral float-left" title="TensorFlow库和扩展" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
