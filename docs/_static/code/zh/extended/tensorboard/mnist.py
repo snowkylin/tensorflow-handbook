@@ -1,7 +1,6 @@
 import tensorflow as tf
-import numpy as np
-from zh.model.mlp.mlp import MLP
-from zh.model.mlp.utils import DataLoader
+from zh.model.mnist.mlp import MLP
+from zh.model.utils import DataLoader
 
 tf.enable_eager_execution()
 num_batches = 10000

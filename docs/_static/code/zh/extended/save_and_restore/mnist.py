@@ -1,14 +1,13 @@
 import tensorflow as tf
 import numpy as np
-from zh.model.mlp.mlp import MLP
-from zh.model.mlp.utils import DataLoader
+from zh.model.mnist.mlp import MLP
+from zh.model.mnist.main import MNISTLoader
 
-tf.enable_eager_execution()
 mode = 'test'
 num_batches = 1000
 batch_size = 50
 learning_rate = 0.001
-data_loader = DataLoader()
+data_loader = MNISTLoader()
 
 
 def train():

@@ -1,6 +1,4 @@
 import tensorflow as tf
-import tensorflow.contrib.eager as tfe
-tfe.enable_eager_execution()
 import numpy as np
 
 X_raw = np.array([2013, 2014, 2015, 2016, 2017], dtype=np.float32)
@@ -12,8 +10,8 @@ y = (y_raw - y_raw.min()) / (y_raw.max() - y_raw.min())
 X = tf.constant(X)
 y = tf.constant(y)
 
-a = tfe.Variable(0., name='a')
-b = tfe.Variable(0., name='b')
+a = tf.Variable(initial_value=0.)
+b = tf.Variable(initial_value=0.)
 
 num_epoch = 10000
 learning_rate = 1e-3

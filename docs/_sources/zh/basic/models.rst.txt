@@ -99,8 +99,8 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 先进行预备工作，实现一个简单的 ``DataLoader`` 类来读取MNIST数据集数据。
 
-.. literalinclude:: /_static/code/zh/model/mlp/main.py
-    :lines: 13-24
+.. literalinclude:: /_static/code/zh/model/mnist/main.py
+    :lines: 15-27
 
 .. hint:: ``mnist = tf.keras.datasets.mnist`` 将从网络上自动下载MNIST数据集并加载。如果运行时出现网络连接错误，可以从 https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz 或 https://s3.amazonaws.com/img-datasets/mnist.npz 下载MNIST数据集 ``mnist.npz`` 文件，并放置于用户目录的 ``.keras/dataset`` 目录下（Windows下用户目录为 ``C:\Users\用户名`` ，Linux下用户目录为 ``/home/用户名`` ）。
 
@@ -108,10 +108,19 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
     
     在TensorFlow中，图像数据集的一种典型表示是 ``[图像数目，长，宽，色彩通道数]`` 的四维张量。在上面的 ``DataLoader`` 类中， ``self.train_data`` 和 ``self.test_data`` 分别载入了60,000和10,000张大小为 ``28*28`` 的手写体数字图片。由于这里读入的是灰度图片，色彩通道数为1（彩色RGB图像色彩通道数为3），所以我们使用 ``np.expand_dims()`` 函数为图像数据手动在最后添加一维通道。
 
-多层感知机的模型类实现与上面的线性模型类似，所不同的地方在于层数增加了（顾名思义，“多层”感知机），以及引入了非线性激活函数（这里使用了 `ReLU函数 <https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0>`_ ， 即下方的 ``activation=tf.nn.relu`` ）。该模型输入一个向量（比如这里是拉直的 ``1×784`` 手写体数字图片），输出10维的信号，分别代表这张图片属于0到9的概率。这里我们加入了一个 ``predict`` 方法，对图片对应的数字进行预测。在预测的时候，选择概率最大的数字进行预测输出。
+多层感知机的模型类实现与上面的线性模型类似，所不同的地方在于层数增加了（顾名思义，“多层”感知机），以及引入了非线性激活函数（这里使用了 `ReLU函数 <https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0>`_ ， 即下方的 ``activation=tf.nn.relu`` ）。该模型输入一个向量（比如这里是拉直的 ``1×784`` 手写体数字图片），输出10维的向量，分别代表这张图片属于0到9的概率。
 
-.. literalinclude:: /_static/code/zh/model/mlp/mlp.py
-    :lines: 4-19
+.. literalinclude:: /_static/code/zh/model/mnist/mlp.py
+    :lines: 4-
+
+.. admonition:: softmax函数
+
+    这里，因为我们希望输出“输入图片分别属于0到9的概率”，也就是一个10维的离散概率分布，所以我们希望这个10维向量至少满足两个条件：
+
+    * 该向量中的每个元素均在 :math:`[0, 1]` 之间；
+    * 该向量的所有元素之和为1。
+
+    为了使得模型的输出能始终满足这两个条件，我们使用 `Softmax函数 <https://zh.wikipedia.org/wiki/Softmax%E5%87%BD%E6%95%B0>`_ （归一化指数函数， ``tf.nn.softmax`` ）对模型的原始输出进行归一化。其形式为 :math:`\sigma(\mathbf{z})_j = \frac{e^{z_j}}{\sum_{k=1}^K e^{z_k}}` 。不仅如此，softmax函数能够凸显原始向量中最大的值，并抑制远低于最大值的其他分量，这也是该函数被称作softmax函数的原因（即平滑化的argmax函数）。
 
 .. figure:: /_static/image/model/mlp.png
     :width: 80%
@@ -129,8 +138,8 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 .. code-block:: python
 
     model = MLP()
-    data_loader = DataLoader()
-    optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
+    data_loader = MNISTLoader()
+    optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
 
 然后迭代进行以下步骤：
 
@@ -142,13 +151,37 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 具体代码实现如下：
 
-.. literalinclude:: /_static/code/zh/model/mlp/main.py
-    :lines: 32-39
+.. literalinclude:: /_static/code/zh/model/mnist/main.py
+    :lines: 107-116
+
+.. admonition:: 交叉熵（cross entropy）
+
+    你或许注意到了，在这里，我们没有显式地写出一个损失函数，而是使用了 ``tf.keras.losses`` 中的 ``sparse_categorical_crossentropy`` （交叉熵）函数，将模型的预测值 ``y_pred`` 与真实的标签值 ``y`` 作为函数参数传入，由Keras帮助我们计算损失函数的值。
+
+    交叉熵作为损失函数，在分类问题中被广泛应用。其离散形式为 :math:`H(y, \hat{y}) = -\sum_{i=1}^{n}y_i \log(\hat{y_i})` ，其中 :math:`y` 为真实概率分布， :math:`\hat{y}` 为预测概率分布， :math:`n` 为分类任务的类别个数。预测概率分布与真实分布越接近，则交叉熵的值越小，反之则越大。更具体的介绍及其在机器学习中的应用可参考 `这篇博客文章 <https://blog.csdn.net/tsyccnh/article/details/79163834>`_ 。
+    
+    在 ``tf.keras`` 中，有两个交叉熵相关的损失函数 ``tf.keras.losses.categorical_crossentropy`` 和 ``tf.keras.losses.sparse_categorical_crossentropy`` 。其中sparse的含义是，真实的标签值 ``y_true`` 可以直接传入int类型的标签类别。具体而言：
+
+    .. code-block:: python
+
+        loss = tf.keras.losses.sparse_categorical_crossentropy(y_true=y, y_pred=y_pred)
+
+    与
+
+    .. code-block:: python
+    
+        loss = tf.keras.losses.categorical_crossentropy(
+            y_true=tf.one_hot(y, depth=tf.shape(y_pred)[-1]), 
+            y_pred=y_pred
+        )
+
+    的结果相同。
+    
 
 接下来，我们使用验证集测试模型性能。具体而言，比较验证集上模型预测的结果与真实结果，输出预测正确的样本数占总样本数的比例：
 
 .. literalinclude:: /_static/code/zh/model/mlp/main.py
-    :lines: 41-43
+    :lines: 118-124
 
 输出结果::
 
@@ -197,8 +230,8 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
     CNN结构图示
 
-.. literalinclude:: /_static/code/zh/model/cnn/cnn.py
-    :lines: 4-38
+.. literalinclude:: /_static/code/zh/model/mnist/cnn.py
+    :lines: 4-
 
 将前节的 ``model = MLP()`` 更换成 ``model = CNN()`` ，输出如下::
 
@@ -208,7 +241,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 .. admonition:: 卷积层和池化层的工作原理
 
-    
+
 
 循环神经网络（RNN）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -232,8 +265,8 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 首先，还是实现一个简单的 ``DataLoader`` 类来读取文本，并以字符为单位进行编码。
 
-.. literalinclude:: /_static/code/zh/model/rnn/rnn.py
-    :lines: 31-49
+.. literalinclude:: /_static/code/zh/model/text_generation/rnn.py
+    :lines: 35-53
 
 接下来进行模型的实现。在 ``__init__`` 方法中我们实例化一个常用的 ``BasicLSTMCell`` 单元，以及一个线性变换用的全连接层，我们首先对序列进行One Hot操作，即将编码i变换为一个n维向量，其第i位为1，其余均为0。这里n为字符种类数num_char。变换后的序列张量形状为[num_batch, seq_length, num_chars]。接下来，我们将序列从头到尾依序送入RNN单元，即将当前时间t的RNN单元状态 ``state`` 和t时刻的序列 ``inputs[:, t, :]`` 送入RNN单元，得到当前时间的输出 ``output`` 和下一个时间t+1的RNN单元状态。取RNN单元最后一次的输出，通过全连接层变换到num_chars维，即作为模型的输出。
 
@@ -251,13 +284,13 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 具体实现如下：
 
-.. literalinclude:: /_static/code/zh/model/rnn/rnn.py
-    :lines: 7-21
+.. literalinclude:: /_static/code/zh/model/text_generation/rnn.py
+    :lines: 7-25
 
 定义一些模型超参数：
 
-.. literalinclude:: ../_static/code/zh/model/rnn/rnn.py
-    :lines: 54-57
+.. literalinclude:: /_static/code/zh/model/text_generation/rnn.py
+    :lines: 57-60
 
 训练过程与前节基本一致，在此复述：
 
@@ -267,18 +300,18 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 - 计算损失函数关于模型变量的导数；
 - 使用优化器更新模型参数以最小化损失函数。
 
-.. literalinclude:: /_static/code/zh/model/rnn/rnn.py
-    :lines: 59-69
+.. literalinclude:: /_static/code/zh/model/text_generation/rnn.py
+    :lines: 62-73
 
 关于文本生成的过程有一点需要特别注意。之前，我们一直使用 ``tf.argmax()`` 函数，将对应概率最大的值作为预测值。然而对于文本生成而言，这样的预测方式过于绝对，会使得生成的文本失去丰富性。于是，我们使用 ``np.random.choice()`` 函数按照生成的概率分布取样。这样，即使是对应概率较小的字符，也有机会被取样到。同时，我们加入一个 ``temperature`` 参数控制分布的形状，参数值越大则分布越平缓（最大值和最小值的差值越小），生成文本的丰富度越高；参数值越小则分布越陡峭，生成文本的丰富度越低。
 
-.. literalinclude:: /_static/code/zh/model/rnn/rnn.py
-    :lines: 23-28
+.. literalinclude:: /_static/code/zh/model/text_generation/rnn.py
+    :lines: 27-32
 
 通过这种方式进行“滚雪球”式的连续预测，即可得到生成文本。
 
-.. literalinclude:: /_static/code/zh/model/rnn/rnn.py
-    :lines: 71-78
+.. literalinclude:: /_static/code/zh/model/text_generation/rnn.py
+    :lines: 75-83
 
 生成的文本如下::
 
@@ -365,7 +398,35 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 .. _custom_layer:
 
-自定义层 *
+Keras Pipeline *
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+https://medium.com/tensorflow/what-are-symbolic-and-imperative-apis-in-tensorflow-2-0-dfccecb01021
+https://www.tensorflow.org/beta/guide/keras/overview
+https://www.tensorflow.org/beta/guide/keras/custom_layers_and_models
+
+以上示例均使用了Keras的Subclassing API建立模型，即对 ``tf.keras.Model`` 类进行扩展以定义自己的新模型，同时手工编写了训练和评估模型的流程。这种方式灵活度高，且与其他流行的深度学习框架（如PyTorch、Chainer）共通，是本手册所推荐的方法。不过在很多时候，我们只需要建立一个结构相对简单和典型的神经网络（比如上文中的MLP和CNN），并使用常规的手段进行训练。这时，Keras也给我们提供了另一套更为简单的模型建立、训练和评估的方式。
+
+Keras Sequential/Functional API模式建立模型
+-------------------------------------------
+
+.. literalinclude:: /_static/code/zh/model/mnist/main.py
+    :lines: 32-37
+
+.. literalinclude:: /_static/code/zh/model/mnist/main.py
+    :lines: 39-44
+
+https://www.tensorflow.org/alpha/guide/keras/functional
+
+使用Keras Model的 ``compile`` 、 ``fit`` 和 ``evaluate`` 方法训练和评估模型
+--------------------------------------------------------------------------------------
+
+.. literalinclude:: /_static/code/zh/model/mnist/main.py
+    :lines: 98-104
+
+https://www.tensorflow.org/beta/guide/keras/training_and_evaluation
+
+自定义层、损失函数和指标 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 可能你还会问，如果现有的这些层无法满足我的要求，我需要定义自己的层怎么办？
@@ -386,56 +447,41 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
             self.variable_0 = self.add_variable(...)
             self.variable_1 = self.add_variable(...)
 
-        def call(self, input):
+        def call(self, inputs):
             # 模型调用的代码（处理输入并返回输出）
             return output
 
-例如，如果我们要自己实现一个 :ref:`本章第一节 <linear>` 中的全连接层，但指定输出维度为1，可以按如下方式编写，在 ``build`` 方法中创建两个变量，并在 ``call`` 方法中使用创建的变量进行运算：
+例如，如果我们要自己实现一个 :ref:`本章第一节 <linear>` 中的全连接层（ ``tf.keras.layers.Dense`` ），可以按如下方式编写。此代码在 ``build`` 方法中创建两个变量，并在 ``call`` 方法中使用创建的变量进行运算：
 
-.. literalinclude:: /_static/code/zh/model/custom_layer/linear.py
-    :lines: 9-21
+.. literalinclude:: /_static/code/zh/model/custom/linear.py
+    :lines: 9-22
     
-使用相同的方式，可以调用我们自定义的层 ``LinearLayer``：
+使用相同的方式，可以在定义模型的时候调用我们自定义的层 ``LinearLayer``：
 
-.. literalinclude:: /_static/code/zh/model/custom_layer/linear.py
-    :lines: 24-31
+.. literalinclude:: /_static/code/zh/model/custom/linear.py
+    :lines: 25-32
+
+自定义损失函数
+-------------------------------------------
+
+自定义评估指标
+-------------------------------------------
+
+https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/keras/metrics/Metric
+
+
 
 Graph Execution模式 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-在TensorFlow 2.0中，推荐使用 ``@tf.function`` （而非1.X中的Session）实现Graph Execution。
+在TensorFlow 2.0中，推荐使用 ``@tf.function`` （而非1.X中的Session）实现Graph Execution。只需要在所定义的模型类的call方法前加上 ``@tf.function`` ，就能让模型以Graph Execution模式运行。
 
-事实上，只要在编写模型的时候稍加注意，以上的模型都是可以同时兼容Eager Execution模式和Graph Execution模式的 [#rnn_exception]_ 。注意，在Graph Execution模式下， ``model(input_tensor)`` 只需运行一次以完成图的建立操作。
+事实上，只要在编写模型的时候稍加注意，Keras的模型是可以同时兼容Eager Execution模式和Graph Execution模式的。注意，在Graph Execution模式下， ``model(input_tensor)`` 只需运行一次以完成图的建立操作。
 
-例如，通过以下代码，同样可以调用 :ref:`本章第一节 <linear>` 建立的线性模型并进行线性回归：
+例如，通过以下代码，同样可以在MNIST数据集上训练前面所建立的MLP或CNN模型：
 
-.. literalinclude:: /_static/code/zh/model/custom_layer/linear.py
-    :lines: 48-59
-
-.. [#rnn_exception] 除了本章实现的RNN模型以外。在RNN模型的实现中，我们通过Eager Execution动态获取了seq_length的长度，使得我们可以方便地动态控制RNN的展开长度。然而Graph Execution不支持这一点，为了达到相同的效果，我们需要固定seq_length的长度，或者使用 ``tf.nn.dynamic_rnn`` （ `文档 <https://www.tensorflow.org/api_docs/python/tf/nn/dynamic_rnn>`_ ）。
-
-Keras Pipeline *
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-https://medium.com/tensorflow/what-are-symbolic-and-imperative-apis-in-tensorflow-2-0-dfccecb01021
-
-以上示例使用了Keras的Subclassing API建立模型。
-
-Keras Sequential API模式建立模型
--------------------------------------------
-
-在很多时候，我们只需要建立一个结构相对简单和典型、各个层之间仅顺序相连的神经网络（比如上文中的MLP和CNN）。这时，Keras给我们提供了一种更为简单的模型建立方式。
-
-Keras Functional API模式建立模型
--------------------------------------------
-
-https://www.tensorflow.org/alpha/guide/keras/functional
-
-使用Keras Model的 ``compile`` 、 ``fit`` 和 ``evaluate`` 方法训练和评估模型
---------------------------------------------------------------------------------------
-
-自定义Metrics和Loss
--------------------------------------------
+.. literalinclude:: /_static/code/zh/model/mnist/main.py
+    :lines: 126-147
 
 .. [LeCun1998] Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. "Gradient-based learning applied to document recognition." Proceedings of the IEEE, 86(11):2278-2324, November 1998. http://yann.lecun.com/exdb/mnist/
 .. [Graves2013] Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.
