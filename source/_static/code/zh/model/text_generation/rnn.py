@@ -5,17 +5,17 @@ import numpy as np
 
 
 class RNN(tf.keras.Model):
-    def __init__(self, num_chars, seq_length):
+    def __init__(self, num_chars, batch_size, seq_length):
         super().__init__()
         self.num_chars = num_chars
         self.seq_length = seq_length
+        self.batch_size = batch_size
         self.cell = tf.keras.layers.LSTMCell(units=256)
         self.dense = tf.keras.layers.Dense(units=self.num_chars)
 
     def call(self, inputs, from_logits=False):
-        batch_size, seq_length = tf.shape(inputs)
         inputs = tf.one_hot(inputs, depth=self.num_chars)       # [batch_size, seq_length, num_chars]
-        state = self.cell.get_initial_state(batch_size=batch_size, dtype=tf.float32)
+        state = self.cell.get_initial_state(batch_size=self.batch_size, dtype=tf.float32)
         for t in range(self.seq_length):
             output, state = self.cell(inputs[:, t, :], state)
         logits = self.dense(output)
@@ -60,7 +60,7 @@ if __name__ == '__main__':
     learning_rate = 1e-3
 
     data_loader = DataLoader()
-    model = RNN(len(data_loader.chars), seq_length)
+    model = RNN(num_chars=len(data_loader.chars), batch_size=batch_size, seq_length=seq_length)
     optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
     for batch_index in range(num_batches):
         X, y = data_loader.get_batch(seq_length, batch_size)

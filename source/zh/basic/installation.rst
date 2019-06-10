@@ -41,9 +41,8 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 
 .. tip:: 
 
-    1. 使用conda包管理器安装GPU版本的TensorFlow时，会自动安装对应版本的CUDA Toolkit和cuDNN。Anaconda包含Python包管理器pip，你也可以使用 ``pip install tensorflow`` 或者 ``pip install tensorflow-gpu`` 来安装TensorFlow。使用pip安装的优点在于TensorFlow的版本往往比较新，缺点则是不会自动安装CUDA Toolkit和cuDNN，你需要按照 `TensorFlow官方网站上的说明 <https://www.tensorflow.org/install/gpu>`_ 进行手动安装；
-    2. 在Windows下，需要打开开始菜单中的“Anaconda Prompt”进入Anaconda的命令行环境；
-    3. 在国内，推荐使用 `清华大学开源软件镜像站的Anaconda镜像 <https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/>`_ ，将显著提高下载速度。
+    1. 在Windows下，需要打开开始菜单中的“Anaconda Prompt”进入Anaconda的命令行环境；
+    2. 在国内，推荐使用 `清华大学开源软件镜像站的Anaconda镜像 <https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/>`_ ，将显著提高下载速度。
 
 .. admonition:: conda包管理器
 
@@ -70,13 +69,53 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 
 .. _gpu_tensorflow:
 
-.. admonition:: GPU版本的TensorFlow
+.. admonition:: GPU版本TensorFlow安装指南
 
     GPU版本的TensorFlow可以利用NVIDIA GPU强大的计算加速能力，使TensorFlow的运行更为高效，尤其是可以成倍提升模型训练的速度。
 
-    在安装GPU版本的TensorFlow前，你需要具有一块不太旧的NVIDIA显卡 [#gpu_version]_ ，以及正确安装NVIDIA显卡驱动程序。
+    在安装GPU版本的TensorFlow前，你需要具有一块不太旧的NVIDIA显卡 [#gpu_version]_ ，以及正确安装NVIDIA显卡驱动程序、CUDA Toolkit和cnDNN。
 
-    NVIDIA显卡驱动程序在Linux系统上的安装往往不会一帆风顺。对于Ubuntu系统，有一个很简易的NVIDIA驱动安装方法：在系统设置（System Setting）里面选软件与更新（Software & Updates），然后点选Additional Drivers里面的“Using NVIDIA binary driver”选项并点选右下角的“Apply Changes”即可，系统即会自动安装NVIDIA驱动。如果需要在Linux下手动安装NVIDIA驱动，注意在安装前禁用系统自带的开源显卡驱动Nouveau、禁用主板的Secure Boot功能、停用桌面环境、删除原有NVIDIA驱动程序，然后即可在 `NVIDIA官方网站 <https://www.nvidia.com/Download/index.aspx?lang=en-us>`_ 下载驱动程序（为 ``.run`` 文件），并使用 ``sudo bash DRIVER_FILE_NAME.run`` 命令安装驱动。安装完后可使用 ``nvidia-smi`` 命令检查是否安装成功。更详细的指导可以参考 `这篇文章 <https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/>`_ 和 `这篇中文博客 <https://blog.csdn.net/wf19930209/article/details/81877822>`_ 。
+    **NVIDIA驱动程序的安装** 
+    
+    Windows环境中，如果系统具有NVIDIA显卡，则往往已经自动安装了NVIDIA显卡驱动程序。如未安装，直接访问NVIDIA官方网站下载并安装对应型号的最新公版驱动程序即可。、
+    
+    不过，NVIDIA显卡驱动程序在Linux系统上的安装往往不会一帆风顺。对于Ubuntu系统，有一个很简易的NVIDIA驱动安装方法：在系统设置（System Setting）里面选软件与更新（Software & Updates），然后点选Additional Drivers里面的“Using NVIDIA binary driver”选项并点选右下角的“Apply Changes”即可，系统即会自动安装NVIDIA驱动，但是通过这种安装方式安装的NVIDIA驱动往往版本较旧。如果需要在Linux下手动安装NVIDIA驱动，注意在安装前：
+    
+    - 禁用系统自带的开源显卡驱动Nouveau（在 ``/etc/modprobe.d/blacklist.conf`` 文件中添加一行 ``blacklist nouveau`` ，使用 ``sudo update-initramfs -u`` 更新内核，并重启）
+    - 禁用主板的Secure Boot功能
+    - 停用桌面环境（如 ``sudo service lightdm stop`` ）
+    - 删除原有NVIDIA驱动程序（如 ``sudo apt-get purge nvidia*``）
+    
+    然后即可在 `NVIDIA官方网站 <https://www.nvidia.com/Download/index.aspx?lang=en-us>`_ 下载驱动程序（为 ``.run`` 文件），并使用 ``sudo bash DRIVER_FILE_NAME.run`` 命令安装驱动。
+    
+    安装完后可在命令行下使用 ``nvidia-smi`` 命令检查是否安装成功，若成功则会打印出当前系统安装的NVIDIA驱动信息，形式如下：
+    
+    ::
+        
+        $ nvidia-smi
+        Mon Jun 10 23:19:54 2019
+        +-----------------------------------------------------------------------------+
+        | NVIDIA-SMI 419.35       Driver Version: 419.35       CUDA Version: 10.1     |
+        |-------------------------------+----------------------+----------------------+
+        | GPU  Name            TCC/WDDM | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+        | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+        |===============================+======================+======================|
+        |   0  GeForce GTX 106... WDDM  | 00000000:01:00.0  On |                  N/A |
+        | 27%   51C    P8    13W / 180W |   1516MiB /  6144MiB |      0%      Default |
+        +-------------------------------+----------------------+----------------------+
+
+        +-----------------------------------------------------------------------------+
+        | Processes:                                                       GPU Memory |
+        |  GPU       PID   Type   Process name                             Usage      |
+        |=============================================================================|
+        |    0       572    C+G   Insufficient Permissions                   N/A      |
+        +-----------------------------------------------------------------------------+
+    
+    更详细的指导可以参考 `这篇文章 <https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/>`_ 和 `这篇中文博客 <https://blog.csdn.net/wf19930209/article/details/81877822>`_ 。
+
+    **CUDA Toolkit和cnDNN的安装** 
+
+    使用conda包管理器安装GPU版本的TensorFlow时，会自动安装对应版本的CUDA Toolkit和cuDNN。Anaconda包含Python包管理器pip，你也可以使用 ``pip install tensorflow`` 或者 ``pip install tensorflow-gpu`` 来安装TensorFlow。使用pip安装的优点在于可以第一时间安装到最新的TensorFlow版本（conda源往往有滞后），缺点则是不会自动安装CUDA Toolkit和cuDNN，你需要按照 `TensorFlow官方网站上的说明 <https://www.tensorflow.org/install/gpu>`_ 进行手动安装，或使用 ``conda install cudntoolkit=X.X`` 和 ``conda install cudnn=X.X.X`` 进行安装，其中X.X和X.X.X为需要安装的CUDA Toolkit和cuDNN版本号，必须严格按照TensorFlow官方网站的版本安装。在安装前，可使用 ``conda search cudatoolkit`` 和 ``conda search cudnn`` 搜索conda源中可用的版本号。
 
     .. [#gpu_version] 具体而言，该显卡的CUDA Compute Capability须不低于3.0，可以到 `NVIDIA的官方网站 <https://developer.nvidia.com/cuda-gpus/>`_ 查询自己所用显卡的CUDA Compute Capability。
 
@@ -90,7 +129,6 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 .. code-block:: python
 
     import tensorflow as tf
-    tf.enable_eager_execution()
 
     A = tf.constant([[1, 2], [3, 4]])
     B = tf.constant([[5, 6], [7, 8]])
