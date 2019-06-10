@@ -1,5 +1,4 @@
 import tensorflow as tf
-tf.enable_eager_execution()
 
 X = tf.constant([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]])
 y = tf.constant([[10.0], [20.0]])
@@ -22,7 +21,7 @@ class Linear(tf.keras.Model):
 
 # 以下代码结构与前节类似
 model = Linear()
-optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)
+optimizer = tf.keras.optimizers.SGD(learning_rate=0.01)
 for i in range(100):
     with tf.GradientTape() as tape:
         y_pred = model(X)      # 调用模型 y_pred = model(X) 而不是显式写出 y_pred = a * X + b
