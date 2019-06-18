@@ -20,13 +20,23 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'0.4 alpha',
+              LANGUAGE:'zh_CN',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -215,34 +225,54 @@
 </div>
 <div class="section" id="tensorflow-1-1">
 <h2>TensorFlow 1+1<a class="headerlink" href="#tensorflow-1-1" title="永久链接至标题">¶</a></h2>
-<p>我们可以先简单地将TensorFlow视为一个科学计算库（类似于Python下的NumPy）。这里以计算 <span class="math notranslate nohighlight">\(1+1\)</span> 和 <span class="math notranslate nohighlight">\(\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} \times \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix}\)</span> 作为Hello World的示例。</p>
+<p>我们可以先简单地将TensorFlow视为一个科学计算库（类似于Python下的NumPy）。</p>
+<p>首先，我们导入TensorFlow：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+</pre></div>
+</div>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
 <p class="last">本手册基于TensorFlow的Eager Execution模式。在TensorFlow 1.X版本中， <strong>必须</strong> 在导入TensorFlow库后调用 <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code> 函数以启用Eager Execution模式。在TensorFlow 2.0版本中，Eager Execution模式将成为默认模式，无需额外调用 <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code> 函数（不过若要关闭Eager Execution，则需调用 <code class="docutils literal notranslate"><span class="pre">tf.compat.v1.disable_eager_execution()</span></code> 函数）。</p>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<p>TensorFlow使用 <strong>张量</strong> （Tensor）作为数据的基本单位。TensorFlow的张量在概念上等同于多维数组，我们可以使用它来描述数学中的标量（0维数组）、向量（1维数组）、矩阵（2维数组）等各种量，示例如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定义一个随机数（标量）</span>
+<span class="n">random_float</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">())</span>
 
-<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">c</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>    <span class="c1"># 也可以直接写 c = a + b，两者等价</span>
+<span class="c1"># 定义一个有2个元素的零向量</span>
+<span class="n">zero_vector</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-
-<span class="n">A</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
-<span class="n">B</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]])</span>
-<span class="n">C</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+<span class="c1"># 定义两个2×2的常量矩阵</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">]])</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">5.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">],</span> <span class="p">[</span><span class="mf">7.</span><span class="p">,</span> <span class="mf">8.</span><span class="p">]])</span>
 </pre></div>
 </div>
-<p>输出:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int32</span><span class="p">)</span>
+<p>张量的重要属性是其形状、类型和值。可以通过张量的 <code class="docutils literal notranslate"><span class="pre">shape</span></code> 、 <code class="docutils literal notranslate"><span class="pre">dtype</span></code> 属性和 <code class="docutils literal notranslate"><span class="pre">numpy()</span></code> 方法获得。例如：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 查看矩阵A的形状、类型和值</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>      <span class="c1"># 输出(2, 2)，即矩阵的长和宽均为2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>      <span class="c1"># 输出&lt;dtype: &#39;float32&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>    <span class="c1"># 输出[[1. 2.]</span>
+                    <span class="c1">#      [3. 4.]]</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">小技巧</p>
+<p class="last">TensorFlow的大多数API函数会根据输入的值自动推断张量中元素的类型（一般默认为 <code class="docutils literal notranslate"><span class="pre">tf.float32</span></code> ）。不过你也可以通过加入 <code class="docutils literal notranslate"><span class="pre">dtype</span></code> 参数来自行指定类型，例如 <code class="docutils literal notranslate"><span class="pre">zero_vector</span> <span class="pre">=</span> <span class="pre">tf.zeros(shape=(2),</span> <span class="pre">dtype=tf.int32)</span></code> 将使得张量中的元素类型均为整数。张量的 <code class="docutils literal notranslate"><span class="pre">numpy()</span></code> 方法是将张量的值转换为一个NumPy数组。</p>
+</div>
+<p>TensorFlow里有大量的 <strong>操作</strong> （Operation），使得我们可以将已有的张量进行运算后得到新的张量。示例如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>    <span class="c1"># 计算矩阵A和B的和</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="c1"># 计算矩阵A和B的乘积</span>
+</pre></div>
+</div>
+<p>操作完成后， <code class="docutils literal notranslate"><span class="pre">C</span></code> 和 <code class="docutils literal notranslate"><span class="pre">D</span></code> 的值分别为:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span>
+<span class="p">[[</span> <span class="mf">6.</span>  <span class="mf">8.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">10.</span> <span class="mf">12.</span><span class="p">]],</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
 <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span>
-<span class="p">[[</span><span class="mi">19</span> <span class="mi">22</span><span class="p">]</span>
-<span class="p">[</span><span class="mi">43</span> <span class="mi">50</span><span class="p">]],</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int32</span><span class="p">)</span>
+<span class="p">[[</span><span class="mf">19.</span> <span class="mf">22.</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">43.</span> <span class="mf">50.</span><span class="p">]],</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>以上代码声明了 <code class="docutils literal notranslate"><span class="pre">a</span></code>、<code class="docutils literal notranslate"><span class="pre">b</span></code>、<code class="docutils literal notranslate"><span class="pre">A</span></code>、<code class="docutils literal notranslate"><span class="pre">B</span></code> 四个 <strong>张量</strong> （Tensor），并使用了 <code class="docutils literal notranslate"><span class="pre">tf.add()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.matmul()</span></code> 两个 <strong>操作</strong> （Operation）对张量进行了加法和矩阵乘法运算，运算结果即时存储于 <code class="docutils literal notranslate"><span class="pre">c</span></code>、<code class="docutils literal notranslate"><span class="pre">C</span></code> 两个张量内。张量的重要属性是其形状（shape）和类型（dtype）。这里 <code class="docutils literal notranslate"><span class="pre">a</span></code>、<code class="docutils literal notranslate"><span class="pre">b</span></code>、<code class="docutils literal notranslate"><span class="pre">c</span></code> 是纯量，形状为空，类型为int32；<code class="docutils literal notranslate"><span class="pre">A</span></code>、<code class="docutils literal notranslate"><span class="pre">B</span></code>、<code class="docutils literal notranslate"><span class="pre">C</span></code> 为2×2的矩阵，形状为 <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">2)</span></code>，类型为int32。</p>
+<p>可见，我们成功使用 <code class="docutils literal notranslate"><span class="pre">tf.add()</span></code> 操作计算出 <span class="math notranslate nohighlight">\(\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} + \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = \begin{bmatrix} 6 &amp; 8 \\ 10 &amp; 12 \end{bmatrix}\)</span>，使用 <code class="docutils literal notranslate"><span class="pre">tf.matmul()</span></code> 操作计算出 <span class="math notranslate nohighlight">\(\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} \times \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = \begin{bmatrix} 19 &amp; 22 \\43 &amp; 50 \end{bmatrix}\)</span> 。</p>
 </div>
 <div class="section" id="id7">
 <h2>自动求导机制<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
