@@ -5,6 +5,11 @@ TensorFlow模型建立与训练
 
 本章介绍如何使用TensorFlow快速搭建动态模型。
 
+- 模型的构建： ``tf.keras.Model`` 和 ``tf.keras.layers`` 
+- 模型的损失函数： ``tf.keras.losses`` 
+- 模型的优化器： ``tf.keras.optimizer`` 
+- 模型的评估： ``tf.keras.metrics`` 
+
 .. admonition:: 前置知识
     
     * `Python面向对象编程 <http://www.runoob.com/python3/python3-class.html>`_ （在Python内定义类和方法、类的继承、构造和析构函数，`使用super()函数调用父类方法 <http://www.runoob.com/python/python-func-super.html>`_ ，`使用__call__()方法对实例进行调用 <https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319098638265527beb24f7840aa97de564ccc7f20f6000>`_ 等）；
@@ -83,7 +88,12 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 基础示例：多层感知机（MLP）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-我们从编写一个最简单的 `多层感知机 <https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8>`_ （Multilayer Perceptron, MLP），或者说“多层全连接神经网络”开始，介绍TensorFlow的模型编写方式。
+我们从编写一个最简单的 `多层感知机 <https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8>`_ （Multilayer Perceptron, MLP），或者说“多层全连接神经网络”开始，介绍TensorFlow的模型编写方式。在这一部分，我们依次进行以下步骤：
+
+- 使用 ``tf.keras.datasets`` 获得数据集并预处理
+- 使用 ``tf.keras.Model`` 和 ``tf.keras.layers`` 构建模型
+- 构建模型训练流程，使用 ``tf.keras.losses`` 计算损失函数，并使用 ``tf.keras.optimizer`` 优化模型
+- 构建模型评估流程，使用 ``tf.keras.metrics`` 计算评估指标
 
 .. admonition:: 基础知识和原理
     
@@ -97,7 +107,10 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
     MNIST手写体数字图片示例
 
-先进行预备工作，实现一个简单的 ``DataLoader`` 类来读取MNIST数据集数据。
+数据获取及预处理： ``tf.keras.datasets`` 
+-------------------------------------------
+
+先进行预备工作，实现一个简单的 ``MNISTLoader`` 类来读取MNIST数据集数据。
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 15-27
@@ -107,6 +120,9 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 .. admonition:: TensorFlow的图像数据表示
     
     在TensorFlow中，图像数据集的一种典型表示是 ``[图像数目，长，宽，色彩通道数]`` 的四维张量。在上面的 ``DataLoader`` 类中， ``self.train_data`` 和 ``self.test_data`` 分别载入了60,000和10,000张大小为 ``28*28`` 的手写体数字图片。由于这里读入的是灰度图片，色彩通道数为1（彩色RGB图像色彩通道数为3），所以我们使用 ``np.expand_dims()`` 函数为图像数据手动在最后添加一维通道。
+
+模型的构建： ``tf.keras.Model`` 和 ``tf.keras.layers`` 
+-------------------------------------------------------------------------------
 
 多层感知机的模型类实现与上面的线性模型类似，所不同的地方在于层数增加了（顾名思义，“多层”感知机），以及引入了非线性激活函数（这里使用了 `ReLU函数 <https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0>`_ ， 即下方的 ``activation=tf.nn.relu`` ）。该模型输入一个向量（比如这里是拉直的 ``1×784`` 手写体数字图片），输出10维的向量，分别代表这张图片属于0到9的概率。
 
@@ -128,10 +144,13 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
     MLP模型示意图
 
+模型的训练： ``tf.keras.losses`` 和 ``tf.keras.optimizer`` 
+-------------------------------------------------------------------------------
+
 定义一些模型超参数：
 
-.. literalinclude:: /_static/code/zh/model/mlp/main.py
-    :lines: 8-10
+.. literalinclude:: /_static/code/zh/model/mnist/main.py
+    :lines: 7-9
 
 实例化模型，数据读取类和优化器：
 
@@ -154,7 +173,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 107-116
 
-.. admonition:: 交叉熵（cross entropy）
+.. admonition:: 交叉熵（cross entropy）与 ``tf.keras.losses`` 
 
     你或许注意到了，在这里，我们没有显式地写出一个损失函数，而是使用了 ``tf.keras.losses`` 中的 ``sparse_categorical_crossentropy`` （交叉熵）函数，将模型的预测值 ``y_pred`` 与真实的标签值 ``y`` 作为函数参数传入，由Keras帮助我们计算损失函数的值。
 
@@ -176,11 +195,13 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
         )
 
     的结果相同。
-    
 
-接下来，我们使用验证集测试模型性能。具体而言，比较验证集上模型预测的结果与真实结果，输出预测正确的样本数占总样本数的比例：
+模型的评估： ``tf.keras.metrics``
+-------------------------------------------------------------------------------
 
-.. literalinclude:: /_static/code/zh/model/mlp/main.py
+最后，我们使用验证集评估模型性能。具体而言，比较验证集上模型预测的结果与真实结果，输出预测正确的样本数占总样本数的比例：
+
+.. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 118-124
 
 输出结果::
@@ -405,7 +426,7 @@ https://medium.com/tensorflow/what-are-symbolic-and-imperative-apis-in-tensorflo
 https://www.tensorflow.org/beta/guide/keras/overview
 https://www.tensorflow.org/beta/guide/keras/custom_layers_and_models
 
-以上示例均使用了Keras的Subclassing API建立模型，即对 ``tf.keras.Model`` 类进行扩展以定义自己的新模型，同时手工编写了训练和评估模型的流程。这种方式灵活度高，且与其他流行的深度学习框架（如PyTorch、Chainer）共通，是本手册所推荐的方法。不过在很多时候，我们只需要建立一个结构相对简单和典型的神经网络（比如上文中的MLP和CNN），并使用常规的手段进行训练。这时，Keras也给我们提供了另一套更为简单的模型建立、训练和评估的方式。
+以上示例均使用了Keras的Subclassing API建立模型，即对 ``tf.keras.Model`` 类进行扩展以定义自己的新模型，同时手工编写了训练和评估模型的流程。这种方式灵活度高，且与其他流行的深度学习框架（如PyTorch、Chainer）共通，是本手册所推荐的方法。不过在很多时候，我们只需要建立一个结构相对简单和典型的神经网络（比如上文中的MLP和CNN），并使用常规的手段进行训练。这时，Keras也给我们提供了另一套更为简单高效的内置方法来建立、训练和评估模型。
 
 Keras Sequential/Functional API模式建立模型
 -------------------------------------------
@@ -429,9 +450,12 @@ https://www.tensorflow.org/beta/guide/keras/training_and_evaluation
 自定义层、损失函数和指标 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-可能你还会问，如果现有的这些层无法满足我的要求，我需要定义自己的层怎么办？
+可能你还会问，如果现有的这些层无法满足我的要求，我需要定义自己的层怎么办？事实上，我们不仅可以继承 ``tf.keras.Model`` 编写自己的模型类，也可以继承 ``tf.keras.layers.Layer`` 编写自己的层。
 
-事实上，我们不仅可以继承 ``tf.keras.Model`` 编写自己的模型类，也可以继承 ``tf.keras.layers.Layer`` 编写自己的层。
+自定义层
+-------------------------------------------
+
+自定义层需要继承tf.keras.layers.Layer类，并重写 ``__init__`` 、 ``build`` 和 ``call`` 三个方法，如下所示：
 
 .. code-block:: python
 
@@ -456,7 +480,7 @@ https://www.tensorflow.org/beta/guide/keras/training_and_evaluation
 .. literalinclude:: /_static/code/zh/model/custom/linear.py
     :lines: 9-22
     
-使用相同的方式，可以在定义模型的时候调用我们自定义的层 ``LinearLayer``：
+在定义模型的时候，我们便可以如同Keras中的其他层一样，调用我们自定义的层 ``LinearLayer``：
 
 .. literalinclude:: /_static/code/zh/model/custom/linear.py
     :lines: 25-32
@@ -476,12 +500,14 @@ Graph Execution模式 *
 
 在TensorFlow 2.0中，推荐使用 ``@tf.function`` （而非1.X中的Session）实现Graph Execution。只需要在所定义的模型类的call方法前加上 ``@tf.function`` ，就能让模型以Graph Execution模式运行。
 
-事实上，只要在编写模型的时候稍加注意，Keras的模型是可以同时兼容Eager Execution模式和Graph Execution模式的。注意，在Graph Execution模式下， ``model(input_tensor)`` 只需运行一次以完成图的建立操作。
+不过，如果你依然钟情于TensorFlow传统的Graph Execution模式也没有问题。TensorFlow 2.0提供了 ``tf.compat.v1`` 模块以支持TensorFlow 1.X版本的API。同时，只要在编写模型的时候稍加注意，Keras的模型是可以同时兼容Eager Execution模式和Graph Execution模式的。注意，在Graph Execution模式下， ``model(input_tensor)`` 只需运行一次以完成图的建立操作。
 
 例如，通过以下代码，同样可以在MNIST数据集上训练前面所建立的MLP或CNN模型：
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 126-147
+
+关于Graph Execution的更多内容可参见 :doc:`/zh/appendix/static`。
 
 .. [LeCun1998] Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. "Gradient-based learning applied to document recognition." Proceedings of the IEEE, 86(11):2278-2324, November 1998. http://yann.lecun.com/exdb/mnist/
 .. [Graves2013] Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.

@@ -20,13 +20,23 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'0.4 alpha',
+              LANGUAGE:'zh_CN',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -98,7 +108,13 @@
 <li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow基础</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow模型建立与训练</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#model-layer">模型（Model）与层（Layer）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#mlp">基础示例：多层感知机（MLP）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mlp">基础示例：多层感知机（MLP）</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tf-keras-datasets">数据获取及预处理： <code class="docutils literal notranslate"><span class="pre">tf.keras.datasets</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tf-keras-model-tf-keras-layers">模型的构建： <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tf-keras-losses-tf-keras-optimizer">模型的训练： <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tf-keras-metrics">模型的评估： <code class="docutils literal notranslate"><span class="pre">tf.keras.metrics</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#cnn">卷积神经网络（CNN）</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#rnn">循环神经网络（RNN）</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#drl">深度强化学习（DRL）</a></li>
@@ -108,8 +124,9 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id20">自定义层、损失函数和指标 *</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id21">自定义损失函数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id22">自定义评估指标</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id21">自定义层</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id22">自定义损失函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id23">自定义评估指标</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#graph-execution">Graph Execution模式 *</a></li>
@@ -210,6 +227,12 @@
   <div class="section" id="tensorflow">
 <h1>TensorFlow模型建立与训练<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
 <p id="linear">本章介绍如何使用TensorFlow快速搭建动态模型。</p>
+<ul class="simple">
+<li>模型的构建： <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code></li>
+<li>模型的损失函数： <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code></li>
+<li>模型的优化器： <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizer</span></code></li>
+<li>模型的评估： <code class="docutils literal notranslate"><span class="pre">tf.keras.metrics</span></code></li>
+</ul>
 <div class="admonition- admonition">
 <p class="first admonition-title">前置知识</p>
 <ul class="last simple">
@@ -238,7 +261,7 @@
     <span class="c1"># 还可以添加自定义的方法</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id23">
+<div class="figure align-center" id="id24">
 <a class="reference internal image-reference" href="../../_images/model.png"><img alt="../../_images/model.png" src="../../_images/model.png" style="width: 50%;" /></a>
 <p class="caption"><span class="caption-text">Keras模型类定义示意图</span></p>
 </div>
@@ -313,7 +336,13 @@
 </div>
 <div class="section" id="mlp">
 <span id="id4"></span><h2>基础示例：多层感知机（MLP）<a class="headerlink" href="#mlp" title="永久链接至标题">¶</a></h2>
-<p>我们从编写一个最简单的 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8">多层感知机</a> （Multilayer Perceptron, MLP），或者说“多层全连接神经网络”开始，介绍TensorFlow的模型编写方式。</p>
+<p>我们从编写一个最简单的 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8">多层感知机</a> （Multilayer Perceptron, MLP），或者说“多层全连接神经网络”开始，介绍TensorFlow的模型编写方式。在这一部分，我们依次进行以下步骤：</p>
+<ul class="simple">
+<li>使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.datasets</span></code> 获得数据集并预处理</li>
+<li>使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code> 构建模型</li>
+<li>构建模型训练流程，使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> 计算损失函数，并使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizer</span></code> 优化模型</li>
+<li>构建模型评估流程，使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.metrics</span></code> 计算评估指标</li>
+</ul>
 <div class="admonition- admonition">
 <p class="first admonition-title">基础知识和原理</p>
 <ul class="last simple">
@@ -322,11 +351,13 @@
 </ul>
 </div>
 <p>这里，我们使用多层感知机完成MNIST手写体数字图片数据集 <a class="reference internal" href="#lecun1998" id="id7">[LeCun1998]</a> 的分类任务。</p>
-<div class="figure align-center" id="id24">
+<div class="figure align-center" id="id25">
 <img alt="../../_images/mnist_0-9.png" src="../../_images/mnist_0-9.png" />
 <p class="caption"><span class="caption-text">MNIST手写体数字图片示例</span></p>
 </div>
-<p>先进行预备工作，实现一个简单的 <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code> 类来读取MNIST数据集数据。</p>
+<div class="section" id="tf-keras-datasets">
+<h3>数据获取及预处理： <code class="docutils literal notranslate"><span class="pre">tf.keras.datasets</span></code><a class="headerlink" href="#tf-keras-datasets" title="永久链接至标题">¶</a></h3>
+<p>先进行预备工作，实现一个简单的 <code class="docutils literal notranslate"><span class="pre">MNISTLoader</span></code> 类来读取MNIST数据集数据。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MNISTLoader</span><span class="p">():</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">mnist</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">mnist</span>
@@ -350,6 +381,9 @@
 <p class="first admonition-title">TensorFlow的图像数据表示</p>
 <p class="last">在TensorFlow中，图像数据集的一种典型表示是 <code class="docutils literal notranslate"><span class="pre">[图像数目，长，宽，色彩通道数]</span></code> 的四维张量。在上面的 <code class="docutils literal notranslate"><span class="pre">DataLoader</span></code> 类中， <code class="docutils literal notranslate"><span class="pre">self.train_data</span></code> 和 <code class="docutils literal notranslate"><span class="pre">self.test_data</span></code> 分别载入了60,000和10,000张大小为 <code class="docutils literal notranslate"><span class="pre">28*28</span></code> 的手写体数字图片。由于这里读入的是灰度图片，色彩通道数为1（彩色RGB图像色彩通道数为3），所以我们使用 <code class="docutils literal notranslate"><span class="pre">np.expand_dims()</span></code> 函数为图像数据手动在最后添加一维通道。</p>
 </div>
+</div>
+<div class="section" id="tf-keras-model-tf-keras-layers">
+<h3>模型的构建： <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code><a class="headerlink" href="#tf-keras-model-tf-keras-layers" title="永久链接至标题">¶</a></h3>
 <p>多层感知机的模型类实现与上面的线性模型类似，所不同的地方在于层数增加了（顾名思义，“多层”感知机），以及引入了非线性激活函数（这里使用了 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0">ReLU函数</a> ， 即下方的 <code class="docutils literal notranslate"><span class="pre">activation=tf.nn.relu</span></code> ）。该模型输入一个向量（比如这里是拉直的 <code class="docutils literal notranslate"><span class="pre">1×784</span></code> 手写体数字图片），输出10维的向量，分别代表这张图片属于0到9的概率。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -375,11 +409,19 @@
 </ul>
 <p class="last">为了使得模型的输出能始终满足这两个条件，我们使用 <a class="reference external" href="https://zh.wikipedia.org/wiki/Softmax%E5%87%BD%E6%95%B0">Softmax函数</a> （归一化指数函数， <code class="docutils literal notranslate"><span class="pre">tf.nn.softmax</span></code> ）对模型的原始输出进行归一化。其形式为 <span class="math notranslate nohighlight">\(\sigma(\mathbf{z})_j = \frac{e^{z_j}}{\sum_{k=1}^K e^{z_k}}\)</span> 。不仅如此，softmax函数能够凸显原始向量中最大的值，并抑制远低于最大值的其他分量，这也是该函数被称作softmax函数的原因（即平滑化的argmax函数）。</p>
 </div>
-<div class="figure align-center" id="id25">
+<div class="figure align-center" id="id26">
 <a class="reference internal image-reference" href="../../_images/mlp.png"><img alt="../../_images/mlp.png" src="../../_images/mlp.png" style="width: 80%;" /></a>
 <p class="caption"><span class="caption-text">MLP模型示意图</span></p>
 </div>
+</div>
+<div class="section" id="tf-keras-losses-tf-keras-optimizer">
+<h3>模型的训练： <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizer</span></code><a class="headerlink" href="#tf-keras-losses-tf-keras-optimizer" title="永久链接至标题">¶</a></h3>
 <p>定义一些模型超参数：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.001</span>
+</pre></div>
+</div>
 <p>实例化模型，数据读取类和优化器：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">MLP</span><span class="p">()</span>
 <span class="n">data_loader</span> <span class="o">=</span> <span class="n">MNISTLoader</span><span class="p">()</span>
@@ -407,8 +449,8 @@
         <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">))</span>
 </pre></div>
 </div>
-<div class="admonition-cross-entropy admonition">
-<p class="first admonition-title">交叉熵（cross entropy）</p>
+<div class="admonition-cross-entropy-tf-keras-losses admonition">
+<p class="first admonition-title">交叉熵（cross entropy）与 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code></p>
 <p>你或许注意到了，在这里，我们没有显式地写出一个损失函数，而是使用了 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">sparse_categorical_crossentropy</span></code> （交叉熵）函数，将模型的预测值 <code class="docutils literal notranslate"><span class="pre">y_pred</span></code> 与真实的标签值 <code class="docutils literal notranslate"><span class="pre">y</span></code> 作为函数参数传入，由Keras帮助我们计算损失函数的值。</p>
 <p>交叉熵作为损失函数，在分类问题中被广泛应用。其离散形式为 <span class="math notranslate nohighlight">\(H(y, \hat{y}) = -\sum_{i=1}^{n}y_i \log(\hat{y_i})\)</span> ，其中 <span class="math notranslate nohighlight">\(y\)</span> 为真实概率分布， <span class="math notranslate nohighlight">\(\hat{y}\)</span> 为预测概率分布， <span class="math notranslate nohighlight">\(n\)</span> 为分类任务的类别个数。预测概率分布与真实分布越接近，则交叉熵的值越小，反之则越大。更具体的介绍及其在机器学习中的应用可参考 <a class="reference external" href="https://blog.csdn.net/tsyccnh/article/details/79163834">这篇博客文章</a> 。</p>
 <p>在 <code class="docutils literal notranslate"><span class="pre">tf.keras</span></code> 中，有两个交叉熵相关的损失函数 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses.categorical_crossentropy</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses.sparse_categorical_crossentropy</span></code> 。其中sparse的含义是，真实的标签值 <code class="docutils literal notranslate"><span class="pre">y_true</span></code> 可以直接传入int类型的标签类别。具体而言：</p>
@@ -424,7 +466,19 @@
 </div>
 <p class="last">的结果相同。</p>
 </div>
-<p>接下来，我们使用验证集测试模型性能。具体而言，比较验证集上模型预测的结果与真实结果，输出预测正确的样本数占总样本数的比例：</p>
+</div>
+<div class="section" id="tf-keras-metrics">
+<h3>模型的评估： <code class="docutils literal notranslate"><span class="pre">tf.keras.metrics</span></code><a class="headerlink" href="#tf-keras-metrics" title="永久链接至标题">¶</a></h3>
+<p>最后，我们使用验证集评估模型性能。具体而言，比较验证集上模型预测的结果与真实结果，输出预测正确的样本数占总样本数的比例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">sparse_categorical_accuracy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">SparseCategoricalAccuracy</span><span class="p">()</span>
+    <span class="n">num_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">num_test_data</span> <span class="o">//</span> <span class="n">batch_size</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">batch_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_batches</span><span class="p">):</span>
+        <span class="n">start_index</span><span class="p">,</span> <span class="n">end_index</span> <span class="o">=</span> <span class="n">batch_index</span> <span class="o">*</span> <span class="n">batch_size</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">batch_size</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">[</span><span class="n">start_index</span><span class="p">:</span> <span class="n">end_index</span><span class="p">])</span>
+        <span class="n">sparse_categorical_accuracy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_label</span><span class="p">[</span><span class="n">start_index</span><span class="p">:</span> <span class="n">end_index</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;test accuracy: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sparse_categorical_accuracy</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>
+</pre></div>
+</div>
 <p>输出结果:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test</span> <span class="n">accuracy</span><span class="p">:</span> <span class="mf">0.947900</span>
 </pre></div>
@@ -438,7 +492,7 @@
 </div>
 <p>该计算单元 <span class="math notranslate nohighlight">\(Q_k\)</span> 有100个权值参数 <span class="math notranslate nohighlight">\(w_{0k}, w_{1k}, ..., w_{99k}\)</span> 和1个偏置参数 <span class="math notranslate nohighlight">\(b_k\)</span> 。将第1层中所有的100个计算单元 <span class="math notranslate nohighlight">\(P_0, P_1, ..., P_{99}\)</span> 的值作为输入，分别按权值 <span class="math notranslate nohighlight">\(w_{ik}\)</span> 加和（即 <span class="math notranslate nohighlight">\(\sum_{i=0}^{99} w_{ik} P_i\)</span> ），并加上偏置值 <span class="math notranslate nohighlight">\(b_k\)</span> ，然后送入激活函数 <span class="math notranslate nohighlight">\(f\)</span> 进行计算，即得到输出结果。</p>
 <p>事实上，这种结构和真实的神经细胞（神经元）类似。神经元由树突、胞体和轴突构成。树突接受其他神经元传来的信号作为输入（一个神经元可以有数千甚至上万树突），胞体对电位信号进行整合，而产生的信号则通过轴突传到神经末梢的突触，传播到下一个（或多个）神经元。</p>
-<div class="figure align-center" id="id26">
+<div class="figure align-center" id="id27">
 <a class="reference internal image-reference" href="../../_images/real_neuron.png"><img alt="../../_images/real_neuron.png" src="../../_images/real_neuron.png" style="width: 80%;" /></a>
 <p class="caption"><span class="caption-text">神经细胞模式图（修改自 Quasar Jarosz at English Wikipedia [CC BY-SA 3.0 (<a class="reference external" href="https://creativecommons.org/licenses/by-sa/3.0">https://creativecommons.org/licenses/by-sa/3.0</a>)]）</span></p>
 </div>
@@ -449,6 +503,7 @@
 <tr><td class="label"><a class="fn-backref" href="#id9">[3]</a></td><td>事实上，应当是先有神经元建模的概念，再有基于人工神经元和层结构的人工神经网络。但由于本手册着重介绍TensorFlow的使用方法，所以调换了介绍顺序。</td></tr>
 </tbody>
 </table>
+</div>
 </div>
 </div>
 <div class="section" id="cnn">
@@ -462,7 +517,7 @@
 </ul>
 </div>
 <p>具体的实现见下，和MLP很类似，只是新加入了一些卷积层和池化层。</p>
-<div class="figure align-center" id="id27">
+<div class="figure align-center" id="id28">
 <img alt="../../_images/cnn.png" src="../../_images/cnn.png" />
 <p class="caption"><span class="caption-text">CNN结构图示</span></p>
 </div>
@@ -546,11 +601,11 @@
 </pre></div>
 </div>
 <p>接下来进行模型的实现。在 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 方法中我们实例化一个常用的 <code class="docutils literal notranslate"><span class="pre">BasicLSTMCell</span></code> 单元，以及一个线性变换用的全连接层，我们首先对序列进行One Hot操作，即将编码i变换为一个n维向量，其第i位为1，其余均为0。这里n为字符种类数num_char。变换后的序列张量形状为[num_batch, seq_length, num_chars]。接下来，我们将序列从头到尾依序送入RNN单元，即将当前时间t的RNN单元状态 <code class="docutils literal notranslate"><span class="pre">state</span></code> 和t时刻的序列 <code class="docutils literal notranslate"><span class="pre">inputs[:,</span> <span class="pre">t,</span> <span class="pre">:]</span></code> 送入RNN单元，得到当前时间的输出 <code class="docutils literal notranslate"><span class="pre">output</span></code> 和下一个时间t+1的RNN单元状态。取RNN单元最后一次的输出，通过全连接层变换到num_chars维，即作为模型的输出。</p>
-<div class="figure align-center" id="id28">
+<div class="figure align-center" id="id29">
 <a class="reference internal image-reference" href="../../_images/rnn_single.jpg"><img alt="../../_images/rnn_single.jpg" src="../../_images/rnn_single.jpg" style="width: 30%;" /></a>
 <p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">output,</span> <span class="pre">state</span> <span class="pre">=</span> <span class="pre">self.cell(inputs[:,</span> <span class="pre">t,</span> <span class="pre">:],</span> <span class="pre">state)</span></code> 图示</span></p>
 </div>
-<div class="figure align-center" id="id29">
+<div class="figure align-center" id="id30">
 <a class="reference internal image-reference" href="../../_images/rnn.jpg"><img alt="../../_images/rnn.jpg" src="../../_images/rnn.jpg" style="width: 50%;" /></a>
 <p class="caption"><span class="caption-text">RNN流程图示</span></p>
 </div>
@@ -668,7 +723,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </ul>
 </div>
 <p>这里，我们使用深度强化学习玩CartPole（平衡杆）游戏。简单说，我们需要让模型控制杆的左右运动，以让其一直保持竖直平衡状态。</p>
-<div class="figure align-center" id="id30">
+<div class="figure align-center" id="id31">
 <a class="reference internal image-reference" href="../../_images/cartpole.gif"><img alt="../../_images/cartpole.gif" src="../../_images/cartpole.gif" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">CartPole游戏</span></p>
 </div>
@@ -787,7 +842,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <p><a class="reference external" href="https://medium.com/tensorflow/what-are-symbolic-and-imperative-apis-in-tensorflow-2-0-dfccecb01021">https://medium.com/tensorflow/what-are-symbolic-and-imperative-apis-in-tensorflow-2-0-dfccecb01021</a>
 <a class="reference external" href="https://www.tensorflow.org/beta/guide/keras/overview">https://www.tensorflow.org/beta/guide/keras/overview</a>
 <a class="reference external" href="https://www.tensorflow.org/beta/guide/keras/custom_layers_and_models">https://www.tensorflow.org/beta/guide/keras/custom_layers_and_models</a></p>
-<p>以上示例均使用了Keras的Subclassing API建立模型，即对 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 类进行扩展以定义自己的新模型，同时手工编写了训练和评估模型的流程。这种方式灵活度高，且与其他流行的深度学习框架（如PyTorch、Chainer）共通，是本手册所推荐的方法。不过在很多时候，我们只需要建立一个结构相对简单和典型的神经网络（比如上文中的MLP和CNN），并使用常规的手段进行训练。这时，Keras也给我们提供了另一套更为简单的模型建立、训练和评估的方式。</p>
+<p>以上示例均使用了Keras的Subclassing API建立模型，即对 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 类进行扩展以定义自己的新模型，同时手工编写了训练和评估模型的流程。这种方式灵活度高，且与其他流行的深度学习框架（如PyTorch、Chainer）共通，是本手册所推荐的方法。不过在很多时候，我们只需要建立一个结构相对简单和典型的神经网络（比如上文中的MLP和CNN），并使用常规的手段进行训练。这时，Keras也给我们提供了另一套更为简单高效的内置方法来建立、训练和评估模型。</p>
 <div class="section" id="keras-sequential-functional-api">
 <h3>Keras Sequential/Functional API模式建立模型<a class="headerlink" href="#keras-sequential-functional-api" title="永久链接至标题">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
@@ -824,8 +879,10 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </div>
 <div class="section" id="id20">
 <h2>自定义层、损失函数和指标 *<a class="headerlink" href="#id20" title="永久链接至标题">¶</a></h2>
-<p>可能你还会问，如果现有的这些层无法满足我的要求，我需要定义自己的层怎么办？</p>
-<p>事实上，我们不仅可以继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 编写自己的模型类，也可以继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 编写自己的层。</p>
+<p>可能你还会问，如果现有的这些层无法满足我的要求，我需要定义自己的层怎么办？事实上，我们不仅可以继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 编写自己的模型类，也可以继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 编写自己的层。</p>
+<div class="section" id="id21">
+<h3>自定义层<a class="headerlink" href="#id21" title="永久链接至标题">¶</a></h3>
+<p>自定义层需要继承tf.keras.layers.Layer类，并重写 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 、 <code class="docutils literal notranslate"><span class="pre">build</span></code> 和 <code class="docutils literal notranslate"><span class="pre">call</span></code> 三个方法，如下所示：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyLayer</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -860,7 +917,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
         <span class="k">return</span> <span class="n">y_pred</span>
 </pre></div>
 </div>
-<p>使用相同的方式，可以在定义模型的时候调用我们自定义的层 <code class="docutils literal notranslate"><span class="pre">LinearLayer</span></code>：</p>
+<p>在定义模型的时候，我们便可以如同Keras中的其他层一样，调用我们自定义的层 <code class="docutils literal notranslate"><span class="pre">LinearLayer</span></code>：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LinearModel</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -871,18 +928,19 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
         <span class="k">return</span> <span class="n">output</span>
 </pre></div>
 </div>
-<div class="section" id="id21">
-<h3>自定义损失函数<a class="headerlink" href="#id21" title="永久链接至标题">¶</a></h3>
 </div>
 <div class="section" id="id22">
-<h3>自定义评估指标<a class="headerlink" href="#id22" title="永久链接至标题">¶</a></h3>
+<h3>自定义损失函数<a class="headerlink" href="#id22" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="id23">
+<h3>自定义评估指标<a class="headerlink" href="#id23" title="永久链接至标题">¶</a></h3>
 <p><a class="reference external" href="https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/keras/metrics/Metric">https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/keras/metrics/Metric</a></p>
 </div>
 </div>
 <div class="section" id="graph-execution">
 <h2>Graph Execution模式 *<a class="headerlink" href="#graph-execution" title="永久链接至标题">¶</a></h2>
 <p>在TensorFlow 2.0中，推荐使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> （而非1.X中的Session）实现Graph Execution。只需要在所定义的模型类的call方法前加上 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> ，就能让模型以Graph Execution模式运行。</p>
-<p>事实上，只要在编写模型的时候稍加注意，Keras的模型是可以同时兼容Eager Execution模式和Graph Execution模式的。注意，在Graph Execution模式下， <code class="docutils literal notranslate"><span class="pre">model(input_tensor)</span></code> 只需运行一次以完成图的建立操作。</p>
+<p>不过，如果你依然钟情于TensorFlow传统的Graph Execution模式也没有问题。TensorFlow 2.0提供了 <code class="docutils literal notranslate"><span class="pre">tf.compat.v1</span></code> 模块以支持TensorFlow 1.X版本的API。同时，只要在编写模型的时候稍加注意，Keras的模型是可以同时兼容Eager Execution模式和Graph Execution模式的。注意，在Graph Execution模式下， <code class="docutils literal notranslate"><span class="pre">model(input_tensor)</span></code> 只需运行一次以完成图的建立操作。</p>
 <p>例如，通过以下代码，同样可以在MNIST数据集上训练前面所建立的MLP或CNN模型：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
     <span class="n">num_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">num_train_data</span> <span class="o">//</span> <span class="n">batch_size</span> <span class="o">*</span> <span class="n">num_epochs</span><span class="p">)</span>
@@ -892,11 +950,11 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
     <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y_placeholder</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">)</span>
     <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
     <span class="n">train_op</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+    <span class="n">sparse_categorical_accuracy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">SparseCategoricalAccuracy</span><span class="p">()</span>
     <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
-        <span class="n">sparse_categorical_accuracy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">SparseCategoricalAccuracy</span><span class="p">()</span>
         <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span>
-        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">get_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">batch_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_batches</span><span class="p">):</span>
+            <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">get_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
             <span class="n">_</span><span class="p">,</span> <span class="n">loss_value</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">train_op</span><span class="p">,</span> <span class="n">loss</span><span class="p">],</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">X_placeholder</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_placeholder</span><span class="p">:</span> <span class="n">y</span><span class="p">})</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;batch </span><span class="si">%d</span><span class="s2">: loss </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">batch_index</span><span class="p">,</span> <span class="n">loss_value</span><span class="p">))</span>
 
@@ -908,6 +966,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;test accuracy: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">sparse_categorical_accuracy</span><span class="o">.</span><span class="n">result</span><span class="p">()))</span>
 </pre></div>
 </div>
+<p>关于Graph Execution的更多内容可参见 <a class="reference internal" href="../appendix/static.html"><span class="doc">静态的TensorFlow</span></a>。</p>
 <table class="docutils citation" frame="void" id="lecun1998" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
