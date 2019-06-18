@@ -32,20 +32,43 @@ TensorFlow基础
 TensorFlow 1+1
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-我们可以先简单地将TensorFlow视为一个科学计算库（类似于Python下的NumPy）。这里以计算 :math:`1+1` 和 :math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \times \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix}` 作为Hello World的示例。
+我们可以先简单地将TensorFlow视为一个科学计算库（类似于Python下的NumPy）。
+
+首先，我们导入TensorFlow：
+
+.. code-block:: python
+
+    import tensorflow as tf
 
 .. warning:: 本手册基于TensorFlow的Eager Execution模式。在TensorFlow 1.X版本中， **必须** 在导入TensorFlow库后调用 ``tf.enable_eager_execution()`` 函数以启用Eager Execution模式。在TensorFlow 2.0版本中，Eager Execution模式将成为默认模式，无需额外调用 ``tf.enable_eager_execution()`` 函数（不过若要关闭Eager Execution，则需调用 ``tf.compat.v1.disable_eager_execution()`` 函数）。
 
+TensorFlow使用 **张量** （Tensor）作为数据的基本单位。TensorFlow的张量在概念上等同于多维数组，我们可以使用它来描述数学中的标量（0维数组）、向量（1维数组）、矩阵（2维数组）等各种量，示例如下：
+
 .. literalinclude:: /_static/code/zh/basic/eager/1plus1.py  
+    :lines: 3-11
 
-输出::
+张量的重要属性是其形状、类型和值。可以通过张量的 ``shape`` 、 ``dtype`` 属性和 ``numpy()`` 方法获得。例如：
+
+.. literalinclude:: /_static/code/zh/basic/eager/1plus1.py  
+    :lines: 13-17
+
+.. tip:: TensorFlow的大多数API函数会根据输入的值自动推断张量中元素的类型（一般默认为 ``tf.float32`` ）。不过你也可以通过加入 ``dtype`` 参数来自行指定类型，例如 ``zero_vector = tf.zeros(shape=(2), dtype=tf.int32)`` 将使得张量中的元素类型均为整数。张量的 ``numpy()`` 方法是将张量的值转换为一个NumPy数组。
+
+TensorFlow里有大量的 **操作** （Operation），使得我们可以将已有的张量进行运算后得到新的张量。示例如下：
+
+.. literalinclude:: /_static/code/zh/basic/eager/1plus1.py  
+    :lines: 19-20
+
+操作完成后， ``C`` 和 ``D`` 的值分别为::
     
-    tf.Tensor(2, shape=(), dtype=int32)
     tf.Tensor(
-    [[19 22]
-    [43 50]], shape=(2, 2), dtype=int32)
+    [[ 6.  8.]
+     [10. 12.]], shape=(2, 2), dtype=float32)
+    tf.Tensor(
+    [[19. 22.]
+     [43. 50.]], shape=(2, 2), dtype=float32)
 
-以上代码声明了 ``a``、``b``、``A``、``B`` 四个 **张量** （Tensor），并使用了 ``tf.add()`` 和 ``tf.matmul()`` 两个 **操作** （Operation）对张量进行了加法和矩阵乘法运算，运算结果即时存储于 ``c``、``C`` 两个张量内。张量的重要属性是其形状（shape）和类型（dtype）。这里 ``a``、``b``、``c`` 是纯量，形状为空，类型为int32；``A``、``B``、``C`` 为2×2的矩阵，形状为 ``(2, 2)``，类型为int32。
+可见，我们成功使用 ``tf.add()`` 操作计算出 :math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} + \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = \begin{bmatrix} 6 & 8 \\ 10 & 12 \end{bmatrix}`，使用 ``tf.matmul()`` 操作计算出 :math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \times \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = \begin{bmatrix} 19 & 22 \\43 & 50 \end{bmatrix}` 。
 
 自动求导机制
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^

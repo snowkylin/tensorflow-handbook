@@ -2,8 +2,8 @@ import tensorflow as tf
 import numpy as np
 
 model = 'CNN'           # 'MLP' or 'CNN'
-mode = 'subclassing'     # 'sequential', 'functional' or 'subclassing'
-training_loop = 'keras' # 'keras', 'custom' or 'graph'
+mode = 'sequential'     # 'sequential', 'functional' or 'subclassing'
+training_loop = 'graph' # 'keras', 'custom' or 'graph'
 num_epochs = 1
 batch_size = 50
 learning_rate = 0.001
@@ -131,11 +131,11 @@ if training_loop == 'graph':
     loss = tf.keras.losses.sparse_categorical_crossentropy(y_true=y_placeholder, y_pred=y_pred)
     loss = tf.reduce_mean(loss)
     train_op = optimizer.minimize(loss)
+    sparse_categorical_accuracy = tf.keras.metrics.SparseCategoricalAccuracy()
     with tf.compat.v1.Session() as sess:
-        sparse_categorical_accuracy = tf.keras.metrics.SparseCategoricalAccuracy()
         sess.run(tf.compat.v1.global_variables_initializer())
-        X, y = data_loader.get_batch(batch_size)
         for batch_index in range(num_batches):
+            X, y = data_loader.get_batch(batch_size)
             _, loss_value = sess.run([train_op, loss], feed_dict={X_placeholder: X, y_placeholder: y})
             print("batch %d: loss %f" % (batch_index, loss_value))
 

@@ -13,7 +13,7 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 
         完毕。
 
-安装步骤
+一般安装步骤
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 1. 安装Python环境。此处建议安装 `Anaconda <https://www.anaconda.com/>`_ 的Python 3.6版本（后文均以此为准），这是一个开源的Python发行版本，提供了一个完整的科学计算环境，包括NumPy、SciPy等常用科学计算库。当然，你有权选择自己喜欢的Python环境。注意截至本手册撰写时，TensorFlow尚未支持Python 3.7版本；
@@ -25,35 +25,56 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
     conda create --name tensorflow python=3.6   # “tensorflow”是你建立的Conda虚拟环境的名字
     conda activate tensorflow                   # 进入名为“tensorflow”的虚拟环境
 
-3. 使用conda包管理器安装TensorFlow。在命令行下输入：
+3. 使用Python包管理器pip安装TensorFlow。在命令行下输入：
 
 ::
 
-    conda install tensorflow        # TensorFlow CPU版本
+    pip install tensorflow        # TensorFlow CPU版本
 
 或
 
 ::
 
-    conda install tensorflow-gpu    # TensorFlow GPU版本，需要具有NVIDIA显卡及正确安装驱动程序，详见下文
+    pip install tensorflow-gpu    # TensorFlow GPU版本，需要具有NVIDIA显卡及正确安装驱动程序，详见下文
 
 等待片刻即安装完毕。
 
 .. tip:: 
 
-    1. 在Windows下，需要打开开始菜单中的“Anaconda Prompt”进入Anaconda的命令行环境；
-    2. 在国内，推荐使用 `清华大学开源软件镜像站的Anaconda镜像 <https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/>`_ ，将显著提高下载速度。
+    1. 也可以使用 ``conda install tensorflow`` 或者 ``conda install tensorflow-gpu`` 来安装TensorFlow，不过conda源的版本往往更新较慢，难以第一时间获得最新的TensorFlow版本；
+    2. 在Windows下，需要打开开始菜单中的“Anaconda Prompt”进入Anaconda的命令行环境；
+    3. 在国内环境下，推荐使用 `清华大学的pypi镜像 <https://mirrors.tuna.tsinghua.edu.cn/help/pypi/>`_ ，将显著提升pip的下载速度。
 
-.. admonition:: conda包管理器
+.. admonition:: pip和conda包管理器
 
-    conda包管理器是Anaconda自带的包管理器，可以帮助我们轻松地安装各种Python包（包括TensorFlow）。常用命令如下：
+    pip是最为广泛使用的Python包管理器，可以帮助我们获得最新的Python包并进行管理。常用命令如下：
 
     ::
 
-        conda install [package-name]    # 安装名为[package-name]的Python包
-        conda update [package-name]     # 更新名为[package-name]的Python包
-        conda remove [package-name]     # 删除名为[package-name]的Python包
-        conda list                      # 列出已安装的所有Python包
+        pip install [package-name]              # 安装名为[package-name]的包
+        pip install [package-name]==X.X         # 安装名为[package-name]的包并指定版本X.X
+        pip install [package-name] --proxy=代理服务器IP:端口号         # 使用代理服务器安装
+        pip install [package-name] --upgrade    # 更新名为[package-name]的包
+        pip uninstall [package-name]            # 删除名为[package-name]的包
+        pip list                                # 列出当前环境下已安装的所有包
+    
+    conda包管理器是Anaconda自带的包管理器，可以帮助我们在conda环境下轻松地安装各种包。相较于pip而言，conda的通用性更强（不仅是Python包，其他包如CUDA Toolkit和cuDNN也可以安装），但conda源的版本更新往往较慢。常用命令如下：
+
+    ::
+
+        conda install [package-name]        # 安装名为[package-name]的包
+        conda install [package-name]=X.X    # 安装名为[package-name]的包并指定版本X.X
+        conda update [package-name]         # 更新名为[package-name]的包
+        conda remove [package-name]         # 删除名为[package-name]的包
+        conda list                          # 列出当前环境下已安装的所有包
+        conda search [package-name]         # 列出名为[package-name]的包在conda源中的所有可用版本
+
+    conda中配置代理：在用户目录下的 .condarc 文件中添加以下内容：
+
+    ::
+
+        proxy_servers:
+            http: http://代理服务器IP:端口号
 
 .. admonition:: Conda虚拟环境
 
@@ -69,55 +90,72 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 
 .. _gpu_tensorflow:
 
-.. admonition:: GPU版本TensorFlow安装指南
+GPU版本TensorFlow安装指南
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    GPU版本的TensorFlow可以利用NVIDIA GPU强大的计算加速能力，使TensorFlow的运行更为高效，尤其是可以成倍提升模型训练的速度。
+GPU版本的TensorFlow可以利用NVIDIA GPU强大的计算加速能力，使TensorFlow的运行更为高效，尤其是可以成倍提升模型训练的速度。
 
-    在安装GPU版本的TensorFlow前，你需要具有一块不太旧的NVIDIA显卡 [#gpu_version]_ ，以及正确安装NVIDIA显卡驱动程序、CUDA Toolkit和cnDNN。
+在安装GPU版本的TensorFlow前，你需要具有一块不太旧的NVIDIA显卡，以及正确安装NVIDIA显卡驱动程序、CUDA Toolkit和cnDNN。
 
-    **NVIDIA驱动程序的安装** 
-    
-    Windows环境中，如果系统具有NVIDIA显卡，则往往已经自动安装了NVIDIA显卡驱动程序。如未安装，直接访问NVIDIA官方网站下载并安装对应型号的最新公版驱动程序即可。、
-    
-    不过，NVIDIA显卡驱动程序在Linux系统上的安装往往不会一帆风顺。对于Ubuntu系统，有一个很简易的NVIDIA驱动安装方法：在系统设置（System Setting）里面选软件与更新（Software & Updates），然后点选Additional Drivers里面的“Using NVIDIA binary driver”选项并点选右下角的“Apply Changes”即可，系统即会自动安装NVIDIA驱动，但是通过这种安装方式安装的NVIDIA驱动往往版本较旧。如果需要在Linux下手动安装NVIDIA驱动，注意在安装前：
-    
-    - 禁用系统自带的开源显卡驱动Nouveau（在 ``/etc/modprobe.d/blacklist.conf`` 文件中添加一行 ``blacklist nouveau`` ，使用 ``sudo update-initramfs -u`` 更新内核，并重启）
-    - 禁用主板的Secure Boot功能
-    - 停用桌面环境（如 ``sudo service lightdm stop`` ）
-    - 删除原有NVIDIA驱动程序（如 ``sudo apt-get purge nvidia*``）
-    
-    然后即可在 `NVIDIA官方网站 <https://www.nvidia.com/Download/index.aspx?lang=en-us>`_ 下载驱动程序（为 ``.run`` 文件），并使用 ``sudo bash DRIVER_FILE_NAME.run`` 命令安装驱动。
-    
-    安装完后可在命令行下使用 ``nvidia-smi`` 命令检查是否安装成功，若成功则会打印出当前系统安装的NVIDIA驱动信息，形式如下：
-    
-    ::
-        
-        $ nvidia-smi
-        Mon Jun 10 23:19:54 2019
-        +-----------------------------------------------------------------------------+
-        | NVIDIA-SMI 419.35       Driver Version: 419.35       CUDA Version: 10.1     |
-        |-------------------------------+----------------------+----------------------+
-        | GPU  Name            TCC/WDDM | Bus-Id        Disp.A | Volatile Uncorr. ECC |
-        | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
-        |===============================+======================+======================|
-        |   0  GeForce GTX 106... WDDM  | 00000000:01:00.0  On |                  N/A |
-        | 27%   51C    P8    13W / 180W |   1516MiB /  6144MiB |      0%      Default |
-        +-------------------------------+----------------------+----------------------+
+GPU硬件的准备
+-------------------------------------------
 
-        +-----------------------------------------------------------------------------+
-        | Processes:                                                       GPU Memory |
-        |  GPU       PID   Type   Process name                             Usage      |
-        |=============================================================================|
-        |    0       572    C+G   Insufficient Permissions                   N/A      |
-        +-----------------------------------------------------------------------------+
+TensorFlow对NVIDIA显卡的支持较为完备。对于NVIDIA显卡，要求其CUDA Compute Capability须不低于3.0，可以到 `NVIDIA的官方网站 <https://developer.nvidia.com/cuda-gpus/>`_ 查询自己所用显卡的CUDA Compute Capability。目前，AMD的显卡也开始对TensorFlow提供支持，可访问  `这篇博客文章 <https://medium.com/tensorflow/amd-rocm-gpu-support-for-tensorflow-33c78cc6a6cf>`_  查看详情。
+
+NVIDIA驱动程序的安装
+-------------------------------------------
+
+Windows环境中，如果系统具有NVIDIA显卡，则往往已经自动安装了NVIDIA显卡驱动程序。如未安装，直接访问NVIDIA官方网站下载并安装对应型号的最新公版驱动程序即可。
+
+不过，在Linux系统上，NVIDIA显卡驱动程序的安装往往不会一帆风顺。对于Ubuntu系统，有一个很简易的NVIDIA驱动安装方法：在系统设置（System Setting）里面选软件与更新（Software & Updates），然后点选Additional Drivers里面的“Using NVIDIA binary driver”选项并点选右下角的“Apply Changes”即可，系统即会自动安装NVIDIA驱动，但是通过这种安装方式安装的NVIDIA驱动往往版本较旧。如果需要在Linux下手动安装NVIDIA驱动，注意在安装前：
+
+- 禁用系统自带的开源显卡驱动Nouveau（在 ``/etc/modprobe.d/blacklist.conf`` 文件中添加一行 ``blacklist nouveau`` ，使用 ``sudo update-initramfs -u`` 更新内核，并重启）
+- 禁用主板的Secure Boot功能
+- 停用桌面环境（如 ``sudo service lightdm stop``）
+- 删除原有NVIDIA驱动程序（如 ``sudo apt-get purge nvidia*``）
+
+然后即可在 `NVIDIA官方网站 <https://www.nvidia.com/Download/index.aspx?lang=en-us>`_ 下载驱动程序（为 ``.run`` 文件），并使用 ``sudo bash DRIVER_FILE_NAME.run`` 命令安装驱动。
+
+安装完后可在命令行下使用 ``nvidia-smi`` 命令检查是否安装成功，若成功则会打印出当前系统安装的NVIDIA驱动信息，形式如下：
+
+::
     
-    更详细的指导可以参考 `这篇文章 <https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/>`_ 和 `这篇中文博客 <https://blog.csdn.net/wf19930209/article/details/81877822>`_ 。
+    $ nvidia-smi
+    Mon Jun 10 23:19:54 2019
+    +-----------------------------------------------------------------------------+
+    | NVIDIA-SMI 419.35       Driver Version: 419.35       CUDA Version: 10.1     |
+    |-------------------------------+----------------------+----------------------+
+    | GPU  Name            TCC/WDDM | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+    | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+    |===============================+======================+======================|
+    |   0  GeForce GTX 106... WDDM  | 00000000:01:00.0  On |                  N/A |
+    | 27%   51C    P8    13W / 180W |   1516MiB /  6144MiB |      0%      Default |
+    +-------------------------------+----------------------+----------------------+
 
-    **CUDA Toolkit和cnDNN的安装** 
+    +-----------------------------------------------------------------------------+
+    | Processes:                                                       GPU Memory |
+    |  GPU       PID   Type   Process name                             Usage      |
+    |=============================================================================|
+    |    0       572    C+G   Insufficient Permissions                   N/A      |
+    +-----------------------------------------------------------------------------+
 
-    使用conda包管理器安装GPU版本的TensorFlow时，会自动安装对应版本的CUDA Toolkit和cuDNN。Anaconda包含Python包管理器pip，你也可以使用 ``pip install tensorflow`` 或者 ``pip install tensorflow-gpu`` 来安装TensorFlow。使用pip安装的优点在于可以第一时间安装到最新的TensorFlow版本（conda源往往有滞后），缺点则是不会自动安装CUDA Toolkit和cuDNN，你需要按照 `TensorFlow官方网站上的说明 <https://www.tensorflow.org/install/gpu>`_ 进行手动安装，或使用 ``conda install cudntoolkit=X.X`` 和 ``conda install cudnn=X.X.X`` 进行安装，其中X.X和X.X.X为需要安装的CUDA Toolkit和cuDNN版本号，必须严格按照TensorFlow官方网站的版本安装。在安装前，可使用 ``conda search cudatoolkit`` 和 ``conda search cudnn`` 搜索conda源中可用的版本号。
+更详细的指导可以参考 `这篇文章 <https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/>`_ 和 `这篇中文博客 <https://blog.csdn.net/wf19930209/article/details/81877822>`_ 。
 
-    .. [#gpu_version] 具体而言，该显卡的CUDA Compute Capability须不低于3.0，可以到 `NVIDIA的官方网站 <https://developer.nvidia.com/cuda-gpus/>`_ 查询自己所用显卡的CUDA Compute Capability。
+CUDA Toolkit和cnDNN的安装
+-------------------------------------------
+
+在Anaconda环境下，推荐使用 
+
+::
+
+    conda install cudatoolkit=X.X
+    conda install cudnn=X.X.X
+
+安装CUDA Toolkit和cnDNN，其中X.X和X.X.X分别为需要安装的CUDA Toolkit和cuDNN版本号，必须严格按照TensorFlow官方网站所说明的版本安装。在安装前，可使用 ``conda search cudatoolkit`` 和 ``conda search cudnn`` 搜索conda源中可用的版本号。
+
+当然，也可以按照 `TensorFlow官方网站上的说明 <https://www.tensorflow.org/install/gpu>`_ 手动下载CUDA Toolkit和cuDNN并安装，不过过程会稍繁琐。
+
+使用conda包管理器安装GPU版本的TensorFlow时，会自动安装对应版本的CUDA Toolkit和cuDNN。conda源的更新较慢，如果对版本不太介意，推荐直接使用 ``conda install tensorflow-gpu`` 进行安装。
 
 第一个程序
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -158,3 +196,8 @@ IDE设置
 .. tip:: 如果你是学生并有.edu结尾的邮箱的话，可以在 `这里 <http://www.jetbrains.com/student/>`_ 申请PyCharm的免费Professional版本授权。
 
 .. [#nohup] 关于  ``nohup`` 命令可参考 https://www.ibm.com/developerworks/cn/linux/l-cn-nohup/
+
+TensorFlow所需的硬件配置 *
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
