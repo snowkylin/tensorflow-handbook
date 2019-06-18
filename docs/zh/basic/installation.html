@@ -20,13 +20,23 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'0.4 alpha',
+              LANGUAGE:'zh_CN',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -95,9 +105,16 @@
 <p class="caption"><span class="caption-text">基础</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow安装</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">安装步骤</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">一般安装步骤</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gputensorflow">GPU版本TensorFlow安装指南</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gpu">GPU硬件的准备</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">NVIDIA驱动程序的安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cuda-toolkitcndnn">CUDA Toolkit和cnDNN的安装</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#id8">第一个程序</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ide">IDE设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">TensorFlow所需的硬件配置 *</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow基础</a></li>
@@ -198,7 +215,7 @@
 <h1>TensorFlow安装<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
 <p>TensorFlow的最新安装步骤可参考官方网站上的说明（<a class="reference external" href="https://tensorflow.google.cn/install">https://tensorflow.google.cn/install</a>）。TensorFlow支持Python、Java、Go、C等多种编程语言以及Windows、OSX、Linux等多种操作系统，此处及后文均以主流的Python 3.6为准。关于在容器环境中部署TensorFlow的方法，见附录中 <a class="reference internal" href="../appendix/config.html#install-by-docker"><span class="std std-ref">使用Docker部署TensorFlow环境</span></a> 。</p>
 <div class="section" id="id1">
-<h2>安装步骤<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<h2>一般安装步骤<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <ol class="arabic simple">
 <li>安装Python环境。此处建议安装 <a class="reference external" href="https://www.anaconda.com/">Anaconda</a> 的Python 3.6版本（后文均以此为准），这是一个开源的Python发行版本，提供了一个完整的科学计算环境，包括NumPy、SciPy等常用科学计算库。当然，你有权选择自己喜欢的Python环境。注意截至本手册撰写时，TensorFlow尚未支持Python 3.7版本；</li>
 <li>使用Anaconda自带的conda包管理器建立一个Conda虚拟环境，并进入该虚拟环境。在命令行下输入：</li>
@@ -208,30 +225,47 @@
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
-<li>使用conda包管理器安装TensorFlow。在命令行下输入：</li>
+<li>使用Python包管理器pip安装TensorFlow。在命令行下输入：</li>
 </ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">tensorflow</span>        <span class="c1"># TensorFlow CPU版本</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span>        <span class="c1"># TensorFlow CPU版本</span>
 </pre></div>
 </div>
 <p>或</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">-</span><span class="n">gpu</span>    <span class="c1"># TensorFlow GPU版本，需要具有NVIDIA显卡及正确安装驱动程序，详见下文</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">-</span><span class="n">gpu</span>    <span class="c1"># TensorFlow GPU版本，需要具有NVIDIA显卡及正确安装驱动程序，详见下文</span>
 </pre></div>
 </div>
 <p>等待片刻即安装完毕。</p>
 <div class="admonition tip">
 <p class="first admonition-title">小技巧</p>
 <ol class="last arabic simple">
+<li>也可以使用 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">tensorflow</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">tensorflow-gpu</span></code> 来安装TensorFlow，不过conda源的版本往往更新较慢，难以第一时间获得最新的TensorFlow版本；</li>
 <li>在Windows下，需要打开开始菜单中的“Anaconda Prompt”进入Anaconda的命令行环境；</li>
-<li>在国内，推荐使用 <a class="reference external" href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/">清华大学开源软件镜像站的Anaconda镜像</a> ，将显著提高下载速度。</li>
+<li>在国内环境下，推荐使用 <a class="reference external" href="https://mirrors.tuna.tsinghua.edu.cn/help/pypi/">清华大学的pypi镜像</a> ，将显著提升pip的下载速度。</li>
 </ol>
 </div>
-<div class="admonition-conda admonition">
-<p class="first admonition-title">conda包管理器</p>
-<p>conda包管理器是Anaconda自带的包管理器，可以帮助我们轻松地安装各种Python包（包括TensorFlow）。常用命令如下：</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="p">[</span><span class="n">package</span><span class="o">-</span><span class="n">name</span><span class="p">]</span>    <span class="c1"># 安装名为[package-name]的Python包</span>
-<span class="n">conda</span> <span class="n">update</span> <span class="p">[</span><span class="n">package</span><span class="o">-</span><span class="n">name</span><span class="p">]</span>     <span class="c1"># 更新名为[package-name]的Python包</span>
-<span class="n">conda</span> <span class="n">remove</span> <span class="p">[</span><span class="n">package</span><span class="o">-</span><span class="n">name</span><span class="p">]</span>     <span class="c1"># 删除名为[package-name]的Python包</span>
-<span class="n">conda</span> <span class="nb">list</span>                      <span class="c1"># 列出已安装的所有Python包</span>
+<div class="admonition-pipconda admonition">
+<p class="first admonition-title">pip和conda包管理器</p>
+<p>pip是最为广泛使用的Python包管理器，可以帮助我们获得最新的Python包并进行管理。常用命令如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="p">[</span><span class="n">package</span><span class="o">-</span><span class="n">name</span><span class="p">]</span>              <span class="c1"># 安装名为[package-name]的包</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="p">[</span><span class="n">package</span><span class="o">-</span><span class="n">name</span><span class="p">]</span><span class="o">==</span><span class="n">X</span><span class="o">.</span><span class="n">X</span>         <span class="c1"># 安装名为[package-name]的包并指定版本X.X</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="p">[</span><span class="n">package</span><span class="o">-</span><span class="n">name</span><span class="p">]</span> <span class="o">--</span><span class="n">proxy</span><span class="o">=</span><span class="n">代理服务器IP</span><span class="p">:</span><span class="n">端口号</span>         <span class="c1"># 使用代理服务器安装</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="p">[</span><span class="n">package</span><span class="o">-</span><span class="n">name</span><span class="p">]</span> <span class="o">--</span><span class="n">upgrade</span>    <span class="c1"># 更新名为[package-name]的包</span>
+<span class="n">pip</span> <span class="n">uninstall</span> <span class="p">[</span><span class="n">package</span><span class="o">-</span><span class="n">name</span><span class="p">]</span>            <span class="c1"># 删除名为[package-name]的包</span>
+<span class="n">pip</span> <span class="nb">list</span>                                <span class="c1"># 列出当前环境下已安装的所有包</span>
+</pre></div>
+</div>
+<p>conda包管理器是Anaconda自带的包管理器，可以帮助我们在conda环境下轻松地安装各种包。相较于pip而言，conda的通用性更强（不仅是Python包，其他包如CUDA Toolkit和cuDNN也可以安装），但conda源的版本更新往往较慢。常用命令如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="p">[</span><span class="n">package</span><span class="o">-</span><span class="n">name</span><span class="p">]</span>        <span class="c1"># 安装名为[package-name]的包</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="p">[</span><span class="n">package</span><span class="o">-</span><span class="n">name</span><span class="p">]</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">X</span>    <span class="c1"># 安装名为[package-name]的包并指定版本X.X</span>
+<span class="n">conda</span> <span class="n">update</span> <span class="p">[</span><span class="n">package</span><span class="o">-</span><span class="n">name</span><span class="p">]</span>         <span class="c1"># 更新名为[package-name]的包</span>
+<span class="n">conda</span> <span class="n">remove</span> <span class="p">[</span><span class="n">package</span><span class="o">-</span><span class="n">name</span><span class="p">]</span>         <span class="c1"># 删除名为[package-name]的包</span>
+<span class="n">conda</span> <span class="nb">list</span>                          <span class="c1"># 列出当前环境下已安装的所有包</span>
+<span class="n">conda</span> <span class="n">search</span> <span class="p">[</span><span class="n">package</span><span class="o">-</span><span class="n">name</span><span class="p">]</span>         <span class="c1"># 列出名为[package-name]的包在conda源中的所有可用版本</span>
+</pre></div>
+</div>
+<p>conda中配置代理：在用户目录下的 .condarc 文件中添加以下内容：</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">proxy_servers</span><span class="p">:</span>
+    <span class="n">http</span><span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理服务器IP</span><span class="p">:</span><span class="n">端口号</span>
 </pre></div>
 </div>
 </div>
@@ -246,17 +280,23 @@
 </pre></div>
 </div>
 </div>
-<div class="admonition-gputensorflow admonition" id="gpu-tensorflow">
-<p class="first admonition-title">GPU版本TensorFlow安装指南</p>
+</div>
+<div class="section" id="gputensorflow">
+<span id="gpu-tensorflow"></span><h2>GPU版本TensorFlow安装指南<a class="headerlink" href="#gputensorflow" title="永久链接至标题">¶</a></h2>
 <p>GPU版本的TensorFlow可以利用NVIDIA GPU强大的计算加速能力，使TensorFlow的运行更为高效，尤其是可以成倍提升模型训练的速度。</p>
-<p>在安装GPU版本的TensorFlow前，你需要具有一块不太旧的NVIDIA显卡 <a class="footnote-reference" href="#gpu-version" id="id3">[1]</a> ，以及正确安装NVIDIA显卡驱动程序、CUDA Toolkit和cnDNN。</p>
-<p><strong>NVIDIA驱动程序的安装</strong></p>
-<p>Windows环境中，如果系统具有NVIDIA显卡，则往往已经自动安装了NVIDIA显卡驱动程序。如未安装，直接访问NVIDIA官方网站下载并安装对应型号的最新公版驱动程序即可。、</p>
-<p>不过，NVIDIA显卡驱动程序在Linux系统上的安装往往不会一帆风顺。对于Ubuntu系统，有一个很简易的NVIDIA驱动安装方法：在系统设置（System Setting）里面选软件与更新（Software &amp; Updates），然后点选Additional Drivers里面的“Using NVIDIA binary driver”选项并点选右下角的“Apply Changes”即可，系统即会自动安装NVIDIA驱动，但是通过这种安装方式安装的NVIDIA驱动往往版本较旧。如果需要在Linux下手动安装NVIDIA驱动，注意在安装前：</p>
+<p>在安装GPU版本的TensorFlow前，你需要具有一块不太旧的NVIDIA显卡，以及正确安装NVIDIA显卡驱动程序、CUDA Toolkit和cnDNN。</p>
+<div class="section" id="gpu">
+<h3>GPU硬件的准备<a class="headerlink" href="#gpu" title="永久链接至标题">¶</a></h3>
+<p>TensorFlow对NVIDIA显卡的支持较为完备。对于NVIDIA显卡，要求其CUDA Compute Capability须不低于3.0，可以到 <a class="reference external" href="https://developer.nvidia.com/cuda-gpus/">NVIDIA的官方网站</a> 查询自己所用显卡的CUDA Compute Capability。目前，AMD的显卡也开始对TensorFlow提供支持，可访问  <a class="reference external" href="https://medium.com/tensorflow/amd-rocm-gpu-support-for-tensorflow-33c78cc6a6cf">这篇博客文章</a>  查看详情。</p>
+</div>
+<div class="section" id="id3">
+<h3>NVIDIA驱动程序的安装<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>Windows环境中，如果系统具有NVIDIA显卡，则往往已经自动安装了NVIDIA显卡驱动程序。如未安装，直接访问NVIDIA官方网站下载并安装对应型号的最新公版驱动程序即可。</p>
+<p>不过，在Linux系统上，NVIDIA显卡驱动程序的安装往往不会一帆风顺。对于Ubuntu系统，有一个很简易的NVIDIA驱动安装方法：在系统设置（System Setting）里面选软件与更新（Software &amp; Updates），然后点选Additional Drivers里面的“Using NVIDIA binary driver”选项并点选右下角的“Apply Changes”即可，系统即会自动安装NVIDIA驱动，但是通过这种安装方式安装的NVIDIA驱动往往版本较旧。如果需要在Linux下手动安装NVIDIA驱动，注意在安装前：</p>
 <ul class="simple">
 <li>禁用系统自带的开源显卡驱动Nouveau（在 <code class="docutils literal notranslate"><span class="pre">/etc/modprobe.d/blacklist.conf</span></code> 文件中添加一行 <code class="docutils literal notranslate"><span class="pre">blacklist</span> <span class="pre">nouveau</span></code> ，使用 <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">update-initramfs</span> <span class="pre">-u</span></code> 更新内核，并重启）</li>
 <li>禁用主板的Secure Boot功能</li>
-<li>停用桌面环境（如 <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">lightdm</span> <span class="pre">stop</span></code> ）</li>
+<li>停用桌面环境（如 <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">service</span> <span class="pre">lightdm</span> <span class="pre">stop</span></code>）</li>
 <li>删除原有NVIDIA驱动程序（如 <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">purge</span> <span class="pre">nvidia*</span></code>）</li>
 </ul>
 <p>然后即可在 <a class="reference external" href="https://www.nvidia.com/Download/index.aspx?lang=en-us">NVIDIA官方网站</a> 下载驱动程序（为 <code class="docutils literal notranslate"><span class="pre">.run</span></code> 文件），并使用 <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">bash</span> <span class="pre">DRIVER_FILE_NAME.run</span></code> 命令安装驱动。</p>
@@ -282,14 +322,17 @@ Mon Jun 10 23:19:54 2019
 </pre></div>
 </div>
 <p>更详细的指导可以参考 <a class="reference external" href="https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/">这篇文章</a> 和 <a class="reference external" href="https://blog.csdn.net/wf19930209/article/details/81877822">这篇中文博客</a> 。</p>
-<p><strong>CUDA Toolkit和cnDNN的安装</strong></p>
-<p>使用conda包管理器安装GPU版本的TensorFlow时，会自动安装对应版本的CUDA Toolkit和cuDNN。Anaconda包含Python包管理器pip，你也可以使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">tensorflow</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">tensorflow-gpu</span></code> 来安装TensorFlow。使用pip安装的优点在于可以第一时间安装到最新的TensorFlow版本（conda源往往有滞后），缺点则是不会自动安装CUDA Toolkit和cuDNN，你需要按照 <a class="reference external" href="https://www.tensorflow.org/install/gpu">TensorFlow官方网站上的说明</a> 进行手动安装，或使用 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">cudntoolkit=X.X</span></code> 和 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">cudnn=X.X.X</span></code> 进行安装，其中X.X和X.X.X为需要安装的CUDA Toolkit和cuDNN版本号，必须严格按照TensorFlow官方网站的版本安装。在安装前，可使用 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">search</span> <span class="pre">cudatoolkit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">search</span> <span class="pre">cudnn</span></code> 搜索conda源中可用的版本号。</p>
-<table class="last docutils footnote" frame="void" id="gpu-version" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td>具体而言，该显卡的CUDA Compute Capability须不低于3.0，可以到 <a class="reference external" href="https://developer.nvidia.com/cuda-gpus/">NVIDIA的官方网站</a> 查询自己所用显卡的CUDA Compute Capability。</td></tr>
-</tbody>
-</table>
+</div>
+<div class="section" id="cuda-toolkitcndnn">
+<h3>CUDA Toolkit和cnDNN的安装<a class="headerlink" href="#cuda-toolkitcndnn" title="永久链接至标题">¶</a></h3>
+<p>在Anaconda环境下，推荐使用</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">cudatoolkit</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">X</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">cudnn</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">X</span>
+</pre></div>
+</div>
+<p>安装CUDA Toolkit和cnDNN，其中X.X和X.X.X分别为需要安装的CUDA Toolkit和cuDNN版本号，必须严格按照TensorFlow官方网站所说明的版本安装。在安装前，可使用 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">search</span> <span class="pre">cudatoolkit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">search</span> <span class="pre">cudnn</span></code> 搜索conda源中可用的版本号。</p>
+<p>当然，也可以按照 <a class="reference external" href="https://www.tensorflow.org/install/gpu">TensorFlow官方网站上的说明</a> 手动下载CUDA Toolkit和cuDNN并安装，不过过程会稍繁琐。</p>
+<p>使用conda包管理器安装GPU版本的TensorFlow时，会自动安装对应版本的CUDA Toolkit和cuDNN。conda源的更新较慢，如果对版本不太介意，推荐直接使用 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">tensorflow-gpu</span></code> 进行安装。</p>
 </div>
 </div>
 <div class="section" id="id8">
@@ -318,7 +361,7 @@ Mon Jun 10 23:19:54 2019
 <h2>IDE设置<a class="headerlink" href="#ide" title="永久链接至标题">¶</a></h2>
 <p>本手册建议使用 <a class="reference external" href="http://www.jetbrains.com/pycharm/">PyCharm</a> 作为Python开发的IDE。</p>
 <p>在新建项目时，你需要选定项目的Python Interpreter，也就是用怎样的Python环境来运行你的项目。在安装部分，你所建立的每个Conda虚拟环境其实都有一个自己独立的Python Interpreter，你只需要将它们添加进来即可。选择“Add”，并在接下来的窗口选择“Existing Environment”，在Interpreter处选择 <code class="docutils literal notranslate"><span class="pre">Anaconda安装目录/envs/所需要添加的Conda环境名字/python.exe</span></code> （Linux下无 <code class="docutils literal notranslate"><span class="pre">.exe</span></code> 后缀）并点击“OK”即可。如果选中了“Make available to all projects”，则在所有项目中都可以选择该Python Interpreter。注意，在Windows下Anaconda的默认安装目录比较特殊，一般为  <code class="docutils literal notranslate"><span class="pre">C:\Users\用户名\Anaconda3\</span></code> ，即当前Windows用户的用户目录下。</p>
-<p>对于TensorFlow开发而言，PyCharm的Professonal版本非常有用的一个特性是 <strong>远程调试</strong> （Remote Debugging）。当你编写程序的终端机性能有限，但又有一台可远程ssh访问的高性能计算机（一般具有高性能GPU）时，远程调试功能可以让你在终端机编写程序的同时，在远程计算机上调试和运行程序（尤其是训练模型）。你在终端机上对代码和数据的修改可以自动同步到远程机，在实际使用的过程中如同在远程机上编写程序一般，与串流游戏有异曲同工之妙。不过远程调试对网络的稳定性要求高，如果需要长时间训练模型，建议登录远程机终端直接训练模型（Linux下可以结合 <code class="docutils literal notranslate"><span class="pre">nohup</span></code> 命令 <a class="footnote-reference" href="#nohup" id="id9">[2]</a> ，让进程在后端运行，不受终端退出的影响）。远程调试功能的具体配置步骤见 <a class="reference external" href="https://www.jetbrains.com/help/pycharm/remote-debugging-with-product.html">PyCharm文档</a> 。</p>
+<p>对于TensorFlow开发而言，PyCharm的Professonal版本非常有用的一个特性是 <strong>远程调试</strong> （Remote Debugging）。当你编写程序的终端机性能有限，但又有一台可远程ssh访问的高性能计算机（一般具有高性能GPU）时，远程调试功能可以让你在终端机编写程序的同时，在远程计算机上调试和运行程序（尤其是训练模型）。你在终端机上对代码和数据的修改可以自动同步到远程机，在实际使用的过程中如同在远程机上编写程序一般，与串流游戏有异曲同工之妙。不过远程调试对网络的稳定性要求高，如果需要长时间训练模型，建议登录远程机终端直接训练模型（Linux下可以结合 <code class="docutils literal notranslate"><span class="pre">nohup</span></code> 命令 <a class="footnote-reference" href="#nohup" id="id9">[1]</a> ，让进程在后端运行，不受终端退出的影响）。远程调试功能的具体配置步骤见 <a class="reference external" href="https://www.jetbrains.com/help/pycharm/remote-debugging-with-product.html">PyCharm文档</a> 。</p>
 <div class="admonition tip">
 <p class="first admonition-title">小技巧</p>
 <p class="last">如果你是学生并有.edu结尾的邮箱的话，可以在 <a class="reference external" href="http://www.jetbrains.com/student/">这里</a> 申请PyCharm的免费Professional版本授权。</p>
@@ -326,9 +369,12 @@ Mon Jun 10 23:19:54 2019
 <table class="docutils footnote" frame="void" id="nohup" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id9">[2]</a></td><td>关于  <code class="docutils literal notranslate"><span class="pre">nohup</span></code> 命令可参考 <a class="reference external" href="https://www.ibm.com/developerworks/cn/linux/l-cn-nohup/">https://www.ibm.com/developerworks/cn/linux/l-cn-nohup/</a></td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id9">[1]</a></td><td>关于  <code class="docutils literal notranslate"><span class="pre">nohup</span></code> 命令可参考 <a class="reference external" href="https://www.ibm.com/developerworks/cn/linux/l-cn-nohup/">https://www.ibm.com/developerworks/cn/linux/l-cn-nohup/</a></td></tr>
 </tbody>
 </table>
+</div>
+<div class="section" id="id12">
+<h2>TensorFlow所需的硬件配置 *<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
 </div>
 </div>
 
