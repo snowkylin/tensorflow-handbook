@@ -18,7 +18,7 @@ def train():
     optimizer = tf.keras.optimizers.Adam(learning_rate=args.learning_rate)
     num_batches = int(data_loader.num_train_data // args.batch_size * args.num_epochs)
     checkpoint = tf.train.Checkpoint(myAwesomeModel=model)      # 实例化Checkpoint，设置保存对象为model
-    for batch_index in range(num_batches):
+    for batch_index in range(1, num_batches+1):                 
         X, y = data_loader.get_batch(args.batch_size)
         with tf.GradientTape() as tape:
             y_pred = model(X)
@@ -27,7 +27,7 @@ def train():
             print("batch %d: loss %f" % (batch_index, loss.numpy()))
         grads = tape.gradient(loss, model.variables)
         optimizer.apply_gradients(grads_and_vars=zip(grads, model.variables))
-        if (batch_index + 1) % 100 == 0:                        # 每隔100个Batch保存一次
+        if batch_index % 100 == 0:                              # 每隔100个Batch保存一次
             path = checkpoint.save('./save/model.ckpt')         # 保存模型参数到文件
             print("model saved to %s" % path)
 
