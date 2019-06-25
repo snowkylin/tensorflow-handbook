@@ -9,9 +9,13 @@ TensorFlow工具
 Checkpoint：变量的保存与恢复
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+..
+
+    https://www.tensorflow.org/beta/guide/checkpoints
+
 很多时候，我们希望在模型训练完成后能将训练好的参数（变量）保存起来。在需要使用模型的其他地方载入模型和参数，就能直接得到训练好的模型。可能你第一个想到的是用Python的序列化模块 ``pickle`` 存储 ``model.variables``。但不幸的是，TensorFlow的变量类型 ``ResourceVariable`` 并不能被序列化。
 
-好在TensorFlow提供了 `tf.train.Checkpoint <https://www.tensorflow.org/api_docs/python/tf/train/Checkpoint>`_ 这一强大的变量保存与恢复类，可以使用其 ``save()`` 和 ``restore()`` 方法将TensorFlow中所有包含Checkpointable State的对象进行保存和恢复。具体而言，``tf.train.Optimizer`` 、 ``tf.Variable`` 、 ``tf.keras.Layer`` 或者 ``tf.keras.Model`` 实例都可以被保存。其使用方法非常简单，我们首先声明一个Checkpoint：
+好在TensorFlow提供了 ``tf.train.Checkpoint`` 这一强大的变量保存与恢复类，可以使用其 ``save()`` 和 ``restore()`` 方法将TensorFlow中所有包含Checkpointable State的对象进行保存和恢复。具体而言，``tf.train.Optimizer`` 、 ``tf.Variable`` 、 ``tf.keras.Layer`` 或者 ``tf.keras.Model`` 实例都可以被保存。其使用方法非常简单，我们首先声明一个Checkpoint：
 
 .. code-block:: python
 
@@ -54,9 +58,11 @@ Checkpoint：变量的保存与恢复
     # train.py 模型训练阶段
 
     model = MyModel()
-    checkpoint = tf.train.Checkpoint(myModel=model)     # 实例化Checkpoint，指定保存对象为model（如果需要保存Optimizer的参数也可加入）
-    # 模型训练代码
-    checkpoint.save('./save/model.ckpt')                # 模型训练完毕后将参数保存到文件，也可以在模型训练过程中每隔一段时间就保存一次
+    # 实例化Checkpoint，指定保存对象为model（如果需要保存Optimizer的参数也可加入）
+    checkpoint = tf.train.Checkpoint(myModel=model)     
+    # ...（模型训练代码）
+    # 模型训练完毕后将参数保存到文件（也可以在模型训练过程中每隔一段时间就保存一次）
+    checkpoint.save('./save/model.ckpt')               
 
 .. code-block:: python
 
@@ -72,9 +78,15 @@ Checkpoint：变量的保存与恢复
 
 最后提供一个实例，以前章的 :ref:`多层感知机模型 <mlp>` 为例展示模型变量的保存和载入：
 
-.. literalinclude:: /_static/code/zh/extended/save_and_restore/mnist.py
+.. literalinclude:: /_static/code/zh/tools/save_and_restore/mnist.py
 
-在代码目录下建立save文件夹并运行代码进行训练后，save文件夹内将会存放每隔100个batch保存一次的模型变量数据。将第7行改为 ``model = 'test'`` 并再次运行代码，将直接使用最后一次保存的变量值恢复模型并在测试集上测试模型性能，可以直接获得95%左右的准确率。
+在代码目录下建立save文件夹并运行代码进行训练后，save文件夹内将会存放每隔100个batch保存一次的模型变量数据。在命令行参数中加入 ``--mode=test`` 并再次运行代码，将直接使用最后一次保存的变量值恢复模型并在测试集上测试模型性能，可以直接获得95%左右的准确率。
+
+.. admonition:: 使用 ``tf.train.CheckpointManager`` 删除旧的Checkpoint以及自定义文件编号
+
+    我们往往在训练一定步数后保存一个Checkpoint。
+
+    - 
 
 ..
     AutoGraph：动态图转静态图 *
