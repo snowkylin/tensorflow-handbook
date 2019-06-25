@@ -78,6 +78,7 @@ Checkpoint：变量的保存与恢复
 最后提供一个实例，以前章的 :ref:`多层感知机模型 <mlp>` 为例展示模型变量的保存和载入：
 
 .. literalinclude:: /_static/code/zh/tools/save_and_restore/mnist.py
+    :emphasize-lines: 20, 30-32, 38-39
 
 在代码目录下建立save文件夹并运行代码进行训练后，save文件夹内将会存放每隔100个batch保存一次的模型变量数据。在命令行参数中加入 ``--mode=test`` 并再次运行代码，将直接使用最后一次保存的变量值恢复模型并在测试集上测试模型性能，可以直接获得95%左右的准确率。
 
@@ -102,6 +103,7 @@ Checkpoint：变量的保存与恢复
     以下提供一个实例，展示使用CheckpointManager限制仅保留最后三个Checkpoint文件，并使用batch的编号作为Checkpoint的文件编号。
 
     .. literalinclude:: /_static/code/zh/tools/save_and_restore/mnist_manager.py
+        :emphasize-lines: 22, 34
 
 ..
     AutoGraph：动态图转静态图 *
@@ -161,6 +163,7 @@ TensorBoard的使用有以下注意事项：
 最后提供一个实例，以前章的 :ref:`多层感知机模型 <mlp>` 为例展示TensorBoard的使用：
 
 .. literalinclude:: /_static/code/zh/tools/tensorboard/mnist.py
+    :emphasize-lines: 11, 19-20
 
 ``tf.data`` ：数据预处理
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
