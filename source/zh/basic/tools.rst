@@ -10,7 +10,6 @@ Checkpoint：变量的保存与恢复
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ..
-
     https://www.tensorflow.org/beta/guide/checkpoints
 
 很多时候，我们希望在模型训练完成后能将训练好的参数（变量）保存起来。在需要使用模型的其他地方载入模型和参数，就能直接得到训练好的模型。可能你第一个想到的是用Python的序列化模块 ``pickle`` 存储 ``model.variables``。但不幸的是，TensorFlow的变量类型 ``ResourceVariable`` 并不能被序列化。
@@ -84,9 +83,25 @@ Checkpoint：变量的保存与恢复
 
 .. admonition:: 使用 ``tf.train.CheckpointManager`` 删除旧的Checkpoint以及自定义文件编号
 
-    我们往往在训练一定步数后保存一个Checkpoint。
+    在模型的训练过程中，我们往往每隔一定步数保存一个Checkpoint并进行编号。不过很多时候我们会有这样的需求：
 
-    - 
+    - 在长时间的训练后，程序会保存大量的Checkpoint，但我们只想保留最后的几个Checkpoint；
+    - Checkpoint默认从1开始编号，每次累加1，但我们可能希望使用别的编号方式（例如使用当前Batch的编号作为文件编号）。
+
+    这时，我们可以使用TensorFlow的 ``tf.train.CheckpointManager`` 来实现以上需求。具体而言，在定义Checkpoint后接着定义一个CheckpointManager：
+
+    .. code-block:: python
+
+        checkpoint = tf.train.Checkpoint(model=model)
+        manager = tf.train.CheckpointManager(checkpoint, directory='./save', checkpoint_name='model.ckpt', max_to_keep=k)
+
+    此处， ``directory`` 参数为文件保存的路径， ``checkpoint_name`` 为文件名前缀（不提供则默认为 ``ckpt`` ）， ``max_to_keep`` 为保留的Checkpoint数目。
+
+    在需要保存模型的时候，我们直接使用 ``manager.save()`` 即可。如果我们希望自行指定保存的Checkpoint的编号，则可以在保存时加入 ``checkpoint_number`` 参数。例如 ``manager.save(checkpoint_number=100)`` 。
+
+    以下提供一个实例，展示使用CheckpointManager限制仅保留最后三个Checkpoint文件，并使用batch的编号作为Checkpoint的文件编号。
+
+    .. literalinclude:: /_static/code/zh/tools/save_and_restore/mnist_manager.py
 
 ..
     AutoGraph：动态图转静态图 *
@@ -101,29 +116,30 @@ Checkpoint：变量的保存与恢复
 TensorBoard：训练过程可视化
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. attention:: 目前，Eager Execution模式下的TensorBoard支持尚在 `tf.contrib.summary <https://www.tensorflow.org/api_docs/python/tf/contrib/summary>`_ 内，可能以后会有较多变化，因此这里只做简单示例。
+..
+    https://www.tensorflow.org/tensorboard/r2/get_started
 
 有时，你希望查看模型训练过程中各个参数的变化情况（例如损失函数loss的值）。虽然可以通过命令行输出来查看，但有时显得不够直观。而TensorBoard就是一个能够帮助我们将训练过程可视化的工具。
 
-首先在代码目录下建立一个文件夹（如./tensorboard）存放TensorBoard的记录文件，并在代码中实例化一个记录器：
+首先在代码目录下建立一个文件夹（如 ``./tensorboard`` ）存放TensorBoard的记录文件，并在代码中实例化一个记录器：
 
 .. code-block:: python
     
-    summary_writer = tf.contrib.summary.create_file_writer('./tensorboard')
+    summary_writer = tf.summary.create_file_writer('./tensorboard')     # 参数为记录文件所保存的目录
 
-接下来，将训练的代码部分通过with语句放在 ``summary_writer.as_default()`` 和 ``tf.contrib.summary.always_record_summaries()`` 的上下文中，并对需要记录的参数（一般是scalar）运行 ``tf.contrib.summary.scalar(name, tensor, step=batch_index)`` 即可。这里的step参数可根据自己的需要自行制定，一般可设置为当前训练过程中的batch序号。整体框架如下：
+接下来，当需要记录训练过程中的参数时，通过with语句指定希望使用的记录器，并对需要记录的参数（一般是scalar）运行 ``tf.summary.scalar(name, tensor, step=batch_index)`` ，即可将训练过程中参数在step时候的值记录下来。这里的step参数可根据自己的需要自行制定，一般可设置为当前训练过程中的batch序号。整体框架如下：
 
 .. code-block:: python
 
-    summary_writer = tf.contrib.summary.create_file_writer('./tensorboard')
-    with summary_writer.as_default(), tf.contrib.summary.always_record_summaries():
-        # 开始模型训练
-        for batch_index in range(num_batches):
-            # 训练代码，当前batch的损失值放入变量loss中
-            tf.contrib.summary.scalar("loss", loss, step=batch_index)
-            tf.contrib.summary.scalar("MyScalar", my_scalar, step=batch_index)  # 还可以添加其他自定义的变量
+    summary_writer = tf.summary.create_file_writer('./tensorboard')    
+    # 开始模型训练
+    for batch_index in range(num_batches):
+        # ...（训练代码，当前batch的损失值放入变量loss中）
+        with summary_writer.as_default():                               # 希望使用的记录器
+            tf.summary.scalar("loss", loss, step=batch_index)
+            tf.summary.scalar("MyScalar", my_scalar, step=batch_index)  # 还可以添加其他自定义的变量
 
-每运行一次 ``tf.contrib.summary.scalar()`` ，记录器就会向记录文件中写入一条记录。除了最简单的标量（scalar）以外，TensorBoard还可以对其他类型的数据（如图像，音频等）进行可视化，详见 `API文档 <https://www.tensorflow.org/api_docs/python/tf/contrib/summary>`_ 。
+每运行一次 ``tf.summary.scalar()`` ，记录器就会向记录文件中写入一条记录。除了最简单的标量（scalar）以外，TensorBoard还可以对其他类型的数据（如图像，音频等）进行可视化，详见 `TensorBoard文档 <https://www.tensorflow.org/tensorboard/r2/get_started>`_ 。
 
 当我们要对训练过程可视化时，在代码目录打开终端（如需要的话进入TensorFlow的conda环境），运行::
 
@@ -131,7 +147,7 @@ TensorBoard：训练过程可视化
 
 然后使用浏览器访问命令行程序所输出的网址（一般是http://计算机名称:6006），即可访问TensorBoard的可视界面，如下图所示：
 
-.. figure:: /_static/image/extended/tensorboard.png
+.. figure:: /_static/image/tools/tensorboard.png
     :width: 100%
     :align: center
 
@@ -144,7 +160,7 @@ TensorBoard的使用有以下注意事项：
 
 最后提供一个实例，以前章的 :ref:`多层感知机模型 <mlp>` 为例展示TensorBoard的使用：
 
-.. literalinclude:: /_static/code/zh/extended/tensorboard/mnist.py
+.. literalinclude:: /_static/code/zh/tools/tensorboard/mnist.py
 
 ``tf.data`` ：数据预处理
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
