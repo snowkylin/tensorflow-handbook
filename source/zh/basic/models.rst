@@ -171,7 +171,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 具体代码实现如下：
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
-    :lines: 107-116
+    :lines: 93-102
 
 .. admonition:: 交叉熵（cross entropy）与 ``tf.keras.losses`` 
 
@@ -202,7 +202,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 最后，我们使用验证集评估模型性能。具体而言，比较验证集上模型预测的结果与真实结果，输出预测正确的样本数占总样本数的比例：
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
-    :lines: 118-124
+    :lines: 104-110
 
 输出结果::
 
@@ -432,10 +432,10 @@ Keras Sequential/Functional API模式建立模型
 -------------------------------------------
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
-    :lines: 32-37
+    :lines: 18-23
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
-    :lines: 39-44
+    :lines: 25-30
 
 https://www.tensorflow.org/alpha/guide/keras/functional
 
@@ -443,7 +443,7 @@ https://www.tensorflow.org/alpha/guide/keras/functional
 --------------------------------------------------------------------------------------
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
-    :lines: 98-104
+    :lines: 84-90
 
 https://www.tensorflow.org/beta/guide/keras/training_and_evaluation
 
@@ -492,7 +492,6 @@ https://www.tensorflow.org/beta/guide/keras/training_and_evaluation
 -------------------------------------------
 
 https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/keras/metrics/Metric
-
 
 
 Graph Execution模式 *
