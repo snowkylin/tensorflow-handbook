@@ -20,23 +20,14 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -116,7 +107,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">TensorFlow模型建立与训练</a></li>
-<li class="toctree-l1"><a class="reference internal" href="extended.html">TensorFlow工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">TensorFlow工具</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
 <ul>
@@ -290,7 +281,7 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">array</span><span class="p">([</span><span class="mf">9.</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">),</span> <span class="n">array</span><span class="p">([</span><span class="mf">6.</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)]</span>
 </pre></div>
 </div>
-<p>这里 <code class="docutils literal notranslate"><span class="pre">x</span></code> 是一个初始化为3的 <strong>变量</strong> （Variable），使用 <code class="docutils literal notranslate"><span class="pre">tf.Variable()</span></code> 声明。与普通张量一样，变量同样具有形状（shape）和类型（dtype）属性，不过使用变量需要有一个初始化过程，可以通过在 <code class="docutils literal notranslate"><span class="pre">tf.Variable()</span></code> 中指定 <code class="docutils literal notranslate"><span class="pre">initial_value</span></code> 参数来指定初始值。这里将变量 <code class="docutils literal notranslate"><span class="pre">x</span></code> 初始化为 <code class="docutils literal notranslate"><span class="pre">3.</span></code> <a class="footnote-reference" href="#f0" id="id8">[1]</a>。变量与普通张量的一个重要区别是其默认能够被TensorFlow的自动求导机制所求导，因此往往被用于定义机器学习模型的参数。</p>
+<p>这里 <code class="docutils literal notranslate"><span class="pre">x</span></code> 是一个初始化为3的 <strong>变量</strong> （Variable），使用 <code class="docutils literal notranslate"><span class="pre">tf.Variable()</span></code> 声明。与普通张量一样，变量同样具有形状、类型和值三种属性。使用变量需要有一个初始化过程，可以通过在 <code class="docutils literal notranslate"><span class="pre">tf.Variable()</span></code> 中指定 <code class="docutils literal notranslate"><span class="pre">initial_value</span></code> 参数来指定初始值。这里将变量 <code class="docutils literal notranslate"><span class="pre">x</span></code> 初始化为 <code class="docutils literal notranslate"><span class="pre">3.</span></code> <a class="footnote-reference" href="#f0" id="id8">[1]</a>。变量与普通张量的一个重要区别是其默认能够被TensorFlow的自动求导机制所求导，因此往往被用于定义机器学习模型的参数。</p>
 <p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 是一个自动求导的记录器，在其中的变量和计算步骤都会被自动记录。在上面的示例中，变量 <code class="docutils literal notranslate"><span class="pre">x</span></code> 和计算步骤 <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">tf.square(x)</span></code> 被自动记录，因此可以通过 <code class="docutils literal notranslate"><span class="pre">y_grad</span> <span class="pre">=</span> <span class="pre">tape.gradient(y,</span> <span class="pre">x)</span></code> 求张量 <code class="docutils literal notranslate"><span class="pre">y</span></code> 对变量 <code class="docutils literal notranslate"><span class="pre">x</span></code> 的导数。</p>
 <p>在机器学习中，更加常见的是对多元函数求偏导数，以及对向量或矩阵的求导。这些对于TensorFlow也不在话下。以下代码展示了如何使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 计算函数 <span class="math notranslate nohighlight">\(L(w, b) = \|Xw + b - y\|^2\)</span> 在 <span class="math notranslate nohighlight">\(w = (1, 2)^T, b = 1\)</span> 时分别对 <span class="math notranslate nohighlight">\(w, b\)</span> 的偏导数。其中 <span class="math notranslate nohighlight">\(X = \begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix},  y = \begin{bmatrix} 1 \\ 2\end{bmatrix}\)</span>。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">]])</span>
