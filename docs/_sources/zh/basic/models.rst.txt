@@ -14,6 +14,7 @@ TensorFlow模型建立与训练
     
     * `Python面向对象编程 <http://www.runoob.com/python3/python3-class.html>`_ （在Python内定义类和方法、类的继承、构造和析构函数，`使用super()函数调用父类方法 <http://www.runoob.com/python/python-func-super.html>`_ ，`使用__call__()方法对实例进行调用 <https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319098638265527beb24f7840aa97de564ccc7f20f6000>`_ 等）；
     * 多层感知机、卷积神经网络、循环神经网络和强化学习（每节之前给出参考资料）。
+    *  `Python的函数装饰器 <https://www.runoob.com/w3cnote/python-func-decorators.html>`_ （非必须）
 
 
 模型（Model）与层（Layer）
@@ -497,14 +498,46 @@ https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/keras/metrics/Metric
 Graph Execution模式 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-在TensorFlow 2.0中，推荐使用 ``@tf.function`` （而非1.X中的Session）实现Graph Execution。只需要在所定义的模型类的call方法前加上 ``@tf.function`` ，就能让模型以Graph Execution模式运行。
+使用 ``@tf.function`` 装饰器
+-------------------------------------------
+
+..
+    https://www.tensorflow.org/beta/guide/autograph
+    https://www.tensorflow.org/guide/autograph
+    https://pgaleone.eu/tensorflow/tf.function/2019/03/21/dissecting-tf-function-part-1/
+    https://pgaleone.eu/tensorflow/tf.function/2019/04/03/dissecting-tf-function-part-2/
+    https://pgaleone.eu/tensorflow/tf.function/2019/05/10/dissecting-tf-function-part-3/
+
+在TensorFlow 2.0中，推荐使用 ``@tf.function`` （而非1.X中的 ``tf.Session`` ）实现Graph Execution，从而将模型转换为易于部署且高性能的TensorFlow图模型。只需要将我们希望以Graph Execution模式运行的代码封装在一个函数内，并在函数前加上 ``@tf.function`` 即可，如下例所示。
+
+.. warning:: ``@tf.function`` 使用静态编译对函数内的代码进行转换。对函数内可使用的语句有一定限制（仅支持Python语言的一个子集），且需要函数内的操作本身能够被构建为计算图。建议在函数内只使用TensorFlow的原生操作，不要使用过于复杂的Python语句，最好是能够按照图模型的思想去构建函数。详细内容可参考 `AutoGraph Capabilities and Limitations <https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/autograph/LIMITATIONS.md>`_ 。
+
+.. literalinclude:: /_static/code/zh/model/autograph/main.py
+    :emphasize-lines: 11, 18
+
+运行400个Batch进行测试，加入 ``@tf.function`` 的程序耗时35.5秒，未加入 ``@tf.function`` 的纯Eager Execution程序耗时43.8秒。可见 ``@tf.function`` 带来了一定的性能提升。一般而言，在模型中有较多小操作的时候
+
+.. admonition:: ``@tf.function`` 细节与AutoGraph
+
+    当被 ``@tf.function`` 修饰的函数第一次被调用的时候，进行以下操作：
+
+    - 在Eager Execution模式关闭的环境下，函数内的代码依次运行。也就是说，每个 ``tf.`` 方法都只是定义了计算节点，而并没有进行任何实质的计算。这与TensorFlow 1.X的Graph Execution是一致的；
+    - 使用AutoGraph将函数中的Python控制流语句转换成TensorFlow计算图中的对应节点（比如说 ``while`` 和 ``for`` 语句转换为 ``tf.while`` ， ``if`` 语句转换为 ``tf.cond`` 等等；
+    - 基于上面的两步，建立函数内代码的计算图表示（为了保证图的计算顺序，图中还会自动加入一些 ``tf.control_dependencies`` 节点）；
+    - 基于函数的名字和输入的函数参数的类型生成一个哈希值，并将建立的计算图缓存到一个哈希表中。
+
+    在被 ``@tf.function`` 修饰的函数之后再次被调用的时候，根据函数名和输入的函数参数的类型计算哈希值，检查哈希表中是否已经有了对应计算图的缓存。如果是，则直接使用已缓存的计算图，否则重新按上述步骤建立计算图。
+
+使用传统的 ``tf.Session`` 
+-------------------------------------------
 
 不过，如果你依然钟情于TensorFlow传统的Graph Execution模式也没有问题。TensorFlow 2.0提供了 ``tf.compat.v1`` 模块以支持TensorFlow 1.X版本的API。同时，只要在编写模型的时候稍加注意，Keras的模型是可以同时兼容Eager Execution模式和Graph Execution模式的。注意，在Graph Execution模式下， ``model(input_tensor)`` 只需运行一次以完成图的建立操作。
 
 例如，通过以下代码，同样可以在MNIST数据集上训练前面所建立的MLP或CNN模型：
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
-    :lines: 126-147
+    :lines: 112-136
+    
 
 关于Graph Execution的更多内容可参见 :doc:`/zh/appendix/static`。
 

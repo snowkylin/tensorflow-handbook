@@ -165,11 +165,18 @@ TensorBoard的使用有以下注意事项：
 .. literalinclude:: /_static/code/zh/tools/tensorboard/mnist.py
     :emphasize-lines: 11, 19-20
 
-``tf.data`` ：数据预处理
+``tf.data`` ：数据集的构建与预处理
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ..
     https://www.tensorflow.org/beta/guide/data
 
-.. literalinclude:: /_static/code/zh/tools/tfdata/main.py
+很多时候，我们希望使用自己的数据集来训练模型。然而，面对一堆格式不一的原始数据文件，将其预处理并读入程序的过程往往十分繁琐，甚至比模型的设计还要耗费精力。比如，为了读入一批图像文件，我们可能需要纠结于python的各种图像处理包（比如 ``pillow`` ），自己设计Batch的生成方式，最后还可能在运行的效率上不尽如人意。为此，TensorFlow提供了 ``tf.data`` 这一模块，包括了一套灵活的数据处理API，能够帮助我们快速、高效地构建数据输入的流水线。
+
+.. literalinclude:: /_static/code/zh/tools/tfdata/cat_and_dog.py
+    :lines: 1-51
+    :emphasize-lines: 14-17, 29-33, 51
+
+.. literalinclude:: /_static/code/zh/tools/tfdata/cat_and_dog.py
+    :lines: 53-67
 
