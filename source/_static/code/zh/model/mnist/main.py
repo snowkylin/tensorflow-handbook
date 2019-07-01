@@ -111,6 +111,7 @@ if training_loop == 'custom':
 if training_loop == 'graph':
     optimizer = tf.compat.v1.train.AdamOptimizer(learning_rate=learning_rate)
     num_batches = int(data_loader.num_train_data // batch_size * num_epochs)
+    # 建立计算图
     X_placeholder = tf.compat.v1.placeholder(name='X', shape=[None, 28, 28, 1], dtype=tf.float32)
     y_placeholder = tf.compat.v1.placeholder(name='y', shape=[None], dtype=tf.int32)
     y_pred = model(X_placeholder)
@@ -118,10 +119,12 @@ if training_loop == 'graph':
     loss = tf.reduce_mean(loss)
     train_op = optimizer.minimize(loss)
     sparse_categorical_accuracy = tf.keras.metrics.SparseCategoricalAccuracy()
+    # 建立Session
     with tf.compat.v1.Session() as sess:
         sess.run(tf.compat.v1.global_variables_initializer())
         for batch_index in range(num_batches):
             X, y = data_loader.get_batch(batch_size)
+            # 使用Session.run()将数据送入计算图节点，进行训练以及计算损失函数
             _, loss_value = sess.run([train_op, loss], feed_dict={X_placeholder: X, y_placeholder: y})
             print("batch %d: loss %f" % (batch_index, loss_value))
 
