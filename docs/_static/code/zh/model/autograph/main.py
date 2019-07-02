@@ -14,8 +14,8 @@ def train_one_step(X, y):
         y_pred = model(X)
         loss = tf.keras.losses.sparse_categorical_crossentropy(y_true=y, y_pred=y_pred)
         loss = tf.reduce_mean(loss)
-        # 注意这里使用了Graph Execution下的tf.print()
-        tf.print("batch", batch_index, "loss", loss)  
+        # 注意这里使用了TensorFlow内置的tf.print()。@tf.function不支持Python内置的print方法
+        tf.print("loss", loss)  
     grads = tape.gradient(loss, model.variables)
     optimizer.apply_gradients(grads_and_vars=zip(grads, model.variables))
 
