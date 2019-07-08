@@ -43,7 +43,7 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 
     1. 也可以使用 ``conda install tensorflow`` 或者 ``conda install tensorflow-gpu`` 来安装TensorFlow，不过conda源的版本往往更新较慢，难以第一时间获得最新的TensorFlow版本；
     2. 在Windows下，需要打开开始菜单中的“Anaconda Prompt”进入Anaconda的命令行环境；
-    3. 在国内环境下，推荐使用 `清华大学的pypi镜像 <https://mirrors.tuna.tsinghua.edu.cn/help/pypi/>`_ ，将显著提升pip的下载速度。
+    3. 在国内环境下，推荐使用 `清华大学的pypi镜像 <https://mirrors.tuna.tsinghua.edu.cn/help/pypi/>`_ 和 `Anaconda镜像 <https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/>`_ ，将显著提升pip的下载速度。
 
 .. admonition:: pip和conda包管理器
 
