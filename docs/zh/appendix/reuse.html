@@ -20,14 +20,23 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'0.4 alpha',
+              LANGUAGE:'zh_CN',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -119,7 +128,7 @@
 <li class="toctree-l1"><a class="reference internal" href="static.html">静态的TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="swift.html">TensorFlow in Swift</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow资源重用</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#tensorflow-hub">TensorFlow Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tensorflow-hub-jinpeng">TensorFlow Hub （jinpeng）</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tensorflow-datasets">TensorFlow Datasets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tensor2tensor">Tensor2Tensor</a></li>
 </ul>
@@ -197,8 +206,8 @@
             
   <div class="section" id="tensorflow">
 <h1>TensorFlow资源重用<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
-<div class="section" id="tensorflow-hub">
-<h2>TensorFlow Hub<a class="headerlink" href="#tensorflow-hub" title="永久链接至标题">¶</a></h2>
+<div class="section" id="tensorflow-hub-jinpeng">
+<h2>TensorFlow Hub （jinpeng）<a class="headerlink" href="#tensorflow-hub-jinpeng" title="永久链接至标题">¶</a></h2>
 <p>TF Hub目的是为了更好复用已训练好的模型，可节省海量的训练时间和计算资源。预训练好的模型，可以进行直接部署，也可以进行迁移学习（Transfer Learning）。</p>
 <p>本书是使用TF Hub中的Inception V3模型，针对mnist图像进行迁移学习。
 mnist图像资源获取地址：<a class="reference external" href="https://github.com/dpinthinker/mnist_image_png_jpeg">https://github.com/dpinthinker/mnist_image_png_jpeg</a></p>
@@ -245,7 +254,29 @@ mnist图像资源获取地址：<a class="reference external" href="https://gith
 </div>
 <div class="section" id="tensorflow-datasets">
 <h2>TensorFlow Datasets<a class="headerlink" href="#tensorflow-datasets" title="永久链接至标题">¶</a></h2>
-<p><a class="reference external" href="https://www.tensorflow.org/datasets/">https://www.tensorflow.org/datasets/</a></p>
+<p>TensorFlow Datasets是一个开箱即用的数据集集合，包含数十种常用的机器学习数据集。通过简单的几行代码即可将数据以 <code class="docutils literal notranslate"><span class="pre">tf.data.Datasets</span></code> 的格式载入。</p>
+<p>该工具是一个独立的Python包，可以通过:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">-</span><span class="n">datasets</span>
+</pre></div>
+</div>
+<p>安装。</p>
+<p>在使用时，首先使用import导入该包</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="kn">as</span> <span class="nn">tfds</span>
+</pre></div>
+</div>
+<p>然后，最基础的用法是使用tfds.load方法，载入所需的数据集，如：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;mnist&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">tfds</span><span class="o">.</span><span class="n">Split</span><span class="o">.</span><span class="n">TRAIN</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;cats_vs_dogs&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">tfds</span><span class="o">.</span><span class="n">Split</span><span class="o">.</span><span class="n">TRAIN</span><span class="p">,</span> <span class="n">as_supervised</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;tf_flowers&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">tfds</span><span class="o">.</span><span class="n">Split</span><span class="o">.</span><span class="n">TRAIN</span><span class="p">,</span> <span class="n">as_supervised</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>该方法返回一个 <code class="docutils literal notranslate"><span class="pre">tf.data.Datasets</span></code> 对象。部分重要的参数如下：</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">as_supervised</span></code> ：若为True，则根据数据集的特性返回为 <code class="docutils literal notranslate"><span class="pre">(input,</span> <span class="pre">label)</span></code> 格式，否则返回所有特征的字典。</li>
+<li><code class="docutils literal notranslate"><span class="pre">split</span></code>：指定返回数据集的特定部分，若无则返回整个数据集。一般有 <code class="docutils literal notranslate"><span class="pre">tfds.Split.TRAIN</span></code> （训练集）和 <code class="docutils literal notranslate"><span class="pre">tfds.Split.TEST</span></code> （测试集）选项。</li>
+</ul>
+<p>当前支持的数据集可在 <a class="reference external" href="https://www.tensorflow.org/datasets/datasets">官方文档</a> 或使用 <code class="docutils literal notranslate"><span class="pre">tfds.list_builders()</span></code> 查看。</p>
 </div>
 <div class="section" id="tensor2tensor">
 <h2>Tensor2Tensor<a class="headerlink" href="#tensor2tensor" title="永久链接至标题">¶</a></h2>
