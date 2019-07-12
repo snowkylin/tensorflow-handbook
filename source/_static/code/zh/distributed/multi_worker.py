@@ -4,7 +4,7 @@ import os
 import json
 
 num_epochs = 5
-batch_size_per_replica = 16
+batch_size_per_replica = 64
 learning_rate = 0.001
 
 num_workers = 2
