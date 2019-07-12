@@ -20,14 +20,23 @@
   <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'0.4 alpha',
+              LANGUAGE:'zh_CN',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
         <script type="text/javascript" src="_static/js/custom.js"></script>
         <script type="text/javascript" src="_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -219,9 +228,9 @@
 <li class="toctree-l1"><a class="reference internal" href="zh/basic/installation.html">TensorFlow安装</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/installation.html#id1">一般安装步骤</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/installation.html#gputensorflow">GPU版本TensorFlow安装指南</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/basic/installation.html#id9">第一个程序</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic/installation.html#id10">第一个程序</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/installation.html#ide">IDE设置</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/basic/installation.html#id13">TensorFlow所需的硬件配置 *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic/installation.html#id14">TensorFlow所需的硬件配置 *</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zh/basic/basic.html">TensorFlow基础</a><ul>
@@ -294,7 +303,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/swift.html">TensorFlow in Swift</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/reuse.html">TensorFlow资源重用</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/reuse.html#tensorflow-hub">TensorFlow Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/reuse.html#tensorflow-hub-jinpeng">TensorFlow Hub （jinpeng）</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/appendix/reuse.html#tensorflow-datasets">TensorFlow Datasets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/appendix/reuse.html#tensor2tensor">Tensor2Tensor</a></li>
 </ul>
@@ -317,8 +326,9 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/config.html">TensorFlow环境配置与管理</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/config.html#gpu">GPU的使用与分配</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/config.html#gpu">本地GPU的使用与分配</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/appendix/config.html#dockertensorflow">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/config.html#google-cloud-platform-gcp-tensorflow">在Google Cloud Platform（GCP）中使用TensorFlow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/appendix/config.html#colabtensorflow">在Colab中使用TensorFlow</a></li>
 </ul>
 </li>
