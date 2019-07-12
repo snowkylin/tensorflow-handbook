@@ -43,7 +43,8 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 
     1. 也可以使用 ``conda install tensorflow`` 或者 ``conda install tensorflow-gpu`` 来安装TensorFlow，不过conda源的版本往往更新较慢，难以第一时间获得最新的TensorFlow版本；
     2. 在Windows下，需要打开开始菜单中的“Anaconda Prompt”进入Anaconda的命令行环境；
-    3. 在国内环境下，推荐使用 `清华大学的pypi镜像 <https://mirrors.tuna.tsinghua.edu.cn/help/pypi/>`_ 和 `Anaconda镜像 <https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/>`_ ，将显著提升pip的下载速度。
+    3. 在国内环境下，推荐使用 `清华大学的pypi镜像 <https://mirrors.tuna.tsinghua.edu.cn/help/pypi/>`_ 和 `Anaconda镜像 <https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/>`_ ，将显著提升pip的下载速度；
+    4. 如果对磁盘空间要求严格（比如服务器环境），可以安装 `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ ，仅包含Python和Conda，其他的包可自己按需安装。
 
 .. admonition:: pip和conda包管理器
 
@@ -105,18 +106,24 @@ TensorFlow对NVIDIA显卡的支持较为完备。对于NVIDIA显卡，要求其C
 NVIDIA驱动程序的安装
 -------------------------------------------
 
-Windows环境中，如果系统具有NVIDIA显卡，则往往已经自动安装了NVIDIA显卡驱动程序。如未安装，直接访问NVIDIA官方网站下载并安装对应型号的最新公版驱动程序即可。
+**Windows** 
 
-不过，在Linux系统上，NVIDIA显卡驱动程序的安装往往不会一帆风顺。对于Ubuntu系统，有一个很简易的NVIDIA驱动安装方法：在系统设置（System Setting）里面选软件与更新（Software & Updates），然后点选Additional Drivers里面的“Using NVIDIA binary driver”选项并点选右下角的“Apply Changes”即可，系统即会自动安装NVIDIA驱动，但是通过这种安装方式安装的NVIDIA驱动往往版本较旧。如果需要在Linux下手动安装NVIDIA驱动，注意在安装前：
+Windows环境中，如果系统具有NVIDIA显卡，则往往已经自动安装了NVIDIA显卡驱动程序。如未安装，直接访问 `NVIDIA官方网站 <https://www.nvidia.com/Download/index.aspx?lang=en-us>`_ 下载并安装对应型号的最新公版驱动程序即可。
+
+**Linux** 
+
+在服务器版Linux系统下，同样访问 `NVIDIA官方网站 <https://www.nvidia.com/Download/index.aspx?lang=en-us>`_ 下载驱动程序（为 ``.run`` 文件），并使用 ``sudo bash DRIVER_FILE_NAME.run`` 命令安装驱动即可。在安装之前，可能需要使用 ``sudo apt-get install build-essential`` 安装合适的编译环境。
+
+在具有图形界面的桌面版Linux系统上，NVIDIA显卡驱动程序需要一些额外的配置，否则会出现无法登录等各种错误。如果需要在Linux下手动安装NVIDIA驱动，注意在安装前进行以下步骤（以Ubuntu为例）：
 
 - 禁用系统自带的开源显卡驱动Nouveau（在 ``/etc/modprobe.d/blacklist.conf`` 文件中添加一行 ``blacklist nouveau`` ，使用 ``sudo update-initramfs -u`` 更新内核，并重启）
 - 禁用主板的Secure Boot功能
 - 停用桌面环境（如 ``sudo service lightdm stop``）
 - 删除原有NVIDIA驱动程序（如 ``sudo apt-get purge nvidia*``）
 
-然后即可在 `NVIDIA官方网站 <https://www.nvidia.com/Download/index.aspx?lang=en-us>`_ 下载驱动程序（为 ``.run`` 文件），并使用 ``sudo bash DRIVER_FILE_NAME.run`` 命令安装驱动。
+.. tip:: 对于桌面版Ubuntu系统，有一个很简易的NVIDIA驱动安装方法：在系统设置（System Setting）里面选软件与更新（Software & Updates），然后点选Additional Drivers里面的“Using NVIDIA binary driver”选项并点选右下角的“Apply Changes”即可，系统即会自动安装NVIDIA驱动，但是通过这种安装方式安装的NVIDIA驱动往往版本较旧。
 
-安装完后可在命令行下使用 ``nvidia-smi`` 命令检查是否安装成功，若成功则会打印出当前系统安装的NVIDIA驱动信息，形式如下：
+NVIDIA驱动程序安装完成后，可在命令行下使用 ``nvidia-smi`` 命令检查是否安装成功，若成功则会打印出当前系统安装的NVIDIA驱动信息，形式如下：
 
 ::
     
