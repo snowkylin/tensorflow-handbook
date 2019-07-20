@@ -20,23 +20,14 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -110,7 +101,13 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow工具</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#checkpoint">Checkpoint：变量的保存与恢复</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tensorboard">TensorBoard：训练过程可视化</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#tf-data"><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> ：数据集的构建与预处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tf-data"><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> ：数据集的构建与预处理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">数据集对象的建立</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">数据集对象的预处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">数据集元素的获取</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cats-vs-dogs">实例：cats_vs_dogs图像分类</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -211,6 +208,7 @@
 <ul class="last simple">
 <li><a class="reference external" href="http://www.runoob.com/python3/python3-inputoutput.html">Python的序列化模块Pickle</a> （非必须）</li>
 <li><a class="reference external" href="https://eastlakeside.gitbooks.io/interpy-zh/content/args_kwargs/Usage_kwargs.html">Python的特殊函数参数**kwargs</a> （非必须）</li>
+<li><a class="reference external" href="https://www.runoob.com/python3/python3-iterator-generator.html">Python的迭代器</a></li>
 </ul>
 </div>
 <div class="section" id="checkpoint">
@@ -446,7 +444,154 @@
 </div>
 <div class="section" id="tf-data">
 <h2><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> ：数据集的构建与预处理<a class="headerlink" href="#tf-data" title="永久链接至标题">¶</a></h2>
-<p>很多时候，我们希望使用自己的数据集来训练模型。然而，面对一堆格式不一的原始数据文件，将其预处理并读入程序的过程往往十分繁琐，甚至比模型的设计还要耗费精力。比如，为了读入一批图像文件，我们可能需要纠结于python的各种图像处理包（比如 <code class="docutils literal notranslate"><span class="pre">pillow</span></code> ），自己设计Batch的生成方式，最后还可能在运行的效率上不尽如人意。为此，TensorFlow提供了 <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 这一模块，包括了一套灵活的数据处理API，能够帮助我们快速、高效地构建数据输入的流水线。</p>
+<p>很多时候，我们希望使用自己的数据集来训练模型。然而，面对一堆格式不一的原始数据文件，将其预处理并读入程序的过程往往十分繁琐，甚至比模型的设计还要耗费精力。比如，为了读入一批图像文件，我们可能需要纠结于python的各种图像处理包（比如 <code class="docutils literal notranslate"><span class="pre">pillow</span></code> ），自己设计Batch的生成方式，最后还可能在运行的效率上不尽如人意。为此，TensorFlow提供了 <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 这一模块，包括了一套灵活的数据集构建API，能够帮助我们快速、高效地构建数据输入的流水线，尤其适用于数据量巨大的场景。</p>
+<div class="section" id="id2">
+<h3>数据集对象的建立<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 的核心是 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 类，提供了对数据集的高层封装。<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 由一系列的可迭代访问的元素（element）组成，每个元素包含一个或多个张量。比如说，对于一个由图像组成的数据集，每个元素可以是一个形状为 <code class="docutils literal notranslate"><span class="pre">长×宽×通道数</span></code> 的图片张量，也可以是由图片张量和图片标签张量组成的元组（Tuple）。</p>
+<p>最常用的建立 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 的方法是使用 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.from_tensor_slices()</span></code> 。具体而言，如果我们的数据集中的所有元素通过张量的第0维，拼接成一个大的张量（例如，前节的MNIST数据集的训练集即为一个 <code class="docutils literal notranslate"><span class="pre">[60000,</span> <span class="pre">28,</span> <span class="pre">28,</span> <span class="pre">1]</span></code> 的张量，表示了60000张28*28的单通道灰度图像），那么我们提供一个这样的张量或者第0维大小相同的多个张量作为输入，即可按张量的第0维展开来构建数据集，数据集的元素数量为张量第0位的大小。具体示例如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">2014</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">,</span> <span class="mi">2017</span><span class="p">])</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mi">12000</span><span class="p">,</span> <span class="mi">14000</span><span class="p">,</span> <span class="mi">15000</span><span class="p">,</span> <span class="mi">16500</span><span class="p">,</span> <span class="mi">17500</span><span class="p">])</span>
+
+<span class="c1"># 也可以使用NumPy数组，效果相同</span>
+<span class="c1"># X = np.array([2013, 2014, 2015, 2016, 2017])</span>
+<span class="c1"># Y = np.array([12000, 14000, 15000, 16500, 17500])</span>
+
+<span class="hll"><span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">))</span>
+</span>
+<span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span> 
+</pre></div>
+</div>
+<p>输出:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2013</span> <span class="mi">12000</span>
+<span class="mi">2014</span> <span class="mi">14000</span>
+<span class="mi">2015</span> <span class="mi">15000</span>
+<span class="mi">2016</span> <span class="mi">16500</span>
+<span class="mi">2017</span> <span class="mi">17500</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">当提供多个张量作为输入时，张量的第0维大小必须相同，且必须将多个张量作为元组（Tuple，即使用Python中的小括号）拼接并作为输入。</p>
+</div>
+<p>类似地，我们可以载入前章的MNIST数据集：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span> 
+
+<span class="p">(</span><span class="n">train_data</span><span class="p">,</span> <span class="n">train_label</span><span class="p">),</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">train_data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>      <span class="c1"># [60000, 28, 28, 1]</span>
+<span class="hll"><span class="n">mnist_dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">train_data</span><span class="p">,</span> <span class="n">train_label</span><span class="p">))</span>
+</span>
+<span class="k">for</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">mnist_dataset</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">label</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>输出</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/mnist_1.png"><img alt="../../_images/mnist_1.png" src="../../_images/mnist_1.png" style="width: 40%;" /></a>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>数据集对象的预处理<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 类为我们提供了多种数据集预处理方法。最常用的如：</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">Dataset.map(f)</span></code> ：对数据集中的每个元素应用函数 <code class="docutils literal notranslate"><span class="pre">f</span></code> ，得到一个新的数据集（这部分往往结合 <code class="docutils literal notranslate"><span class="pre">tf.io</span></code> 进行读写和解码文件， <code class="docutils literal notranslate"><span class="pre">tf.image</span></code> 进行图像处理）；</li>
+<li><code class="docutils literal notranslate"><span class="pre">Dataset.shuffle(buffer_size)</span></code> ：将数据集打乱（设定一个固定大小的缓冲区（Buffer），取出前 <code class="docutils literal notranslate"><span class="pre">buffer_size</span></code> 个元素放入，并从缓冲区中随机采样，采样后的数据用后续数据替换）；</li>
+<li><code class="docutils literal notranslate"><span class="pre">Dataset.batch(batch_size)</span></code> ：将数据集分成批次，即对每 <code class="docutils literal notranslate"><span class="pre">batch_size</span></code> 个元素，使用 <code class="docutils literal notranslate"><span class="pre">tf.stack()</span></code> 在第0维合并，成为一个元素。</li>
+</ul>
+<p>除此以外，还有 <code class="docutils literal notranslate"><span class="pre">Dataset.repeat()</span></code> （重复数据集的元素）、 <code class="docutils literal notranslate"><span class="pre">Dataset.reduce()</span></code> （与Map相对的聚合操作）、 <code class="docutils literal notranslate"><span class="pre">Dataset.prefetch()</span></code> （预取出数据集中的若干个元素）等，可参考 <a class="reference external" href="https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/data/Dataset">API文档</a> 进一步了解。</p>
+<p>以下以MNIST数据集进行示例。</p>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">Dataset.map()</span></code> 将所有图片旋转90度：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="k">def</span> <span class="nf">rot90</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+</span><span class="hll">    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">rot90</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</span><span class="hll">    <span class="k">return</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span>
+</span><span class="hll">
+</span><span class="hll"><span class="n">mnist_dataset</span> <span class="o">=</span> <span class="n">mnist_dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">rot90</span><span class="p">)</span>
+</span>
+<span class="k">for</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">mnist_dataset</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">label</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</pre></div>
+</div>
+<p>输出</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/mnist_1_rot90.png"><img alt="../../_images/mnist_1_rot90.png" src="../../_images/mnist_1_rot90.png" style="width: 40%;" /></a>
+</div>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">Dataset.batch()</span></code> 将数据集划分批次，每个批次的大小为4：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="n">mnist_dataset</span> <span class="o">=</span> <span class="n">mnist_dataset</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span>
+<span class="k">for</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">mnist_dataset</span><span class="p">:</span>    <span class="c1"># image: [4, 28, 28, 1], labels: [4]</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[</span><span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>输出</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/mnist_batch.png"><img alt="../../_images/mnist_batch.png" src="../../_images/mnist_batch.png" style="width: 100%;" /></a>
+</div>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">Dataset.shuffle()</span></code> 将数据打散后再设置批次，缓存大小设置为10000：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="n">mnist_dataset</span> <span class="o">=</span> <span class="n">mnist_dataset</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">buffer_size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</span>
+<span class="k">for</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">mnist_dataset</span><span class="p">:</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">images</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[</span><span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>输出</p>
+<div class="figure align-center" id="id5">
+<a class="reference internal image-reference" href="../../_images/mnist_shuffle_1.png"><img alt="../../_images/mnist_shuffle_1.png" src="../../_images/mnist_shuffle_1.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-text">第一次运行</span></p>
+</div>
+<div class="figure align-center" id="id6">
+<a class="reference internal image-reference" href="../../_images/mnist_shuffle_2.png"><img alt="../../_images/mnist_shuffle_2.png" src="../../_images/mnist_shuffle_2.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-text">第二次运行</span></p>
+</div>
+<p>可见每次的数据都会被随机打散。</p>
+<div class="admonition-dataset-shuffle-buffer-size admonition">
+<p class="first admonition-title"><code class="docutils literal notranslate"><span class="pre">Dataset.shuffle()</span></code> 时缓冲区大小 <code class="docutils literal notranslate"><span class="pre">buffer_size</span></code> 的设置</p>
+<p><code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 作为一个针对大规模数据设计的迭代器，本身无法方便地获得自身元素的数量或随机访问元素。因此，为了高效且较为充分地打散数据集，需要一些特定的方法。<code class="docutils literal notranslate"><span class="pre">Dataset.shuffle()</span></code> 采取了以下方法：</p>
+<ul class="simple">
+<li>设定一个固定大小为 <code class="docutils literal notranslate"><span class="pre">buffer_size</span></code> 的缓冲区（Buffer）；</li>
+<li>初始化时，取出数据集中的前 <code class="docutils literal notranslate"><span class="pre">buffer_size</span></code> 个元素放入缓冲区；</li>
+<li>每次需要从数据集中取元素时，即从缓冲区中随机采样一个元素并取出，然后从后续的元素中取出一个放回到之前被取出的位置，以维持缓冲区的大小。</li>
+</ul>
+<p>因此，缓冲区的大小需要根据数据集的特性和数据排列顺序特点来进行合理的设置。比如：</p>
+<ul class="last simple">
+<li>当 <code class="docutils literal notranslate"><span class="pre">buffer_size</span></code> 设置为1时，其实等价于没有进行任何打散；</li>
+<li>当数据集的标签顺序分布极为不均匀（例如二元分类时数据集前N个的标签为0，后N个的标签为1）时，较小的缓冲区大小会使得训练时取出的Batch数据很可能全为同一标签，从而影响训练效果。一般而言，数据集的顺序分布若较为随机，则缓冲区的大小可较小，否则则需要设置较大的缓冲区。</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>数据集元素的获取<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>构建好数据并预处理后，我们需要从其中迭代获取数据以用于训练。<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 是一个Python的可迭代对象，因此可以使用For循环迭代获取数据，即：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="o">...</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="o">...</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+    <span class="c1"># 对张量a, b, c等进行操作，例如送入模型进行训练</span>
+</pre></div>
+</div>
+<p>也可以使用 <code class="docutils literal notranslate"><span class="pre">iter()</span></code> 显式创建一个Python迭代器并使用 <code class="docutils literal notranslate"><span class="pre">next()</span></code> 获取下一个元素，即：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="o">...</span><span class="p">))</span>
+<span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="n">a_0</span><span class="p">,</span> <span class="n">b_0</span><span class="p">,</span> <span class="n">c_0</span><span class="p">,</span> <span class="o">...</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+<span class="n">a_1</span><span class="p">,</span> <span class="n">b_1</span><span class="p">,</span> <span class="n">c_1</span><span class="p">,</span> <span class="o">...</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cats-vs-dogs">
+<h3>实例：cats_vs_dogs图像分类<a class="headerlink" href="#cats-vs-dogs" title="永久链接至标题">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
@@ -516,6 +661,7 @@
     <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">metrics_names</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">))</span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>
