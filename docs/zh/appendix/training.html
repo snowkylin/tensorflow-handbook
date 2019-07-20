@@ -20,23 +20,14 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -263,31 +254,35 @@
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>在以下的测试中，我们使用同一台主机上的4块NVIDIA GeForce GTX 1080 Ti显卡进行单机多卡的模型训练，训练所需的时间如下：</p>
+<p>在以下的测试中，我们使用同一台主机上的4块NVIDIA GeForce GTX 1080 Ti显卡进行单机多卡的模型训练。所有测试的epoch数均为5。使用单机无分布式配置时，虽然机器依然具有4块显卡，但程序不使用分布式的设置，直接进行训练，Batch Size设置为64。使用单机四卡时，测试总Batch Size为64（分发到单台机器的Batch Size为16）和总Batch Size为256（分发到单台机器的Batch Size为64）两种情况。</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="20%" />
-<col width="40%" />
-<col width="40%" />
+<col width="12%" />
+<col width="30%" />
+<col width="30%" />
+<col width="29%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">数据集</th>
-<th class="head">无MirroredStrategy</th>
-<th class="head">加入MirroredStrategy</th>
+<th class="head">单机无分布式（Batch Size为64）</th>
+<th class="head">单机四卡（总Batch Size为64）</th>
+<th class="head">单机四卡（总Batch Size为256）</th>
 </tr>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>cats_vs_dogs</td>
 <td>146s/epoch</td>
 <td>39s/epoch</td>
+<td>29s/epoch</td>
 </tr>
 <tr class="row-odd"><td>tf_flowers</td>
 <td>22s/epoch</td>
 <td>7s/epoch</td>
+<td>5s/epoch</td>
 </tr>
 </tbody>
 </table>
-<p>可见，使用MirroredStrategy后，模型训练的速度有了大幅度的提高。</p>
+<p>可见，使用MirroredStrategy后，模型训练的速度有了大幅度的提高。在所有显卡性能接近的情况下，训练时长与显卡的数目接近于反比关系。</p>
 <div class="admonition-mirroredstrategy admonition">
 <p class="first admonition-title"><code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 过程简介</p>
 <p>MirroredStrategy的步骤如下：</p>

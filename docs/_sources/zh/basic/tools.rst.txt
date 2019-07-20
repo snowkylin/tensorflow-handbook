@@ -5,6 +5,7 @@ TensorFlow工具
 
     * `Python的序列化模块Pickle <http://www.runoob.com/python3/python3-inputoutput.html>`_ （非必须）
     * `Python的特殊函数参数**kwargs <https://eastlakeside.gitbooks.io/interpy-zh/content/args_kwargs/Usage_kwargs.html>`_ （非必须）
+    * `Python的迭代器 <https://www.runoob.com/python3/python3-iterator-generator.html>`_ 
 
 Checkpoint：变量的保存与恢复
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -171,7 +172,134 @@ TensorBoard的使用有以下注意事项：
 ..
     https://www.tensorflow.org/beta/guide/data
 
-很多时候，我们希望使用自己的数据集来训练模型。然而，面对一堆格式不一的原始数据文件，将其预处理并读入程序的过程往往十分繁琐，甚至比模型的设计还要耗费精力。比如，为了读入一批图像文件，我们可能需要纠结于python的各种图像处理包（比如 ``pillow`` ），自己设计Batch的生成方式，最后还可能在运行的效率上不尽如人意。为此，TensorFlow提供了 ``tf.data`` 这一模块，包括了一套灵活的数据处理API，能够帮助我们快速、高效地构建数据输入的流水线。
+很多时候，我们希望使用自己的数据集来训练模型。然而，面对一堆格式不一的原始数据文件，将其预处理并读入程序的过程往往十分繁琐，甚至比模型的设计还要耗费精力。比如，为了读入一批图像文件，我们可能需要纠结于python的各种图像处理包（比如 ``pillow`` ），自己设计Batch的生成方式，最后还可能在运行的效率上不尽如人意。为此，TensorFlow提供了 ``tf.data`` 这一模块，包括了一套灵活的数据集构建API，能够帮助我们快速、高效地构建数据输入的流水线，尤其适用于数据量巨大的场景。
+
+数据集对象的建立
+-------------------------------------------
+
+``tf.data`` 的核心是 ``tf.data.Dataset`` 类，提供了对数据集的高层封装。``tf.data.Dataset`` 由一系列的可迭代访问的元素（element）组成，每个元素包含一个或多个张量。比如说，对于一个由图像组成的数据集，每个元素可以是一个形状为 ``长×宽×通道数`` 的图片张量，也可以是由图片张量和图片标签张量组成的元组（Tuple）。
+
+最常用的建立 ``tf.data.Dataset`` 的方法是使用 ``tf.data.Dataset.from_tensor_slices()`` 。具体而言，如果我们的数据集中的所有元素通过张量的第0维，拼接成一个大的张量（例如，前节的MNIST数据集的训练集即为一个 ``[60000, 28, 28, 1]`` 的张量，表示了60000张28*28的单通道灰度图像），那么我们提供一个这样的张量或者第0维大小相同的多个张量作为输入，即可按张量的第0维展开来构建数据集，数据集的元素数量为张量第0位的大小。具体示例如下：
+
+.. literalinclude:: /_static/code/zh/tools/tfdata/tutorial.py
+    :lines: 1-14
+    :emphasize-lines: 11
+
+输出::
+
+    2013 12000
+    2014 14000
+    2015 15000
+    2016 16500
+    2017 17500
+
+.. warning:: 当提供多个张量作为输入时，张量的第0维大小必须相同，且必须将多个张量作为元组（Tuple，即使用Python中的小括号）拼接并作为输入。
+
+类似地，我们可以载入前章的MNIST数据集：
+
+.. literalinclude:: /_static/code/zh/tools/tfdata/tutorial.py
+    :lines: 16-25
+    :emphasize-lines: 5
+
+输出
+
+.. figure:: /_static/image/tools/mnist_1.png
+    :width: 40%
+    :align: center
+
+数据集对象的预处理
+-------------------------------------------
+
+``tf.data.Dataset`` 类为我们提供了多种数据集预处理方法。最常用的如：
+
+- ``Dataset.map(f)`` ：对数据集中的每个元素应用函数 ``f`` ，得到一个新的数据集（这部分往往结合 ``tf.io`` 进行读写和解码文件， ``tf.image`` 进行图像处理）；
+- ``Dataset.shuffle(buffer_size)`` ：将数据集打乱（设定一个固定大小的缓冲区（Buffer），取出前 ``buffer_size`` 个元素放入，并从缓冲区中随机采样，采样后的数据用后续数据替换）；
+- ``Dataset.batch(batch_size)`` ：将数据集分成批次，即对每 ``batch_size`` 个元素，使用 ``tf.stack()`` 在第0维合并，成为一个元素。
+
+除此以外，还有 ``Dataset.repeat()`` （重复数据集的元素）、 ``Dataset.reduce()`` （与Map相对的聚合操作）、 ``Dataset.prefetch()`` （预取出数据集中的若干个元素）等，可参考 `API文档 <https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/data/Dataset>`_ 进一步了解。
+
+以下以MNIST数据集进行示例。
+
+使用 ``Dataset.map()`` 将所有图片旋转90度：
+
+.. literalinclude:: /_static/code/zh/tools/tfdata/tutorial.py
+    :lines: 27-37
+    :emphasize-lines: 1-5
+
+输出
+
+.. figure:: /_static/image/tools/mnist_1_rot90.png
+    :width: 40%
+    :align: center
+
+使用 ``Dataset.batch()`` 将数据集划分批次，每个批次的大小为4：
+
+.. literalinclude:: /_static/code/zh/tools/tfdata/tutorial.py
+    :lines: 38-45
+    :emphasize-lines: 1
+
+输出
+
+.. figure:: /_static/image/tools/mnist_batch.png
+    :width: 100%
+    :align: center
+
+使用 ``Dataset.shuffle()`` 将数据打散后再设置批次，缓存大小设置为10000：
+
+.. literalinclude:: /_static/code/zh/tools/tfdata/tutorial.py
+    :lines: 47-54
+    :emphasize-lines: 1
+
+输出
+
+.. figure:: /_static/image/tools/mnist_shuffle_1.png
+    :width: 100%
+    :align: center
+    
+    第一次运行
+
+.. figure:: /_static/image/tools/mnist_shuffle_2.png
+    :width: 100%
+    :align: center
+    
+    第二次运行
+
+可见每次的数据都会被随机打散。
+
+.. admonition:: ``Dataset.shuffle()`` 时缓冲区大小 ``buffer_size`` 的设置
+
+    ``tf.data.Dataset`` 作为一个针对大规模数据设计的迭代器，本身无法方便地获得自身元素的数量或随机访问元素。因此，为了高效且较为充分地打散数据集，需要一些特定的方法。``Dataset.shuffle()`` 采取了以下方法：
+
+    - 设定一个固定大小为 ``buffer_size`` 的缓冲区（Buffer）；
+    - 初始化时，取出数据集中的前 ``buffer_size`` 个元素放入缓冲区；
+    - 每次需要从数据集中取元素时，即从缓冲区中随机采样一个元素并取出，然后从后续的元素中取出一个放回到之前被取出的位置，以维持缓冲区的大小。
+
+    因此，缓冲区的大小需要根据数据集的特性和数据排列顺序特点来进行合理的设置。比如：
+
+    - 当 ``buffer_size`` 设置为1时，其实等价于没有进行任何打散；
+    - 当数据集的标签顺序分布极为不均匀（例如二元分类时数据集前N个的标签为0，后N个的标签为1）时，较小的缓冲区大小会使得训练时取出的Batch数据很可能全为同一标签，从而影响训练效果。一般而言，数据集的顺序分布若较为随机，则缓冲区的大小可较小，否则则需要设置较大的缓冲区。
+
+数据集元素的获取
+-------------------------------------------
+构建好数据并预处理后，我们需要从其中迭代获取数据以用于训练。``tf.data.Dataset`` 是一个Python的可迭代对象，因此可以使用For循环迭代获取数据，即：
+
+.. code-block:: python
+
+    dataset = tf.data.Dataset.from_tensor_slices((A, B, C, ...))
+    for a, b, c, ... in dataset:
+        # 对张量a, b, c等进行操作，例如送入模型进行训练
+
+也可以使用 ``iter()`` 显式创建一个Python迭代器并使用 ``next()`` 获取下一个元素，即：
+
+.. code-block:: python
+
+    dataset = tf.data.Dataset.from_tensor_slices((A, B, C, ...))
+    it = iter(dataset)
+    a_0, b_0, c_0, ... = next(it)
+    a_1, b_1, c_1, ... = next(it)
+
+实例：cats_vs_dogs图像分类
+-------------------------------------------
 
 .. literalinclude:: /_static/code/zh/tools/tfdata/cat_and_dog.py
     :lines: 1-51
