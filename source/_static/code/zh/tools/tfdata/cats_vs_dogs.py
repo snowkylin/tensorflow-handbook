@@ -4,7 +4,7 @@ import os
 num_epochs = 10
 batch_size = 32
 learning_rate = 0.001
-data_dir = 'C:/datasets/cat_and_dog'
+data_dir = 'C:/datasets/cats_vs_dogs'
 train_cats_dir = data_dir + '/train/cats/'
 train_dogs_dir = data_dir + '/train/dogs/'
 test_cats_dir = data_dir + '/valid/cats/'

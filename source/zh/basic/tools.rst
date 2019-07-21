@@ -166,6 +166,8 @@ TensorBoard的使用有以下注意事项：
 .. literalinclude:: /_static/code/zh/tools/tensorboard/mnist.py
     :emphasize-lines: 11, 19-20
 
+.. _tfdata:
+
 ``tf.data`` ：数据集的构建与预处理
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -206,6 +208,15 @@ TensorBoard的使用有以下注意事项：
 .. figure:: /_static/image/tools/mnist_1.png
     :width: 40%
     :align: center
+
+.. hint:: TensorFlow Datasets提供了一个基于 ``tf.data.Datasets`` 的开箱即用的数据集集合，相关内容可参考 :ref:`TensorFlow Datasets <tfds>`。例如，使用以下语句：
+
+    .. code-block:: python
+
+        import tensorflow_datasets as tfds
+        dataset = tfds.load("mnist", split=tfds.Split.TRAIN)
+
+    即可快速载入MNIST数据集。
 
 数据集对象的预处理
 -------------------------------------------
@@ -279,7 +290,7 @@ TensorBoard的使用有以下注意事项：
     - 当 ``buffer_size`` 设置为1时，其实等价于没有进行任何打散；
     - 当数据集的标签顺序分布极为不均匀（例如二元分类时数据集前N个的标签为0，后N个的标签为1）时，较小的缓冲区大小会使得训练时取出的Batch数据很可能全为同一标签，从而影响训练效果。一般而言，数据集的顺序分布若较为随机，则缓冲区的大小可较小，否则则需要设置较大的缓冲区。
 
-数据集元素的获取
+数据集元素的获取与使用
 -------------------------------------------
 构建好数据并预处理后，我们需要从其中迭代获取数据以用于训练。``tf.data.Dataset`` 是一个Python的可迭代对象，因此可以使用For循环迭代获取数据，即：
 
@@ -298,13 +309,31 @@ TensorBoard的使用有以下注意事项：
     a_0, b_0, c_0, ... = next(it)
     a_1, b_1, c_1, ... = next(it)
 
+Keras支持使用 ``tf.data.Dataset`` 直接作为输入。当调用 ``tf.keras.Model`` 的 ``fit()`` 和 ``evaluate()`` 方法时，可以将参数中的输入数据 ``x`` 指定为一个元素格式为 ``(输入数据, 标签数据)`` 的 ``Dataset`` ，并忽略掉参数中的标签数据 ``y`` 。例如，对于上述的MNIST数据集，常规的Keras训练方式是：
+
+.. code-block:: python
+
+    model.fit(x=train_data, y=train_label, epochs=num_epochs, batch_size=batch_size)
+
+使用 ``tf.data.Dataset`` 后，我们可以直接传入 ``Dataset`` ：
+
+.. code-block:: python
+
+    model.fit(mnist_dataset, epochs=num_epochs)
+
+由于已经通过 ``Dataset.batch()`` 方法划分了数据集的批次，所以这里也无需提供批次的大小。
+
 实例：cats_vs_dogs图像分类
 -------------------------------------------
 
-.. literalinclude:: /_static/code/zh/tools/tfdata/cat_and_dog.py
+以下代码以猫狗图片二分类任务为示例，展示了使用 ``tf.data`` 结合 ``tf.io`` 和 ``tf.image`` 建立 ``tf.data.Dataset`` 数据集，并进行训练和测试的完整过程。数据集可至 `这里 <https://www.floydhub.com/fastai/datasets/cats-vs-dogs>`_ 下载。
+
+.. literalinclude:: /_static/code/zh/tools/tfdata/cats_vs_dogs.py
     :lines: 1-51
     :emphasize-lines: 14-17, 29-33, 51
 
-.. literalinclude:: /_static/code/zh/tools/tfdata/cat_and_dog.py
+使用以下代码进行测试：
+
+.. literalinclude:: /_static/code/zh/tools/tfdata/cats_vs_dogs.py
     :lines: 53-67
 
