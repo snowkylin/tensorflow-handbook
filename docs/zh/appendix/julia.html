@@ -1,0 +1,342 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TensorFlow in Julia &mdash; 简单粗暴TensorFlow 0.4 alpha 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="TensorFlow资源重用" href="reuse.html" />
+    <link rel="prev" title="TensorFlow in Swift" href="swift.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴TensorFlow
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow工具</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript</a></li>
+</ul>
+<p class="caption"><span class="caption-text">应用</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../application/rl.html">TensorFlow智能物资调度</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/seq2seq-python.html">Tensorflow Python 闲聊机器人</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/seq2seq-javascript.html">Tensorflow JavaScript 闲聊对话模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../application/seq2seq-swift.html">TensorFlow Swift 闲聊机器人</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="static.html">静态的TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="swift.html">TensorFlow in Swift</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow in Julia</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tensorflow-jl">TensorFlow.jl 简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#julia-tensorflow">为什么要使用 julia 进行 Tensorflow 开发</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#docker-tensorflow-jl">在 docker 中快速体验 TensorFlow.jl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#julia-tensorflow-jl">在 julia 包管理器中安装 TensorFlow.jl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">基础使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mnist">MNIST数字分类</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reuse.html">TensorFlow资源重用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="addons.html">TensorFlow库和扩展</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimization.html">TensorFlow性能优化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="training.html">TensorFlow大规模训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_op.html">TensorFlow自定义运算操作</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">TensorFlow环境配置与管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms.html">术语中英对照表</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴TensorFlow</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>TensorFlow in Julia</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/zh/appendix/julia.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorflow-in-julia">
+<h1>TensorFlow in Julia<a class="headerlink" href="#tensorflow-in-julia" title="永久链接至标题">¶</a></h1>
+<div class="section" id="tensorflow-jl">
+<h2>TensorFlow.jl 简介<a class="headerlink" href="#tensorflow-jl" title="永久链接至标题">¶</a></h2>
+<p>TensorFlow.jl 是 Tensorflow 的 Julia 版本, 经由 <a class="reference external" href="https://github.com/malmaud/">malmaud</a> 对于原版 Tensorflow 的包装实现.</p>
+<p>作为一个对于 Tensorflow 的封装, TensorFlow.jl 和 Python 版本的 TensorFlow 具有类似的API, 并支持 GPU 加速.</p>
+</div>
+<div class="section" id="julia-tensorflow">
+<h2>为什么要使用 julia 进行 Tensorflow 开发<a class="headerlink" href="#julia-tensorflow" title="永久链接至标题">¶</a></h2>
+<p>虽然 Julia 对于 Tensorflow 本身的运行并没有什么影响, 但是 TensorFlow.jl 确实具有相当的优势.</p>
+<p>作为面向数值计算而生的现代语言，Julia 拥有一系列先进的语法特性. 优异的 JIT 能让你高速提取数据, 并处理 Tensorflow 的输出结果. 而得益于Julia的语法设计, 书写表达式也更加灵活自然.</p>
+<p>本章我们将基于 TensorFlow.jl 0.12, 向大家简要介绍 Tensorflow 在 Julia 下的使用. 你可以参考最新的 <a class="reference external" href="https://malmaud.github.io/TensorFlow.jl/stable/tutorial.html">TensorFlow.jl 文档</a>.</p>
+</div>
+<div class="section" id="docker-tensorflow-jl">
+<h2>在 docker 中快速体验 TensorFlow.jl<a class="headerlink" href="#docker-tensorflow-jl" title="永久链接至标题">¶</a></h2>
+<p>在本机已有 docker 环境的情况下, 使用预装 TensorFlow.jl 的 docker image 是非常方便的.</p>
+<p>在命令行中执行 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">malmaud/julia:tf</span></code> , 然后就可以获得一个已经安装好 TensorFlow.jl 的 Julia REPL 环境. (如果你不想直接打开 Julia, 请在执行 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">malmaud/julia:tf</span> <span class="pre">/bin/bash</span></code> 来打开一个bash终端. 如需执行您需要的jl代码文件, 可以使用 dcoker的目录映射.)</p>
+</div>
+<div class="section" id="julia-tensorflow-jl">
+<h2>在 julia 包管理器中安装 TensorFlow.jl<a class="headerlink" href="#julia-tensorflow-jl" title="永久链接至标题">¶</a></h2>
+<p>在命令行中执行 <code class="docutils literal notranslate"><span class="pre">julia</span></code> 进入 Julia REPL 环境, 然后执行以下命令安装 TensorFlow.jl</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">pkg</span>
+<span class="n">Pkg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;TensorFlow&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>基础使用<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">TensorFlow</span>
+
+<span class="c"># 定义一个 Session</span>
+<span class="n">sess</span> <span class="o">=</span> <span class="n">TensorFlow</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+
+<span class="c"># 定义一个常量和变量</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">TensorFlow</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">TensorFlow</span><span class="o">.</span><span class="n">Variable</span><span class="p">([</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="c"># 定义一个计算</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="c"># 执行计算过程</span>
+<span class="n">run</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">TensorFlow</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+
+<span class="c"># 输出结果</span>
+<span class="n">println</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mnist">
+<h2>MNIST数字分类<a class="headerlink" href="#mnist" title="永久链接至标题">¶</a></h2>
+<p>这个例子来自于 <a class="reference external" href="https://malmaud.github.io/TensorFlow.jl/stable/tutorial.html">TensorFlow.jl 文档</a>, 可以用于对比 python 版本的 API.</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># 使用自带例子中的 mnist_loader.jl 加载数据</span>
+<span class="n">include</span><span class="p">(</span><span class="n">Pkg</span><span class="o">.</span><span class="n">dir</span><span class="p">(</span><span class="s">&quot;TensorFlow&quot;</span><span class="p">,</span> <span class="s">&quot;examples&quot;</span><span class="p">,</span> <span class="s">&quot;mnist_loader.jl&quot;</span><span class="p">))</span>
+<span class="n">loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">()</span>
+
+<span class="c"># 定义一个 Session</span>
+<span class="k">using</span> <span class="n">TensorFlow</span>
+<span class="n">sess</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+
+
+<span class="c"># 构建 softmax 回归模型</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">placeholder</span><span class="p">(</span><span class="kt">Float32</span><span class="p">)</span>
+<span class="n">y_</span> <span class="o">=</span> <span class="n">placeholder</span><span class="p">(</span><span class="kt">Float32</span><span class="p">)</span>
+<span class="n">W</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">zeros</span><span class="p">(</span><span class="kt">Float32</span><span class="p">,</span> <span class="mi">784</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">zeros</span><span class="p">(</span><span class="kt">Float32</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="n">run</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">global_variables_initializer</span><span class="p">())</span>
+
+<span class="c"># 预测类和损失函数</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">W</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">cross_entropy</span> <span class="o">=</span> <span class="n">reduce_mean</span><span class="p">(</span><span class="o">-</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">y_</span> <span class="o">.*</span> <span class="n">log</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+
+<span class="c"># 开始训练模型</span>
+<span class="n">train_step</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="o">.</span><span class="mi">00001</span><span class="p">),</span> <span class="n">cross_entropy</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="kp">in</span> <span class="mi">1</span><span class="o">:</span><span class="mi">1000</span>
+    <span class="n">batch</span> <span class="o">=</span> <span class="n">next_batch</span><span class="p">(</span><span class="n">loader</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">run</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">train_step</span><span class="p">,</span> <span class="kt">Dict</span><span class="p">(</span><span class="n">x</span><span class="o">=&gt;</span><span class="n">batch</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">y_</span><span class="o">=&gt;</span><span class="n">batch</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+<span class="k">end</span>
+
+<span class="c"># 查看结果并评估模型</span>
+<span class="n">correct_prediction</span> <span class="o">=</span> <span class="n">indmax</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">.==</span> <span class="n">indmax</span><span class="p">(</span><span class="n">y_</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">accuracy</span><span class="o">=</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">cast</span><span class="p">(</span><span class="n">correct_prediction</span><span class="p">,</span> <span class="kt">Float32</span><span class="p">))</span>
+<span class="n">testx</span><span class="p">,</span> <span class="n">testy</span> <span class="o">=</span> <span class="n">load_test_set</span><span class="p">()</span>
+
+<span class="n">println</span><span class="p">(</span><span class="n">run</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">,</span> <span class="kt">Dict</span><span class="p">(</span><span class="n">x</span><span class="o">=&gt;</span><span class="n">testx</span><span class="p">,</span> <span class="n">y_</span><span class="o">=&gt;</span><span class="n">testy</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="reuse.html" class="btn btn-neutral float-right" title="TensorFlow资源重用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="swift.html" class="btn btn-neutral float-left" title="TensorFlow in Swift" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
