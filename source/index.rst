@@ -94,6 +94,7 @@ The code of this handbook is based on TensorFlow 2.0 beta.
 
     zh/appendix/static
     zh/appendix/swift
+    zh/appendix/julia
     zh/appendix/reuse
     zh/appendix/addons
     zh/appendix/optimization
