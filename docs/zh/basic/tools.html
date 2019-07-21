@@ -104,7 +104,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#tf-data"><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> ：数据集的构建与预处理</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">数据集对象的建立</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id3">数据集对象的预处理</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">数据集元素的获取</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">数据集元素的获取与使用</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cats-vs-dogs">实例：cats_vs_dogs图像分类</a></li>
 </ul>
 </li>
@@ -129,6 +129,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/static.html">静态的TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">TensorFlow in Swift</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/reuse.html">TensorFlow资源重用</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/addons.html">TensorFlow库和扩展</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/optimization.html">TensorFlow性能优化</a></li>
@@ -443,7 +444,7 @@
 </div>
 </div>
 <div class="section" id="tf-data">
-<h2><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> ：数据集的构建与预处理<a class="headerlink" href="#tf-data" title="永久链接至标题">¶</a></h2>
+<span id="tfdata"></span><h2><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> ：数据集的构建与预处理<a class="headerlink" href="#tf-data" title="永久链接至标题">¶</a></h2>
 <p>很多时候，我们希望使用自己的数据集来训练模型。然而，面对一堆格式不一的原始数据文件，将其预处理并读入程序的过程往往十分繁琐，甚至比模型的设计还要耗费精力。比如，为了读入一批图像文件，我们可能需要纠结于python的各种图像处理包（比如 <code class="docutils literal notranslate"><span class="pre">pillow</span></code> ），自己设计Batch的生成方式，最后还可能在运行的效率上不尽如人意。为此，TensorFlow提供了 <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 这一模块，包括了一套灵活的数据集构建API，能够帮助我们快速、高效地构建数据输入的流水线，尤其适用于数据量巨大的场景。</p>
 <div class="section" id="id2">
 <h3>数据集对象的建立<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
@@ -493,6 +494,15 @@
 <p>输出</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/mnist_1.png"><img alt="../../_images/mnist_1.png" src="../../_images/mnist_1.png" style="width: 40%;" /></a>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">提示</p>
+<p>TensorFlow Datasets提供了一个基于 <code class="docutils literal notranslate"><span class="pre">tf.data.Datasets</span></code> 的开箱即用的数据集集合，相关内容可参考 <a class="reference internal" href="../appendix/reuse.html#tfds"><span class="std std-ref">TensorFlow Datasets</span></a>。例如，使用以下语句：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="kn">as</span> <span class="nn">tfds</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;mnist&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">tfds</span><span class="o">.</span><span class="n">Split</span><span class="o">.</span><span class="n">TRAIN</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="last">即可快速载入MNIST数据集。</p>
 </div>
 </div>
 <div class="section" id="id3">
@@ -550,11 +560,11 @@
 </pre></div>
 </div>
 <p>输出</p>
-<div class="figure align-center" id="id5">
+<div class="figure align-center" id="id6">
 <a class="reference internal image-reference" href="../../_images/mnist_shuffle_1.png"><img alt="../../_images/mnist_shuffle_1.png" src="../../_images/mnist_shuffle_1.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">第一次运行</span></p>
 </div>
-<div class="figure align-center" id="id6">
+<div class="figure align-center" id="id7">
 <a class="reference internal image-reference" href="../../_images/mnist_shuffle_2.png"><img alt="../../_images/mnist_shuffle_2.png" src="../../_images/mnist_shuffle_2.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">第二次运行</span></p>
 </div>
@@ -575,7 +585,7 @@
 </div>
 </div>
 <div class="section" id="id4">
-<h3>数据集元素的获取<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<h3>数据集元素的获取与使用<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
 <p>构建好数据并预处理后，我们需要从其中迭代获取数据以用于训练。<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 是一个Python的可迭代对象，因此可以使用For循环迭代获取数据，即：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="o">...</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="o">...</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
@@ -589,16 +599,26 @@
 <span class="n">a_1</span><span class="p">,</span> <span class="n">b_1</span><span class="p">,</span> <span class="n">c_1</span><span class="p">,</span> <span class="o">...</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Keras支持使用 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 直接作为输入。当调用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的 <code class="docutils literal notranslate"><span class="pre">fit()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">evaluate()</span></code> 方法时，可以将参数中的输入数据 <code class="docutils literal notranslate"><span class="pre">x</span></code> 指定为一个元素格式为 <code class="docutils literal notranslate"><span class="pre">(输入数据,</span> <span class="pre">标签数据)</span></code> 的 <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> ，并忽略掉参数中的标签数据 <code class="docutils literal notranslate"><span class="pre">y</span></code> 。例如，对于上述的MNIST数据集，常规的Keras训练方式是：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">train_data</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">train_label</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 后，我们可以直接传入 <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> ：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">mnist_dataset</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>由于已经通过 <code class="docutils literal notranslate"><span class="pre">Dataset.batch()</span></code> 方法划分了数据集的批次，所以这里也无需提供批次的大小。</p>
 </div>
 <div class="section" id="cats-vs-dogs">
 <h3>实例：cats_vs_dogs图像分类<a class="headerlink" href="#cats-vs-dogs" title="永久链接至标题">¶</a></h3>
+<p>以下代码以猫狗图片二分类任务为示例，展示了使用 <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 结合 <code class="docutils literal notranslate"><span class="pre">tf.io</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.image</span></code> 建立 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 数据集，并进行训练和测试的完整过程。数据集可至 <a class="reference external" href="https://www.floydhub.com/fastai/datasets/cats-vs-dogs">这里</a> 下载。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
 <span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>
 <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.001</span>
-<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;C:/datasets/cat_and_dog&#39;</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;C:/datasets/cats_vs_dogs&#39;</span>
 <span class="n">train_cats_dir</span> <span class="o">=</span> <span class="n">data_dir</span> <span class="o">+</span> <span class="s1">&#39;/train/cats/&#39;</span>
 <span class="n">train_dogs_dir</span> <span class="o">=</span> <span class="n">data_dir</span> <span class="o">+</span> <span class="s1">&#39;/train/dogs/&#39;</span>
 <span class="n">test_cats_dir</span> <span class="o">=</span> <span class="n">data_dir</span> <span class="o">+</span> <span class="s1">&#39;/valid/cats/&#39;</span>
@@ -645,6 +665,7 @@
 <span class="hll">    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">)</span>
 </span></pre></div>
 </div>
+<p>使用以下代码进行测试：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="c1"># 构建测试数据集</span>
     <span class="n">test_cat_filenames</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="n">test_cats_dir</span> <span class="o">+</span> <span class="n">filename</span> <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">test_cats_dir</span><span class="p">)])</span>
     <span class="n">test_dog_filenames</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([</span><span class="n">test_dogs_dir</span> <span class="o">+</span> <span class="n">filename</span> <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">test_dogs_dir</span><span class="p">)])</span>
