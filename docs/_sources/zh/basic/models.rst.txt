@@ -60,7 +60,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 .. admonition:: Keras的全连接层：线性变换+激活函数
 
-    `全连接层 <https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense>`_ （Fully-connected Layer，``tf.keras.layers.Dense`` ）是Keras中最基础和常用的层之一。给定输入张量 ``input = [batch_size, input_dim]`` ，该层对输入张量首先进行 ``tf.matmul(input, kernel) + bias`` 的线性变换，然后对线性变换后张量的每个元素通过激活函数 ``activation`` ，输出形状为 ``[batch_size, units]`` 的二维张量。
+    `全连接层 <https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense>`_ （Fully-connected Layer，``tf.keras.layers.Dense`` ）是Keras中最基础和常用的层之一，对输入矩阵 :math:`A` 进行 :math:`f(AW + b)` 的线性变换+激活函数操作。如果不指定激活函数，即是纯粹的线性变换 :math:`AW + b`。具体而言，给定输入张量 ``input = [batch_size, input_dim]`` ，该层对输入张量首先进行 ``tf.matmul(input, kernel) + bias`` 的线性变换（ ``kernel`` 和 ``bias`` 是层中可训练的变量），然后对线性变换后张量的每个元素通过激活函数 ``activation`` ，从而输出形状为 ``[batch_size, units]`` 的二维张量。
     
     .. figure:: /_static/image/model/dense.png
         :width: 60%
@@ -69,11 +69,11 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
     其包含的主要参数如下：
     
     * ``units`` ：输出张量的维度；
-    * ``activation`` ：激活函数，默认为无激活函数（ ``a(x) = x`` ）。常用的激活函数包括 ``tf.nn.relu`` 、 ``tf.nn.tanh`` 和 ``tf.nn.sigmoid`` ；
-    * ``use_bias`` ：是否加入偏置向量 ``bias`` 。默认为 ``True`` ；
+    * ``activation`` ：激活函数，对应于 :math:`f(AW + b)` 中的 :math:`f` ，默认为无激活函数（ ``a(x) = x`` ）。常用的激活函数包括 ``tf.nn.relu`` 、 ``tf.nn.tanh`` 和 ``tf.nn.sigmoid`` ；
+    * ``use_bias`` ：是否加入偏置向量 ``bias`` ，即 :math:`f(AW + b)` 中的 :math:`b`。默认为 ``True`` ；
     * ``kernel_initializer`` 、 ``bias_initializer`` ：权重矩阵 ``kernel`` 和偏置向量 ``bias`` 两个变量的初始化器。默认为 ``tf.glorot_uniform_initializer`` [#glorot]_ 。设置为 ``tf.zeros_initializer`` 表示将两个变量均初始化为全0；
     
-    以及包含权重矩阵 ``kernel = [input_dim, units]`` 和偏置向量 ``bias = [units]`` [#broadcast]_ 两个变量，相当于上述的 ``a`` 和 ``b`` 。
+    该层包含权重矩阵 ``kernel = [input_dim, units]`` 和偏置向量 ``bias = [units]`` [#broadcast]_ 两个可训练变量，对应于 :math:`f(AW + b)` 中的 :math:`W` 和 :math:`b`。
 
     这里着重从数学矩阵运算和线性变换的角度描述了全连接层。基于神经元建模的描述可参考 :ref:`后文介绍 <neuron>` 。
 
@@ -111,10 +111,10 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 数据获取及预处理： ``tf.keras.datasets`` 
 -------------------------------------------
 
-先进行预备工作，实现一个简单的 ``MNISTLoader`` 类来读取MNIST数据集数据。
+先进行预备工作，实现一个简单的 ``MNISTLoader`` 类来读取MNIST数据集数据。这里使用了 ``tf.keras.datasets`` 快速载入MNIST数据集。
 
-.. literalinclude:: /_static/code/zh/model/mnist/main.py
-    :lines: 15-27
+.. literalinclude:: /_static/code/zh/model/utils.py
+    :lines: 5-
 
 .. hint:: ``mnist = tf.keras.datasets.mnist`` 将从网络上自动下载MNIST数据集并加载。如果运行时出现网络连接错误，可以从 https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz 或 https://s3.amazonaws.com/img-datasets/mnist.npz 下载MNIST数据集 ``mnist.npz`` 文件，并放置于用户目录的 ``.keras/dataset`` 目录下（Windows下用户目录为 ``C:\Users\用户名`` ，Linux下用户目录为 ``/home/用户名`` ）。
 
@@ -125,7 +125,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 模型的构建： ``tf.keras.Model`` 和 ``tf.keras.layers`` 
 -------------------------------------------------------------------------------
 
-多层感知机的模型类实现与上面的线性模型类似，所不同的地方在于层数增加了（顾名思义，“多层”感知机），以及引入了非线性激活函数（这里使用了 `ReLU函数 <https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0>`_ ， 即下方的 ``activation=tf.nn.relu`` ）。该模型输入一个向量（比如这里是拉直的 ``1×784`` 手写体数字图片），输出10维的向量，分别代表这张图片属于0到9的概率。
+多层感知机的模型类实现与上面的线性模型类似，使用 ``tf.keras.Model`` 和 ``tf.keras.layers`` 构建，所不同的地方在于层数增加了（顾名思义，“多层”感知机），以及引入了非线性激活函数（这里使用了 `ReLU函数 <https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0>`_ ， 即下方的 ``activation=tf.nn.relu`` ）。该模型输入一个向量（比如这里是拉直的 ``1×784`` 手写体数字图片），输出10维的向量，分别代表这张图片属于0到9的概率。
 
 .. literalinclude:: /_static/code/zh/model/mnist/mlp.py
     :lines: 4-
@@ -153,7 +153,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 7-9
 
-实例化模型，数据读取类和优化器：
+实例化模型和数据读取类，并实例化一个 ``tf.keras.optimizer`` 的优化器（这里使用常用的Adam优化器）：
 
 .. code-block:: python
 
@@ -165,9 +165,9 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 - 从DataLoader中随机取一批训练数据；
 - 将这批数据送入模型，计算出模型的预测值；
-- 将模型预测值与真实值进行比较，计算损失函数（loss）；
+- 将模型预测值与真实值进行比较，计算损失函数（loss）。这里使用 ``tf.keras.losses`` 中的交叉熵函数作为损失函数；
 - 计算损失函数关于模型变量的导数；
-- 使用优化器更新模型参数以最小化损失函数。
+- 将求出的导数值传入优化器，使用优化器更新模型参数以最小化损失函数。
 
 具体代码实现如下：
 
@@ -200,7 +200,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 模型的评估： ``tf.keras.metrics``
 -------------------------------------------------------------------------------
 
-最后，我们使用验证集评估模型性能。具体而言，比较验证集上模型预测的结果与真实结果，输出预测正确的样本数占总样本数的比例：
+最后，我们使用测试集评估模型性能。具体而言，比较测试集上模型预测的结果与真实结果，输出预测正确的样本数占总样本数的比例。这里，我们使用 ``tf.keras.metrics`` 中的 ``SparseCategoricalAccuracy`` 评估器来评估模型在测试集上的性能。我们每次向评估器输入两个参数： ``y_pred`` 和 ``y_true`` ，即模型预测出的结果和真实结果。同时，评估器具有内部变量来保存当前评估指标相关的参数数值（例如当前已传入的累计样本数和当前预测正确的样本数）。在以下代码中，我们实例化了一个 ``tf.keras.metrics.SparseCategoricalAccuracy`` 评估器，并在For循环中分批次传入了测试集数据的预测结果与真实结果，最后使用 ``result()`` 方法输出评估指标。
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 104-110
@@ -263,7 +263,38 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 .. admonition:: 卷积层和池化层的工作原理
 
+    卷积层（Convolutional Layer，以 ``tf.keras.layers.Conv2D`` 为代表）是CNN的核心组件，其结构与大脑的视觉皮层有类似之处。
 
+    回忆我们之前建立的 :ref:`神经细胞的计算模型 <neuron>` 以及全连接层，我们默认每个神经元与上一层的所有神经元相连。不过，在视觉皮层的神经元中，情况并不是这样。你或许在生物课上学习过 **感受野** （Receptive Field）这一概念，即视觉皮层中的神经元并非与前一层的所有神经元相连，而只是感受一片区域内的视觉信号，并只对局部区域的视觉刺激进行反应。CNN中的卷积层正体现了这一特性。
+
+    例如，下图是一个7×7的单通道图片信号输入：
+
+    .. figure:: /_static/image/model/conv_image.png
+        :align: center
+
+    如果使用之前基于全连接层的模型，我们需要让每个输入信号对应一个权值，即建模一个神经元需要7×7=49个权值（不考虑偏置权值），并得到一个输出信号。如果一层有N个神经元，我们就需要49N个权值，并得到N个输出信号。
+
+    而在CNN的卷积层中，我们这样建模一个卷积层的神经元：
+
+    .. figure:: /_static/image/model/conv_field.png
+        :align: center
+
+    图中3×3的红框代表该神经元的感受野。由此，我们只需3×3=9个权值 :math:`W = \begin{bmatrix}w_{1, 1} & w_{1, 2} & w_{1, 3} \\w_{2, 1} & w_{2, 2} & w_{2, 3} \\w_{3, 1} & w_{3, 2} & w_{3, 3}\end{bmatrix}`  ，即可得到一个输出信号。例如，对于红框所示的位置，输出信号即为对矩阵 :math:`\begin{bmatrix}0 \times w_{1, 1} & 0 \times w_{1, 2} & 0 \times w_{1, 3} \\0 \times w_{2, 1} & 1 \times w_{2, 2} & 0 \times w_{2, 3} \\0 \times w_{3, 1} & 0 \times w_{3, 2} & 2 \times w_{3, 3}\end{bmatrix}` 的所有元素求和，并通过激活函数，记作 :math:`a_{1, 1}`  。
+
+    不过，3×3的范围显然不足以处理整个图像，因此我们使用滑动窗口的方法。使用相同的参数 :math:`W` ，但将红框在图像中从左到有滑动，进行逐行扫描，每滑动到一个位置就计算一个值。例如，当红框向右移动一个单位时，我们计算矩阵 :math:`\begin{bmatrix}0 \times w_{1, 1} & 0 \times w_{1, 2} & 0 \times w_{1, 3} \\1 \times w_{2, 1} & 0 \times w_{2, 2} & 1 \times w_{2, 3} \\0 \times w_{3, 1} & 2 \times w_{3, 2} & 1 \times w_{3, 3}\end{bmatrix}` 的所有元素的和并通过激活函数，记作 :math:`a_{1, 2}` 。由此，和一般的神经元只能输出1个值不同，这里的卷积层神经元可以输出一个5×5的矩阵 :math:`A = \begin{bmatrix}a_{1, 1} & \cdots & a_{1, 5} \\ \vdots & & \vdots \\ a_{5, 1} & \cdots & a_{5, 5}\end{bmatrix}`  。
+
+    还有一个问题，以上假设图片都只有一个通道（例如灰度图片），但如果图像是彩色的（例如有RGB三个通道）该怎么办呢？此时，我们可以为每个通道准备一个3×3的权值矩阵，即一共有3×3×3=27个权值。对于每个通道，均使用自己的权值矩阵进行处理，输出时将多个通道所输出的值进行加和后再通过激活函数。
+    
+    一个动态演示如下图所示。其中红色的矩阵为多通道的图像（这里展示为2个通道），绿色的矩阵为图像的每个通道所对应的权值矩阵 :math:`W` ，蓝色的矩阵为输出矩阵 :math:`A`  。
+
+    .. figure:: /_static/image/model/conv_sliding_window.gif
+        :align: center
+
+        卷积示意图（来源： https://blog.csdn.net/huachao1001/article/details/79120521 ）
+
+    事实上，卷积的形式多种多样，以上的介绍只是其中最简单和基础的一种。更多卷积方式的示例可见 `这里 <https://github.com/vdumoulin/conv_arithmetic>`_ 。
+
+    池化层（Pooling Layer）的理解则简单得多，其可以理解为对图像进行降采样的过程，对于每一次滑动窗口中的所有值，输出其中的最大值（MaxPooling）/均值或其他值。例如，对于一个三通道的16×16图像（即一个 ``16*16*3`` 的张量），经过感受野为2×2，滑动步长为2的池化层，则得到一个 ``8*8*3`` 的张量。
 
 循环神经网络（RNN）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -360,6 +391,24 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
     zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey tomm--whach 
 
 .. [#rnn_reference] 此处的任务及实现参考了 https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py
+
+.. admonition:: 循环神经网络的工作过程
+
+    循环神经网络是一个处理时间序列数据的神经网络结构，也就是说，我们需要在脑海里有一根时间轴，循环神经网络具有初始状态 :math:`s_0` ，在每个时间点 :math:`t` 迭代对当前时间的输入 :math:`x_t` 进行处理，修改自身的状态 :math:`s_t` ，并进行输出 :math:`o_t` 。
+
+    循环神经网络的核心是状态 :math:`s` ，是一个特定维数的向量，类似于神经网络的“记忆”。在 :math:`t=0` 的初始时刻，:math:`s_0` 被赋予一个初始值（常用的为全0向量）。然后，我们用类似于递归的方法来描述循环神经网络的工作过程。即我们假设 :math:`s_{t-1}` 已经求出，关注如何在此基础上求出 :math:`s_{t-1}` ：
+
+    - 对输出向量 :math:`x_t` 通过矩阵U进行线性变换，:math:`U x_t` 与状态s具有相同的维度；
+    - 对 :math:`s_{t-1}` 通过矩阵W进行线性变换，:math:`W s_{t-1}` 与状态s具有相同的维度；
+    - 将上述得到的两个向量相加并通过激活函数，作为当前状态 :math:`s_t` 的值，即 :math:`s_t = f(U x_t + W s_{t-1})`。也就是说，当前状态的值是上一个状态的值和当前输入进行某种信息整合而产生的；
+    - 对当前状态 :math:`s_t` 通过矩阵V进行线性变换，得到当前时刻的输出 :math:`o_t`。
+
+    .. figure:: /_static/image/model/rnn_cell.jpg
+        :align: center
+
+        RNN工作过程图示（来自 http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/）
+
+
 
 深度强化学习（DRL）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
