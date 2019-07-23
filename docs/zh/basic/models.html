@@ -115,7 +115,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id22">自定义层、损失函数和指标 *</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id23">自定义层</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-layer">自定义层</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id24">自定义损失函数</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id25">自定义评估指标</a></li>
 </ul>
@@ -737,12 +737,12 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <div class="admonition- admonition">
 <p class="first admonition-title">循环神经网络的工作过程</p>
 <p>循环神经网络是一个处理时间序列数据的神经网络结构，也就是说，我们需要在脑海里有一根时间轴，循环神经网络具有初始状态 <span class="math notranslate nohighlight">\(s_0\)</span> ，在每个时间点 <span class="math notranslate nohighlight">\(t\)</span> 迭代对当前时间的输入 <span class="math notranslate nohighlight">\(x_t\)</span> 进行处理，修改自身的状态 <span class="math notranslate nohighlight">\(s_t\)</span> ，并进行输出 <span class="math notranslate nohighlight">\(o_t\)</span> 。</p>
-<p>循环神经网络的核心是状态 <span class="math notranslate nohighlight">\(s\)</span> ，是一个特定维数的向量，类似于神经网络的“记忆”。在 <span class="math notranslate nohighlight">\(t=0\)</span> 的初始时刻，<span class="math notranslate nohighlight">\(s_0\)</span> 被赋予一个初始值（常用的为全0向量）。然后，我们用类似于递归的方法来描述循环神经网络的工作过程。即我们假设 <span class="math notranslate nohighlight">\(s_{t-1}\)</span> 已经求出，关注如何在此基础上求出 <span class="math notranslate nohighlight">\(s_{t-1}\)</span> ：</p>
+<p>循环神经网络的核心是状态 <span class="math notranslate nohighlight">\(s\)</span> ，是一个特定维数的向量，类似于神经网络的“记忆”。在 <span class="math notranslate nohighlight">\(t=0\)</span> 的初始时刻，<span class="math notranslate nohighlight">\(s_0\)</span> 被赋予一个初始值（常用的为全0向量）。然后，我们用类似于递归的方法来描述循环神经网络的工作过程。即在 <span class="math notranslate nohighlight">\(t\)</span> 时刻，我们假设 <span class="math notranslate nohighlight">\(s_{t-1}\)</span> 已经求出，关注如何在此基础上求出 <span class="math notranslate nohighlight">\(s_{t}\)</span> ：</p>
 <ul class="simple">
-<li>对输出向量 <span class="math notranslate nohighlight">\(x_t\)</span> 通过矩阵U进行线性变换，<span class="math notranslate nohighlight">\(U x_t\)</span> 与状态s具有相同的维度；</li>
-<li>对 <span class="math notranslate nohighlight">\(s_{t-1}\)</span> 通过矩阵W进行线性变换，<span class="math notranslate nohighlight">\(W s_{t-1}\)</span> 与状态s具有相同的维度；</li>
+<li>对输出向量 <span class="math notranslate nohighlight">\(x_t\)</span> 通过矩阵 <span class="math notranslate nohighlight">\(U\)</span> 进行线性变换，<span class="math notranslate nohighlight">\(U x_t\)</span> 与状态s具有相同的维度；</li>
+<li>对 <span class="math notranslate nohighlight">\(s_{t-1}\)</span> 通过矩阵 <span class="math notranslate nohighlight">\(W\)</span> 进行线性变换，<span class="math notranslate nohighlight">\(W s_{t-1}\)</span> 与状态s具有相同的维度；</li>
 <li>将上述得到的两个向量相加并通过激活函数，作为当前状态 <span class="math notranslate nohighlight">\(s_t\)</span> 的值，即 <span class="math notranslate nohighlight">\(s_t = f(U x_t + W s_{t-1})\)</span>。也就是说，当前状态的值是上一个状态的值和当前输入进行某种信息整合而产生的；</li>
-<li>对当前状态 <span class="math notranslate nohighlight">\(s_t\)</span> 通过矩阵V进行线性变换，得到当前时刻的输出 <span class="math notranslate nohighlight">\(o_t\)</span>。</li>
+<li>对当前状态 <span class="math notranslate nohighlight">\(s_t\)</span> 通过矩阵 <span class="math notranslate nohighlight">\(V\)</span> 进行线性变换，得到当前时刻的输出 <span class="math notranslate nohighlight">\(o_t\)</span>。</li>
 </ul>
 <div class="last figure align-center" id="id35">
 <img alt="../../_images/rnn_cell.jpg" src="../../_images/rnn_cell.jpg" />
@@ -873,16 +873,14 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <li>小球移动的信息很重要，如果只知道单帧画面而不知道小球往哪边运动，即使是人也很难判断挡板应当移动的方向。因此，必须在状态中加入表征小球运动方向的信息。一个简单的方式是将当前帧与前面几帧的画面进行叠加，得到一个 <code class="docutils literal notranslate"><span class="pre">210</span> <span class="pre">*</span> <span class="pre">160</span> <span class="pre">*</span> <span class="pre">X</span></code> （X为叠加帧数）的状态表示；</li>
 <li>每帧的分辨率不需要特别高，只要能大致表征方块、小球和挡板的位置以做出决策即可，因此对于每帧的长宽可做适当压缩。</li>
 </ul>
-<p>而考虑到我们需要从图像信息中提取特征，使用CNN作为拟合Q函数的网络将更为适合。</p>
+<p>而考虑到我们需要从图像信息中提取特征，使用CNN作为拟合Q函数的网络将更为适合。将上面的 <code class="docutils literal notranslate"><span class="pre">QNetwork</span></code> 更换为CNN网络，即可用于玩一些简单的视频游戏。</p>
 </div>
 <div class="section" id="keras-pipeline">
-<span id="custom-layer"></span><h2>Keras Pipeline *<a class="headerlink" href="#keras-pipeline" title="永久链接至标题">¶</a></h2>
-<p><a class="reference external" href="https://medium.com/tensorflow/what-are-symbolic-and-imperative-apis-in-tensorflow-2-0-dfccecb01021">https://medium.com/tensorflow/what-are-symbolic-and-imperative-apis-in-tensorflow-2-0-dfccecb01021</a>
-<a class="reference external" href="https://www.tensorflow.org/beta/guide/keras/overview">https://www.tensorflow.org/beta/guide/keras/overview</a>
-<a class="reference external" href="https://www.tensorflow.org/beta/guide/keras/custom_layers_and_models">https://www.tensorflow.org/beta/guide/keras/custom_layers_and_models</a></p>
+<h2>Keras Pipeline *<a class="headerlink" href="#keras-pipeline" title="永久链接至标题">¶</a></h2>
 <p>以上示例均使用了Keras的Subclassing API建立模型，即对 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 类进行扩展以定义自己的新模型，同时手工编写了训练和评估模型的流程。这种方式灵活度高，且与其他流行的深度学习框架（如PyTorch、Chainer）共通，是本手册所推荐的方法。不过在很多时候，我们只需要建立一个结构相对简单和典型的神经网络（比如上文中的MLP和CNN），并使用常规的手段进行训练。这时，Keras也给我们提供了另一套更为简单高效的内置方法来建立、训练和评估模型。</p>
 <div class="section" id="keras-sequential-functional-api">
 <h3>Keras Sequential/Functional API模式建立模型<a class="headerlink" href="#keras-sequential-functional-api" title="永久链接至标题">¶</a></h3>
+<p>最典型和常用的神经网络结构是将一堆层按特定顺序叠加起来，那么，我们是不是只需要提供一个层的列表，就能由Keras将它们自动首尾相连，形成模型呢？Keras的Sequential API正是如此。通过向 <code class="docutils literal notranslate"><span class="pre">tf.keras.models.Sequential()</span></code> 提供一个层的列表，就能快速地建立一个 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 模型并返回：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
             <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span>
             <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">),</span>
@@ -891,6 +889,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
         <span class="p">])</span>
 </pre></div>
 </div>
+<p>不过，这种层叠结构并不能表示任意的神经网络结构。为此，Keras提供了Functional API，帮助我们建立更为复杂的模型，例如多输入/输出或存在参数共享的模型。其使用方法是将层作为可调用的对象并返回张量（这点与之前章节的使用方法一致），并将输入向量和输出向量提供给 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的 <code class="docutils literal notranslate"><span class="pre">inputs</span></code> 和 <code class="docutils literal notranslate"><span class="pre">outputs</span></code> 参数，示例如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">inputs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">()(</span><span class="n">inputs</span><span class="p">)</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
@@ -899,27 +898,51 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
         <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="https://www.tensorflow.org/alpha/guide/keras/functional">https://www.tensorflow.org/alpha/guide/keras/functional</a></p>
 </div>
 <div class="section" id="keras-model-compile-fit-evaluate">
 <h3>使用Keras Model的 <code class="docutils literal notranslate"><span class="pre">compile</span></code> 、 <code class="docutils literal notranslate"><span class="pre">fit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> 方法训练和评估模型<a class="headerlink" href="#keras-model-compile-fit-evaluate" title="永久链接至标题">¶</a></h3>
+<p>当模型建立完成后，通过 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的 <code class="docutils literal notranslate"><span class="pre">compile</span></code> 方法配置训练过程：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
         <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">),</span>
         <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">,</span>
         <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">sparse_categorical_accuracy</span><span class="p">]</span>
     <span class="p">)</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">train_data</span><span class="p">,</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">train_label</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">,</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">test_label</span><span class="p">))</span>
 </pre></div>
 </div>
-<p><a class="reference external" href="https://www.tensorflow.org/beta/guide/keras/training_and_evaluation">https://www.tensorflow.org/beta/guide/keras/training_and_evaluation</a></p>
+<p><code class="docutils literal notranslate"><span class="pre">tf.keras.Model.compile</span></code> 接受3个重要的参数：</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">oplimizer</span></code> ：优化器，可从 <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizers</span></code> 中选择；</li>
+<li><code class="docutils literal notranslate"><span class="pre">loss</span></code> ：损失函数，可从 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> 中选择；</li>
+<li><code class="docutils literal notranslate"><span class="pre">metrics</span></code> ：评估指标，可从 <code class="docutils literal notranslate"><span class="pre">tf.keras.metrics</span></code> 中选择。</li>
+</ul>
+</div></blockquote>
+<p>接下来，可以使用tf.keras.Model的fit方法训练模型：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">train_data</span><span class="p">,</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">train_label</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">tf.keras.Model.fit</span></code> 接受5个重要的参数：</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">x</span></code> ：训练数据；</li>
+<li><code class="docutils literal notranslate"><span class="pre">y</span></code> ：目标数据（数据标签）；</li>
+<li><code class="docutils literal notranslate"><span class="pre">epochs</span></code> ：将训练数据迭代多少遍；</li>
+<li><code class="docutils literal notranslate"><span class="pre">batch_size</span></code> ：批次的大小；</li>
+<li><code class="docutils literal notranslate"><span class="pre">validation_data</span></code> ：验证数据，可用于在训练过程中监控模型的性能。</li>
+</ul>
+</div></blockquote>
+<p>Keras支持使用tf.data.Dataset进行训练，详见 <a class="reference internal" href="tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 。</p>
+<p>最后，使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model.evaluate</span></code> 评估训练效果，提供测试数据及标签即可：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">,</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">test_label</span><span class="p">))</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="id22">
 <h2>自定义层、损失函数和指标 *<a class="headerlink" href="#id22" title="永久链接至标题">¶</a></h2>
 <p>可能你还会问，如果现有的这些层无法满足我的要求，我需要定义自己的层怎么办？事实上，我们不仅可以继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 编写自己的模型类，也可以继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 编写自己的层。</p>
-<div class="section" id="id23">
-<h3>自定义层<a class="headerlink" href="#id23" title="永久链接至标题">¶</a></h3>
+<div class="section" id="custom-layer">
+<span id="id23"></span><h3>自定义层<a class="headerlink" href="#custom-layer" title="永久链接至标题">¶</a></h3>
 <p>自定义层需要继承tf.keras.layers.Layer类，并重写 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 、 <code class="docutils literal notranslate"><span class="pre">build</span></code> 和 <code class="docutils literal notranslate"><span class="pre">call</span></code> 三个方法，如下所示：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyLayer</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
