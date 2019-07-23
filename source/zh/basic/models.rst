@@ -396,12 +396,12 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
     循环神经网络是一个处理时间序列数据的神经网络结构，也就是说，我们需要在脑海里有一根时间轴，循环神经网络具有初始状态 :math:`s_0` ，在每个时间点 :math:`t` 迭代对当前时间的输入 :math:`x_t` 进行处理，修改自身的状态 :math:`s_t` ，并进行输出 :math:`o_t` 。
 
-    循环神经网络的核心是状态 :math:`s` ，是一个特定维数的向量，类似于神经网络的“记忆”。在 :math:`t=0` 的初始时刻，:math:`s_0` 被赋予一个初始值（常用的为全0向量）。然后，我们用类似于递归的方法来描述循环神经网络的工作过程。即我们假设 :math:`s_{t-1}` 已经求出，关注如何在此基础上求出 :math:`s_{t-1}` ：
+    循环神经网络的核心是状态 :math:`s` ，是一个特定维数的向量，类似于神经网络的“记忆”。在 :math:`t=0` 的初始时刻，:math:`s_0` 被赋予一个初始值（常用的为全0向量）。然后，我们用类似于递归的方法来描述循环神经网络的工作过程。即在 :math:`t` 时刻，我们假设 :math:`s_{t-1}` 已经求出，关注如何在此基础上求出 :math:`s_{t}` ：
 
-    - 对输出向量 :math:`x_t` 通过矩阵U进行线性变换，:math:`U x_t` 与状态s具有相同的维度；
-    - 对 :math:`s_{t-1}` 通过矩阵W进行线性变换，:math:`W s_{t-1}` 与状态s具有相同的维度；
+    - 对输出向量 :math:`x_t` 通过矩阵 :math:`U` 进行线性变换，:math:`U x_t` 与状态s具有相同的维度；
+    - 对 :math:`s_{t-1}` 通过矩阵 :math:`W` 进行线性变换，:math:`W s_{t-1}` 与状态s具有相同的维度；
     - 将上述得到的两个向量相加并通过激活函数，作为当前状态 :math:`s_t` 的值，即 :math:`s_t = f(U x_t + W s_{t-1})`。也就是说，当前状态的值是上一个状态的值和当前输入进行某种信息整合而产生的；
-    - 对当前状态 :math:`s_t` 通过矩阵V进行线性变换，得到当前时刻的输出 :math:`o_t`。
+    - 对当前状态 :math:`s_t` 通过矩阵 :math:`V` 进行线性变换，得到当前时刻的输出 :math:`o_t`。
 
     .. figure:: /_static/image/model/rnn_cell.jpg
         :align: center
@@ -465,42 +465,76 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 * 小球移动的信息很重要，如果只知道单帧画面而不知道小球往哪边运动，即使是人也很难判断挡板应当移动的方向。因此，必须在状态中加入表征小球运动方向的信息。一个简单的方式是将当前帧与前面几帧的画面进行叠加，得到一个 ``210 * 160 * X`` （X为叠加帧数）的状态表示；
 * 每帧的分辨率不需要特别高，只要能大致表征方块、小球和挡板的位置以做出决策即可，因此对于每帧的长宽可做适当压缩。
 
-而考虑到我们需要从图像信息中提取特征，使用CNN作为拟合Q函数的网络将更为适合。
-
-.. _custom_layer:
+而考虑到我们需要从图像信息中提取特征，使用CNN作为拟合Q函数的网络将更为适合。将上面的 ``QNetwork`` 更换为CNN网络，即可用于玩一些简单的视频游戏。
 
 Keras Pipeline *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-https://medium.com/tensorflow/what-are-symbolic-and-imperative-apis-in-tensorflow-2-0-dfccecb01021
-https://www.tensorflow.org/beta/guide/keras/overview
-https://www.tensorflow.org/beta/guide/keras/custom_layers_and_models
+..
+    https://medium.com/tensorflow/what-are-symbolic-and-imperative-apis-in-tensorflow-2-0-dfccecb01021
+    https://www.tensorflow.org/beta/guide/keras/overview
+    https://www.tensorflow.org/beta/guide/keras/custom_layers_and_models
 
 以上示例均使用了Keras的Subclassing API建立模型，即对 ``tf.keras.Model`` 类进行扩展以定义自己的新模型，同时手工编写了训练和评估模型的流程。这种方式灵活度高，且与其他流行的深度学习框架（如PyTorch、Chainer）共通，是本手册所推荐的方法。不过在很多时候，我们只需要建立一个结构相对简单和典型的神经网络（比如上文中的MLP和CNN），并使用常规的手段进行训练。这时，Keras也给我们提供了另一套更为简单高效的内置方法来建立、训练和评估模型。
 
 Keras Sequential/Functional API模式建立模型
 -------------------------------------------
 
+最典型和常用的神经网络结构是将一堆层按特定顺序叠加起来，那么，我们是不是只需要提供一个层的列表，就能由Keras将它们自动首尾相连，形成模型呢？Keras的Sequential API正是如此。通过向 ``tf.keras.models.Sequential()`` 提供一个层的列表，就能快速地建立一个 ``tf.keras.Model`` 模型并返回：
+
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 18-23
 
+不过，这种层叠结构并不能表示任意的神经网络结构。为此，Keras提供了Functional API，帮助我们建立更为复杂的模型，例如多输入/输出或存在参数共享的模型。其使用方法是将层作为可调用的对象并返回张量（这点与之前章节的使用方法一致），并将输入向量和输出向量提供给 ``tf.keras.Model`` 的 ``inputs`` 和 ``outputs`` 参数，示例如下：
+
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 25-30
-
-https://www.tensorflow.org/alpha/guide/keras/functional
+..
+    https://www.tensorflow.org/alpha/guide/keras/functional
 
 使用Keras Model的 ``compile`` 、 ``fit`` 和 ``evaluate`` 方法训练和评估模型
 --------------------------------------------------------------------------------------
 
-.. literalinclude:: /_static/code/zh/model/mnist/main.py
-    :lines: 84-90
+当模型建立完成后，通过 ``tf.keras.Model`` 的 ``compile`` 方法配置训练过程：
 
-https://www.tensorflow.org/beta/guide/keras/training_and_evaluation
+.. literalinclude:: /_static/code/zh/model/mnist/main.py
+    :lines: 84-88
+
+``tf.keras.Model.compile`` 接受3个重要的参数：
+ 
+ - ``oplimizer`` ：优化器，可从 ``tf.keras.optimizers`` 中选择；
+ - ``loss`` ：损失函数，可从 ``tf.keras.losses`` 中选择；
+ - ``metrics`` ：评估指标，可从 ``tf.keras.metrics`` 中选择。
+
+接下来，可以使用tf.keras.Model的fit方法训练模型：
+
+.. literalinclude:: /_static/code/zh/model/mnist/main.py
+    :lines: 89
+
+``tf.keras.Model.fit`` 接受5个重要的参数：
+ 
+ - ``x`` ：训练数据；
+ - ``y`` ：目标数据（数据标签）；
+ - ``epochs`` ：将训练数据迭代多少遍；
+ - ``batch_size`` ：批次的大小；
+ - ``validation_data`` ：验证数据，可用于在训练过程中监控模型的性能。
+
+Keras支持使用tf.data.Dataset进行训练，详见 :ref:`tf.data <tfdata>` 。
+
+最后，使用 ``tf.keras.Model.evaluate`` 评估训练效果，提供测试数据及标签即可：
+
+.. literalinclude:: /_static/code/zh/model/mnist/main.py
+    :lines: 90
+
+..
+    https://www.tensorflow.org/beta/guide/keras/training_and_evaluation
 
 自定义层、损失函数和指标 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 可能你还会问，如果现有的这些层无法满足我的要求，我需要定义自己的层怎么办？事实上，我们不仅可以继承 ``tf.keras.Model`` 编写自己的模型类，也可以继承 ``tf.keras.layers.Layer`` 编写自己的层。
+
+.. _custom_layer:
 
 自定义层
 -------------------------------------------
