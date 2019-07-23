@@ -392,6 +392,24 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 .. [#rnn_reference] 此处的任务及实现参考了 https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py
 
+.. admonition:: 循环神经网络的工作过程
+
+    循环神经网络是一个处理时间序列数据的神经网络结构，也就是说，我们需要在脑海里有一根时间轴，循环神经网络具有初始状态 :math:`s_0` ，在每个时间点 :math:`t` 迭代对当前时间的输入 :math:`x_t` 进行处理，修改自身的状态 :math:`s_t` ，并进行输出 :math:`o_t` 。
+
+    循环神经网络的核心是状态 :math:`s` ，是一个特定维数的向量，类似于神经网络的“记忆”。在 :math:`t=0` 的初始时刻，:math:`s_0` 被赋予一个初始值（常用的为全0向量）。然后，我们用类似于递归的方法来描述循环神经网络的工作过程。即我们假设 :math:`s_{t-1}` 已经求出，关注如何在此基础上求出 :math:`s_{t-1}` ：
+
+    - 对输出向量 :math:`x_t` 通过矩阵U进行线性变换，:math:`U x_t` 与状态s具有相同的维度；
+    - 对 :math:`s_{t-1}` 通过矩阵W进行线性变换，:math:`W s_{t-1}` 与状态s具有相同的维度；
+    - 将上述得到的两个向量相加并通过激活函数，作为当前状态 :math:`s_t` 的值，即 :math:`s_t = f(U x_t + W s_{t-1})`。也就是说，当前状态的值是上一个状态的值和当前输入进行某种信息整合而产生的；
+    - 对当前状态 :math:`s_t` 通过矩阵V进行线性变换，得到当前时刻的输出 :math:`o_t`。
+
+    .. figure:: /_static/image/model/rnn_cell.jpg
+        :align: center
+
+        RNN工作过程图示（来自 http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/）
+
+
+
 深度强化学习（DRL）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
