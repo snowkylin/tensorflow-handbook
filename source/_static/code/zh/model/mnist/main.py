@@ -1,11 +1,11 @@
 import tensorflow as tf
 import numpy as np
-from zh.model.utils import MNISTLoader
+from zh.model.utils import MNISTLoader, SparseCategoricalAccuracy
 
 model = 'CNN'           # 'MLP' or 'CNN'
 mode = 'sequential'     # 'sequential', 'functional' or 'subclassing'
-training_loop = 'graph' # 'keras', 'custom' or 'graph'
-num_epochs = 100
+training_loop = 'custom' # 'keras', 'custom' or 'graph'
+num_epochs = 0.1
 batch_size = 50
 learning_rate = 0.001
 
@@ -106,7 +106,7 @@ if training_loop == 'custom':
     for batch_index in range(num_batches):
         start_index, end_index = batch_index * batch_size, (batch_index + 1) * batch_size
         y_pred = model.predict(data_loader.test_data[start_index: end_index])
-        sparse_categorical_accuracy(y_true=data_loader.test_label[start_index: end_index], y_pred=y_pred)
+        sparse_categorical_accuracy.update_state(y_true=data_loader.test_label[start_index: end_index], y_pred=y_pred)
     print("test accuracy: %f" % sparse_categorical_accuracy.result())
 if training_loop == 'graph':
     optimizer = tf.compat.v1.train.AdamOptimizer(learning_rate=learning_rate)
@@ -132,5 +132,5 @@ if training_loop == 'graph':
         for batch_index in range(num_batches):
             start_index, end_index = batch_index * batch_size, (batch_index + 1) * batch_size
             y_pred = model.predict(data_loader.test_data[start_index: end_index])
-            sess.run(sparse_categorical_accuracy(y_true=data_loader.test_label[start_index: end_index], y_pred=y_pred))
+            sess.run(sparse_categorical_accuracy.update(y_true=data_loader.test_label[start_index: end_index], y_pred=y_pred))
         print("test accuracy: %f" % sess.run(sparse_categorical_accuracy.result()))
