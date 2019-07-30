@@ -20,14 +20,23 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'0.4 alpha',
+              LANGUAGE:'zh_CN',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -104,7 +113,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#tf-data"><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> ：数据集的构建与预处理</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">数据集对象的建立</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id3">数据集对象的预处理</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">数据集元素的获取与使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">数据集元素的获取与使用</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cats-vs-dogs">实例：cats_vs_dogs图像分类</a></li>
 </ul>
 </li>
@@ -449,7 +458,7 @@
 <div class="section" id="id2">
 <h3>数据集对象的建立<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 的核心是 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 类，提供了对数据集的高层封装。<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 由一系列的可迭代访问的元素（element）组成，每个元素包含一个或多个张量。比如说，对于一个由图像组成的数据集，每个元素可以是一个形状为 <code class="docutils literal notranslate"><span class="pre">长×宽×通道数</span></code> 的图片张量，也可以是由图片张量和图片标签张量组成的元组（Tuple）。</p>
-<p>最常用的建立 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 的方法是使用 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.from_tensor_slices()</span></code> 。具体而言，如果我们的数据集中的所有元素通过张量的第0维，拼接成一个大的张量（例如，前节的MNIST数据集的训练集即为一个 <code class="docutils literal notranslate"><span class="pre">[60000,</span> <span class="pre">28,</span> <span class="pre">28,</span> <span class="pre">1]</span></code> 的张量，表示了60000张28*28的单通道灰度图像），那么我们提供一个这样的张量或者第0维大小相同的多个张量作为输入，即可按张量的第0维展开来构建数据集，数据集的元素数量为张量第0位的大小。具体示例如下：</p>
+<p>最基础的建立 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 的方法是使用 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.from_tensor_slices()</span></code> ，适用于数据量较小（能够整个装进内存）的情况。具体而言，如果我们的数据集中的所有元素通过张量的第0维，拼接成一个大的张量（例如，前节的MNIST数据集的训练集即为一个 <code class="docutils literal notranslate"><span class="pre">[60000,</span> <span class="pre">28,</span> <span class="pre">28,</span> <span class="pre">1]</span></code> 的张量，表示了60000张28*28的单通道灰度图像），那么我们提供一个这样的张量或者第0维大小相同的多个张量作为输入，即可按张量的第0维展开来构建数据集，数据集的元素数量为张量第0位的大小。具体示例如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -512,8 +521,9 @@
 <li><code class="docutils literal notranslate"><span class="pre">Dataset.map(f)</span></code> ：对数据集中的每个元素应用函数 <code class="docutils literal notranslate"><span class="pre">f</span></code> ，得到一个新的数据集（这部分往往结合 <code class="docutils literal notranslate"><span class="pre">tf.io</span></code> 进行读写和解码文件， <code class="docutils literal notranslate"><span class="pre">tf.image</span></code> 进行图像处理）；</li>
 <li><code class="docutils literal notranslate"><span class="pre">Dataset.shuffle(buffer_size)</span></code> ：将数据集打乱（设定一个固定大小的缓冲区（Buffer），取出前 <code class="docutils literal notranslate"><span class="pre">buffer_size</span></code> 个元素放入，并从缓冲区中随机采样，采样后的数据用后续数据替换）；</li>
 <li><code class="docutils literal notranslate"><span class="pre">Dataset.batch(batch_size)</span></code> ：将数据集分成批次，即对每 <code class="docutils literal notranslate"><span class="pre">batch_size</span></code> 个元素，使用 <code class="docutils literal notranslate"><span class="pre">tf.stack()</span></code> 在第0维合并，成为一个元素。</li>
+<li><code class="docutils literal notranslate"><span class="pre">Dataset.prefetch()</span></code> ：预取出数据集中的若干个元素</li>
 </ul>
-<p>除此以外，还有 <code class="docutils literal notranslate"><span class="pre">Dataset.repeat()</span></code> （重复数据集的元素）、 <code class="docutils literal notranslate"><span class="pre">Dataset.reduce()</span></code> （与Map相对的聚合操作）、 <code class="docutils literal notranslate"><span class="pre">Dataset.prefetch()</span></code> （预取出数据集中的若干个元素）等，可参考 <a class="reference external" href="https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/data/Dataset">API文档</a> 进一步了解。</p>
+<p>除此以外，还有 <code class="docutils literal notranslate"><span class="pre">Dataset.repeat()</span></code> （重复数据集的元素）、 <code class="docutils literal notranslate"><span class="pre">Dataset.reduce()</span></code> （与Map相对的聚合操作）、 <a href="#id4"><span class="problematic" id="id5">``</span></a>Dataset.take()``（）等，可参考 <a class="reference external" href="https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/data/Dataset">API文档</a> 进一步了解。</p>
 <p>以下以MNIST数据集进行示例。</p>
 <p>使用 <code class="docutils literal notranslate"><span class="pre">Dataset.map()</span></code> 将所有图片旋转90度：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="k">def</span> <span class="nf">rot90</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
@@ -560,11 +570,11 @@
 </pre></div>
 </div>
 <p>输出</p>
-<div class="figure align-center" id="id6">
+<div class="figure align-center" id="id8">
 <a class="reference internal image-reference" href="../../_images/mnist_shuffle_1.png"><img alt="../../_images/mnist_shuffle_1.png" src="../../_images/mnist_shuffle_1.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">第一次运行</span></p>
 </div>
-<div class="figure align-center" id="id7">
+<div class="figure align-center" id="id9">
 <a class="reference internal image-reference" href="../../_images/mnist_shuffle_2.png"><img alt="../../_images/mnist_shuffle_2.png" src="../../_images/mnist_shuffle_2.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">第二次运行</span></p>
 </div>
@@ -584,8 +594,8 @@
 </ul>
 </div>
 </div>
-<div class="section" id="id4">
-<h3>数据集元素的获取与使用<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id6">
+<h3>数据集元素的获取与使用<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
 <p>构建好数据并预处理后，我们需要从其中迭代获取数据以用于训练。<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 是一个Python的可迭代对象，因此可以使用For循环迭代获取数据，即：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="o">...</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="o">...</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>

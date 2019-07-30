@@ -32,15 +32,21 @@ class LinearModel(tf.keras.Model):
         return output
 
 
+class MeanSquaredError(tf.keras.losses.Loss):
+    def call(self, y_true, y_pred):
+        return tf.reduce_mean(tf.square(y_pred - y_true))
+
+
 if eager:
     X = tf.constant(X)
     y = tf.constant(y)
     model = LinearModel()
+    mse = MeanSquaredError()
     optimizer = tf.keras.optimizers.Adam(learning_rate=0.01)
     for i in range(100):
         with tf.GradientTape() as tape:
             y_pred = model(X)
-            loss = tf.reduce_mean(tf.square(y_pred - y))
+            loss = mse(y, y_pred)
         grads = tape.gradient(loss, model.variables)
         optimizer.apply_gradients(grads_and_vars=zip(grads, model.variables))
     print(model.variables)
