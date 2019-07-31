@@ -146,3 +146,56 @@ Google Cloud Platform（GCP）是Google的云计算服务。其Compute Engine类
 
 在Colab中使用TensorFlow
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Google Colab是谷歌的免费在线交互式Python运行环境，且提供GPU支持，使得机器学习开发者们无需在自己的电脑上安装环境，就能随时随地从云端访问和运行自己的机器学习代码。
+
+.. admonition:: 学习资源
+
+    - `Colab官方教程 <https://colab.research.google.com/notebooks/welcome.ipynb>`_
+    - `Google Colab Free GPU Tutorial <https://medium.com/deep-learning-turkey/google-colab-free-gpu-tutorial-e113627b9f5d>`_ （`中文翻译 <https://juejin.im/post/5c05e1bc518825689f1b4948>`_）
+
+进入Colab（https://colab.research.google.com），新建一个Python3笔记本，界面如下：
+
+.. figure:: /_static/image/colab/new.png
+    :width: 100%
+    :align: center
+
+如果需要使用GPU，则点击菜单“代码执行程序-更改运行时类型”，在“硬件加速器”一项中选择“GPU”，如下图所示：
+
+.. figure:: /_static/image/colab/select_env.png
+    :width: 40%
+    :align: center
+
+我们在主界面输入一行代码，例如 ``import tensorflow as tf`` ，然后按 ``ctrl + enter`` 执行代码（如果直接按下 ``enter`` 是换行，可以一次输入多行代码并运行）。此时Colab会自动连接到云端的运行环境，并将状态显示在右上角。
+
+运行完后，点击界面左上角的“+代码”，此时界面上会新增一个输入框，我们输入 ``tf.__version__`` ，再次按下 ``ctrl + enter`` 执行代码，以查看Colab默认的TensorFlow版本，执行情况如下：
+
+.. figure:: /_static/image/colab/tf_version.png
+    :width: 100%
+    :align: center
+
+.. tip:: Colab支持代码提示，可以在输入 ``tf.`` 后按下 ``tab`` 键，即会弹出代码提示的下拉菜单。
+
+可见，截至本文写作时，Colab中的TensorFlow默认版本是1.14.0。在Colab中，可以使用 ``!pip install`` 或者 ``!apt-get install`` 来安装Colab中尚未安装的Python库或Linux软件包。比如在这里，我们希望使用TensorFlow 2.0 beta1版本，即点击左上角的“+代码”，输入::
+
+    !pip install tensorflow-gpu==2.0.0-beta1
+
+按下 ``ctrl + enter`` 执行，结果如下：
+
+.. figure:: /_static/image/colab/install_tf.png
+    :width: 100%
+    :align: center
+
+可见，Colab提示我们重启运行环境以使用新安装的TensorFlow版本。于是我们点击运行框最下方的Restart Runtime（或者菜单“代码执行程序-重新启动代码执行程序”），然后再次导入TensorFlow并查看版本，结果如下：
+
+.. figure:: /_static/image/colab/view_tf_version.png
+    :width: 100%
+    :align: center
+
+我们可以使用 ``tf.test.is_gpu_available`` 函数来查看当前环境的GPU是否可用：
+
+.. figure:: /_static/image/colab/view_gpu.png
+    :width: 100%
+    :align: center
+
+可见，我们成功在Colab中启用了GPU环境。
