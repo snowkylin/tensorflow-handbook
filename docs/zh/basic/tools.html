@@ -20,23 +20,14 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -108,7 +99,7 @@
 <li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">TensorFlow模型建立与训练</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow常用模块</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#checkpoint">Checkpoint：变量的保存与恢复</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tf-train-checkpoint"><code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code> ：变量的保存与恢复</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tensorboard">TensorBoard：训练过程可视化</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tf-data"><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> ：数据集的构建与预处理</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">数据集对象的建立</a></li>
@@ -122,6 +113,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#id9"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 内在机制</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#autograph-pythontensorflow">AutoGraph：将Python控制流转换为TensorFlow计算图</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#tf-session">使用传统的 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#tf-config-gpu"><code class="docutils literal notranslate"><span class="pre">tf.config</span></code>：GPU的使用与分配 *</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gpu">指定当前程序使用的GPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">设置显存使用策略</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">模拟多GPU环境</a></li>
 </ul>
 </li>
 </ul>
@@ -227,8 +224,8 @@
 <li><a class="reference external" href="https://www.runoob.com/python3/python3-iterator-generator.html">Python的迭代器</a></li>
 </ul>
 </div>
-<div class="section" id="checkpoint">
-<h2>Checkpoint：变量的保存与恢复<a class="headerlink" href="#checkpoint" title="永久链接至标题">¶</a></h2>
+<div class="section" id="tf-train-checkpoint">
+<h2><code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code> ：变量的保存与恢复<a class="headerlink" href="#tf-train-checkpoint" title="永久链接至标题">¶</a></h2>
 <p>很多时候，我们希望在模型训练完成后能将训练好的参数（变量）保存起来。在需要使用模型的其他地方载入模型和参数，就能直接得到训练好的模型。可能你第一个想到的是用Python的序列化模块 <code class="docutils literal notranslate"><span class="pre">pickle</span></code> 存储 <code class="docutils literal notranslate"><span class="pre">model.variables</span></code>。但不幸的是，TensorFlow的变量类型 <code class="docutils literal notranslate"><span class="pre">ResourceVariable</span></code> 并不能被序列化。</p>
 <p>好在TensorFlow提供了 <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code> 这一强大的变量保存与恢复类，可以使用其 <code class="docutils literal notranslate"><span class="pre">save()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">restore()</span></code> 方法将TensorFlow中所有包含Checkpointable State的对象进行保存和恢复。具体而言，<code class="docutils literal notranslate"><span class="pre">tf.keras.optimizer</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.keras.Layer</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 实例都可以被保存。其使用方法非常简单，我们首先声明一个Checkpoint：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">checkpoint</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Checkpoint</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
@@ -576,11 +573,11 @@
 </pre></div>
 </div>
 <p>输出</p>
-<div class="figure align-center" id="id10">
+<div class="figure align-center" id="id12">
 <a class="reference internal image-reference" href="../../_images/mnist_shuffle_1.png"><img alt="../../_images/mnist_shuffle_1.png" src="../../_images/mnist_shuffle_1.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">第一次运行</span></p>
 </div>
-<div class="figure align-center" id="id11">
+<div class="figure align-center" id="id13">
 <a class="reference internal image-reference" href="../../_images/mnist_shuffle_2.png"><img alt="../../_images/mnist_shuffle_2.png" src="../../_images/mnist_shuffle_2.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">第二次运行</span></p>
 </div>
@@ -931,6 +928,43 @@
 </pre></div>
 </div>
 <p>关于Graph Execution的更多内容可参见 <a class="reference internal" href="../appendix/static.html"><span class="doc">图模型下的TensorFlow</span></a>。</p>
+</div>
+</div>
+<div class="section" id="tf-config-gpu">
+<h2><code class="docutils literal notranslate"><span class="pre">tf.config</span></code>：GPU的使用与分配 *<a class="headerlink" href="#tf-config-gpu" title="永久链接至标题">¶</a></h2>
+<div class="section" id="gpu">
+<h3>指定当前程序使用的GPU<a class="headerlink" href="#gpu" title="永久链接至标题">¶</a></h3>
+<p>很多时候的场景是：实验室/公司研究组里有许多学生/研究员都需要使用GPU，但多卡的机器只有一台，这时就需要注意如何分配显卡资源。</p>
+<p>命令 <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> 可以查看机器上现有的GPU及使用情况（在Windows下，将 <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\NVIDIA</span> <span class="pre">Corporation\NVSMI</span></code> 加入Path环境变量中即可，或Windows 10下可使用任务管理器的“性能”标签查看显卡信息）。</p>
+<p>使用环境变量 <code class="docutils literal notranslate"><span class="pre">CUDA_VISIBLE_DEVICES</span></code> 可以控制程序所使用的GPU。假设发现四卡的机器上显卡0,1使用中，显卡2,3空闲，Linux终端输入:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">CUDA_VISIBLE_DEVICES</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span>
+</pre></div>
+</div>
+<p>或在代码中加入</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CUDA_VISIBLE_DEVICES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;2,3&quot;</span>
+</pre></div>
+</div>
+<p>即可指定程序只在显卡2,3上运行。</p>
+</div>
+<div class="section" id="id10">
+<h3>设置显存使用策略<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p>默认情况下，TensorFlow将使用几乎所有可用的显存，以避免内存碎片化所带来的性能损失。可以通过 <code class="docutils literal notranslate"><span class="pre">tf.ConfigProto</span></code> 类来设置TensorFlow使用显存的策略。具体方式是实例化一个 <code class="docutils literal notranslate"><span class="pre">tf.ConfigProto</span></code> 类，设置参数，并在运行 <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code> 时指定Config参数。以下代码通过 <code class="docutils literal notranslate"><span class="pre">allow_growth</span></code> 选项设置TensorFlow仅在需要时申请显存空间：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">()</span>
+<span class="n">config</span><span class="o">.</span><span class="n">gpu_options</span><span class="o">.</span><span class="n">allow_growth</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">enable_eager_execution</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>以下代码通过 <code class="docutils literal notranslate"><span class="pre">per_process_gpu_memory_fraction</span></code> 选项设置TensorFlow固定消耗40%的GPU显存：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">()</span>
+<span class="n">config</span><span class="o">.</span><span class="n">gpu_options</span><span class="o">.</span><span class="n">per_process_gpu_memory_fraction</span> <span class="o">=</span> <span class="mf">0.4</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">enable_eager_execution</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Graph Execution下，也可以在实例化新的session时传入 <code class="docutils literal notranslate"><span class="pre">tf.ConfigPhoto</span></code> 类来进行设置。</p>
+</div>
+<div class="section" id="id11">
+<h3>模拟多GPU环境<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
 </div>
 </div>
 </div>

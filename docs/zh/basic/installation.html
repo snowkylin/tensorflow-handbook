@@ -20,23 +20,14 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -114,8 +105,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id10">第一个程序</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ide">IDE设置</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id14">本地GPU的使用与分配 *</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id15">TensorFlow所需的硬件配置 *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id14">TensorFlow所需的硬件配置 *</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow基础</a></li>
@@ -386,35 +376,7 @@ Mon Jun 10 23:19:54 2019
 </table>
 </div>
 <div class="section" id="id14">
-<h2>本地GPU的使用与分配 *<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h2>
-<p>很多时候的场景是：实验室/公司研究组里有许多学生/研究员都需要使用GPU，但多卡的机器只有一台，这时就需要注意如何分配显卡资源。</p>
-<p>命令 <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> 可以查看机器上现有的GPU及使用情况（在Windows下，将 <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\NVIDIA</span> <span class="pre">Corporation\NVSMI</span></code> 加入Path环境变量中即可，或Windows 10下可使用任务管理器的“性能”标签查看显卡信息）。</p>
-<p>使用环境变量 <code class="docutils literal notranslate"><span class="pre">CUDA_VISIBLE_DEVICES</span></code> 可以控制程序所使用的GPU。假设发现四卡的机器上显卡0,1使用中，显卡2,3空闲，Linux终端输入:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">CUDA_VISIBLE_DEVICES</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span>
-</pre></div>
-</div>
-<p>或在代码中加入</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CUDA_VISIBLE_DEVICES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;2,3&quot;</span>
-</pre></div>
-</div>
-<p>即可指定程序只在显卡2,3上运行。</p>
-<p>默认情况下，TensorFlow将使用几乎所有可用的显存，以避免内存碎片化所带来的性能损失。可以通过 <code class="docutils literal notranslate"><span class="pre">tf.ConfigProto</span></code> 类来设置TensorFlow使用显存的策略。具体方式是实例化一个 <code class="docutils literal notranslate"><span class="pre">tf.ConfigProto</span></code> 类，设置参数，并在运行 <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code> 时指定Config参数。以下代码通过 <code class="docutils literal notranslate"><span class="pre">allow_growth</span></code> 选项设置TensorFlow仅在需要时申请显存空间：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">()</span>
-<span class="n">config</span><span class="o">.</span><span class="n">gpu_options</span><span class="o">.</span><span class="n">allow_growth</span> <span class="o">=</span> <span class="bp">True</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">enable_eager_execution</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>以下代码通过 <code class="docutils literal notranslate"><span class="pre">per_process_gpu_memory_fraction</span></code> 选项设置TensorFlow固定消耗40%的GPU显存：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">()</span>
-<span class="n">config</span><span class="o">.</span><span class="n">gpu_options</span><span class="o">.</span><span class="n">per_process_gpu_memory_fraction</span> <span class="o">=</span> <span class="mf">0.4</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">enable_eager_execution</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Graph Execution下，也可以在实例化新的session时传入 tf.ConfigPhoto 类来进行设置。</p>
-</div>
-<div class="section" id="id15">
-<h2>TensorFlow所需的硬件配置 *<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h2>
+<h2>TensorFlow所需的硬件配置 *<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h2>
 </div>
 </div>
 
