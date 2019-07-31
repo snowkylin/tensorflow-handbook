@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TensorFlow环境配置与管理 &mdash; 简单粗暴TensorFlow 0.4 alpha 文档</title>
+  <title>在容器和云端使用TensorFlow &mdash; 简单粗暴TensorFlow 2.0 0.4 alpha 文档</title>
   
 
   
@@ -48,8 +48,8 @@
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
-    <link rel="next" title="参考资料与推荐阅读" href="recommended_books.html" />
-    <link rel="prev" title="TensorFlow自定义运算操作" href="custom_op.html" /> 
+    <link rel="next" title="TensorFlow性能优化" href="optimization.html" />
+    <link rel="prev" title="图模型下的TensorFlow" href="static.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -63,7 +63,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 简单粗暴TensorFlow
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴TensorFlow 2.0
           
 
           
@@ -104,42 +104,40 @@
 </ul>
 <p class="caption"><span class="caption-text">基础</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装与环境配置</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow模型建立与训练</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模块</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型导出（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
 </ul>
-<p class="caption"><span class="caption-text">应用</span></p>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../application/rl.html">TensorFlow智能物资调度</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../application/seq2seq-python.html">Tensorflow Python 闲聊机器人</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../application/seq2seq-javascript.html">Tensorflow JavaScript 闲聊对话模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../application/seq2seq-swift.html">TensorFlow Swift 闲聊机器人</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="swift.html">TensorFlow in Swift（Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="julia.html">TensorFlow in Julia</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="static.html">静态的TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="swift.html">TensorFlow in Swift</a></li>
-<li class="toctree-l1"><a class="reference internal" href="julia.html">TensorFlow in Julia</a></li>
-<li class="toctree-l1"><a class="reference internal" href="reuse.html">TensorFlow资源重用</a></li>
-<li class="toctree-l1"><a class="reference internal" href="addons.html">TensorFlow库和扩展</a></li>
-<li class="toctree-l1"><a class="reference internal" href="optimization.html">TensorFlow性能优化</a></li>
-<li class="toctree-l1"><a class="reference internal" href="training.html">TensorFlow大规模训练</a></li>
-<li class="toctree-l1"><a class="reference internal" href="custom_op.html">TensorFlow自定义运算操作</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow环境配置与管理</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#gpu">本地GPU的使用与分配</a></li>
+<li class="toctree-l1"><a class="reference internal" href="static.html">图模型下的TensorFlow</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">在容器和云端使用TensorFlow</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#dockertensorflow">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#google-cloud-platform-gcp-tensorflow">在Google Cloud Platform（GCP）中使用TensorFlow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#colabtensorflow">在Colab中使用TensorFlow</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="optimization.html">TensorFlow性能优化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="terms.html">术语中英对照表</a></li>
 </ul>
@@ -156,7 +154,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">简单粗暴TensorFlow</a>
+          <a href="../../index.html">简单粗暴TensorFlow 2.0</a>
         
       </nav>
 
@@ -187,7 +185,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>TensorFlow环境配置与管理</li>
+      <li>在容器和云端使用TensorFlow</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -207,35 +205,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="tensorflow">
-<h1>TensorFlow环境配置与管理<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
-<div class="section" id="gpu">
-<h2>本地GPU的使用与分配<a class="headerlink" href="#gpu" title="永久链接至标题">¶</a></h2>
-<p>很多时候的场景是：实验室/公司研究组里有许多学生/研究员都需要使用GPU，但多卡的机器只有一台，这时就需要注意如何分配显卡资源。</p>
-<p>命令 <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> 可以查看机器上现有的GPU及使用情况（在Windows下，将 <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\NVIDIA</span> <span class="pre">Corporation\NVSMI</span></code> 加入Path环境变量中即可，或Windows 10下可使用任务管理器的“性能”标签查看显卡信息）。</p>
-<p>使用环境变量 <code class="docutils literal notranslate"><span class="pre">CUDA_VISIBLE_DEVICES</span></code> 可以控制程序所使用的GPU。假设发现四卡的机器上显卡0,1使用中，显卡2,3空闲，Linux终端输入:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">CUDA_VISIBLE_DEVICES</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span>
-</pre></div>
-</div>
-<p>或在代码中加入</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CUDA_VISIBLE_DEVICES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;2,3&quot;</span>
-</pre></div>
-</div>
-<p>即可指定程序只在显卡2,3上运行。</p>
-<p>默认情况下，TensorFlow将使用几乎所有可用的显存，以避免内存碎片化所带来的性能损失。可以通过 <code class="docutils literal notranslate"><span class="pre">tf.ConfigProto</span></code> 类来设置TensorFlow使用显存的策略。具体方式是实例化一个 <code class="docutils literal notranslate"><span class="pre">tf.ConfigProto</span></code> 类，设置参数，并在运行 <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code> 时指定Config参数。以下代码通过 <code class="docutils literal notranslate"><span class="pre">allow_growth</span></code> 选项设置TensorFlow仅在需要时申请显存空间：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">()</span>
-<span class="n">config</span><span class="o">.</span><span class="n">gpu_options</span><span class="o">.</span><span class="n">allow_growth</span> <span class="o">=</span> <span class="bp">True</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">enable_eager_execution</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>以下代码通过 <code class="docutils literal notranslate"><span class="pre">per_process_gpu_memory_fraction</span></code> 选项设置TensorFlow固定消耗40%的GPU显存：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">()</span>
-<span class="n">config</span><span class="o">.</span><span class="n">gpu_options</span><span class="o">.</span><span class="n">per_process_gpu_memory_fraction</span> <span class="o">=</span> <span class="mf">0.4</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">enable_eager_execution</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Graph Execution下，也可以在实例化新的session时传入 tf.ConfigPhoto 类来进行设置。</p>
-</div>
+<h1>在容器和云端使用TensorFlow<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
 <div class="section" id="dockertensorflow">
 <span id="install-by-docker"></span><h2>使用Docker部署TensorFlow环境<a class="headerlink" href="#dockertensorflow" title="永久链接至标题">¶</a></h2>
 <div class="admonition hint">
@@ -379,10 +349,10 @@ Fri Jul <span class="m">12</span> <span class="m">10</span>:30:37 <span class="m
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="recommended_books.html" class="btn btn-neutral float-right" title="参考资料与推荐阅读" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="optimization.html" class="btn btn-neutral float-right" title="TensorFlow性能优化" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="custom_op.html" class="btn btn-neutral float-left" title="TensorFlow自定义运算操作" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="static.html" class="btn btn-neutral float-left" title="图模型下的TensorFlow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -81,26 +81,35 @@ The code of this handbook is based on TensorFlow 2.0 beta.
 
 .. toctree:: 
     :maxdepth: 2
-    :caption: 应用
+    :caption: 大规模训练与加速
 
-    zh/application/rl
-    zh/application/seq2seq-python
-    zh/application/seq2seq-javascript
-    zh/application/seq2seq-swift
+    zh/appendix/distributed
+    zh/appendix/tpu
+
+.. toctree:: 
+    :maxdepth: 2
+    :caption: 扩展
+
+    zh/appendix/tfhub
+    zh/appendix/tfds  
+    zh/appendix/swift
+    zh/appendix/julia
+
+..
+    .. toctree:: 
+        :maxdepth: 2
+        :caption: 应用
+
+        zh/application/rl
+        zh/application/chatbot
 
 .. toctree:: 
     :maxdepth: 2
     :caption: 附录
 
-    zh/appendix/static
-    zh/appendix/swift
-    zh/appendix/julia
-    zh/appendix/reuse
-    zh/appendix/addons
-    zh/appendix/optimization
-    zh/appendix/training 
-    zh/appendix/custom_op
+    zh/appendix/static 
     zh/appendix/config 
+    zh/appendix/optimization
     zh/appendix/recommended_books
     zh/appendix/terms
 
