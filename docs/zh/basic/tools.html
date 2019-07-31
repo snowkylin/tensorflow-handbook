@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TensorFlow工具 &mdash; 简单粗暴TensorFlow 0.4 alpha 文档</title>
+  <title>TensorFlow常用模块 &mdash; 简单粗暴TensorFlow 2.0 0.4 alpha 文档</title>
   
 
   
@@ -48,7 +48,7 @@
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
-    <link rel="next" title="TensorFlow模型导出" href="../deployment/export.html" />
+    <link rel="next" title="TensorFlow模型导出（Jinpeng）" href="../deployment/export.html" />
     <link rel="prev" title="TensorFlow模型建立与训练" href="models.html" /> 
 </head>
 
@@ -63,7 +63,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 简单粗暴TensorFlow
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴TensorFlow 2.0
           
 
           
@@ -104,10 +104,10 @@
 </ul>
 <p class="caption"><span class="caption-text">基础</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="installation.html">TensorFlow安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">TensorFlow安装与环境配置</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">TensorFlow模型建立与训练</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow工具</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow常用模块</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#checkpoint">Checkpoint：变量的保存与恢复</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tensorboard">TensorBoard：训练过程可视化</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tf-data"><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> ：数据集的构建与预处理</a><ul>
@@ -117,34 +117,40 @@
 <li class="toctree-l3"><a class="reference internal" href="#cats-vs-dogs">实例：cats_vs_dogs图像分类</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#tf-function-graph-execution"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> ：Graph Execution模式 *</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tf-function"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 基础使用方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 内在机制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#autograph-pythontensorflow">AutoGraph：将Python控制流转换为TensorFlow计算图</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tf-session">使用传统的 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型导出（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
 </ul>
-<p class="caption"><span class="caption-text">应用</span></p>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../application/rl.html">TensorFlow智能物资调度</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../application/seq2seq-python.html">Tensorflow Python 闲聊机器人</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../application/seq2seq-javascript.html">Tensorflow JavaScript 闲聊对话模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../application/seq2seq-swift.html">TensorFlow Swift 闲聊机器人</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">TensorFlow in Swift（Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/static.html">静态的TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">TensorFlow in Swift</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/reuse.html">TensorFlow资源重用</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/addons.html">TensorFlow库和扩展</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/static.html">图模型下的TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/config.html">在容器和云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/optimization.html">TensorFlow性能优化</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/training.html">TensorFlow大规模训练</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/custom_op.html">TensorFlow自定义运算操作</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/config.html">TensorFlow环境配置与管理</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">术语中英对照表</a></li>
 </ul>
@@ -161,7 +167,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">简单粗暴TensorFlow</a>
+          <a href="../../index.html">简单粗暴TensorFlow 2.0</a>
         
       </nav>
 
@@ -192,7 +198,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>TensorFlow工具</li>
+      <li>TensorFlow常用模块</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -212,7 +218,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="tensorflow">
-<h1>TensorFlow工具<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
+<h1>TensorFlow常用模块<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
 <div class="admonition- admonition">
 <p class="first admonition-title">前置知识</p>
 <ul class="last simple">
@@ -506,7 +512,7 @@
 </div>
 <div class="admonition hint">
 <p class="first admonition-title">提示</p>
-<p>TensorFlow Datasets提供了一个基于 <code class="docutils literal notranslate"><span class="pre">tf.data.Datasets</span></code> 的开箱即用的数据集集合，相关内容可参考 <a class="reference internal" href="../appendix/reuse.html#tfds"><span class="std std-ref">TensorFlow Datasets</span></a>。例如，使用以下语句：</p>
+<p>TensorFlow Datasets提供了一个基于 <code class="docutils literal notranslate"><span class="pre">tf.data.Datasets</span></code> 的开箱即用的数据集集合，相关内容可参考 <span class="xref std std-ref">TensorFlow Datasets</span>。例如，使用以下语句：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="kn">as</span> <span class="nn">tfds</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;mnist&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">tfds</span><span class="o">.</span><span class="n">Split</span><span class="o">.</span><span class="n">TRAIN</span><span class="p">)</span>
 </pre></div>
@@ -570,11 +576,11 @@
 </pre></div>
 </div>
 <p>输出</p>
-<div class="figure align-center" id="id8">
+<div class="figure align-center" id="id10">
 <a class="reference internal image-reference" href="../../_images/mnist_shuffle_1.png"><img alt="../../_images/mnist_shuffle_1.png" src="../../_images/mnist_shuffle_1.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">第一次运行</span></p>
 </div>
-<div class="figure align-center" id="id9">
+<div class="figure align-center" id="id11">
 <a class="reference internal image-reference" href="../../_images/mnist_shuffle_2.png"><img alt="../../_images/mnist_shuffle_2.png" src="../../_images/mnist_shuffle_2.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">第二次运行</span></p>
 </div>
@@ -695,6 +701,238 @@
 </div>
 </div>
 </div>
+<div class="section" id="tf-function-graph-execution">
+<h2><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> ：Graph Execution模式 *<a class="headerlink" href="#tf-function-graph-execution" title="永久链接至标题">¶</a></h2>
+<div class="section" id="tf-function">
+<h3><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 基础使用方法<a class="headerlink" href="#tf-function" title="永久链接至标题">¶</a></h3>
+<p>在TensorFlow 2.0中，推荐使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> （而非1.X中的 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code> ）实现Graph Execution，从而将模型转换为易于部署且高性能的TensorFlow图模型。只需要将我们希望以Graph Execution模式运行的代码封装在一个函数内，并在函数前加上 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 即可，如下例所示。</p>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">并不是任何函数都可以被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰！<code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 使用静态编译将函数内的代码转换成计算图，因此对函数内可使用的语句有一定限制（仅支持Python语言的一个子集），且需要函数内的操作本身能够被构建为计算图。建议在函数内只使用TensorFlow的原生操作，不要使用过于复杂的Python语句，函数参数只包括TensorFlow张量或NumPy数组，并最好是能够按照计算图的思想去构建函数（换言之，<code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 只是给了你一种更方便的写计算图的方法，而不是一颗能给任何函数加速的 <a class="reference external" href="https://en.wikipedia.org/wiki/No_Silver_Bullet">银子弹</a> ）。详细内容可参考 <a class="reference external" href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/autograph/LIMITATIONS.md">AutoGraph Capabilities and Limitations</a> 。</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">zh.model.mnist.cnn</span> <span class="k">import</span> <span class="n">CNN</span>
+<span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="k">import</span> <span class="n">MNISTLoader</span>
+
+<span class="n">num_batches</span> <span class="o">=</span> <span class="mi">400</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.001</span>
+<span class="n">data_loader</span> <span class="o">=</span> <span class="n">MNISTLoader</span><span class="p">()</span>
+
+<span class="hll"><span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+</span><span class="k">def</span> <span class="nf">train_one_step</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>    
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        <span class="c1"># 注意这里使用了TensorFlow内置的tf.print()。@tf.function不支持Python内置的print方法</span>
+<span class="hll">        <span class="n">tf</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>  
+</span>    <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">CNN</span><span class="p">()</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">batch_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_batches</span><span class="p">):</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">get_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+        <span class="n">train_one_step</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>      
+</pre></div>
+</div>
+<p>运行400个Batch进行测试，加入 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 的程序耗时35.5秒，未加入 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 的纯Eager Execution程序耗时43.8秒。可见 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 带来了一定的性能提升。一般而言，当模型由较多小的操作组成的时候， <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 带来的提升效果较大。而当模型的操作数量较少，但单一操作均很耗时的时候，则 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 带来的性能提升不会太大。</p>
+</div>
+<div class="section" id="id9">
+<h3><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 内在机制<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>当被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰的函数第一次被调用的时候，进行以下操作：</p>
+<ul class="simple">
+<li>在Eager Execution模式关闭的环境下，函数内的代码依次运行。也就是说，每个 <code class="docutils literal notranslate"><span class="pre">tf.</span></code> 方法都只是定义了计算节点，而并没有进行任何实质的计算。这与TensorFlow 1.X的Graph Execution是一致的；</li>
+<li>使用AutoGraph将函数中的Python控制流语句转换成TensorFlow计算图中的对应节点（比如说 <code class="docutils literal notranslate"><span class="pre">while</span></code> 和 <code class="docutils literal notranslate"><span class="pre">for</span></code> 语句转换为 <code class="docutils literal notranslate"><span class="pre">tf.while</span></code> ， <code class="docutils literal notranslate"><span class="pre">if</span></code> 语句转换为 <code class="docutils literal notranslate"><span class="pre">tf.cond</span></code> 等等；</li>
+<li>基于上面的两步，建立函数内代码的计算图表示（为了保证图的计算顺序，图中还会自动加入一些 <code class="docutils literal notranslate"><span class="pre">tf.control_dependencies</span></code> 节点）；</li>
+<li>运行一次这个计算图；</li>
+<li>基于函数的名字和输入的函数参数的类型生成一个哈希值，并将建立的计算图缓存到一个哈希表中。</li>
+</ul>
+<p>在被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰的函数之后再次被调用的时候，根据函数名和输入的函数参数的类型计算哈希值，检查哈希表中是否已经有了对应计算图的缓存。如果是，则直接使用已缓存的计算图，否则重新按上述步骤建立计算图。</p>
+<p>以下是一个测试题：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The function is running in Python&quot;</span><span class="p">)</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="n">b_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="n">b_</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>思考一下，上面这段程序的结果是什么？</p>
+<p>答案是:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
+<span class="mi">1</span>
+<span class="mi">2</span>
+<span class="mi">2</span>
+<span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
+<span class="mf">0.1</span>
+<span class="mf">0.2</span>
+<span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
+<span class="mi">1</span>
+<span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
+<span class="mi">2</span>
+<span class="mi">1</span>
+<span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
+<span class="mf">0.1</span>
+<span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
+<span class="mf">0.2</span>
+<span class="mf">0.1</span>
+</pre></div>
+</div>
+<p>当计算 <code class="docutils literal notranslate"><span class="pre">f(a)</span></code> 时，由于是第一次调用该函数，TensorFlow进行了以下操作：</p>
+<ul class="simple">
+<li>将函数内的代码依次运行了一遍（因此输出了文本）；</li>
+<li>构建了计算图，然后运行了一次该计算图（因此输出了1）。这里 <code class="docutils literal notranslate"><span class="pre">tf.print(x)</span></code> 可以作为计算图的节点，但Python内置的 <code class="docutils literal notranslate"><span class="pre">print</span></code> 则不能被转换成计算图的节点。因此，计算图中只包含了 <code class="docutils literal notranslate"><span class="pre">tf.print(x)</span></code> 这一操作；</li>
+<li>将该计算图缓存到了一个哈希表中（如果之后再有类型为 <code class="docutils literal notranslate"><span class="pre">tf.int32</span></code> ，shape为空的张量输入，则重复使用已构建的计算图）。</li>
+</ul>
+<p>计算 <code class="docutils literal notranslate"><span class="pre">f(b)</span></code> 时，由于b的类型与a相同，所以TensorFlow重复使用了之前已构建的计算图并运行（因此输出了2）。这里由于并没有真正地逐行运行函数中的代码，所以函数第一行的文本输出代码没有运行。计算 <code class="docutils literal notranslate"><span class="pre">f(b_)</span></code> 时，TensorFlow自动将numpy的数据结构转换成了TensorFlow中的张量，因此依然能够复用之前已构建的计算图。</p>
+<p>计算 <code class="docutils literal notranslate"><span class="pre">f(c)</span></code> 时，虽然张量 <code class="docutils literal notranslate"><span class="pre">c</span></code> 的shape和 <code class="docutils literal notranslate"><span class="pre">a</span></code> 、 <code class="docutils literal notranslate"><span class="pre">b</span></code> 均相同，但类型为 <code class="docutils literal notranslate"><span class="pre">tf.float32</span></code> ，因此TensorFlow重新运行了函数内代码（从而再次输出了文本）并建立了一个输入为 <code class="docutils literal notranslate"><span class="pre">tf.float32</span></code> 类型的计算图。</p>
+<p>计算 <code class="docutils literal notranslate"><span class="pre">f(d)</span></code> 时，由于 <code class="docutils literal notranslate"><span class="pre">d</span></code> 和 <code class="docutils literal notranslate"><span class="pre">c</span></code> 的类型相同，所以TensorFlow复用了计算图，同理没有输出文本。</p>
+<p>之后的计算结果则显示出 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 对Python内置的整数和浮点数类型的处理方式。简而言之，只有当值完全一致的时候， <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 才会复用之前建立的计算图，而并不会自动将Python内置的整数或浮点数等转换成张量。因此，当函数参数包含Python内置整数或浮点数时，需要额外小心。一般而言，应当只在指定超参数等少数场合使用Python内置类型作为被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰的函数的参数。</p>
+<p>下一个思考题：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+
+<span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+<span class="k">def</span> <span class="nf">g</span><span class="p">():</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>这段代码的输出是:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>正如同正文里的例子一样，你可以在被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰的函数里调用 <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizers</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 等包含有变量的数据结构。一旦被调用，这些结构将作为隐含的参数提供给函数。当这些结构内的值在函数内被修改时，在函数外也同样生效。</p>
+</div>
+<div class="section" id="autograph-pythontensorflow">
+<h3>AutoGraph：将Python控制流转换为TensorFlow计算图<a class="headerlink" href="#autograph-pythontensorflow" title="永久链接至标题">¶</a></h3>
+<p>前面提到，<code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 使用名为AutoGraph的机制将函数中的Python控制流语句转换成TensorFlow计算图中的对应节点。以下是一个示例，使用 <code class="docutils literal notranslate"><span class="pre">tf.autograph</span></code> 模块的低层API <code class="docutils literal notranslate"><span class="pre">tf.autograph.to_code</span></code> 将函数 <code class="docutils literal notranslate"><span class="pre">square_if_positive</span></code> 转换成TensorFlow计算图：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+<span class="k">def</span> <span class="nf">square_if_positive</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">square_if_positive</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">square_if_positive</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">autograph</span><span class="o">.</span><span class="n">to_code</span><span class="p">(</span><span class="n">square_if_positive</span><span class="o">.</span><span class="n">python_function</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int32</span><span class="p">)</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int32</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">tf__square_if_positive</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">do_return</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">retval_</span> <span class="o">=</span> <span class="n">ag__</span><span class="o">.</span><span class="n">UndefinedReturnValue</span><span class="p">()</span>
+    <span class="n">cond</span> <span class="o">=</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">get_state</span><span class="p">():</span>
+        <span class="k">return</span> <span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">set_state</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">if_true</span><span class="p">():</span>
+        <span class="n">x_1</span><span class="p">,</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span>
+        <span class="n">x_1</span> <span class="o">=</span> <span class="n">x_1</span> <span class="o">*</span> <span class="n">x_1</span>
+        <span class="k">return</span> <span class="n">x_1</span>
+
+    <span class="k">def</span> <span class="nf">if_false</span><span class="p">():</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">x</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">ag__</span><span class="o">.</span><span class="n">if_stmt</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="n">if_true</span><span class="p">,</span> <span class="n">if_false</span><span class="p">,</span> <span class="n">get_state</span><span class="p">,</span> <span class="n">set_state</span><span class="p">)</span>
+    <span class="n">do_return</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">retval_</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="n">cond_1</span> <span class="o">=</span> <span class="n">ag__</span><span class="o">.</span><span class="n">is_undefined_return</span><span class="p">(</span><span class="n">retval_</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_state_1</span><span class="p">():</span>
+        <span class="k">return</span> <span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">set_state_1</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">if_true_1</span><span class="p">():</span>
+        <span class="n">retval_</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">retval_</span>
+
+    <span class="k">def</span> <span class="nf">if_false_1</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">retval_</span>
+    <span class="n">retval_</span> <span class="o">=</span> <span class="n">ag__</span><span class="o">.</span><span class="n">if_stmt</span><span class="p">(</span><span class="n">cond_1</span><span class="p">,</span> <span class="n">if_true_1</span><span class="p">,</span> <span class="n">if_false_1</span><span class="p">,</span> <span class="n">get_state_1</span><span class="p">,</span> <span class="n">set_state_1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">retval_</span>
+</pre></div>
+</div>
+<p>我们注意到，原函数中的Python控制流 <code class="docutils literal notranslate"><span class="pre">if...else...</span></code> 被转换为了 <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">ag__.if_stmt(cond,</span> <span class="pre">if_true,</span> <span class="pre">if_false,</span> <span class="pre">get_state,</span> <span class="pre">set_state)</span></code> 这种计算图式的写法。AutoGraph起到了类似编译器的作用，能够帮助我们通过更加自然的Python控制流轻松地构建带有条件/循环的计算图，而无需手动使用TensorFlow的API进行构建。</p>
+</div>
+<div class="section" id="tf-session">
+<h3>使用传统的 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code><a class="headerlink" href="#tf-session" title="永久链接至标题">¶</a></h3>
+<p>不过，如果你依然钟情于TensorFlow传统的Graph Execution模式也没有问题。TensorFlow 2.0提供了 <code class="docutils literal notranslate"><span class="pre">tf.compat.v1</span></code> 模块以支持TensorFlow 1.X版本的API。同时，只要在编写模型的时候稍加注意，Keras的模型是可以同时兼容Eager Execution模式和Graph Execution模式的。注意，在Graph Execution模式下， <code class="docutils literal notranslate"><span class="pre">model(input_tensor)</span></code> 只需运行一次以完成图的建立操作。</p>
+<p>例如，通过以下代码，同样可以在MNIST数据集上训练前面所建立的MLP或CNN模型：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+    <span class="n">num_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">num_train_data</span> <span class="o">//</span> <span class="n">batch_size</span> <span class="o">*</span> <span class="n">num_epochs</span><span class="p">)</span>
+    <span class="c1"># 建立计算图</span>
+    <span class="n">X_placeholder</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">y_placeholder</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X_placeholder</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y_placeholder</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+    <span class="n">train_op</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+    <span class="n">sparse_categorical_accuracy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">SparseCategoricalAccuracy</span><span class="p">()</span>
+    <span class="c1"># 建立Session</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+        <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">batch_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_batches</span><span class="p">):</span>
+            <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">get_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+            <span class="c1"># 使用Session.run()将数据送入计算图节点，进行训练以及计算损失函数</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">loss_value</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">train_op</span><span class="p">,</span> <span class="n">loss</span><span class="p">],</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">X_placeholder</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_placeholder</span><span class="p">:</span> <span class="n">y</span><span class="p">})</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;batch </span><span class="si">%d</span><span class="s2">: loss </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">batch_index</span><span class="p">,</span> <span class="n">loss_value</span><span class="p">))</span>
+
+        <span class="n">num_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">num_test_data</span> <span class="o">//</span> <span class="n">batch_size</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">batch_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_batches</span><span class="p">):</span>
+            <span class="n">start_index</span><span class="p">,</span> <span class="n">end_index</span> <span class="o">=</span> <span class="n">batch_index</span> <span class="o">*</span> <span class="n">batch_size</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">batch_size</span>
+            <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">[</span><span class="n">start_index</span><span class="p">:</span> <span class="n">end_index</span><span class="p">])</span>
+            <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">sparse_categorical_accuracy</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_label</span><span class="p">[</span><span class="n">start_index</span><span class="p">:</span> <span class="n">end_index</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;test accuracy: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">sparse_categorical_accuracy</span><span class="o">.</span><span class="n">result</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p>关于Graph Execution的更多内容可参见 <a class="reference internal" href="../appendix/static.html"><span class="doc">图模型下的TensorFlow</span></a>。</p>
+</div>
+</div>
 </div>
 
 
@@ -705,7 +943,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../deployment/export.html" class="btn btn-neutral float-right" title="TensorFlow模型导出" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../deployment/export.html" class="btn btn-neutral float-right" title="TensorFlow模型导出（Jinpeng）" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="models.html" class="btn btn-neutral float-left" title="TensorFlow模型建立与训练" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

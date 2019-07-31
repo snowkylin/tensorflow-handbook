@@ -1,0 +1,298 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TensorFlow Hub 模型复用（Jinpeng） &mdash; 简单粗暴TensorFlow 2.0 0.4 alpha 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'0.4 alpha',
+              LANGUAGE:'zh_CN',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="TensorFlow Datasets 数据集载入" href="tfds.html" />
+    <link rel="prev" title="使用TPU训练TensorFlow模型（Huan）" href="tpu.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴TensorFlow 2.0
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型导出（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="swift.html">TensorFlow in Swift（Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="julia.html">TensorFlow in Julia</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="static.html">图模型下的TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">在容器和云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimization.html">TensorFlow性能优化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms.html">术语中英对照表</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴TensorFlow 2.0</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>TensorFlow Hub 模型复用（Jinpeng）</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/zh/appendix/tfhub.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorflow-hub-jinpeng">
+<h1>TensorFlow Hub 模型复用（Jinpeng）<a class="headerlink" href="#tensorflow-hub-jinpeng" title="永久链接至标题">¶</a></h1>
+<p>TF Hub目的是为了更好复用已训练好的模型，可节省海量的训练时间和计算资源。预训练好的模型，可以进行直接部署，也可以进行迁移学习（Transfer Learning）。</p>
+<p>本书是使用TF Hub中的Inception V3模型，针对mnist图像进行迁移学习。
+mnist图像资源获取地址：<a class="reference external" href="https://github.com/dpinthinker/mnist_image_png_jpeg">https://github.com/dpinthinker/mnist_image_png_jpeg</a></p>
+<p>具体操作方法参考https://www.tensorflow.org/hub/tutorials/image_retraining，如下</p>
+<ol class="arabic simple">
+<li>获取retrain.py脚本</li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -LO https://github.com/tensorflow/hub/raw/master/examples/image_retraining/retrain.py
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>进行迁移学习，该过程会持续很长时间，停止后可以增量训练</li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python retrain.py --image_dir your_mnist_img_path
+</pre></div>
+</div>
+<p>默认生成的模型在/tmp/output_graph.pb，对应的label数据在/tmp/output_labels.txt。</p>
+<ol class="arabic simple" start="3">
+<li>获取label_imange.py脚本</li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -LO https://github.com/tensorflow/tensorflow/raw/master/tensorflow/examples/label_image/label_image.py
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li>对迁移学习训练完的模型进行验证</li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python label_image.py <span class="se">\</span>
+--graph<span class="o">=</span>/tmp/output_graph.pb <span class="se">\</span>
+--labels<span class="o">=</span>/tmp/output_labels.txt <span class="se">\</span>
+--input_layer<span class="o">=</span>Placeholder <span class="se">\</span>
+--output_layer<span class="o">=</span>final_result <span class="se">\</span>
+--image<span class="o">=</span>your_mnist_test_img_&lt;number&gt;.jpg
+</pre></div>
+</div>
+<p>结果如下：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="m">3</span> <span class="m">0</span>.92819667
+<span class="m">2</span> <span class="m">0</span>.027902907
+<span class="m">5</span> <span class="m">0</span>.018210107
+<span class="m">9</span> <span class="m">0</span>.010902734
+<span class="m">7</span> <span class="m">0</span>.0056838035
+</pre></div>
+</div>
+<p>这里产生的模型output_graph.pb，在移动端部署章节会被使用到。</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tfds.html" class="btn btn-neutral float-right" title="TensorFlow Datasets 数据集载入" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tpu.html" class="btn btn-neutral float-left" title="使用TPU训练TensorFlow模型（Huan）" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

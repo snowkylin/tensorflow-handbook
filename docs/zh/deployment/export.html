@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TensorFlow模型导出 &mdash; 简单粗暴TensorFlow 0.4 alpha 文档</title>
+  <title>TensorFlow模型导出（Jinpeng） &mdash; 简单粗暴TensorFlow 2.0 0.4 alpha 文档</title>
   
 
   
@@ -49,7 +49,7 @@
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
     <link rel="next" title="TensorFlow Serving" href="serving.html" />
-    <link rel="prev" title="TensorFlow工具" href="../basic/tools.html" /> 
+    <link rel="prev" title="TensorFlow常用模块" href="../basic/tools.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -63,7 +63,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 简单粗暴TensorFlow
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴TensorFlow 2.0
           
 
           
@@ -104,40 +104,39 @@
 </ul>
 <p class="caption"><span class="caption-text">基础</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装与环境配置</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow模型建立与训练</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模块</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow模型导出</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow模型导出（Jinpeng）</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#savedmodel">SavedModel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#keras-sequential-save">Keras Sequential save方法</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="serving.html">TensorFlow Serving</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lite.html">TensorFlow Lite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="javascript.html">TensorFlow in JavaScript</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="javascript.html">TensorFlow in JavaScript（Huan）</a></li>
 </ul>
-<p class="caption"><span class="caption-text">应用</span></p>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../application/rl.html">TensorFlow智能物资调度</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../application/seq2seq-python.html">Tensorflow Python 闲聊机器人</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../application/seq2seq-javascript.html">Tensorflow JavaScript 闲聊对话模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../application/seq2seq-swift.html">TensorFlow Swift 闲聊机器人</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">TensorFlow in Swift（Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/static.html">静态的TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">TensorFlow in Swift</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/reuse.html">TensorFlow资源重用</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/addons.html">TensorFlow库和扩展</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/static.html">图模型下的TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/config.html">在容器和云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/optimization.html">TensorFlow性能优化</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/training.html">TensorFlow大规模训练</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/custom_op.html">TensorFlow自定义运算操作</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/config.html">TensorFlow环境配置与管理</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">术语中英对照表</a></li>
 </ul>
@@ -154,7 +153,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">简单粗暴TensorFlow</a>
+          <a href="../../index.html">简单粗暴TensorFlow 2.0</a>
         
       </nav>
 
@@ -185,7 +184,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>TensorFlow模型导出</li>
+      <li>TensorFlow模型导出（Jinpeng）</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -204,8 +203,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="tensorflow">
-<h1>TensorFlow模型导出<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
+  <div class="section" id="tensorflow-jinpeng">
+<h1>TensorFlow模型导出（Jinpeng）<a class="headerlink" href="#tensorflow-jinpeng" title="永久链接至标题">¶</a></h1>
 <div class="section" id="savedmodel">
 <h2>SavedModel<a class="headerlink" href="#savedmodel" title="永久链接至标题">¶</a></h2>
 <p>TODO: 2.0 eager + Keras Sequential save model way</p>
@@ -215,79 +214,6 @@
 <p>我们以keras模型训练和保存为例进行讲解，如下是keras官方的mnist模型训练样例。</p>
 <p>源码地址:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keras</span><span class="o">-</span><span class="n">team</span><span class="o">/</span><span class="n">keras</span><span class="o">/</span><span class="n">blob</span><span class="o">/</span><span class="n">master</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">mnist_cnn</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p>引用源码如下</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;Trains a simple convnet on the MNIST dataset.</span>
-
-<span class="sd">Gets to 99.25% test accuracy after 12 epochs</span>
-<span class="sd">(there is still a lot of margin for parameter tuning).</span>
-<span class="sd">16 seconds per epoch on a GRID K520 GPU.</span>
-<span class="sd">&#39;&#39;&#39;</span>
-
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
-<span class="kn">import</span> <span class="nn">keras</span>
-<span class="kn">from</span> <span class="nn">keras.datasets</span> <span class="kn">import</span> <span class="n">mnist</span>
-<span class="kn">from</span> <span class="nn">keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
-<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Dropout</span><span class="p">,</span> <span class="n">Flatten</span>
-<span class="kn">from</span> <span class="nn">keras.layers</span> <span class="kn">import</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">MaxPooling2D</span>
-<span class="kn">from</span> <span class="nn">keras</span> <span class="kn">import</span> <span class="n">backend</span> <span class="k">as</span> <span class="n">K</span>
-
-<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span>
-<span class="n">num_classes</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">epochs</span> <span class="o">=</span> <span class="mi">12</span>
-
-<span class="c1"># input image dimensions</span>
-<span class="n">img_rows</span><span class="p">,</span> <span class="n">img_cols</span> <span class="o">=</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span>
-
-<span class="c1"># the data, split between train and test sets</span>
-<span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
-
-<span class="k">if</span> <span class="n">K</span><span class="o">.</span><span class="n">image_data_format</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;channels_first&#39;</span><span class="p">:</span>
-    <span class="n">x_train</span> <span class="o">=</span> <span class="n">x_train</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">img_rows</span><span class="p">,</span> <span class="n">img_cols</span><span class="p">)</span>
-    <span class="n">x_test</span> <span class="o">=</span> <span class="n">x_test</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">img_rows</span><span class="p">,</span> <span class="n">img_cols</span><span class="p">)</span>
-    <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">img_rows</span><span class="p">,</span> <span class="n">img_cols</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">x_train</span> <span class="o">=</span> <span class="n">x_train</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">img_rows</span><span class="p">,</span> <span class="n">img_cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">x_test</span> <span class="o">=</span> <span class="n">x_test</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">img_rows</span><span class="p">,</span> <span class="n">img_cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">img_rows</span><span class="p">,</span> <span class="n">img_cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-
-<span class="n">x_train</span> <span class="o">=</span> <span class="n">x_train</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
-<span class="n">x_test</span> <span class="o">=</span> <span class="n">x_test</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
-<span class="n">x_train</span> <span class="o">/=</span> <span class="mi">255</span>
-<span class="n">x_test</span> <span class="o">/=</span> <span class="mi">255</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;x_train shape:&#39;</span><span class="p">,</span> <span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;train samples&#39;</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">x_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;test samples&#39;</span><span class="p">)</span>
-
-<span class="c1"># convert class vectors to binary class matrices</span>
-<span class="n">y_train</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
-<span class="n">y_test</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">to_categorical</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-                 <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span>
-                 <span class="n">input_shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.25</span><span class="p">))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Flatten</span><span class="p">())</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
-<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
-
-<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">categorical_crossentropy</span><span class="p">,</span>
-              <span class="n">optimizer</span><span class="o">=</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adadelta</span><span class="p">(),</span>
-              <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
-
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span>
-          <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
-          <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
-          <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-          <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
-<span class="n">score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Test loss:&#39;</span><span class="p">,</span> <span class="n">score</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Test accuracy:&#39;</span><span class="p">,</span> <span class="n">score</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>以上代码，是基于keras的Sequential构建了多层的卷积神经网络，并进行训练。</p>
@@ -323,7 +249,7 @@
         <a href="serving.html" class="btn btn-neutral float-right" title="TensorFlow Serving" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../basic/tools.html" class="btn btn-neutral float-left" title="TensorFlow工具" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../basic/tools.html" class="btn btn-neutral float-left" title="TensorFlow常用模块" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

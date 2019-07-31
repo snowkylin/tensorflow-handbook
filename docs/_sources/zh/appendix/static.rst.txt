@@ -1,4 +1,4 @@
-静态的TensorFlow
+图模型下的TensorFlow
 ======================================
 
 TensorFlow 1+1
