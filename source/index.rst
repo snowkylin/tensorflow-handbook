@@ -62,7 +62,7 @@ The code of this handbook is based on TensorFlow 2.0 beta.
     zh/introduction
 
 .. toctree:: 
-    :maxdepth: 2
+    :maxdepth: 3
     :caption: 基础
 
     zh/basic/installation
