@@ -148,7 +148,9 @@ NVIDIA驱动程序安装完成后，可在命令行下使用 ``nvidia-smi`` 命�
     |    0       572    C+G   Insufficient Permissions                   N/A      |
     +-----------------------------------------------------------------------------+
 
-更详细的指导可以参考 `这篇文章 <https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/>`_ 和 `这篇中文博客 <https://blog.csdn.net/wf19930209/article/details/81877822>`_ 。
+.. hint:: 命令 ``nvidia-smi`` 可以查看机器上现有的GPU及使用情况。（在Windows下，将 ``C:\Program Files\NVIDIA Corporation\NVSMI`` 加入Path环境变量中即可，或Windows 10下可使用任务管理器的“性能”标签查看显卡信息）
+
+更详细的GPU环境配置指导可以参考 `这篇文章 <https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/>`_ 和 `这篇中文博客 <https://blog.csdn.net/wf19930209/article/details/81877822>`_ 。
 
 CUDA Toolkit和cnDNN的安装
 -------------------------------------------
@@ -209,9 +211,9 @@ IDE设置
 TensorFlow所需的硬件配置 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. hint:: 对于学习而言，TensorFlow的硬件门槛并不高。借助 :ref:`免费 <colab>` 或 :ref:`廉价 <gcp>` 的云端计算资源，只要你有一台能上网的电脑，就能够熟练掌握TensorFlow！
+.. hint:: 对于学习而言，TensorFlow的硬件门槛并不高。甚至，借助 :ref:`免费 <colab>` 或 :ref:`灵活 <gcp>` 的云端计算资源，只要你有一台能上网的电脑，就能够熟练掌握TensorFlow！
 
-虽然在很多人的刻板印象中，TensorFlow乃至深度学习是一件非常“吃硬件”的事情，以至于一接触TensorFlow，第一件事情可能就是想如何升级自己的电脑硬件。不过，TensorFlow所需的硬件配置很大程度是视任务和使用环境而定的：
+在很多人的刻板印象中，TensorFlow乃至深度学习是一件非常“吃硬件”的事情，以至于一接触TensorFlow，第一件事情可能就是想如何升级自己的电脑硬件。不过，TensorFlow所需的硬件配置很大程度是视任务和使用环境而定的：
 
 - 对于TensorFlow初学者，无需硬件升级也可以很好地学习和掌握TensorFlow。本手册中的大部分教学示例，大部分当前主流的个人电脑（即使没有GPU）均可胜任，无需添置其他硬件设备。对于本手册中部分计算量较大的示例（例如 :ref:`在cats_vs_dogs数据集上训练CNN图像分类 <cats_vs_dogs>` ），一块主流的NVIDIA GPU会大幅加速训练。如果自己的个人电脑难以胜任，可以考虑在云端（例如 :ref:`免费的 Colab <colab>` ）进行模型训练。
 - 对于参加数据科学竞赛（比如Kaggle）或者经常在本机进行训练的个人爱好者或开发者，一块高性能的NVIDIA GPU往往是必要的。CUDA核心数和显存大小是决定显卡机器学习性能的两个关键参数，前者决定训练速度，后者决定可以训练多大的模型以及训练时的最大Batch Size，对于较大规模的训练而言尤其敏感。
