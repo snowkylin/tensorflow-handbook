@@ -144,6 +144,8 @@ Google Cloud Platform（GCP）是Google的云计算服务。其Compute Engine类
     |  No running processes found                                                 |
     +-----------------------------------------------------------------------------+
 
+.. _colab:
+
 在Colab中使用TensorFlow
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -198,4 +200,4 @@ Google Colab是谷歌的免费在线交互式Python运行环境，且提供GPU�
     :width: 100%
     :align: center
 
-可见，我们成功在Colab中启用了GPU环境。
+可见，我们成功在Colab中配置了TensorFlow 2.0环境并启用了GPU支持。
