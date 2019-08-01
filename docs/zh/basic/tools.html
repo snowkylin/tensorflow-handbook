@@ -110,15 +110,15 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#tf-function-graph-execution"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> ：Graph Execution模式 *</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#tf-function"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 基础使用方法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id9"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 内在机制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 内在机制</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#autograph-pythontensorflow">AutoGraph：将Python控制流转换为TensorFlow计算图</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#tf-session">使用传统的 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#tf-config-gpu"><code class="docutils literal notranslate"><span class="pre">tf.config</span></code>：GPU的使用与分配 *</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#gpu">指定当前程序使用的GPU</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id10">设置显存使用策略</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id11">模拟多GPU环境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">设置显存使用策略</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">模拟多GPU环境</a></li>
 </ul>
 </li>
 </ul>
@@ -573,11 +573,11 @@
 </pre></div>
 </div>
 <p>输出</p>
-<div class="figure align-center" id="id12">
+<div class="figure align-center" id="id13">
 <a class="reference internal image-reference" href="../../_images/mnist_shuffle_1.png"><img alt="../../_images/mnist_shuffle_1.png" src="../../_images/mnist_shuffle_1.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">第一次运行</span></p>
 </div>
-<div class="figure align-center" id="id13">
+<div class="figure align-center" id="id14">
 <a class="reference internal image-reference" href="../../_images/mnist_shuffle_2.png"><img alt="../../_images/mnist_shuffle_2.png" src="../../_images/mnist_shuffle_2.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">第二次运行</span></p>
 </div>
@@ -623,7 +623,7 @@
 <p>由于已经通过 <code class="docutils literal notranslate"><span class="pre">Dataset.batch()</span></code> 方法划分了数据集的批次，所以这里也无需提供批次的大小。</p>
 </div>
 <div class="section" id="cats-vs-dogs">
-<h3>实例：cats_vs_dogs图像分类<a class="headerlink" href="#cats-vs-dogs" title="永久链接至标题">¶</a></h3>
+<span id="id7"></span><h3>实例：cats_vs_dogs图像分类<a class="headerlink" href="#cats-vs-dogs" title="永久链接至标题">¶</a></h3>
 <p>以下代码以猫狗图片二分类任务为示例，展示了使用 <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 结合 <code class="docutils literal notranslate"><span class="pre">tf.io</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.image</span></code> 建立 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 数据集，并进行训练和测试的完整过程。数据集可至 <a class="reference external" href="https://www.floydhub.com/fastai/datasets/cats-vs-dogs">这里</a> 下载。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -741,8 +741,8 @@
 </div>
 <p>运行400个Batch进行测试，加入 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 的程序耗时35.5秒，未加入 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 的纯Eager Execution程序耗时43.8秒。可见 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 带来了一定的性能提升。一般而言，当模型由较多小的操作组成的时候， <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 带来的提升效果较大。而当模型的操作数量较少，但单一操作均很耗时的时候，则 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 带来的性能提升不会太大。</p>
 </div>
-<div class="section" id="id9">
-<h3><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 内在机制<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id10">
+<h3><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 内在机制<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
 <p>当被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰的函数第一次被调用的时候，进行以下操作：</p>
 <ul class="simple">
 <li>在Eager Execution模式关闭的环境下，函数内的代码依次运行。也就是说，每个 <code class="docutils literal notranslate"><span class="pre">tf.</span></code> 方法都只是定义了计算节点，而并没有进行任何实质的计算。这与TensorFlow 1.X的Graph Execution是一致的；</li>
@@ -947,8 +947,8 @@
 </div>
 <p>即可指定程序只在显卡2,3上运行。</p>
 </div>
-<div class="section" id="id10">
-<h3>设置显存使用策略<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id11">
+<h3>设置显存使用策略<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
 <p>默认情况下，TensorFlow将使用几乎所有可用的显存，以避免内存碎片化所带来的性能损失。可以通过 <code class="docutils literal notranslate"><span class="pre">tf.ConfigProto</span></code> 类来设置TensorFlow使用显存的策略。具体方式是实例化一个 <code class="docutils literal notranslate"><span class="pre">tf.ConfigProto</span></code> 类，设置参数，并在运行 <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code> 时指定Config参数。以下代码通过 <code class="docutils literal notranslate"><span class="pre">allow_growth</span></code> 选项设置TensorFlow仅在需要时申请显存空间：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">()</span>
 <span class="n">config</span><span class="o">.</span><span class="n">gpu_options</span><span class="o">.</span><span class="n">allow_growth</span> <span class="o">=</span> <span class="bp">True</span>
@@ -963,8 +963,8 @@
 </div>
 <p>Graph Execution下，也可以在实例化新的session时传入 <code class="docutils literal notranslate"><span class="pre">tf.ConfigPhoto</span></code> 类来进行设置。</p>
 </div>
-<div class="section" id="id11">
-<h3>模拟多GPU环境<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id12">
+<h3>模拟多GPU环境<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
 </div>
 </div>
 </div>
