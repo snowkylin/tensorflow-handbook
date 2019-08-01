@@ -20,14 +20,23 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'0.4 alpha',
+              LANGUAGE:'zh_CN',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -323,7 +332,11 @@ Mon Jun 10 23:19:54 2019
 +-----------------------------------------------------------------------------+
 </pre></div>
 </div>
-<p>更详细的指导可以参考 <a class="reference external" href="https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/">这篇文章</a> 和 <a class="reference external" href="https://blog.csdn.net/wf19930209/article/details/81877822">这篇中文博客</a> 。</p>
+<div class="admonition hint">
+<p class="first admonition-title">提示</p>
+<p class="last">命令 <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> 可以查看机器上现有的GPU及使用情况。（在Windows下，将 <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files\NVIDIA</span> <span class="pre">Corporation\NVSMI</span></code> 加入Path环境变量中即可，或Windows 10下可使用任务管理器的“性能”标签查看显卡信息）</p>
+</div>
+<p>更详细的GPU环境配置指导可以参考 <a class="reference external" href="https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/">这篇文章</a> 和 <a class="reference external" href="https://blog.csdn.net/wf19930209/article/details/81877822">这篇中文博客</a> 。</p>
 </div>
 <div class="section" id="cuda-toolkitcndnn">
 <h3>CUDA Toolkit和cnDNN的安装<a class="headerlink" href="#cuda-toolkitcndnn" title="永久链接至标题">¶</a></h3>
@@ -379,9 +392,9 @@ Mon Jun 10 23:19:54 2019
 <h2>TensorFlow所需的硬件配置 *<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h2>
 <div class="admonition hint">
 <p class="first admonition-title">提示</p>
-<p class="last">对于学习而言，TensorFlow的硬件门槛并不高。借助 <a class="reference internal" href="../appendix/config.html#colab"><span class="std std-ref">免费</span></a> 或 <a class="reference internal" href="../appendix/config.html#gcp"><span class="std std-ref">廉价</span></a> 的云端计算资源，只要你有一台能上网的电脑，就能够熟练掌握TensorFlow！</p>
+<p class="last">对于学习而言，TensorFlow的硬件门槛并不高。甚至，借助 <a class="reference internal" href="../appendix/config.html#colab"><span class="std std-ref">免费</span></a> 或 <a class="reference internal" href="../appendix/config.html#gcp"><span class="std std-ref">灵活</span></a> 的云端计算资源，只要你有一台能上网的电脑，就能够熟练掌握TensorFlow！</p>
 </div>
-<p>虽然在很多人的刻板印象中，TensorFlow乃至深度学习是一件非常“吃硬件”的事情，以至于一接触TensorFlow，第一件事情可能就是想如何升级自己的电脑硬件。不过，TensorFlow所需的硬件配置很大程度是视任务和使用环境而定的：</p>
+<p>在很多人的刻板印象中，TensorFlow乃至深度学习是一件非常“吃硬件”的事情，以至于一接触TensorFlow，第一件事情可能就是想如何升级自己的电脑硬件。不过，TensorFlow所需的硬件配置很大程度是视任务和使用环境而定的：</p>
 <ul class="simple">
 <li>对于TensorFlow初学者，无需硬件升级也可以很好地学习和掌握TensorFlow。本手册中的大部分教学示例，大部分当前主流的个人电脑（即使没有GPU）均可胜任，无需添置其他硬件设备。对于本手册中部分计算量较大的示例（例如 <a class="reference internal" href="tools.html#cats-vs-dogs"><span class="std std-ref">在cats_vs_dogs数据集上训练CNN图像分类</span></a> ），一块主流的NVIDIA GPU会大幅加速训练。如果自己的个人电脑难以胜任，可以考虑在云端（例如 <a class="reference internal" href="../appendix/config.html#colab"><span class="std std-ref">免费的 Colab</span></a> ）进行模型训练。</li>
 <li>对于参加数据科学竞赛（比如Kaggle）或者经常在本机进行训练的个人爱好者或开发者，一块高性能的NVIDIA GPU往往是必要的。CUDA核心数和显存大小是决定显卡机器学习性能的两个关键参数，前者决定训练速度，后者决定可以训练多大的模型以及训练时的最大Batch Size，对于较大规模的训练而言尤其敏感。</li>
