@@ -20,14 +20,23 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'0.4 alpha',
+              LANGUAGE:'zh_CN',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -124,8 +133,12 @@
 <li class="toctree-l1"><a class="reference internal" href="static.html">图模型下的TensorFlow</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">在容器和云端使用TensorFlow</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#dockertensorflow">使用Docker部署TensorFlow环境</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#google-cloud-platform-gcp-tensorflow">在Google Cloud Platform（GCP）中使用TensorFlow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#colabtensorflow">在Colab中使用TensorFlow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#google-cloud-platform-gcp-tensorflow">在Google Cloud Platform（GCP）中使用TensorFlow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#compute-enginegputensorflow">在Compute Engine建立带GPU的实例并部署TensorFlow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ai-platformnotebookgpujupyterlab">使用AI Platform中的Notebook建立带GPU的在线JupyterLab环境</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="optimization.html">TensorFlow性能优化</a></li>
@@ -282,51 +295,6 @@
 <p class="last">Docker入门教程可参考 <a class="reference external" href="http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html">阮一峰的Docker入门教程</a> 和 <a class="reference external" href="https://www.docker.com/sites/default/files/Docker_CheatSheet_08.09.2016_0.pdf">Docker Cheat Sheet</a> 。</p>
 </div>
 </div>
-<div class="section" id="google-cloud-platform-gcp-tensorflow">
-<span id="gcp"></span><h2>在Google Cloud Platform（GCP）中使用TensorFlow<a class="headerlink" href="#google-cloud-platform-gcp-tensorflow" title="永久链接至标题">¶</a></h2>
-<p>Google Cloud Platform（GCP）是Google的云计算服务。其Compute Engine类似于AWS、阿里云等，允许用户快速建立自己的虚拟机实例。且GCP收费灵活，默认按时长计费。也就是说，你可以迅速建立一个带GPU的实例，训练一个模型，然后立即关闭（关机或删除实例）。GCP只收取在实例开启时所产生的费用，关机时只收取磁盘存储的费用，删除后即不再继续收费。</p>
-<p>在 <a class="reference external" href="https://cloud.google.com/">Google Cloud Platform（GCP）</a> 中，可以很方便地建立具有GPU的虚拟机实例，只需要在创建实例（Compute Engine - VM实例 - 创建实例）的时候选择GPU类型和数量即可。不过需要注意两点：</p>
-<ol class="arabic simple">
-<li>只有特定区域的机房具有GPU，且不同类型的GPU地区范围也不同，可参考 <a class="reference external" href="https://cloud.google.com/compute/docs/gpus">GCP官方文档</a> 并选择适合的地区建立实例；</li>
-<li>默认情况下GCP账号的GPU配额非常有限（可能是怕你付不起钱？）。你很可能需要在使用前申请提升自己账号在特定地区的特定型号GPU的配额，可参考 <a class="reference external" href="https://cloud.google.com/compute/quotas?hl=zh-cn#requesting_additional_quota">GCP官方文档：申请提升配额</a> ，GCP会有工作人员手动处理申请，并给你的邮箱发送邮件通知，大约需要数小时至两个工作日不等。</li>
-</ol>
-<p>当建立好具有GPU的GCP虚拟机实例后，配置工作与在本地基本相同。系统中默认并没有NVIDIA显卡驱动，依然需要自己安装。</p>
-<p>以下命令示例了在Tesla K80，Ubuntu 18.04 LTS的GCP虚拟机实例中配置NVIDIA 410驱动、CUDA 10.0、cuDNN 7.6.0以及TensorFlow 2.0 beta环境的过程：</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install build-essential    <span class="c1"># 安装编译环境</span>
-wget http://us.download.nvidia.com/tesla/410.104/NVIDIA-Linux-x86_64-410.104.run    <span class="c1"># 下载NVIDIA驱动</span>
-sudo bash NVIDIA-Linux-x86_64-410.104.run   <span class="c1"># 安装驱动（一路Next）</span>
-<span class="c1"># nvidia-smi  # 查看虚拟机中的GPU型号</span>
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh  <span class="c1"># 下载Miniconda</span>
-bash Miniconda3-latest-Linux-x86_64.sh      <span class="c1"># 安装Miniconda（安装完需要重启终端）</span>
-conda create -n tf2.0-beta-gpu <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.6
-conda activate tf2.0-beta-gpu
-conda install <span class="nv">cudatoolkit</span><span class="o">=</span><span class="m">10</span>.0
-conda install <span class="nv">cudnn</span><span class="o">=</span><span class="m">7</span>.6.0
-pip install tensorflow-gpu<span class="o">==</span><span class="m">2</span>.0.0-beta1
-</pre></div>
-</div>
-<p>输入 <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> 会显示：</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~$ nvidia-smi
-Fri Jul <span class="m">12</span> <span class="m">10</span>:30:37 <span class="m">2019</span>
-+-----------------------------------------------------------------------------+
-<span class="p">|</span> NVIDIA-SMI <span class="m">410</span>.104      Driver Version: <span class="m">410</span>.104      CUDA Version: <span class="m">10</span>.0     <span class="p">|</span>
-<span class="p">|</span>-------------------------------+----------------------+----------------------+
-<span class="p">|</span> GPU  Name        Persistence-M<span class="p">|</span> Bus-Id        Disp.A <span class="p">|</span> Volatile Uncorr. ECC <span class="p">|</span>
-<span class="p">|</span> Fan  Temp  Perf  Pwr:Usage/Cap<span class="p">|</span>         Memory-Usage <span class="p">|</span> GPU-Util  Compute M. <span class="p">|</span>
-<span class="p">|</span><span class="o">===============================</span>+<span class="o">======================</span>+<span class="o">======================</span><span class="p">|</span>
-<span class="p">|</span>   <span class="m">0</span>  Tesla K80           Off  <span class="p">|</span> <span class="m">00000000</span>:00:04.0 Off <span class="p">|</span>                    <span class="m">0</span> <span class="p">|</span>
-<span class="p">|</span> N/A   63C    P0    88W / 149W <span class="p">|</span>      0MiB / 11441MiB <span class="p">|</span>    <span class="m">100</span>%      Default <span class="p">|</span>
-+-------------------------------+----------------------+----------------------+
-
-+-----------------------------------------------------------------------------+
-<span class="p">|</span> Processes:                                                       GPU Memory <span class="p">|</span>
-<span class="p">|</span>  GPU       PID   Type   Process name                             Usage      <span class="p">|</span>
-<span class="p">|</span><span class="o">=============================================================================</span><span class="p">|</span>
-<span class="p">|</span>  No running processes found                                                 <span class="p">|</span>
-+-----------------------------------------------------------------------------+
-</pre></div>
-</div>
-</div>
 <div class="section" id="colabtensorflow">
 <span id="colab"></span><h2>在Colab中使用TensorFlow<a class="headerlink" href="#colabtensorflow" title="永久链接至标题">¶</a></h2>
 <p>Google Colab是谷歌的免费在线交互式Python运行环境，且提供GPU支持，使得机器学习开发者们无需在自己的电脑上安装环境，就能随时随地从云端访问和运行自己的机器学习代码。</p>
@@ -371,6 +339,64 @@ Fri Jul <span class="m">12</span> <span class="m">10</span>:30:37 <span class="m
 <a class="reference internal image-reference" href="../../_images/view_gpu.png"><img alt="../../_images/view_gpu.png" src="../../_images/view_gpu.png" style="width: 100%;" /></a>
 </div>
 <p>可见，我们成功在Colab中配置了TensorFlow 2.0环境并启用了GPU支持。</p>
+<p>你甚至可以通过 <code class="docutils literal notranslate"><span class="pre">!nvidia-smi</span></code> 查看当前的GPU信息：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/nvidia_smi.png"><img alt="../../_images/nvidia_smi.png" src="../../_images/nvidia_smi.png" style="width: 100%;" /></a>
+</div>
+<p>可见GPU的型号为Tesla T4。</p>
+</div>
+<div class="section" id="google-cloud-platform-gcp-tensorflow">
+<span id="gcp"></span><h2>在Google Cloud Platform（GCP）中使用TensorFlow<a class="headerlink" href="#google-cloud-platform-gcp-tensorflow" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="https://cloud.google.com/">Google Cloud Platform（GCP）</a> 是Google的云计算服务。GCP收费灵活，默认按时长计费。也就是说，你可以迅速建立一个带GPU的实例，训练一个模型，然后立即关闭（关机或删除实例）。GCP只收取在实例开启时所产生的费用，关机时只收取磁盘存储的费用，删除后即不再继续收费。</p>
+<p>我们可以通过两种方式在GCP中使用TensorFlow：使用Compute Engine建立带GPU的实例，或使用AI Platform中的Notebook建立带GPU的在线JupyterLab环境。</p>
+<div class="section" id="compute-enginegputensorflow">
+<h3>在Compute Engine建立带GPU的实例并部署TensorFlow<a class="headerlink" href="#compute-enginegputensorflow" title="永久链接至标题">¶</a></h3>
+<p>GCP的Compute Engine类似于AWS、阿里云等，允许用户快速建立自己的虚拟机实例。在Compute Engine中，可以很方便地建立具有GPU的虚拟机实例，只需要在创建实例（Compute Engine - VM实例 - 创建实例）的时候选择GPU类型和数量即可。不过需要注意两点：</p>
+<ol class="arabic simple">
+<li>只有特定区域的机房具有GPU，且不同类型的GPU地区范围也不同，可参考 <a class="reference external" href="https://cloud.google.com/compute/docs/gpus">GCP官方文档</a> 并选择适合的地区建立实例；</li>
+<li>默认情况下GCP账号的GPU配额非常有限（可能是怕你付不起钱？）。你很可能需要在使用前申请提升自己账号在特定地区的特定型号GPU的配额，可参考 <a class="reference external" href="https://cloud.google.com/compute/quotas?hl=zh-cn#requesting_additional_quota">GCP官方文档：申请提升配额</a> ，GCP会有工作人员手动处理申请，并给你的邮箱发送邮件通知，大约需要数小时至两个工作日不等。</li>
+</ol>
+<p>当建立好具有GPU的GCP虚拟机实例后，配置工作与在本地基本相同。系统中默认并没有NVIDIA显卡驱动，依然需要自己安装。</p>
+<p>以下命令示例了在Tesla K80，Ubuntu 18.04 LTS的GCP虚拟机实例中配置NVIDIA 410驱动、CUDA 10.0、cuDNN 7.6.0以及TensorFlow 2.0 beta环境的过程：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install build-essential    <span class="c1"># 安装编译环境</span>
+wget http://us.download.nvidia.com/tesla/410.104/NVIDIA-Linux-x86_64-410.104.run    <span class="c1"># 下载NVIDIA驱动</span>
+sudo bash NVIDIA-Linux-x86_64-410.104.run   <span class="c1"># 安装驱动（一路Next）</span>
+<span class="c1"># nvidia-smi  # 查看虚拟机中的GPU型号</span>
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh  <span class="c1"># 下载Miniconda</span>
+bash Miniconda3-latest-Linux-x86_64.sh      <span class="c1"># 安装Miniconda（安装完需要重启终端）</span>
+conda create -n tf2.0-beta-gpu <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.6
+conda activate tf2.0-beta-gpu
+conda install <span class="nv">cudatoolkit</span><span class="o">=</span><span class="m">10</span>.0
+conda install <span class="nv">cudnn</span><span class="o">=</span><span class="m">7</span>.6.0
+pip install tensorflow-gpu<span class="o">==</span><span class="m">2</span>.0.0-beta1
+</pre></div>
+</div>
+<p>输入 <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> 会显示：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~$ nvidia-smi
+Fri Jul <span class="m">12</span> <span class="m">10</span>:30:37 <span class="m">2019</span>
++-----------------------------------------------------------------------------+
+<span class="p">|</span> NVIDIA-SMI <span class="m">410</span>.104      Driver Version: <span class="m">410</span>.104      CUDA Version: <span class="m">10</span>.0     <span class="p">|</span>
+<span class="p">|</span>-------------------------------+----------------------+----------------------+
+<span class="p">|</span> GPU  Name        Persistence-M<span class="p">|</span> Bus-Id        Disp.A <span class="p">|</span> Volatile Uncorr. ECC <span class="p">|</span>
+<span class="p">|</span> Fan  Temp  Perf  Pwr:Usage/Cap<span class="p">|</span>         Memory-Usage <span class="p">|</span> GPU-Util  Compute M. <span class="p">|</span>
+<span class="p">|</span><span class="o">===============================</span>+<span class="o">======================</span>+<span class="o">======================</span><span class="p">|</span>
+<span class="p">|</span>   <span class="m">0</span>  Tesla K80           Off  <span class="p">|</span> <span class="m">00000000</span>:00:04.0 Off <span class="p">|</span>                    <span class="m">0</span> <span class="p">|</span>
+<span class="p">|</span> N/A   63C    P0    88W / 149W <span class="p">|</span>      0MiB / 11441MiB <span class="p">|</span>    <span class="m">100</span>%      Default <span class="p">|</span>
++-------------------------------+----------------------+----------------------+
+
++-----------------------------------------------------------------------------+
+<span class="p">|</span> Processes:                                                       GPU Memory <span class="p">|</span>
+<span class="p">|</span>  GPU       PID   Type   Process name                             Usage      <span class="p">|</span>
+<span class="p">|</span><span class="o">=============================================================================</span><span class="p">|</span>
+<span class="p">|</span>  No running processes found                                                 <span class="p">|</span>
++-----------------------------------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="ai-platformnotebookgpujupyterlab">
+<h3>使用AI Platform中的Notebook建立带GPU的在线JupyterLab环境<a class="headerlink" href="#ai-platformnotebookgpujupyterlab" title="永久链接至标题">¶</a></h3>
+<p>AI Platform中的Notebook可以理解为Google Colab的升级版。</p>
+</div>
 </div>
 </div>
 
