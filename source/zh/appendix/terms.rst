@@ -5,7 +5,14 @@
 * 变量 Variable
 * 操作 Operation
 * 优化器 Optimizer
-* 卷积神经网络 Convolutional Neural Network
-* 循环神经网络 Recurrent Neural Network
-* 强化学习 Reinforcement Learning
-* 多智能体强化学习 Multi-Agent Reinforcement Learning
+* 层 Layer
+* 损失函数 Loss Function
+* 评估指标 Metrics
+* 多层感知机 Multilayer Perceptron, MLP
+* 卷积神经网络 Convolutional Neural Network, CNN
+* 循环神经网络 Recurrent Neural Network, RNN
+* 强化学习 Reinforcement Learning, RL
+* 深度强化学习 Deep Reinforcement Learning, DRL
+* 多智能体强化学习 Multi-Agent Reinforcement Learning, MARL
+* 批次 Batch
+* 容器 Container
