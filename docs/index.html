@@ -218,7 +218,12 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="zh/basic/installation.html">TensorFlow安装与环境配置</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/installation.html#id1">一般安装步骤</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/basic/installation.html#gputensorflow">GPU版本TensorFlow安装指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic/installation.html#gputensorflow">GPU版本TensorFlow安装指南</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/installation.html#gpu">GPU硬件的准备</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/installation.html#id4">NVIDIA驱动程序的安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/installation.html#cuda-toolkitcndnn">CUDA Toolkit和cnDNN的安装</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/installation.html#id10">第一个程序</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/installation.html#ide">IDE设置</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/installation.html#id14">TensorFlow所需的硬件配置 *</a></li>
@@ -227,25 +232,60 @@
 <li class="toctree-l1"><a class="reference internal" href="zh/basic/basic.html">TensorFlow基础</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/basic.html#tensorflow-1-1">TensorFlow 1+1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/basic.html#id7">自动求导机制</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/basic/basic.html#linear-regression">基础示例：线性回归</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic/basic.html#linear-regression">基础示例：线性回归</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/basic.html#id13">NumPy下的线性回归</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/basic.html#optimizer">TensorFlow下的线性回归</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zh/basic/models.html">TensorFlow模型建立与训练</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/models.html#model-layer">模型（Model）与层（Layer）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/basic/models.html#mlp">基础示例：多层感知机（MLP）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic/models.html#mlp">基础示例：多层感知机（MLP）</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/models.html#tf-keras-datasets">数据获取及预处理： <code class="docutils literal notranslate"><span class="pre">tf.keras.datasets</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/models.html#tf-keras-model-tf-keras-layers">模型的构建： <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/models.html#tf-keras-losses-tf-keras-optimizer">模型的训练： <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/models.html#tf-keras-metrics">模型的评估： <code class="docutils literal notranslate"><span class="pre">tf.keras.metrics</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/models.html#cnn">卷积神经网络（CNN）</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/models.html#rnn">循环神经网络（RNN）</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/models.html#drl">深度强化学习（DRL）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/basic/models.html#keras-pipeline">Keras Pipeline *</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/basic/models.html#id22">自定义层、损失函数和评估指标 *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic/models.html#keras-pipeline">Keras Pipeline *</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/models.html#keras-sequential-functional-api">Keras Sequential/Functional API模式建立模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/models.html#keras-model-compile-fit-evaluate">使用Keras Model的 <code class="docutils literal notranslate"><span class="pre">compile</span></code> 、 <code class="docutils literal notranslate"><span class="pre">fit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> 方法训练和评估模型</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic/models.html#id22">自定义层、损失函数和评估指标 *</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/models.html#custom-layer">自定义层</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/models.html#id24">自定义损失函数和评估指标</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zh/basic/tools.html">TensorFlow常用模块</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/tools.html#tf-train-checkpoint"><code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code> ：变量的保存与恢复</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/tools.html#tensorboard">TensorBoard：训练过程可视化</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/basic/tools.html#tf-data"><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> ：数据集的构建与预处理</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/basic/tools.html#tf-function-graph-execution"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> ：Graph Execution模式 *</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/basic/tools.html#tf-config-gpu"><code class="docutils literal notranslate"><span class="pre">tf.config</span></code>：GPU的使用与分配 *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic/tools.html#tf-data"><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> ：数据集的构建与预处理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id2">数据集对象的建立</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id3">数据集对象的预处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id6">数据集元素的获取与使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#cats-vs-dogs">实例：cats_vs_dogs图像分类</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic/tools.html#tf-function-graph-execution"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> ：Graph Execution模式 *</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#tf-function"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 基础使用方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id10"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 内在机制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#autograph-pythontensorflow">AutoGraph：将Python控制流转换为TensorFlow计算图</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#tf-session">使用传统的 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic/tools.html#tf-config-gpu"><code class="docutils literal notranslate"><span class="pre">tf.config</span></code>：GPU的使用与分配 *</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#gpu">指定当前程序使用的GPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id11">设置显存使用策略</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id12">模拟多GPU环境</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
