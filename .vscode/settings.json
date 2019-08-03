@@ -2,6 +2,6 @@
     "restructuredtext.builtDocumentationPath": "build/html",
     "restructuredtext.updateOnTextChanged"    : "true",
     "restructuredtext.sphinxBuildPath": "sphinx-build",
-    "python.pythonPath": "C:\\Users\\xihan\\Anaconda3\\envs\\tf2.0-beta-gpu\\python.exe",
+    "python.pythonPath": "C:\\Users\\xihan\\Anaconda3\\envs\\tf2.0-beta\\python.exe",
     "restructuredtext.confPath": "c:\\Users\\xihan\\Desktop\\TensorFlow-cn\\source"
 }
