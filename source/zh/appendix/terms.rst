@@ -16,3 +16,4 @@
 * 多智能体强化学习 Multi-Agent Reinforcement Learning, MARL
 * 批次 Batch
 * 容器 Container
+* 推断 Inference
