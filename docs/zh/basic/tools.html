@@ -20,23 +20,13 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -48,7 +38,7 @@
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
-    <link rel="next" title="TensorFlow模型导出（Jinpeng）" href="../deployment/export.html" />
+    <link rel="next" title="TensorFlow模型导出" href="../deployment/export.html" />
     <link rel="prev" title="TensorFlow模型建立与训练" href="models.html" /> 
 </head>
 
@@ -135,7 +125,7 @@
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型导出（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型导出</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
@@ -150,7 +140,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">TensorFlow in Swift（Huan）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia（Ziyang）</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
@@ -235,6 +225,10 @@
 </div>
 <div class="section" id="tf-train-checkpoint">
 <h2><code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code> ：变量的保存与恢复<a class="headerlink" href="#tf-train-checkpoint" title="永久链接至标题">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">Checkpoint只保存模型的参数，不保存模型的计算过程，因此一般用于在具有模型源代码的时候恢复之前训练好的模型参数。如果需要导出模型（无需源代码也能运行模型），请参考 <a class="reference internal" href="../deployment/export.html#savedmodel"><span class="std std-ref">“部署”章节中的SavedModel</span></a> 。</p>
+</div>
 <p>很多时候，我们希望在模型训练完成后能将训练好的参数（变量）保存起来。在需要使用模型的其他地方载入模型和参数，就能直接得到训练好的模型。可能你第一个想到的是用Python的序列化模块 <code class="docutils literal notranslate"><span class="pre">pickle</span></code> 存储 <code class="docutils literal notranslate"><span class="pre">model.variables</span></code>。但不幸的是，TensorFlow的变量类型 <code class="docutils literal notranslate"><span class="pre">ResourceVariable</span></code> 并不能被序列化。</p>
 <p>好在TensorFlow提供了 <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code> 这一强大的变量保存与恢复类，可以使用其 <code class="docutils literal notranslate"><span class="pre">save()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">restore()</span></code> 方法将TensorFlow中所有包含Checkpointable State的对象进行保存和恢复。具体而言，<code class="docutils literal notranslate"><span class="pre">tf.keras.optimizer</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.keras.Layer</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 实例都可以被保存。其使用方法非常简单，我们首先声明一个Checkpoint：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">checkpoint</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Checkpoint</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
@@ -708,7 +702,7 @@
 </div>
 </div>
 <div class="section" id="tf-function-graph-execution">
-<h2><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> ：Graph Execution模式 *<a class="headerlink" href="#tf-function-graph-execution" title="永久链接至标题">¶</a></h2>
+<span id="tffunction"></span><h2><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> ：Graph Execution模式 *<a class="headerlink" href="#tf-function-graph-execution" title="永久链接至标题">¶</a></h2>
 <div class="section" id="tf-function">
 <h3><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 基础使用方法<a class="headerlink" href="#tf-function" title="永久链接至标题">¶</a></h3>
 <p>在TensorFlow 2.0中，推荐使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> （而非1.X中的 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code> ）实现Graph Execution，从而将模型转换为易于部署且高性能的TensorFlow图模型。只需要将我们希望以Graph Execution模式运行的代码封装在一个函数内，并在函数前加上 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 即可，如下例所示。</p>
@@ -1040,7 +1034,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../deployment/export.html" class="btn btn-neutral float-right" title="TensorFlow模型导出（Jinpeng）" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../deployment/export.html" class="btn btn-neutral float-right" title="TensorFlow模型导出" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="models.html" class="btn btn-neutral float-left" title="TensorFlow模型建立与训练" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
