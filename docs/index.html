@@ -20,23 +20,13 @@
   <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/js/custom.js"></script>
         <script type="text/javascript" src="_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -110,7 +100,7 @@
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="zh/deployment/export.html">TensorFlow模型导出（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/deployment/export.html">TensorFlow模型导出</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/deployment/serving.html">TensorFlow Serving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
@@ -125,7 +115,7 @@
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/swift.html">TensorFlow in Swift（Huan）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/appendix/julia.html">TensorFlow in Julia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/appendix/julia.html">TensorFlow in Julia（Ziyang）</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
@@ -302,12 +292,16 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">部署</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="zh/deployment/export.html">TensorFlow模型导出（Jinpeng）</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="zh/deployment/export.html#savedmodel">SavedModel</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/deployment/export.html#keras-sequential-save">Keras Sequential save方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/deployment/export.html">TensorFlow模型导出</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zh/deployment/export.html#savedmodel">使用SavedModel完整导出模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/deployment/export.html#keras-sequential-save-jinpeng">Keras Sequential save方法（Jinpeng）</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="zh/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/deployment/serving.html">TensorFlow Serving</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zh/deployment/serving.html#id1">TensorFlow Serving安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/deployment/serving.html#id2">TensorFlow Serving模型部署</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="zh/deployment/lite.html">TensorFlow Lite（Jinpeng）</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zh/deployment/lite.html#id1">模型转换</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/deployment/lite.html#quantization">Quantization 模型转换</a></li>
@@ -342,7 +336,7 @@
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/swift.html">TensorFlow in Swift（Huan）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/appendix/julia.html">TensorFlow in Julia</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="zh/appendix/julia.html">TensorFlow in Julia（Ziyang）</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zh/appendix/julia.html#tensorflow-jl">TensorFlow.jl 简介</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/appendix/julia.html#julia-tensorflow">为什么要使用 julia 进行 Tensorflow 开发</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/appendix/julia.html#docker-tensorflow-jl">在 docker 中快速体验 TensorFlow.jl</a></li>
@@ -364,7 +358,11 @@
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/config.html">在容器和云端使用TensorFlow</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zh/appendix/config.html#dockertensorflow">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/appendix/config.html#colabtensorflow">在Colab中使用TensorFlow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/config.html#google-cloud-platform-gcp-tensorflow">在Google Cloud Platform（GCP）中使用TensorFlow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/config.html#google-cloud-platform-gcp-tensorflow">在Google Cloud Platform（GCP）中使用TensorFlow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/config.html#compute-enginegputensorflow">在Compute Engine建立带GPU的实例并部署TensorFlow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/config.html#ai-platformnotebookgpujupyterlab">使用AI Platform中的Notebook建立带GPU的在线JupyterLab环境</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/optimization.html">TensorFlow性能优化</a></li>
