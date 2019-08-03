@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TensorFlow模型导出（Jinpeng） &mdash; 简单粗暴TensorFlow 2.0 0.4 alpha 文档</title>
+  <title>TensorFlow模型导出 &mdash; 简单粗暴TensorFlow 2.0 0.4 alpha 文档</title>
   
 
   
@@ -20,23 +20,13 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -111,9 +101,9 @@
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow模型导出（Jinpeng）</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#savedmodel">SavedModel</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#keras-sequential-save">Keras Sequential save方法</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow模型导出</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#savedmodel">使用SavedModel完整导出模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keras-sequential-save-jinpeng">Keras Sequential save方法（Jinpeng）</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="serving.html">TensorFlow Serving</a></li>
@@ -130,7 +120,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">TensorFlow in Swift（Huan）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia（Ziyang）</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
@@ -184,7 +174,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>TensorFlow模型导出（Jinpeng）</li>
+      <li>TensorFlow模型导出</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -203,14 +193,28 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="tensorflow-jinpeng">
-<h1>TensorFlow模型导出（Jinpeng）<a class="headerlink" href="#tensorflow-jinpeng" title="永久链接至标题">¶</a></h1>
+  <div class="section" id="tensorflow">
+<h1>TensorFlow模型导出<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
 <div class="section" id="savedmodel">
-<h2>SavedModel<a class="headerlink" href="#savedmodel" title="永久链接至标题">¶</a></h2>
-<p>TODO: 2.0 eager + Keras Sequential save model way</p>
+<span id="id1"></span><h2>使用SavedModel完整导出模型<a class="headerlink" href="#savedmodel" title="永久链接至标题">¶</a></h2>
+<p>在部署模型时，我们的第一步往往是将训练好的整个模型完整导出为一系列标准格式的文件，然后即可在不同的平台上部署模型文件。这时，TensorFlow为我们提供了SavedModel这一格式。与前面介绍的Checkpoint不同，SavedModel包含了一个TensorFlow程序的完整信息： <strong>不仅包含参数的权值，还包含计算的流程（即计算图）</strong> 。当模型导出为SavedModel文件时，无需建立模型的源代码即可再次运行模型，这使得SavedModel尤其适用于模型的分享和部署。后文的TensorFlow Serving（服务器端部署模型）、TensorFlow Lite（移动端部署模型）以及TensorFlow.js都会用到这一格式。</p>
+<p>Keras模型均可方便地导出为SavedModel格式。不过需要注意的是，因为SavedModel基于计算图，所以对于使用继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 类建立的Keras模型，其需要导出到SavedModel格式的方法（比如 <code class="docutils literal notranslate"><span class="pre">call</span></code> ）都需要使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰（ <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 的使用方式见 <a class="reference internal" href="../basic/tools.html#tffunction"><span class="std std-ref">前文</span></a> ）。然后，假设我们有一个名为 <code class="docutils literal notranslate"><span class="pre">model</span></code> 的Keras模型，使用下面的代码即可将模型导出为SavedModel：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;保存的目标文件夹名称&quot;</span><span class="p">)</span>
+</pre></div>
 </div>
-<div class="section" id="keras-sequential-save">
-<h2>Keras Sequential save方法<a class="headerlink" href="#keras-sequential-save" title="永久链接至标题">¶</a></h2>
+<p>在需要载入SavedModel文件时，使用</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;保存的目标文件夹名称&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>即可。</p>
+<div class="admonition hint">
+<p class="first admonition-title">提示</p>
+<p class="last">对于使用继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 类建立的Keras模型 <code class="docutils literal notranslate"><span class="pre">model</span></code> ，使用SavedModel载入后将无法使用 <code class="docutils literal notranslate"><span class="pre">model()</span></code> 直接进行推断，而需要使用 <code class="docutils literal notranslate"><span class="pre">model.call()</span></code> 。</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="keras-sequential-save-jinpeng">
+<h2>Keras Sequential save方法（Jinpeng）<a class="headerlink" href="#keras-sequential-save-jinpeng" title="永久链接至标题">¶</a></h2>
 <p>我们以keras模型训练和保存为例进行讲解，如下是keras官方的mnist模型训练样例。</p>
 <p>源码地址:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keras</span><span class="o">-</span><span class="n">team</span><span class="o">/</span><span class="n">keras</span><span class="o">/</span><span class="n">blob</span><span class="o">/</span><span class="n">master</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">mnist_cnn</span><span class="o">.</span><span class="n">py</span>
@@ -231,10 +235,10 @@
 </div>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
-<p class="last">该过程需要连接网络获取mnist.npz文件（<a class="reference external" href="https://s3.amazonaws.com/img-datasets/mnist.npz">https://s3.amazonaws.com/img-datasets/mnist.npz</a>），会被保存到$HOME/.keras/datasets/。如果网络连接存在问题，可以通过其他方式获取mnist.npz后，直接保存到该目录即可。</p>
+<p class="last">该过程需要连接网络获取 <code class="docutils literal notranslate"><span class="pre">mnist.npz</span></code> 文件（<a class="reference external" href="https://s3.amazonaws.com/img-datasets/mnist.npz">https://s3.amazonaws.com/img-datasets/mnist.npz</a>），会被保存到 <code class="docutils literal notranslate"><span class="pre">$HOME/.keras/datasets/</span></code> 。如果网络连接存在问题，可以通过其他方式获取 <code class="docutils literal notranslate"><span class="pre">mnist.npz</span></code> 后，直接保存到该目录即可。</p>
 </div>
-<p>执行过程会比较久，执行结束后，会在当前目录产生`mnist_cnn.h5`文件（HDF5格式），就是keras训练后的模型，其中已经包含了训练后的模型结构和权重等信息。</p>
-<p>在服务器端，可以直接通过keras.models.load_model(“mnist_cnn.h5”)加载，然后进行推理；在移动设备需要将HDF5模型文件转换为TensorFlow Lite的格式，然后通过相应平台的Interpreter加载，然后进行推理。</p>
+<p>执行过程会比较久，执行结束后，会在当前目录产生 <code class="docutils literal notranslate"><span class="pre">mnist_cnn.h5</span></code> 文件（HDF5格式），就是keras训练后的模型，其中已经包含了训练后的模型结构和权重等信息。</p>
+<p>在服务器端，可以直接通过 <code class="docutils literal notranslate"><span class="pre">keras.models.load_model(&quot;mnist_cnn.h5&quot;)</span></code> 加载，然后进行推理；在移动设备需要将HDF5模型文件转换为TensorFlow Lite的格式，然后通过相应平台的Interpreter加载，然后进行推理。</p>
 </div>
 </div>
 
