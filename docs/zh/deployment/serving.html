@@ -20,23 +20,13 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -49,7 +39,7 @@
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
     <link rel="next" title="TensorFlow Lite（Jinpeng）" href="lite.html" />
-    <link rel="prev" title="TensorFlow模型导出（Jinpeng）" href="export.html" /> 
+    <link rel="prev" title="TensorFlow模型导出" href="export.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -111,8 +101,12 @@
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="export.html">TensorFlow模型导出（Jinpeng）</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Serving</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">TensorFlow Serving安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">TensorFlow Serving模型部署</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="lite.html">TensorFlow Lite（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="javascript.html">TensorFlow in JavaScript（Huan）</a></li>
 </ul>
@@ -126,7 +120,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">TensorFlow in Swift（Huan）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia（Ziyang）</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
@@ -201,6 +195,119 @@
             
   <div class="section" id="tensorflow-serving">
 <h1>TensorFlow Serving<a class="headerlink" href="#tensorflow-serving" title="永久链接至标题">¶</a></h1>
+<p>当我们将模型训练完毕后，往往需要将模型在生产环境中部署。最常见的方式，是在服务器上提供一个API，即客户机向服务器的某个API发送特定格式的请求，服务器收到请求数据后通过模型进行计算，并返回结果。如果仅仅是做一个Demo，不考虑高并发和性能问题，其实配合 <a class="reference external" href="https://palletsprojects.com/p/flask/">Flask</a> 等Python下的Web框架就能非常轻松地实现服务器API。不过，如果是在真的实际生产环境中部署，这样的方式就显得力不从心了。这时，TensorFlow为我们提供了TensorFlow Serving这一组件，能够帮助我们在实际生产环境中灵活且高性能地部署机器学习模型。</p>
+<div class="section" id="id1">
+<h2>TensorFlow Serving安装<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>TensorFlow Serving可以使用apt-get或Docker安装。在生产环境中，推荐 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/docker">使用Docker部署TensorFlow Serving</a> 。不过此处出于教学目的，介绍依赖环境较少的 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup#installing_using_apt">apt-get安装</a> 。</p>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">软件的安装方法往往具有时效性，本节的更新日期为2019年8月。若遇到问题，建议参考 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup">TensorFlow网站上的最新安装说明</a> 进行操作。</p>
+</div>
+<p>首先设置安装源：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 添加Google的TensorFlow Serving源</span>
+<span class="n">echo</span> <span class="s2">&quot;deb [arch=amd64] http://storage.googleapis.com/tensorflow-serving-apt stable tensorflow-model-server tensorflow-model-server-universal&quot;</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">tee</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">-</span><span class="n">serving</span><span class="o">.</span><span class="n">list</span>
+<span class="c1"># 添加gpg key</span>
+<span class="n">curl</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">storage</span><span class="o">.</span><span class="n">googleapis</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">-</span><span class="n">serving</span><span class="o">-</span><span class="n">apt</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">-</span><span class="n">serving</span><span class="o">.</span><span class="n">release</span><span class="o">.</span><span class="n">pub</span><span class="o">.</span><span class="n">gpg</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">key</span> <span class="n">add</span> <span class="o">-</span>
+</pre></div>
+</div>
+<p>更新源后，即可使用apt-get安装TensorFlow Serving</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="n">server</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">提示</p>
+<p>在运行curl和apt-get命令时，可能需要设置代理。</p>
+<p>curl设置代理的方式为 <code class="docutils literal notranslate"><span class="pre">-x</span></code> 选项或设置 <code class="docutils literal notranslate"><span class="pre">http_proxy</span></code> 环境变量，即</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">http_proxy</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理服务器IP</span><span class="p">:</span><span class="n">端口</span>
+</pre></div>
+</div>
+<p>或</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">x</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理服务器IP</span><span class="p">:</span><span class="n">端口</span> <span class="n">URL</span>
+</pre></div>
+</div>
+<p>apt-get设置代理的方式为 <code class="docutils literal notranslate"><span class="pre">-o</span></code> 选项，即</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">o</span> <span class="n">Acquire</span><span class="p">::</span><span class="n">http</span><span class="p">::</span><span class="n">proxy</span><span class="o">=</span><span class="s2">&quot;http://代理服务器IP:端口&quot;</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p class="last">Windows 10下，可以在 <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Linux子系统（WSL）</a> 内使用相同的方式安装TensorFlow Serving。</p>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>TensorFlow Serving模型部署<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>TensorFlow Serving可以直接读取 <a class="reference internal" href="export.html#savedmodel"><span class="std std-ref">SavedModel格式的模型</span></a> 进行部署。使用以下命令即可：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>tensorflow_model_server \
+    --rest_api_port=端口号（如8501） \
+    --model_name=模型名 \
+    --model_base_path=&quot;SavedModel格式模型的文件夹绝对地址&quot;
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="k">import</span> <span class="n">MNISTLoader</span>
+
+<span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.001</span>
+
+<span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flatten</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="hll">    <span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+</span>    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>         <span class="c1"># [batch_size, 28, 28, 1]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>    <span class="c1"># [batch_size, 784]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>          <span class="c1"># [batch_size, 100]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>          <span class="c1"># [batch_size, 10]</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MLP</span><span class="p">()</span>
+<span class="n">data_loader</span> <span class="o">=</span> <span class="n">MNISTLoader</span><span class="p">()</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+<span class="n">num_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">num_train_data</span> <span class="o">//</span> <span class="n">batch_size</span> <span class="o">*</span> <span class="n">num_epochs</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">batch_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_batches</span><span class="p">):</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">get_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;batch </span><span class="si">%d</span><span class="s2">: loss </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">batch_index</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+    <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">))</span>
+<span class="hll"><span class="n">call_signature</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">call</span><span class="o">.</span><span class="n">get_concrete_function</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">TensorSpec</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+</span><span class="hll"><span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;saved_with_signature/1&quot;</span><span class="p">,</span> <span class="n">signatures</span><span class="o">=</span><span class="n">call_signature</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tensorflow_model_server</span> \
+    <span class="o">--</span><span class="n">rest_api_port</span><span class="o">=</span><span class="mi">8501</span> \
+    <span class="o">--</span><span class="n">model_name</span><span class="o">=</span><span class="n">MLP</span> \
+    <span class="o">--</span><span class="n">model_base_path</span><span class="o">=</span><span class="s2">&quot;/home/.../.../saved_with_signature&quot;</span>  <span class="c1"># 文件夹绝对地址根据自身情况填写</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="k">import</span> <span class="n">MNISTLoader</span>
+
+
+<span class="n">data_loader</span> <span class="o">=</span> <span class="n">MNISTLoader</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+    <span class="s2">&quot;signature_name&quot;</span><span class="p">:</span> <span class="s2">&quot;serving_default&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;instances&quot;</span><span class="p">:</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="p">})</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;content-type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
+<span class="n">json_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+    <span class="s1">&#39;http://localhost:8501/v1/models/MLP:predict&#39;</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_response</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="s1">&#39;predictions&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_label</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -214,7 +321,7 @@
         <a href="lite.html" class="btn btn-neutral float-right" title="TensorFlow Lite（Jinpeng）" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="export.html" class="btn btn-neutral float-left" title="TensorFlow模型导出（Jinpeng）" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="export.html" class="btn btn-neutral float-left" title="TensorFlow模型导出" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
