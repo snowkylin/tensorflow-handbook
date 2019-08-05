@@ -104,7 +104,12 @@
 <li class="toctree-l1"><a class="reference internal" href="export.html">TensorFlow模型导出</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Serving</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">TensorFlow Serving安装</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">TensorFlow Serving模型部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">TensorFlow Serving模型部署</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#keras-sequential">Keras Sequential模式模型的部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keras">自定义Keras模型的部署</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#call-serving-api">在客户端调用以TensorFlow Serving部署的模型</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="lite.html">TensorFlow Lite（Jinpeng）</a></li>
@@ -125,7 +130,8 @@
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/static.html">图模型下的TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/config.html">在容器和云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/optimization.html">TensorFlow性能优化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">术语中英对照表</a></li>
@@ -235,58 +241,76 @@
 </div>
 <div class="section" id="id2">
 <h2>TensorFlow Serving模型部署<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<p>TensorFlow Serving可以直接读取 <a class="reference internal" href="export.html#savedmodel"><span class="std std-ref">SavedModel格式的模型</span></a> 进行部署。使用以下命令即可：</p>
+<p>TensorFlow Serving可以直接读取SavedModel格式的模型进行部署（导出模型到SavedModel文件的方法见 <a class="reference internal" href="export.html#savedmodel"><span class="std std-ref">前文</span></a> ）。使用以下命令即可：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>tensorflow_model_server \
     --rest_api_port=端口号（如8501） \
     --model_name=模型名 \
-    --model_base_path=&quot;SavedModel格式模型的文件夹绝对地址&quot;
+    --model_base_path=&quot;SavedModel格式模型的文件夹绝对地址（不含版本号）&quot;
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="k">import</span> <span class="n">MNISTLoader</span>
-
-<span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span>
-<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.001</span>
-
-<span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">flatten</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="hll">    <span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
-</span>    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>         <span class="c1"># [batch_size, 28, 28, 1]</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>    <span class="c1"># [batch_size, 784]</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>          <span class="c1"># [batch_size, 100]</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>          <span class="c1"># [batch_size, 10]</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">output</span>
-
-<span class="n">model</span> <span class="o">=</span> <span class="n">MLP</span><span class="p">()</span>
-<span class="n">data_loader</span> <span class="o">=</span> <span class="n">MNISTLoader</span><span class="p">()</span>
-<span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
-<span class="n">num_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">num_train_data</span> <span class="o">//</span> <span class="n">batch_size</span> <span class="o">*</span> <span class="n">num_epochs</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">batch_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_batches</span><span class="p">):</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">get_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
-        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-        <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">)</span>
-        <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;batch </span><span class="si">%d</span><span class="s2">: loss </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">batch_index</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
-    <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
-    <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">))</span>
-<span class="hll"><span class="n">call_signature</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">call</span><span class="o">.</span><span class="n">get_concrete_function</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">TensorSpec</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
-</span><span class="hll"><span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;saved_with_signature/1&quot;</span><span class="p">,</span> <span class="n">signatures</span><span class="o">=</span><span class="n">call_signature</span><span class="p">)</span>
-</span></pre></div>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p>TensorFlow Serving支持热更新模型，其典型的模型文件夹结构如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">saved_model_files</span>
+    <span class="o">/</span><span class="mi">1</span>      <span class="c1"># 版本号为1的模型文件</span>
+        <span class="o">/</span><span class="n">assets</span>
+        <span class="o">/</span><span class="n">variables</span>
+        <span class="n">saved_model</span><span class="o">.</span><span class="n">pb</span>
+    <span class="o">...</span>
+    <span class="o">/</span><span class="n">N</span>      <span class="c1"># 版本号为N的模型文件</span>
+        <span class="o">/</span><span class="n">assets</span>
+        <span class="o">/</span><span class="n">variables</span>
+        <span class="n">saved_model</span><span class="o">.</span><span class="n">pb</span>
+</pre></div>
 </div>
+<p class="last">上面1~N的子文件夹代表不同版本号的模型。当指定 <code class="docutils literal notranslate"><span class="pre">--model_base_path</span></code> 时，只需要指定根目录的 <strong>绝对地址</strong> （不是相对地址）即可。例如，如果上述文件夹结构存放在 <code class="docutils literal notranslate"><span class="pre">home/snowkylin</span></code> 文件夹内，则 <code class="docutils literal notranslate"><span class="pre">--model_base_path</span></code> 应当设置为 <code class="docutils literal notranslate"><span class="pre">home/snowkylin/saved_model_files</span></code> （不附带模型版本号）。TensorFlow Serving会自动选择版本号最大的模型进行载入。</p>
+</div>
+<div class="section" id="keras-sequential">
+<h3>Keras Sequential模式模型的部署<a class="headerlink" href="#keras-sequential" title="永久链接至标题">¶</a></h3>
+<p>由于Sequential模式的输入和输出都很固定，因此这种类型的模型很容易部署，无需其他额外操作。例如，要将 <a class="reference internal" href="export.html#savedmodel"><span class="std std-ref">前文使用SavedModel导出的MNIST手写体识别模型</span></a> （使用Keras Sequential模式建立）以 <code class="docutils literal notranslate"><span class="pre">MLP</span></code> 的模型名在 <code class="docutils literal notranslate"><span class="pre">8501</span></code> 端口进行部署，可以直接使用以下命令：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tensorflow_model_server</span> \
     <span class="o">--</span><span class="n">rest_api_port</span><span class="o">=</span><span class="mi">8501</span> \
     <span class="o">--</span><span class="n">model_name</span><span class="o">=</span><span class="n">MLP</span> \
-    <span class="o">--</span><span class="n">model_base_path</span><span class="o">=</span><span class="s2">&quot;/home/.../.../saved_with_signature&quot;</span>  <span class="c1"># 文件夹绝对地址根据自身情况填写</span>
+    <span class="o">--</span><span class="n">model_base_path</span><span class="o">=</span><span class="s2">&quot;/home/.../.../saved&quot;</span>  <span class="c1"># 文件夹绝对地址根据自身情况填写，无需加入版本号</span>
 </pre></div>
 </div>
+<p>然后就可以按照 <a class="reference internal" href="#call-serving-api"><span class="std std-ref">后文的介绍</span></a> ，使用gRPC或者RESTful API在客户端调用模型了。</p>
+</div>
+<div class="section" id="keras">
+<h3>自定义Keras模型的部署<a class="headerlink" href="#keras" title="永久链接至标题">¶</a></h3>
+<p>使用继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 类建立的自定义Keras模型的自由度相对更高。因此当使用TensorFlow Serving部署模型时，对导出的SavedModel文件也有更多的要求：</p>
+<ul class="simple">
+<li>需要导出到SavedModel格式的方法（比如 <code class="docutils literal notranslate"><span class="pre">call</span></code> ）不仅需要使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰，还要在修饰时指定 <code class="docutils literal notranslate"><span class="pre">input_signature</span></code> 参数，以显式说明输入的形状。该参数传入一个由 <code class="docutils literal notranslate"><span class="pre">tf.TensorSpec</span></code> 组成的列表，指定每个输入张量的形状和类型。例如，对于MNIST手写体数字识别，我们的输入是一个 <code class="docutils literal notranslate"><span class="pre">[None,</span> <span class="pre">28,</span> <span class="pre">28,</span> <span class="pre">1]</span></code> 的四维张量（ <code class="docutils literal notranslate"><span class="pre">None</span></code> 表示第一维即Batch Size的大小不固定），此时我们可以将模型的 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法做以下修饰：</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="hll">    <span class="nd">@tf.function</span><span class="p">(</span><span class="n">input_signature</span><span class="o">=</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">TensorSpec</span><span class="p">([</span><span class="bp">None</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)])</span>
+</span>    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>在将模型使用 <code class="docutils literal notranslate"><span class="pre">tf.saved_model.save</span></code> 导出时，需要通过 <code class="docutils literal notranslate"><span class="pre">signature</span></code> 参数提供待导出的函数的签名（Signature）。简单说来，由于自定义的模型类里可能有多个方法都需要导出，因此，需要告诉TensorFlow Serving每个方法在被客户端调用时分别叫做什么名字。例如，如果我们希望客户端在调用模型时使用 <code class="docutils literal notranslate"><span class="pre">call</span></code> 这一签名来调用 <code class="docutils literal notranslate"><span class="pre">model.call</span></code> 方法时，我们可以在导出时传入 <code class="docutils literal notranslate"><span class="pre">signature</span></code> 参数，以 <code class="docutils literal notranslate"><span class="pre">dict</span></code> 的键值对形式告知导出的方法对应的签名，代码如下：</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">MLP</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="hll"><span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;saved_with_signature/1&quot;</span><span class="p">,</span> <span class="n">signatures</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;call&quot;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">call</span><span class="p">})</span>
+</span></pre></div>
+</div>
+<p>然后即可使用以下命令部署：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tensorflow_model_server</span> \
+    <span class="o">--</span><span class="n">rest_api_port</span><span class="o">=</span><span class="mi">8501</span> \
+    <span class="o">--</span><span class="n">model_name</span><span class="o">=</span><span class="n">MLP</span> \
+    <span class="o">--</span><span class="n">model_base_path</span><span class="o">=</span><span class="s2">&quot;/home/.../.../saved_with_signature&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="call-serving-api">
+<span id="id3"></span><h2>在客户端调用以TensorFlow Serving部署的模型<a class="headerlink" href="#call-serving-api" title="永久链接至标题">¶</a></h2>
+<p>TensorFlow Serving支持以gRPC和RESTful API调用以TensorFlow Serving部署的模型。本手册主要介绍较为通用的RESTful API方法。</p>
+<p>RESTful API以标准的HTTP POST方法进行交互，请求和回复均为JSON对象。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">requests</span>
@@ -295,7 +319,7 @@
 
 <span class="n">data_loader</span> <span class="o">=</span> <span class="n">MNISTLoader</span><span class="p">()</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
-    <span class="s2">&quot;signature_name&quot;</span><span class="p">:</span> <span class="s2">&quot;serving_default&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;signature_name&quot;</span><span class="p">:</span> <span class="s2">&quot;call&quot;</span><span class="p">,</span>
     <span class="s2">&quot;instances&quot;</span><span class="p">:</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
     <span class="p">})</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;content-type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
