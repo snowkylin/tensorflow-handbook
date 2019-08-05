@@ -6,7 +6,7 @@ from zh.model.utils import MNISTLoader
 
 data_loader = MNISTLoader()
 data = json.dumps({
-    "signature_name": "serving_default",
+    "signature_name": "call",
     "instances": data_loader.test_data[0:10].tolist()
     })
 headers = {"content-type": "application/json"}
