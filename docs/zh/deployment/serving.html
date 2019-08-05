@@ -298,11 +298,11 @@
 <span class="hll"><span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;saved_with_signature/1&quot;</span><span class="p">,</span> <span class="n">signatures</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;call&quot;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">call</span><span class="p">})</span>
 </span></pre></div>
 </div>
-<p>然后即可使用以下命令部署：</p>
+<p>以上两步均完成后，即可使用以下命令部署：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tensorflow_model_server</span> \
     <span class="o">--</span><span class="n">rest_api_port</span><span class="o">=</span><span class="mi">8501</span> \
     <span class="o">--</span><span class="n">model_name</span><span class="o">=</span><span class="n">MLP</span> \
-    <span class="o">--</span><span class="n">model_base_path</span><span class="o">=</span><span class="s2">&quot;/home/.../.../saved_with_signature&quot;</span>
+    <span class="o">--</span><span class="n">model_base_path</span><span class="o">=</span><span class="s2">&quot;/home/.../.../saved_with_signature&quot;</span>  <span class="c1"># 修改为自己模型的绝对地址</span>
 </pre></div>
 </div>
 </div>
@@ -310,7 +310,22 @@
 <div class="section" id="call-serving-api">
 <span id="id3"></span><h2>在客户端调用以TensorFlow Serving部署的模型<a class="headerlink" href="#call-serving-api" title="永久链接至标题">¶</a></h2>
 <p>TensorFlow Serving支持以gRPC和RESTful API调用以TensorFlow Serving部署的模型。本手册主要介绍较为通用的RESTful API方法。</p>
-<p>RESTful API以标准的HTTP POST方法进行交互，请求和回复均为JSON对象。</p>
+<p>RESTful API以标准的HTTP POST方法进行交互，请求和回复均为JSON对象。为了调用服务器端的模型，我们在客户端向服务器发送以下格式的请求：</p>
+<p>服务器URI： <code class="docutils literal notranslate"><span class="pre">http://服务器地址:端口号/v1/models/模型名:predict</span></code></p>
+<p>请求内容：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;signature_name&quot;</span><span class="p">:</span> <span class="s2">&quot;需要调用的函数签名（Sequential模式不需要）&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;instances&quot;</span><span class="p">:</span> <span class="n">输入数据</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>回复为：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;predictions&quot;</span><span class="p">:</span> <span class="n">返回值</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>以下示例展示了使用 <a class="reference external" href="https://2.python-requests.org//zh_CN/latest/user/quickstart.html">Python的Requests库</a> （你可能需要使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">requests</span></code> 安装该库）向本机的TensorFlow Serving服务器发送MNIST测试集的前10幅图像并返回预测结果，同时与测试集的真实标签进行比较。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">requests</span>
@@ -319,7 +334,6 @@
 
 <span class="n">data_loader</span> <span class="o">=</span> <span class="n">MNISTLoader</span><span class="p">()</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
-    <span class="s2">&quot;signature_name&quot;</span><span class="p">:</span> <span class="s2">&quot;call&quot;</span><span class="p">,</span>
     <span class="s2">&quot;instances&quot;</span><span class="p">:</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
     <span class="p">})</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;content-type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
@@ -330,6 +344,25 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_label</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
 </pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">7</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">4</span> <span class="mi">1</span> <span class="mi">4</span> <span class="mi">9</span> <span class="mi">6</span> <span class="mi">9</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">7</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">4</span> <span class="mi">1</span> <span class="mi">4</span> <span class="mi">9</span> <span class="mi">5</span> <span class="mi">9</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>可见预测结果与真实标签值非常接近。</p>
+<p>对于自定义的Keras模型，在发送的数据中加入 <code class="docutils literal notranslate"><span class="pre">signature_name</span></code> 键值即可，即将上面代码的 <code class="docutils literal notranslate"><span class="pre">data</span></code> 建立过程改为</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+    <span class="s2">&quot;signature_name&quot;</span><span class="p">:</span> <span class="s2">&quot;call&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;instances&quot;</span><span class="p">:</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="p">})</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p>如果你不熟悉HTTP POST，可以参考 <a class="reference external" href="https://www.runoob.com/tags/html-httpmethods.html">这里</a> 。事实上，当你在用浏览器填写表单（比方说性格测试）并点击“提交”按钮，然后获得返回结果（比如说“你的性格是ISTJ”）时，就很有可能是在向服务器发送一个HTTP POST请求并获得了服务器的回复。</p>
+<p>RESTful API是一个流行的API设计理论，可以参考 <a class="reference external" href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html">这里</a> 获得简要介绍。</p>
+<p class="last">关于TensorFlow Serving的RESTful API的完整使用方式可参考 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/api_rest">文档</a> 。</p>
 </div>
 </div>
 </div>
