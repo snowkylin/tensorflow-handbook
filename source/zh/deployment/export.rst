@@ -27,8 +27,53 @@ Keras模型均可方便地导出为SavedModel格式。不过需要注意的是�
 
 .. hint:: 对于使用继承 ``tf.keras.Model`` 类建立的Keras模型 ``model`` ，使用SavedModel载入后将无法使用 ``model()`` 直接进行推断，而需要使用 ``model.call()`` 。
 
+以下是一个简单的示例，将 :ref:`前文MNIST手写体识别的模型 <mlp>` 进行导出和导入。
 
-----------------------------------------------------------------
+导出模型到 ``saved/1`` 文件夹：
+
+.. literalinclude:: /_static/code/zh/savedmodel/keras/train_and_export.py
+    :emphasize-lines: 22
+
+将 ``saved/1`` 中的模型导入并测试性能：
+
+.. literalinclude:: /_static/code/zh/savedmodel/keras/load_savedmodel.py
+    :emphasize-lines: 6, 12
+
+输出::
+
+    test accuracy: 0.952000
+
+使用继承 ``tf.keras.Model`` 类建立的Keras模型同样可以以相同方法导出，唯须注意 ``call`` 方法需要以 ``@tf.function`` 修饰，以转化为SavedModel支持的计算图，代码如下：
+
+.. code-block:: python
+    :emphasize-lines: 8
+
+    class MLP(tf.keras.Model):
+        def __init__(self):
+            super().__init__()
+            self.flatten = tf.keras.layers.Flatten()
+            self.dense1 = tf.keras.layers.Dense(units=100, activation=tf.nn.relu)
+            self.dense2 = tf.keras.layers.Dense(units=10)
+
+        @tf.function
+        def call(self, inputs):         # [batch_size, 28, 28, 1]
+            x = self.flatten(inputs)    # [batch_size, 784]
+            x = self.dense1(x)          # [batch_size, 100]
+            x = self.dense2(x)          # [batch_size, 10]
+            output = tf.nn.softmax(x)
+            return output
+
+    model = MLP()
+    ...
+
+模型导入并测试性能的过程也相同，唯须注意模型推断时需要显式调用 ``call`` 方法，即使用：
+
+.. code-block:: python
+    :emphasize-lines: 2
+
+        ...
+        y_pred = model.call(data_loader.test_data[start_index: end_index])
+        ...
 
 Keras Sequential save方法（Jinpeng）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

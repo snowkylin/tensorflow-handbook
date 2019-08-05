@@ -1,7 +1,7 @@
 import tensorflow as tf
 from zh.model.utils import MNISTLoader
 
-num_epochs = 1
+num_epochs = 0.1
 batch_size = 50
 learning_rate = 0.001
 
@@ -12,7 +12,7 @@ class MLP(tf.keras.Model):
         self.dense1 = tf.keras.layers.Dense(units=100, activation=tf.nn.relu)
         self.dense2 = tf.keras.layers.Dense(units=10)
 
-    @tf.function
+    @tf.function(input_signature=[tf.TensorSpec([None, 28, 28, 1], tf.float32)])
     def call(self, inputs):         # [batch_size, 28, 28, 1]
         x = self.flatten(inputs)    # [batch_size, 784]
         x = self.dense1(x)          # [batch_size, 100]
@@ -33,5 +33,4 @@ for batch_index in range(num_batches):
         print("batch %d: loss %f" % (batch_index, loss.numpy()))
     grads = tape.gradient(loss, model.variables)
     optimizer.apply_gradients(grads_and_vars=zip(grads, model.variables))
-call_signature = model.call.get_concrete_function(tf.TensorSpec([None, 28, 28, 1], tf.float32))
-tf.saved_model.save(model, "saved_with_signature/1", signatures=call_signature)
+tf.saved_model.save(model, "saved_with_signature/1", signatures={"call": model.call})
