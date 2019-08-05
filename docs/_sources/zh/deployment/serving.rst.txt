@@ -118,27 +118,70 @@ Keras Sequential模式模型的部署
     ...
     tf.saved_model.save(model, "saved_with_signature/1", signatures={"call": model.call})
 
-然后即可使用以下命令部署：
+以上两步均完成后，即可使用以下命令部署：
 
 ::
 
     tensorflow_model_server \
         --rest_api_port=8501 \
         --model_name=MLP \
-        --model_base_path="/home/.../.../saved_with_signature"
+        --model_base_path="/home/.../.../saved_with_signature"  # 修改为自己模型的绝对地址
 
 .. _call_serving_api:
 
 在客户端调用以TensorFlow Serving部署的模型
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-TensorFlow Serving支持以gRPC和RESTful API调用以TensorFlow Serving部署的模型。本手册主要介绍较为通用的RESTful API方法。
-
-RESTful API以标准的HTTP POST方法进行交互，请求和回复均为JSON对象。
-
 ..
     https://www.tensorflow.org/tfx/serving/api_rest
     http://www.ruanyifeng.com/blog/2014/05/restful_api.html
 
+TensorFlow Serving支持以gRPC和RESTful API调用以TensorFlow Serving部署的模型。本手册主要介绍较为通用的RESTful API方法。
+
+RESTful API以标准的HTTP POST方法进行交互，请求和回复均为JSON对象。为了调用服务器端的模型，我们在客户端向服务器发送以下格式的请求：
+
+服务器URI： ``http://服务器地址:端口号/v1/models/模型名:predict`` 
+
+请求内容：
+
+::
+
+    {
+        "signature_name": "需要调用的函数签名（Sequential模式不需要）",
+        "instances": 输入数据
+    }
+
+回复为：
+
+::
+
+    {
+        "predictions": 返回值
+    }
+
+以下示例展示了使用 `Python的Requests库 <https://2.python-requests.org//zh_CN/latest/user/quickstart.html>`_ （你可能需要使用 ``pip install requests`` 安装该库）向本机的TensorFlow Serving服务器发送MNIST测试集的前10幅图像并返回预测结果，同时与测试集的真实标签进行比较。
+
+.. literalinclude:: /_static/code/zh/savedmodel/keras/client.py
+
+输出：
+
+::
+
+    [7 2 1 0 4 1 4 9 6 9]
+    [7 2 1 0 4 1 4 9 5 9]
+
+可见预测结果与真实标签值非常接近。
+
+对于自定义的Keras模型，在发送的数据中加入 ``signature_name`` 键值即可，即将上面代码的 ``data`` 建立过程改为
+
 .. literalinclude:: /_static/code/zh/savedmodel/custom/client.py
+    :lines: 8-11
+
+.. note:: 如果你不熟悉HTTP POST，可以参考 `这里 <https://www.runoob.com/tags/html-httpmethods.html>`_ 。事实上，当你在用浏览器填写表单（比方说性格测试）并点击“提交”按钮，然后获得返回结果（比如说“你的性格是ISTJ”）时，就很有可能是在向服务器发送一个HTTP POST请求并获得了服务器的回复。
+
+    RESTful API是一个流行的API设计理论，可以参考 `这里 <http://www.ruanyifeng.com/blog/2014/05/restful_api.html>`_ 获得简要介绍。
+
+    关于TensorFlow Serving的RESTful API的完整使用方式可参考 `文档 <https://www.tensorflow.org/tfx/serving/api_rest>`_ 。
+
+
 
