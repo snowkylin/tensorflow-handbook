@@ -254,6 +254,10 @@
 <span id="gcp"></span><h2>在Google Cloud Platform（GCP）中使用TensorFlow<a class="headerlink" href="#google-cloud-platform-gcp-tensorflow" title="永久链接至标题">¶</a></h2>
 <p><a class="reference external" href="https://cloud.google.com/">Google Cloud Platform（GCP）</a> 是Google的云计算服务。GCP收费灵活，默认按时长计费。也就是说，你可以迅速建立一个带GPU的实例，训练一个模型，然后立即关闭（关机或删除实例）。GCP只收取在实例开启时所产生的费用，关机时只收取磁盘存储的费用，删除后即不再继续收费。</p>
 <p>我们可以通过两种方式在GCP中使用TensorFlow：使用Compute Engine建立带GPU的实例，或使用AI Platform中的Notebook建立带GPU的在线JupyterLab环境。</p>
+<div class="admonition hint">
+<p class="first admonition-title">提示</p>
+<p class="last">国内的 <a class="reference external" href="https://cn.aliyun.com/product/ecs/gpu">阿里云</a> 和 <a class="reference external" href="https://cloud.tencent.com/product/gpu">腾讯云</a> 也有类似的GPU云服务器提供，且可按量计费。至本手册撰写时，具备单个GPU的实例价格在数元（Tesla T4）至二十多元（Tesla V100）每小时不等。</p>
+</div>
 <div class="section" id="compute-enginegputensorflow">
 <h3>在Compute Engine建立带GPU的实例并部署TensorFlow<a class="headerlink" href="#compute-enginegputensorflow" title="永久链接至标题">¶</a></h3>
 <p>GCP的Compute Engine类似于AWS、阿里云等，允许用户快速建立自己的虚拟机实例。在Compute Engine中，可以很方便地建立具有GPU的虚拟机实例，只需要在创建实例（Compute Engine - VM实例 - 创建实例）的时候选择GPU类型和数量即可。不过需要注意两点：</p>
@@ -297,10 +301,49 @@ Fri Jul <span class="m">12</span> <span class="m">10</span>:30:37 <span class="m
 +-----------------------------------------------------------------------------+
 </pre></div>
 </div>
+<p>如果你既希望获得Compute Engine强大的计算能力，又希望获得Colab方便的在线Python交互式运行，可以在Compute Engine建立的实例中安装JupyterLab。JupyterLab可以理解成升级版的Colab，提供多标签页支持，在线终端和文件管理等一系列方便的功能，接近于一个在线的Python IDE。</p>
+<p>使用以下命令安装JupyterLab：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">jupyterlab</span>
+</pre></div>
+</div>
+<p>然后使用以下命令运行JupyterLab：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">lab</span> <span class="o">--</span><span class="n">ip</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
+</pre></div>
+</div>
+<p>然后根据输出的提示，使用浏览器访问 <code class="docutils literal notranslate"><span class="pre">http://服务器地址:8888</span></code> ，并使用输出中提供的token直接登录（或设置密码后登录）即可。</p>
+<p>JupyterLab界面如下所示：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/jupyterlab.png"><img alt="../../_images/jupyterlab.png" src="../../_images/jupyterlab.png" style="width: 100%;" /></a>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">提示</p>
+<p>可以使用 <code class="docutils literal notranslate"><span class="pre">--port</span></code> 参数指定端口号。</p>
+<p>如果使用默认端口号，需要在“虚拟机实例详情-网络接口-查看详情”中新建防火墙规则，开放对应端口并应用到当前实例。</p>
+<p>如果需要在终端退出后仍然持续运行JupyterLab，可以使用 <code class="docutils literal notranslate"><span class="pre">nohup</span></code> 命令及 <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> 放入后台运行，即：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nohup</span> <span class="n">jupyter</span> <span class="n">lab</span> <span class="o">--</span><span class="n">ip</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="o">&amp;</span>
+</pre></div>
+</div>
+<p>程序输出可以在当前目录下的 <code class="docutils literal notranslate"><span class="pre">nohup.txt</span></code> 找到。</p>
+<p>如果需要在JupyterLab的Notebook中使用自己的Conda环境，可以使用以下命令：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>conda activate 环境名（比如前面建立的tf2.0-beta-gpu）
+conda install ipykernel
+ipython kernel install --name 环境名 --user
+</pre></div>
+</div>
+<p>然后重新启动JupyterLab，即可在Kernel选项和启动器中建立Notebook的选项中找到自己的Conda环境。</p>
+<div class="figure align-center" id="id7">
+<a class="reference internal image-reference" href="../../_images/add_env.png"><img alt="../../_images/add_env.png" src="../../_images/add_env.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-text">Notebook中新增了“tf2.0-beta-gpu”选项</span></p>
+</div>
+<div class="last figure align-center" id="id8">
+<a class="reference internal image-reference" href="../../_images/kernel.png"><img alt="../../_images/kernel.png" src="../../_images/kernel.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-text">可以在Kernel中选择“tf2.0-beta-gpu”</span></p>
+</div>
+</div>
 </div>
 <div class="section" id="ai-platformnotebookgpujupyterlab">
 <h3>使用AI Platform中的Notebook建立带GPU的在线JupyterLab环境<a class="headerlink" href="#ai-platformnotebookgpujupyterlab" title="永久链接至标题">¶</a></h3>
-<p>AI Platform中的Notebook可以理解为Google Colab的升级版。</p>
+<p>如果你不希望繁杂的配置，希望迅速获得一个开箱即用的JupyterLab环境，可以使用GCP的AI Platform中的Notebook。</p>
 </div>
 </div>
 </div>

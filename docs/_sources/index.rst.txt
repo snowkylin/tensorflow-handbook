@@ -71,7 +71,7 @@ The code of this handbook is based on TensorFlow 2.0 beta.
     zh/basic/tools
 
 .. toctree:: 
-    :maxdepth: 2
+    :maxdepth: 3
     :caption: 部署
 
     zh/deployment/export
@@ -80,7 +80,7 @@ The code of this handbook is based on TensorFlow 2.0 beta.
     zh/deployment/javascript
 
 .. toctree:: 
-    :maxdepth: 2
+    :maxdepth: 3
     :caption: 大规模训练与加速
 
     zh/appendix/distributed
