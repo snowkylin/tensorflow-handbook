@@ -210,7 +210,7 @@ TensorBoard的使用有以下注意事项：
     :width: 40%
     :align: center
 
-.. hint:: TensorFlow Datasets提供了一个基于 ``tf.data.Datasets`` 的开箱即用的数据集集合，相关内容可参考 :ref:`TensorFlow Datasets <tfds>`。例如，使用以下语句：
+.. hint:: TensorFlow Datasets提供了一个基于 ``tf.data.Datasets`` 的开箱即用的数据集集合，相关内容可参考 :doc:`TensorFlow Datasets <../appendix/tfds>` 。例如，使用以下语句：
 
     .. code-block:: python
 
