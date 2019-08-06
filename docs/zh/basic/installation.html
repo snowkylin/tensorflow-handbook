@@ -133,7 +133,8 @@
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/static.html">图模型下的TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/config.html">在容器和云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/optimization.html">TensorFlow性能优化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">术语中英对照表</a></li>
@@ -206,7 +207,7 @@
 <p>TensorFlow的最新安装步骤可参考官方网站上的说明（<a class="reference external" href="https://tensorflow.google.cn/install">https://tensorflow.google.cn/install</a>）。TensorFlow支持Python、Java、Go、C等多种编程语言以及Windows、OSX、Linux等多种操作系统，此处及后文均以主流的Python 3.6为准。</p>
 <div class="admonition hint">
 <p class="first admonition-title">提示</p>
-<p class="last">本章介绍在一般的个人电脑或服务器上直接安装TensorFlow的方法。关于在容器环境（Docker）、云平台中部署TensorFlow或在线上环境中使用TensorFlow的方法，见附录 <a class="reference internal" href="../appendix/config.html"><span class="doc">在容器和云端使用TensorFlow</span></a> 。</p>
+<p class="last">本章介绍在一般的个人电脑或服务器上直接安装TensorFlow的方法。关于在容器环境（Docker）、云平台中部署TensorFlow或在线上环境中使用TensorFlow的方法，见附录 <span class="xref std std-doc">在容器和云端使用TensorFlow</span> 。</p>
 </div>
 <div class="section" id="id1">
 <h2>一般安装步骤<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
@@ -382,11 +383,11 @@ Mon Jun 10 23:19:54 2019
 <h2>TensorFlow所需的硬件配置 *<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h2>
 <div class="admonition hint">
 <p class="first admonition-title">提示</p>
-<p class="last">对于学习而言，TensorFlow的硬件门槛并不高。甚至，借助 <a class="reference internal" href="../appendix/config.html#colab"><span class="std std-ref">免费</span></a> 或 <a class="reference internal" href="../appendix/config.html#gcp"><span class="std std-ref">灵活</span></a> 的云端计算资源，只要你有一台能上网的电脑，就能够熟练掌握TensorFlow！</p>
+<p class="last">对于学习而言，TensorFlow的硬件门槛并不高。甚至，借助 <a class="reference internal" href="../appendix/cloud.html#colab"><span class="std std-ref">免费</span></a> 或 <a class="reference internal" href="../appendix/cloud.html#gcp"><span class="std std-ref">灵活</span></a> 的云端计算资源，只要你有一台能上网的电脑，就能够熟练掌握TensorFlow！</p>
 </div>
 <p>在很多人的刻板印象中，TensorFlow乃至深度学习是一件非常“吃硬件”的事情，以至于一接触TensorFlow，第一件事情可能就是想如何升级自己的电脑硬件。不过，TensorFlow所需的硬件配置很大程度是视任务和使用环境而定的：</p>
 <ul class="simple">
-<li>对于TensorFlow初学者，无需硬件升级也可以很好地学习和掌握TensorFlow。本手册中的大部分教学示例，大部分当前主流的个人电脑（即使没有GPU）均可胜任，无需添置其他硬件设备。对于本手册中部分计算量较大的示例（例如 <a class="reference internal" href="tools.html#cats-vs-dogs"><span class="std std-ref">在cats_vs_dogs数据集上训练CNN图像分类</span></a> ），一块主流的NVIDIA GPU会大幅加速训练。如果自己的个人电脑难以胜任，可以考虑在云端（例如 <a class="reference internal" href="../appendix/config.html#colab"><span class="std std-ref">免费的 Colab</span></a> ）进行模型训练。</li>
+<li>对于TensorFlow初学者，无需硬件升级也可以很好地学习和掌握TensorFlow。本手册中的大部分教学示例，大部分当前主流的个人电脑（即使没有GPU）均可胜任，无需添置其他硬件设备。对于本手册中部分计算量较大的示例（例如 <a class="reference internal" href="tools.html#cats-vs-dogs"><span class="std std-ref">在cats_vs_dogs数据集上训练CNN图像分类</span></a> ），一块主流的NVIDIA GPU会大幅加速训练。如果自己的个人电脑难以胜任，可以考虑在云端（例如 <a class="reference internal" href="../appendix/cloud.html#colab"><span class="std std-ref">免费的 Colab</span></a> ）进行模型训练。</li>
 <li>对于参加数据科学竞赛（比如Kaggle）或者经常在本机进行训练的个人爱好者或开发者，一块高性能的NVIDIA GPU往往是必要的。CUDA核心数和显存大小是决定显卡机器学习性能的两个关键参数，前者决定训练速度，后者决定可以训练多大的模型以及训练时的最大Batch Size，对于较大规模的训练而言尤其敏感。</li>
 <li>对于前沿的机器学习研究（尤其是计算机视觉和自然语言处理领域），多GPU并行训练是标准配置。为了快速迭代实验结果以及训练更大规模的模型以提升性能，4卡、8卡或更高的GPU数量是常态。</li>
 </ul>
