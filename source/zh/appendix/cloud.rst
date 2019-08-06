@@ -79,6 +79,8 @@ Google Colab是谷歌的免费在线交互式Python运行环境，且提供GPU�
 
 我们可以通过两种方式在GCP中使用TensorFlow：使用Compute Engine建立带GPU的实例，或使用AI Platform中的Notebook建立带GPU的在线JupyterLab环境。
 
+.. hint:: 国内的 `阿里云 <https://cn.aliyun.com/product/ecs/gpu>`_ 和 `腾讯云 <https://cloud.tencent.com/product/gpu>`_ 也有类似的GPU云服务器提供，且可按量计费。至本手册撰写时，具备单个GPU的实例价格在数元（Tesla T4）至二十多元（Tesla V100）每小时不等。
+
 在Compute Engine建立带GPU的实例并部署TensorFlow
 ----------------------------------------------------------------
 
@@ -128,7 +130,63 @@ GCP的Compute Engine类似于AWS、阿里云等，允许用户快速建立自己
     |  No running processes found                                                 |
     +-----------------------------------------------------------------------------+
 
+如果你既希望获得Compute Engine强大的计算能力，又希望获得Colab方便的在线Python交互式运行，可以在Compute Engine建立的实例中安装JupyterLab。JupyterLab可以理解成升级版的Colab，提供多标签页支持，在线终端和文件管理等一系列方便的功能，接近于一个在线的Python IDE。
+
+使用以下命令安装JupyterLab：
+
+::
+
+    pip install jupyterlab
+
+然后使用以下命令运行JupyterLab：
+
+::
+
+    jupyter lab --ip=0.0.0.0
+
+然后根据输出的提示，使用浏览器访问 ``http://服务器地址:8888`` ，并使用输出中提供的token直接登录（或设置密码后登录）即可。
+
+JupyterLab界面如下所示：
+
+.. figure:: /_static/image/gcp/jupyterlab.png
+    :width: 100%
+    :align: center
+
+.. hint:: 可以使用 ``--port`` 参数指定端口号。
+
+    如果使用默认端口号，需要在“虚拟机实例详情-网络接口-查看详情”中新建防火墙规则，开放对应端口并应用到当前实例。
+
+    如果需要在终端退出后仍然持续运行JupyterLab，可以使用 ``nohup`` 命令及 ``&`` 放入后台运行，即：
+
+    ::
+
+        nohup jupyter lab --ip=0.0.0.0 &
+
+    程序输出可以在当前目录下的 ``nohup.txt`` 找到。
+
+    如果需要在JupyterLab的Notebook中使用自己的Conda环境，可以使用以下命令：
+
+    ::
+
+        conda activate 环境名（比如前面建立的tf2.0-beta-gpu）
+        conda install ipykernel
+        ipython kernel install --name 环境名 --user
+
+    然后重新启动JupyterLab，即可在Kernel选项和启动器中建立Notebook的选项中找到自己的Conda环境。
+
+    .. figure:: /_static/image/gcp/add_env.png
+        :width: 100%
+        :align: center
+
+        Notebook中新增了“tf2.0-beta-gpu”选项
+    
+    .. figure:: /_static/image/gcp/kernel.png
+        :width: 100%
+        :align: center
+
+        可以在Kernel中选择“tf2.0-beta-gpu”
+
 使用AI Platform中的Notebook建立带GPU的在线JupyterLab环境
 ----------------------------------------------------------------
 
-AI Platform中的Notebook可以理解为Google Colab的升级版。
+如果你不希望繁杂的配置，希望迅速获得一个开箱即用的JupyterLab环境，可以使用GCP的AI Platform中的Notebook。
