@@ -84,7 +84,13 @@ Google Colab是谷歌的免费在线交互式Python运行环境，且提供GPU�
 在Compute Engine建立带GPU的实例并部署TensorFlow
 ----------------------------------------------------------------
 
-GCP的Compute Engine类似于AWS、阿里云等，允许用户快速建立自己的虚拟机实例。在Compute Engine中，可以很方便地建立具有GPU的虚拟机实例，只需要在创建实例（Compute Engine - VM实例 - 创建实例）的时候选择GPU类型和数量即可。不过需要注意两点：
+GCP的Compute Engine类似于AWS、阿里云等，允许用户快速建立自己的虚拟机实例。在Compute Engine中，可以很方便地建立具有GPU的虚拟机实例，只需要进入Compute Engine的VM实例（https://console.cloud.google.com/compute/instances），并在创建实例的时候选择GPU类型和数量即可。
+
+.. figure:: /_static/image/gcp/create_instance.png
+    :width: 100%
+    :align: center
+
+需要注意两点：
 
 1. 只有特定区域的机房具有GPU，且不同类型的GPU地区范围也不同，可参考 `GCP官方文档 <https://cloud.google.com/compute/docs/gpus>`_ 并选择适合的地区建立实例；
 #. 默认情况下GCP账号的GPU配额非常有限（可能是怕你付不起钱？）。你很可能需要在使用前申请提升自己账号在特定地区的特定型号GPU的配额，可参考 `GCP官方文档：申请提升配额 <https://cloud.google.com/compute/quotas?hl=zh-cn#requesting_additional_quota>`_ ，GCP会有工作人员手动处理申请，并给你的邮箱发送邮件通知，大约需要数小时至两个工作日不等。
@@ -130,63 +136,43 @@ GCP的Compute Engine类似于AWS、阿里云等，允许用户快速建立自己
     |  No running processes found                                                 |
     +-----------------------------------------------------------------------------+
 
-如果你既希望获得Compute Engine强大的计算能力，又希望获得Colab方便的在线Python交互式运行，可以在Compute Engine建立的实例中安装JupyterLab。JupyterLab可以理解成升级版的Colab，提供多标签页支持，在线终端和文件管理等一系列方便的功能，接近于一个在线的Python IDE。
-
-使用以下命令安装JupyterLab：
-
-::
-
-    pip install jupyterlab
-
-然后使用以下命令运行JupyterLab：
-
-::
-
-    jupyter lab --ip=0.0.0.0
-
-然后根据输出的提示，使用浏览器访问 ``http://服务器地址:8888`` ，并使用输出中提供的token直接登录（或设置密码后登录）即可。
-
-JupyterLab界面如下所示：
-
-.. figure:: /_static/image/gcp/jupyterlab.png
-    :width: 100%
-    :align: center
-
-.. hint:: 可以使用 ``--port`` 参数指定端口号。
-
-    如果使用默认端口号，需要在“虚拟机实例详情-网络接口-查看详情”中新建防火墙规则，开放对应端口并应用到当前实例。
-
-    如果需要在终端退出后仍然持续运行JupyterLab，可以使用 ``nohup`` 命令及 ``&`` 放入后台运行，即：
-
-    ::
-
-        nohup jupyter lab --ip=0.0.0.0 &
-
-    程序输出可以在当前目录下的 ``nohup.txt`` 找到。
-
-    如果需要在JupyterLab的Notebook中使用自己的Conda环境，可以使用以下命令：
-
-    ::
-
-        conda activate 环境名（比如前面建立的tf2.0-beta-gpu）
-        conda install ipykernel
-        ipython kernel install --name 环境名 --user
-
-    然后重新启动JupyterLab，即可在Kernel选项和启动器中建立Notebook的选项中找到自己的Conda环境。
-
-    .. figure:: /_static/image/gcp/add_env.png
-        :width: 100%
-        :align: center
-
-        Notebook中新增了“tf2.0-beta-gpu”选项
-    
-    .. figure:: /_static/image/gcp/kernel.png
-        :width: 100%
-        :align: center
-
-        可以在Kernel中选择“tf2.0-beta-gpu”
+.. _notebook:
 
 使用AI Platform中的Notebook建立带GPU的在线JupyterLab环境
 ----------------------------------------------------------------
 
-如果你不希望繁杂的配置，希望迅速获得一个开箱即用的JupyterLab环境，可以使用GCP的AI Platform中的Notebook。
+如果你不希望繁杂的配置，希望迅速获得一个开箱即用的在线交互式Python环境，可以使用GCP的AI Platform中的Notebook。其预安装了JupyterLab，可以理解为Colab的付费升级版，具备更多功能且限制较少。
+
+进入 https://console.cloud.google.com/mlengine/notebooks ，界面如下：
+
+.. figure:: /_static/image/gcp/notebook.png
+    :width: 100%
+    :align: center
+
+点击“新建实例-TensorFlow 2.0-With 1 NVIDIA Tesla K80”，界面如下：
+
+.. figure:: /_static/image/gcp/create_notebook.png
+    :width: 100%
+    :align: center
+
+也可以点击“自定义”来进一步配置实例，例如选择区域、GPU类型和个数，与创建Compute Engine实例类似。
+
+.. hint:: 和Compute Engine实例一样，你很可能需要在这里选择自己适合的区域，以及申请提升自己账号在特定地区的特定型号GPU的配额。
+
+建立完成后，点击“打开JUPYTERLAB”，即可进入以下界面：
+
+.. figure:: /_static/image/gcp/notebook_index.png
+    :width: 100%
+    :align: center
+
+建立一个Python 3笔记本，测试TensorFlow环境：
+
+.. figure:: /_static/image/gcp/notebook_test.png
+    :width: 100%
+    :align: center
+
+我们还可以点击左上角的“+”号，新建一个终端：
+
+.. figure:: /_static/image/gcp/notebook_terminal.png
+    :width: 100%
+    :align: center
