@@ -38,7 +38,7 @@
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
-    <link rel="next" title="TensorFlow性能优化" href="optimization.html" />
+    <link rel="next" title="部署自己的交互式Python开发环境JupyterLab" href="jupyterlab.html" />
     <link rel="prev" title="使用Docker部署TensorFlow环境" href="docker.html" /> 
 </head>
 
@@ -131,6 +131,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="optimization.html">TensorFlow性能优化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="terms.html">术语中英对照表</a></li>
@@ -260,7 +261,11 @@
 </div>
 <div class="section" id="compute-enginegputensorflow">
 <h3>在Compute Engine建立带GPU的实例并部署TensorFlow<a class="headerlink" href="#compute-enginegputensorflow" title="永久链接至标题">¶</a></h3>
-<p>GCP的Compute Engine类似于AWS、阿里云等，允许用户快速建立自己的虚拟机实例。在Compute Engine中，可以很方便地建立具有GPU的虚拟机实例，只需要在创建实例（Compute Engine - VM实例 - 创建实例）的时候选择GPU类型和数量即可。不过需要注意两点：</p>
+<p>GCP的Compute Engine类似于AWS、阿里云等，允许用户快速建立自己的虚拟机实例。在Compute Engine中，可以很方便地建立具有GPU的虚拟机实例，只需要进入Compute Engine的VM实例（<a class="reference external" href="https://console.cloud.google.com/compute/instances">https://console.cloud.google.com/compute/instances</a>），并在创建实例的时候选择GPU类型和数量即可。</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/create_instance.png"><img alt="../../_images/create_instance.png" src="../../_images/create_instance.png" style="width: 100%;" /></a>
+</div>
+<p>需要注意两点：</p>
 <ol class="arabic simple">
 <li>只有特定区域的机房具有GPU，且不同类型的GPU地区范围也不同，可参考 <a class="reference external" href="https://cloud.google.com/compute/docs/gpus">GCP官方文档</a> 并选择适合的地区建立实例；</li>
 <li>默认情况下GCP账号的GPU配额非常有限（可能是怕你付不起钱？）。你很可能需要在使用前申请提升自己账号在特定地区的特定型号GPU的配额，可参考 <a class="reference external" href="https://cloud.google.com/compute/quotas?hl=zh-cn#requesting_additional_quota">GCP官方文档：申请提升配额</a> ，GCP会有工作人员手动处理申请，并给你的邮箱发送邮件通知，大约需要数小时至两个工作日不等。</li>
@@ -301,49 +306,35 @@ Fri Jul <span class="m">12</span> <span class="m">10</span>:30:37 <span class="m
 +-----------------------------------------------------------------------------+
 </pre></div>
 </div>
-<p>如果你既希望获得Compute Engine强大的计算能力，又希望获得Colab方便的在线Python交互式运行，可以在Compute Engine建立的实例中安装JupyterLab。JupyterLab可以理解成升级版的Colab，提供多标签页支持，在线终端和文件管理等一系列方便的功能，接近于一个在线的Python IDE。</p>
-<p>使用以下命令安装JupyterLab：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">jupyterlab</span>
-</pre></div>
-</div>
-<p>然后使用以下命令运行JupyterLab：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">lab</span> <span class="o">--</span><span class="n">ip</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
-</pre></div>
-</div>
-<p>然后根据输出的提示，使用浏览器访问 <code class="docutils literal notranslate"><span class="pre">http://服务器地址:8888</span></code> ，并使用输出中提供的token直接登录（或设置密码后登录）即可。</p>
-<p>JupyterLab界面如下所示：</p>
-<div class="figure align-center">
-<a class="reference internal image-reference" href="../../_images/jupyterlab.png"><img alt="../../_images/jupyterlab.png" src="../../_images/jupyterlab.png" style="width: 100%;" /></a>
-</div>
-<div class="admonition hint">
-<p class="first admonition-title">提示</p>
-<p>可以使用 <code class="docutils literal notranslate"><span class="pre">--port</span></code> 参数指定端口号。</p>
-<p>如果使用默认端口号，需要在“虚拟机实例详情-网络接口-查看详情”中新建防火墙规则，开放对应端口并应用到当前实例。</p>
-<p>如果需要在终端退出后仍然持续运行JupyterLab，可以使用 <code class="docutils literal notranslate"><span class="pre">nohup</span></code> 命令及 <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> 放入后台运行，即：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nohup</span> <span class="n">jupyter</span> <span class="n">lab</span> <span class="o">--</span><span class="n">ip</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="o">&amp;</span>
-</pre></div>
-</div>
-<p>程序输出可以在当前目录下的 <code class="docutils literal notranslate"><span class="pre">nohup.txt</span></code> 找到。</p>
-<p>如果需要在JupyterLab的Notebook中使用自己的Conda环境，可以使用以下命令：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>conda activate 环境名（比如前面建立的tf2.0-beta-gpu）
-conda install ipykernel
-ipython kernel install --name 环境名 --user
-</pre></div>
-</div>
-<p>然后重新启动JupyterLab，即可在Kernel选项和启动器中建立Notebook的选项中找到自己的Conda环境。</p>
-<div class="figure align-center" id="id7">
-<a class="reference internal image-reference" href="../../_images/add_env.png"><img alt="../../_images/add_env.png" src="../../_images/add_env.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">Notebook中新增了“tf2.0-beta-gpu”选项</span></p>
-</div>
-<div class="last figure align-center" id="id8">
-<a class="reference internal image-reference" href="../../_images/kernel.png"><img alt="../../_images/kernel.png" src="../../_images/kernel.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">可以在Kernel中选择“tf2.0-beta-gpu”</span></p>
-</div>
-</div>
 </div>
 <div class="section" id="ai-platformnotebookgpujupyterlab">
-<h3>使用AI Platform中的Notebook建立带GPU的在线JupyterLab环境<a class="headerlink" href="#ai-platformnotebookgpujupyterlab" title="永久链接至标题">¶</a></h3>
-<p>如果你不希望繁杂的配置，希望迅速获得一个开箱即用的JupyterLab环境，可以使用GCP的AI Platform中的Notebook。</p>
+<span id="notebook"></span><h3>使用AI Platform中的Notebook建立带GPU的在线JupyterLab环境<a class="headerlink" href="#ai-platformnotebookgpujupyterlab" title="永久链接至标题">¶</a></h3>
+<p>如果你不希望繁杂的配置，希望迅速获得一个开箱即用的在线交互式Python环境，可以使用GCP的AI Platform中的Notebook。其预安装了JupyterLab，可以理解为Colab的付费升级版，具备更多功能且限制较少。</p>
+<p>进入 <a class="reference external" href="https://console.cloud.google.com/mlengine/notebooks">https://console.cloud.google.com/mlengine/notebooks</a> ，界面如下：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/notebook.png"><img alt="../../_images/notebook.png" src="../../_images/notebook.png" style="width: 100%;" /></a>
+</div>
+<p>点击“新建实例-TensorFlow 2.0-With 1 NVIDIA Tesla K80”，界面如下：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/create_notebook.png"><img alt="../../_images/create_notebook.png" src="../../_images/create_notebook.png" style="width: 100%;" /></a>
+</div>
+<p>也可以点击“自定义”来进一步配置实例，例如选择区域、GPU类型和个数，与创建Compute Engine实例类似。</p>
+<div class="admonition hint">
+<p class="first admonition-title">提示</p>
+<p class="last">和Compute Engine实例一样，你很可能需要在这里选择自己适合的区域，以及申请提升自己账号在特定地区的特定型号GPU的配额。</p>
+</div>
+<p>建立完成后，点击“打开JUPYTERLAB”，即可进入以下界面：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/notebook_index.png"><img alt="../../_images/notebook_index.png" src="../../_images/notebook_index.png" style="width: 100%;" /></a>
+</div>
+<p>建立一个Python 3笔记本，测试TensorFlow环境：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/notebook_test.png"><img alt="../../_images/notebook_test.png" src="../../_images/notebook_test.png" style="width: 100%;" /></a>
+</div>
+<p>我们还可以点击左上角的“+”号，新建一个终端：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/notebook_terminal.png"><img alt="../../_images/notebook_terminal.png" src="../../_images/notebook_terminal.png" style="width: 100%;" /></a>
+</div>
 </div>
 </div>
 </div>
@@ -356,7 +347,7 @@ ipython kernel install --name 环境名 --user
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="optimization.html" class="btn btn-neutral float-right" title="TensorFlow性能优化" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="jupyterlab.html" class="btn btn-neutral float-right" title="部署自己的交互式Python开发环境JupyterLab" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="docker.html" class="btn btn-neutral float-left" title="使用Docker部署TensorFlow环境" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
