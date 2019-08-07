@@ -110,6 +110,7 @@ The code of this handbook is based on TensorFlow 2.0 beta.
     zh/appendix/static 
     zh/appendix/docker
     zh/appendix/cloud
+    zh/appendix/jupyterlab
     zh/appendix/optimization
     zh/appendix/recommended_books
     zh/appendix/terms
