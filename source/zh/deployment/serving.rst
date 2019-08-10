@@ -159,7 +159,10 @@ RESTful API以标准的HTTP POST方法进行交互，请求和回复均为JSON�
         "predictions": 返回值
     }
 
-以下示例展示了使用 `Python的Requests库 <https://2.python-requests.org//zh_CN/latest/user/quickstart.html>`_ （你可能需要使用 ``pip install requests`` 安装该库）向本机的TensorFlow Serving服务器发送MNIST测试集的前10幅图像并返回预测结果，同时与测试集的真实标签进行比较。
+Python客户端示例
+------------------------------------------------------
+
+以下示例使用 `Python的Requests库 <https://2.python-requests.org//zh_CN/latest/user/quickstart.html>`_ （你可能需要使用 ``pip install requests`` 安装该库）向本机的TensorFlow Serving服务器发送MNIST测试集的前10幅图像并返回预测结果，同时与测试集的真实标签进行比较。
 
 .. literalinclude:: /_static/code/zh/savedmodel/keras/client.py
 
@@ -176,6 +179,55 @@ RESTful API以标准的HTTP POST方法进行交互，请求和回复均为JSON�
 
 .. literalinclude:: /_static/code/zh/savedmodel/custom/client.py
     :lines: 8-11
+
+Node.js客户端示例（Ziyang）
+------------------------------------------------------
+
+以下示例使用 `Node.js <https://nodejs.org/zh-cn/>`_ 将下图转换为28*28的灰度图，发送给本机的TensorFlow Serving服务器，并输出返回的预测值和概率。（其中使用了 `图像处理库jimp <https://github.com/oliver-moran/jimp>`_ 和 `HTTP库superagent <https://visionmedia.github.io/superagent/>`_ ，可使用 ``npm install jimp`` 和 ``npm install superagent`` 安装）
+
+.. figure:: /_static/image/serving/test_pic_tag_5.png
+    :align: center
+
+    ``test_pic_tag_5.png`` ：一个由作者手写的数字5。（运行下面的代码时可下载该图片并放在与代码同一目录下）
+
+.. literalinclude:: /_static/code/zh/savedmodel/keras/client.js
+    :language: javascript
+
+运行结果为：
+
+::
+
+    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1 1               1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1                 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1       1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1       1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1     1                 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1                         1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1         1 1 1 1 1 1     1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1       1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1         1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1 1 1 1 1         1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1     1 1 1         1 1 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1                 1 1 1 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1         1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    我们猜这个数字是5，概率是0.846008837
+
+可见输出结果符合预期。
 
 .. note:: 如果你不熟悉HTTP POST，可以参考 `这里 <https://www.runoob.com/tags/html-httpmethods.html>`_ 。事实上，当你在用浏览器填写表单（比方说性格测试）并点击“提交”按钮，然后获得返回结果（比如说“你的性格是ISTJ”）时，就很有可能是在向服务器发送一个HTTP POST请求并获得了服务器的回复。
 
