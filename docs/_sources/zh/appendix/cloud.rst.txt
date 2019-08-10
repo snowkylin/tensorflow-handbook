@@ -143,13 +143,7 @@ GCP的Compute Engine类似于AWS、阿里云等，允许用户快速建立自己
 
 如果你不希望繁杂的配置，希望迅速获得一个开箱即用的在线交互式Python环境，可以使用GCP的AI Platform中的Notebook。其预安装了JupyterLab，可以理解为Colab的付费升级版，具备更多功能且限制较少。
 
-进入 https://console.cloud.google.com/mlengine/notebooks ，界面如下：
-
-.. figure:: /_static/image/gcp/notebook.png
-    :width: 100%
-    :align: center
-
-点击“新建实例-TensorFlow 2.0-With 1 NVIDIA Tesla K80”，界面如下：
+进入 https://console.cloud.google.com/mlengine/notebooks ，点击“新建实例-TensorFlow 2.0-With 1 NVIDIA Tesla K80”，界面如下：
 
 .. figure:: /_static/image/gcp/create_notebook.png
     :width: 100%
