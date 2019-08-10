@@ -18,14 +18,14 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 一般安装步骤
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1. 安装Python环境。此处建议安装 `Anaconda <https://www.anaconda.com/>`_ 的Python 3.6版本（后文均以此为准），这是一个开源的Python发行版本，提供了一个完整的科学计算环境，包括NumPy、SciPy等常用科学计算库。当然，你有权选择自己喜欢的Python环境。注意截至本手册撰写时，TensorFlow尚未支持Python 3.7版本；
+1. 安装Python环境。此处建议安装 `Anaconda <https://www.anaconda.com/>`_ 的Python 3.6版本（后文均以此为准），这是一个开源的Python发行版本，提供了一个完整的科学计算环境，包括NumPy、SciPy等常用科学计算库。当然，你有权选择自己喜欢的Python环境。
 
 2. 使用Anaconda自带的conda包管理器建立一个Conda虚拟环境，并进入该虚拟环境。在命令行下输入：
 
 ::
 
-    conda create --name tensorflow python=3.6   # “tensorflow”是你建立的Conda虚拟环境的名字
-    conda activate tensorflow                   # 进入名为“tensorflow”的虚拟环境
+    conda create --name tf2.0 python=3.7   # “tf2.0”是你建立的Conda虚拟环境的名字
+    conda activate tf2.0                   # 进入名为“tf2.0”的虚拟环境
 
 3. 使用Python包管理器pip安装TensorFlow。在命令行下输入：
 
@@ -45,7 +45,9 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 
     1. 也可以使用 ``conda install tensorflow`` 或者 ``conda install tensorflow-gpu`` 来安装TensorFlow，不过conda源的版本往往更新较慢，难以第一时间获得最新的TensorFlow版本；
     2. 在Windows下，需要打开开始菜单中的“Anaconda Prompt”进入Anaconda的命令行环境；
-    3. 在国内环境下，推荐使用 `清华大学的pypi镜像 <https://mirrors.tuna.tsinghua.edu.cn/help/pypi/>`_ 和 `Anaconda镜像 <https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/>`_ ，将显著提升pip的下载速度；
+    3. 在国内环境下，推荐使用国内的pypi镜像和Anaconda镜像，将显著提升pip和conda的下载速度；
+        - 清华大学的pypi镜像：https://mirrors.tuna.tsinghua.edu.cn/help/pypi/
+        - 清华大学的Anaconda镜像：https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/
     4. 如果对磁盘空间要求严格（比如服务器环境），可以安装 `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ ，仅包含Python和Conda，其他的包可自己按需安装。
 
 .. admonition:: pip和conda包管理器
