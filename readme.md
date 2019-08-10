@@ -19,7 +19,7 @@ The code of this handbook is based on TensorFlow 2.0 beta1.
 PDF下载（旧版） | PDF download (old version) : 
 
 - (中文版 | Chinese): https://www.tensorflowers.cn/t/6230
-- (英文版 | English): https://github.com/snowkylin/TensorFlow-cn/releases
+- (英文版 | English): https://github.com/snowkylin/tensorflow-handbook/releases
 
 在线答疑区 | Online Q&A area : 
 
