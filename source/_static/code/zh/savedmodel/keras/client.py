@@ -6,7 +6,7 @@ from zh.model.utils import MNISTLoader
 
 data_loader = MNISTLoader()
 data = json.dumps({
-    "instances": data_loader.test_data[0:10].tolist()
+    "instances": data_loader.test_data[0:3].tolist()
     })
 headers = {"content-type": "application/json"}
 json_response = requests.post(
