@@ -3,7 +3,7 @@
 
 如果你既希望获得本地或云端强大的计算能力，又希望获得Jupyter Notebook或Colab中方便的在线Python交互式运行环境，可以自己为的本地服务器或云服务器安装JupyterLab。JupyterLab可以理解成升级版的Jupyter Notebook/Colab，提供多标签页支持，在线终端和文件管理等一系列方便的功能，接近于一个在线的Python IDE。
 
-.. tip:: 部分云服务提供了开箱即用的JupyterLab环境，例如前章介绍的 :ref:`GCP中AI Platform的Notebook <notebook>` ，以及 `Floydhub <https://www.floydhub.com/>`_ 。
+.. tip:: 部分云服务提供了开箱即用的JupyterLab环境，例如前章介绍的 :ref:`GCP中AI Platform的Notebook <notebook>` ，以及 `FloydHub <https://www.floydhub.com/>`_ 。
 
 
 在已经部署Python环境后，使用以下命令安装JupyterLab：
@@ -28,7 +28,7 @@ JupyterLab界面如下所示：
 
 .. hint:: 可以使用 ``--port`` 参数指定端口号。
 
-    部分云服务（如GCP）的实例默认不开放大多数网络端口。如果使用默认端口号，需要在“虚拟机实例详情-网络接口-查看详情”中新建防火墙规则，开放对应端口并应用到当前实例。
+    部分云服务（如GCP）的实例默认不开放大多数网络端口。如果使用默认端口号，需要在防火墙设置中打开端口（例如GCP需要在“虚拟机实例详情-网络接口-查看详情”中新建防火墙规则，开放对应端口并应用到当前实例）。
 
     如果需要在终端退出后仍然持续运行JupyterLab，可以使用 ``nohup`` 命令及 ``&`` 放入后台运行，即：
 
