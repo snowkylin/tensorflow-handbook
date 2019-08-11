@@ -79,8 +79,6 @@ Google Colab是谷歌的免费在线交互式Python运行环境，且提供GPU�
 
 我们可以通过两种方式在GCP中使用TensorFlow：使用Compute Engine建立带GPU的实例，或使用AI Platform中的Notebook建立带GPU的在线JupyterLab环境。
 
-.. hint:: 国内的 `阿里云 <https://cn.aliyun.com/product/ecs/gpu>`_ 和 `腾讯云 <https://cloud.tencent.com/product/gpu>`_ 也有类似的GPU云服务器提供，且可按量计费。至本手册撰写时，具备单个GPU的实例价格在数元（Tesla T4）至二十多元（Tesla V100）每小时不等。
-
 在Compute Engine建立带GPU的实例并部署TensorFlow
 ----------------------------------------------------------------
 
@@ -171,35 +169,36 @@ GCP的Compute Engine类似于AWS、阿里云等，允许用户快速建立自己
     :width: 100%
     :align: center
 
-在阿里云上使用 GPU 实例运行 Tensorflow
+在阿里云上使用 GPU 实例运行 Tensorflow（Ziyang）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-因为某些原因，大部分的中国用户使用以上的这些服务可能并不方便。
-此时，我们可以使用国内的云服务提供商所提供的 GPU 实例。
+国内也有部分云服务商（如 `阿里云 <https://cn.aliyun.com/product/ecs/gpu>`_ 和 `腾讯云 <https://cloud.tencent.com/product/gpu>`_ ）提供了 GPU 实例，且可按量计费。至本手册撰写时，具备单个GPU的实例价格在数元（Tesla P4）至二十多元（Tesla V100）每小时不等。以下我们简要介绍在阿里云使用 GPU 实例。
 
-以下我们简要介绍以下在阿里云试用 GPU 实例.
+.. hint:: 根据不同的地区、配置和付费方式，实例的价格也是多样化的，请根据需要合理选择。如果是临时需要的计算任务，可以考虑按量付费以及使用抢占式VPS，以节约资金。
 
-.. hint:: 根据不同的地区和不同的配置，实例的价格也是多样化的，请根据需要合理选择。如果是临时需要的计算任务，可以考虑试用抢占式VPS以节约资金。
+访问 https://cn.aliyun.com/product/ecs/gpu ，点击购买，界面如下：
 
 .. figure:: /_static/image/aliyun/vps_select.png
     :width: 100%
     :align: center
 
-此处，我们选择了一个带有 Tesla P4 计算卡的实例
+此处，我们选择一个带有 Tesla P4 计算卡的实例。
+
+在系统镜像中，阿里云提供多种选择，可以根据需要选择合适的镜像。
 
 .. figure:: /_static/image/aliyun/os_image_config_with_driver.png
     :width: 100%
     :align: center
 
-在创建镜像时，可以根据提示选择提前预装GPU驱动，可以避免后续安装驱动的麻烦
+    如果选择“公共镜像”，可以根据提示选择提前预装GPU驱动，可以避免后续安装驱动的麻烦。
 
 .. figure:: /_static/image/aliyun/os_image_with_RAPIDS.png
     :width: 100%
     :align: center
 
-官方也提供了适合深度学习的定制镜像，这里我们选择预装了 RAPIDS 的 Ubuntu 16.04 镜像。 
+    在“镜像市场”中，官方也提供了适合深度学习的定制镜像。在本示例中我们选择预装了 NVIDIA RAPIDS 的 Ubuntu 16.04 镜像。 
 
-然后，通过 ssh 连接上我们选购的服务器
+然后，通过 ssh 连接上我们选购的服务器，并使用 ``nvidia-smi`` 查看 GPU 信息：
 
 .. code-block:: bash
 
