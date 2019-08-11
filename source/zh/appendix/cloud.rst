@@ -170,3 +170,58 @@ GCP的Compute Engine类似于AWS、阿里云等，允许用户快速建立自己
 .. figure:: /_static/image/gcp/notebook_terminal.png
     :width: 100%
     :align: center
+
+在阿里云上使用 GPU 实例运行 Tensorflow
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+因为某些原因，大部分的中国用户使用以上的这些服务可能并不方便。
+此时，我们可以使用国内的云服务提供商所提供的 GPU 实例。
+
+以下我们简要介绍以下在阿里云试用 GPU 实例.
+
+.. hint:: 根据不同的地区和不同的配置，实例的价格也是多样化的，请根据需要合理选择。如果是临时需要的计算任务，可以考虑试用抢占式VPS以节约资金。
+
+.. figure:: /_static/image/aliyun/vps_select.png
+    :width: 100%
+    :align: center
+
+此处，我们选择了一个带有 Tesla P4 计算卡的实例
+
+.. figure:: /_static/image/aliyun/os_image_config_with_driver.png
+    :width: 100%
+    :align: center
+
+在创建镜像时，可以根据提示选择提前预装GPU驱动，可以避免后续安装驱动的麻烦
+
+.. figure:: /_static/image/aliyun/os_image_with_RAPIDS.png
+    :width: 100%
+    :align: center
+
+官方也提供了适合深度学习的定制镜像，这里我们选择预装了 RAPIDS 的 Ubuntu 16.04 镜像。 
+
+然后，通过 ssh 连接上我们选购的服务器
+
+.. code-block:: bash
+
+    (rapids) root@iZ8vb2567465uc1ty3f4ovZ:~# nvidia-smi
+    Sun Aug 11 23:53:52 2019
+    +-----------------------------------------------------------------------------+
+    | NVIDIA-SMI 418.67       Driver Version: 418.67       CUDA Version: 10.1     |
+    |-------------------------------+----------------------+----------------------+
+    | GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+    | Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+    |===============================+======================+======================|
+    |   0  Tesla P4            On   | 00000000:00:07.0 Off |                    0 |
+    | N/A   29C    P8     6W /  75W |      0MiB /  7611MiB |      0%      Default |
+    +-------------------------------+----------------------+----------------------+
+
+    +-----------------------------------------------------------------------------+
+    | Processes:                                                       GPU Memory |
+    |  GPU       PID   Type   Process name                             Usage      |
+    |=============================================================================|
+    |  No running processes found                                                 |
+    +-----------------------------------------------------------------------------+
+
+确认了驱动无误之后，其他操作就可以照常执行了。
+
+.. hint:: 阿里云这类国内的云服务提供商一般对于 VPS 的端口进行了安全策略限制，请关注所使用的端口是否在安全策略的放行列表中，以免影响Tensorflow Serving和Tensorboard的使用。
