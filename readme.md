@@ -6,7 +6,7 @@
 
 备用地址 | Alternative URL：https://snowkylin.github.io/tensorflow-handbook/
 
-作者 | Author: Xihan Li (snowkylin), Zhuohuan Li, Jinpeng Zhu
+作者 | Author: Xihan Li (snowkylin), Huan Li, Jinpeng Zhu
 
 本手册是一篇精简的TensorFlow 2.0入门指导，基于TensorFlow的Eager Execution（动态图）模式，力图让具备一定机器学习及Python基础的开发者们快速上手TensorFlow 2.0。
 
