@@ -18,13 +18,17 @@
 
 本手册的所有代码基于 TensorFlow 2.0 beta1 版本。
 
-**本手册的英文版仍在翻译中。**  请访问 https://snowkylin.github.io/TensorFlow-cn/ 以查看本手册上一版的英文版。
+**本手册的英文版仍在翻译中。** 请访问 https://v1.tf.wiki 以查看本手册上一版的英文版。
+
+GitHub： https://github.com/snowkylin/tensorflow-handbook
 
 This handbook is a concise introduction to TensorFlow 2.0 based on Eager Execution mode, trying to help developers with some basic machine learning and Python knowledge to get started with TensorFlow 2.0 quickly.
 
 The code of this handbook is based on TensorFlow 2.0 beta1.
 
-**The English version of this handbook is still in progress.**  Please refer to https://snowkylin.github.io/TensorFlow-cn/ for the eariler version.
+**The English version of this handbook is still in progress.**  Please refer to https://v1.tf.wiki for the eariler version.
+
+GitHub： https://github.com/snowkylin/tensorflow-handbook
 
 ..
     .. hint:: 这是一本TensorFlow技术手册，而不是一本机器学习/深度学习原理入门手册。如果发现阅读中有难以理解的部分，请检查每章的“前置知识”部分，这里提供了一些机器学习原理的入门资料链接。
