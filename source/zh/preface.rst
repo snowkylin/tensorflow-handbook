@@ -41,11 +41,14 @@
 
 本手册的暂定名称《简单粗暴TensorFlow》是向我的好友兼同学Chris Wu编写的《简单粗暴 :math:`\text{\LaTeX}` 》（https://github.com/wklchris/Note-by-LaTeX）致敬。该手册清晰精炼，是 :math:`\text{\LaTeX}` 领域不可多得的中文资料，也是我在编写这一技术文档时所学习的对象。本手册最初是在我的好友Ji-An Li所组织的深度学习研讨小组中，由我作为预备知识的讲义而编写和使用。好友们的才学卓著与无私分享的品格也是编写此拙作的重要助力。
 
-本手册的英文版由我的好友Zida Jin（2-5章）和Ming（6-7章）翻译，并由Ji-An Li和笔者审校。三位朋友牺牲了自己的大量宝贵时间翻译和校对本手册，同时Ji-An Li亦对本手册的教学内容和代码细节提供了诸多宝贵意见。我谨向好友们为本手册的辛勤付出致以衷心的感谢。
+本手册的TensorFlow.js和TensorFlow Lite部分分别由Huan Li和Jinpeng Zhu两位在JavaScript和Android领域有丰富履历的Google Developers Expert编写，同时Huan提供了TensorFlow for Swift和TPU部分的介绍。以及来自豆瓣的Ziyang Wang提供了TensorFlow for Julia的介绍及部分示例代码和说明。相关贡献者撰写的内容均在文章中进行了标注，在此特别表示感谢。
+
+..
+    本手册的英文版由我的好友Zida Jin（2-5章）和Ming（6-7章）翻译，并由Ji-An Li和笔者审校。三位朋友牺牲了自己的大量宝贵时间翻译和校对本手册，同时Ji-An Li亦对本手册的教学内容和代码细节提供了诸多宝贵意见。我谨向好友们为本手册的辛勤付出致以衷心的感谢。
 
 衷心感谢Google中国开发者关系团队和TensorFlow工程团队的成员们对本手册编写所提供的帮助。其中包括开发者关系团队的Luke Cheng在本手册写作全程提供的思路启发和持续鼓励（以及提供本手册在线版本的域名 ``tf.wiki`` ），开发者关系团队的Rui Li, Pryce Mu和TensorFlow社群维护的小伙伴们在本手册宣发及推广上提供的大力支持，以及TensorFlow团队的Tiezhen Wang在本手册工程细节方面提供的诸多建议和补充。
 
-关于本手册的意见和建议，欢迎在 https://github.com/snowkylin/TensorFlow-cn/issues 提交。这是一个开源项目，您的宝贵意见将促进本手册的持续更新。
+关于本手册的意见和建议，欢迎在 https://github.com/snowkylin/tensorflow-handbook/issues 提交。这是一个开源项目，您的宝贵意见将促进本手册的持续更新。
 
 |
 
