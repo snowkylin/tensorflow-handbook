@@ -31,7 +31,8 @@
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [ 'sphinx.ext.mathjax', 'sphinx.ext.intersphinx' ]
+# imgmath or mathjax
+extensions = [ 'sphinx.ext.imgmath', 'sphinx.ext.intersphinx' ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -113,7 +114,8 @@ html_static_path = ['_static']
 
 def setup(app):
     app.add_stylesheet( "css/custom.css" )
-    app.add_javascript( "js/custom.js" )
+    app.add_javascript( "js/pangu.min.js" )    
+    app.add_javascript( "js/custom.js" )    
 
 # -- Options for HTMLHelp output ------------------------------------------
 

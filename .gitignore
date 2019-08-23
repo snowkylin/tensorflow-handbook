@@ -9,3 +9,4 @@ source/.vscode
 source/_future
 source/_static/code/.idea
 source/_static/code/zh/tools/tfdata/cat_and_dog
+source/_static/code/zh/savedmodel/server.log
