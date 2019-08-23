@@ -28,4 +28,6 @@ $(document).ready(function(){
             $(this).text("折叠全部注释（Fold all admonitions）");            
         }
     });
+    pangu.spacingElementByClassName('wy-nav-content');
+    pangu.spacingElementByClassName('wy-nav-side');
 });
