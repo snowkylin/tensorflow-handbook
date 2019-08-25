@@ -22,7 +22,7 @@ TensorFlow.jl 是 Tensorflow 的 Julia 版本, 经由 `malmaud <https://github.c
 
 在本机已有 docker 环境的情况下, 使用预装 TensorFlow.jl 的 docker image 是非常方便的.
 
-在命令行中执行 ``docker run -it malmaud/julia:tf`` , 然后就可以获得一个已经安装好 TensorFlow.jl 的 Julia REPL 环境. (如果你不想直接打开 Julia, 请在执行 ``docker run -it malmaud/julia:tf /bin/bash`` 来打开一个bash终端. 如需执行您需要的jl代码文件, 可以使用 dcoker的目录映射.)
+在命令行中执行 ``docker run -it malmaud/julia:tf`` , 然后就可以获得一个已经安装好 TensorFlow.jl 的 Julia REPL 环境. (如果你不想直接打开 Julia, 请在执行 ``docker run -it malmaud/julia:tf /bin/bash`` 来打开一个bash终端. 如需执行您需要的jl代码文件, 可以使用 docker 的目录映射.)
 
 在 julia 包管理器中安装 TensorFlow.jl
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
