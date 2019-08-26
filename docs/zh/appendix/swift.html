@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TensorFlow in Swift（Huan） &mdash; 简单粗暴TensorFlow 2.0 0.4 alpha 文档</title>
+  <title>Swift for TensorFlow (S4TF) (Huan） &mdash; 简单粗暴TensorFlow 2.0 0.4 alpha 文档</title>
   
 
   
@@ -117,7 +117,21 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets 数据集载入</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow in Swift（Huan）</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Swift for TensorFlow (S4TF) (Huan）</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#swift-for-tensorflow-s4tf">Swift for TensorFlow (S4TF)简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#swift-tensorflow">为什么要使用 Swift 进行 Tensorflow 开发</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">本地安装 Swift for Tensorflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#colaboratory-swift-for-tensorflow">在 Colaboratory 中使用 Swift for Tensorflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-swift-for-tensorflow">在 Docker 中快速体验 Swift for TensorFlow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#swift">Swift 基础使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#swift-tensorflow-api">在 Swift 中使用标准的 TensorFlow API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#swift-python">在 Swift 中直接加载 Python 语言库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mnist">MNIST数字分类</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="julia.html">TensorFlow in Julia（Ziyang）</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
@@ -174,7 +188,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>TensorFlow in Swift（Huan）</li>
+      <li>Swift for TensorFlow (S4TF) (Huan）</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -193,9 +207,214 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="tensorflow-in-swift-huan">
-<h1>TensorFlow in Swift（Huan）<a class="headerlink" href="#tensorflow-in-swift-huan" title="永久链接至标题">¶</a></h1>
-<p>5-10页，最基本的SWIFT使用入门。</p>
+  <div class="section" id="swift-for-tensorflow-s4tf-huan">
+<h1>Swift for TensorFlow (S4TF) (Huan）<a class="headerlink" href="#swift-for-tensorflow-s4tf-huan" title="永久链接至标题">¶</a></h1>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="../../_images/swift-tensorflow.png"><img alt="../../_images/swift-tensorflow.png" src="../../_images/swift-tensorflow.png" style="width: 60%;" /></a>
+<p class="caption"><span class="caption-text">“Swift for Tensorflow is an attempt to change the default tools used by the entire machine learning and data science ecosystem.”</span></p>
+<div class="legend">
+<blockquote>
+<div>– Jameson Toole,  Co-founder &amp; CTO of Fritz.ai</div></blockquote>
+</div>
+</div>
+<div class="section" id="swift-for-tensorflow-s4tf">
+<h2>Swift for TensorFlow (S4TF)简介<a class="headerlink" href="#swift-for-tensorflow-s4tf" title="永久链接至标题">¶</a></h2>
+<p>Google 推出的 Swift for TensorFlow （简称S4TF）是专门针对 TensorFlow 优化过的 Swift 版本。</p>
+<p>Swift 语言是 Chris Lattner 在苹果公司工作时创建的。 现在 Chris Lattner 在 Google Brain 工作，专门从事深度学习的研究，并为 Swift 重写了编译器，为 Tensorflow 做定制优化，</p>
+<p>为了能够在程序语言级支持 Tensorflow 所需的所有功能特性，S4TF 做为了 Swift 语言本身的一个分支，为 Swift 语言添加了机器学习所需要的所有功能扩展。它不仅仅是一个用 Swift 写成的 TensorFlow API 封装，Google 还为 Swift 增加了编译器和语言增强功能，提供了一种新的编程模型，结合了图的性能、Eager Execution 的灵活性和表达能力。</p>
+<p>本章我们将向大家简要介绍 Swift for Tensorflow 的使用。你可以参考最新的 <a class="reference external" href="https://www.tensorflow.org/swift">Swift for TensorFlow 文档</a>.</p>
+</div>
+<div class="section" id="swift-tensorflow">
+<h2>为什么要使用 Swift 进行 Tensorflow 开发<a class="headerlink" href="#swift-tensorflow" title="永久链接至标题">¶</a></h2>
+<p>相对于 Tensorflow 的其他版本（如 Python，C++ 等），S4TF 拥有其独有的优势，比如：</p>
+<ol class="arabic simple">
+<li>开发效率高：强类型语言，能够静态检查 Tensor 维度是否匹配</li>
+<li>迁移成本低：与 Python，C，C++ 能够无缝结合</li>
+<li>执行性能高：能够直接编译为底层硬件代码</li>
+<li>专门为机器学习打造：语言原生支持自动微分系统</li>
+</ol>
+<p>与其他语言相比，S4TF 还有更多优势。谷歌正在大力投资，使 Swift 成为其 TensorFlow ML 基础设施的一个关键组件，而且很有可能 Swift 将成为深度学习的专属语言。</p>
+<p>更多使用 Swift 的理由，有兴趣的读者可以参考官方文档：<a class="reference external" href="https://github.com/tensorflow/swift/blob/master/docs/WhySwiftForTensorFlow.md">Why Swift for Tensorflow</a></p>
+</div>
+<div class="section" id="id1">
+<h2>安装<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id2">
+<h3>本地安装 Swift for Tensorflow<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>目前 S4TF 支持 Mac 和 Linux 两个运行环境。安装需要下载预先编译好的软件包，同时按照对应的操作系统的说明进行操作。安装后，即可以使用全套 Swift 工具，包括 Swift（Swift REPL / Interpreter）和 Swiftc（Swift编译器）。</p>
+<p>官方文档（含下载地址）：<a class="reference external" href="https://github.com/tensorflow/swift/blob/master/Installation.md">https://github.com/tensorflow/swift/blob/master/Installation.md</a></p>
+</div>
+<div class="section" id="colaboratory-swift-for-tensorflow">
+<h3>在 Colaboratory 中使用 Swift for Tensorflow<a class="headerlink" href="#colaboratory-swift-for-tensorflow" title="永久链接至标题">¶</a></h3>
+<p>Google 的 Colaboratory 可以直接支持 Swift 语言的运行环境。可以通过下面的链接，直接打开一个 Swift 运行环境的 Colab Notebook ，这是一个最方便立即可以体验 Swift for Tensorflow 的方法。</p>
+<p>Blank Swift on Colab: <a class="reference external" href="https://colab.research.google.com/github/tensorflow/swift/blob/master/notebooks/blank_swift.ipynb">https://colab.research.google.com/github/tensorflow/swift/blob/master/notebooks/blank_swift.ipynb</a></p>
+</div>
+<div class="section" id="docker-swift-for-tensorflow">
+<h3>在 Docker 中快速体验 Swift for TensorFlow<a class="headerlink" href="#docker-swift-for-tensorflow" title="永久链接至标题">¶</a></h3>
+<p>在本机已有 docker 环境的情况下, 使用预装 Swift for TensorFlow 的 Docker Image 是非常方便的。</p>
+<ul>
+<li><p class="first">获得一个已经安装好 S4TF 的 Swift REPL 环境</p>
+<blockquote>
+<div><p>在命令行中执行 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">--privileged</span> <span class="pre">--userns=host</span> <span class="pre">zixia/swift</span> <span class="pre">swift</span></code></p>
+</div></blockquote>
+</li>
+<li><p class="first">获得一个 S4TF 的 Bash 终端</p>
+<blockquote>
+<div><p>在命令行中执行 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">--privileged</span> <span class="pre">--userns=host</span> <span class="pre">zixia/swift</span> <span class="pre">bash</span></code> 来打开一个 Bash 终端</p>
+</div></blockquote>
+</li>
+<li><p class="first">获得一个 S4TS 的 Jupyter Notebook</p>
+<blockquote>
+<div><p>在命令行中执行 <code class="docutils literal notranslate"><span class="pre">nvidia-docker</span> <span class="pre">run</span> <span class="pre">-ti</span> <span class="pre">--rm</span> <span class="pre">-p</span> <span class="pre">8888:8888</span> <span class="pre">--cap-add</span> <span class="pre">SYS_PTRACE</span> <span class="pre">-v</span> <span class="pre">&quot;$(pwd)&quot;:/notebooks</span> <span class="pre">zixia/swift</span></code> 来启动 Jupyter ，然后根据提示的 URL ，打开浏览器访问即可。</p>
+</div></blockquote>
+</li>
+</ul>
+<p>如需执行您需要的 Swift 代码文件, 可以使用 Docker 的目录映射。详细使用方法可以参考 Docker Image <cite>zixia/swift</cite> 开源项目的地址：<a class="reference external" href="https://github.com/huan/docker-swift-tensorflow">https://github.com/huan/docker-swift-tensorflow</a></p>
+</div>
+</div>
+<div class="section" id="swift">
+<h2>Swift 基础使用<a class="headerlink" href="#swift" title="永久链接至标题">¶</a></h2>
+<p>Swift 是动态强类型语言，也就是说 Swift 支持通过编译器自动检测类型，同时要求变量的使用要严格符合定义，所有变量都必须先定义后使用。</p>
+<p>下面的代码，因为最初声明的 <code class="docutils literal notranslate"><span class="pre">n</span></code> 是整数类型 <code class="docutils literal notranslate"><span class="pre">42</span></code> ，所以如果将 <code class="docutils literal notranslate"><span class="pre">'string'</span></code> 赋值给 <code class="docutils literal notranslate"><span class="pre">n</span></code> 时，会出现类型不匹配的问题，Swift 将会报错：“Cannot assign value of type ‘String’ to type ‘Int’”。</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span>var n = 42
+n = &#39;string&#39;
+</pre></div>
+</div>
+<p>下面是一个使用 TensorFlow 计算的基础示例：</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span><span class="kd">import</span> <span class="nc">TensorFlow</span>
+
+<span class="c1">// 声明两个Tensor</span>
+<span class="kd">let</span> <span class="nv">x</span> <span class="p">=</span> <span class="n">Tensor</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;([</span><span class="mi">1</span><span class="p">])</span>
+<span class="kd">let</span> <span class="nv">y</span> <span class="p">=</span> <span class="n">Tensor</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;([</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="c1">// 对两个 Tensor 做加法运算</span>
+<span class="kd">let</span> <span class="nv">w</span> <span class="p">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="c1">// 输出结果</span>
+<span class="bp">print</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift-tensorflow-api">
+<h2>在 Swift 中使用标准的 TensorFlow API<a class="headerlink" href="#swift-tensorflow-api" title="永久链接至标题">¶</a></h2>
+<p>在基础的 Tensorflow API 上，Swift 封装了 Tensorflow 的标准 API 接口。比如看一下处理数字的代码，API 与 Tensorflow 高度保持了一致：</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span>let x = Tensor&lt;BFloat16&gt;(zeros: [32, 128])
+let h1 = sigmoid(x • w1 + b1)
+let h2 = tanh(h1 • w1 + b1)
+let h3 = softmax(h2 • w1 + b1)
+</pre></div>
+</div>
+<p>再比如 Data API ，也是同名函数直接改写为 Swift 语法即可直接使用：</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span>let imageBatch = Dataset(elements: images)
+let labelBatch = Dataset(elements: labels)
+let zipped = zip(imageBatch, labelBatch).batched(8)
+
+let imageBatch = Dataset(elements: images)
+let labelBatch = Dataset(elements: labels)
+for (image, label) in zip(imageBatch, labelBatch) {
+    let y = image • w + b
+    let loss = (y - label).squared().mean()
+    print(loss)
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift-python">
+<h2>在 Swift 中直接加载 Python 语言库<a class="headerlink" href="#swift-python" title="永久链接至标题">¶</a></h2>
+<p>Swift 语言支持直接加载 Python 函数库（比如 NumPy），也支持直接加载系统动态链接库，很方便的做到即导入即用。</p>
+<p>借助 S4TF 强大的集成能力，从 Python 迁移到 Swift 非常简单。您可以逐步迁移 Python 代码（或继续使用 Python 代码库），因为 S4TF 支持直接在代码中加载 Python 原生代码库，使得开发者可以继续使用熟悉的语法在 Swift 中调用 Python 中已经完成的功能。</p>
+<p>下面我们以 NumPy 为例，看一下如何在 Swift 语言中，直接加载 Python 的 NumPy 代码库，并且直接进行调用：</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span><span class="kd">import</span> <span class="nc">Python</span>
+
+<span class="kd">let</span> <span class="nv">np</span> <span class="p">=</span> <span class="n">Python</span><span class="p">.</span><span class="kd">import</span><span class="p">(</span><span class="s">&quot;numpy&quot;</span><span class="p">)</span>
+<span class="kd">let</span> <span class="nv">x</span> <span class="p">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+<span class="kd">let</span> <span class="nv">y</span> <span class="p">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">])</span>
+<span class="bp">print</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="c1">// [35 81]</span>
+</pre></div>
+</div>
+<p>除了能够直接调用 Python 之外，Swift 也快成直接调用系统函数库。比如下面的代码例子展示了我们可以在 Swift 中直接加载 Glibc 的动态库，然后调用系统底层的 malloc 和 memcpy 函数，对变量直接进行操作。</p>
+<p>通过 Swift 强大的集成能力，针对 C/C++ 语言库的加载和调用，处理起来也将会是非常简单高效。</p>
+</div>
+<div class="section" id="mnist">
+<h2>MNIST数字分类<a class="headerlink" href="#mnist" title="永久链接至标题">¶</a></h2>
+<p>这个例子来自于 <a class="reference external" href="https://github.com/tensorflow/swift-models/blob/master/Examples/LeNet-MNIST/">Swift Models 文档</a>: LeNet-5 with MNIST</p>
+<p>可以通过以下命令，运行这个例子：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/tensorflow/swift-models.git
+<span class="nb">cd</span> swift-models
+swift run -c release LeNet-MNIST
+</pre></div>
+</div>
+<p>代码：</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span>import TensorFlow
+import ImageClassificationModels
+import Datasets
+
+let epochCount = 12
+let batchSize = 128
+
+let dataset = MNIST(batchSize: batchSize)
+var classifier = LeNet()
+
+let optimizer = SGD(for: classifier, learningRate: 0.1)
+
+print(&quot;Beginning training...&quot;)
+
+struct Statistics {
+    var correctGuessCount: Int = 0
+    var totalGuessCount: Int = 0
+    var totalLoss: Float = 0
+}
+
+// The training loop.
+for epoch in 1...epochCount {
+    var trainStats = Statistics()
+    var testStats = Statistics()
+    Context.local.learningPhase = .training
+    for i in 0 ..&lt; dataset.trainingSize / batchSize {
+        let x = dataset.trainingImages.minibatch(at: i, batchSize: batchSize)
+        let y = dataset.trainingLabels.minibatch(at: i, batchSize: batchSize)
+        // Compute the gradient with respect to the model.
+        let 𝛁model = classifier.gradient { classifier -&gt; Tensor&lt;Float&gt; in
+            let ŷ = classifier(x)
+            let correctPredictions = ŷ.argmax(squeezingAxis: 1) .== y
+            trainStats.correctGuessCount += Int(
+              Tensor&lt;Int32&gt;(correctPredictions).sum().scalarized())
+            trainStats.totalGuessCount += batchSize
+            let loss = softmaxCrossEntropy(logits: ŷ, labels: y)
+            trainStats.totalLoss += loss.scalarized()
+            return loss
+        }
+        // Update the model&#39;s differentiable variables along the gradient vector.
+        optimizer.update(&amp;classifier, along: 𝛁model)
+    }
+
+    Context.local.learningPhase = .inference
+    for i in 0 ..&lt; dataset.testSize / batchSize {
+        let x = dataset.testImages.minibatch(at: i, batchSize: batchSize)
+        let y = dataset.testLabels.minibatch(at: i, batchSize: batchSize)
+        // Compute loss on test set
+        let ŷ = classifier(x)
+        let correctPredictions = ŷ.argmax(squeezingAxis: 1) .== y
+        testStats.correctGuessCount += Int(Tensor&lt;Int32&gt;(correctPredictions).sum().scalarized())
+        testStats.totalGuessCount += batchSize
+        let loss = softmaxCrossEntropy(logits: ŷ, labels: y)
+        testStats.totalLoss += loss.scalarized()
+    }
+
+    let trainAccuracy = Float(trainStats.correctGuessCount) / Float(trainStats.totalGuessCount)
+    let testAccuracy = Float(testStats.correctGuessCount) / Float(testStats.totalGuessCount)
+    print(&quot;&quot;&quot;
+          [Epoch \(epoch)] \
+          Training Loss: \(trainStats.totalLoss), \
+          Training Accuracy: \(trainStats.correctGuessCount)/\(trainStats.totalGuessCount) \
+          (\(trainAccuracy)), \
+          Test Loss: \(testStats.totalLoss), \
+          Test Accuracy: \(testStats.correctGuessCount)/\(testStats.totalGuessCount) \
+          (\(testAccuracy))
+          &quot;&quot;&quot;)
+}
+</pre></div>
+</div>
+</div>
 </div>
 
 
