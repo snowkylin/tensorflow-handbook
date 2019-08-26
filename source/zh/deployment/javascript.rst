@@ -353,7 +353,21 @@ Python代码运行一次推理：
 
 我们将Python代码运行所需要的时间，设为基准1。
 
-浏览器性能
+手机浏览器性能
+------------------------------
+
+.. figure:: /_static/image/javascript/performance-mobile.png
+    :width: 60%
+    :align: center
+
+Tensorflow.js在手机浏览器中运行一次推理：
+
+1. 在IPhoneX上需要时间为22ms
+1. 在Pixel3上需要时间为100ms
+
+与 Tensorflow Lite 代码基准相比，手机浏览器中的 Tensorflow.js 在 IPhoneX 上的运行时间为基准的1.2倍，在 Pixel3 上运行的时间为基准的 1.8 倍。
+
+台式机浏览器性能
 ------------------------------
 
 在浏览器中，Tensorflow.js 可以使用 WebGL 进行硬件加速，将 GPU 资源使用起来。
@@ -364,8 +378,8 @@ Python代码运行一次推理：
 
 Tensorflow.js在浏览器中运行一次推理：
 
-* 在CPU上需要时间为97.3ms
-* 在GPU (WebGL)上需要时间为10.8ms
+* 在CPU上需要时间为97ms
+* 在GPU (WebGL)上需要时间为10ms
 
 与Python代码基准相比，浏览器中的 Tensorflow.js 在 CPU 上的运行时间为基准的1.7倍，在 GPU (WebGL) 上运行的时间为基准的3.8倍。
 
@@ -374,13 +388,13 @@ Node.js性能
 
 在 Node.js 中，Tensorflow.js 使用 Tensorflow 的 C Binding ，所以基本上可以达到和 Python 接近的效果。
 
-.. figure:: /_static/image/javascript/performance-node.gif
+.. figure:: /_static/image/javascript/performance-node.png
     :width: 60%
     :align: center
 
 Tensorflow.js 在 Node.js 运行一次推理：
 
-* 在 CPU 上需要时间为56.23ms
-* 在 GPU (CUDA) 上需要时间为3.12ms
+* 在 CPU 上需要时间为56ms
+* 在 GPU(CUDA) 上需要时间为14ms
 
-与 Python 代码基准相比，Node.js 的 Tensorflow.js 在 CPU 上的运行时间与基准相同，在 GPU (CUDA) 上运行的时间是基准的1.1倍。
+与 Python 代码基准相比，Node.js 的 Tensorflow.js 在 CPU 上的运行时间与基准相同，在 GPU（CUDA） 上运行的时间是基准的1.6倍。
