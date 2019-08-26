@@ -4,14 +4,14 @@ TensorFlow in Julia（Ziyang）
 TensorFlow.jl 简介
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-TensorFlow.jl 是 Tensorflow 的 Julia 版本, 经由 `malmaud <https://github.com/malmaud/>`_ 对于原版 Tensorflow 的包装实现.
+TensorFlow.jl 是 TensorFlow 的 Julia 版本, 经由 `malmaud <https://github.com/malmaud/>`_ 对于原版 TensorFlow 的包装实现.
 
-作为一个对于 Tensorflow 的封装, TensorFlow.jl 和 Python 版本的 TensorFlow 具有类似的API, 并支持 GPU 加速.
+作为一个对于 TensorFlow 的封装, TensorFlow.jl 和 Python 版本的 TensorFlow 具有类似的API, 并支持 GPU 加速.
 
-为什么要使用 julia 进行 Tensorflow 开发
+为什么要使用 julia 进行 TensorFlow 开发
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-虽然 Julia 对于 Tensorflow 本身的运行并没有什么影响, 但是 TensorFlow.jl 确实具有相当的优势.
+虽然 Julia 对于 TensorFlow 本身的运行并没有什么影响, 但是 TensorFlow.jl 确实具有相当的优势.
 
 作为面向数值计算而生的现代语言，Julia 拥有一系列先进的语法特性. 优异的 JIT 能让你高速提取数据, 并处理 Tensorflow 的输出结果. 而得益于Julia的语法设计, 书写表达式也更加灵活自然.
 
