@@ -182,7 +182,7 @@ Tensorflow.js 微信小程序官方文档地址： <https://mp.weixin.qq.com/wxo
 
 然后，完成以下四个步骤即可完成配置：
 
-1. 确认 Node.js 版本::
+1. 确认 Node.js 版本（v10，或更新）::
 
     $ node --verion
     v10.5.0
@@ -248,7 +248,6 @@ Tensorflow.js 提供了一系列预训练好的模型，方便大家快速的给
 一般Tensorflow的模型，以Python版本为例，会被存储为以下四种格式之一：
 
 * TensorFlow SavedModel
-* Frozen Model
 * Tensorflow Hub Module
 * Keras Module
 
@@ -280,17 +279,6 @@ Tensorflow.js转换器tensorflowjs_converter
         --output_node_names='MobilenetV1/Predictions/Reshape_1' \
         --saved_model_tags=serve \
         /mobilenet/saved_model \
-        /mobilenet/tfjs_model
-
-转换 Frozen Model
--------------------------------------------
-
-将 ``/mobilenet/frozen_model.pb`` 转换到 ``/mobilenet/tfjs_model`` ::
-
-    tensorflowjs_converter \
-        --input_format=tf_frozen_model \
-        --output_node_names='MobilenetV1/Predictions/Reshape_1' \
-        /mobilenet/frozen_model.pb \
         /mobilenet/tfjs_model
 
 转换 Hub Model
