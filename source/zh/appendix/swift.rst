@@ -207,7 +207,7 @@ MNIST数字分类
     let optimizer = Adam(for: model)
 
     let mnist = MNIST()
-    let (trainImages, trainLabels, testImages, testLabels) = mnist.splitTrainTest()
+    let ((trainImages, trainLabels), (testImages, testLabels)) = mnist.loadData()
 
     let imageBatch = Dataset(elements: trainImages).batched(32)
     let labelBatch = Dataset(elements: trainLabels).batched(32)
