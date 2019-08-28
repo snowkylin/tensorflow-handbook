@@ -145,6 +145,7 @@ Swift 语言支持直接加载 Python 函数库（比如 NumPy），也支持直
 除了能够直接调用 Python 之外，Swift 也快成直接调用系统函数库。比如下面的代码例子展示了我们可以在 Swift 中直接加载 Glibc 的动态库，然后调用系统底层的 malloc 和 memcpy 函数，对变量直接进行操作。
 
 .. code-block:: swift
+
     import Glibc
     let x = malloc(18)
     memcpy(x, "memcpy from Glibc", 18)
@@ -155,82 +156,82 @@ Swift 语言支持直接加载 Python 函数库（比如 NumPy），也支持直
 语言原生支持自动微分
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-我们可以通过 `@differentiable` 参数，非常容易的定义一个可被微分的函数。
+我们可以通过 ``@differentiable`` 参数，非常容易的定义一个可被微分的函数。
 
-```swift
-@differentiable
-func frac(_ x:Double) -> Double {
-  return 1/x
-}
+.. code-block:: swift
 
-gradient(at:0.5) { x in frac(x) }
+    @differentiable
+    func frac(_ x:Double) -> Double {
+        return 1/x
+    }
 
-// Output: -4.0
-```
+    gradient(at:0.5) { x in frac(x) }
+
+    // Output: -4.0
 
 MNIST数字分类
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-本小节的源代码可以在 <https://github.com/huan/tensorflow-handbook-swift/src> 找到。其中的 `Mnist` 数据集的辅助类的源代码文件为 `mnist.swift` ，需要单独加载。
+本小节的源代码可以在 https://github.com/huan/tensorflow-handbook-swift/src 找到。其中的 ``Mnist`` 数据集的辅助类的源代码文件为 ``mnist.swift`` ，需要单独加载。
 
-更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址：<https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/swift-for-tensorflow-mnist-example.ipynb>（推荐）
+更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址：https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/swift-for-tensorflow-mnist-example.ipynb（推荐）
 
 代码：
 
-```swift
-import TensorFlow
-import Python
-import Foundation
+.. code-block:: swift
 
-struct MLP: Layer {
-  typealias Input = Tensor<Float>
-  typealias Output = Tensor<Float>
+    import TensorFlow
+    import Python
+    import Foundation
 
-  var flatten = Flatten<Float>()
-  var dense = Dense<Float>(inputSize: 784, outputSize: 10)
-  
-  @differentiable
-  public func callAsFunction(_ input: Input) -> Output {
-    return input.sequenced(through: flatten, dense)
-  }  
-}
+    struct MLP: Layer {
+    typealias Input = Tensor<Float>
+    typealias Output = Tensor<Float>
 
-var model = MLP()
-let optimizer = Adam(for: model)
+    var flatten = Flatten<Float>()
+    var dense = Dense<Float>(inputSize: 784, outputSize: 10)
+    
+    @differentiable
+    public func callAsFunction(_ input: Input) -> Output {
+        return input.sequenced(through: flatten, dense)
+    }  
+    }
 
-/**
- * The Mnist class source code is from:
- * https://github.com/huan/tensorflow-handbook-swift/src/mnist.swift
- */
-let mnist = Mnist()
-let (trainImages, trainLabels, testImages, testLabels) = mnist.splitTrainTest()
+    var model = MLP()
+    let optimizer = Adam(for: model)
 
-let imageBatch = Dataset(elements: trainImages).batched(32)
-let labelBatch = Dataset(elements: trainLabels).batched(32)
+    /**
+    * The Mnist class source code is from:
+    * https://github.com/huan/tensorflow-handbook-swift/src/mnist.swift
+    */
+    let mnist = Mnist()
+    let (trainImages, trainLabels, testImages, testLabels) = mnist.splitTrainTest()
 
-for (X, y) in zip(imageBatch, labelBatch) {
-  // Caculate the gradient
-  let (_loss, grads) = valueWithGradient(at: model) { model -> Tensor<Float> in
-    let logits = model(X)
-    return softmaxCrossEntropy(logits: logits, labels: y)
-  }
+    let imageBatch = Dataset(elements: trainImages).batched(32)
+    let labelBatch = Dataset(elements: trainLabels).batched(32)
 
-  // Update parameters by optimizer
-  optimizer.update(&model.allDifferentiableVariables, along: grads)
-}
+    for (X, y) in zip(imageBatch, labelBatch) {
+    // Caculate the gradient
+    let (_loss, grads) = valueWithGradient(at: model) { model -> Tensor<Float> in
+        let logits = model(X)
+        return softmaxCrossEntropy(logits: logits, labels: y)
+    }
 
-let logits = model(testImages)
-let acc = mnist.getAccuracy(y: testLabels, logits: logits)
+    // Update parameters by optimizer
+    optimizer.update(&model.allDifferentiableVariables, along: grads)
+    }
 
-print("Test Accuracy: \(acc)" )
-```
+    let logits = model(testImages)
+    let acc = mnist.getAccuracy(y: testLabels, logits: logits)
+
+    print("Test Accuracy: \(acc)" )
 
 以上程序运行输出为：
 
-```text
-Downloading train-images-idx3-ubyte ...
-Downloading train-labels-idx1-ubyte ...
-Reading data.
-Constructing data tensors.
-Test Accuracy: 0.9116667
-```
+::
+
+    Downloading train-images-idx3-ubyte ...
+    Downloading train-labels-idx1-ubyte ...
+    Reading data.
+    Constructing data tensors.
+    Test Accuracy: 0.9116667
