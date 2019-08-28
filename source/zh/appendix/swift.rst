@@ -152,88 +152,85 @@ Swift 语言支持直接加载 Python 函数库（比如 NumPy），也支持直
 
 通过 Swift 强大的集成能力，针对 C/C++ 语言库的加载和调用，处理起来也将会是非常简单高效。
 
+语言原生支持自动微分
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+我们可以通过 `@differentiable` 参数，非常容易的定义一个可被微分的函数。
+
+```swift
+@differentiable
+func frac(_ x:Double) -> Double {
+  return 1/x
+}
+
+gradient(at:0.5) { x in frac(x) }
+
+// Output: -4.0
+```
+
 MNIST数字分类
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-这个例子来自于 `Swift Models 文档 <https://github.com/tensorflow/swift-models/blob/master/Examples/LeNet-MNIST/>`_: LeNet-5 with MNIST
+本小节的源代码可以在 <https://github.com/huan/tensorflow-handbook-swift/src> 找到。其中的 `Mnist` 数据集的辅助类的源代码文件为 `mnist.swift` ，需要单独加载。
 
-可以通过以下命令，运行这个例子：
-
-.. code-block:: shell
-
-    git clone https://github.com/tensorflow/swift-models.git
-    cd swift-models
-    swift run -c release LeNet-MNIST
+更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址：<https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/swift-for-tensorflow-mnist-example.ipynb>（推荐）
 
 代码：
 
-.. code-block:: swift
+```swift
+import TensorFlow
+import Python
+import Foundation
 
-    import TensorFlow
-    import ImageClassificationModels
-    import Datasets
+struct MLP: Layer {
+  typealias Input = Tensor<Float>
+  typealias Output = Tensor<Float>
 
-    let epochCount = 12
-    let batchSize = 128
+  var flatten = Flatten<Float>()
+  var dense = Dense<Float>(inputSize: 784, outputSize: 10)
+  
+  @differentiable
+  public func callAsFunction(_ input: Input) -> Output {
+    return input.sequenced(through: flatten, dense)
+  }  
+}
 
-    let dataset = MNIST(batchSize: batchSize)
-    var classifier = LeNet()
+var model = MLP()
+let optimizer = Adam(for: model)
 
-    let optimizer = SGD(for: classifier, learningRate: 0.1)
+/**
+ * The Mnist class source code is from:
+ * https://github.com/huan/tensorflow-handbook-swift/src/mnist.swift
+ */
+let mnist = Mnist()
+let (trainImages, trainLabels, testImages, testLabels) = mnist.splitTrainTest()
 
-    print("Beginning training...")
+let imageBatch = Dataset(elements: trainImages).batched(32)
+let labelBatch = Dataset(elements: trainLabels).batched(32)
 
-    struct Statistics {
-        var correctGuessCount: Int = 0
-        var totalGuessCount: Int = 0
-        var totalLoss: Float = 0
-    }
+for (X, y) in zip(imageBatch, labelBatch) {
+  // Caculate the gradient
+  let (_loss, grads) = valueWithGradient(at: model) { model -> Tensor<Float> in
+    let logits = model(X)
+    return softmaxCrossEntropy(logits: logits, labels: y)
+  }
 
-    // The training loop.
-    for epoch in 1...epochCount {
-        var trainStats = Statistics()
-        var testStats = Statistics()
-        Context.local.learningPhase = .training
-        for i in 0 ..< dataset.trainingSize / batchSize {
-            let x = dataset.trainingImages.minibatch(at: i, batchSize: batchSize)
-            let y = dataset.trainingLabels.minibatch(at: i, batchSize: batchSize)
-            // Compute the gradient with respect to the model.
-            let 𝛁model = classifier.gradient { classifier -> Tensor<Float> in
-                let ŷ = classifier(x)
-                let correctPredictions = ŷ.argmax(squeezingAxis: 1) .== y
-                trainStats.correctGuessCount += Int(
-                  Tensor<Int32>(correctPredictions).sum().scalarized())
-                trainStats.totalGuessCount += batchSize
-                let loss = softmaxCrossEntropy(logits: ŷ, labels: y)
-                trainStats.totalLoss += loss.scalarized()
-                return loss
-            }
-            // Update the model's differentiable variables along the gradient vector.
-            optimizer.update(&classifier, along: 𝛁model)
-        }
+  // Update parameters by optimizer
+  optimizer.update(&model.allDifferentiableVariables, along: grads)
+}
 
-        Context.local.learningPhase = .inference
-        for i in 0 ..< dataset.testSize / batchSize {
-            let x = dataset.testImages.minibatch(at: i, batchSize: batchSize)
-            let y = dataset.testLabels.minibatch(at: i, batchSize: batchSize)
-            // Compute loss on test set
-            let ŷ = classifier(x)
-            let correctPredictions = ŷ.argmax(squeezingAxis: 1) .== y
-            testStats.correctGuessCount += Int(Tensor<Int32>(correctPredictions).sum().scalarized())
-            testStats.totalGuessCount += batchSize
-            let loss = softmaxCrossEntropy(logits: ŷ, labels: y)
-            testStats.totalLoss += loss.scalarized()
-        }
+let logits = model(testImages)
+let acc = mnist.getAccuracy(y: testLabels, logits: logits)
 
-        let trainAccuracy = Float(trainStats.correctGuessCount) / Float(trainStats.totalGuessCount)
-        let testAccuracy = Float(testStats.correctGuessCount) / Float(testStats.totalGuessCount)
-        print("""
-              [Epoch \(epoch)] \
-              Training Loss: \(trainStats.totalLoss), \
-              Training Accuracy: \(trainStats.correctGuessCount)/\(trainStats.totalGuessCount) \
-              (\(trainAccuracy)), \
-              Test Loss: \(testStats.totalLoss), \
-              Test Accuracy: \(testStats.correctGuessCount)/\(testStats.totalGuessCount) \
-              (\(testAccuracy))
-              """)
-    }
+print("Test Accuracy: \(acc)" )
+```
+
+以上程序运行输出为：
+
+```text
+Downloading train-images-idx3-ubyte ...
+Downloading train-labels-idx1-ubyte ...
+Reading data.
+Constructing data tensors.
+Test Accuracy: 0.9116667
+```
