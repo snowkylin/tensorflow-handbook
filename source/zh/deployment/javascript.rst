@@ -27,9 +27,11 @@ Tensorflow.js 是 Tensorflow 的 JavaScript 版本，支持GPU硬件加速，可
 
 Tensorflow.js 支持 GPU 硬件加速。在 Node.js 环境中，如果有 CUDA 环境支持，或者在浏览器环境中，有 WebGL 环境支持，那么 Tensorflow.js 可以使用硬件进行加速。
 
+微信小程序也提供了官方插件，封装了TensorFlow.js库，利用小程序WebGL API给第三方小程序调用时提供GPU加速。
+
 本章，我们将基于 Tensorflow.js 1.0，向大家简单的介绍如何基于 ES6 的 JavaScript 进行 Tensorflow.js 的开发，然后提供两个例子，并基于例子进行详细的讲解和介绍，最终实现使用纯 JavaScript 进行 Tensorflow 模型的开发、训练和部署。
 
-本章中提到的 JavaScript 版 Tensorflow 的相关代码，使用说明，和训练好的模型文件及参数，都可以在作者的 GitHub 上找到。地址： https://github.com/huan/javascript-concise-chitchat
+本章中提到的 JavaScript 版 Tensorflow 的相关代码，使用说明，和训练好的模型文件及参数，都可以在作者的 GitHub 上找到。地址： https://github.com/huan/tensorflow-handbook-javascript
 
 在浏览器中使用 Tensorflow.js
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -162,6 +164,17 @@ Move Mirror 所使用的 PoseNet 地址：https://github.com/tensorflow/tfjs-mod
       </head>
     </html>
 
+TensorFlow.js 微信小程序插件
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+TensorFlow.js 微信小程序插件封装了TensorFlow.js库，用于提供给第三方小程序调用。
+
+在使用插件前，首先要在小程序管理后台的“设置-第三方服务-插件管理”中添加插件。开发者可登录小程序管理后台，通过 appid _wx6afed118d9e81df9_ 查找插件并添加。本插件无需申请，添加后可直接使用。
+
+例子可以看 TFJS Mobilenet: [物体识别小程序](https://github.com/tensorflow/tfjs-wechat/tree/master/demo/mobilenet)
+
+Tensorflow.js 微信小程序官方文档地址： <https://mp.weixin.qq.com/wxopen/plugindevdoc?appid=wx6afed118d9e81df9>
+
 在服务器端使用 Tensorflow.js
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -209,6 +222,25 @@ Move Mirror 所使用的 PoseNet 地址：https://github.com/tensorflow/tfjs-mod
 
 如果你看到了上面的 ``tfjs-core``, ``tfjs-data``, ``tfjs-layers`` 和 ``tfjs-converter`` 的输出信息，那么就说明环境配置没有问题了。
 
+使用 Tensorflow.js 模型库
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Tensorflow.js 提供了一系列预训练好的模型，方便大家快速的给自己的程序引入人工智能能力。
+
+模型库 GitHub 地址：<https://github.com/tensorflow/tfjs-models>，其中模型分类包括：
+
+1. 图像识别
+1. 语音识别
+1. 人体姿态识别
+1. 物体识别
+1. 文字分类
+
+由于这些API默认模型文件都存储在谷歌云上，直接使用会导致中国用户无法直接读取。在程序内使用模型API时要提供 modelUrl 的参数，可以指向谷歌中国的镜像服务器。
+
+谷歌云的base url是 https://storage.googleapis.com， 中国镜像的base url是 https://www.gstaticcnapps.cn 模型的url path是一致的。以 posenet模型为例：
+
+- 谷歌云地址是：**https://storage.googleapis.com**/tfjs-models/savedmodel/posenet/mobilenet/float/050/model-stride16.json
+- 中国镜像地址是：**https://www.gstaticcnapps.cn**/tfjs-models/savedmodel/posenet/mobilenet/float/050/model-stride16.json
 
 通过 Tensorflow.js 加载 Python 模型
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -311,17 +343,21 @@ Tensorflow.js的性能如何，Google官方做了一份基于 MobileNet 的评�
 
 其评测结论如下。
 
-Python性能基准
+手机浏览器性能
 ------------------------------
 
-Python代码运行一次推理：
+.. figure:: /_static/image/javascript/performance-mobile.png
+    :width: 60%
+    :align: center
 
-* 在CPU上需要时间为56.6ms
-* 在GPU上需要时间为2.82ms
+Tensorflow.js在手机浏览器中运行一次推理：
 
-我们将Python代码运行所需要的时间，设为基准1。
+1. 在IPhoneX上需要时间为22ms
+1. 在Pixel3上需要时间为100ms
 
-浏览器性能
+与 Tensorflow Lite 代码基准相比，手机浏览器中的 Tensorflow.js 在 IPhoneX 上的运行时间为基准的1.2倍，在 Pixel3 上运行的时间为基准的 1.8 倍。
+
+台式机浏览器性能
 ------------------------------
 
 在浏览器中，Tensorflow.js 可以使用 WebGL 进行硬件加速，将 GPU 资源使用起来。
@@ -332,8 +368,8 @@ Python代码运行一次推理：
 
 Tensorflow.js在浏览器中运行一次推理：
 
-* 在CPU上需要时间为97.3ms
-* 在GPU (WebGL)上需要时间为10.8ms
+* 在CPU上需要时间为97ms
+* 在GPU (WebGL)上需要时间为10ms
 
 与Python代码基准相比，浏览器中的 Tensorflow.js 在 CPU 上的运行时间为基准的1.7倍，在 GPU (WebGL) 上运行的时间为基准的3.8倍。
 
@@ -342,13 +378,13 @@ Node.js性能
 
 在 Node.js 中，Tensorflow.js 使用 Tensorflow 的 C Binding ，所以基本上可以达到和 Python 接近的效果。
 
-.. figure:: /_static/image/javascript/performance-node.gif
+.. figure:: /_static/image/javascript/performance-node.png
     :width: 60%
     :align: center
 
 Tensorflow.js 在 Node.js 运行一次推理：
 
-* 在 CPU 上需要时间为56.23ms
-* 在 GPU (CUDA) 上需要时间为3.12ms
+* 在 CPU 上需要时间为56ms
+* 在 GPU(CUDA) 上需要时间为14ms
 
-与 Python 代码基准相比，Node.js 的 Tensorflow.js 在 CPU 上的运行时间与基准相同，在 GPU (CUDA) 上运行的时间是基准的1.1倍。
+与 Python 代码基准相比，Node.js 的 Tensorflow.js 在 CPU 上的运行时间与基准相同，在 GPU（CUDA） 上运行的时间是基准的1.6倍。
