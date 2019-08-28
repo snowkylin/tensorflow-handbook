@@ -172,7 +172,7 @@ Swift 语言支持直接加载 Python 函数库（比如 NumPy），也支持直
 MNIST数字分类
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-本小节的源代码可以在 https://github.com/huan/tensorflow-handbook-swift/blob/master/src/ 找到。其中的 ``Mnist`` 数据集的辅助类的源代码文件为 ``mnist.swift`` ，需要单独加载。
+本小节的源代码可以在 <https://github.com/huan/tensorflow-handbook-swift/blob/master/Sources/> 找到。其中的 `Mnist` 数据集的辅助类的源代码文件为 `s4tf/mnist.swift` ，需要读者单独加载。
 
 更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址：https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/swift-for-tensorflow-mnist-example.ipynb（推荐）
 
@@ -202,7 +202,7 @@ MNIST数字分类
 
     /**
     * The Mnist class source code is from:
-    * https://github.com/huan/tensorflow-handbook-swift/blob/master/src/mnist.swift
+    * https://github.com/huan/tensorflow-handbook-swift/blob/master/Sources/s4tf/mnist.swift
     */
     let mnist = Mnist()
     let (trainImages, trainLabels, testImages, testLabels) = mnist.splitTrainTest()
