@@ -107,12 +107,12 @@
 <li class="toctree-l1"><a class="reference internal" href="serving.html">TensorFlow Serving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lite.html">TensorFlow Lite（Jinpeng）</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow in JavaScript（Huan）</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#tensorflow-js">Tensorflow.js 简介</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">在浏览器中使用 Tensorflow.js</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tensorflow-js">TensorFlow.js 简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">在浏览器中使用 TensorFlow.js</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id2">一个浏览器中的基本的线性回归模型</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">在服务器端使用 Tensorflow.js</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#tensorflow-js-python">通过 Tensorflow.js 加载 Python 模型</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#tensorflow-jstensorflowjs-converter">Tensorflow.js转换器tensorflowjs_converter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">在服务器端使用 TensorFlow.js</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tensorflow-js-python">通过 TensorFlow.js 加载 Python 模型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tensorflow-jstensorflowjs-converter">TensorFlow.js转换器tensorflowjs_converter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#savedmodel">转换 SavedModel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#frozen-model">转换 Frozen Model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#hub-model">转换 Hub Model</a></li>
@@ -120,7 +120,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#javascript">用JavaScript加载和运行</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">Tensorflow.js 性能对比</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id4">TensorFlow.js 性能对比</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#python">Python性能基准</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id5">浏览器性能</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#node-js">Node.js性能</a></li>
@@ -226,24 +226,24 @@
 <div>– Paul Graham, YC Founder</div></blockquote>
 </div></blockquote>
 <div class="section" id="tensorflow-js">
-<h2>Tensorflow.js 简介<a class="headerlink" href="#tensorflow-js" title="永久链接至标题">¶</a></h2>
+<h2>TensorFlow.js 简介<a class="headerlink" href="#tensorflow-js" title="永久链接至标题">¶</a></h2>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/tensorflow-js.gif"><img alt="../../_images/tensorflow-js.gif" src="../../_images/tensorflow-js.gif" style="width: 60%;" /></a>
 </div>
-<p>Tensorflow.js 是 Tensorflow 的 JavaScript 版本，支持GPU硬件加速，可以运行在 Node.js 或浏览器环境中。它不但支持完全基于 JavaScript 从头开发、训练和部署模型，也可以用来运行已有的 Python 版 Tensorflow 模型，或者基于现有的模型进行继续训练。</p>
+<p>TensorFlow.js 是 Tensorflow 的 JavaScript 版本，支持GPU硬件加速，可以运行在 Node.js 或浏览器环境中。它不但支持完全基于 JavaScript 从头开发、训练和部署模型，也可以用来运行已有的 Python 版 Tensorflow 模型，或者基于现有的模型进行继续训练。</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/architecture.gif"><img alt="../../_images/architecture.gif" src="../../_images/architecture.gif" style="width: 60%;" /></a>
 </div>
-<p>Tensorflow.js 支持 GPU 硬件加速。在 Node.js 环境中，如果有 CUDA 环境支持，或者在浏览器环境中，有 WebGL 环境支持，那么 Tensorflow.js 可以使用硬件进行加速。</p>
-<p>本章，我们将基于 Tensorflow.js 1.0，向大家简单的介绍如何基于 ES6 的 JavaScript 进行 Tensorflow.js 的开发，然后提供两个例子，并基于例子进行详细的讲解和介绍，最终实现使用纯 JavaScript 进行 Tensorflow 模型的开发、训练和部署。</p>
+<p>TensorFlow.js 支持 GPU 硬件加速。在 Node.js 环境中，如果有 CUDA 环境支持，或者在浏览器环境中，有 WebGL 环境支持，那么 TensorFlow.js 可以使用硬件进行加速。</p>
+<p>本章，我们将基于 TensorFlow.js 1.0，向大家简单的介绍如何基于 ES6 的 JavaScript 进行 TensorFlow.js 的开发，然后提供两个例子，并基于例子进行详细的讲解和介绍，最终实现使用纯 JavaScript 进行 Tensorflow 模型的开发、训练和部署。</p>
 <p>本章中提到的 JavaScript 版 Tensorflow 的相关代码，使用说明，和训练好的模型文件及参数，都可以在作者的 GitHub 上找到。地址： <a class="reference external" href="https://github.com/huan/tensorflow-handbook-javascript">https://github.com/huan/tensorflow-handbook-javascript</a></p>
 </div>
 <div class="section" id="id1">
-<h2>在浏览器中使用 Tensorflow.js<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<h2>在浏览器中使用 TensorFlow.js<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/chrome-ml.png"><img alt="../../_images/chrome-ml.png" src="../../_images/chrome-ml.png" style="width: 60%;" /></a>
 </div>
-<p>Tensorflow.js可以让我们直接在浏览器中加载Tensorflow，让用户立即通过本地的CPU/GPU资源进行我们所需要的机器学习运算，更灵活的进行AI应用的开发。</p>
+<p>TensorFlow.js可以让我们直接在浏览器中加载Tensorflow，让用户立即通过本地的CPU/GPU资源进行我们所需要的机器学习运算，更灵活的进行AI应用的开发。</p>
 <p>浏览器中进行机器学习，相对比与服务器端来讲，将拥有以下四大优势：</p>
 <ul class="simple">
 <li>不需要安装软件或驱动（打开浏览器即可使用）；</li>
@@ -251,7 +251,7 @@
 <li>可以通过手机浏览器，调用手机硬件的各种传感器（如：GPS、电子罗盘、加速度传感器、摄像头等）；</li>
 <li>用户的数据可以无需上传到服务器，在本地即可完成所需操作。</li>
 </ul>
-<p>通过这些优势，Tensorflow.js 将带给开发者带来极高的灵活性。比如我们可以在手机上打开浏览器，通过手机摄像头检测视频中用户的身体动作姿势，然后通过对图片数据库中类似身体动作姿势的检索，给用户显示一个最能够和他当前动作相似的照片。这就是 Google Creative Lab 在2018年7月发布的 Move Mirror。在 Move Mirror 的运行过程中，数据没有上传到服务器，所有的运算都是在手机本地，基于手机的CPU/GPU完成的，而这项技术，将使Servreless与AI应用结合起来成为可能。</p>
+<p>通过这些优势，TensorFlow.js 将带给开发者带来极高的灵活性。比如我们可以在手机上打开浏览器，通过手机摄像头检测视频中用户的身体动作姿势，然后通过对图片数据库中类似身体动作姿势的检索，给用户显示一个最能够和他当前动作相似的照片。这就是 Google Creative Lab 在2018年7月发布的 Move Mirror。在 Move Mirror 的运行过程中，数据没有上传到服务器，所有的运算都是在手机本地，基于手机的CPU/GPU完成的，而这项技术，将使Servreless与AI应用结合起来成为可能。</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/move-mirror.jpg"><img alt="../../_images/move-mirror.jpg" src="../../_images/move-mirror.jpg" style="width: 60%;" /></a>
 </div>
@@ -260,7 +260,7 @@
 <div class="section" id="id2">
 <h2>一个浏览器中的基本的线性回归模型<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <p>在 Tensorflow 基础章节中，我们已经用 Python 实现过，针对某城市在2013年-2017年的房价的任务，通过对该数据进行线性回归，即使用线性模型 <span class="math notranslate nohighlight">\(y = ax + b\)</span> 来拟合上述数据，此处 <span class="math notranslate nohighlight">\(a\)</span> 和 <span class="math notranslate nohighlight">\(b\)</span> 是待求的参数。</p>
-<p>下面我们改用 Tensorflow.js 来实现一个 JavaScript 版本。</p>
+<p>下面我们改用 TensorFlow.js 来实现一个 JavaScript 版本。</p>
 <p>首先，我们定义数据，进行基本的归一化操作。</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">tf</span> <span class="nx">from</span> <span class="s1">&#39;@tensorflow/tfjs&#39;</span>
 
@@ -352,7 +352,7 @@
 </div>
 </div>
 <div class="section" id="id3">
-<h2>在服务器端使用 Tensorflow.js<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<h2>在服务器端使用 TensorFlow.js<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <p>服务器端使用 JavaScript ，首先需要按照 <a class="reference external" href="https://nodejs.org">NodeJS.org</a> 官网的说明，完成安装最新版本的 Node.js 。</p>
 <p>然后，完成以下四个步骤即可完成配置：</p>
 <ol class="arabic">
@@ -365,13 +365,13 @@ $ npm --version
 </pre></div>
 </div>
 </li>
-<li><p class="first">建立 Tensorflow.js 项目目录:</p>
+<li><p class="first">建立 TensorFlow.js 项目目录:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir tfjs
 $ cd tfjs
 </pre></div>
 </div>
 </li>
-<li><p class="first">安装 Tensorflow.js:</p>
+<li><p class="first">安装 TensorFlow.js:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 初始化项目管理文件 package.json
 $ npm init -y
 
@@ -386,7 +386,7 @@ $ npm install @tensorflow/tfjs-node-gpu
 </pre></div>
 </div>
 </li>
-<li><p class="first">确认 Node.js 和 Tensorflow.js 工作正常:</p>
+<li><p class="first">确认 Node.js 和 TensorFlow.js 工作正常:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ node
 &gt; require(&#39;@tensorflow/tfjs&#39;).version
 { &#39;tfjs-core&#39;: &#39;1.0.1&#39;,
@@ -402,7 +402,7 @@ $ npm install @tensorflow/tfjs-node-gpu
 <p>如果你看到了上面的 <code class="docutils literal notranslate"><span class="pre">tfjs-core</span></code>, <code class="docutils literal notranslate"><span class="pre">tfjs-data</span></code>, <code class="docutils literal notranslate"><span class="pre">tfjs-layers</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tfjs-converter</span></code> 的输出信息，那么就说明环境配置没有问题了。</p>
 </div>
 <div class="section" id="tensorflow-js-python">
-<h2>通过 Tensorflow.js 加载 Python 模型<a class="headerlink" href="#tensorflow-js-python" title="永久链接至标题">¶</a></h2>
+<h2>通过 TensorFlow.js 加载 Python 模型<a class="headerlink" href="#tensorflow-js-python" title="永久链接至标题">¶</a></h2>
 <p>一般Tensorflow的模型，以Python版本为例，会被存储为以下四种格式之一：</p>
 <ul class="simple">
 <li>TensorFlow SavedModel</li>
@@ -410,9 +410,9 @@ $ npm install @tensorflow/tfjs-node-gpu
 <li>Tensorflow Hub Module</li>
 <li>Keras Module</li>
 </ul>
-<p>所有以上四种格式，都可以通过 tensorflowjs-converter 转换器，将其转换为可以直接被 Tensorflow.js 加载的格式，在JavaScript语言中进行使用。</p>
+<p>所有以上四种格式，都可以通过 tensorflowjs-converter 转换器，将其转换为可以直接被 TensorFlow.js 加载的格式，在JavaScript语言中进行使用。</p>
 <div class="section" id="tensorflow-jstensorflowjs-converter">
-<h3>Tensorflow.js转换器tensorflowjs_converter<a class="headerlink" href="#tensorflow-jstensorflowjs-converter" title="永久链接至标题">¶</a></h3>
+<h3>TensorFlow.js转换器tensorflowjs_converter<a class="headerlink" href="#tensorflow-jstensorflowjs-converter" title="永久链接至标题">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">tensorflowjs_converter</span></code> 可以将Python存储的模型格式，转换为JavaScript可以直接调用的模型格式。</p>
 <p>安装 <code class="docutils literal notranslate"><span class="pre">tensorflowjs_converter</span></code></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install tensorflowjs
@@ -422,7 +422,7 @@ $ npm install @tensorflow/tfjs-node-gpu
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ tensorflowjs_converter --help
 </pre></div>
 </div>
-<p>以下我们以MobilenetV1为例，看一下如何对模型文件进行转换操作，并将可以被Tensorflow.js加载的模型文件，存放到 <code class="docutils literal notranslate"><span class="pre">/mobilenet/tfjs_model</span></code> 目录下。</p>
+<p>以下我们以MobilenetV1为例，看一下如何对模型文件进行转换操作，并将可以被TensorFlow.js加载的模型文件，存放到 <code class="docutils literal notranslate"><span class="pre">/mobilenet/tfjs_model</span></code> 目录下。</p>
 </div>
 <div class="section" id="savedmodel">
 <h3>转换 SavedModel<a class="headerlink" href="#savedmodel" title="永久链接至标题">¶</a></h3>
@@ -489,8 +489,8 @@ $ npm install @tensorflow/tfjs-node-gpu
 </div>
 </div>
 <div class="section" id="id4">
-<h2>Tensorflow.js 性能对比<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
-<p>Tensorflow.js的性能如何，Google官方做了一份基于 MobileNet 的评测，可以作为参考。具体评测是基于 MobileNet 的 Tensorflow 模型，将其 JavaScript 版本和 Python 版本各运行两百次。</p>
+<h2>TensorFlow.js 性能对比<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>TensorFlow.js的性能如何，Google官方做了一份基于 MobileNet 的评测，可以作为参考。具体评测是基于 MobileNet 的 Tensorflow 模型，将其 JavaScript 版本和 Python 版本各运行两百次。</p>
 <p>其评测结论如下。</p>
 <div class="section" id="python">
 <h3>Python性能基准<a class="headerlink" href="#python" title="永久链接至标题">¶</a></h3>
@@ -503,29 +503,29 @@ $ npm install @tensorflow/tfjs-node-gpu
 </div>
 <div class="section" id="id5">
 <h3>浏览器性能<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
-<p>在浏览器中，Tensorflow.js 可以使用 WebGL 进行硬件加速，将 GPU 资源使用起来。</p>
+<p>在浏览器中，TensorFlow.js 可以使用 WebGL 进行硬件加速，将 GPU 资源使用起来。</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/performance-browser.gif"><img alt="../../_images/performance-browser.gif" src="../../_images/performance-browser.gif" style="width: 60%;" /></a>
 </div>
-<p>Tensorflow.js在浏览器中运行一次推理：</p>
+<p>TensorFlow.js在浏览器中运行一次推理：</p>
 <ul class="simple">
 <li>在CPU上需要时间为97.3ms</li>
 <li>在GPU (WebGL)上需要时间为10.8ms</li>
 </ul>
-<p>与Python代码基准相比，浏览器中的 Tensorflow.js 在 CPU 上的运行时间为基准的1.7倍，在 GPU (WebGL) 上运行的时间为基准的3.8倍。</p>
+<p>与Python代码基准相比，浏览器中的 TensorFlow.js 在 CPU 上的运行时间为基准的1.7倍，在 GPU (WebGL) 上运行的时间为基准的3.8倍。</p>
 </div>
 <div class="section" id="node-js">
 <h3>Node.js性能<a class="headerlink" href="#node-js" title="永久链接至标题">¶</a></h3>
-<p>在 Node.js 中，Tensorflow.js 使用 Tensorflow 的 C Binding ，所以基本上可以达到和 Python 接近的效果。</p>
+<p>在 Node.js 中，TensorFlow.js 使用 Tensorflow 的 C Binding ，所以基本上可以达到和 Python 接近的效果。</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/performance-node.gif"><img alt="../../_images/performance-node.gif" src="../../_images/performance-node.gif" style="width: 60%;" /></a>
 </div>
-<p>Tensorflow.js 在 Node.js 运行一次推理：</p>
+<p>TensorFlow.js 在 Node.js 运行一次推理：</p>
 <ul class="simple">
 <li>在 CPU 上需要时间为56.23ms</li>
 <li>在 GPU (CUDA) 上需要时间为3.12ms</li>
 </ul>
-<p>与 Python 代码基准相比，Node.js 的 Tensorflow.js 在 CPU 上的运行时间与基准相同，在 GPU (CUDA) 上运行的时间是基准的1.1倍。</p>
+<p>与 Python 代码基准相比，Node.js 的 TensorFlow.js 在 CPU 上的运行时间与基准相同，在 GPU (CUDA) 上运行的时间是基准的1.1倍。</p>
 </div>
 </div>
 </div>
