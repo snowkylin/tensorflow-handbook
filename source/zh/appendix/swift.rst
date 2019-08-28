@@ -191,16 +191,16 @@ MNIST数字分类
     import MNIST
 
     struct MLP: Layer {
-    typealias Input = Tensor<Float>
-    typealias Output = Tensor<Float>
+        typealias Input = Tensor<Float>
+        typealias Output = Tensor<Float>
 
-    var flatten = Flatten<Float>()
-    var dense = Dense<Float>(inputSize: 784, outputSize: 10)
-    
-    @differentiable
-    public func callAsFunction(_ input: Input) -> Output {
-        return input.sequenced(through: flatten, dense)
-    }  
+        var flatten = Flatten<Float>()
+        var dense = Dense<Float>(inputSize: 784, outputSize: 10)
+        
+        @differentiable
+        public func callAsFunction(_ input: Input) -> Output {
+            return input.sequenced(through: flatten, dense)
+        }  
     }
 
     var model = MLP()
@@ -213,14 +213,14 @@ MNIST数字分类
     let labelBatch = Dataset(elements: trainLabels).batched(32)
 
     for (X, y) in zip(imageBatch, labelBatch) {
-    // Caculate the gradient
-    let (_, grads) = valueWithGradient(at: model) { model -> Tensor<Float> in
-        let logits = model(X)
-        return softmaxCrossEntropy(logits: logits, labels: y)
-    }
+        // Caculate the gradient
+        let (_, grads) = valueWithGradient(at: model) { model -> Tensor<Float> in
+            let logits = model(X)
+            return softmaxCrossEntropy(logits: logits, labels: y)
+        }
 
-    // Update parameters by optimizer
-    optimizer.update(&model.self, along: grads)
+        // Update parameters by optimizer
+        optimizer.update(&model.self, along: grads)
     }
 
     let logits = model(testImages)
