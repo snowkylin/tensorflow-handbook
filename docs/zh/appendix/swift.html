@@ -20,24 +20,15 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -138,6 +129,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#swift">Swift 基础使用</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#swift-tensorflow-api">在 Swift 中使用标准的 TensorFlow API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#swift-python">在 Swift 中直接加载 Python 语言库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">语言原生支持自动微分</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#mnist">MNIST数字分类</a></li>
 </ul>
 </li>
@@ -218,7 +210,7 @@
             
   <div class="section" id="swift-for-tensorflow-s4tf-huan">
 <h1>Swift for TensorFlow (S4TF) (Huan）<a class="headerlink" href="#swift-for-tensorflow-s4tf-huan" title="永久链接至标题">¶</a></h1>
-<div class="figure align-center" id="id3">
+<div class="figure align-center" id="id4">
 <a class="reference internal image-reference" href="../../_images/swift-tensorflow.png"><img alt="../../_images/swift-tensorflow.png" src="../../_images/swift-tensorflow.png" style="width: 60%;" /></a>
 <p class="caption"><span class="caption-text">“Swift for Tensorflow is an attempt to change the default tools used by the entire machine learning and data science ecosystem.”</span></p>
 <div class="legend">
@@ -341,86 +333,86 @@ for (image, label) in zip(imageBatch, labelBatch) {
 </pre></div>
 </div>
 <p>除了能够直接调用 Python 之外，Swift 也快成直接调用系统函数库。比如下面的代码例子展示了我们可以在 Swift 中直接加载 Glibc 的动态库，然后调用系统底层的 malloc 和 memcpy 函数，对变量直接进行操作。</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span><span class="kd">import</span> <span class="nc">Glibc</span>
+<span class="kd">let</span> <span class="nv">x</span> <span class="p">=</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;memcpy from Glibc&quot;</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
+<span class="n">free</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>通过 Swift 强大的集成能力，针对 C/C++ 语言库的加载和调用，处理起来也将会是非常简单高效。</p>
+</div>
+<div class="section" id="id3">
+<h2>语言原生支持自动微分<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>我们可以通过 <code class="docutils literal notranslate"><span class="pre">&#64;differentiable</span></code> 参数，非常容易的定义一个可被微分的函数。</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span><span class="p">@</span><span class="n">differentiable</span>
+<span class="kd">func</span> <span class="nf">frac</span><span class="p">(</span><span class="kc">_</span> <span class="n">x</span><span class="p">:</span><span class="nb">Double</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">Double</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="n">x</span>
+<span class="p">}</span>
+
+<span class="n">gradient</span><span class="p">(</span><span class="n">at</span><span class="p">:</span><span class="mf">0.5</span><span class="p">)</span> <span class="p">{</span> <span class="n">x</span> <span class="k">in</span> <span class="n">frac</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">}</span>
+
+<span class="c1">// Output: -4.0</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="mnist">
 <h2>MNIST数字分类<a class="headerlink" href="#mnist" title="永久链接至标题">¶</a></h2>
-<p>这个例子来自于 <a class="reference external" href="https://github.com/tensorflow/swift-models/blob/master/Examples/LeNet-MNIST/">Swift Models 文档</a>: LeNet-5 with MNIST</p>
-<p>可以通过以下命令，运行这个例子：</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/tensorflow/swift-models.git
-<span class="nb">cd</span> swift-models
-swift run -c release LeNet-MNIST
+<p>本小节的源代码可以在 <a class="reference external" href="https://github.com/huan/tensorflow-handbook-swift/src">https://github.com/huan/tensorflow-handbook-swift/src</a> 找到。其中的 <code class="docutils literal notranslate"><span class="pre">Mnist</span></code> 数据集的辅助类的源代码文件为 <code class="docutils literal notranslate"><span class="pre">mnist.swift</span></code> ，需要单独加载。</p>
+<p>更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址：<a class="reference external" href="https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/swift-for-tensorflow-mnist-example">https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/swift-for-tensorflow-mnist-example</a>.ipynb（推荐）</p>
+<p>代码：</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span><span class="kd">import</span> <span class="nc">TensorFlow</span>
+<span class="kd">import</span> <span class="nc">Python</span>
+<span class="kd">import</span> <span class="nc">Foundation</span>
+
+<span class="kd">struct</span> <span class="nc">MLP</span><span class="p">:</span> <span class="n">Layer</span> <span class="p">{</span>
+<span class="kd">typealias</span> <span class="n">Input</span> <span class="p">=</span> <span class="n">Tensor</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;</span>
+<span class="kd">typealias</span> <span class="n">Output</span> <span class="p">=</span> <span class="n">Tensor</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;</span>
+
+<span class="kd">var</span> <span class="nv">flatten</span> <span class="p">=</span> <span class="n">Flatten</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;()</span>
+<span class="kd">var</span> <span class="nv">dense</span> <span class="p">=</span> <span class="n">Dense</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;(</span><span class="n">inputSize</span><span class="p">:</span> <span class="mi">784</span><span class="p">,</span> <span class="n">outputSize</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="p">@</span><span class="n">differentiable</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">callAsFunction</span><span class="p">(</span><span class="kc">_</span> <span class="n">input</span><span class="p">:</span> <span class="n">Input</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">Output</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">input</span><span class="p">.</span><span class="n">sequenced</span><span class="p">(</span><span class="n">through</span><span class="p">:</span> <span class="n">flatten</span><span class="p">,</span> <span class="n">dense</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nv">model</span> <span class="p">=</span> <span class="n">MLP</span><span class="p">()</span>
+<span class="kd">let</span> <span class="nv">optimizer</span> <span class="p">=</span> <span class="n">Adam</span><span class="p">(</span><span class="k">for</span><span class="p">:</span> <span class="n">model</span><span class="p">)</span>
+
+<span class="cm">/**</span>
+<span class="cm">* The Mnist class source code is from:</span>
+<span class="cm">* https://github.com/huan/tensorflow-handbook-swift/src/mnist.swift</span>
+<span class="cm">*/</span>
+<span class="kd">let</span> <span class="nv">mnist</span> <span class="p">=</span> <span class="n">Mnist</span><span class="p">()</span>
+<span class="kd">let</span> <span class="p">(</span><span class="n">trainImages</span><span class="p">,</span> <span class="n">trainLabels</span><span class="p">,</span> <span class="n">testImages</span><span class="p">,</span> <span class="n">testLabels</span><span class="p">)</span> <span class="p">=</span> <span class="n">mnist</span><span class="p">.</span><span class="n">splitTrainTest</span><span class="p">()</span>
+
+<span class="kd">let</span> <span class="nv">imageBatch</span> <span class="p">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">elements</span><span class="p">:</span> <span class="n">trainImages</span><span class="p">).</span><span class="n">batched</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<span class="kd">let</span> <span class="nv">labelBatch</span> <span class="p">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">elements</span><span class="p">:</span> <span class="n">trainLabels</span><span class="p">).</span><span class="n">batched</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">in</span> <span class="n">zip</span><span class="p">(</span><span class="n">imageBatch</span><span class="p">,</span> <span class="n">labelBatch</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">// Caculate the gradient</span>
+<span class="kd">let</span> <span class="p">(</span><span class="n">_loss</span><span class="p">,</span> <span class="n">grads</span><span class="p">)</span> <span class="p">=</span> <span class="n">valueWithGradient</span><span class="p">(</span><span class="n">at</span><span class="p">:</span> <span class="n">model</span><span class="p">)</span> <span class="p">{</span> <span class="n">model</span> <span class="p">-&gt;</span> <span class="n">Tensor</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;</span> <span class="k">in</span>
+    <span class="kd">let</span> <span class="nv">logits</span> <span class="p">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">softmaxCrossEntropy</span><span class="p">(</span><span class="n">logits</span><span class="p">:</span> <span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="n">y</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// Update parameters by optimizer</span>
+<span class="n">optimizer</span><span class="p">.</span><span class="n">update</span><span class="p">(&amp;</span><span class="n">model</span><span class="p">.</span><span class="n">allDifferentiableVariables</span><span class="p">,</span> <span class="n">along</span><span class="p">:</span> <span class="n">grads</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nv">logits</span> <span class="p">=</span> <span class="n">model</span><span class="p">(</span><span class="n">testImages</span><span class="p">)</span>
+<span class="kd">let</span> <span class="nv">acc</span> <span class="p">=</span> <span class="n">mnist</span><span class="p">.</span><span class="n">getAccuracy</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="n">testLabels</span><span class="p">,</span> <span class="n">logits</span><span class="p">:</span> <span class="n">logits</span><span class="p">)</span>
+
+<span class="bp">print</span><span class="p">(</span><span class="s">&quot;Test Accuracy: </span><span class="si">\(</span><span class="n">acc</span><span class="si">)</span><span class="s">&quot;</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>代码：</p>
-<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span>import TensorFlow
-import ImageClassificationModels
-import Datasets
-
-let epochCount = 12
-let batchSize = 128
-
-let dataset = MNIST(batchSize: batchSize)
-var classifier = LeNet()
-
-let optimizer = SGD(for: classifier, learningRate: 0.1)
-
-print(&quot;Beginning training...&quot;)
-
-struct Statistics {
-    var correctGuessCount: Int = 0
-    var totalGuessCount: Int = 0
-    var totalLoss: Float = 0
-}
-
-// The training loop.
-for epoch in 1...epochCount {
-    var trainStats = Statistics()
-    var testStats = Statistics()
-    Context.local.learningPhase = .training
-    for i in 0 ..&lt; dataset.trainingSize / batchSize {
-        let x = dataset.trainingImages.minibatch(at: i, batchSize: batchSize)
-        let y = dataset.trainingLabels.minibatch(at: i, batchSize: batchSize)
-        // Compute the gradient with respect to the model.
-        let 𝛁model = classifier.gradient { classifier -&gt; Tensor&lt;Float&gt; in
-            let ŷ = classifier(x)
-            let correctPredictions = ŷ.argmax(squeezingAxis: 1) .== y
-            trainStats.correctGuessCount += Int(
-              Tensor&lt;Int32&gt;(correctPredictions).sum().scalarized())
-            trainStats.totalGuessCount += batchSize
-            let loss = softmaxCrossEntropy(logits: ŷ, labels: y)
-            trainStats.totalLoss += loss.scalarized()
-            return loss
-        }
-        // Update the model&#39;s differentiable variables along the gradient vector.
-        optimizer.update(&amp;classifier, along: 𝛁model)
-    }
-
-    Context.local.learningPhase = .inference
-    for i in 0 ..&lt; dataset.testSize / batchSize {
-        let x = dataset.testImages.minibatch(at: i, batchSize: batchSize)
-        let y = dataset.testLabels.minibatch(at: i, batchSize: batchSize)
-        // Compute loss on test set
-        let ŷ = classifier(x)
-        let correctPredictions = ŷ.argmax(squeezingAxis: 1) .== y
-        testStats.correctGuessCount += Int(Tensor&lt;Int32&gt;(correctPredictions).sum().scalarized())
-        testStats.totalGuessCount += batchSize
-        let loss = softmaxCrossEntropy(logits: ŷ, labels: y)
-        testStats.totalLoss += loss.scalarized()
-    }
-
-    let trainAccuracy = Float(trainStats.correctGuessCount) / Float(trainStats.totalGuessCount)
-    let testAccuracy = Float(testStats.correctGuessCount) / Float(testStats.totalGuessCount)
-    print(&quot;&quot;&quot;
-          [Epoch \(epoch)] \
-          Training Loss: \(trainStats.totalLoss), \
-          Training Accuracy: \(trainStats.correctGuessCount)/\(trainStats.totalGuessCount) \
-          (\(trainAccuracy)), \
-          Test Loss: \(testStats.totalLoss), \
-          Test Accuracy: \(testStats.correctGuessCount)/\(testStats.totalGuessCount) \
-          (\(testAccuracy))
-          &quot;&quot;&quot;)
-}
+<p>以上程序运行输出为：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Downloading</span> <span class="n">train</span><span class="o">-</span><span class="n">images</span><span class="o">-</span><span class="n">idx3</span><span class="o">-</span><span class="n">ubyte</span> <span class="o">...</span>
+<span class="n">Downloading</span> <span class="n">train</span><span class="o">-</span><span class="n">labels</span><span class="o">-</span><span class="n">idx1</span><span class="o">-</span><span class="n">ubyte</span> <span class="o">...</span>
+<span class="n">Reading</span> <span class="n">data</span><span class="o">.</span>
+<span class="n">Constructing</span> <span class="n">data</span> <span class="n">tensors</span><span class="o">.</span>
+<span class="n">Test</span> <span class="n">Accuracy</span><span class="p">:</span> <span class="mf">0.9116667</span>
 </pre></div>
 </div>
 </div>
