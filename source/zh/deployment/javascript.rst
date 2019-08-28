@@ -12,20 +12,20 @@ TensorFlow in JavaScript（Huan）
      
      -- Paul Graham, YC Founder
 
-Tensorflow.js 简介
+TensorFlow.js 简介
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. figure:: /_static/image/javascript/tensorflow-js.gif
     :width: 60%
     :align: center
 
-Tensorflow.js 是 Tensorflow 的 JavaScript 版本，支持GPU硬件加速，可以运行在 Node.js 或浏览器环境中。它不但支持完全基于 JavaScript 从头开发、训练和部署模型，也可以用来运行已有的 Python 版 Tensorflow 模型，或者基于现有的模型进行继续训练。
+TensorFlow.js 是 Tensorflow 的 JavaScript 版本，支持GPU硬件加速，可以运行在 Node.js 或浏览器环境中。它不但支持完全基于 JavaScript 从头开发、训练和部署模型，也可以用来运行已有的 Python 版 Tensorflow 模型，或者基于现有的模型进行继续训练。
 
 .. figure:: /_static/image/javascript/architecture.gif
     :width: 60%
     :align: center
 
-Tensorflow.js 支持 GPU 硬件加速。在 Node.js 环境中，如果有 CUDA 环境支持，或者在浏览器环境中，有 WebGL 环境支持，那么 Tensorflow.js 可以使用硬件进行加速。
+TensorFlow.js 支持 GPU 硬件加速。在 Node.js 环境中，如果有 CUDA 环境支持，或者在浏览器环境中，有 WebGL 环境支持，那么 TensorFlow.js 可以使用硬件进行加速。
 
 微信小程序也提供了官方插件，封装了TensorFlow.js库，利用小程序WebGL API给第三方小程序调用时提供GPU加速。
 
@@ -33,14 +33,14 @@ Tensorflow.js 支持 GPU 硬件加速。在 Node.js 环境中，如果有 CUDA �
 
 本章中提到的 JavaScript 版 Tensorflow 的相关代码，使用说明，和训练好的模型文件及参数，都可以在作者的 GitHub 上找到。地址： https://github.com/huan/tensorflow-handbook-javascript
 
-在浏览器中使用 Tensorflow.js
+在浏览器中使用 TensorFlow.js
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. figure:: /_static/image/javascript/chrome-ml.png
     :width: 60%
     :align: center
 
-Tensorflow.js可以让我们直接在浏览器中加载Tensorflow，让用户立即通过本地的CPU/GPU资源进行我们所需要的机器学习运算，更灵活的进行AI应用的开发。
+TensorFlow.js可以让我们直接在浏览器中加载Tensorflow，让用户立即通过本地的CPU/GPU资源进行我们所需要的机器学习运算，更灵活的进行AI应用的开发。
 
 浏览器中进行机器学习，相对比与服务器端来讲，将拥有以下四大优势：
 
@@ -49,20 +49,21 @@ Tensorflow.js可以让我们直接在浏览器中加载Tensorflow，让用户立
 * 可以通过手机浏览器，调用手机硬件的各种传感器（如：GPS、电子罗盘、加速度传感器、摄像头等）；
 * 用户的数据可以无需上传到服务器，在本地即可完成所需操作。
 
-通过这些优势，Tensorflow.js 将带给开发者带来极高的灵活性。比如我们可以在手机上打开浏览器，通过手机摄像头检测视频中用户的身体动作姿势，然后通过对图片数据库中类似身体动作姿势的检索，给用户显示一个最能够和他当前动作相似的照片。这就是 Google Creative Lab 在2018年7月发布的 Move Mirror。在 Move Mirror 的运行过程中，数据没有上传到服务器，所有的运算都是在手机本地，基于手机的CPU/GPU完成的，而这项技术，将使Servreless与AI应用结合起来成为可能。
+通过这些优势，TensorFlow.js 将带给开发者带来极高的灵活性。比如在 Google Creative Lab 在2018年7月发布的 Move Mirror 里，我们可以在手机上打开浏览器，通过手机摄像头检测视频中用户的身体动作姿势，然后通过对图片数据库中类似身体动作姿势的检索，给用户显示一个最能够和他当前动作相似的照片。在Move Mirror的运行过程中，数据没有上传到服务器，所有的运算都是在手机本地，基于手机的CPU/GPU完成的，而这项技术，将使Servreless与AI应用结合起来成为可能。
 
 .. figure:: /_static/image/javascript/move-mirror.jpg
     :width: 60%
     :align: center
 
-Move Mirror 所使用的 PoseNet 地址：https://github.com/tensorflow/tfjs-models/tree/master/posenet
+- Move Mirror 地址：<https://experiments.withgoogle.com/move-mirror>
+- Move Mirror 所使用的 PoseNet 地址：https://github.com/tensorflow/tfjs-models/tree/master/posenet
 
 一个浏览器中的基本的线性回归模型
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 在 Tensorflow 基础章节中，我们已经用 Python 实现过，针对某城市在2013年-2017年的房价的任务，通过对该数据进行线性回归，即使用线性模型 :math:`y = ax + b` 来拟合上述数据，此处 :math:`a` 和 :math:`b` 是待求的参数。
 
-下面我们改用 Tensorflow.js 来实现一个 JavaScript 版本。
+下面我们改用 TensorFlow.js 来实现一个 JavaScript 版本。
 
 首先，我们定义数据，进行基本的归一化操作。
 
@@ -190,12 +191,12 @@ Tensorflow.js 微信小程序官方文档地址： <https://mp.weixin.qq.com/wxo
     $ npm --version
     6.4.1
 
-2. 建立 Tensorflow.js 项目目录::
+2. 建立 TensorFlow.js 项目目录::
 
     $ mkdir tfjs
     $ cd tfjs
 
-3. 安装 Tensorflow.js::
+3. 安装 TensorFlow.js::
 
     # 初始化项目管理文件 package.json
     $ npm init -y
@@ -209,7 +210,7 @@ Tensorflow.js 微信小程序官方文档地址： <https://mp.weixin.qq.com/wxo
     # 安装 tfjs-node-gpu 库，支持 CUDA GPU 加速
     $ npm install @tensorflow/tfjs-node-gpu
 
-4. 确认 Node.js 和 Tensorflow.js 工作正常::
+4. 确认 Node.js 和 TensorFlow.js 工作正常::
 
     $ node
     > require('@tensorflow/tfjs').version
@@ -242,7 +243,7 @@ Tensorflow.js 提供了一系列预训练好的模型，方便大家快速的给
 - 谷歌云地址是：**https://storage.googleapis.com**/tfjs-models/savedmodel/posenet/mobilenet/float/050/model-stride16.json
 - 中国镜像地址是：**https://www.gstaticcnapps.cn**/tfjs-models/savedmodel/posenet/mobilenet/float/050/model-stride16.json
 
-通过 Tensorflow.js 加载 Python 模型
+通过 TensorFlow.js 加载 Python 模型
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 一般Tensorflow的模型，以Python版本为例，会被存储为以下四种格式之一：
@@ -252,9 +253,9 @@ Tensorflow.js 提供了一系列预训练好的模型，方便大家快速的给
 * Tensorflow Hub Module
 * Keras Module
 
-所有以上四种格式，都可以通过 tensorflowjs-converter 转换器，将其转换为可以直接被 Tensorflow.js 加载的格式，在JavaScript语言中进行使用。
+Google 目前最佳实践中，推荐使用 SavedModel 方法进行模型保存。同时所有以上格式，都可以通过 tensorflowjs-converter 转换器，将其转换为可以直接被 TensorFlow.js 加载的格式，在JavaScript语言中进行使用。
 
-Tensorflow.js转换器tensorflowjs_converter
+TensorFlow.js转换器tensorflowjs_converter
 -------------------------------------------
 
 ``tensorflowjs_converter`` 可以将Python存储的模型格式，转换为JavaScript可以直接调用的模型格式。
@@ -268,7 +269,7 @@ Tensorflow.js转换器tensorflowjs_converter
 
     $ tensorflowjs_converter --help
 
-以下我们以MobilenetV1为例，看一下如何对模型文件进行转换操作，并将可以被Tensorflow.js加载的模型文件，存放到 ``/mobilenet/tfjs_model`` 目录下。
+以下我们以MobilenetV1为例，看一下如何对模型文件进行转换操作，并将可以被TensorFlow.js加载的模型文件，存放到 ``/mobilenet/tfjs_model`` 目录下。
 
 转换 SavedModel
 -------------------------------------------
@@ -336,10 +337,10 @@ Tensorflow.js转换器tensorflowjs_converter
     model.execute(tf.browser.fromPixels(cat))
 
 
-Tensorflow.js 性能对比
+TensorFlow.js 性能对比
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Tensorflow.js的性能如何，Google官方做了一份基于 MobileNet 的评测，可以作为参考。具体评测是基于 MobileNet 的 Tensorflow 模型，将其 JavaScript 版本和 Python 版本各运行两百次。
+TensorFlow.js的性能如何，Google官方做了一份基于 MobileNet 的评测，可以作为参考。具体评测是基于 MobileNet 的 Tensorflow 模型，将其 JavaScript 版本和 Python 版本各运行两百次。
 
 其评测结论如下。
 
@@ -360,29 +361,29 @@ Tensorflow.js在手机浏览器中运行一次推理：
 台式机浏览器性能
 ------------------------------
 
-在浏览器中，Tensorflow.js 可以使用 WebGL 进行硬件加速，将 GPU 资源使用起来。
+在浏览器中，TensorFlow.js 可以使用 WebGL 进行硬件加速，将 GPU 资源使用起来。
 
 .. figure:: /_static/image/javascript/performance-browser.gif
     :width: 60%
     :align: center
 
-Tensorflow.js在浏览器中运行一次推理：
+TensorFlow.js在浏览器中运行一次推理：
 
 * 在CPU上需要时间为97ms
 * 在GPU (WebGL)上需要时间为10ms
 
-与Python代码基准相比，浏览器中的 Tensorflow.js 在 CPU 上的运行时间为基准的1.7倍，在 GPU (WebGL) 上运行的时间为基准的3.8倍。
+与Python代码基准相比，浏览器中的 TensorFlow.js 在 CPU 上的运行时间为基准的1.7倍，在 GPU (WebGL) 上运行的时间为基准的3.8倍。
 
 Node.js性能
 ------------------------------
 
-在 Node.js 中，Tensorflow.js 使用 Tensorflow 的 C Binding ，所以基本上可以达到和 Python 接近的效果。
+在 Node.js 中，TensorFlow.js 使用 Tensorflow 的 C Binding ，所以基本上可以达到和 Python 接近的效果。
 
 .. figure:: /_static/image/javascript/performance-node.png
     :width: 60%
     :align: center
 
-Tensorflow.js 在 Node.js 运行一次推理：
+TensorFlow.js 在 Node.js 运行一次推理：
 
 * 在 CPU 上需要时间为56ms
 * 在 GPU(CUDA) 上需要时间为14ms
