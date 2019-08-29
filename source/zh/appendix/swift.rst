@@ -174,7 +174,7 @@ MNIST数字分类
 
 本小节的源代码可以在 <https://github.com/huan/tensorflow-handbook-swift> 找到。加载 `MNIST` 数据集使用了作者封装的 Swift Module [swift-MNIST](https://github.com/huan/swift-MNIST)。
 
-更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址：https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/swift-for-tensorflow-mnist-example.ipynb（推荐）
+更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址：https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb（推荐）
 
 代码：
 
