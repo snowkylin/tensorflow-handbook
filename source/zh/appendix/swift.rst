@@ -172,9 +172,9 @@ Swift 语言支持直接加载 Python 函数库（比如 NumPy），也支持直
 MNIST数字分类
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-本小节的源代码可以在 https://github.com/huan/tensorflow-handbook-swift/src 找到。其中的 ``Mnist`` 数据集的辅助类的源代码文件为 ``mnist.swift`` ，需要单独加载。
+本小节的源代码可以在 <https://github.com/huan/tensorflow-handbook-swift> 找到。加载 `MNIST` 数据集使用了作者封装的 Swift Module [swift-MNIST](https://github.com/huan/swift-MNIST)。
 
-更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址： https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/swift-for-tensorflow-mnist-example.ipynb （推荐）
+更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址： https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb （推荐）
 
 代码：
 
@@ -184,41 +184,43 @@ MNIST数字分类
     import Python
     import Foundation
 
-    struct MLP: Layer {
-    typealias Input = Tensor<Float>
-    typealias Output = Tensor<Float>
+    /**
+    * The Swift Module for MNIST Dataset:
+    * https://github.com/huan/swift-MNIST
+    */
+    import MNIST
 
-    var flatten = Flatten<Float>()
-    var dense = Dense<Float>(inputSize: 784, outputSize: 10)
-    
-    @differentiable
-    public func callAsFunction(_ input: Input) -> Output {
-        return input.sequenced(through: flatten, dense)
-    }  
+    struct MLP: Layer {
+        typealias Input = Tensor<Float>
+        typealias Output = Tensor<Float>
+
+        var flatten = Flatten<Float>()
+        var dense = Dense<Float>(inputSize: 784, outputSize: 10)
+        
+        @differentiable
+        public func callAsFunction(_ input: Input) -> Output {
+            return input.sequenced(through: flatten, dense)
+        }  
     }
 
     var model = MLP()
     let optimizer = Adam(for: model)
 
-    /**
-    * The Mnist class source code is from:
-    * https://github.com/huan/tensorflow-handbook-swift/src/mnist.swift
-    */
-    let mnist = Mnist()
-    let (trainImages, trainLabels, testImages, testLabels) = mnist.splitTrainTest()
+    let mnist = MNIST()
+    let ((trainImages, trainLabels), (testImages, testLabels)) = mnist.loadData()
 
     let imageBatch = Dataset(elements: trainImages).batched(32)
     let labelBatch = Dataset(elements: trainLabels).batched(32)
 
     for (X, y) in zip(imageBatch, labelBatch) {
-    // Caculate the gradient
-    let (_loss, grads) = valueWithGradient(at: model) { model -> Tensor<Float> in
-        let logits = model(X)
-        return softmaxCrossEntropy(logits: logits, labels: y)
-    }
+        // Caculate the gradient
+        let (_, grads) = valueWithGradient(at: model) { model -> Tensor<Float> in
+            let logits = model(X)
+            return softmaxCrossEntropy(logits: logits, labels: y)
+        }
 
-    // Update parameters by optimizer
-    optimizer.update(&model.allDifferentiableVariables, along: grads)
+        // Update parameters by optimizer
+        optimizer.update(&model.self, along: grads)
     }
 
     let logits = model(testImages)
