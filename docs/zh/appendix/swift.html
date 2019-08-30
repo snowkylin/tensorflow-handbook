@@ -366,48 +366,50 @@ for (image, label) in zip(imageBatch, labelBatch) {
 </div>
 <div class="section" id="mnist">
 <h2>MNIST数字分类<a class="headerlink" href="#mnist" title="永久链接至标题">¶</a></h2>
-<p>本小节的源代码可以在 <a class="reference external" href="https://github.com/huan/tensorflow-handbook-swift/src">https://github.com/huan/tensorflow-handbook-swift/src</a> 找到。其中的 <code class="docutils literal notranslate"><span class="pre">Mnist</span></code> 数据集的辅助类的源代码文件为 <code class="docutils literal notranslate"><span class="pre">mnist.swift</span></code> ，需要单独加载。</p>
-<p>更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址： <a class="reference external" href="https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/swift-for-tensorflow-mnist-example.ipynb">https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/swift-for-tensorflow-mnist-example.ipynb</a> （推荐）</p>
+<p>本小节的源代码可以在 &lt;<a class="reference external" href="https://github.com/huan/tensorflow-handbook-swift">https://github.com/huan/tensorflow-handbook-swift</a>&gt; 找到。加载 <cite>MNIST</cite> 数据集使用了作者封装的 Swift Module [swift-MNIST](<a class="reference external" href="https://github.com/huan/swift-MNIST">https://github.com/huan/swift-MNIST</a>)。</p>
+<p>更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址： <a class="reference external" href="https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb">https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb</a> （推荐）</p>
 <p>代码：</p>
 <div class="highlight-swift notranslate"><div class="highlight"><pre><span></span><span class="kd">import</span> <span class="nc">TensorFlow</span>
 <span class="kd">import</span> <span class="nc">Python</span>
 <span class="kd">import</span> <span class="nc">Foundation</span>
 
+<span class="cm">/**</span>
+<span class="cm">* The Swift Module for MNIST Dataset:</span>
+<span class="cm">* https://github.com/huan/swift-MNIST</span>
+<span class="cm">*/</span>
+<span class="kd">import</span> <span class="nc">MNIST</span>
+
 <span class="kd">struct</span> <span class="nc">MLP</span><span class="p">:</span> <span class="n">Layer</span> <span class="p">{</span>
-<span class="kd">typealias</span> <span class="n">Input</span> <span class="p">=</span> <span class="n">Tensor</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;</span>
-<span class="kd">typealias</span> <span class="n">Output</span> <span class="p">=</span> <span class="n">Tensor</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;</span>
+    <span class="kd">typealias</span> <span class="n">Input</span> <span class="p">=</span> <span class="n">Tensor</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;</span>
+    <span class="kd">typealias</span> <span class="n">Output</span> <span class="p">=</span> <span class="n">Tensor</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;</span>
 
-<span class="kd">var</span> <span class="nv">flatten</span> <span class="p">=</span> <span class="n">Flatten</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;()</span>
-<span class="kd">var</span> <span class="nv">dense</span> <span class="p">=</span> <span class="n">Dense</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;(</span><span class="n">inputSize</span><span class="p">:</span> <span class="mi">784</span><span class="p">,</span> <span class="n">outputSize</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="kd">var</span> <span class="nv">flatten</span> <span class="p">=</span> <span class="n">Flatten</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;()</span>
+    <span class="kd">var</span> <span class="nv">dense</span> <span class="p">=</span> <span class="n">Dense</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;(</span><span class="n">inputSize</span><span class="p">:</span> <span class="mi">784</span><span class="p">,</span> <span class="n">outputSize</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
 
-<span class="p">@</span><span class="n">differentiable</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="nf">callAsFunction</span><span class="p">(</span><span class="kc">_</span> <span class="n">input</span><span class="p">:</span> <span class="n">Input</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">Output</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">input</span><span class="p">.</span><span class="n">sequenced</span><span class="p">(</span><span class="n">through</span><span class="p">:</span> <span class="n">flatten</span><span class="p">,</span> <span class="n">dense</span><span class="p">)</span>
-<span class="p">}</span>
+    <span class="p">@</span><span class="n">differentiable</span>
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">callAsFunction</span><span class="p">(</span><span class="kc">_</span> <span class="n">input</span><span class="p">:</span> <span class="n">Input</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">Output</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">input</span><span class="p">.</span><span class="n">sequenced</span><span class="p">(</span><span class="n">through</span><span class="p">:</span> <span class="n">flatten</span><span class="p">,</span> <span class="n">dense</span><span class="p">)</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="kd">var</span> <span class="nv">model</span> <span class="p">=</span> <span class="n">MLP</span><span class="p">()</span>
 <span class="kd">let</span> <span class="nv">optimizer</span> <span class="p">=</span> <span class="n">Adam</span><span class="p">(</span><span class="k">for</span><span class="p">:</span> <span class="n">model</span><span class="p">)</span>
 
-<span class="cm">/**</span>
-<span class="cm">* The Mnist class source code is from:</span>
-<span class="cm">* https://github.com/huan/tensorflow-handbook-swift/src/mnist.swift</span>
-<span class="cm">*/</span>
-<span class="kd">let</span> <span class="nv">mnist</span> <span class="p">=</span> <span class="n">Mnist</span><span class="p">()</span>
-<span class="kd">let</span> <span class="p">(</span><span class="n">trainImages</span><span class="p">,</span> <span class="n">trainLabels</span><span class="p">,</span> <span class="n">testImages</span><span class="p">,</span> <span class="n">testLabels</span><span class="p">)</span> <span class="p">=</span> <span class="n">mnist</span><span class="p">.</span><span class="n">splitTrainTest</span><span class="p">()</span>
+<span class="kd">let</span> <span class="nv">mnist</span> <span class="p">=</span> <span class="n">MNIST</span><span class="p">()</span>
+<span class="kd">let</span> <span class="p">((</span><span class="n">trainImages</span><span class="p">,</span> <span class="n">trainLabels</span><span class="p">),</span> <span class="p">(</span><span class="n">testImages</span><span class="p">,</span> <span class="n">testLabels</span><span class="p">))</span> <span class="p">=</span> <span class="n">mnist</span><span class="p">.</span><span class="n">loadData</span><span class="p">()</span>
 
 <span class="kd">let</span> <span class="nv">imageBatch</span> <span class="p">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">elements</span><span class="p">:</span> <span class="n">trainImages</span><span class="p">).</span><span class="n">batched</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
 <span class="kd">let</span> <span class="nv">labelBatch</span> <span class="p">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">elements</span><span class="p">:</span> <span class="n">trainLabels</span><span class="p">).</span><span class="n">batched</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">in</span> <span class="n">zip</span><span class="p">(</span><span class="n">imageBatch</span><span class="p">,</span> <span class="n">labelBatch</span><span class="p">)</span> <span class="p">{</span>
-<span class="c1">// Caculate the gradient</span>
-<span class="kd">let</span> <span class="p">(</span><span class="n">_loss</span><span class="p">,</span> <span class="n">grads</span><span class="p">)</span> <span class="p">=</span> <span class="n">valueWithGradient</span><span class="p">(</span><span class="n">at</span><span class="p">:</span> <span class="n">model</span><span class="p">)</span> <span class="p">{</span> <span class="n">model</span> <span class="p">-&gt;</span> <span class="n">Tensor</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;</span> <span class="k">in</span>
-    <span class="kd">let</span> <span class="nv">logits</span> <span class="p">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">softmaxCrossEntropy</span><span class="p">(</span><span class="n">logits</span><span class="p">:</span> <span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="n">y</span><span class="p">)</span>
-<span class="p">}</span>
+    <span class="c1">// Caculate the gradient</span>
+    <span class="kd">let</span> <span class="p">(</span><span class="kc">_</span><span class="p">,</span> <span class="n">grads</span><span class="p">)</span> <span class="p">=</span> <span class="n">valueWithGradient</span><span class="p">(</span><span class="n">at</span><span class="p">:</span> <span class="n">model</span><span class="p">)</span> <span class="p">{</span> <span class="n">model</span> <span class="p">-&gt;</span> <span class="n">Tensor</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;</span> <span class="k">in</span>
+        <span class="kd">let</span> <span class="nv">logits</span> <span class="p">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">softmaxCrossEntropy</span><span class="p">(</span><span class="n">logits</span><span class="p">:</span> <span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="n">y</span><span class="p">)</span>
+    <span class="p">}</span>
 
-<span class="c1">// Update parameters by optimizer</span>
-<span class="n">optimizer</span><span class="p">.</span><span class="n">update</span><span class="p">(&amp;</span><span class="n">model</span><span class="p">.</span><span class="n">allDifferentiableVariables</span><span class="p">,</span> <span class="n">along</span><span class="p">:</span> <span class="n">grads</span><span class="p">)</span>
+    <span class="c1">// Update parameters by optimizer</span>
+    <span class="n">optimizer</span><span class="p">.</span><span class="n">update</span><span class="p">(&amp;</span><span class="n">model</span><span class="p">.</span><span class="kc">self</span><span class="p">,</span> <span class="n">along</span><span class="p">:</span> <span class="n">grads</span><span class="p">)</span>
 <span class="p">}</span>
 
 <span class="kd">let</span> <span class="nv">logits</span> <span class="p">=</span> <span class="n">model</span><span class="p">(</span><span class="n">testImages</span><span class="p">)</span>
