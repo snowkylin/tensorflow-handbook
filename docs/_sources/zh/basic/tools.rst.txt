@@ -505,6 +505,11 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
 
 关于Graph Execution的更多内容可参见 :doc:`/zh/appendix/static`。
 
+``tf.TensorArray`` ：TensorFlow数组 *
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
 ``tf.config``：GPU的使用与分配 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

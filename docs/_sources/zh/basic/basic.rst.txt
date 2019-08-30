@@ -120,6 +120,10 @@ TensorFlow里有大量的 **操作** （Operation），使得我们可以将已�
 基础示例：线性回归
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. admonition:: 基础知识和原理
+    
+    * UFLDL教程 `Linear Regression <http://ufldl.stanford.edu/tutorial/supervised/LinearRegression/>`_ 一节。
+
 考虑一个实际问题，某城市在2013年-2017年的房价如下表所示：
 
 ======  =====  =====  =====  =====  =====

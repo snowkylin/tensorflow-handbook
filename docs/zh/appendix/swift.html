@@ -20,15 +20,24 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'0.4 alpha',
+              LANGUAGE:'zh_CN',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -358,7 +367,7 @@ for (image, label) in zip(imageBatch, labelBatch) {
 <div class="section" id="mnist">
 <h2>MNIST数字分类<a class="headerlink" href="#mnist" title="永久链接至标题">¶</a></h2>
 <p>本小节的源代码可以在 <a class="reference external" href="https://github.com/huan/tensorflow-handbook-swift/src">https://github.com/huan/tensorflow-handbook-swift/src</a> 找到。其中的 <code class="docutils literal notranslate"><span class="pre">Mnist</span></code> 数据集的辅助类的源代码文件为 <code class="docutils literal notranslate"><span class="pre">mnist.swift</span></code> ，需要单独加载。</p>
-<p>更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址：<a class="reference external" href="https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/swift-for-tensorflow-mnist-example">https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/swift-for-tensorflow-mnist-example</a>.ipynb（推荐）</p>
+<p>更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址： <a class="reference external" href="https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/swift-for-tensorflow-mnist-example.ipynb">https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/swift-for-tensorflow-mnist-example.ipynb</a> （推荐）</p>
 <p>代码：</p>
 <div class="highlight-swift notranslate"><div class="highlight"><pre><span></span><span class="kd">import</span> <span class="nc">TensorFlow</span>
 <span class="kd">import</span> <span class="nc">Python</span>

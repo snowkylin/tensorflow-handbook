@@ -20,15 +20,24 @@
   <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'0.4 alpha',
+              LANGUAGE:'zh_CN',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
         <script type="text/javascript" src="_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="_static/js/custom.js"></script>
         <script type="text/javascript" src="_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -240,7 +249,7 @@
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/basic.html#tensorflow-1-1">TensorFlow 1+1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/basic.html#id7">自动求导机制</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/basic.html#linear-regression">基础示例：线性回归</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="zh/basic/basic.html#id13">NumPy下的线性回归</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/basic.html#id14">NumPy下的线性回归</a></li>
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/basic.html#optimizer">TensorFlow下的线性回归</a></li>
 </ul>
 </li>
@@ -287,6 +296,7 @@
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#tf-session">使用传统的 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic/tools.html#tf-tensorarray-tensorflow"><code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> ：TensorFlow数组 *</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/tools.html#tf-config-gpu"><code class="docutils literal notranslate"><span class="pre">tf.config</span></code>：GPU的使用与分配 *</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#gpu">指定当前程序使用的GPU</a></li>
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id11">设置显存使用策略</a></li>

@@ -78,7 +78,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
     这里着重从数学矩阵运算和线性变换的角度描述了全连接层。基于神经元建模的描述可参考 :ref:`后文介绍 <neuron>` 。
 
     .. [#glorot] Keras中的很多层都默认使用 ``tf.glorot_uniform_initializer`` 初始化变量，关于该初始化器可参考 https://www.tensorflow.org/api_docs/python/tf/glorot_uniform_initializer 。
-    .. [#broadcast] 你可能会注意到， ``tf.matmul(input, kernel)`` 的结果是一个形状为 ``[batch_size, units]`` 的二维矩阵，这个二维矩阵要如何与形状为 ``[units]`` 的一维偏置向量bias相加呢？事实上，这里是TensorFlow的Broadcasting机制在起作用，该加法运算相当于将二维矩阵的每一行加上了 ``Bias`` 。Broadcasting机制的具体介绍可见 https://www.tensorflow.org/xla/broadcasting 。
+    .. [#broadcast] 你可能会注意到， ``tf.matmul(input, kernel)`` 的结果是一个形状为 ``[batch_size, units]`` 的二维矩阵，这个二维矩阵要如何与形状为 ``[units]`` 的一维偏置向量 ``bias`` 相加呢？事实上，这里是TensorFlow的Broadcasting机制在起作用，该加法运算相当于将二维矩阵的每一行加上了 ``Bias`` 。Broadcasting机制的具体介绍可见 https://www.tensorflow.org/xla/broadcasting 。
 
 .. admonition:: 为什么模型类是重载 ``call()`` 方法而不是  ``__call__()`` 方法？
 
@@ -98,7 +98,7 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 .. admonition:: 基础知识和原理
     
-    * UFLDL教程 `神经网络 <http://ufldl.stanford.edu/wiki/index.php/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C>`_ 一节。
+    * UFLDL教程 `Multi-Layer Neural Network <http://ufldl.stanford.edu/tutorial/supervised/MultiLayerNeuralNetworks/>`_ 一节；
     * 斯坦福课程 `CS231n: Convolutional Neural Networks for Visual Recognition <http://cs231n.github.io/>`_ 中的“Neural Networks Part 1 ~ 3”部分。
 
 这里，我们使用多层感知机完成MNIST手写体数字图片数据集 [LeCun1998]_ 的分类任务。
@@ -200,7 +200,9 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 模型的评估： ``tf.keras.metrics``
 -------------------------------------------------------------------------------
 
-最后，我们使用测试集评估模型性能。具体而言，比较测试集上模型预测的结果与真实结果，输出预测正确的样本数占总样本数的比例。这里，我们使用 ``tf.keras.metrics`` 中的 ``SparseCategoricalAccuracy`` 评估器来评估模型在测试集上的性能，该评估器。我们迭代测试数据集，每次通过 ``update_state()`` 方法向评估器输入两个参数： ``y_pred`` 和 ``y_true`` ，即模型预测出的结果和真实结果。同时，评估器具有内部变量来保存当前评估指标相关的参数数值（例如当前已传入的累计样本数和当前预测正确的样本数）。迭代结束后，使用 ``result()`` 方法输出最终的评估指标值。在以下代码中，我们实例化了一个 ``tf.keras.metrics.SparseCategoricalAccuracy`` 评估器，并使用For循环迭代分批次传入了测试集数据的预测结果与真实结果，并输出训练后的模型在测试数据集上的准确率。
+最后，我们使用测试集评估模型的性能。这里，我们使用 ``tf.keras.metrics`` 中的 ``SparseCategoricalAccuracy`` 评估器来评估模型在测试集上的性能，该评估器能够对模型预测的结果与真实结果进行比较，并输出预测正确的样本数占总样本数的比例。我们迭代测试数据集，每次通过 ``update_state()`` 方法向评估器输入两个参数： ``y_pred`` 和 ``y_true`` ，即模型预测出的结果和真实结果。评估器具有内部变量来保存当前评估指标相关的参数数值（例如当前已传入的累计样本数和当前预测正确的样本数）。迭代结束后，我们使用 ``result()`` 方法输出最终的评估指标值（预测正确的样本数占总样本数的比例）。
+
+在以下代码中，我们实例化了一个 ``tf.keras.metrics.SparseCategoricalAccuracy`` 评估器，并使用For循环迭代分批次传入了测试集数据的预测结果与真实结果，并输出训练后的模型在测试数据集上的准确率。
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 104-110
@@ -242,7 +244,8 @@ Keras模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` �
 
 .. admonition:: 基础知识和原理
     
-    * 台湾大学李宏毅教授的《机器学习》课程的 `Convolutional Neural Network <https://www.bilibili.com/video/av10590361/?p=21>`_ 一章。
+    * 台湾大学李宏毅教授的《机器学习》课程的 `Convolutional Neural Network <https://www.bilibili.com/video/av10590361/?p=21>`_ 一章；
+    * UFLDL 教程 `Convolutional Neural Network <http://ufldl.stanford.edu/tutorial/supervised/ConvolutionalNeuralNetwork/>`_ 一节；
     * 斯坦福课程 `CS231n: Convolutional Neural Networks for Visual Recognition <http://cs231n.github.io/>`_ 中的“Module 2: Convolutional Neural Networks”部分。
 
 具体的实现见下，和MLP很类似，只是新加入了一些卷积层和池化层。

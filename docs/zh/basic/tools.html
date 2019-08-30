@@ -20,15 +20,24 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'0.4 alpha',
+              LANGUAGE:'zh_CN',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -116,6 +125,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#tf-session">使用传统的 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#tf-tensorarray-tensorflow"><code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> ：TensorFlow数组 *</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tf-config-gpu"><code class="docutils literal notranslate"><span class="pre">tf.config</span></code>：GPU的使用与分配 *</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#gpu">指定当前程序使用的GPU</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id11">设置显存使用策略</a></li>
@@ -936,6 +946,9 @@
 </div>
 <p>关于Graph Execution的更多内容可参见 <a class="reference internal" href="../appendix/static.html"><span class="doc">图模型下的TensorFlow</span></a>。</p>
 </div>
+</div>
+<div class="section" id="tf-tensorarray-tensorflow">
+<h2><code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> ：TensorFlow数组 *<a class="headerlink" href="#tf-tensorarray-tensorflow" title="永久链接至标题">¶</a></h2>
 </div>
 <div class="section" id="tf-config-gpu">
 <h2><code class="docutils literal notranslate"><span class="pre">tf.config</span></code>：GPU的使用与分配 *<a class="headerlink" href="#tf-config-gpu" title="永久链接至标题">¶</a></h2>
