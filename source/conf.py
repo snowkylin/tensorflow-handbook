@@ -32,7 +32,7 @@
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 # imgmath or mathjax
-extensions = [ 'sphinx.ext.mathjax', 'sphinx.ext.intersphinx' ]
+extensions = [ 'sphinx.ext.mathjax', 'sphinx.ext.intersphinx', 'sphinx_markdown_builder' ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -70,7 +70,9 @@ language = 'zh_CN'
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = []
+exclude_patterns = [
+    'build/*'
+]
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'default'
