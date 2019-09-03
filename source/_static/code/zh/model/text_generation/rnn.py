@@ -50,7 +50,7 @@ class DataLoader():
             index = np.random.randint(0, len(self.text) - seq_length)
             seq.append(self.text[index:index+seq_length])
             next_char.append(self.text[index+seq_length])
-        return np.array(seq), np.array(next_char)       # [num_batch, seq_length], [num_batch]
+        return np.array(seq), np.array(next_char)       # [batch_size, seq_length], [num_batch]
 
 
 if __name__ == '__main__':

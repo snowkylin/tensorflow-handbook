@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 ==================================================================
-简单粗暴TensorFlow 2.0 | A Concise Handbook of TensorFlow 2.0
+简单粗暴 TensorFlow 2.0 | A Concise Handbook of TensorFlow 2.0
 ==================================================================
 
 *基于Eager Execution | Based on Eager Execution*
@@ -14,7 +14,7 @@
 
     This document is unfinished, content will be updated rapidly. Please keep it internal at this time.
 
-本手册是一篇精简的TensorFlow 2.0入门指导，基于TensorFlow的Eager Execution（动态图）模式，力图让具备一定机器学习及Python基础的开发者们快速上手TensorFlow 2.0。
+这是一本简明的 TensorFlow 2.0 入门指导手册，基于 Keras 和 Eager Execution（即时运行）模式，力图让具备一定机器学习及Python基础的开发者们快速上手TensorFlow 2.0。
 
 本手册的所有代码基于 TensorFlow 2.0 beta1 版本。
 
@@ -22,7 +22,7 @@
 
 GitHub： https://github.com/snowkylin/tensorflow-handbook
 
-This handbook is a concise introduction to TensorFlow 2.0 based on Eager Execution mode, trying to help developers with some basic machine learning and Python knowledge to get started with TensorFlow 2.0 quickly.
+This is a concise handbook of TensorFlow 2.0 based on Keras and Eager Execution mode, aiming to help developers with some basic machine learning and Python knowledge to get started with TensorFlow 2.0 quickly.
 
 The code of this handbook is based on TensorFlow 2.0 beta1.
 
