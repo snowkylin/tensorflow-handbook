@@ -20,24 +20,15 @@
   <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
         <script type="text/javascript" src="../_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="../_static/js/custom.js"></script>
         <script type="text/javascript" src="../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -105,7 +96,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../zh/basic/installation.html">TensorFlow安装与环境配置</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../zh/basic/basic.html">TensorFlow基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../zh/basic/models.html">TensorFlow模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh/basic/models.html">TensorFlow 模型建立与训练</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../zh/basic/tools.html">TensorFlow常用模块</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
@@ -205,8 +196,8 @@
 <p>This chapter introduces some of the most commonly used TensorFlow extensions. Although these features are not “must”, they make the process of model training and calling more convenient.</p>
 <p>Prerequisites:</p>
 <ul class="simple">
-<li><a class="reference external" href="http://www.runoob.com/python3/python3-inputoutput.html">Python serialization module Pickle</a> (not required)</li>
-<li><a class="reference external" href="https://eastlakeside.gitbooks.io/interpy-zh/content/args_kwargs/Usage_kwargs.html">Python special function parameters **kwargs</a> (not required)</li>
+<li><p><a class="reference external" href="http://www.runoob.com/python3/python3-inputoutput.html">Python serialization module Pickle</a> (not required)</p></li>
+<li><p><a class="reference external" href="https://eastlakeside.gitbooks.io/interpy-zh/content/args_kwargs/Usage_kwargs.html">Python special function parameters **kwargs</a> (not required)</p></li>
 </ul>
 <div class="section" id="checkpoint-saving-and-restoring-variables">
 <h2>Checkpoint: Saving and Restoring Variables<a class="headerlink" href="#checkpoint-saving-and-restoring-variables" title="永久链接至标题">¶</a></h2>
@@ -328,8 +319,8 @@
 <p>By default, TensorBoard updates data every 30 seconds. However, you can also manually refresh by clicking the refresh button in the upper right corner.</p>
 <p>When using TensorBoard, please notice the following notes:</p>
 <ul class="simple">
-<li>If you want to retrain, you need to delete the information in the record folder and restart TensorBoard (or create a new record folder and open TensorBoard with the <code class="docutils literal notranslate"><span class="pre">--logdir</span></code> parameter set to be the newly created folder);</li>
-<li>Language of the record directory path should all be English.</li>
+<li><p>If you want to retrain, you need to delete the information in the record folder and restart TensorBoard (or create a new record folder and open TensorBoard with the <code class="docutils literal notranslate"><span class="pre">--logdir</span></code> parameter set to be the newly created folder);</p></li>
+<li><p>Language of the record directory path should all be English.</p></li>
 </ul>
 <p>Finally, we provide an example of the previous chapter’s <a class="reference internal" href="../zh/basic/models.html#mlp"><span class="std std-ref">multilayer perceptron model</span></a> showing the use of TensorBoard:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>

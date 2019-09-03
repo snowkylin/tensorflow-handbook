@@ -20,24 +20,15 @@
   <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
         <script type="text/javascript" src="../_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="../_static/js/custom.js"></script>
         <script type="text/javascript" src="../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -50,7 +41,7 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="TensorFlow概述" href="introduction.html" />
-    <link rel="prev" title="简单粗暴TensorFlow 2.0 | A Concise Handbook of TensorFlow 2.0" href="../index.html" /> 
+    <link rel="prev" title="简单粗暴 TensorFlow 2.0 | A Concise Handbook of TensorFlow 2.0" href="../index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -112,7 +103,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="basic/installation.html">TensorFlow安装与环境配置</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic/basic.html">TensorFlow基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basic/models.html">TensorFlow模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic/models.html">TensorFlow 模型建立与训练</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic/tools.html">TensorFlow常用模块</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
@@ -212,28 +203,28 @@
 <p>2018年3月30日，Google在加州山景城举行了第二届TensorFlow Dev Summit开发者峰会，并宣布正式发布TensorFlow 1.8版本。笔者有幸获得Google的资助亲临峰会现场，见证了这一具有里程碑式意义的新版本发布。众多新功能的加入和支持展示了TensorFlow的雄心壮志，同时早在2017年秋就开始测试的Eager Execution（动态图机制）在这一版本中终于正式加入，并成为了入门TensorFlow的官方推荐模式。</p>
 <blockquote>
 <div><p>The easiest way to get started with TensorFlow is using Eager Execution.</p>
-<p class="attribution">&mdash;— <a class="reference external" href="https://www.tensorflow.org/get_started/">https://www.tensorflow.org/get_started/</a></p>
+<p class="attribution">—— <a class="reference external" href="https://www.tensorflow.org/get_started/">https://www.tensorflow.org/get_started/</a></p>
 </div></blockquote>
 <p>在此之前，TensorFlow所基于的传统Graph Execution的弊端，如入门门槛高、调试困难、灵活性差、无法使用Python原生控制语句等早已被开发者诟病许久。一些新的基于动态图机制的深度学习框架（如PyTorch）也横空出世，并以其易用性和快速开发的特性而占据了一席之地。尤其是在学术研究等需要快速迭代模型的领域，PyTorch等新兴深度学习框架已经成为主流。笔者所在的数十人的机器学习实验室中，竟只有笔者一人“守旧”地使用TensorFlow。然而，直到目前，市面上相关的TensorFlow相关的中文技术书籍及资料仍然基于传统的Graph Execution模式，让不少初学者（尤其是刚学过机器学习课程的大学生）望而却步。由此，在TensorFlow正式支持Eager Execution之际，有必要出现一本全新的技术手册，帮助初学者及需要快速迭代模型的研究者，以一个全新的角度快速入门TensorFlow。</p>
 <p>同时，本手册还有第二个任务。市面上与TensorFlow相关的中文技术书籍大部分都以深度学习为主线，而将TensorFlow作为这些深度学习模型的实现方式。这样固然有体系完整的优点，然而对于已经对机器学习或深度学习理论有所了解，希望侧重于学习TensorFlow本身的读者而言，就显得不够友好。于是，笔者希望编写一本手册，以尽量精简的篇幅展示TensorFlow作为一个计算框架的主要特性，并弥补官方手册的不足，力图能让已经有一定机器学习/深度学习知识及编程能力的读者迅速上手TensorFlow，并在实际编程过程中可以随时查阅并解决实际问题。</p>
 <p>本手册的主要特征有：</p>
 <ul class="simple">
-<li>主要基于TensorFlow最新的Eager Execution（动态图）模式，以便于模型的快速迭代开发。但依然会包含传统的Graph Execution模式，代码上尽可能兼容两者；</li>
-<li>定位以技术手册为主，编排以TensorFlow的各项概念和功能为核心，力求能够让TensorFlow开发者快速查阅。各章相对独立，不一定需要按顺序阅读；</li>
-<li>代码实现均进行仔细推敲，力图简洁高效和表意清晰。模型实现均统一使用 <a class="reference external" href="https://www.tensorflow.org/programmers_guide/eager#build_a_model">TensorFlow官方文档</a> 最新提出的继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 的方式，保证代码的高度可复用性。每个完整项目的代码总行数均不过百行，让读者可以快速理解并举一反三；</li>
-<li>注重详略，少即是多，不追求巨细靡遗和面面俱到，不进行大篇幅的细节论述。</li>
+<li><p>主要基于TensorFlow最新的Eager Execution（动态图）模式，以便于模型的快速迭代开发。但依然会包含传统的Graph Execution模式，代码上尽可能兼容两者；</p></li>
+<li><p>定位以技术手册为主，编排以TensorFlow的各项概念和功能为核心，力求能够让TensorFlow开发者快速查阅。各章相对独立，不一定需要按顺序阅读；</p></li>
+<li><p>代码实现均进行仔细推敲，力图简洁高效和表意清晰。模型实现均统一使用 <a class="reference external" href="https://www.tensorflow.org/programmers_guide/eager#build_a_model">TensorFlow官方文档</a> 最新提出的继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 的方式，保证代码的高度可复用性。每个完整项目的代码总行数均不过百行，让读者可以快速理解并举一反三；</p></li>
+<li><p>注重详略，少即是多，不追求巨细靡遗和面面俱到，不进行大篇幅的细节论述。</p></li>
 </ul>
 <div class="section" id="id2">
 <h2>本书的适用群体<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <p>本书适用于以下读者：</p>
 <ul class="simple">
-<li>已有一定机器学习/深度学习基础，希望将所学理论知识使用TensorFlow进行具体实现的学生和研究者；</li>
-<li>曾使用或正在使用TensorFlow 1.X版本或其他深度学习框架（比如PyTorch），希望了解TensorFlow 2.0新特性的开发者；</li>
-<li>希望将已有的TensorFlow模型应用于业界的开发者或工程师。</li>
+<li><p>已有一定机器学习/深度学习基础，希望将所学理论知识使用TensorFlow进行具体实现的学生和研究者；</p></li>
+<li><p>曾使用或正在使用TensorFlow 1.X版本或其他深度学习框架（比如PyTorch），希望了解TensorFlow 2.0新特性的开发者；</p></li>
+<li><p>希望将已有的TensorFlow模型应用于业界的开发者或工程师。</p></li>
 </ul>
 <div class="admonition hint">
-<p class="first admonition-title">提示</p>
-<p class="last">本书不是一本机器学习/深度学习原理入门手册。若希望进行机器学习/深度学习理论的入门学习，可参考 <span class="xref std std-doc">附录</span> 中提供的一些入门资料。</p>
+<p class="admonition-title">提示</p>
+<p>本书不是一本机器学习/深度学习原理入门手册。若希望进行机器学习/深度学习理论的入门学习，可参考 <span class="xref std std-doc">附录</span> 中提供的一些入门资料。</p>
 </div>
 </div>
 <div class="section" id="id3">
@@ -267,7 +258,7 @@
         <a href="introduction.html" class="btn btn-neutral float-right" title="TensorFlow概述" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../index.html" class="btn btn-neutral float-left" title="简单粗暴TensorFlow 2.0 | A Concise Handbook of TensorFlow 2.0" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="简单粗暴 TensorFlow 2.0 | A Concise Handbook of TensorFlow 2.0" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -20,24 +20,15 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -107,7 +98,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装与环境配置</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立与训练</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模块</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
@@ -221,12 +212,12 @@
 </pre></div>
 </div>
 <div class="admonition tip">
-<p class="first admonition-title">小技巧</p>
+<p class="admonition-title">小技巧</p>
 <p>可以在参数中指定设备，如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">MirroredStrategy</span><span class="p">(</span><span class="n">devices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;/gpu:0&quot;</span><span class="p">,</span> <span class="s2">&quot;/gpu:1&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
-<p class="last">即指定只使用第0、1号GPU参与分布式策略。</p>
+<p>即指定只使用第0、1号GPU参与分布式策略。</p>
 </div>
 <p>以下代码展示了使用 <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 策略，在TensorFlow Datasets中的部分图像数据集上使用Keras训练MobileNetV2的过程：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
@@ -261,47 +252,47 @@
 </pre></div>
 </div>
 <p>在以下的测试中，我们使用同一台主机上的4块NVIDIA GeForce GTX 1080 Ti显卡进行单机多卡的模型训练。所有测试的epoch数均为5。使用单机无分布式配置时，虽然机器依然具有4块显卡，但程序不使用分布式的设置，直接进行训练，Batch Size设置为64。使用单机四卡时，测试总Batch Size为64（分发到单台机器的Batch Size为16）和总Batch Size为256（分发到单台机器的Batch Size为64）两种情况。</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="12%" />
-<col width="30%" />
-<col width="30%" />
-<col width="29%" />
+<col style="width: 12%" />
+<col style="width: 30%" />
+<col style="width: 30%" />
+<col style="width: 29%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">数据集</th>
-<th class="head">单机无分布式（Batch Size为64）</th>
-<th class="head">单机四卡（总Batch Size为64）</th>
-<th class="head">单机四卡（总Batch Size为256）</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>数据集</p></th>
+<th class="head"><p>单机无分布式（Batch Size为64）</p></th>
+<th class="head"><p>单机四卡（总Batch Size为64）</p></th>
+<th class="head"><p>单机四卡（总Batch Size为256）</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>cats_vs_dogs</td>
-<td>146s/epoch</td>
-<td>39s/epoch</td>
-<td>29s/epoch</td>
+<tbody>
+<tr class="row-even"><td><p>cats_vs_dogs</p></td>
+<td><p>146s/epoch</p></td>
+<td><p>39s/epoch</p></td>
+<td><p>29s/epoch</p></td>
 </tr>
-<tr class="row-odd"><td>tf_flowers</td>
-<td>22s/epoch</td>
-<td>7s/epoch</td>
-<td>5s/epoch</td>
+<tr class="row-odd"><td><p>tf_flowers</p></td>
+<td><p>22s/epoch</p></td>
+<td><p>7s/epoch</p></td>
+<td><p>5s/epoch</p></td>
 </tr>
 </tbody>
 </table>
 <p>可见，使用MirroredStrategy后，模型训练的速度有了大幅度的提高。在所有显卡性能接近的情况下，训练时长与显卡的数目接近于反比关系。</p>
 <div class="admonition-mirroredstrategy admonition">
-<p class="first admonition-title"><code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 过程简介</p>
+<p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 过程简介</p>
 <p>MirroredStrategy的步骤如下：</p>
 <ul class="simple">
-<li>训练开始前，该策略在所有N个计算设备上均各复制一份完整的模型；</li>
-<li>每次训练传入一个批次的数据时，将数据分成N份，分别传入N个计算设备（即数据并行）；</li>
-<li>N个计算设备使用本地变量（镜像变量）分别计算自己所获得的部分数据的梯度；</li>
-<li>使用分布式计算的All-reduce操作，在计算设备间高效交换梯度数据并进行求和，使得最终每个设备都有了所有设备的梯度之和；</li>
-<li>使用梯度求和的结果更新本地变量（镜像变量）；</li>
-<li>当所有设备均更新本地变量后，进行下一轮训练（即该并行策略是同步的）。</li>
+<li><p>训练开始前，该策略在所有N个计算设备上均各复制一份完整的模型；</p></li>
+<li><p>每次训练传入一个批次的数据时，将数据分成N份，分别传入N个计算设备（即数据并行）；</p></li>
+<li><p>N个计算设备使用本地变量（镜像变量）分别计算自己所获得的部分数据的梯度；</p></li>
+<li><p>使用分布式计算的All-reduce操作，在计算设备间高效交换梯度数据并进行求和，使得最终每个设备都有了所有设备的梯度之和；</p></li>
+<li><p>使用梯度求和的结果更新本地变量（镜像变量）；</p></li>
+<li><p>当所有设备均更新本地变量后，进行下一轮训练（即该并行策略是同步的）。</p></li>
 </ul>
 <p>默认情况下，TensorFlow中的 <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 策略使用NVIDIA NCCL进行All-reduce操作。</p>
-<p class="last">为了进一步理解MirroredStrategy的过程，以下展示一个手工构建训练流程的示例，相对而言要复杂不少：</p>
+<p>为了进一步理解MirroredStrategy的过程，以下展示一个手工构建训练流程的示例，相对而言要复杂不少：</p>
 </div>
 </div>
 <div class="section" id="multiworkermirroredstrategy">
@@ -317,13 +308,13 @@
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">TF_CONFIG</span></code> 由 <code class="docutils literal notranslate"><span class="pre">cluster</span></code> 和 <code class="docutils literal notranslate"><span class="pre">task</span></code> 两部分组成：</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">cluster</span></code> 说明了整个多机集群的结构和每台机器的网络地址（IP+端口号）。对于每一台机器，<code class="docutils literal notranslate"><span class="pre">cluster</span></code> 的值都是相同的；</li>
-<li><code class="docutils literal notranslate"><span class="pre">task</span></code> 说明了当前机器的角色。例如， <code class="docutils literal notranslate"><span class="pre">{'type':</span> <span class="pre">'worker',</span> <span class="pre">'index':</span> <span class="pre">0}</span></code> 说明当前机器是 <code class="docutils literal notranslate"><span class="pre">cluster</span></code> 中的第0个worker（即 <code class="docutils literal notranslate"><span class="pre">localhost:20000</span></code> ）。每一台机器的 <code class="docutils literal notranslate"><span class="pre">task</span></code> 值都需要针对当前主机进行分别的设置。</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cluster</span></code> 说明了整个多机集群的结构和每台机器的网络地址（IP+端口号）。对于每一台机器，<code class="docutils literal notranslate"><span class="pre">cluster</span></code> 的值都是相同的；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">task</span></code> 说明了当前机器的角色。例如， <code class="docutils literal notranslate"><span class="pre">{'type':</span> <span class="pre">'worker',</span> <span class="pre">'index':</span> <span class="pre">0}</span></code> 说明当前机器是 <code class="docutils literal notranslate"><span class="pre">cluster</span></code> 中的第0个worker（即 <code class="docutils literal notranslate"><span class="pre">localhost:20000</span></code> ）。每一台机器的 <code class="docutils literal notranslate"><span class="pre">task</span></code> 值都需要针对当前主机进行分别的设置。</p></li>
 </ul>
 <p>以上内容设置完成后，在所有的机器上逐个运行训练代码即可。先运行的代码在尚未与其他主机连接时会进入监听状态，待整个集群的连接建立完毕后，所有的机器即会同时开始训练。</p>
 <div class="admonition hint">
-<p class="first admonition-title">提示</p>
-<p class="last">请在各台机器上均注意防火墙的设置，尤其是需要开放与其他主机通信的端口。如上例的0号worker需要开放20000端口，1号worker需要开放20001端口。</p>
+<p class="admonition-title">提示</p>
+<p>请在各台机器上均注意防火墙的设置，尤其是需要开放与其他主机通信的端口。如上例的0号worker需要开放20000端口，1号worker需要开放20001端口。</p>
 </div>
 <p>以下示例的训练任务与前节相同，只不过迁移到了多机训练环境。假设我们有两台机器，即首先在两台机器上均部署下面的程序，唯一的区别是 <code class="docutils literal notranslate"><span class="pre">task</span></code> 部分，第一台机器设置为 <code class="docutils literal notranslate"><span class="pre">{'type':</span> <span class="pre">'worker',</span> <span class="pre">'index':</span> <span class="pre">0}</span></code> ，第二台机器设置为 <code class="docutils literal notranslate"><span class="pre">{'type':</span> <span class="pre">'worker',</span> <span class="pre">'index':</span> <span class="pre">1}</span></code> 。接下来，在两台机器上依次运行程序，待通讯成功后，即会自动开始训练流程。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
@@ -364,30 +355,30 @@
 </pre></div>
 </div>
 <p>在以下测试中，我们在Google Cloud Platform分别建立两台具有单张NVIDIA Tesla K80的虚拟机实例（具体建立方式参见 <a class="reference internal" href="cloud.html#gcp"><span class="std std-ref">后文介绍</span></a> ），并分别测试在使用一个GPU时的训练时长和使用两台虚拟机实例进行分布式训练的训练时长。所有测试的epoch数均为5。使用单机单卡时，Batch Size设置为64。使用双机单卡时，测试总Batch Size为64（分发到单台机器的Batch Size为32）和总Batch Size为128（分发到单台机器的Batch Size为64）两种情况。</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="12%" />
-<col width="27%" />
-<col width="31%" />
-<col width="31%" />
+<col style="width: 12%" />
+<col style="width: 27%" />
+<col style="width: 31%" />
+<col style="width: 31%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">数据集</th>
-<th class="head">单机单卡（Batch Size为64）</th>
-<th class="head">双机单卡（总Batch Size为64）</th>
-<th class="head">双机单卡（总Batch Size为128）</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>数据集</p></th>
+<th class="head"><p>单机单卡（Batch Size为64）</p></th>
+<th class="head"><p>双机单卡（总Batch Size为64）</p></th>
+<th class="head"><p>双机单卡（总Batch Size为128）</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>cats_vs_dogs</td>
-<td>1622s</td>
-<td>858s</td>
-<td>755s</td>
+<tbody>
+<tr class="row-even"><td><p>cats_vs_dogs</p></td>
+<td><p>1622s</p></td>
+<td><p>858s</p></td>
+<td><p>755s</p></td>
 </tr>
-<tr class="row-odd"><td>tf_flowers</td>
-<td>301s</td>
-<td>152s</td>
-<td>144s</td>
+<tr class="row-odd"><td><p>tf_flowers</p></td>
+<td><p>301s</p></td>
+<td><p>152s</p></td>
+<td><p>144s</p></td>
 </tr>
 </tbody>
 </table>

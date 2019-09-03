@@ -20,24 +20,15 @@
   <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
         <script type="text/javascript" src="../_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="../_static/js/custom.js"></script>
         <script type="text/javascript" src="../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -105,7 +96,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../zh/basic/installation.html">TensorFlow安装与环境配置</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../zh/basic/basic.html">TensorFlow基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../zh/basic/models.html">TensorFlow模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh/basic/models.html">TensorFlow 模型建立与训练</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../zh/basic/tools.html">TensorFlow常用模块</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
@@ -205,13 +196,13 @@
 <p>This chapter describes basic operations in TensorFlow.</p>
 <p>Prerequisites:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://docs.python.org/3/tutorial/">Basic Python operations</a> (assignment, branch &amp; loop statement, library import)</li>
-<li><a class="reference external" href="https://docs.python.org/3/reference/compound_stmts.html#the-with-statement">‘With’ statement in Python</a></li>
-<li><a class="reference external" href="https://docs.scipy.org/doc/numpy/user/quickstart.html">NumPy</a> , a common library for scientific computation, important for TensorFlow</li>
-<li><a class="reference external" href="https://en.wikipedia.org/wiki/Euclidean_vector">Vectors</a> &amp; <a class="reference external" href="https://en.wikipedia.org/wiki/Matrix_(mathematics)">Matrices</a> operations (matrix addition &amp; subtraction, matrix multiplication with vectors &amp; matrices, matrix transpose, etc., Quiz: <span class="math notranslate nohighlight">\(\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} \times \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = ?\)</span>)</li>
-<li><a class="reference external" href="https://en.wikipedia.org/wiki/Derivative">Derivatives of functions</a> , <a class="reference external" href="https://en.wikipedia.org/wiki/Partial_derivative">derivatives of multivariable functions</a> (Quiz: <span class="math notranslate nohighlight">\(f(x, y) = x^2 + xy + y^2, \frac{\partial f}{\partial x} = ?, \frac{\partial f}{\partial y} = ?\)</span>)</li>
-<li><a class="reference external" href="https://en.wikipedia.org/wiki/Linear_regression">Linear regression</a>;</li>
-<li><a class="reference external" href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient descent</a> that searches local minima of a function</li>
+<li><p><a class="reference external" href="https://docs.python.org/3/tutorial/">Basic Python operations</a> (assignment, branch &amp; loop statement, library import)</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/reference/compound_stmts.html#the-with-statement">‘With’ statement in Python</a></p></li>
+<li><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/user/quickstart.html">NumPy</a> , a common library for scientific computation, important for TensorFlow</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Euclidean_vector">Vectors</a> &amp; <a class="reference external" href="https://en.wikipedia.org/wiki/Matrix_(mathematics)">Matrices</a> operations (matrix addition &amp; subtraction, matrix multiplication with vectors &amp; matrices, matrix transpose, etc., Quiz: <span class="math notranslate nohighlight">\(\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} \times \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = ?\)</span>)</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Derivative">Derivatives of functions</a> , <a class="reference external" href="https://en.wikipedia.org/wiki/Partial_derivative">derivatives of multivariable functions</a> (Quiz: <span class="math notranslate nohighlight">\(f(x, y) = x^2 + xy + y^2, \frac{\partial f}{\partial x} = ?, \frac{\partial f}{\partial y} = ?\)</span>)</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Linear_regression">Linear regression</a>;</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient descent</a> that searches local minima of a function</p></li>
 </ul>
 <div class="section" id="tensorflow-1-1">
 <h2>TensorFlow 1+1<a class="headerlink" href="#tensorflow-1-1" title="永久链接至标题">¶</a></h2>
@@ -255,7 +246,7 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">array</span><span class="p">([</span><span class="mf">9.</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">),</span> <span class="n">array</span><span class="p">([</span><span class="mf">6.</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)]</span>
 </pre></div>
 </div>
-<p>Here <code class="docutils literal notranslate"><span class="pre">x</span></code> is a <strong>variable</strong> initialized to 3, declared by <code class="docutils literal notranslate"><span class="pre">tf.get_variable()</span></code>. Like common tensors, variables also have shape and dtype attributes, but require an initialization. We can assign an initializer to <code class="docutils literal notranslate"><span class="pre">tf.get_variable()</span></code> by setting the <code class="docutils literal notranslate"><span class="pre">Initializer</span></code> parameter. Here we use <code class="docutils literal notranslate"><span class="pre">tf.constant_initializer(3.)</span></code> to initialize the variable <code class="docutils literal notranslate"><span class="pre">x</span></code> to <code class="docutils literal notranslate"><span class="pre">3.</span></code> with a float32 dtype. <a class="footnote-reference" href="#f0" id="id1">[1]</a>. An important difference between variables and common tensors is that a function can be differentiated by variables, not by tensors, using the automatic differentiation mechanism by default. Therefore variables are usually used as parameters defined in machine learning models. <code class="docutils literal notranslate"><span class="pre">tf.GraidentTape()</span></code> is a recorder of automatic differentiation which records all variables and steps of calculation automatically. In the previous example, the variable <code class="docutils literal notranslate"><span class="pre">x</span></code> and the calculation step <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">tf.square(x)</span></code> are recorded automatically, thus the derivative of the tensor <code class="docutils literal notranslate"><span class="pre">y</span></code> with respect to <code class="docutils literal notranslate"><span class="pre">x</span></code> can be obtained through <code class="docutils literal notranslate"><span class="pre">y_grad</span> <span class="pre">=</span> <span class="pre">tape.gradient(y,</span> <span class="pre">x)</span></code>.</p>
+<p>Here <code class="docutils literal notranslate"><span class="pre">x</span></code> is a <strong>variable</strong> initialized to 3, declared by <code class="docutils literal notranslate"><span class="pre">tf.get_variable()</span></code>. Like common tensors, variables also have shape and dtype attributes, but require an initialization. We can assign an initializer to <code class="docutils literal notranslate"><span class="pre">tf.get_variable()</span></code> by setting the <code class="docutils literal notranslate"><span class="pre">Initializer</span></code> parameter. Here we use <code class="docutils literal notranslate"><span class="pre">tf.constant_initializer(3.)</span></code> to initialize the variable <code class="docutils literal notranslate"><span class="pre">x</span></code> to <code class="docutils literal notranslate"><span class="pre">3.</span></code> with a float32 dtype. <a class="footnote-reference brackets" href="#f0" id="id1">1</a>. An important difference between variables and common tensors is that a function can be differentiated by variables, not by tensors, using the automatic differentiation mechanism by default. Therefore variables are usually used as parameters defined in machine learning models. <code class="docutils literal notranslate"><span class="pre">tf.GraidentTape()</span></code> is a recorder of automatic differentiation which records all variables and steps of calculation automatically. In the previous example, the variable <code class="docutils literal notranslate"><span class="pre">x</span></code> and the calculation step <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">tf.square(x)</span></code> are recorded automatically, thus the derivative of the tensor <code class="docutils literal notranslate"><span class="pre">y</span></code> with respect to <code class="docutils literal notranslate"><span class="pre">x</span></code> can be obtained through <code class="docutils literal notranslate"><span class="pre">y_grad</span> <span class="pre">=</span> <span class="pre">tape.gradient(y,</span> <span class="pre">x)</span></code>.</p>
 <p>In machine learning, calculating the derivatives of a multivariable function, a vector or a matrix is a more common case, which is a piece cake for TensorFlow. The following codes show how to utilize <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> to differentiate <span class="math notranslate nohighlight">\(L(w, b) = \|Xw + b - y\|^2\)</span> with respect to <span class="math notranslate nohighlight">\(w\)</span> and <span class="math notranslate nohighlight">\(b\)</span> at <span class="math notranslate nohighlight">\(w = (1, 2)^T, b = 1\)</span>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">]])</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.</span><span class="p">]])</span>
@@ -272,7 +263,7 @@
    <span class="p">[</span><span class="mf">50.</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">),</span> <span class="n">array</span><span class="p">([</span><span class="mf">15.</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)]</span>
 </pre></div>
 </div>
-<p>Here the operation <code class="docutils literal notranslate"><span class="pre">tf.square()</span></code> squares every element in the input tensor without altering its shape. The operation <code class="docutils literal notranslate"><span class="pre">tf.reduce_sum()</span></code> outputs the sum of all elements in the input tensor with a null shape (the dimensions of the summation can be indicated by the <code class="docutils literal notranslate"><span class="pre">axis</span></code> parameter, while all elements are summed up if not specified). TensorFlow contains a large number of tensor operation APIs including mathematical operations, tensor shape operations (like <code class="docutils literal notranslate"><span class="pre">tf.reshape()</span></code>), slicing and concatenation (like <code class="docutils literal notranslate"><span class="pre">tf.concat()</span></code>), etc. You can heck TensorFlow official API documentation <a class="footnote-reference" href="#f3" id="id2">[2]</a> for further information.</p>
+<p>Here the operation <code class="docutils literal notranslate"><span class="pre">tf.square()</span></code> squares every element in the input tensor without altering its shape. The operation <code class="docutils literal notranslate"><span class="pre">tf.reduce_sum()</span></code> outputs the sum of all elements in the input tensor with a null shape (the dimensions of the summation can be indicated by the <code class="docutils literal notranslate"><span class="pre">axis</span></code> parameter, while all elements are summed up if not specified). TensorFlow contains a large number of tensor operation APIs including mathematical operations, tensor shape operations (like <code class="docutils literal notranslate"><span class="pre">tf.reshape()</span></code>), slicing and concatenation (like <code class="docutils literal notranslate"><span class="pre">tf.concat()</span></code>), etc. You can heck TensorFlow official API documentation <a class="footnote-reference brackets" href="#f3" id="id2">2</a> for further information.</p>
 <p>As we can see from the output, TensorFlow helps us figure out that</p>
 <div class="math notranslate nohighlight">
 \[ \begin{align}\begin{aligned}L((1, 2)^T, 1) &amp;= 62.5\\\begin{split}\frac{\partial L(w, b)}{\partial w} |_{w = (1, 2)^T, b = 1} &amp;= \begin{bmatrix} 35 \\ 50\end{bmatrix}\end{split}\\\frac{\partial L(w, b)}{\partial b} |_{w = (1, 2)^T, b = 1} &amp;= 15\end{aligned}\end{align} \]</div>
@@ -280,29 +271,29 @@
 <div class="section" id="a-basic-example-linear-regression">
 <span id="id3"></span><h2>A Basic Example: Linear Regression<a class="headerlink" href="#a-basic-example-linear-regression" title="永久链接至标题">¶</a></h2>
 <p>Let’s consider a practical problem. The house prices of a city between 2013 and 2017 are given by the following table:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="19%" />
-<col width="16%" />
-<col width="16%" />
-<col width="16%" />
-<col width="16%" />
-<col width="16%" />
+<col style="width: 19%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Year</td>
-<td>2013</td>
-<td>2014</td>
-<td>2015</td>
-<td>2016</td>
-<td>2017</td>
+<tbody>
+<tr class="row-odd"><td><p>Year</p></td>
+<td><p>2013</p></td>
+<td><p>2014</p></td>
+<td><p>2015</p></td>
+<td><p>2016</p></td>
+<td><p>2017</p></td>
 </tr>
-<tr class="row-even"><td>Price</td>
-<td>12000</td>
-<td>14000</td>
-<td>15000</td>
-<td>16500</td>
-<td>17500</td>
+<tr class="row-even"><td><p>Price</p></td>
+<td><p>12000</p></td>
+<td><p>14000</p></td>
+<td><p>15000</p></td>
+<td><p>16500</p></td>
+<td><p>17500</p></td>
 </tr>
 </tbody>
 </table>
@@ -317,17 +308,16 @@
 <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_raw</span> <span class="o">-</span> <span class="n">y_raw</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">y_raw</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">y_raw</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
 </pre></div>
 </div>
-<p>Then, we use gradient descent to evaluate these two parameters <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> in the linear model <a class="footnote-reference" href="#f1" id="id4">[3]</a>.</p>
+<p>Then, we use gradient descent to evaluate these two parameters <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> in the linear model <a class="footnote-reference brackets" href="#f1" id="id4">3</a>.</p>
 <p>Recalling from the fundamentals of machine learning, for searching local minima of a multivariable function <span class="math notranslate nohighlight">\(f(x)\)</span>, we use <a class="reference external" href="https://en.wikipedia.org/wiki/Gradient_descent">gradient descent</a> which taking the following steps:</p>
 <ul>
-<li><p class="first">Initialize the argument to <span class="math notranslate nohighlight">\(x_0\)</span> and have <span class="math notranslate nohighlight">\(k=0\)</span></p>
-</li>
-<li><p class="first">Iterate the following steps repeatedly till the convergence criteria is met:</p>
+<li><p>Initialize the argument to <span class="math notranslate nohighlight">\(x_0\)</span> and have <span class="math notranslate nohighlight">\(k=0\)</span></p></li>
+<li><p>Iterate the following steps repeatedly till the convergence criteria is met:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Find the gradient of the function <span class="math notranslate nohighlight">\(f(x)\)</span> with respect to the parameter <span class="math notranslate nohighlight">\(\nabla f(x_k)\)</span></li>
-<li>Update the parameter <span class="math notranslate nohighlight">\(x_{k+1} = x_{k} - \gamma \nabla f(x_k)\)</span> where <span class="math notranslate nohighlight">\(\gamma\)</span> is the learning rate (like the step size of the gradient descent)</li>
-<li><span class="math notranslate nohighlight">\(k \leftarrow k+1\)</span></li>
+<li><p>Find the gradient of the function <span class="math notranslate nohighlight">\(f(x)\)</span> with respect to the parameter <span class="math notranslate nohighlight">\(\nabla f(x_k)\)</span></p></li>
+<li><p>Update the parameter <span class="math notranslate nohighlight">\(x_{k+1} = x_{k} - \gamma \nabla f(x_k)\)</span> where <span class="math notranslate nohighlight">\(\gamma\)</span> is the learning rate (like the step size of the gradient descent)</p></li>
+<li><p><span class="math notranslate nohighlight">\(k \leftarrow k+1\)</span></p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -335,7 +325,7 @@
 <p>Next we focus on how to implement gradient descent in order to solve the linear regression <span class="math notranslate nohighlight">\(\min_{a, b} L(a, b) = \sum_{i=1}^n(ax_i + b - y_i)^2\)</span>.</p>
 <div class="section" id="id6">
 <h3>NumPy<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
-<p>The implementation of machine learning models is not a patent of TensorFlow. In fact, even most common scientific calculators or tools can solve simple models. Here, we use Numpy, a general library for scientific computation, to implement gradient descent. Numpy supports multidimensional arrays to represent vectors, matrices and tensors with more dimensions. Meanwhile, it also supports lots of operations on multidimensional arrays (e.g. <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code> calculates the inner products and <code class="docutils literal notranslate"><span class="pre">np.sum()</span></code> adds up all the elements). In this way Numpy is somewhat like MATLAB. In the following codes, we evaluate the partial derivatives of loss function with respect to the parameters <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> manually <a class="footnote-reference" href="#f2" id="id7">[4]</a>, and then iterate by gradient descent to acquire the value of <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> eventually.</p>
+<p>The implementation of machine learning models is not a patent of TensorFlow. In fact, even most common scientific calculators or tools can solve simple models. Here, we use Numpy, a general library for scientific computation, to implement gradient descent. Numpy supports multidimensional arrays to represent vectors, matrices and tensors with more dimensions. Meanwhile, it also supports lots of operations on multidimensional arrays (e.g. <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code> calculates the inner products and <code class="docutils literal notranslate"><span class="pre">np.sum()</span></code> adds up all the elements). In this way Numpy is somewhat like MATLAB. In the following codes, we evaluate the partial derivatives of loss function with respect to the parameters <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> manually <a class="footnote-reference brackets" href="#f2" id="id7">4</a>, and then iterate by gradient descent to acquire the value of <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> eventually.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
 
 <span class="n">num_epoch</span> <span class="o">=</span> <span class="mi">10000</span>
@@ -353,17 +343,17 @@
 </div>
 <p>However, you may have noticed that there are several pain points using common libraries for scientific computation to implement machine learning models:</p>
 <ul class="simple">
-<li>It’s often inevitable to differentiate functions manually. Simple ones may be fine, however the more complex ones (especially commonly appeared in deep learning models) are another story. Manual differentiation may be painful, even infeasible in the latter cases.</li>
-<li>It’s also often inevitable to update parameters based on the gradients manually. Manual update is still easy here because the gradient descent is a rather basic method while it’s not going to be easy anymore if we apply a more complex approach to update parameters (like Adam or Adagrad).</li>
+<li><p>It’s often inevitable to differentiate functions manually. Simple ones may be fine, however the more complex ones (especially commonly appeared in deep learning models) are another story. Manual differentiation may be painful, even infeasible in the latter cases.</p></li>
+<li><p>It’s also often inevitable to update parameters based on the gradients manually. Manual update is still easy here because the gradient descent is a rather basic method while it’s not going to be easy anymore if we apply a more complex approach to update parameters (like Adam or Adagrad).</p></li>
 </ul>
 <p>However, the appearance of TensorFlow eliminates these pain points to a large extent, granting users convenience for implementing machine learning models.</p>
 </div>
 <div class="section" id="tensorflow">
 <h3>TensorFlow<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h3>
-<p>The <strong>Eager Execution Mode</strong> of TensorFlow <a class="footnote-reference" href="#f4" id="id8">[5]</a> have very similar operations as the above-mentioned Numpy. In addition, it also provides us with a series of critical functions for deep learning such as faster operation speed (need support from GPU), automatic differentiation and optimizers, etc. We will show how to do linear regression using Tensorflow. You may notice that its code structure is similar to the one of Numpy. Here we delegates TensorFlow to do two important jobs:</p>
+<p>The <strong>Eager Execution Mode</strong> of TensorFlow <a class="footnote-reference brackets" href="#f4" id="id8">5</a> have very similar operations as the above-mentioned Numpy. In addition, it also provides us with a series of critical functions for deep learning such as faster operation speed (need support from GPU), automatic differentiation and optimizers, etc. We will show how to do linear regression using Tensorflow. You may notice that its code structure is similar to the one of Numpy. Here we delegates TensorFlow to do two important jobs:</p>
 <ul class="simple">
-<li>Using <code class="docutils literal notranslate"><span class="pre">tape.gradient(ys,</span> <span class="pre">xs)</span></code> to get the gradients automatically;</li>
-<li>Using <code class="docutils literal notranslate"><span class="pre">optimizer.apply_gradients(grads_and_vars)</span></code> to update parameters automatically.</li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">tape.gradient(ys,</span> <span class="pre">xs)</span></code> to get the gradients automatically;</p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">optimizer.apply_gradients(grads_and_vars)</span></code> to update parameters automatically.</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
@@ -388,36 +378,23 @@
 <p>Here, we use the aforementioned approach to calculate the partial derivatives of the loss function with respect to each parameter, while we also use <code class="docutils literal notranslate"><span class="pre">tf.train.GradientDescentOptimizer(learning_rate=1e-3)</span></code> to declare an <strong>optimizer</strong> for graident descent with a learning rate of 1e-3. The optimizer can help us update parameters based on the result of differentiation in order to minimize a specific loss function by calling its <code class="docutils literal notranslate"><span class="pre">apply_gradients()</span></code> interface.</p>
 <p>Note that, for calling <code class="docutils literal notranslate"><span class="pre">optimizer.apply_gradients()</span></code> to update model parameters, we need to provide it with parameters <code class="docutils literal notranslate"><span class="pre">grads_and_vars</span></code>, i.e. the variables to be updated (like <code class="docutils literal notranslate"><span class="pre">variables</span></code> in the aforementioned codes). To be specific, a Python list has to be passed, whose every element is a (partial derivative with respect to a variable, this variable) pair. For instance, <code class="docutils literal notranslate"><span class="pre">[(grad_w,</span> <span class="pre">w),</span> <span class="pre">(grad_b,</span> <span class="pre">b)]</span></code> is passed here. By executing <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">tape.gradient(loss,</span> <span class="pre">variables)</span></code> we get partial derivatives of the loss function with respect to each variable recorded in <code class="docutils literal notranslate"><span class="pre">tape</span></code>, i.e. <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">[grad_w,</span> <span class="pre">grad_b]</span></code>. Then we use <code class="docutils literal notranslate"><span class="pre">zip()</span></code> in Python to pair the elements in <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">[grad_w,</span> <span class="pre">grad_b]</span></code> and  <code class="docutils literal notranslate"><span class="pre">vars</span> <span class="pre">=</span> <span class="pre">[w,</span> <span class="pre">b]</span></code> together respectively so as to get the required parameters.</p>
 <p>In practice, we usually build much more complex models rather the linear model <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">tf.matmul(X,</span> <span class="pre">w)</span> <span class="pre">+</span> <span class="pre">b</span></code> here which can be simply written in a single line. Therefore, we often write a model class and call it by <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">model(X)</span></code> when needed. <a class="reference internal" href="models.html"><span class="doc">The following chapter</span></a> elaborates writing model classes.</p>
-<table class="docutils footnote" frame="void" id="f0" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>We can add a decimal point after an integer to make it become a floating point number in Python. E.g. <code class="docutils literal notranslate"><span class="pre">3.</span></code> represents the floating point number <code class="docutils literal notranslate"><span class="pre">3.0</span></code>.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="f3" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Mainly refer to <a class="reference external" href="https://www.tensorflow.org/versions/r1.9/api_guides/python/array_ops">Tensor Transformations</a> and <a class="reference external" href="https://www.tensorflow.org/versions/r1.9/api_guides/python/math_ops">Math</a>. Note that the tensor operation API of TensorFlow is very similar to Numpy, thus one can get started on TensorFlow rather quickly if knowing about the latter.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="f1" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id4">[3]</a></td><td>In fact there is an analytic solution for the linear regression. We use gradient descent here just for showing you how TensorFlow works.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="f2" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id7">[4]</a></td><td>The loss function here is the mean square error <span class="math notranslate nohighlight">\(L(x) = \frac{1}{2} \sum_{i=1}^5 (ax_i + b - y_i)^2\)</span> whose partial derivatives with respect to <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> are <span class="math notranslate nohighlight">\(\frac{\partial L}{\partial a} = \sum_{i=1}^5 (ax_i + b - y) x_i\)</span> and <span class="math notranslate nohighlight">\(\frac{\partial L}{\partial b} = \sum_{i=1}^5 (ax_i + b - y)\)</span>.</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="f4" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id8">[5]</a></td><td>The opposite of Eager Execution is Graph Execution that TensorFlow adopts before version 1.8 in Mar 2018. This handbook is mainly written for Eager Execution aiming at fast iterative development, however the basic usage of Graph Execution is also attached in the appendices in case of reference.</td></tr>
-</tbody>
-</table>
+<dl class="footnote brackets">
+<dt class="label" id="f0"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>We can add a decimal point after an integer to make it become a floating point number in Python. E.g. <code class="docutils literal notranslate"><span class="pre">3.</span></code> represents the floating point number <code class="docutils literal notranslate"><span class="pre">3.0</span></code>.</p>
+</dd>
+<dt class="label" id="f3"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>Mainly refer to <a class="reference external" href="https://www.tensorflow.org/versions/r1.9/api_guides/python/array_ops">Tensor Transformations</a> and <a class="reference external" href="https://www.tensorflow.org/versions/r1.9/api_guides/python/math_ops">Math</a>. Note that the tensor operation API of TensorFlow is very similar to Numpy, thus one can get started on TensorFlow rather quickly if knowing about the latter.</p>
+</dd>
+<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id4">3</a></span></dt>
+<dd><p>In fact there is an analytic solution for the linear regression. We use gradient descent here just for showing you how TensorFlow works.</p>
+</dd>
+<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id7">4</a></span></dt>
+<dd><p>The loss function here is the mean square error <span class="math notranslate nohighlight">\(L(x) = \frac{1}{2} \sum_{i=1}^5 (ax_i + b - y_i)^2\)</span> whose partial derivatives with respect to <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> are <span class="math notranslate nohighlight">\(\frac{\partial L}{\partial a} = \sum_{i=1}^5 (ax_i + b - y) x_i\)</span> and <span class="math notranslate nohighlight">\(\frac{\partial L}{\partial b} = \sum_{i=1}^5 (ax_i + b - y)\)</span>.</p>
+</dd>
+<dt class="label" id="f4"><span class="brackets"><a class="fn-backref" href="#id8">5</a></span></dt>
+<dd><p>The opposite of Eager Execution is Graph Execution that TensorFlow adopts before version 1.8 in Mar 2018. This handbook is mainly written for Eager Execution aiming at fast iterative development, however the basic usage of Graph Execution is also attached in the appendices in case of reference.</p>
+</dd>
+</dl>
 </div>
 </div>
 </div>

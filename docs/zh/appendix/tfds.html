@@ -20,24 +20,15 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -107,7 +98,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装与环境配置</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立与训练</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模块</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
@@ -223,8 +214,8 @@
 </div>
 <p>该方法返回一个 <code class="docutils literal notranslate"><span class="pre">tf.data.Datasets</span></code> 对象。部分重要的参数如下：</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">as_supervised</span></code> ：若为True，则根据数据集的特性返回为 <code class="docutils literal notranslate"><span class="pre">(input,</span> <span class="pre">label)</span></code> 格式，否则返回所有特征的字典。</li>
-<li><code class="docutils literal notranslate"><span class="pre">split</span></code>：指定返回数据集的特定部分，若无则返回整个数据集。一般有 <code class="docutils literal notranslate"><span class="pre">tfds.Split.TRAIN</span></code> （训练集）和 <code class="docutils literal notranslate"><span class="pre">tfds.Split.TEST</span></code> （测试集）选项。</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as_supervised</span></code> ：若为True，则根据数据集的特性返回为 <code class="docutils literal notranslate"><span class="pre">(input,</span> <span class="pre">label)</span></code> 格式，否则返回所有特征的字典。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">split</span></code>：指定返回数据集的特定部分，若无则返回整个数据集。一般有 <code class="docutils literal notranslate"><span class="pre">tfds.Split.TRAIN</span></code> （训练集）和 <code class="docutils literal notranslate"><span class="pre">tfds.Split.TEST</span></code> （测试集）选项。</p></li>
 </ul>
 <p>当前支持的数据集可在 <a class="reference external" href="https://www.tensorflow.org/datasets/datasets">官方文档</a> 或使用 <code class="docutils literal notranslate"><span class="pre">tfds.list_builders()</span></code> 查看。</p>
 </div>

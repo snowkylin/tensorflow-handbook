@@ -20,24 +20,15 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -107,7 +98,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装与环境配置</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立与训练</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模块</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
@@ -221,10 +212,11 @@
 <h1>Swift for TensorFlow (S4TF) (Huan）<a class="headerlink" href="#swift-for-tensorflow-s4tf-huan" title="永久链接至标题">¶</a></h1>
 <div class="figure align-center" id="id4">
 <a class="reference internal image-reference" href="../../_images/swift-tensorflow.png"><img alt="../../_images/swift-tensorflow.png" src="../../_images/swift-tensorflow.png" style="width: 60%;" /></a>
-<p class="caption"><span class="caption-text">“Swift for Tensorflow is an attempt to change the default tools used by the entire machine learning and data science ecosystem.”</span></p>
+<p class="caption"><span class="caption-text">“Swift for Tensorflow is an attempt to change the default tools used by the entire machine learning and data science ecosystem.”</span><a class="headerlink" href="#id4" title="永久链接至图片">¶</a></p>
 <div class="legend">
 <blockquote>
-<div>– Jameson Toole,  Co-founder &amp; CTO of Fritz.ai</div></blockquote>
+<div><p>– Jameson Toole,  Co-founder &amp; CTO of Fritz.ai</p>
+</div></blockquote>
 </div>
 </div>
 <div class="section" id="swift-for-tensorflow-s4tf">
@@ -238,10 +230,10 @@
 <h2>为什么要使用 Swift 进行 Tensorflow 开发<a class="headerlink" href="#swift-tensorflow" title="永久链接至标题">¶</a></h2>
 <p>相对于 Tensorflow 的其他版本（如 Python，C++ 等），S4TF 拥有其独有的优势，比如：</p>
 <ol class="arabic simple">
-<li>开发效率高：强类型语言，能够静态检查 Tensor 维度是否匹配</li>
-<li>迁移成本低：与 Python，C，C++ 能够无缝结合</li>
-<li>执行性能高：能够直接编译为底层硬件代码</li>
-<li>专门为机器学习打造：语言原生支持自动微分系统</li>
+<li><p>开发效率高：强类型语言，能够静态检查 Tensor 维度是否匹配</p></li>
+<li><p>迁移成本低：与 Python，C，C++ 能够无缝结合</p></li>
+<li><p>执行性能高：能够直接编译为底层硬件代码</p></li>
+<li><p>专门为机器学习打造：语言原生支持自动微分系统</p></li>
 </ol>
 <p>与其他语言相比，S4TF 还有更多优势。谷歌正在大力投资，使 Swift 成为其 TensorFlow ML 基础设施的一个关键组件，而且很有可能 Swift 将成为深度学习的专属语言。</p>
 <p>更多使用 Swift 的理由，有兴趣的读者可以参考官方文档：<a class="reference external" href="https://github.com/tensorflow/swift/blob/master/docs/WhySwiftForTensorFlow.md">Why Swift for Tensorflow</a></p>
@@ -262,17 +254,17 @@
 <h3>在 Docker 中快速体验 Swift for TensorFlow<a class="headerlink" href="#docker-swift-for-tensorflow" title="永久链接至标题">¶</a></h3>
 <p>在本机已有 docker 环境的情况下, 使用预装 Swift for TensorFlow 的 Docker Image 是非常方便的。</p>
 <ul>
-<li><p class="first">获得一个已经安装好 S4TF 的 Swift REPL 环境</p>
+<li><p>获得一个已经安装好 S4TF 的 Swift REPL 环境</p>
 <blockquote>
 <div><p>在命令行中执行 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">--privileged</span> <span class="pre">--userns=host</span> <span class="pre">zixia/swift</span> <span class="pre">swift</span></code></p>
 </div></blockquote>
 </li>
-<li><p class="first">获得一个 S4TF 的 Bash 终端</p>
+<li><p>获得一个 S4TF 的 Bash 终端</p>
 <blockquote>
 <div><p>在命令行中执行 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">--privileged</span> <span class="pre">--userns=host</span> <span class="pre">zixia/swift</span> <span class="pre">bash</span></code> 来打开一个 Bash 终端</p>
 </div></blockquote>
 </li>
-<li><p class="first">获得一个 S4TS 的 Jupyter Notebook</p>
+<li><p>获得一个 S4TS 的 Jupyter Notebook</p>
 <blockquote>
 <div><p>在命令行中执行 <code class="docutils literal notranslate"><span class="pre">nvidia-docker</span> <span class="pre">run</span> <span class="pre">-ti</span> <span class="pre">--rm</span> <span class="pre">-p</span> <span class="pre">8888:8888</span> <span class="pre">--cap-add</span> <span class="pre">SYS_PTRACE</span> <span class="pre">-v</span> <span class="pre">&quot;$(pwd)&quot;:/notebooks</span> <span class="pre">zixia/swift</span></code> 来启动 Jupyter ，然后根据提示的 URL ，打开浏览器访问即可。</p>
 </div></blockquote>
