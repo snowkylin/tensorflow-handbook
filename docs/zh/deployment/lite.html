@@ -20,24 +20,15 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -107,7 +98,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装与环境配置</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立与训练</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模块</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
@@ -246,8 +237,8 @@
 </div>
 <p>到此，我们已经得到一个可以运行的TensorFlow Lite模型了，即 <code class="docutils literal notranslate"><span class="pre">mnist_cnn.tflite</span></code> 。</p>
 <div class="admonition warning">
-<p class="first admonition-title">警告</p>
-<p class="last">这里只介绍了keras HDF5格式模型的转换，其他模型转换建议参考：<a class="reference external" href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/convert/cmdline_examples.md">https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/convert/cmdline_examples.md</a></p>
+<p class="admonition-title">警告</p>
+<p>这里只介绍了keras HDF5格式模型的转换，其他模型转换建议参考：<a class="reference external" href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/convert/cmdline_examples.md">https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/convert/cmdline_examples.md</a></p>
 </div>
 </div>
 <div class="section" id="quantization">
@@ -335,8 +326,8 @@ std_dev_values对应255 / (float_max - float_min)
 </div>
 <p>其中，</p>
 <ol class="arabic simple">
-<li><code class="docutils literal notranslate"><span class="pre">aaptOptions</span></code> 设置tflite文件不压缩，确保后面tflite文件可以被Interpreter正确加载。</li>
-<li><code class="docutils literal notranslate"><span class="pre">org.tensorflow:tensorflow-lite</span></code> 的最新版本号可以在这里查询 <a class="reference external" href="https://bintray.com/google/tensorflow/tensorflow-lite">https://bintray.com/google/tensorflow/tensorflow-lite</a></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">aaptOptions</span></code> 设置tflite文件不压缩，确保后面tflite文件可以被Interpreter正确加载。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">org.tensorflow:tensorflow-lite</span></code> 的最新版本号可以在这里查询 <a class="reference external" href="https://bintray.com/google/tensorflow/tensorflow-lite">https://bintray.com/google/tensorflow/tensorflow-lite</a></p></li>
 </ol>
 <p>设置好后，sync和build整个工程，如果build成功说明，配置成功。</p>
 <p><strong>添加tflite文件到assets文件夹</strong></p>

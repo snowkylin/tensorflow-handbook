@@ -20,24 +20,15 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -105,7 +96,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装与环境配置</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立与训练</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模块</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
@@ -244,10 +235,10 @@
 </div>
 <p>其次，我们还需要基于 <cite>DataLoader</cite> 加载的文本数据，建立一个词汇表 <cite>Vocabulary</cite> 来负责管理以下5项任务：</p>
 <ol class="arabic simple">
-<li>将所有单词和标点符号进行编码；</li>
-<li>记录词汇表大小；</li>
-<li>建立单词到编码数字，以及编码数字到单词的映射字典；</li>
-<li>负责将文本句子转化为填充后的编码序列，形状为[batch_size, max_length]；</li>
+<li><p>将所有单词和标点符号进行编码；</p></li>
+<li><p>记录词汇表大小；</p></li>
+<li><p>建立单词到编码数字，以及编码数字到单词的映射字典；</p></li>
+<li><p>负责将文本句子转化为填充后的编码序列，形状为[batch_size, max_length]；</p></li>
 </ol>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">MAX_LEN</span> <span class="o">=</span> <span class="mi">10</span>
 
@@ -346,11 +337,11 @@
 </div>
 <p>训练过程与本书的 RNN 模型训练基本一致，在此复述：</p>
 <ul class="simple">
-<li>从DataLoader中随机取一批训练数据；</li>
-<li>将这批数据送入模型，计算出模型的预测值；</li>
-<li>将模型预测值与真实值进行比较，计算损失函数（loss）；</li>
-<li>计算损失函数关于模型变量的导数；</li>
-<li>使用优化器更新模型参数以最小化损失函数。</li>
+<li><p>从DataLoader中随机取一批训练数据；</p></li>
+<li><p>将这批数据送入模型，计算出模型的预测值；</p></li>
+<li><p>将模型预测值与真实值进行比较，计算损失函数（loss）；</p></li>
+<li><p>计算损失函数关于模型变量的导数；</p></li>
+<li><p>使用优化器更新模型参数以最小化损失函数。</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">LEARNING_RATE</span> <span class="o">=</span> <span class="mf">1e-3</span>
 <span class="n">NUM_STEP</span> <span class="o">=</span> <span class="mi">10000</span>

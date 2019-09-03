@@ -20,24 +20,15 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -107,7 +98,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装与环境配置</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立与训练</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模块</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
@@ -222,8 +213,8 @@
 <h2>TensorFlow Serving安装<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <p>TensorFlow Serving可以使用apt-get或Docker安装。在生产环境中，推荐 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/docker">使用Docker部署TensorFlow Serving</a> 。不过此处出于教学目的，介绍依赖环境较少的 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup#installing_using_apt">apt-get安装</a> 。</p>
 <div class="admonition warning">
-<p class="first admonition-title">警告</p>
-<p class="last">软件的安装方法往往具有时效性，本节的更新日期为2019年8月。若遇到问题，建议参考 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup">TensorFlow网站上的最新安装说明</a> 进行操作。</p>
+<p class="admonition-title">警告</p>
+<p>软件的安装方法往往具有时效性，本节的更新日期为2019年8月。若遇到问题，建议参考 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup">TensorFlow网站上的最新安装说明</a> 进行操作。</p>
 </div>
 <p>首先设置安装源：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 添加Google的TensorFlow Serving源</span>
@@ -238,7 +229,7 @@
 </pre></div>
 </div>
 <div class="admonition hint">
-<p class="first admonition-title">提示</p>
+<p class="admonition-title">提示</p>
 <p>在运行curl和apt-get命令时，可能需要设置代理。</p>
 <p>curl设置代理的方式为 <code class="docutils literal notranslate"><span class="pre">-x</span></code> 选项或设置 <code class="docutils literal notranslate"><span class="pre">http_proxy</span></code> 环境变量，即</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">http_proxy</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理服务器IP</span><span class="p">:</span><span class="n">端口</span>
@@ -252,7 +243,7 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">o</span> <span class="n">Acquire</span><span class="p">::</span><span class="n">http</span><span class="p">::</span><span class="n">proxy</span><span class="o">=</span><span class="s2">&quot;http://代理服务器IP:端口&quot;</span> <span class="o">...</span>
 </pre></div>
 </div>
-<p class="last">Windows 10下，可以在 <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Linux子系统（WSL）</a> 内使用相同的方式安装TensorFlow Serving。</p>
+<p>Windows 10下，可以在 <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Linux子系统（WSL）</a> 内使用相同的方式安装TensorFlow Serving。</p>
 </div>
 </div>
 <div class="section" id="id2">
@@ -265,7 +256,7 @@
 </pre></div>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">注解</p>
+<p class="admonition-title">注解</p>
 <p>TensorFlow Serving支持热更新模型，其典型的模型文件夹结构如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">saved_model_files</span>
     <span class="o">/</span><span class="mi">1</span>      <span class="c1"># 版本号为1的模型文件</span>
@@ -279,7 +270,7 @@
         <span class="n">saved_model</span><span class="o">.</span><span class="n">pb</span>
 </pre></div>
 </div>
-<p class="last">上面1~N的子文件夹代表不同版本号的模型。当指定 <code class="docutils literal notranslate"><span class="pre">--model_base_path</span></code> 时，只需要指定根目录的 <strong>绝对地址</strong> （不是相对地址）即可。例如，如果上述文件夹结构存放在 <code class="docutils literal notranslate"><span class="pre">home/snowkylin</span></code> 文件夹内，则 <code class="docutils literal notranslate"><span class="pre">--model_base_path</span></code> 应当设置为 <code class="docutils literal notranslate"><span class="pre">home/snowkylin/saved_model_files</span></code> （不附带模型版本号）。TensorFlow Serving会自动选择版本号最大的模型进行载入。</p>
+<p>上面1~N的子文件夹代表不同版本号的模型。当指定 <code class="docutils literal notranslate"><span class="pre">--model_base_path</span></code> 时，只需要指定根目录的 <strong>绝对地址</strong> （不是相对地址）即可。例如，如果上述文件夹结构存放在 <code class="docutils literal notranslate"><span class="pre">home/snowkylin</span></code> 文件夹内，则 <code class="docutils literal notranslate"><span class="pre">--model_base_path</span></code> 应当设置为 <code class="docutils literal notranslate"><span class="pre">home/snowkylin/saved_model_files</span></code> （不附带模型版本号）。TensorFlow Serving会自动选择版本号最大的模型进行载入。</p>
 </div>
 <div class="section" id="keras-sequential">
 <h3>Keras Sequential模式模型的部署<a class="headerlink" href="#keras-sequential" title="永久链接至标题">¶</a></h3>
@@ -296,7 +287,7 @@
 <h3>自定义Keras模型的部署<a class="headerlink" href="#keras" title="永久链接至标题">¶</a></h3>
 <p>使用继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 类建立的自定义Keras模型的自由度相对更高。因此当使用TensorFlow Serving部署模型时，对导出的SavedModel文件也有更多的要求：</p>
 <ul class="simple">
-<li>需要导出到SavedModel格式的方法（比如 <code class="docutils literal notranslate"><span class="pre">call</span></code> ）不仅需要使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰，还要在修饰时指定 <code class="docutils literal notranslate"><span class="pre">input_signature</span></code> 参数，以显式说明输入的形状。该参数传入一个由 <code class="docutils literal notranslate"><span class="pre">tf.TensorSpec</span></code> 组成的列表，指定每个输入张量的形状和类型。例如，对于MNIST手写体数字识别，我们的输入是一个 <code class="docutils literal notranslate"><span class="pre">[None,</span> <span class="pre">28,</span> <span class="pre">28,</span> <span class="pre">1]</span></code> 的四维张量（ <code class="docutils literal notranslate"><span class="pre">None</span></code> 表示第一维即Batch Size的大小不固定），此时我们可以将模型的 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法做以下修饰：</li>
+<li><p>需要导出到SavedModel格式的方法（比如 <code class="docutils literal notranslate"><span class="pre">call</span></code> ）不仅需要使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰，还要在修饰时指定 <code class="docutils literal notranslate"><span class="pre">input_signature</span></code> 参数，以显式说明输入的形状。该参数传入一个由 <code class="docutils literal notranslate"><span class="pre">tf.TensorSpec</span></code> 组成的列表，指定每个输入张量的形状和类型。例如，对于MNIST手写体数字识别，我们的输入是一个 <code class="docutils literal notranslate"><span class="pre">[None,</span> <span class="pre">28,</span> <span class="pre">28,</span> <span class="pre">1]</span></code> 的四维张量（ <code class="docutils literal notranslate"><span class="pre">None</span></code> 表示第一维即Batch Size的大小不固定），此时我们可以将模型的 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法做以下修饰：</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="o">...</span>
@@ -307,7 +298,7 @@
 </pre></div>
 </div>
 <ul class="simple">
-<li>在将模型使用 <code class="docutils literal notranslate"><span class="pre">tf.saved_model.save</span></code> 导出时，需要通过 <code class="docutils literal notranslate"><span class="pre">signature</span></code> 参数提供待导出的函数的签名（Signature）。简单说来，由于自定义的模型类里可能有多个方法都需要导出，因此，需要告诉TensorFlow Serving每个方法在被客户端调用时分别叫做什么名字。例如，如果我们希望客户端在调用模型时使用 <code class="docutils literal notranslate"><span class="pre">call</span></code> 这一签名来调用 <code class="docutils literal notranslate"><span class="pre">model.call</span></code> 方法时，我们可以在导出时传入 <code class="docutils literal notranslate"><span class="pre">signature</span></code> 参数，以 <code class="docutils literal notranslate"><span class="pre">dict</span></code> 的键值对形式告知导出的方法对应的签名，代码如下：</li>
+<li><p>在将模型使用 <code class="docutils literal notranslate"><span class="pre">tf.saved_model.save</span></code> 导出时，需要通过 <code class="docutils literal notranslate"><span class="pre">signature</span></code> 参数提供待导出的函数的签名（Signature）。简单说来，由于自定义的模型类里可能有多个方法都需要导出，因此，需要告诉TensorFlow Serving每个方法在被客户端调用时分别叫做什么名字。例如，如果我们希望客户端在调用模型时使用 <code class="docutils literal notranslate"><span class="pre">call</span></code> 这一签名来调用 <code class="docutils literal notranslate"><span class="pre">model.call</span></code> 方法时，我们可以在导出时传入 <code class="docutils literal notranslate"><span class="pre">signature</span></code> 参数，以 <code class="docutils literal notranslate"><span class="pre">dict</span></code> 的键值对形式告知导出的方法对应的签名，代码如下：</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">MLP</span><span class="p">()</span>
 <span class="o">...</span>
@@ -382,7 +373,7 @@
 <p>以下示例使用 <a class="reference external" href="https://nodejs.org/zh-cn/">Node.js</a> 将下图转换为28*28的灰度图，发送给本机的TensorFlow Serving服务器，并输出返回的预测值和概率。（其中使用了 <a class="reference external" href="https://github.com/oliver-moran/jimp">图像处理库jimp</a> 和 <a class="reference external" href="https://visionmedia.github.io/superagent/">HTTP库superagent</a> ，可使用 <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">jimp</span></code> 和 <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">superagent</span></code> 安装）</p>
 <div class="figure align-center" id="id7">
 <img alt="../../_images/test_pic_tag_5.png" src="../../_images/test_pic_tag_5.png" />
-<p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">test_pic_tag_5.png</span></code> ：一个由作者手写的数字5。（运行下面的代码时可下载该图片并放在与代码同一目录下）</span></p>
+<p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">test_pic_tag_5.png</span></code> ：一个由作者手写的数字5。（运行下面的代码时可下载该图片并放在与代码同一目录下）</span><a class="headerlink" href="#id7" title="永久链接至图片">¶</a></p>
 </div>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">Jimp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jimp&#39;</span><span class="p">)</span>
 <span class="kr">const</span> <span class="nx">superagent</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;superagent&#39;</span><span class="p">)</span>
@@ -461,10 +452,10 @@
 </div>
 <p>可见输出结果符合预期。</p>
 <div class="admonition note">
-<p class="first admonition-title">注解</p>
+<p class="admonition-title">注解</p>
 <p>如果你不熟悉HTTP POST，可以参考 <a class="reference external" href="https://www.runoob.com/tags/html-httpmethods.html">这里</a> 。事实上，当你在用浏览器填写表单（比方说性格测试）并点击“提交”按钮，然后获得返回结果（比如说“你的性格是ISTJ”）时，就很有可能是在向服务器发送一个HTTP POST请求并获得了服务器的回复。</p>
 <p>RESTful API是一个流行的API设计理论，可以参考 <a class="reference external" href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html">这里</a> 获得简要介绍。</p>
-<p class="last">关于TensorFlow Serving的RESTful API的完整使用方式可参考 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/api_rest">文档</a> 。</p>
+<p>关于TensorFlow Serving的RESTful API的完整使用方式可参考 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/api_rest">文档</a> 。</p>
 </div>
 </div>
 </div>

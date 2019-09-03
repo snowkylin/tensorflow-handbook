@@ -20,24 +20,15 @@
   <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../../',
-              VERSION:'0.4 alpha',
-              LANGUAGE:'zh_CN',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -107,7 +98,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装与环境配置</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立与训练</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模块</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
@@ -221,8 +212,8 @@
 </div>
 <p>即可。</p>
 <div class="admonition hint">
-<p class="first admonition-title">提示</p>
-<p class="last">对于使用继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 类建立的Keras模型 <code class="docutils literal notranslate"><span class="pre">model</span></code> ，使用SavedModel载入后将无法使用 <code class="docutils literal notranslate"><span class="pre">model()</span></code> 直接进行推断，而需要使用 <code class="docutils literal notranslate"><span class="pre">model.call()</span></code> 。</p>
+<p class="admonition-title">提示</p>
+<p>对于使用继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 类建立的Keras模型 <code class="docutils literal notranslate"><span class="pre">model</span></code> ，使用SavedModel载入后将无法使用 <code class="docutils literal notranslate"><span class="pre">model()</span></code> 直接进行推断，而需要使用 <code class="docutils literal notranslate"><span class="pre">model.call()</span></code> 。</p>
 </div>
 <p>以下是一个简单的示例，将 <a class="reference internal" href="../basic/models.html#mlp"><span class="std std-ref">前文MNIST手写体识别的模型</span></a> 进行导出和导入。</p>
 <p>导出模型到 <code class="docutils literal notranslate"><span class="pre">saved/1</span></code> 文件夹：</p>
@@ -319,8 +310,8 @@
 </pre></div>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">警告</p>
-<p class="last">该过程需要连接网络获取 <code class="docutils literal notranslate"><span class="pre">mnist.npz</span></code> 文件（<a class="reference external" href="https://s3.amazonaws.com/img-datasets/mnist.npz">https://s3.amazonaws.com/img-datasets/mnist.npz</a>），会被保存到 <code class="docutils literal notranslate"><span class="pre">$HOME/.keras/datasets/</span></code> 。如果网络连接存在问题，可以通过其他方式获取 <code class="docutils literal notranslate"><span class="pre">mnist.npz</span></code> 后，直接保存到该目录即可。</p>
+<p class="admonition-title">警告</p>
+<p>该过程需要连接网络获取 <code class="docutils literal notranslate"><span class="pre">mnist.npz</span></code> 文件（<a class="reference external" href="https://s3.amazonaws.com/img-datasets/mnist.npz">https://s3.amazonaws.com/img-datasets/mnist.npz</a>），会被保存到 <code class="docutils literal notranslate"><span class="pre">$HOME/.keras/datasets/</span></code> 。如果网络连接存在问题，可以通过其他方式获取 <code class="docutils literal notranslate"><span class="pre">mnist.npz</span></code> 后，直接保存到该目录即可。</p>
 </div>
 <p>执行过程会比较久，执行结束后，会在当前目录产生 <code class="docutils literal notranslate"><span class="pre">mnist_cnn.h5</span></code> 文件（HDF5格式），就是keras训练后的模型，其中已经包含了训练后的模型结构和权重等信息。</p>
 <p>在服务器端，可以直接通过 <code class="docutils literal notranslate"><span class="pre">keras.models.load_model(&quot;mnist_cnn.h5&quot;)</span></code> 加载，然后进行推理；在移动设备需要将HDF5模型文件转换为TensorFlow Lite的格式，然后通过相应平台的Interpreter加载，然后进行推理。</p>
