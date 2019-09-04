@@ -4,6 +4,8 @@
 .. figure:: /_static/image/tpu/tensorflow-tpu.png
     :width: 60%
     :align: center
+    :alt: Tensor Processing Unit - TPU
+
 
 
 2017年5月，Alpha Go 在中国乌镇围棋峰会上，与世界第一棋士柯洁比试，并取得了三比零全胜战绩。之后的版本Alpha Zero可以通过自我学习21天即可以达到胜过中国顶尖棋手柯洁的Alpha Go Master的水平。
@@ -19,55 +21,59 @@ TPU 代表 Tensor Processing Unit (张量处理单元) ，是由谷歌在2016年
 
 TPU 由多个计算核心（Tensor Core）组成，其中包括标量，矢量和矩阵单元（MXU）。TPU（张量处理单元）与CPU（中央处理单元）和GPU（图形处理单元）最重要的区别是：TPU的硬件专为线性代数而设计，线性代数是深度学习的基石。在过去几年中，Google TPU 已经发布了 v1，v2，v3, v2 Pod, v3 Pod, Edge 等多个版本：
 
-<table border="0">
-  <tr>
-    <td>版本</td>
-    <td>图片</td>
-    <td>性能</td>
-    <td>内存</td>
-  </tr>
-  <tr>
-    <td>TPU<br />(v1, 2015)</td>
-    <td><img src="images/tpu-v1.png" border="0" width="100"></td>
-    <td>92 TeraFLOPS</td>
-    <td>8 GB HBM</td>
-  </tr>
-  <tr>
-    <td>Cloud TPU<br />(v2, 2017)</td>
-    <td><img src="images/tpu-v2.jpg" border="0" width="100"></td>
-    <td>180 TeraFLOPS</td>
-    <td>64 GB HBM</td>
-  </tr>
-  <tr>
-    <td>Cloud TPU<br />(v3, 2018)</td>
-    <td><img src="images/tpu-v3.png" border="0" width="100"></td>
-    <td>420 TeraFLOPS</td>
-    <td>128 GB HBM</td>
-  </tr>
+.. raw:: html
 
-  <tr>
-    <td><nobr>Cloud TPU Pod</nobr><br />(v2, 2017)</td>
-    <td><img src="images/tpu-v2-pod.png" border="0" width="100"></td>
-    <td>11,500 TeraFLOPS</td>
-    <td>4,096 GB HBM</td>
-  </tr>
-  <tr>
-    <td>Cloud TPU Pod<br />(v3, 2018)</td>
-    <td><img src="images/tpu-v3-pod.jpg" border="0" width="100"></td>
-    <td><nobr>100,000+ TeraFLOPS</nobr></td>
-    <td><nobr>32,768 GB HBM</nobr></td>
-  </tr>
+    <div align="center">
+    <table border="0">
+      <tr>
+        <td>版本</td>
+        <td>图片</td>
+        <td>性能</td>
+        <td>内存</td>
+      </tr>
+      <tr>
+        <td>TPU<br />(v1, 2015)</td>
+        <td>
+        <img src="../../_static/image/tpu/tpu-v1.png" border="0" width="100"></td>
+        <td>92 TeraFLOPS</td>
+        <td>8 GB HBM</td>
+      </tr>
+      <tr>
+        <td>Cloud TPU<br />(v2, 2017)</td>
+        <td><img src="../../_static/image/tpu/tpu-v2.jpg" border="0" width="100"></td>
+        <td>180 TeraFLOPS</td>
+        <td>64 GB HBM</td>
+      </tr>
+      <tr>
+        <td>Cloud TPU<br />(v3, 2018)</td>
+        <td><img src="../../_static/image/tpu/tpu-v3.png" border="0" width="100"></td>
+        <td>420 TeraFLOPS</td>
+        <td>128 GB HBM</td>
+      </tr>
 
-  <tr>
-    <td>Edge TPU<br />(Coral, 2019)</td>
-    <td><img src="images/tpu-edge-coral-usb.png" border="0" width="100"></td>
-    <td>4 TeraOPS</td>
-    <td></td>
-  </tr>
-</table>
+      <tr>
+        <td><nobr>Cloud TPU Pod</nobr><br />(v2, 2017)</td>
+        <td><img src="../../_static/image/tpu/tpu-v2-pod.png" border="0" width="100"></td>
+        <td>11,500 TeraFLOPS</td>
+        <td>4,096 GB HBM</td>
+      </tr>
+      <tr>
+        <td>Cloud TPU Pod<br />(v3, 2018)</td>
+        <td><img src="../../_static/image/tpu/tpu-v3-pod.jpg" border="0" width="100"></td>
+        <td><nobr>100,000+ TeraFLOPS</nobr></td>
+        <td><nobr>32,768 GB HBM</nobr></td>
+      </tr>
 
-    注：
-    
+      <tr>
+        <td>Edge TPU<br />(Coral, 2019)</td>
+        <td><img src="../../_static/image/tpu/tpu-edge-coral-usb.png" border="0" width="100"></td>
+        <td>4 TeraOPS</td>
+        <td></td>
+      </tr>
+    </table>
+    </div>
+
+注：    
     1. Tera: 万亿，10的12次方
     1. Peta: 千万亿，10的15次方
     1. FLOPS：每秒浮点数计算次数（FLoating-point Operations Per Second）
@@ -83,45 +89,62 @@ TPU 由多个计算核心（Tensor Core）组成，其中包括标量，矢量�
 .. figure:: /_static/image/tpu/tpu-pod.jpg
     :width: 60%
     :align: center
+    :alt: TPU Pod
 
 根据 Google 提供的数据显示，在 Google Cloud TPU Pod 上可以仅用 8 分钟就能够完成ResNet-50 模型的训练。
 
-| ResNet-50 | TPU | TPU Pod |
-| --- | --- | --- |
-| 训练速度（每秒图像数） | 4000+ | 200,000+ |
-| 最终精度 | 93% | 93% |
-| 训练时长 | 7h 47m | 8m 45s |
+.. list-table:: ResNet-50
+   :header-rows: 1
 
-> Source: Google
+ * -
+   - TPU
+   - TPU Pod
+ * - 训练速度（每秒图像数）
+   - 4000+
+   - 200,000+
+ * - 最终精度
+   - 93%
+   - 93%
+ * - 训练时长
+   - 7h 47m
+   - 8m 45s
+
+Source: Google
 
 TPU 性能
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 根据研究显示，TPU 比现代 GPU 和 CPU 快 15 到 30 倍。同时，TPU 还实现了比传统芯片更好的能耗效率，算力能耗比值提高了30倍至80倍。
 
-每个周期的操作次数：
+.. list-table:: 每个周期的操作次数
+   :header-rows: 0
 
-| | 每周期计算次数 |
-| --- | --- |
-| CPU | 10 |
-| GPU | 10000 |
-| TPU | 100000 |
+   * - CPU
+     - 10
+   * - GPU
+     - 10,000
+   * - TPU
+     - 100,000
 
-每瓦性能比：
+.. list-table:: 每瓦性能比
+   :header-rows: 0
 
-| | 每瓦性能比 |
-| --- | --- |
-| CPU | 1 |
-| GPU | 2.9 |
-| TPU | 83 |
+    * - CPU
+      - 1
+    * - GPU
+      - 2.9
+    * - TPU
+      - 83
 
-每秒推理次数：
+.. list-table:: 每秒推理次数
+   :header-rows: 0
 
-| | 每秒推理次数 |
-| --- | --- |
-| CPU | 5,482 |
-| GPU | 13,194 |
-| TPU | 225,000 |
+    * - CPU
+      - 5,482
+    * - GPU
+      - 13,194
+    * - TPU
+      - 225,000
 
 Source: [An in-depth look at Google’s first Tensor Processing Unit (TPU)](https://cloud.google.com/blog/products/gcp/an-in-depth-look-at-googles-first-tensor-processing-unit-tpu)
 
