@@ -9,7 +9,7 @@ Swift for TensorFlow (S4TF) (Huan）
      
      -- Jameson Toole,  Co-founder & CTO of Fritz.ai
 
-Swift for TensorFlow (S4TF)简介
+S4TF 简介
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Google 推出的 Swift for TensorFlow （简称S4TF）是专门针对 TensorFlow 优化过的 Swift 版本。
@@ -21,7 +21,7 @@ Swift 语言是 Chris Lattner 在苹果公司工作时创建的。 现在 Chris 
 本章我们将向大家简要介绍 Swift for Tensorflow 的使用。你可以参考最新的 `Swift for TensorFlow 文档 <https://www.tensorflow.org/swift>`_.
 
 为什么要使用 Swift 进行 Tensorflow 开发
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------------------------
 
 相对于 Tensorflow 的其他版本（如 Python，C++ 等），S4TF 拥有其独有的优势，比如：
 
@@ -34,7 +34,7 @@ Swift 语言是 Chris Lattner 在苹果公司工作时创建的。 现在 Chris 
 
 更多使用 Swift 的理由，有兴趣的读者可以参考官方文档：`Why Swift for Tensorflow <https://github.com/tensorflow/swift/blob/master/docs/WhySwiftForTensorFlow.md>`_
 
-安装
+S4TF 环境配置
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 本地安装 Swift for Tensorflow
@@ -68,7 +68,7 @@ Blank Swift on Colab: https://colab.research.google.com/github/tensorflow/swift/
 
 如需执行您需要的 Swift 代码文件, 可以使用 Docker 的目录映射。详细使用方法可以参考 Docker Image `zixia/swift` 开源项目的地址：https://github.com/huan/docker-swift-tensorflow
 
-Swift 基础使用
+S4TF 基础使用
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Swift 是动态强类型语言，也就是说 Swift 支持通过编译器自动检测类型，同时要求变量的使用要严格符合定义，所有变量都必须先定义后使用。
@@ -97,7 +97,7 @@ Swift 是动态强类型语言，也就是说 Swift 支持通过编译器自动�
     print(w)
 
 在 Swift 中使用标准的 TensorFlow API
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------------------------
 
 在基础的 Tensorflow API 上，Swift 封装了 Tensorflow 的标准 API 接口。比如看一下处理数字的代码，API 与 Tensorflow 高度保持了一致：
 
@@ -125,7 +125,7 @@ Swift 是动态强类型语言，也就是说 Swift 支持通过编译器自动�
     }
 
 在 Swift 中直接加载 Python 语言库
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------------------------
 
 Swift 语言支持直接加载 Python 函数库（比如 NumPy），也支持直接加载系统动态链接库，很方便的做到即导入即用。
 
@@ -154,7 +154,7 @@ Swift 语言支持直接加载 Python 函数库（比如 NumPy），也支持直
 通过 Swift 强大的集成能力，针对 C/C++ 语言库的加载和调用，处理起来也将会是非常简单高效。
 
 语言原生支持自动微分
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------------------------
 
 我们可以通过 ``@differentiable`` 参数，非常容易的定义一个可被微分的函数。
 
@@ -170,7 +170,7 @@ Swift 语言支持直接加载 Python 函数库（比如 NumPy），也支持直
     // Output: -4.0
 
 MNIST数字分类
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+---------------------------------------------
 
 本小节的源代码可以在 <https://github.com/huan/tensorflow-handbook-swift> 找到。加载 `MNIST` 数据集使用了作者封装的 Swift Module [swift-MNIST](https://github.com/huan/swift-MNIST)。
 
