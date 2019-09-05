@@ -30,6 +30,8 @@ PDF下载（旧版） | PDF download (old version) :
 
 ### Install
 
+> run `make install` for run all the follow commands.
+
 ```sh
 # https://www.ibm.com/developerworks/cn/opensource/os-sphinx-documentation/index.html
 pip install sphinx
