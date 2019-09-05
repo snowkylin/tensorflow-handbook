@@ -137,7 +137,7 @@ TPU 环境配置
 
 最方便使用 TPU 的方法，就是使用 Google 的 Colab ，不但通过浏览器访问直接可以用，而且还免费。
 
-在 `Google Colab <https://colab.research.google.com>`_ 的 Notebook 界面中，打开界面中，打开主菜单 Runtime ，然后选择 Change runtime type，会弹出 Notebook settings 的窗口。选择里面的 Hardware accelerator 为 TPU 就可以了。
+在 `Google Colab <https://colab.research.google.com>`_ 的 Notebook 界面中，打开界面中，打开主菜单 `Runtime` ，然后选择 `Change runtime type`，会弹出 `Notebook settings` 的窗口。选择里面的 `Hardware accelerator` 为 `TPU` 就可以了。
 
 为了确认 Colab Notebook 中的确分配了 TPU 资源，我们可以运行以下测试代码。
 
@@ -180,6 +180,8 @@ TPU 环境配置
      _DeviceAttributes(/job:tpu_worker/.../device:TPU:7, TPU, ...),
      _DeviceAttributes(/job:tpu_worker/.../device:TPU_SYSTEM:0, TPU_SYSTEM, ...)]
 
+看到以上信息（一个CPU worker，8个TPU workers），既可以确认 Colab 的 TPU 环境设置正常。
+
 Cloud TPU
 --------------------------------------------
 
@@ -200,11 +202,13 @@ TPU 基础使用
 
 .. code-block:: python
 
-    resolver = tf.contrib.cluster_resolver.TPUClusterResolver(tpu='grpc://' + os.environ['COLAB_TPU_ADDR'])
+    resolver = tf.distribute.resolver.TPUClusterResolver(
+        tpu='grpc://' + os.environ['COLAB_TPU_ADDR'])
+    tf.config.experimental_connect_to_host(resolver.master())
     tf.tpu.experimental.initialize_tpu_system(resolver)
     strategy = tf.distribute.experimental.TPUStrategy(resolver)
 
-在上面的代码中，首先我们通过 ``TPUClusterResolver`` 用来获得 TPU 的参数（IP和端口），然后，我们对其进行初始化，并在最终通过 ``TPUStrategy`` 实例化到指定的 TPU 上。
+在上面的代码中，首先我们通过 TPU 的 IP 和端口实例化 `TPUClusterResolver`；然后，我们通过 `resolver` 链接到 TPU 上，并对其进行初始化；最后，完成实例化 `TPUStrategy`。
 
 以下使用 Fashion MNIST 分类任务展示 TPU 的使用方式。本小节的源代码可以在 https://github.com/huan/tensorflow-handbook-tpu 找到。
 
@@ -235,7 +239,9 @@ TPU 基础使用
         
         return model
 
-    resolver = tf.contrib.cluster_resolver.TPUClusterResolver(tpu='grpc://' + os.environ['COLAB_TPU_ADDR'])
+    resolver = tf.distribute.resolver.TPUClusterResolver(
+        tpu='grpc://' + os.environ['COLAB_TPU_ADDR'])
+    tf.config.experimental_connect_to_host(resolver.master())
     tf.tpu.experimental.initialize_tpu_system(resolver)
     strategy = tf.distribute.experimental.TPUStrategy(resolver)
 
