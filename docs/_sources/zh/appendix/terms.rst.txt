@@ -15,5 +15,6 @@
 * 深度强化学习 Deep Reinforcement Learning, DRL
 * 多智能体强化学习 Multi-Agent Reinforcement Learning, MARL
 * 批次 Batch
+* 形状 Shape
 * 容器 Container
 * 推断 Inference

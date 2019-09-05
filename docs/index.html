@@ -263,9 +263,9 @@
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/models.html#keras-model-compile-fit-evaluate">使用 Keras Model 的 <code class="docutils literal notranslate"><span class="pre">compile</span></code> 、 <code class="docutils literal notranslate"><span class="pre">fit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> 方法训练和评估模型</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="zh/basic/models.html#id24">自定义层、损失函数和评估指标 *</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic/models.html#id22">自定义层、损失函数和评估指标 *</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/models.html#custom-layer">自定义层</a></li>
-<li class="toctree-l3"><a class="reference internal" href="zh/basic/models.html#id26">自定义损失函数和评估指标</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/models.html#id24">自定义损失函数和评估指标</a></li>
 </ul>
 </li>
 </ul>
@@ -360,7 +360,21 @@
 <li class="toctree-l2"><a class="reference internal" href="zh/appendix/distributed.html#multiworkermirroredstrategy">多机训练： <code class="docutils literal notranslate"><span class="pre">MultiWorkerMirroredStrategy</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="zh/appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/tpu.html#tpu">TPU 简介</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/tpu.html#id1">什么是 TPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/tpu.html#id2">为什么使用 TPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/tpu.html#id3">TPU 性能</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/tpu.html#id4">TPU 环境配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/tpu.html#tpu-google-colab">免费 TPU：Google Colab</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/tpu.html#cloud-tpu">Cloud TPU</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/tpu.html#id5">TPU 基础使用</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -369,23 +383,39 @@
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/swift.html#swift-for-tensorflow-s4tf">Swift for TensorFlow (S4TF)简介</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/swift.html#swift-tensorflow">为什么要使用 Swift 进行 Tensorflow 开发</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/swift.html#id1">安装</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/swift.html#swift">Swift 基础使用</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/swift.html#swift-tensorflow-api">在 Swift 中使用标准的 TensorFlow API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/swift.html#swift-python">在 Swift 中直接加载 Python 语言库</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/swift.html#id3">语言原生支持自动微分</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/swift.html#mnist">MNIST数字分类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/swift.html#s4tf">S4TF 简介</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/swift.html#swift-tensorflow">为什么要使用 Swift 进行 Tensorflow 开发</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/swift.html#id1">S4TF 环境配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/swift.html#id2">本地安装 Swift for Tensorflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/swift.html#colaboratory-swift-for-tensorflow">在 Colaboratory 中使用 Swift for Tensorflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/swift.html#docker-swift-for-tensorflow">在 Docker 中快速体验 Swift for TensorFlow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/swift.html#id3">S4TF 基础使用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/swift.html#swift-tensorflow-api">在 Swift 中使用标准的 TensorFlow API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/swift.html#swift-python">在 Swift 中直接加载 Python 语言库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/swift.html#id4">语言原生支持自动微分</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/swift.html#mnist">MNIST数字分类</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/julia.html">TensorFlow in Julia（Ziyang）</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/julia.html#tensorflow-jl">TensorFlow.jl 简介</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/julia.html#julia-tensorflow">为什么要使用 julia 进行 TensorFlow 开发</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/julia.html#docker-tensorflow-jl">在 docker 中快速体验 TensorFlow.jl</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/julia.html#julia-tensorflow-jl">在 julia 包管理器中安装 TensorFlow.jl</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/julia.html#id2">基础使用</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/julia.html#mnist">MNIST数字分类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/julia.html#tensorflow-jl">TensorFlow.jl 简介</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/julia.html#julia-tensorflow">为什么要使用 julia 进行 TensorFlow 开发</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/julia.html#id2">TensorFlow.jl 环境配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/julia.html#docker-tensorflow-jl">在 docker 中快速体验 TensorFlow.jl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/julia.html#julia-tensorflow-jl">在 julia 包管理器中安装 TensorFlow.jl</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/julia.html#id3">TensorFlow.jl 基础使用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/julia.html#mnist">MNIST数字分类</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
