@@ -95,7 +95,7 @@ GitHub： https://github.com/snowkylin/tensorflow-handbook
     zh/appendix/tpu
 
 .. toctree:: 
-    :maxdepth: 2
+    :maxdepth: 3
     :caption: 扩展
 
     zh/appendix/tfhub
