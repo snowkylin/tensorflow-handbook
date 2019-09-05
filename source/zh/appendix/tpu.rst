@@ -208,7 +208,7 @@ TPU 基础使用
     tf.tpu.experimental.initialize_tpu_system(resolver)
     strategy = tf.distribute.experimental.TPUStrategy(resolver)
 
-在上面的代码中，首先我们通过 TPU 的 IP 和端口实例化 `TPUClusterResolver`；然后，我们通过 `resolver` 链接到 TPU 上，并对其进行初始化；最后，完成实例化 `TPUStrategy`。
+在上面的代码中，首先我们通过 TPU 的 IP 和端口实例化 `TPUClusterResolver`；然后，我们通过 `resolver` 连接到 TPU 上，并对其进行初始化；最后，完成实例化 `TPUStrategy`。
 
 以下使用 Fashion MNIST 分类任务展示 TPU 的使用方式。本小节的源代码可以在 https://github.com/huan/tensorflow-handbook-tpu 找到。
 
