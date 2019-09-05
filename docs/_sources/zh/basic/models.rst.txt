@@ -116,7 +116,7 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
 .. literalinclude:: /_static/code/zh/model/utils.py
     :lines: 5-19
 
-.. hint:: ``mnist = tf.keras.datasets.mnist`` 将从网络上自动下载 MNIST 数据集并加载。如果运行时出现网络连接错误，可以从 https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz 或 https://s3.amazonaws.com/img-datasets/mnist.npz 下载 MNIST 数据集 ``mnist.npz`` 文件，并放置于用户目录的 ``.keras/dataset`` 目录下（Windows 下用户目录为 ``C:\Users \ 用户名 `` ，Linux 下用户目录为 ``/home / 用户名 `` ）。
+.. hint:: ``mnist = tf.keras.datasets.mnist`` 将从网络上自动下载 MNIST 数据集并加载。如果运行时出现网络连接错误，可以从 https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz 或 https://s3.amazonaws.com/img-datasets/mnist.npz 下载 MNIST 数据集 ``mnist.npz`` 文件，并放置于用户目录的 ``.keras/dataset`` 目录下（Windows 下用户目录为 ``C:\Users\用户名`` ，Linux 下用户目录为 ``/home/用户名`` ）。
 
 .. admonition:: TensorFlow 的图像数据表示
 
@@ -298,7 +298,7 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
     .. literalinclude:: /_static/code/zh/model/cnn/cnn_example.py
         :lines: 4-21
 
-    然后建立一个仅有一个卷积层的模型，用 ``W`` 和 ``b`` 初始化 [#sequential_] ：
+    然后建立一个仅有一个卷积层的模型，用 ``W`` 和 ``b`` 初始化 [#sequential]_ ：
 
     .. literalinclude:: /_static/code/zh/model/cnn/cnn_example.py
         :lines: 23-30
@@ -485,7 +485,7 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
 
         CartPole 游戏
 
-我们使用 `OpenAI 推出的 Gym 环境库 <https://gym.openai.com/>`_ 中的 CartPole 游戏环境，具体安装步骤和教程可参考 ` 官方文档 <https://gym.openai.com/docs/>`_ 和 `这里 <https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-4-gym/>`_ 。Gym 的基本调用方法如下：
+我们使用 `OpenAI 推出的 Gym 环境库 <https://gym.openai.com/>`_ 中的 CartPole 游戏环境，具体安装步骤和教程可参考 `官方文档 <https://gym.openai.com/docs/>`_ 和 `这里 <https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-4-gym/>`_ 。Gym 的基本调用方法如下：
 
 .. code-block:: python
 
@@ -601,8 +601,8 @@ Keras 支持使用 ``tf.data.Dataset`` 进行训练，详见 :ref:`tf.data <tfda
             # 在第一次使用该层的时候调用该部分代码，在这里创建变量可以使得变量的形状自适应输入的形状
             # 而不需要使用者额外指定变量形状。
             # 如果已经可以完全确定变量的形状，也可以在__init__部分创建变量
-            self.variable_0 = self.add_variable(...)
-            self.variable_1 = self.add_variable(...)
+            self.variable_0 = self.add_weight(...)
+            self.variable_1 = self.add_weight(...)
 
         def call(self, inputs):
             # 模型调用的代码（处理输入并返回输出）
