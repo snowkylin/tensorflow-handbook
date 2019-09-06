@@ -107,16 +107,6 @@ TensorFlow常用模块
     .. literalinclude:: /_static/code/zh/tools/save_and_restore/mnist_manager.py
         :emphasize-lines: 22, 34
 
-..
-    AutoGraph：动态图转静态图 *
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-    `AutoGraph <https://www.tensorflow.org/guide/autograph>`_ 
-
-    SavedModel：模型的封装 *
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-
 TensorBoard：训练过程可视化
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -357,7 +347,7 @@ Keras支持使用 ``tf.data.Dataset`` 直接作为输入。当调用 ``tf.keras.
     https://pgaleone.eu/tensorflow/tf.function/2019/04/03/dissecting-tf-function-part-2/
     https://pgaleone.eu/tensorflow/tf.function/2019/05/10/dissecting-tf-function-part-3/
 
-在TensorFlow 2.0中，推荐使用 ``@tf.function`` （而非1.X中的 ``tf.Session`` ）实现Graph Execution，从而将模型转换为易于部署且高性能的TensorFlow图模型。只需要将我们希望以Graph Execution模式运行的代码封装在一个函数内，并在函数前加上 ``@tf.function`` 即可，如下例所示。
+在TensorFlow 2.0中，推荐使用 ``@tf.function`` （而非1.X中的 ``tf.Session`` ）实现Graph Execution，从而将模型转换为易于部署且高性能的TensorFlow图模型。只需要将我们希望以Graph Execution模式运行的代码封装在一个函数内，并在函数前加上 ``@tf.function`` 即可，如下例所示。关于TensorFlow 1.X版本中的Graph Execution可参考 :doc:`附录 <../appendix/static>` 。
 
 .. warning:: 并不是任何函数都可以被 ``@tf.function`` 修饰！``@tf.function`` 使用静态编译将函数内的代码转换成计算图，因此对函数内可使用的语句有一定限制（仅支持Python语言的一个子集），且需要函数内的操作本身能够被构建为计算图。建议在函数内只使用TensorFlow的原生操作，不要使用过于复杂的Python语句，函数参数只包括TensorFlow张量或NumPy数组，并最好是能够按照计算图的思想去构建函数（换言之，``@tf.function`` 只是给了你一种更方便的写计算图的方法，而不是一颗能给任何函数加速的 `银子弹 <https://en.wikipedia.org/wiki/No_Silver_Bullet>`_ ）。详细内容可参考 `AutoGraph Capabilities and Limitations <https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/autograph/g3doc/reference/limitations.md>`_ 。
 
@@ -505,10 +495,24 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
 
 关于Graph Execution的更多内容可参见 :doc:`/zh/appendix/static`。
 
-``tf.TensorArray`` ：TensorFlow数组 *
+``tf.TensorArray`` ：TensorFlow 动态数组 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+在部分网络结构，尤其是涉及到时间序列的结构中，我们可能需要将一系列张量以数组的方式依次存放起来，以供进一步处理。当然，在Eager Execution下，你可以直接使用一个Python列表（List）存放数组。不过，如果你需要基于计算图的特性（例如使用 ``@tf.function`` 加速模型运行或者使用SavedModel导出模型），就无法使用这种方式了。因此，TensorFlow提供了 ``tf.TensorArray`` ，一种支持计算图特性的TensorFlow动态数组。
 
+由于需要支持计算图， ``tf.TensorArray`` 的使用方式和一般编程语言中的列表/数组类型略有不同，包括4个方法：
+
+- 
+
+一个简单的示例如下：
+
+.. literalinclude:: /_static/code/zh/tools/tensorarray/example.py
+
+输出：
+
+::
+    
+    tf.Tensor(0.0, shape=(), dtype=float32) tf.Tensor(1.0, shape=(), dtype=float32) tf.Tensor(2.0, shape=(), dtype=float32)
 
 ``tf.config``：GPU的使用与分配 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
