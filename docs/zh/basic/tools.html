@@ -116,7 +116,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#tf-session">使用传统的 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#tf-tensorarray-tensorflow"><code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> ：TensorFlow数组 *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tf-tensorarray-tensorflow"><code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> ：TensorFlow 动态数组 *</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tf-config-gpu"><code class="docutils literal notranslate"><span class="pre">tf.config</span></code>：GPU的使用与分配 *</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#gpu">指定当前程序使用的GPU</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id11">设置显存使用策略</a></li>
@@ -710,7 +710,7 @@
 <span id="tffunction"></span><h2><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> ：Graph Execution模式 *<a class="headerlink" href="#tf-function-graph-execution" title="永久链接至标题">¶</a></h2>
 <div class="section" id="tf-function">
 <h3><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 基础使用方法<a class="headerlink" href="#tf-function" title="永久链接至标题">¶</a></h3>
-<p>在TensorFlow 2.0中，推荐使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> （而非1.X中的 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code> ）实现Graph Execution，从而将模型转换为易于部署且高性能的TensorFlow图模型。只需要将我们希望以Graph Execution模式运行的代码封装在一个函数内，并在函数前加上 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 即可，如下例所示。</p>
+<p>在TensorFlow 2.0中，推荐使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> （而非1.X中的 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code> ）实现Graph Execution，从而将模型转换为易于部署且高性能的TensorFlow图模型。只需要将我们希望以Graph Execution模式运行的代码封装在一个函数内，并在函数前加上 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 即可，如下例所示。关于TensorFlow 1.X版本中的Graph Execution可参考 <a class="reference internal" href="../appendix/static.html"><span class="doc">附录</span></a> 。</p>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>
 <p>并不是任何函数都可以被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰！<code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 使用静态编译将函数内的代码转换成计算图，因此对函数内可使用的语句有一定限制（仅支持Python语言的一个子集），且需要函数内的操作本身能够被构建为计算图。建议在函数内只使用TensorFlow的原生操作，不要使用过于复杂的Python语句，函数参数只包括TensorFlow张量或NumPy数组，并最好是能够按照计算图的思想去构建函数（换言之，<code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 只是给了你一种更方便的写计算图的方法，而不是一颗能给任何函数加速的 <a class="reference external" href="https://en.wikipedia.org/wiki/No_Silver_Bullet">银子弹</a> ）。详细内容可参考 <a class="reference external" href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/autograph/g3doc/reference/limitations.md">AutoGraph Capabilities and Limitations</a> 。</p>
@@ -939,7 +939,34 @@
 </div>
 </div>
 <div class="section" id="tf-tensorarray-tensorflow">
-<h2><code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> ：TensorFlow数组 *<a class="headerlink" href="#tf-tensorarray-tensorflow" title="永久链接至标题">¶</a></h2>
+<h2><code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> ：TensorFlow 动态数组 *<a class="headerlink" href="#tf-tensorarray-tensorflow" title="永久链接至标题">¶</a></h2>
+<p>在部分网络结构，尤其是涉及到时间序列的结构中，我们可能需要将一系列张量以数组的方式依次存放起来，以供进一步处理。当然，在Eager Execution下，你可以直接使用一个Python列表（List）存放数组。不过，如果你需要基于计算图的特性（例如使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 加速模型运行或者使用SavedModel导出模型），就无法使用这种方式了。因此，TensorFlow提供了 <code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> ，一种支持计算图特性的TensorFlow动态数组。</p>
+<p>由于需要支持计算图， <code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> 的使用方式和一般编程语言中的列表/数组类型略有不同，包括4个方法：</p>
+<ul class="simple">
+<li></li>
+</ul>
+<p>一个简单的示例如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+<span class="k">def</span> <span class="nf">array_write_and_read</span><span class="p">():</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">TensorArray</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">1.0</span><span class="p">))</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">2.0</span><span class="p">))</span>
+    <span class="n">arr_0</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">arr_1</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">arr_2</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">arr_0</span><span class="p">,</span> <span class="n">arr_1</span><span class="p">,</span> <span class="n">arr_2</span>
+
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">array_write_and_read</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="tf-config-gpu">
 <h2><code class="docutils literal notranslate"><span class="pre">tf.config</span></code>：GPU的使用与分配 *<a class="headerlink" href="#tf-config-gpu" title="永久链接至标题">¶</a></h2>
