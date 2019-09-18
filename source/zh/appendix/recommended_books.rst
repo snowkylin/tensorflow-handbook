@@ -21,6 +21,12 @@
 
 * 皮隆, 辛愿, 钟黎, and 欧阳婷. `贝叶斯方法: 概率编程与贝叶斯推断 <https://book.douban.com/subject/26929874/>`_ . 人民邮电出版社, 2017.
 
+如果你喜欢相对生动的视频讲解，可以参考以下公开课程：
+
+* `台湾大学李宏毅教授的《机器学习》课程 <https://www.bilibili.com/video/av10590361>`_ （ `讲义点此 <http://speech.ee.ntu.edu.tw/~tlkagk/courses_ML17.html>`_ ，中文，讲解生动且更新及时）
+* `谷歌的《机器学习速成课程》 <https://developers.google.cn/machine-learning/crash-course/>`_ （内容已全部汉化，注重实践）
+* `Andrew Ng的《机器学习》课程 <https://www.bilibili.com/video/av29430384>`_ （英文含字幕，经典课程，较偏理论，网络上可搜索到很多课程笔记）
+
 相对的，一本不够适合的教材则可能会毁掉初学者的热情。对于缺乏基础的初学者，**不** 推荐以下书籍：
 
 * Goodfellow, Ian, Yoshua Bengio, and Aaron Courville. `深度学习 <https://book.douban.com/subject/27087503/>`_ . 人民邮电出版社, 2017.
