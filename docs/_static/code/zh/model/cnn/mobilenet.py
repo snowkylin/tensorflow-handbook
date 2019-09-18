@@ -7,7 +7,7 @@ learning_rate = 0.001
 
 dataset = tfds.load("tf_flowers", split=tfds.Split.TRAIN, as_supervised=True)
 dataset = dataset.map(lambda img, label: (tf.image.resize(img, [224, 224]) / 255.0, label)).shuffle(1024).batch(32)
-model = tf.keras.applications.DenseNet121(weights=None, classes=5)
+model = tf.keras.applications.MobileNetV2(weights=None, classes=5)
 optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
 for images, labels in dataset:
     with tf.GradientTape() as tape:
