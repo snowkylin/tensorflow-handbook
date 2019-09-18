@@ -124,7 +124,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">S4TF 环境配置</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">本地安装 Swift for Tensorflow</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#colaboratory-swift-for-tensorflow">在 Colaboratory 中使用 Swift for Tensorflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#colaboratory-swift-for-tensorflow">在 Colaboratory 中快速体验 Swift for Tensorflow</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#docker-swift-for-tensorflow">在 Docker 中快速体验 Swift for TensorFlow</a></li>
 </ul>
 </li>
@@ -225,7 +225,7 @@
 </div>
 <div class="section" id="s4tf">
 <h2>S4TF 简介<a class="headerlink" href="#s4tf" title="永久链接至标题">¶</a></h2>
-<p>Google 推出的 Swift for TensorFlow （简称S4TF）是专门针对 TensorFlow 优化过的 Swift 版本。</p>
+<p>Google 推出的 Swift for TensorFlow （简称S4TF）是专门针对 TensorFlow 优化过的 Swift 版本。（目前处在 Pre-Alpha 阶段）</p>
 <p>Swift 语言是 Chris Lattner 在苹果公司工作时创建的。 现在 Chris Lattner 在 Google Brain 工作，专门从事深度学习的研究，并为 Swift 重写了编译器，为 Tensorflow 做定制优化，</p>
 <p>为了能够在程序语言级支持 Tensorflow 所需的所有功能特性，S4TF 做为了 Swift 语言本身的一个分支，为 Swift 语言添加了机器学习所需要的所有功能扩展。它不仅仅是一个用 Swift 写成的 TensorFlow API 封装，Google 还为 Swift 增加了编译器和语言增强功能，提供了一种新的编程模型，结合了图的性能、Eager Execution 的灵活性和表达能力。</p>
 <p>本章我们将向大家简要介绍 Swift for Tensorflow 的使用。你可以参考最新的 <a class="reference external" href="https://www.tensorflow.org/swift">Swift for TensorFlow 文档</a>.</p>
@@ -233,7 +233,7 @@
 <h3>为什么要使用 Swift 进行 Tensorflow 开发<a class="headerlink" href="#swift-tensorflow" title="永久链接至标题">¶</a></h3>
 <p>相对于 Tensorflow 的其他版本（如 Python，C++ 等），S4TF 拥有其独有的优势，比如：</p>
 <ol class="arabic simple">
-<li><p>开发效率高：强类型语言，能够静态检查 Tensor 维度是否匹配</p></li>
+<li><p>开发效率高：强类型语言，能够静态检查变量类型</p></li>
 <li><p>迁移成本低：与 Python，C，C++ 能够无缝结合</p></li>
 <li><p>执行性能高：能够直接编译为底层硬件代码</p></li>
 <li><p>专门为机器学习打造：语言原生支持自动微分系统</p></li>
@@ -250,7 +250,7 @@
 <p>官方文档（含下载地址）：<a class="reference external" href="https://github.com/tensorflow/swift/blob/master/Installation.md">https://github.com/tensorflow/swift/blob/master/Installation.md</a></p>
 </div>
 <div class="section" id="colaboratory-swift-for-tensorflow">
-<h3>在 Colaboratory 中使用 Swift for Tensorflow<a class="headerlink" href="#colaboratory-swift-for-tensorflow" title="永久链接至标题">¶</a></h3>
+<h3>在 Colaboratory 中快速体验 Swift for Tensorflow<a class="headerlink" href="#colaboratory-swift-for-tensorflow" title="永久链接至标题">¶</a></h3>
 <p>Google 的 Colaboratory 可以直接支持 Swift 语言的运行环境。可以通过下面的链接，直接打开一个 Swift 运行环境的 Colab Notebook ，这是一个最方便立即可以体验 Swift for Tensorflow 的方法。</p>
 <p>Blank Swift on Colab: <a class="reference external" href="https://colab.research.google.com/github/tensorflow/swift/blob/master/notebooks/blank_swift.ipynb">https://colab.research.google.com/github/tensorflow/swift/blob/master/notebooks/blank_swift.ipynb</a></p>
 </div>
@@ -280,9 +280,13 @@
 <div class="section" id="id3">
 <h2>S4TF 基础使用<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <p>Swift 是动态强类型语言，也就是说 Swift 支持通过编译器自动检测类型，同时要求变量的使用要严格符合定义，所有变量都必须先定义后使用。</p>
-<p>下面的代码，因为最初声明的 <code class="docutils literal notranslate"><span class="pre">n</span></code> 是整数类型 <code class="docutils literal notranslate"><span class="pre">42</span></code> ，所以如果将 <code class="docutils literal notranslate"><span class="pre">'string'</span></code> 赋值给 <code class="docutils literal notranslate"><span class="pre">n</span></code> 时，会出现类型不匹配的问题，Swift 将会报错：“Cannot assign value of type ‘String’ to type ‘Int’”。</p>
-<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span>var n = 42
-n = &#39;string&#39;
+<p>下面的代码，因为最初声明的 <code class="docutils literal notranslate"><span class="pre">n</span></code> 是整数类型 <code class="docutils literal notranslate"><span class="pre">42</span></code> ，所以如果将 <code class="docutils literal notranslate"><span class="pre">'string'</span></code> 赋值给 <code class="docutils literal notranslate"><span class="pre">n</span></code> 时，会出现类型不匹配的问题，Swift 将会报错：</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nv">n</span> <span class="p">=</span> <span class="mi">42</span>
+<span class="n">n</span> <span class="p">=</span> <span class="s">&quot;string&quot;</span>
+</pre></div>
+</div>
+<p>报错输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Cannot</span> <span class="n">assign</span> <span class="n">value</span> <span class="n">of</span> <span class="nb">type</span> <span class="s1">&#39;String&#39;</span> <span class="n">to</span> <span class="nb">type</span> <span class="s1">&#39;Int&#39;</span>
 </pre></div>
 </div>
 <p>下面是一个使用 TensorFlow 计算的基础示例：</p>
@@ -333,7 +337,11 @@ for (image, label) in zip(imageBatch, labelBatch) {
 <span class="kd">let</span> <span class="nv">np</span> <span class="p">=</span> <span class="n">Python</span><span class="p">.</span><span class="kd">import</span><span class="p">(</span><span class="s">&quot;numpy&quot;</span><span class="p">)</span>
 <span class="kd">let</span> <span class="nv">x</span> <span class="p">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
 <span class="kd">let</span> <span class="nv">y</span> <span class="p">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">])</span>
-<span class="bp">print</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="c1">// [35 81]</span>
+<span class="bp">print</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">35</span> <span class="mi">81</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>除了能够直接调用 Python 之外，Swift 也快成直接调用系统函数库。比如下面的代码例子展示了我们可以在 Swift 中直接加载 Glibc 的动态库，然后调用系统底层的 malloc 和 memcpy 函数，对变量直接进行操作。</p>
@@ -354,8 +362,10 @@ for (image, label) in zip(imageBatch, labelBatch) {
 <span class="p">}</span>
 
 <span class="n">gradient</span><span class="p">(</span><span class="n">at</span><span class="p">:</span><span class="mf">0.5</span><span class="p">)</span> <span class="p">{</span> <span class="n">x</span> <span class="k">in</span> <span class="n">frac</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">}</span>
-
-<span class="c1">// Output: -4.0</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="mf">4.0</span>
 </pre></div>
 </div>
 </div>

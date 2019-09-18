@@ -107,7 +107,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#tf-keras-metrics">模型的评估： <code class="docutils literal notranslate"><span class="pre">tf.keras.metrics</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#cnn">卷积神经网络（CNN）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cnn">卷积神经网络（CNN）</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#keras">使用Keras实现卷积神经网络</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">使用Keras中预定义的经典卷积神经网络结构</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#rnn">循环神经网络（RNN）</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#drl">深度强化学习（DRL）</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#keras-pipeline">Keras Pipeline *</a><ul>
@@ -115,9 +119,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#keras-model-compile-fit-evaluate">使用 Keras Model 的 <code class="docutils literal notranslate"><span class="pre">compile</span></code> 、 <code class="docutils literal notranslate"><span class="pre">fit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> 方法训练和评估模型</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id22">自定义层、损失函数和评估指标 *</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id24">自定义层、损失函数和评估指标 *</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#custom-layer">自定义层</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id24">自定义损失函数和评估指标</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id26">自定义损失函数和评估指标</a></li>
 </ul>
 </li>
 </ul>
@@ -254,9 +258,9 @@
     <span class="c1"># 还可以添加自定义的方法</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id25">
+<div class="figure align-center" id="id27">
 <a class="reference internal image-reference" href="../../_images/model.png"><img alt="../../_images/model.png" src="../../_images/model.png" style="width: 50%;" /></a>
-<p class="caption"><span class="caption-text">Keras 模型类定义示意图</span><a class="headerlink" href="#id25" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">Keras 模型类定义示意图</span><a class="headerlink" href="#id27" title="永久链接至图片">¶</a></p>
 </div>
 <p>继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 后，我们同时可以使用父类的若干方法和属性，例如在实例化类 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">Model()</span></code> 后，可以通过 <code class="docutils literal notranslate"><span class="pre">model.variables</span></code> 这一属性直接获得模型中的所有变量，免去我们一个个显式指定变量的麻烦。</p>
 <p>上一章中简单的线性模型 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> ，我们可以通过模型类的方式编写如下：</p>
@@ -340,9 +344,9 @@
 </ul>
 </div>
 <p>这里，我们使用多层感知机完成 MNIST 手写体数字图片数据集 <a class="reference internal" href="#lecun1998" id="id7"><span>[LeCun1998]</span></a> 的分类任务。</p>
-<div class="figure align-center" id="id26">
+<div class="figure align-center" id="id28">
 <img alt="../../_images/mnist_0-9.png" src="../../_images/mnist_0-9.png" />
-<p class="caption"><span class="caption-text">MNIST 手写体数字图片示例</span><a class="headerlink" href="#id26" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">MNIST 手写体数字图片示例</span><a class="headerlink" href="#id28" title="永久链接至图片">¶</a></p>
 </div>
 <div class="section" id="tf-keras-datasets">
 <h3>数据获取及预处理： <code class="docutils literal notranslate"><span class="pre">tf.keras.datasets</span></code><a class="headerlink" href="#tf-keras-datasets" title="永久链接至标题">¶</a></h3>
@@ -374,7 +378,7 @@
 </div>
 </div>
 <div class="section" id="tf-keras-model-tf-keras-layers">
-<h3>模型的构建： <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code><a class="headerlink" href="#tf-keras-model-tf-keras-layers" title="永久链接至标题">¶</a></h3>
+<span id="mlp-model"></span><h3>模型的构建： <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code><a class="headerlink" href="#tf-keras-model-tf-keras-layers" title="永久链接至标题">¶</a></h3>
 <p>多层感知机的模型类实现与上面的线性模型类似，使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code> 构建，所不同的地方在于层数增加了（顾名思义，“多层” 感知机），以及引入了非线性激活函数（这里使用了 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0">ReLU 函数</a> ， 即下方的 <code class="docutils literal notranslate"><span class="pre">activation=tf.nn.relu</span></code> ）。该模型输入一个向量（比如这里是拉直的 <code class="docutils literal notranslate"><span class="pre">1×784</span></code> 手写体数字图片），输出 10 维的向量，分别代表这张图片属于 0 到 9 的概率。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -400,9 +404,9 @@
 </ul>
 <p>为了使得模型的输出能始终满足这两个条件，我们使用 <a class="reference external" href="https://zh.wikipedia.org/wiki/Softmax%E5%87%BD%E6%95%B0">Softmax 函数</a> （归一化指数函数， <code class="docutils literal notranslate"><span class="pre">tf.nn.softmax</span></code> ）对模型的原始输出进行归一化。其形式为 <span class="math notranslate nohighlight">\(\sigma(\mathbf{z})_j = \frac{e^{z_j}}{\sum_{k=1}^K e^{z_k}}\)</span> 。不仅如此，softmax 函数能够凸显原始向量中最大的值，并抑制远低于最大值的其他分量，这也是该函数被称作 softmax 函数的原因（即平滑化的 argmax 函数）。</p>
 </div>
-<div class="figure align-center" id="id27">
+<div class="figure align-center" id="id29">
 <a class="reference internal image-reference" href="../../_images/mlp.png"><img alt="../../_images/mlp.png" src="../../_images/mlp.png" style="width: 80%;" /></a>
-<p class="caption"><span class="caption-text">MLP 模型示意图</span><a class="headerlink" href="#id27" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">MLP 模型示意图</span><a class="headerlink" href="#id29" title="永久链接至图片">¶</a></p>
 </div>
 </div>
 <div class="section" id="tf-keras-losses-tf-keras-optimizer">
@@ -484,9 +488,9 @@
 </div>
 <p>该计算单元 <span class="math notranslate nohighlight">\(Q_k\)</span> 有 100 个权值参数 <span class="math notranslate nohighlight">\(w_{0k}, w_{1k}, ..., w_{99k}\)</span> 和 1 个偏置参数 <span class="math notranslate nohighlight">\(b_k\)</span> 。将第 1 层中所有的 100 个计算单元 <span class="math notranslate nohighlight">\(P_0, P_1, ..., P_{99}\)</span> 的值作为输入，分别按权值 <span class="math notranslate nohighlight">\(w_{ik}\)</span> 加和（即 <span class="math notranslate nohighlight">\(\sum_{i=0}^{99} w_{ik} P_i\)</span> ），并加上偏置值 <span class="math notranslate nohighlight">\(b_k\)</span> ，然后送入激活函数 <span class="math notranslate nohighlight">\(f\)</span> 进行计算，即得到输出结果。</p>
 <p>事实上，这种结构和真实的神经细胞（神经元）类似。神经元由树突、胞体和轴突构成。树突接受其他神经元传来的信号作为输入（一个神经元可以有数千甚至上万树突），胞体对电位信号进行整合，而产生的信号则通过轴突传到神经末梢的突触，传播到下一个（或多个）神经元。</p>
-<div class="figure align-center" id="id28">
+<div class="figure align-center" id="id30">
 <a class="reference internal image-reference" href="../../_images/real_neuron.png"><img alt="../../_images/real_neuron.png" src="../../_images/real_neuron.png" style="width: 80%;" /></a>
-<p class="caption"><span class="caption-text">神经细胞模式图（修改自 Quasar Jarosz at English Wikipedia [CC BY-SA 3.0 (<a class="reference external" href="https://creativecommons.org/licenses/by-sa/3.0">https://creativecommons.org/licenses/by-sa/3.0</a>)]）</span><a class="headerlink" href="#id28" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">神经细胞模式图（修改自 Quasar Jarosz at English Wikipedia [CC BY-SA 3.0 (<a class="reference external" href="https://creativecommons.org/licenses/by-sa/3.0">https://creativecommons.org/licenses/by-sa/3.0</a>)]）</span><a class="headerlink" href="#id30" title="永久链接至图片">¶</a></p>
 </div>
 <p>上面的计算单元，可以被视作对神经元结构的数学建模。在上面的例子里，第二层的每一个计算单元（人工神经元）有 100 个权值参数和 1 个偏置参数，而第二层计算单元的数目是 10 个，因此这一个全连接层的总参数量为 100*10 个权值参数和 10 个偏置参数。事实上，这正是该全连接层中的两个变量 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 的形状。仔细研究一下，你会发现，这里基于神经元建模的介绍与上文基于矩阵计算的介绍是等价的。</p>
 <dl class="footnote brackets">
@@ -508,11 +512,9 @@
 <li><p>斯坦福课程 <a class="reference external" href="http://cs231n.github.io/">CS231n: Convolutional Neural Networks for Visual Recognition</a> 中的 “Module 2: Convolutional Neural Networks” 部分。</p></li>
 </ul>
 </div>
-<p>具体的实现见下，和 MLP 很类似，只是新加入了一些卷积层和池化层。</p>
-<div class="figure align-center" id="id29">
-<img alt="../../_images/cnn.png" src="../../_images/cnn.png" />
-<p class="caption"><span class="caption-text">CNN 结构图示</span><a class="headerlink" href="#id29" title="永久链接至图片">¶</a></p>
-</div>
+<div class="section" id="keras">
+<h3>使用Keras实现卷积神经网络<a class="headerlink" href="#keras" title="永久链接至标题">¶</a></h3>
+<p>卷积神经网络的一个示例实现如下所示，和 <a class="reference internal" href="#mlp-model"><span class="std std-ref">上节中的多层感知机</span></a> 在代码结构上很类似，只是新加入了一些卷积层和池化层。这里的网络结构并不是唯一的，可以增加、删除或调整 CNN 的网络结构和参数，以达到更好的性能。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CNN</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -546,11 +548,54 @@
         <span class="k">return</span> <span class="n">output</span>
 </pre></div>
 </div>
+<div class="figure align-center" id="id31">
+<img alt="../../_images/cnn.png" src="../../_images/cnn.png" />
+<p class="caption"><span class="caption-text">示例代码中的 CNN 结构图示</span><a class="headerlink" href="#id31" title="永久链接至图片">¶</a></p>
+</div>
 <p>将前节的 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">MLP()</span></code> 更换成 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">CNN()</span></code> ，输出如下:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test</span> <span class="n">accuracy</span><span class="p">:</span> <span class="mf">0.988100</span>
 </pre></div>
 </div>
-<p>可以发现准确率有非常显著的提高。事实上，通过改变模型的网络结构（比如加入 Dropout 层防止过拟合），准确率还有进一步提升的空间。</p>
+<p>可以发现准确率相较于前节的多层感知机有非常显著的提高。事实上，通过改变模型的网络结构（比如加入 Dropout 层防止过拟合），准确率还有进一步提升的空间。</p>
+</div>
+<div class="section" id="id14">
+<h3>使用Keras中预定义的经典卷积神经网络结构<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">tf.keras.applications</span></code> 中有一些预定义好的经典卷积神经网络结构，如 <code class="docutils literal notranslate"><span class="pre">VGG16</span></code> 、 <code class="docutils literal notranslate"><span class="pre">VGG19</span></code> 、 <code class="docutils literal notranslate"><span class="pre">ResNet</span></code> 、 <code class="docutils literal notranslate"><span class="pre">MobileNet</span></code> 等。我们可以直接调用这些经典的卷积神经网络结构（甚至载入预训练的参数），而无需手动定义网络结构。</p>
+<p>例如，我们可以使用以下代码来实例化一个 <code class="docutils literal notranslate"><span class="pre">MobileNetV2</span></code> 网络结构：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">MobileNetV2</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>当执行以上代码时，TensorFlow会自动从网络上下载 <code class="docutils literal notranslate"><span class="pre">MobileNetV2</span></code> 网络结构，因此在第一次执行代码时需要具备网络连接。每个网络结构具有自己特定的详细参数设置，一些共通的常用参数如下：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input_shape</span></code> ：输入张量的形状（不含第一维的Batch），大多默认为 <code class="docutils literal notranslate"><span class="pre">224</span> <span class="pre">×</span> <span class="pre">224</span> <span class="pre">×</span> <span class="pre">3</span></code> 。一般而言，模型对输入张量的大小有下限，长和宽至少为 <code class="docutils literal notranslate"><span class="pre">32</span> <span class="pre">×</span> <span class="pre">32</span></code> 或 <code class="docutils literal notranslate"><span class="pre">75</span> <span class="pre">×</span> <span class="pre">75</span></code> ；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">include_top</span></code> ：在网络的最后是否包含全连接层，默认为 <code class="docutils literal notranslate"><span class="pre">True</span></code> ；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">weights</span></code> ：预训练权值，默认为 <code class="docutils literal notranslate"><span class="pre">'imagenet'</span></code> ，即为当前模型载入在ImageNet数据集上预训练的权值。如需随机初始化变量可设为 <code class="docutils literal notranslate"><span class="pre">None</span></code> ；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">classes</span></code> ：分类数，默认为1000。修改该参数需要 <code class="docutils literal notranslate"><span class="pre">include_top</span></code> 参数为 <code class="docutils literal notranslate"><span class="pre">True</span></code> 且 <code class="docutils literal notranslate"><span class="pre">weights</span></code> 参数为 <code class="docutils literal notranslate"><span class="pre">None</span></code> 。</p></li>
+</ul>
+<p>各网络模型参数的详细介绍可参考 <a class="reference external" href="https://keras.io/applications/">Keras文档</a> 。</p>
+<p>以下展示一个例子，使用 <code class="docutils literal notranslate"><span class="pre">MobileNetV2</span></code> 网络在 <code class="docutils literal notranslate"><span class="pre">tf_flowers</span></code> 五分类数据集上进行训练（为了代码的简短高效，在该示例中我们使用了 <a class="reference internal" href="../appendix/tfds.html"><span class="doc">TensorFlow Datasets</span></a> 和 <a class="reference internal" href="tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 载入和预处理数据）。通过将 <code class="docutils literal notranslate"><span class="pre">weights</span></code> 设置为 <code class="docutils literal notranslate"><span class="pre">None</span></code> ，我们随机初始化变量而不使用预训练权值。同时将 <code class="docutils literal notranslate"><span class="pre">classes</span></code> 设置为5，对应于5分类的数据集。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
+
+<span class="n">num_batches</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.001</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;tf_flowers&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">tfds</span><span class="o">.</span><span class="n">Split</span><span class="o">.</span><span class="n">TRAIN</span><span class="p">,</span> <span class="n">as_supervised</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">img</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">[</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">])</span> <span class="o">/</span> <span class="mf">255.0</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<span class="hll"><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">DenseNet121</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
+        <span class="n">labels_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">labels_pred</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;loss </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">loss</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+    <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">)</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>后文的部分章节（如 <a class="reference internal" href="../appendix/distributed.html"><span class="doc">分布式训练</span></a> ）中，我们也会直接调用这些经典的网络结构来进行训练。</p>
 <div class="admonition- admonition">
 <p class="admonition-title">卷积层和池化层的工作原理</p>
 <p>卷积层（Convolutional Layer，以 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Conv2D</span></code> 为代表）是 CNN 的核心组件，其结构与大脑的视觉皮层有类似之处。</p>
@@ -566,9 +611,9 @@
 </div>
 <p>图中 3×3 的红框代表该神经元的感受野。由此，我们只需 3×3=9 个权值 <span class="math notranslate nohighlight">\(W = \begin{bmatrix}w_{1, 1} &amp; w_{1, 2} &amp; w_{1, 3} \\w_{2, 1} &amp; w_{2, 2} &amp; w_{2, 3} \\w_{3, 1} &amp; w_{3, 2} &amp; w_{3, 3}\end{bmatrix}\)</span>  ，外加1个偏置项 <span class="math notranslate nohighlight">\(b\)</span>  ，即可得到一个输出信号。例如，对于红框所示的位置，输出信号即为对矩阵 <span class="math notranslate nohighlight">\(\begin{bmatrix}0 \times w_{1, 1} &amp; 0 \times w_{1, 2} &amp; 0 \times w_{1, 3} \\0 \times w_{2, 1} &amp; 1 \times w_{2, 2} &amp; 0 \times w_{2, 3} \\0 \times w_{3, 1} &amp; 0 \times w_{3, 2} &amp; 2 \times w_{3, 3}\end{bmatrix}\)</span> 的所有元素求和，记作 <span class="math notranslate nohighlight">\(a_{1, 1}\)</span>  。</p>
 <p>不过，3×3 的范围显然不足以处理整个图像，因此我们使用滑动窗口的方法。使用相同的参数 <span class="math notranslate nohighlight">\(W\)</span> ，但将红框在图像中从左到右滑动，进行逐行扫描，每滑动到一个位置就计算一个值。例如，当红框向右移动一个单位时，我们计算矩阵 <span class="math notranslate nohighlight">\(\begin{bmatrix}0 \times w_{1, 1} &amp; 0 \times w_{1, 2} &amp; 0 \times w_{1, 3} \\1 \times w_{2, 1} &amp; 0 \times w_{2, 2} &amp; 1 \times w_{2, 3} \\0 \times w_{3, 1} &amp; 2 \times w_{3, 2} &amp; 1 \times w_{3, 3}\end{bmatrix}\)</span> 的所有元素的和，记作 <span class="math notranslate nohighlight">\(a_{1, 2}\)</span> 。由此，和一般的神经元只能输出 1 个值不同，这里的卷积层神经元可以输出一个 5×5 的矩阵 <span class="math notranslate nohighlight">\(A = \begin{bmatrix}a_{1, 1} &amp; \cdots &amp; a_{1, 5} \\ \vdots &amp; &amp; \vdots \\ a_{5, 1} &amp; \cdots &amp; a_{5, 5}\end{bmatrix}\)</span>  。</p>
-<div class="figure align-center" id="id30">
+<div class="figure align-center" id="id32">
 <img alt="../../_images/conv_procedure.png" src="../../_images/conv_procedure.png" />
-<p class="caption"><span class="caption-text">卷积示意图。一个单通道的 7×7 图像在通过一个感受野为 3×3 ，参数为10个的卷积层神经元后，得到 5×5 的矩阵作为卷积结果。</span><a class="headerlink" href="#id30" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">卷积示意图。一个单通道的 7×7 图像在通过一个感受野为 3×3 ，参数为10个的卷积层神经元后，得到 5×5 的矩阵作为卷积结果。</span><a class="headerlink" href="#id32" title="永久链接至图片">¶</a></p>
 </div>
 <p>下面，我们使用TensorFlow来验证一下上图的计算结果。</p>
 <p>将上图中的输入图像、权值矩阵 <span class="math notranslate nohighlight">\(W\)</span> 和偏置项 <span class="math notranslate nohighlight">\(b\)</span> 表示为NumPy数组 <code class="docutils literal notranslate"><span class="pre">image</span></code> , <code class="docutils literal notranslate"><span class="pre">W</span></code> , <code class="docutils literal notranslate"><span class="pre">b</span></code> 如下：</p>
@@ -592,7 +637,7 @@
 <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>然后建立一个仅有一个卷积层的模型，用 <code class="docutils literal notranslate"><span class="pre">W</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 初始化 <a class="footnote-reference brackets" href="#sequential" id="id14">4</a> ：</p>
+<p>然后建立一个仅有一个卷积层的模型，用 <code class="docutils literal notranslate"><span class="pre">W</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 初始化 <a class="footnote-reference brackets" href="#sequential" id="id16">4</a> ：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
     <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span>
         <span class="n">filters</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>              <span class="c1"># 卷积层神经元（卷积核）数目</span>
@@ -624,10 +669,11 @@
 <p>事实上，卷积的形式多种多样，以上的介绍只是其中最简单和基础的一种。更多卷积方式的示例可见 <a class="reference external" href="https://github.com/vdumoulin/conv_arithmetic">Convolution arithmetic</a> 。</p>
 <p>池化层（Pooling Layer）的理解则简单得多，其可以理解为对图像进行降采样的过程，对于每一次滑动窗口中的所有值，输出其中的最大值（MaxPooling）、均值或其他方法产生的值。例如，对于一个三通道的 16×16 图像（即一个 <code class="docutils literal notranslate"><span class="pre">16*16*3</span></code> 的张量），经过感受野为 2×2，滑动步长为 2 的池化层，则得到一个 <code class="docutils literal notranslate"><span class="pre">8*8*3</span></code> 的张量。</p>
 <dl class="footnote brackets">
-<dt class="label" id="sequential"><span class="brackets"><a class="fn-backref" href="#id14">4</a></span></dt>
+<dt class="label" id="sequential"><span class="brackets"><a class="fn-backref" href="#id16">4</a></span></dt>
 <dd><p>这里使用了较为简易的Sequential模式建立模型，具体介绍见 <a class="reference internal" href="#sequential-functional"><span class="std std-ref">后文</span></a>  。</p>
 </dd>
 </dl>
+</div>
 </div>
 </div>
 <div class="section" id="rnn">
@@ -639,10 +685,10 @@
 <li><p><a class="reference external" href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">Recurrent Neural Networks Tutorial, Part 1 – Introduction to RNNs</a></p></li>
 <li><p>台湾大学李宏毅教授的《机器学习》课程的 <a class="reference external" href="https://www.bilibili.com/video/av10590361/?p=36">Recurrent Neural Network (part 1)</a> <a class="reference external" href="https://www.bilibili.com/video/av10590361/?p=37">Recurrent Neural Network (part 2)</a> 两部分。</p></li>
 <li><p>LSTM 原理：<a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></p></li>
-<li><p>RNN 序列生成：<a class="reference internal" href="#graves2013" id="id15"><span>[Graves2013]</span></a></p></li>
+<li><p>RNN 序列生成：<a class="reference internal" href="#graves2013" id="id17"><span>[Graves2013]</span></a></p></li>
 </ul>
 </div>
-<p>这里，我们使用 RNN 来进行尼采风格文本的自动生成。 <a class="footnote-reference brackets" href="#rnn-reference" id="id16">5</a></p>
+<p>这里，我们使用 RNN 来进行尼采风格文本的自动生成。 <a class="footnote-reference brackets" href="#rnn-reference" id="id18">5</a></p>
 <p>这个任务的本质其实预测一段英文文本的接续字母的概率分布。比如，我们有以下句子:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">I</span> <span class="n">am</span> <span class="n">a</span> <span class="n">studen</span>
 </pre></div>
@@ -671,13 +717,13 @@
 </pre></div>
 </div>
 <p>接下来进行模型的实现。在 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 方法中我们实例化一个常用的 <code class="docutils literal notranslate"><span class="pre">LSTMCell</span></code> 单元，以及一个线性变换用的全连接层，我们首先对序列进行“One Hot”操作，即将序列中的每个字符的编码 i 均变换为一个 <code class="docutils literal notranslate"><span class="pre">num_char</span></code> 维向量，其第 i 位为 1，其余均为 0。变换后的序列张量形状为 <code class="docutils literal notranslate"><span class="pre">[seq_length,</span> <span class="pre">num_chars]</span></code> 。然后，我们初始化 RNN 单元的状态，存入变量 <code class="docutils literal notranslate"><span class="pre">state</span></code> 中。接下来，将序列从头到尾依次送入 RNN 单元，即在 t 时刻，将上一个时刻 t-1 的 RNN 单元状态 <code class="docutils literal notranslate"><span class="pre">state</span></code> 和序列的第 t 个元素 <code class="docutils literal notranslate"><span class="pre">inputs[t,</span> <span class="pre">:]</span></code> 送入 RNN 单元，得到当前时刻的输出 <code class="docutils literal notranslate"><span class="pre">output</span></code> 和 RNN 单元状态。取 RNN 单元最后一次的输出，通过全连接层变换到 <code class="docutils literal notranslate"><span class="pre">num_chars</span></code> 维，即作为模型的输出。</p>
-<div class="figure align-center" id="id31">
+<div class="figure align-center" id="id33">
 <a class="reference internal image-reference" href="../../_images/rnn_single.jpg"><img alt="../../_images/rnn_single.jpg" src="../../_images/rnn_single.jpg" style="width: 50%;" /></a>
-<p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">output,</span> <span class="pre">state</span> <span class="pre">=</span> <span class="pre">self.cell(inputs[:,</span> <span class="pre">t,</span> <span class="pre">:],</span> <span class="pre">state)</span></code> 图示</span><a class="headerlink" href="#id31" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">output,</span> <span class="pre">state</span> <span class="pre">=</span> <span class="pre">self.cell(inputs[:,</span> <span class="pre">t,</span> <span class="pre">:],</span> <span class="pre">state)</span></code> 图示</span><a class="headerlink" href="#id33" title="永久链接至图片">¶</a></p>
 </div>
-<div class="figure align-center" id="id32">
+<div class="figure align-center" id="id34">
 <a class="reference internal image-reference" href="../../_images/rnn.jpg"><img alt="../../_images/rnn.jpg" src="../../_images/rnn.jpg" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">RNN 流程图示</span><a class="headerlink" href="#id32" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">RNN 流程图示</span><a class="headerlink" href="#id34" title="永久链接至图片">¶</a></p>
 </div>
 <p>具体实现如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RNN</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
@@ -776,7 +822,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </pre></div>
 </div>
 <dl class="footnote brackets">
-<dt class="label" id="rnn-reference"><span class="brackets"><a class="fn-backref" href="#id16">5</a></span></dt>
+<dt class="label" id="rnn-reference"><span class="brackets"><a class="fn-backref" href="#id18">5</a></span></dt>
 <dd><p>此处的任务及实现参考了 <a class="reference external" href="https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py">https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py</a></p>
 </dd>
 </dl>
@@ -790,9 +836,9 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <li><p>将上述得到的两个向量相加并通过激活函数，作为当前状态 <span class="math notranslate nohighlight">\(s_t\)</span> 的值，即 <span class="math notranslate nohighlight">\(s_t = f(U x_t + W s_{t-1})\)</span>。也就是说，当前状态的值是上一个状态的值和当前输入进行某种信息整合而产生的；</p></li>
 <li><p>对当前状态 <span class="math notranslate nohighlight">\(s_t\)</span> 通过矩阵 <span class="math notranslate nohighlight">\(V\)</span> 进行线性变换，得到当前时刻的输出 <span class="math notranslate nohighlight">\(o_t\)</span>。</p></li>
 </ul>
-<div class="figure align-center" id="id33">
+<div class="figure align-center" id="id35">
 <img alt="../../_images/rnn_cell.jpg" src="../../_images/rnn_cell.jpg" />
-<p class="caption"><span class="caption-text">RNN 工作过程图示（来自 <a class="reference external" href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/</a>）</span><a class="headerlink" href="#id33" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">RNN 工作过程图示（来自 <a class="reference external" href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/</a>）</span><a class="headerlink" href="#id35" title="永久链接至图片">¶</a></p>
 </div>
 <p>我们假设输入向量 <span class="math notranslate nohighlight">\(x_t\)</span> 、状态 <span class="math notranslate nohighlight">\(s\)</span> 和输出向量 <span class="math notranslate nohighlight">\(o_t\)</span> 的维度分别为 <span class="math notranslate nohighlight">\(m\)</span>、<span class="math notranslate nohighlight">\(n\)</span>、<span class="math notranslate nohighlight">\(p\)</span>，则 <span class="math notranslate nohighlight">\(U \in \mathbb{R}^{m \times n}\)</span>、<span class="math notranslate nohighlight">\(W \in \mathbb{R}^{n \times n}\)</span>、<span class="math notranslate nohighlight">\(V \in \mathbb{R}^{n \times p}\)</span>。</p>
 <p>上述为最基础的 RNN 原理介绍。在实际使用时往往使用一些常见的改进型，如LSTM（长短期记忆神经网络，解决了长序列的梯度消失问题，适用于较长的序列）、GRU等。</p>
@@ -805,13 +851,13 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <p class="admonition-title">基础知识和原理</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://ai.intel.com/demystifying-deep-reinforcement-learning/">Demystifying Deep Reinforcement Learning</a> （<a class="reference external" href="https://snowkylin.github.io/rl/2017/01/04/Reinforcement-Learning.html">中文编译</a>）</p></li>
-<li><p><a class="reference internal" href="#mnih2013" id="id19"><span>[Mnih2013]</span></a></p></li>
+<li><p><a class="reference internal" href="#mnih2013" id="id21"><span>[Mnih2013]</span></a></p></li>
 </ul>
 </div>
 <p>这里，我们使用深度强化学习玩 CartPole（平衡杆）游戏。简单说，我们需要让模型控制杆的左右运动，以让其一直保持竖直平衡状态。</p>
-<div class="figure align-center" id="id34">
+<div class="figure align-center" id="id36">
 <a class="reference internal image-reference" href="../../_images/cartpole.gif"><img alt="../../_images/cartpole.gif" src="../../_images/cartpole.gif" style="width: 500px;" /></a>
-<p class="caption"><span class="caption-text">CartPole 游戏</span><a class="headerlink" href="#id34" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">CartPole 游戏</span><a class="headerlink" href="#id36" title="永久链接至图片">¶</a></p>
 </div>
 <p>我们使用 <a class="reference external" href="https://gym.openai.com/">OpenAI 推出的 Gym 环境库</a> 中的 CartPole 游戏环境，具体安装步骤和教程可参考 <a class="reference external" href="https://gym.openai.com/docs/">官方文档</a> 和 <a class="reference external" href="https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-4-gym/">这里</a> 。Gym 的基本调用方法如下：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gym</span>
@@ -986,11 +1032,11 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </div>
 </div>
 </div>
-<div class="section" id="id22">
-<h2>自定义层、损失函数和评估指标 *<a class="headerlink" href="#id22" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id24">
+<h2>自定义层、损失函数和评估指标 *<a class="headerlink" href="#id24" title="永久链接至标题">¶</a></h2>
 <p>可能你还会问，如果现有的这些层无法满足我的要求，我需要定义自己的层怎么办？事实上，我们不仅可以继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 编写自己的模型类，也可以继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 编写自己的层。</p>
 <div class="section" id="custom-layer">
-<span id="id23"></span><h3>自定义层<a class="headerlink" href="#custom-layer" title="永久链接至标题">¶</a></h3>
+<span id="id25"></span><h3>自定义层<a class="headerlink" href="#custom-layer" title="永久链接至标题">¶</a></h3>
 <p>自定义层需要继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 类，并重写 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 、 <code class="docutils literal notranslate"><span class="pre">build</span></code> 和 <code class="docutils literal notranslate"><span class="pre">call</span></code> 三个方法，如下所示：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyLayer</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1038,8 +1084,8 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </pre></div>
 </div>
 </div>
-<div class="section" id="id24">
-<h3>自定义损失函数和评估指标<a class="headerlink" href="#id24" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id26">
+<h3>自定义损失函数和评估指标<a class="headerlink" href="#id26" title="永久链接至标题">¶</a></h3>
 <p>自定义损失函数需要继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses.Loss</span></code> 类，重写 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法即可，输入真实值 <code class="docutils literal notranslate"><span class="pre">y_true</span></code> 和模型预测值 <code class="docutils literal notranslate"><span class="pre">y_pred</span></code> ，输出模型预测值和真实值之间通过自定义的损失函数计算出的损失值。下面的示例为均方差损失函数：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MeanSquaredError</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">Loss</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
@@ -1068,10 +1114,10 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <li><p>LeCun, L. Bottou, Y. Bengio, and P. Haffner. “Gradient-based learning applied to document recognition.” Proceedings of the IEEE, 86(11):2278-2324, November 1998. <a class="reference external" href="http://yann.lecun.com/exdb/mnist/">http://yann.lecun.com/exdb/mnist/</a></p></li>
 </ol>
 </dd>
-<dt class="label" id="graves2013"><span class="brackets"><a class="fn-backref" href="#id15">Graves2013</a></span></dt>
+<dt class="label" id="graves2013"><span class="brackets"><a class="fn-backref" href="#id17">Graves2013</a></span></dt>
 <dd><p>Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.</p>
 </dd>
-<dt class="label" id="mnih2013"><span class="brackets"><a class="fn-backref" href="#id19">Mnih2013</a></span></dt>
+<dt class="label" id="mnih2013"><span class="brackets"><a class="fn-backref" href="#id21">Mnih2013</a></span></dt>
 <dd><p>Mnih, Volodymyr, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. “Playing Atari with Deep Reinforcement Learning.” ArXiv:1312.5602 [Cs], December 19, 2013. http://arxiv.org/abs/1312.5602.</p>
 </dd>
 </dl>

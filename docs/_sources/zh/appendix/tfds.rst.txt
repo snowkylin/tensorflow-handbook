@@ -33,3 +33,25 @@ TensorFlow Datasets 数据集载入
 - ``split``：指定返回数据集的特定部分，若无则返回整个数据集。一般有 ``tfds.Split.TRAIN`` （训练集）和 ``tfds.Split.TEST`` （测试集）选项。
 
 当前支持的数据集可在 `官方文档 <https://www.tensorflow.org/datasets/datasets>`_ 或使用 ``tfds.list_builders()`` 查看。
+
+当得到了 ``tf.data.Datasets`` 类型的数据集后，我们即可使用 ``tf.data`` 对数据集进行各种预处理以及读取数据。例如：
+
+.. code-block:: python
+    
+    # 使用 TessorFlow Datasets 载入“tf_flowers”数据集
+    dataset = tfds.load("tf_flowers", split=tfds.Split.TRAIN, as_supervised=True)
+    # 对 dataset 进行大小调整、打散和分批次操作
+    dataset = dataset.map(lambda img, label: (tf.image.resize(img, [224, 224]) / 255.0, label)) \
+        .shuffle(1024) \
+        .batch(32)
+    # 迭代数据
+    for images, labels in dataset:
+        # 对images和labels进行操作
+
+详细操作说明可见 :ref:`本文档的 tf.data 一节 <tfdata>` 。
+
+.. hint:: 在使用 TensorFlow Datasets 时，可能需要设置代理。较为简易的方式是设置 ``TFDS_HTTPS_PROXY`` 环境变量，即
+
+    ::
+
+        export TFDS_HTTPS_PROXY=http://代理服务器IP:端口
