@@ -349,7 +349,7 @@
 <div class="section" id="tpu-google-colab">
 <h3>免费 TPU：Google Colab<a class="headerlink" href="#tpu-google-colab" title="永久链接至标题">¶</a></h3>
 <p>最方便使用 TPU 的方法，就是使用 Google 的 Colab ，不但通过浏览器访问直接可以用，而且还免费。</p>
-<p>在 <a class="reference external" href="https://colab.research.google.com">Google Colab</a> 的 Notebook 界面中，打开界面中，打开主菜单 Runtime ，然后选择 Change runtime type，会弹出 Notebook settings 的窗口。选择里面的 Hardware accelerator 为 TPU 就可以了。</p>
+<p>在 <a class="reference external" href="https://colab.research.google.com">Google Colab</a> 的 Notebook 界面中，打开界面中，打开主菜单 <cite>Runtime</cite> ，然后选择 <cite>Change runtime type</cite>，会弹出 <cite>Notebook settings</cite> 的窗口。选择里面的 <cite>Hardware accelerator</cite> 为 <cite>TPU</cite> 就可以了。</p>
 <p>为了确认 Colab Notebook 中的确分配了 TPU 资源，我们可以运行以下测试代码。</p>
 <p>1. 如果输出 ERROR 信息，则表示目前的 Runetime 并没有分配到 TPU；
 1. 如果输出 TPU 地址及设备列表，则表示 Colab 已经分配了 TPU；</p>
@@ -386,6 +386,7 @@
  <span class="n">_DeviceAttributes</span><span class="p">(</span><span class="o">/</span><span class="n">job</span><span class="p">:</span><span class="n">tpu_worker</span><span class="o">/.../</span><span class="n">device</span><span class="p">:</span><span class="n">TPU_SYSTEM</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">TPU_SYSTEM</span><span class="p">,</span> <span class="o">...</span><span class="p">)]</span>
 </pre></div>
 </div>
+<p>看到以上信息（一个CPU worker，8个TPU workers），既可以确认 Colab 的 TPU 环境设置正常。</p>
 </div>
 <div class="section" id="cloud-tpu">
 <h3>Cloud TPU<a class="headerlink" href="#cloud-tpu" title="永久链接至标题">¶</a></h3>
@@ -400,12 +401,14 @@
 <div class="section" id="id5">
 <h2>TPU 基础使用<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
 <p>在 TPU 上进行 TensorFlow 分布式训练的核心API是 <code class="docutils literal notranslate"><span class="pre">tf.distribute.TPUStrategy</span></code> ，可以简单几行代码就实现在 TPU 上的分布式训练，同时也可以很容易的迁移到 GPU单机多卡、多机多卡的环境。以下是如何实例化 <code class="docutils literal notranslate"><span class="pre">TPUStrategy</span></code> ：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">resolver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">cluster_resolver</span><span class="o">.</span><span class="n">TPUClusterResolver</span><span class="p">(</span><span class="n">tpu</span><span class="o">=</span><span class="s1">&#39;grpc://&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;COLAB_TPU_ADDR&#39;</span><span class="p">])</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">resolver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">resolver</span><span class="o">.</span><span class="n">TPUClusterResolver</span><span class="p">(</span>
+    <span class="n">tpu</span><span class="o">=</span><span class="s1">&#39;grpc://&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;COLAB_TPU_ADDR&#39;</span><span class="p">])</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental_connect_to_host</span><span class="p">(</span><span class="n">resolver</span><span class="o">.</span><span class="n">master</span><span class="p">())</span>
 <span class="n">tf</span><span class="o">.</span><span class="n">tpu</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">initialize_tpu_system</span><span class="p">(</span><span class="n">resolver</span><span class="p">)</span>
 <span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">TPUStrategy</span><span class="p">(</span><span class="n">resolver</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>在上面的代码中，首先我们通过 <code class="docutils literal notranslate"><span class="pre">TPUClusterResolver</span></code> 用来获得 TPU 的参数（IP和端口），然后，我们对其进行初始化，并在最终通过 <code class="docutils literal notranslate"><span class="pre">TPUStrategy</span></code> 实例化到指定的 TPU 上。</p>
+<p>在上面的代码中，首先我们通过 TPU 的 IP 和端口实例化 <cite>TPUClusterResolver</cite>；然后，我们通过 <cite>resolver</cite> 连接到 TPU 上，并对其进行初始化；最后，完成实例化 <cite>TPUStrategy</cite>。</p>
 <p>以下使用 Fashion MNIST 分类任务展示 TPU 的使用方式。本小节的源代码可以在 <a class="reference external" href="https://github.com/huan/tensorflow-handbook-tpu">https://github.com/huan/tensorflow-handbook-tpu</a> 找到。</p>
 <p>更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址：<a class="reference external" href="https://colab.research.google.com/github/huan/tensorflow-handbook-tpu/blob/master/tensorflow-handbook-tpu-example.ipynb">https://colab.research.google.com/github/huan/tensorflow-handbook-tpu/blob/master/tensorflow-handbook-tpu-example.ipynb</a> （推荐）</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
@@ -431,7 +434,9 @@
 
     <span class="k">return</span> <span class="n">model</span>
 
-<span class="n">resolver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">contrib</span><span class="o">.</span><span class="n">cluster_resolver</span><span class="o">.</span><span class="n">TPUClusterResolver</span><span class="p">(</span><span class="n">tpu</span><span class="o">=</span><span class="s1">&#39;grpc://&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;COLAB_TPU_ADDR&#39;</span><span class="p">])</span>
+<span class="n">resolver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">resolver</span><span class="o">.</span><span class="n">TPUClusterResolver</span><span class="p">(</span>
+    <span class="n">tpu</span><span class="o">=</span><span class="s1">&#39;grpc://&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;COLAB_TPU_ADDR&#39;</span><span class="p">])</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental_connect_to_host</span><span class="p">(</span><span class="n">resolver</span><span class="o">.</span><span class="n">master</span><span class="p">())</span>
 <span class="n">tf</span><span class="o">.</span><span class="n">tpu</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">initialize_tpu_system</span><span class="p">(</span><span class="n">resolver</span><span class="p">)</span>
 <span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">TPUStrategy</span><span class="p">(</span><span class="n">resolver</span><span class="p">)</span>
 

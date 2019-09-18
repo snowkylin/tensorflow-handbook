@@ -122,6 +122,8 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
 
     在 TensorFlow 中，图像数据集的一种典型表示是 ``[图像数目，长，宽，色彩通道数]`` 的四维张量。在上面的 ``DataLoader`` 类中， ``self.train_data`` 和 ``self.test_data`` 分别载入了 60,000 和 10,000 张大小为 ``28*28`` 的手写体数字图片。由于这里读入的是灰度图片，色彩通道数为 1（彩色 RGB 图像色彩通道数为 3），所以我们使用 ``np.expand_dims()`` 函数为图像数据手动在最后添加一维通道。
 
+.. _mlp_model:
+
 模型的构建： ``tf.keras.Model`` 和 ``tf.keras.layers``
 -------------------------------------------------------------------------------
 
@@ -248,21 +250,51 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
     * UFLDL 教程 `Convolutional Neural Network <http://ufldl.stanford.edu/tutorial/supervised/ConvolutionalNeuralNetwork/>`_ 一节；
     * 斯坦福课程 `CS231n: Convolutional Neural Networks for Visual Recognition <http://cs231n.github.io/>`_ 中的 “Module 2: Convolutional Neural Networks” 部分。
 
-具体的实现见下，和 MLP 很类似，只是新加入了一些卷积层和池化层。
+使用Keras实现卷积神经网络
+-------------------------------------------------------
+
+卷积神经网络的一个示例实现如下所示，和 :ref:`上节中的多层感知机 <mlp_model>` 在代码结构上很类似，只是新加入了一些卷积层和池化层。这里的网络结构并不是唯一的，可以增加、删除或调整 CNN 的网络结构和参数，以达到更好的性能。
+
+.. literalinclude:: /_static/code/zh/model/mnist/cnn.py
+    :lines: 4-
 
 .. figure:: /_static/image/model/cnn.png
     :align: center
 
-    CNN 结构图示
-
-.. literalinclude:: /_static/code/zh/model/mnist/cnn.py
-    :lines: 4-
+    示例代码中的 CNN 结构图示
 
 将前节的 ``model = MLP()`` 更换成 ``model = CNN()`` ，输出如下::
 
     test accuracy: 0.988100
 
-可以发现准确率有非常显著的提高。事实上，通过改变模型的网络结构（比如加入 Dropout 层防止过拟合），准确率还有进一步提升的空间。
+可以发现准确率相较于前节的多层感知机有非常显著的提高。事实上，通过改变模型的网络结构（比如加入 Dropout 层防止过拟合），准确率还有进一步提升的空间。
+
+使用Keras中预定义的经典卷积神经网络结构
+-------------------------------------------------------
+
+``tf.keras.applications`` 中有一些预定义好的经典卷积神经网络结构，如 ``VGG16`` 、 ``VGG19`` 、 ``ResNet`` 、 ``MobileNet`` 等。我们可以直接调用这些经典的卷积神经网络结构（甚至载入预训练的参数），而无需手动定义网络结构。
+
+例如，我们可以使用以下代码来实例化一个 ``MobileNetV2`` 网络结构：
+
+.. code-block:: python
+
+    model = tf.keras.applications.MobileNetV2()
+
+当执行以上代码时，TensorFlow会自动从网络上下载 ``MobileNetV2`` 网络结构，因此在第一次执行代码时需要具备网络连接。每个网络结构具有自己特定的详细参数设置，一些共通的常用参数如下：
+
+- ``input_shape`` ：输入张量的形状（不含第一维的Batch），大多默认为 ``224 × 224 × 3`` 。一般而言，模型对输入张量的大小有下限，长和宽至少为 ``32 × 32`` 或 ``75 × 75`` ；
+- ``include_top`` ：在网络的最后是否包含全连接层，默认为 ``True`` ；
+- ``weights`` ：预训练权值，默认为 ``'imagenet'`` ，即为当前模型载入在ImageNet数据集上预训练的权值。如需随机初始化变量可设为 ``None`` ；
+- ``classes`` ：分类数，默认为1000。修改该参数需要 ``include_top`` 参数为 ``True`` 且 ``weights`` 参数为 ``None`` 。
+
+各网络模型参数的详细介绍可参考 `Keras文档 <https://keras.io/applications/>`_ 。
+
+以下展示一个例子，使用 ``MobileNetV2`` 网络在 ``tf_flowers`` 五分类数据集上进行训练（为了代码的简短高效，在该示例中我们使用了 :doc:`TensorFlow Datasets <../appendix/tfds>` 和 :ref:`tf.data <tfdata>` 载入和预处理数据）。通过将 ``weights`` 设置为 ``None`` ，我们随机初始化变量而不使用预训练权值。同时将 ``classes`` 设置为5，对应于5分类的数据集。
+
+.. literalinclude:: /_static/code/zh/model/cnn/mobilenet.py
+    :emphasize-lines: 10    
+
+后文的部分章节（如 :doc:`分布式训练 <../appendix/distributed>` ）中，我们也会直接调用这些经典的网络结构来进行训练。
 
 .. admonition:: 卷积层和池化层的工作原理
 
