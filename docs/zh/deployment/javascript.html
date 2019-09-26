@@ -28,7 +28,6 @@
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -429,7 +428,7 @@ $ npm install @tensorflow/tfjs-node-gpu
 <div class="section" id="id8">
 <h2>TensorFlow.js 模型训练 *<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
 <p>与 TensorFlow Serving 和 TensorFlow Lite 不同，TensorFlow.js 不仅支持模型的部署和推断，还支持直接在 TensorFlow.js 中进行模型训练、</p>
-<p>在 TensorFlow 基础章节中，我们已经用 Python 实现过，针对某城市在2013年-2017年的房价的任务，通过对该数据进行线性回归，即使用线性模型 <span class="math notranslate nohighlight">\(y = ax + b\)</span> 来拟合上述数据，此处 <span class="math notranslate nohighlight">\(a\)</span> 和 <span class="math notranslate nohighlight">\(b\)</span> 是待求的参数。</p>
+<p>在 TensorFlow 基础章节中，我们已经用 Python 实现过，针对某城市在2013年-2017年的房价的任务，通过对该数据进行线性回归，即使用线性模型 <img class="math" src="../../_images/math/4b73dd4430869b9fd6bcb231d4cc119b153f5d10.png" alt="y = ax + b"/> 来拟合上述数据，此处 <img class="math" src="../../_images/math/b3e65e3b6408fcfa00452530b73f55d1755f9965.png" alt="a"/> 和 <img class="math" src="../../_images/math/68c7c8c65602677ab56cf7fd88002023f0edc575.png" alt="b"/> 是待求的参数。</p>
 <p>下面我们改用 TensorFlow.js 来实现一个 JavaScript 版本。</p>
 <p>首先，我们定义数据，进行基本的归一化操作。</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">tf</span> <span class="nx">from</span> <span class="s1">&#39;@tensorflow/tfjs&#39;</span>
