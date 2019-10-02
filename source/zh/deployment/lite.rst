@@ -5,11 +5,11 @@ TensorFlow Lite（Jinpeng）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 由于移动设备空间和计算能力受限，使用TensorFlow训练好的模型，模型太大、运行效率比较低，不能直接在移动端部署。
 
-故在移动端部署的时候，需要使用 ``tflight_convert`` 转化格式，其在通过pip安装TensorFlow时一起安装。 ``tflight_convert`` 会把原模型转换为FlatBuffer格式。
+故在移动端部署的时候，需要使用 ``tflite_convert`` 转化格式，其在通过pip安装TensorFlow时一起安装。 ``tflite_convert`` 会把原模型转换为FlatBuffer格式。
 
 在终端执行如下命令::
 
-    tflight_convert -h
+    tflite_convert -h
 
 输出结果如下，即该命令的使用方法::
 
@@ -71,7 +71,7 @@ Quantization 模型转换
       --output_format=GRAPHVIZ_DOT \
       --keras_model_file=mnist_cnn.h5
 
-dot是一种graph description language，可以用graphz的dot命令转化为pdf或png等可视化图。
+dot是一种graph description language，可以用graphviz的dot命令转化为pdf或png等可视化图。
 
 .. code-block:: bash
 
