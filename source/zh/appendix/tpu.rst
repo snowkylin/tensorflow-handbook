@@ -139,10 +139,7 @@ TPU 环境配置
 
 在 `Google Colab <https://colab.research.google.com>`_ 的 Notebook 界面中，打开界面中，打开主菜单 `Runtime` ，然后选择 `Change runtime type`，会弹出 `Notebook settings` 的窗口。选择里面的 `Hardware accelerator` 为 `TPU` 就可以了。
 
-为了确认 Colab Notebook 中的确分配了 TPU 资源，我们可以运行以下测试代码。
-
-1. 如果输出 ERROR 信息，则表示目前的 Runetime 并没有分配到 TPU；
-1. 如果输出 TPU 地址及设备列表，则表示 Colab 已经分配了 TPU；
+为了确认 Colab Notebook 中的确分配了 TPU 资源，我们可以运行以下测试代码。如果输出 ERROR 信息，则表示目前的 Runetime 并没有分配到 TPU；如果输出 TPU 地址及设备列表，则表示 Colab 已经分配了 TPU。
 
 .. code-block:: python
 
