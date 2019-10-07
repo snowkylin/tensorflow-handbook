@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MNISTClassifier</string>
+    <string name="prediction">Prediction</string>
+    <string name="mnist_image_descrpt">ShowMNISTImage</string>
+</resources>
