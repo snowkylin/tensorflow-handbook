@@ -1,0 +1,455 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Swift for TensorFlow (S4TF) &mdash; 简单粗暴TensorFlow 2.0 0.4 alpha 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴TensorFlow 2.0
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/julia.html">TensorFlow in Julia（Ziyang）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/static.html">图模型下的TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/optimization.html">TensorFlow性能优化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/terms.html">术语中英对照表</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴TensorFlow 2.0</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Swift for TensorFlow (S4TF)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/en/appendix/swift.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="swift-for-tensorflow-s4tf">
+<h1>Swift for TensorFlow (S4TF)<a class="headerlink" href="#swift-for-tensorflow-s4tf" title="永久链接至标题">¶</a></h1>
+<div class="figure align-center" id="id1">
+<a class="reference internal image-reference" href="../../_images/swift-tensorflow.png"><img alt="../../_images/swift-tensorflow.png" src="../../_images/swift-tensorflow.png" style="width: 60%;" /></a>
+<p class="caption"><span class="caption-text">“Swift for Tensorflow is an attempt to change the default tools used by the entire machine learning and data science ecosystem.”</span><a class="headerlink" href="#id1" title="永久链接至图片">¶</a></p>
+<div class="legend">
+<blockquote>
+<div><p>– Jameson Toole,  Co-founder &amp; CTO of Fritz.ai</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="introduction-to-s4tf">
+<h2>Introduction to S4TF<a class="headerlink" href="#introduction-to-s4tf" title="永久链接至标题">¶</a></h2>
+<p>Google 推出的 Swift for TensorFlow （简称S4TF）是专门针对 TensorFlow 优化过的 Swift 版本。（目前处在 Pre-Alpha 阶段）</p>
+<p>Swift 语言是 Chris Lattner 在苹果公司工作时创建的。 现在 Chris Lattner 在 Google Brain 工作，专门从事深度学习的研究，并为 Swift 重写了编译器，为 Tensorflow 做定制优化，</p>
+<p>为了能够在程序语言级支持 Tensorflow 所需的所有功能特性，S4TF 做为了 Swift 语言本身的一个分支，为 Swift 语言添加了机器学习所需要的所有功能扩展。它不仅仅是一个用 Swift 写成的 TensorFlow API 封装，Google 还为 Swift 增加了编译器和语言增强功能，提供了一种新的编程模型，结合了图的性能、Eager Execution 的灵活性和表达能力。</p>
+<p>本章我们将向大家简要介绍 Swift for Tensorflow 的使用。你可以参考最新的 <a class="reference external" href="https://www.tensorflow.org/swift">Swift for TensorFlow 文档</a>.</p>
+<div class="section" id="why-using-swift-for-tensorflow-development">
+<h3>Why using Swift for TensorFlow Development<a class="headerlink" href="#why-using-swift-for-tensorflow-development" title="永久链接至标题">¶</a></h3>
+<p>相对于 Tensorflow 的其他版本（如 Python，C++ 等），S4TF 拥有其独有的优势，比如：</p>
+<ol class="arabic simple">
+<li><p>开发效率高：强类型语言，能够静态检查变量类型</p></li>
+<li><p>迁移成本低：与 Python，C，C++ 能够无缝结合</p></li>
+<li><p>执行性能高：能够直接编译为底层硬件代码</p></li>
+<li><p>专门为机器学习打造：语言原生支持自动微分系统</p></li>
+</ol>
+<p>与其他语言相比，S4TF 还有更多优势。谷歌正在大力投资，使 Swift 成为其 TensorFlow ML 基础设施的一个关键组件，而且很有可能 Swift 将成为深度学习的专属语言。</p>
+<p>更多使用 Swift 的理由，有兴趣的读者可以参考官方文档：<a class="reference external" href="https://github.com/tensorflow/swift/blob/master/docs/WhySwiftForTensorFlow.md">Why Swift for Tensorflow</a></p>
+</div>
+</div>
+<div class="section" id="s4tf-environment-configuration">
+<h2>S4TF environment configuration<a class="headerlink" href="#s4tf-environment-configuration" title="永久链接至标题">¶</a></h2>
+<p>Local installation of Swift for Tensorflow
+——————————————’</p>
+<p>目前 S4TF 支持 Mac 和 Linux 两个运行环境。安装需要下载预先编译好的软件包，同时按照对应的操作系统的说明进行操作。安装后，即可以使用全套 Swift 工具，包括 Swift（Swift REPL / Interpreter）和 Swiftc（Swift编译器）。</p>
+<p>官方文档（含下载地址）：<a class="reference external" href="https://github.com/tensorflow/swift/blob/master/Installation.md">https://github.com/tensorflow/swift/blob/master/Installation.md</a></p>
+<div class="section" id="express-experience-of-swift-for-tensorflow-in-colaboratory">
+<h3>Express experience of Swift for TensorFlow in Colaboratory<a class="headerlink" href="#express-experience-of-swift-for-tensorflow-in-colaboratory" title="永久链接至标题">¶</a></h3>
+<p>Google 的 Colaboratory 可以直接支持 Swift 语言的运行环境。可以通过下面的链接，直接打开一个 Swift 运行环境的 Colab Notebook ，这是一个最方便立即可以体验 Swift for Tensorflow 的方法。</p>
+<p>Blank Swift on Colab: <a class="reference external" href="https://colab.research.google.com/github/tensorflow/swift/blob/master/notebooks/blank_swift.ipynb">https://colab.research.google.com/github/tensorflow/swift/blob/master/notebooks/blank_swift.ipynb</a></p>
+</div>
+<div class="section" id="express-experience-of-swift-for-tensorflow-in-docker">
+<h3>Express experience of Swift for TensorFlow in Docker<a class="headerlink" href="#express-experience-of-swift-for-tensorflow-in-docker" title="永久链接至标题">¶</a></h3>
+<p>在本机已有 docker 环境的情况下, 使用预装 Swift for TensorFlow 的 Docker Image 是非常方便的。</p>
+<ul>
+<li><p>获得一个已经安装好 S4TF 的 Swift REPL 环境</p>
+<blockquote>
+<div><p>在命令行中执行 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">--privileged</span> <span class="pre">--userns=host</span> <span class="pre">zixia/swift</span> <span class="pre">swift</span></code></p>
+</div></blockquote>
+</li>
+<li><p>获得一个 S4TF 的 Bash 终端</p>
+<blockquote>
+<div><p>在命令行中执行 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">--privileged</span> <span class="pre">--userns=host</span> <span class="pre">zixia/swift</span> <span class="pre">bash</span></code> 来打开一个 Bash 终端</p>
+</div></blockquote>
+</li>
+<li><p>获得一个 S4TS 的 Jupyter Notebook</p>
+<blockquote>
+<div><p>在命令行中执行 <code class="docutils literal notranslate"><span class="pre">nvidia-docker</span> <span class="pre">run</span> <span class="pre">-ti</span> <span class="pre">--rm</span> <span class="pre">-p</span> <span class="pre">8888:8888</span> <span class="pre">--cap-add</span> <span class="pre">SYS_PTRACE</span> <span class="pre">-v</span> <span class="pre">&quot;$(pwd)&quot;:/notebooks</span> <span class="pre">zixia/swift</span></code> 来启动 Jupyter ，然后根据提示的 URL ，打开浏览器访问即可。</p>
+</div></blockquote>
+</li>
+</ul>
+<p>如需执行您需要的 Swift 代码文件, 可以使用 Docker 的目录映射。详细使用方法可以参考 Docker Image <cite>zixia/swift</cite> 开源项目的地址：<a class="reference external" href="https://github.com/huan/docker-swift-tensorflow">https://github.com/huan/docker-swift-tensorflow</a></p>
+</div>
+</div>
+<div class="section" id="basic-usage-of-s4tf">
+<h2>Basic usage of S4TF<a class="headerlink" href="#basic-usage-of-s4tf" title="永久链接至标题">¶</a></h2>
+<p>Swift 是动态强类型语言，也就是说 Swift 支持通过编译器自动检测类型，同时要求变量的使用要严格符合定义，所有变量都必须先定义后使用。</p>
+<p>下面的代码，因为最初声明的 <code class="docutils literal notranslate"><span class="pre">n</span></code> 是整数类型 <code class="docutils literal notranslate"><span class="pre">42</span></code> ，所以如果将 <code class="docutils literal notranslate"><span class="pre">'string'</span></code> 赋值给 <code class="docutils literal notranslate"><span class="pre">n</span></code> 时，会出现类型不匹配的问题，Swift 将会报错：</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nv">n</span> <span class="p">=</span> <span class="mi">42</span>
+<span class="n">n</span> <span class="p">=</span> <span class="s">&quot;string&quot;</span>
+</pre></div>
+</div>
+<p>报错输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Cannot</span> <span class="n">assign</span> <span class="n">value</span> <span class="n">of</span> <span class="nb">type</span> <span class="s1">&#39;String&#39;</span> <span class="n">to</span> <span class="nb">type</span> <span class="s1">&#39;Int&#39;</span>
+</pre></div>
+</div>
+<p>下面是一个使用 TensorFlow 计算的基础示例：</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span><span class="kd">import</span> <span class="nc">TensorFlow</span>
+
+<span class="c1">// 声明两个Tensor</span>
+<span class="kd">let</span> <span class="nv">x</span> <span class="p">=</span> <span class="n">Tensor</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;([</span><span class="mi">1</span><span class="p">])</span>
+<span class="kd">let</span> <span class="nv">y</span> <span class="p">=</span> <span class="n">Tensor</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;([</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="c1">// 对两个 Tensor 做加法运算</span>
+<span class="kd">let</span> <span class="nv">w</span> <span class="p">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+<span class="c1">// 输出结果</span>
+<span class="bp">print</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="using-standard-tensorflow-api-in-swift">
+<h3>Using standard TensorFlow API in Swift<a class="headerlink" href="#using-standard-tensorflow-api-in-swift" title="永久链接至标题">¶</a></h3>
+<p>在基础的 Tensorflow API 上，Swift 封装了 Tensorflow 的标准 API 接口。比如看一下处理数字的代码，API 与 Tensorflow 高度保持了一致：</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span>let x = Tensor&lt;BFloat16&gt;(zeros: [32, 128])
+let h1 = sigmoid(x • w1 + b1)
+let h2 = tanh(h1 • w1 + b1)
+let h3 = softmax(h2 • w1 + b1)
+</pre></div>
+</div>
+<p>再比如 Data API ，也是同名函数直接改写为 Swift 语法即可直接使用：</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span>let imageBatch = Dataset(elements: images)
+let labelBatch = Dataset(elements: labels)
+let zipped = zip(imageBatch, labelBatch).batched(8)
+
+let imageBatch = Dataset(elements: images)
+let labelBatch = Dataset(elements: labels)
+for (image, label) in zip(imageBatch, labelBatch) {
+    let y = image • w + b
+    let loss = (y - label).squared().mean()
+    print(loss)
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="loading-python-libraries-directly-in-swift">
+<h3>Loading Python libraries directly in Swift<a class="headerlink" href="#loading-python-libraries-directly-in-swift" title="永久链接至标题">¶</a></h3>
+<p>Swift 语言支持直接加载 Python 函数库（比如 NumPy），也支持直接加载系统动态链接库，很方便的做到即导入即用。</p>
+<p>借助 S4TF 强大的集成能力，从 Python 迁移到 Swift 非常简单。您可以逐步迁移 Python 代码（或继续使用 Python 代码库），因为 S4TF 支持直接在代码中加载 Python 原生代码库，使得开发者可以继续使用熟悉的语法在 Swift 中调用 Python 中已经完成的功能。</p>
+<p>下面我们以 NumPy 为例，看一下如何在 Swift 语言中，直接加载 Python 的 NumPy 代码库，并且直接进行调用：</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span><span class="kd">import</span> <span class="nc">Python</span>
+
+<span class="kd">let</span> <span class="nv">np</span> <span class="p">=</span> <span class="n">Python</span><span class="p">.</span><span class="kd">import</span><span class="p">(</span><span class="s">&quot;numpy&quot;</span><span class="p">)</span>
+<span class="kd">let</span> <span class="nv">x</span> <span class="p">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+<span class="kd">let</span> <span class="nv">y</span> <span class="p">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">])</span>
+<span class="bp">print</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">35</span> <span class="mi">81</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>除了能够直接调用 Python 之外，Swift 也快成直接调用系统函数库。比如下面的代码例子展示了我们可以在 Swift 中直接加载 Glibc 的动态库，然后调用系统底层的 malloc 和 memcpy 函数，对变量直接进行操作。</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span><span class="kd">import</span> <span class="nc">Glibc</span>
+<span class="kd">let</span> <span class="nv">x</span> <span class="p">=</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">memcpy</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&quot;memcpy from Glibc&quot;</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
+<span class="n">free</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>通过 Swift 强大的集成能力，针对 C/C++ 语言库的加载和调用，处理起来也将会是非常简单高效。</p>
+</div>
+<div class="section" id="native-support-of-automatic-differentiation">
+<h3>Native support of automatic differentiation<a class="headerlink" href="#native-support-of-automatic-differentiation" title="永久链接至标题">¶</a></h3>
+<p>我们可以通过 <code class="docutils literal notranslate"><span class="pre">&#64;differentiable</span></code> 参数，非常容易的定义一个可被微分的函数。</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span><span class="p">@</span><span class="n">differentiable</span>
+<span class="kd">func</span> <span class="nf">frac</span><span class="p">(</span><span class="kc">_</span> <span class="n">x</span><span class="p">:</span><span class="nb">Double</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="nb">Double</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="n">x</span>
+<span class="p">}</span>
+
+<span class="n">gradient</span><span class="p">(</span><span class="n">at</span><span class="p">:</span><span class="mf">0.5</span><span class="p">)</span> <span class="p">{</span> <span class="n">x</span> <span class="k">in</span> <span class="n">frac</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="mf">4.0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mnist-digit-catagorization">
+<h3>MNIST digit catagorization<a class="headerlink" href="#mnist-digit-catagorization" title="永久链接至标题">¶</a></h3>
+<p>本小节的源代码可以在 &lt;<a class="reference external" href="https://github.com/huan/tensorflow-handbook-swift">https://github.com/huan/tensorflow-handbook-swift</a>&gt; 找到。加载 <cite>MNIST</cite> 数据集使用了作者封装的 Swift Module [swift-MNIST](<a class="reference external" href="https://github.com/huan/swift-MNIST">https://github.com/huan/swift-MNIST</a>)。</p>
+<p>更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址： <a class="reference external" href="https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb">https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb</a> （推荐）</p>
+<p>代码：</p>
+<div class="highlight-swift notranslate"><div class="highlight"><pre><span></span><span class="kd">import</span> <span class="nc">TensorFlow</span>
+<span class="kd">import</span> <span class="nc">Python</span>
+<span class="kd">import</span> <span class="nc">Foundation</span>
+
+<span class="cm">/**</span>
+<span class="cm">* The Swift Module for MNIST Dataset:</span>
+<span class="cm">* https://github.com/huan/swift-MNIST</span>
+<span class="cm">*/</span>
+<span class="kd">import</span> <span class="nc">MNIST</span>
+
+<span class="kd">struct</span> <span class="nc">MLP</span><span class="p">:</span> <span class="n">Layer</span> <span class="p">{</span>
+    <span class="kd">typealias</span> <span class="n">Input</span> <span class="p">=</span> <span class="n">Tensor</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;</span>
+    <span class="kd">typealias</span> <span class="n">Output</span> <span class="p">=</span> <span class="n">Tensor</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;</span>
+
+    <span class="kd">var</span> <span class="nv">flatten</span> <span class="p">=</span> <span class="n">Flatten</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;()</span>
+    <span class="kd">var</span> <span class="nv">dense</span> <span class="p">=</span> <span class="n">Dense</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;(</span><span class="n">inputSize</span><span class="p">:</span> <span class="mi">784</span><span class="p">,</span> <span class="n">outputSize</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
+
+    <span class="p">@</span><span class="n">differentiable</span>
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">callAsFunction</span><span class="p">(</span><span class="kc">_</span> <span class="n">input</span><span class="p">:</span> <span class="n">Input</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">Output</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">input</span><span class="p">.</span><span class="n">sequenced</span><span class="p">(</span><span class="n">through</span><span class="p">:</span> <span class="n">flatten</span><span class="p">,</span> <span class="n">dense</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nv">model</span> <span class="p">=</span> <span class="n">MLP</span><span class="p">()</span>
+<span class="kd">let</span> <span class="nv">optimizer</span> <span class="p">=</span> <span class="n">Adam</span><span class="p">(</span><span class="k">for</span><span class="p">:</span> <span class="n">model</span><span class="p">)</span>
+
+<span class="kd">let</span> <span class="nv">mnist</span> <span class="p">=</span> <span class="n">MNIST</span><span class="p">()</span>
+<span class="kd">let</span> <span class="p">((</span><span class="n">trainImages</span><span class="p">,</span> <span class="n">trainLabels</span><span class="p">),</span> <span class="p">(</span><span class="n">testImages</span><span class="p">,</span> <span class="n">testLabels</span><span class="p">))</span> <span class="p">=</span> <span class="n">mnist</span><span class="p">.</span><span class="n">loadData</span><span class="p">()</span>
+
+<span class="kd">let</span> <span class="nv">imageBatch</span> <span class="p">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">elements</span><span class="p">:</span> <span class="n">trainImages</span><span class="p">).</span><span class="n">batched</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<span class="kd">let</span> <span class="nv">labelBatch</span> <span class="p">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">elements</span><span class="p">:</span> <span class="n">trainLabels</span><span class="p">).</span><span class="n">batched</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">in</span> <span class="n">zip</span><span class="p">(</span><span class="n">imageBatch</span><span class="p">,</span> <span class="n">labelBatch</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Caculate the gradient</span>
+    <span class="kd">let</span> <span class="p">(</span><span class="kc">_</span><span class="p">,</span> <span class="n">grads</span><span class="p">)</span> <span class="p">=</span> <span class="n">valueWithGradient</span><span class="p">(</span><span class="n">at</span><span class="p">:</span> <span class="n">model</span><span class="p">)</span> <span class="p">{</span> <span class="n">model</span> <span class="p">-&gt;</span> <span class="n">Tensor</span><span class="p">&lt;</span><span class="nb">Float</span><span class="p">&gt;</span> <span class="k">in</span>
+        <span class="kd">let</span> <span class="nv">logits</span> <span class="p">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">softmaxCrossEntropy</span><span class="p">(</span><span class="n">logits</span><span class="p">:</span> <span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="n">y</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Update parameters by optimizer</span>
+    <span class="n">optimizer</span><span class="p">.</span><span class="n">update</span><span class="p">(&amp;</span><span class="n">model</span><span class="p">.</span><span class="kc">self</span><span class="p">,</span> <span class="n">along</span><span class="p">:</span> <span class="n">grads</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nv">logits</span> <span class="p">=</span> <span class="n">model</span><span class="p">(</span><span class="n">testImages</span><span class="p">)</span>
+<span class="kd">let</span> <span class="nv">acc</span> <span class="p">=</span> <span class="n">mnist</span><span class="p">.</span><span class="n">getAccuracy</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="n">testLabels</span><span class="p">,</span> <span class="n">logits</span><span class="p">:</span> <span class="n">logits</span><span class="p">)</span>
+
+<span class="bp">print</span><span class="p">(</span><span class="s">&quot;Test Accuracy: </span><span class="si">\(</span><span class="n">acc</span><span class="si">)</span><span class="s">&quot;</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>以上程序运行输出为：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Downloading</span> <span class="n">train</span><span class="o">-</span><span class="n">images</span><span class="o">-</span><span class="n">idx3</span><span class="o">-</span><span class="n">ubyte</span> <span class="o">...</span>
+<span class="n">Downloading</span> <span class="n">train</span><span class="o">-</span><span class="n">labels</span><span class="o">-</span><span class="n">idx1</span><span class="o">-</span><span class="n">ubyte</span> <span class="o">...</span>
+<span class="n">Reading</span> <span class="n">data</span><span class="o">.</span>
+<span class="n">Constructing</span> <span class="n">data</span> <span class="n">tensors</span><span class="o">.</span>
+<span class="n">Test</span> <span class="n">Accuracy</span><span class="p">:</span> <span class="mf">0.9116667</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

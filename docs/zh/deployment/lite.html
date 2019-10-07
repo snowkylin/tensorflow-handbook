@@ -106,8 +106,9 @@
 <li class="toctree-l1"><a class="reference internal" href="serving.html">TensorFlow Serving</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Lite（Jinpeng）</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">模型转换</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#quantization">Quantization 模型转换</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#android">Android部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quantization">Quantization模型转换</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">总结</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="javascript.html">TensorFlow in JavaScript（Huan）</a></li>
@@ -199,128 +200,79 @@
             
   <div class="section" id="tensorflow-lite-jinpeng">
 <h1>TensorFlow Lite（Jinpeng）<a class="headerlink" href="#tensorflow-lite-jinpeng" title="永久链接至标题">¶</a></h1>
+<p>TensorFlow Lite是TensorFlow在移动和IoT等边缘设备端的解决方案，提供了Java、Python和C++ API库，可以运行在Android、iOS和Raspberry Pi等设备上。2019年是5G元年，万物互联的时代已经来临，作为TensorFlow在边缘设备上的基础设施，TFLite将会是愈发重要的角色。</p>
+<p>目前TFLite只提供了推理功能，在服务器端进行训练后，经过如下简单处理即可部署到边缘设备上。</p>
+<ul class="simple">
+<li><p>模型转换：由于边缘设备计算等资源有限，使用TensorFlow训练好的模型，模型太大、运行效率比较低，不能直接在移动端部署，需要通过相应工具进行转换成适合边缘设备的格式。</p></li>
+<li><p>边缘设备部署：本节以android为例，简单介绍如何在android应用中部署转化后的模型，完成Mnist图片的识别。</p></li>
+</ul>
 <div class="section" id="id1">
 <h2>模型转换<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
-<p>由于移动设备空间和计算能力受限，使用TensorFlow训练好的模型，模型太大、运行效率比较低，不能直接在移动端部署。</p>
-<p>故在移动端部署的时候，需要使用 <code class="docutils literal notranslate"><span class="pre">tflight_convert</span></code> 转化格式，其在通过pip安装TensorFlow时一起安装。 <code class="docutils literal notranslate"><span class="pre">tflight_convert</span></code> 会把原模型转换为FlatBuffer格式。</p>
-<p>在终端执行如下命令:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tflight_convert</span> <span class="o">-</span><span class="n">h</span>
+<p>转换工具有两种：命令行工具和Python API</p>
+<p>TF2.0对模型转换工具发生了非常大的变化，推荐大家使用Python API进行转换，命令行工具只提供了基本的转化功能。转换后的原模型为 <code class="docutils literal notranslate"><span class="pre">FlatBuffers</span></code> 格式。 <code class="docutils literal notranslate"><span class="pre">FlatBuffers</span></code> 原来主要应用于游戏场景，是谷歌为了高性能场景创建的序列化库，相比Protocol Buffer有更高的性能和更小的大小等优势，更适合于边缘设备部署。</p>
+<p>转换方式有两种：Float格式和Quantized格式</p>
+<p>为了熟悉两种方式我们都会使用，针对Float格式的，先使用命令行工具 <code class="docutils literal notranslate"><span class="pre">tflite_convert</span></code> ，其跟随TensorFlow一起安装（见 <a class="reference external" href="https://tf.wiki/zh/basic/installation.html#id1">一般安装步骤</a> ）。</p>
+<p>在终端执行如下命令：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tflite_convert</span> <span class="o">-</span><span class="n">h</span>
 </pre></div>
 </div>
-<p>输出结果如下，即该命令的使用方法:</p>
+<p>输出结果如下，即该命令的使用方法：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usage</span><span class="p">:</span> <span class="n">tflite_convert</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="o">--</span><span class="n">output_file</span> <span class="n">OUTPUT_FILE</span>
-                      <span class="p">(</span><span class="o">--</span><span class="n">graph_def_file</span> <span class="n">GRAPH_DEF_FILE</span> <span class="o">|</span> <span class="o">--</span><span class="n">saved_model_dir</span> <span class="n">SAVED_MODEL_DIR</span> <span class="o">|</span> <span class="o">--</span><span class="n">keras_model_file</span> <span class="n">KERAS_MODEL_FILE</span><span class="p">)</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">output_format</span> <span class="p">{</span><span class="n">TFLITE</span><span class="p">,</span><span class="n">GRAPHVIZ_DOT</span><span class="p">}]</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">inference_type</span> <span class="p">{</span><span class="n">FLOAT</span><span class="p">,</span><span class="n">QUANTIZED_UINT8</span><span class="p">}]</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">inference_input_type</span> <span class="p">{</span><span class="n">FLOAT</span><span class="p">,</span><span class="n">QUANTIZED_UINT8</span><span class="p">}]</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">input_arrays</span> <span class="n">INPUT_ARRAYS</span><span class="p">]</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">input_shapes</span> <span class="n">INPUT_SHAPES</span><span class="p">]</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">output_arrays</span> <span class="n">OUTPUT_ARRAYS</span><span class="p">]</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">saved_model_tag_set</span> <span class="n">SAVED_MODEL_TAG_SET</span><span class="p">]</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">saved_model_signature_key</span> <span class="n">SAVED_MODEL_SIGNATURE_KEY</span><span class="p">]</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">std_dev_values</span> <span class="n">STD_DEV_VALUES</span><span class="p">]</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">mean_values</span> <span class="n">MEAN_VALUES</span><span class="p">]</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">default_ranges_min</span> <span class="n">DEFAULT_RANGES_MIN</span><span class="p">]</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">default_ranges_max</span> <span class="n">DEFAULT_RANGES_MAX</span><span class="p">]</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">post_training_quantize</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">drop_control_dependency</span><span class="p">]</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">reorder_across_fake_quant</span><span class="p">]</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">change_concat_input_ranges</span> <span class="p">{</span><span class="n">TRUE</span><span class="p">,</span><span class="n">FALSE</span><span class="p">}]</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">allow_custom_ops</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">target_ops</span> <span class="n">TARGET_OPS</span><span class="p">]</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">dump_graphviz_dir</span> <span class="n">DUMP_GRAPHVIZ_DIR</span><span class="p">]</span>
-                      <span class="p">[</span><span class="o">--</span><span class="n">dump_graphviz_video</span><span class="p">]</span>
+                      <span class="p">(</span><span class="o">--</span><span class="n">saved_model_dir</span> <span class="n">SAVED_MODEL_DIR</span> <span class="o">|</span> <span class="o">--</span><span class="n">keras_model_file</span> <span class="n">KERAS_MODEL_FILE</span><span class="p">)</span>
+  <span class="o">--</span><span class="n">output_file</span> <span class="n">OUTPUT_FILE</span>
+                        <span class="n">Full</span> <span class="n">filepath</span> <span class="n">of</span> <span class="n">the</span> <span class="n">output</span> <span class="n">file</span><span class="o">.</span>
+  <span class="o">--</span><span class="n">saved_model_dir</span> <span class="n">SAVED_MODEL_DIR</span>
+                        <span class="n">Full</span> <span class="n">path</span> <span class="n">of</span> <span class="n">the</span> <span class="n">directory</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">SavedModel</span><span class="o">.</span>
+  <span class="o">--</span><span class="n">keras_model_file</span> <span class="n">KERAS_MODEL_FILE</span>
+                        <span class="n">Full</span> <span class="n">filepath</span> <span class="n">of</span> <span class="n">HDF5</span> <span class="n">file</span> <span class="n">containing</span> <span class="n">tf</span><span class="o">.</span><span class="n">Keras</span> <span class="n">model</span><span class="o">.</span>
 </pre></div>
 </div>
-<p>模型的导出：Keras Sequential save方法中产生的模型文件，可以使用如下命令处理：</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tflite_convert --keras_model_file<span class="o">=</span>./mnist_cnn.h5 --output_file<span class="o">=</span>./mnist_cnn.tflite
+<p>在 <a class="reference external" href="https://tf.wiki/zh/deployment/export.html">TensorFlow模型导出</a> 中，我们知道TF2.0支持两种模型导出方法和格式SavedModel和Keras Sequential。</p>
+<p>SavedModel导出模型转换：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tflite_convert --saved_model_dir<span class="o">=</span>saved/1 --output_file<span class="o">=</span>mnist_savedmodel.tflite
 </pre></div>
 </div>
-<p>到此，我们已经得到一个可以运行的TensorFlow Lite模型了，即 <code class="docutils literal notranslate"><span class="pre">mnist_cnn.tflite</span></code> 。</p>
-<div class="admonition warning">
-<p class="admonition-title">警告</p>
-<p>这里只介绍了keras HDF5格式模型的转换，其他模型转换建议参考：<a class="reference external" href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/convert/cmdline_examples.md">https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/g3doc/convert/cmdline_examples.md</a></p>
-</div>
-</div>
-<div class="section" id="quantization">
-<h2>Quantization 模型转换<a class="headerlink" href="#quantization" title="永久链接至标题">¶</a></h2>
-<p>还有一种quantization的转化方法，这种转化命令如下：</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tflite_convert <span class="se">\</span>
-  --output_file<span class="o">=</span>keras_mnist_quantized_uint8.tflite <span class="se">\</span>
-  --keras_model_file<span class="o">=</span>mnist_cnn.h5 <span class="se">\</span>
-  --inference_type<span class="o">=</span>QUANTIZED_UINT8 <span class="se">\</span>
-  --mean_values<span class="o">=</span><span class="m">128</span> <span class="se">\</span>
-  --std_dev_values<span class="o">=</span><span class="m">127</span> <span class="se">\</span>
-  --default_ranges_min<span class="o">=</span><span class="m">0</span> <span class="se">\</span>
-  --default_ranges_max<span class="o">=</span><span class="m">255</span> <span class="se">\</span>
-  --input_arrays<span class="o">=</span>conv2d_1_input <span class="se">\</span>
-  --output_arrays<span class="o">=</span>dense_2/Softmax
+<p>Keras Sequential导出模型转换：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tflite_convert --keras_model_file<span class="o">=</span>mnist_cnn.h5 --output_file<span class="o">=</span>mnist_sequential.tflite
 </pre></div>
 </div>
-<p>细心的读者肯定会问，上图中有很多参数是怎么来的呢？我们可以使用 <code class="docutils literal notranslate"><span class="pre">tflite_convert</span></code> 获得模型具体结构，命令如下：</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tflite_convert <span class="se">\</span>
-  --output_file<span class="o">=</span>keras_mnist.dot <span class="se">\</span>
-  --output_format<span class="o">=</span>GRAPHVIZ_DOT <span class="se">\</span>
-  --keras_model_file<span class="o">=</span>mnist_cnn.h5
-</pre></div>
-</div>
-<p>dot是一种graph description language，可以用graphz的dot命令转化为pdf或png等可视化图。</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dot -Tpng -O keras_mnist.dot
-</pre></div>
-</div>
-<p>这样就转化为一张图了，如下：</p>
-<div class="figure align-center">
-<a class="reference internal image-reference" href="../../_images/keras_mnist.dot.png"><img alt="../../_images/keras_mnist.dot.png" src="../../_images/keras_mnist.dot.png" style="width: 80%;" /></a>
-</div>
-<p>很明显的可以看到如下信息：</p>
-<p>入口：</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conv2d_1_input
-Type: Float <span class="o">[</span><span class="m">1</span>×28×28×1<span class="o">]</span>
-MinMax: <span class="o">[</span><span class="m">0</span>, <span class="m">255</span><span class="o">]</span>
-</pre></div>
-</div>
-<p>出口：</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dense_2/Softmax
-Type: Float <span class="o">[</span><span class="m">1</span>×10<span class="o">]</span>
-</pre></div>
-</div>
-<p>因此，可以知道</p>
-<p><code class="docutils literal notranslate"><span class="pre">--input_arrays</span></code> 就是 <code class="docutils literal notranslate"><span class="pre">conv2d_1_input</span></code></p>
-<p><code class="docutils literal notranslate"><span class="pre">--output_arrays</span></code> 就是 <code class="docutils literal notranslate"><span class="pre">dense_2/Softmax</span></code></p>
-<p><code class="docutils literal notranslate"><span class="pre">--default_ranges_min</span></code> 就是 <code class="docutils literal notranslate"><span class="pre">0</span></code></p>
-<p><code class="docutils literal notranslate"><span class="pre">--default_ranges_max</span></code> 就是 <code class="docutils literal notranslate"><span class="pre">255</span></code></p>
-<p>关于 <code class="docutils literal notranslate"><span class="pre">--mean_values</span></code> 和 <code class="docutils literal notranslate"><span class="pre">--std_dev_values</span></code> 的用途:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>QUANTIZED_UINT8的quantized模型期望的输入是[0,255], 需要有个跟原始的float类型输入有个对应关系。
-
-mean_values和std_dev_values就是为了实现这个对应关系
-
-mean_values对应float的float_min
-
-std_dev_values对应255 / (float_max - float_min)
-</pre></div>
-</div>
-<p>因此，可以知道</p>
-<p><code class="docutils literal notranslate"><span class="pre">--mean_values</span></code> 就是 <code class="docutils literal notranslate"><span class="pre">0</span></code></p>
-<p><code class="docutils literal notranslate"><span class="pre">--std_dev_values</span></code> 就是 <code class="docutils literal notranslate"><span class="pre">1</span></code></p>
+<p>到此，已经得到两个TensorFlow Lite模型。因为两者后续操作基本一致，我们只处理SavedModel格式的，Keras Sequential的转换可以按类似方法处理。</p>
 </div>
 <div class="section" id="android">
 <h2>Android部署<a class="headerlink" href="#android" title="永久链接至标题">¶</a></h2>
-<p>现在开始在Android环境部署，对于国内的读者，需要先给Android Studio配置proxy，因为gradle编译环境需要获取相应的资源，请大家自行解决，这里不再赘述。</p>
+<p>现在开始在Android环境部署，对于国内的读者，因为获取SDK和gradle编译环境等资源，需要先给Android Studio配置proxy或者使用国内的镜像。</p>
+<p><strong>配置build.gradle</strong></p>
+<p>将 <code class="docutils literal notranslate"><span class="pre">build.gradle</span></code> 中的maven源 <code class="docutils literal notranslate"><span class="pre">google()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">jcenter()</span></code> 分别替换为国内镜像，如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">buildscript</span> <span class="p">{</span>
+
+    <span class="n">repositories</span> <span class="p">{</span>
+        <span class="n">maven</span> <span class="p">{</span> <span class="n">url</span> <span class="s1">&#39;https://maven.aliyun.com/nexus/content/repositories/google&#39;</span> <span class="p">}</span>
+        <span class="n">maven</span> <span class="p">{</span> <span class="n">url</span> <span class="s1">&#39;https://maven.aliyun.com/nexus/content/repositories/jcenter&#39;</span> <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">dependencies</span> <span class="p">{</span>
+        <span class="n">classpath</span> <span class="s1">&#39;com.android.tools.build:gradle:3.5.1&#39;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">allprojects</span> <span class="p">{</span>
+    <span class="n">repositories</span> <span class="p">{</span>
+        <span class="n">maven</span> <span class="p">{</span> <span class="n">url</span> <span class="s1">&#39;https://maven.aliyun.com/nexus/content/repositories/google&#39;</span> <span class="p">}</span>
+        <span class="n">maven</span> <span class="p">{</span> <span class="n">url</span> <span class="s1">&#39;https://maven.aliyun.com/nexus/content/repositories/jcenter&#39;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <p><strong>配置app/build.gradle</strong></p>
-<p>新建一个Android Project，打开 <code class="docutils literal notranslate"><span class="pre">app/build.gradle</span></code> 添加如下信息:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">android</span> <span class="p">{</span>
-    <span class="n">aaptOptions</span> <span class="p">{</span>
-        <span class="n">noCompress</span> <span class="s2">&quot;tflite&quot;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<p>新建一个Android Project，打开 <code class="docutils literal notranslate"><span class="pre">app/build.gradle</span></code> 添加如下信息：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>android {
+    aaptOptions {
+        noCompress &quot;tflite&quot; // 编译apk时，不压缩tflite文件
+    }
+}
 
-<span class="n">repositories</span> <span class="p">{</span>
-    <span class="n">maven</span> <span class="p">{</span>
-        <span class="n">url</span> <span class="s1">&#39;https://google.bintray.com/tensorflow&#39;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="n">dependencies</span> <span class="p">{</span>
-    <span class="n">implementation</span> <span class="s1">&#39;org.tensorflow:tensorflow-lite:+&#39;</span>
-<span class="p">}</span>
+dependencies {
+    implementation &#39;org.tensorflow:tensorflow-lite:1.14.0&#39;
+}
 </pre></div>
 </div>
 <p>其中，</p>
@@ -330,19 +282,17 @@ std_dev_values对应255 / (float_max - float_min)
 </ol>
 <p>设置好后，sync和build整个工程，如果build成功说明，配置成功。</p>
 <p><strong>添加tflite文件到assets文件夹</strong></p>
-<p>在app目录先新建assets目录，并将 <code class="docutils literal notranslate"><span class="pre">mnist_cnn.tflite</span></code> 文件保存到assets目录。重新编译apk，检查新编译出来的apk的assets文件夹是否有 <code class="docutils literal notranslate"><span class="pre">mnist_cnn.tflite</span></code> 文件。</p>
-<p>使用apk analyzer查看新编译出来的apk，存在如下目录即编译打包成功:</p>
+<p>在app目录先新建assets目录，并将 <code class="docutils literal notranslate"><span class="pre">mnist_savedmodel.tflite</span></code> 文件保存到assets目录。重新编译apk，检查新编译出来的apk的assets文件夹是否有 <code class="docutils literal notranslate"><span class="pre">mnist_cnn.tflite</span></code> 文件。</p>
+<p>点击菜单Build-&gt;Build APK(s)触发apk编译，apk编译成功点击右下角的EventLog。点击最后一条信息中的 <code class="docutils literal notranslate"><span class="pre">analyze</span></code> 链接，会触发apk analyzer查看新编译出来的apk，若在assets目录下存在 <code class="docutils literal notranslate"><span class="pre">mnist_savedmodel.tflite</span></code> ，则编译打包成功，如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">assets</span>
-     <span class="o">|</span><span class="n">__mnist_cnn</span><span class="o">.</span><span class="n">tflite</span>
+     <span class="o">|</span><span class="n">__mnist_savedmodel</span><span class="o">.</span><span class="n">tflite</span>
 </pre></div>
 </div>
 <p><strong>加载模型</strong></p>
-<p>使用如下函数将 <code class="docutils literal notranslate"><span class="pre">mnist_cnn.tflite</span></code> 文件加载到memory-map中，作为Interpreter实例化的输入</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">MODEL_PATH</span> <span class="o">=</span> <span class="s">&quot;mnist_cnn.tflite&quot;</span><span class="o">;</span>
-
-<span class="cm">/** Memory-map the model file in Assets. */</span>
+<p>使用如下函数将 <code class="docutils literal notranslate"><span class="pre">mnist_savedmodel.tflite</span></code> 文件加载到memory-map中，作为Interpreter实例化的输入</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/** Memory-map the model file in Assets. */</span>
 <span class="kd">private</span> <span class="n">MappedByteBuffer</span> <span class="nf">loadModelFile</span><span class="o">(</span><span class="n">Activity</span> <span class="n">activity</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
-    <span class="n">AssetFileDescriptor</span> <span class="n">fileDescriptor</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="na">getAssets</span><span class="o">().</span><span class="na">openFd</span><span class="o">(</span><span class="n">MODEL_PATH</span><span class="o">);</span>
+    <span class="n">AssetFileDescriptor</span> <span class="n">fileDescriptor</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="na">getAssets</span><span class="o">().</span><span class="na">openFd</span><span class="o">(</span><span class="n">mModelPath</span><span class="o">);</span>
     <span class="n">FileInputStream</span> <span class="n">inputStream</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="n">fileDescriptor</span><span class="o">.</span><span class="na">getFileDescriptor</span><span class="o">());</span>
     <span class="n">FileChannel</span> <span class="n">fileChannel</span> <span class="o">=</span> <span class="n">inputStream</span><span class="o">.</span><span class="na">getChannel</span><span class="o">();</span>
     <span class="kt">long</span> <span class="n">startOffset</span> <span class="o">=</span> <span class="n">fileDescriptor</span><span class="o">.</span><span class="na">getStartOffset</span><span class="o">();</span>
@@ -351,78 +301,208 @@ std_dev_values对应255 / (float_max - float_min)
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>实例化Interpreter，其中this为当前acitivity</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">tflite</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Interpreter</span><span class="o">(</span><span class="n">loadModelFile</span><span class="o">(</span><span class="k">this</span><span class="o">));</span>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>memory-map可以把整个文件映射到虚拟内存中，用于提升tflite模型的读取性能。更多请参考： <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/nio/channels/FileChannel.html#map-java.nio.channels.FileChannel.MapMode-long-long-">JDK API介绍</a></p>
+</div>
+<p>实例化Interpreter，其中acitivity是为了从assets中获取模型，因为我们把模型编译到assets中，只能通过 <code class="docutils literal notranslate"><span class="pre">getAssets()</span></code> 打开。</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">mTFLite</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Interpreter</span><span class="o">(</span><span class="n">loadModelFile</span><span class="o">(</span><span class="n">activity</span><span class="o">));</span>
 </pre></div>
 </div>
+<p>memory-map后的 <code class="docutils literal notranslate"><span class="pre">MappedByteBuffer</span></code> 直接作为 <code class="docutils literal notranslate"><span class="pre">Interpreter</span></code> 的输入， <code class="docutils literal notranslate"><span class="pre">mTFLite</span></code> （ <code class="docutils literal notranslate"><span class="pre">Interpreter</span></code> ）就是转换后模型的运行载体。</p>
 <p><strong>运行输入</strong></p>
-<p>我们使用mnist test测试集中的某张图片作为输入，mnist图像大小28*28，单像素。这样我们输入的数据需要设置成如下格式</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/** A ByteBuffer to hold image data, to be feed into Tensorflow Lite as inputs. */</span>
-<span class="kd">private</span> <span class="n">ByteBuffer</span> <span class="n">imgData</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<p>我们使用MNIST test测试集中的图片作为输入，mnist图像大小28*28，单像素，因为我们输入的数据需要设置成如下格式</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">//Float模型相关参数</span>
+<span class="c1">// com/dpthinker/mnistclassifier/model/FloatSavedModelConfig.java</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">setConfigs</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">setModelName</span><span class="o">(</span><span class="s">&quot;mnist_savedmodel.tflite&quot;</span><span class="o">);</span>
 
-<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">DIM_BATCH_SIZE</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">DIM_PIXEL_SIZE</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="n">setNumBytesPerChannel</span><span class="o">(</span><span class="mi">4</span><span class="o">);</span>
 
-<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">DIM_IMG_WIDTH</span> <span class="o">=</span> <span class="mi">28</span><span class="o">;</span>
-<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">DIM_IMG_HEIGHT</span> <span class="o">=</span> <span class="mi">28</span><span class="o">;</span>
+    <span class="n">setDimBatchSize</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+    <span class="n">setDimPixelSize</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
 
-<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">()</span> <span class="o">{</span>
-    <span class="n">imgData</span> <span class="o">=</span> <span class="n">ByteBuffer</span><span class="o">.</span><span class="na">allocateDirect</span><span class="o">(</span>
-        <span class="mi">4</span> <span class="o">*</span> <span class="n">DIM_BATCH_SIZE</span> <span class="o">*</span> <span class="n">DIM_IMG_WIDTH</span> <span class="o">*</span> <span class="n">DIM_IMG_HEIGHT</span> <span class="o">*</span> <span class="n">DIM_PIXEL_SIZE</span><span class="o">);</span>
-    <span class="n">imgData</span><span class="o">.</span><span class="na">order</span><span class="o">(</span><span class="n">ByteOrder</span><span class="o">.</span><span class="na">nativeOrder</span><span class="o">());</span>
+    <span class="n">setDimImgWeight</span><span class="o">(</span><span class="mi">28</span><span class="o">);</span>
+    <span class="n">setDimImgHeight</span><span class="o">(</span><span class="mi">28</span><span class="o">);</span>
+
+    <span class="n">setImageMean</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+    <span class="n">setImageSTD</span><span class="o">(</span><span class="mf">255.0f</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="c1">// 初始化</span>
+<span class="c1">// com/dpthinker/mnistclassifier/classifier/BaseClassifier.java</span>
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">initConfig</span><span class="o">(</span><span class="n">BaseModelConfig</span> <span class="n">config</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">mModelConfig</span> <span class="o">=</span> <span class="n">config</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">mNumBytesPerChannel</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="na">getNumBytesPerChannel</span><span class="o">();</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">mDimBatchSize</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="na">getDimBatchSize</span><span class="o">();</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">mDimPixelSize</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="na">getDimPixelSize</span><span class="o">();</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">mDimImgWidth</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="na">getDimImgWeight</span><span class="o">();</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">mDimImgHeight</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="na">getDimImgHeight</span><span class="o">();</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">mModelPath</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="na">getModelName</span><span class="o">();</span>
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>将mnist图片转化成 <code class="docutils literal notranslate"><span class="pre">ByteBuffer</span></code> ，并保持到 <code class="docutils literal notranslate"><span class="pre">imgData</span></code> 中</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/** Preallocated buffers for storing image data in. */</span>
-<span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">intValues</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">DIM_IMG_WIDTH</span> <span class="o">*</span> <span class="n">DIM_IMG_HEIGHT</span><span class="o">];</span>
+<p>将MNIST图片转化成 <code class="docutils literal notranslate"><span class="pre">ByteBuffer</span></code> ，并保持到 <code class="docutils literal notranslate"><span class="pre">imgData</span></code> （  <code class="docutils literal notranslate"><span class="pre">ByteBuffer</span></code> ）中</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// 将输入的Bitmap转化为Interpreter可以识别的ByteBuffer</span>
+<span class="c1">// com/dpthinker/mnistclassifier/classifier/BaseClassifier.java</span>
+<span class="kd">protected</span> <span class="n">ByteBuffer</span> <span class="nf">convertBitmapToByteBuffer</span><span class="o">(</span><span class="n">Bitmap</span> <span class="n">bitmap</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">intValues</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">mDimImgWidth</span> <span class="o">*</span> <span class="n">mDimImgHeight</span><span class="o">];</span>
+    <span class="n">scaleBitmap</span><span class="o">(</span><span class="n">bitmap</span><span class="o">).</span><span class="na">getPixels</span><span class="o">(</span><span class="n">intValues</span><span class="o">,</span>
+            <span class="mi">0</span><span class="o">,</span> <span class="n">bitmap</span><span class="o">.</span><span class="na">getWidth</span><span class="o">(),</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">bitmap</span><span class="o">.</span><span class="na">getWidth</span><span class="o">(),</span> <span class="n">bitmap</span><span class="o">.</span><span class="na">getHeight</span><span class="o">());</span>
 
-<span class="cm">/** Writes Image data into a {@code ByteBuffer}. */</span>
-<span class="kd">private</span> <span class="kt">void</span> <span class="nf">convertBitmapToByteBuffer</span><span class="o">(</span><span class="n">Bitmap</span> <span class="n">bitmap</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">imgData</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="c1">// Rewinds this buffer. The position is set to zero and the mark is discarded.</span>
+    <span class="n">ByteBuffer</span> <span class="n">imgData</span> <span class="o">=</span> <span class="n">ByteBuffer</span><span class="o">.</span><span class="na">allocateDirect</span><span class="o">(</span>
+            <span class="n">mNumBytesPerChannel</span> <span class="o">*</span> <span class="n">mDimBatchSize</span> <span class="o">*</span> <span class="n">mDimImgWidth</span> <span class="o">*</span> <span class="n">mDimImgHeight</span> <span class="o">*</span> <span class="n">mDimPixelSize</span><span class="o">);</span>
+    <span class="n">imgData</span><span class="o">.</span><span class="na">order</span><span class="o">(</span><span class="n">ByteOrder</span><span class="o">.</span><span class="na">nativeOrder</span><span class="o">());</span>
     <span class="n">imgData</span><span class="o">.</span><span class="na">rewind</span><span class="o">();</span>
 
-    <span class="n">bitmap</span><span class="o">.</span><span class="na">getPixels</span><span class="o">(</span><span class="n">intValues</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">bitmap</span><span class="o">.</span><span class="na">getWidth</span><span class="o">(),</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">bitmap</span><span class="o">.</span><span class="na">getWidth</span><span class="o">(),</span> <span class="n">bitmap</span><span class="o">.</span><span class="na">getHeight</span><span class="o">());</span>
-    <span class="c1">// Convert the image to floating point.</span>
+    <span class="c1">// Convert the image toFloating point.</span>
     <span class="kt">int</span> <span class="n">pixel</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">DIM_IMG_WIDTH</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">DIM_IMG_HEIGHT</span><span class="o">;</span> <span class="o">++</span><span class="n">j</span><span class="o">)</span> <span class="o">{</span>
-            <span class="kd">final</span> <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">intValues</span><span class="o">[</span><span class="n">pixel</span><span class="o">++];</span>
-            <span class="n">imgData</span><span class="o">.</span><span class="na">putFloat</span><span class="o">(</span><span class="n">val</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">mDimImgWidth</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">mDimImgHeight</span><span class="o">;</span> <span class="o">++</span><span class="n">j</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">//final int val = intValues[pixel++];</span>
+            <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">intValues</span><span class="o">[</span><span class="n">pixel</span><span class="o">++];</span>
+            <span class="n">mModelConfig</span><span class="o">.</span><span class="na">addImgValue</span><span class="o">(</span><span class="n">imgData</span><span class="o">,</span> <span class="n">val</span><span class="o">);</span> <span class="c1">//添加把Pixel数值转化并添加到ByteBuffer</span>
         <span class="o">}</span>
     <span class="o">}</span>
+    <span class="k">return</span> <span class="n">imgData</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// mModelConfig.addImgValue定义</span>
+<span class="c1">// com/dpthinker/mnistclassifier/model/FloatSavedModelConfig.java</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addImgValue</span><span class="o">(</span><span class="n">ByteBuffer</span> <span class="n">imgData</span><span class="o">,</span> <span class="kt">int</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">imgData</span><span class="o">.</span><span class="na">putFloat</span><span class="o">(((</span><span class="n">val</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="o">)</span> <span class="o">-</span> <span class="n">getImageMean</span><span class="o">())</span> <span class="o">/</span> <span class="n">getImageSTD</span><span class="o">());</span>
 <span class="o">}</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">convertBitmapToByteBuffer</span></code> 的输出即为模型运行的输入。</p>
 <p><strong>运行输出</strong></p>
-<p>定义一个1*10的多维数组，因为我们只有1个batch和10个label（TODO：need double check），具体代码如下</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">private</span> <span class="kt">float</span><span class="o">[][]</span> <span class="n">labelProbArray</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">float</span><span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="mi">10</span><span class="o">];</span>
+<p>定义一个1*10的多维数组，因为我们只有10个label，具体代码如下</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">privateFloat</span><span class="o">[][]</span> <span class="n">mLabelProbArray</span> <span class="o">=</span> <span class="n">newFloat</span><span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="mi">10</span><span class="o">];</span>
 </pre></div>
 </div>
 <p>运行结束后，每个二级元素都是一个label的概率。</p>
 <p><strong>运行及结果处理</strong></p>
 <p>开始运行模型，具体代码如下</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">tflite</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">imgData</span><span class="o">,</span> <span class="n">labelProbArray</span><span class="o">);</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">mTFLite</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">imgData</span><span class="o">,</span> <span class="n">mLabelProbArray</span><span class="o">);</span>
 </pre></div>
 </div>
-<p>针对某个图片，运行后 <code class="docutils literal notranslate"><span class="pre">labelProbArray</span></code> 的内容如下，也就是各个label识别的概率</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">index</span> <span class="mi">0</span> <span class="n">prob</span> <span class="n">is</span> <span class="mf">0.0</span>
-<span class="n">index</span> <span class="mi">1</span> <span class="n">prob</span> <span class="n">is</span> <span class="mf">0.0</span>
-<span class="n">index</span> <span class="mi">2</span> <span class="n">prob</span> <span class="n">is</span> <span class="mf">0.0</span>
-<span class="n">index</span> <span class="mi">3</span> <span class="n">prob</span> <span class="n">is</span> <span class="mf">1.0</span>
-<span class="n">index</span> <span class="mi">4</span> <span class="n">prob</span> <span class="n">is</span> <span class="mf">0.0</span>
-<span class="n">index</span> <span class="mi">6</span> <span class="n">prob</span> <span class="n">is</span> <span class="mf">0.0</span>
-<span class="n">index</span> <span class="mi">7</span> <span class="n">prob</span> <span class="n">is</span> <span class="mf">0.0</span>
-<span class="n">index</span> <span class="mi">8</span> <span class="n">prob</span> <span class="n">is</span> <span class="mf">0.0</span>
-<span class="n">index</span> <span class="mi">9</span> <span class="n">prob</span> <span class="n">is</span> <span class="mf">0.0</span>
+<p>针对某个图片，运行后 <code class="docutils literal notranslate"><span class="pre">mLabelProbArray</span></code> 的内容就是各个label识别的概率。对他们进行排序，找出Top的label并界面呈现给用户.</p>
+<p>在Android应用中，笔者使用了 <code class="docutils literal notranslate"><span class="pre">View.OnClickListener()</span></code> 触发 <code class="docutils literal notranslate"><span class="pre">&quot;image/*&quot;</span></code> 类型的 <code class="docutils literal notranslate"><span class="pre">Intent.ACTION_GET_CONTENT</span></code> ，进而获取设备上的图片（只支持MNIST标准图片）。然后，通过 <code class="docutils literal notranslate"><span class="pre">RadioButtion</span></code> 的选择情况，确认加载哪种转换后的模型，并触发真正分类操作。这部分比较简单，请读者自行阅读代码即可，不再展开介绍。</p>
+<p>选取一张MNIST测试集中的图片进行测试，得到结果如下：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/mnist_float.png"><img alt="../../_images/mnist_float.png" src="../../_images/mnist_float.png" style="width: 40%;" /></a>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>注意我们这里直接用 <code class="docutils literal notranslate"><span class="pre">mLabelProbArray</span></code> 数值中的index作为label了，因为MNIST的label完全跟index从0到9匹配。如果是其他的分类问题，需要根据实际情况进行转换。</p>
+</div>
+</div>
+<div class="section" id="quantization">
+<h2>Quantization模型转换<a class="headerlink" href="#quantization" title="永久链接至标题">¶</a></h2>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>Quantized模型是对原模型进行转换过程中，将float参数转化为uint8类型，进而产生的模型会更小、运行更快，但是精度会有所下降。</p>
+</div>
+<p>前面我们介绍了Float 模型的转换方法，接下来我们要展示下 Quantized 模型，在TF1.0上，可以使用命令行工具转换 Quantized模型。在笔者尝试的情况看在TF2.0上，命令行工具目前只能转换为Float 模型，Python API只能转换为 Quantized 模型。</p>
+<p>Python API转换方法如下：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>import tensorflow as tf
+
+<span class="nv">converter</span> <span class="o">=</span> tf.lite.TFLiteConverter.from_saved_model<span class="o">(</span><span class="s1">&#39;saved/1&#39;</span><span class="o">)</span>
+converter.optimizations <span class="o">=</span> <span class="o">[</span>tf.lite.Optimize.DEFAULT<span class="o">]</span>
+<span class="nv">tflite_quant_model</span> <span class="o">=</span> converter.convert<span class="o">()</span>
+open<span class="o">(</span><span class="s2">&quot;mnist_savedmodel_quantized.tflite&quot;</span>, <span class="s2">&quot;wb&quot;</span><span class="o">)</span>.write<span class="o">(</span>tflite_quant_model<span class="o">)</span>
 </pre></div>
 </div>
-<p>接下来，我们要做的就是根据对这些概率进行排序，找出Top的label并界面呈现给用户.</p>
+<p>最终转换后的 Quantized模型即为同级目录下的 <code class="docutils literal notranslate"><span class="pre">mnist_savedmodel_quantized.tflite</span></code> 。</p>
+<p>相对TF1.0，上面的方法简化了很多，不需要考虑各种各样的参数，谷歌一直在优化开发者的使用体验。</p>
+<p>在TF1.0上，我们可以使用 <code class="docutils literal notranslate"><span class="pre">tflite_convert</span></code> 获得模型具体结构，然后通过graphviz转换为pdf或png等方便查看。
+在TF2.0上，提供了新的一步到位的工具 <code class="docutils literal notranslate"><span class="pre">visualize.py</span></code> ，直接转换为html文件，除了模型结构，还有更清晰的关键信息总结。</p>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p><code class="docutils literal notranslate"><span class="pre">visualize.py</span></code> 目前看应该还是开发阶段，使用前需要先从github下载最新的 <code class="docutils literal notranslate"><span class="pre">TensorFlow</span></code> 和 <code class="docutils literal notranslate"><span class="pre">FlatBuffers</span></code> 源码，并且两者要在同一目录，因为 <code class="docutils literal notranslate"><span class="pre">visualize.py</span></code> 源码中是按两者在同一目录写的调用路径。</p>
+<p>下载 TensorFlow：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone git@github.com:tensorflow/tensorflow.git
+</pre></div>
+</div>
+<p>下载 FlatBuffers：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone git@github.com:google/flatbuffers.git
+</pre></div>
+</div>
+<p>编译 FlatBuffers：（笔者使用的Mac，其他平台请大家自行配置，应该不麻烦）</p>
+<ol class="arabic simple">
+<li><p>下载cmake：执行 <code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">cmake</span></code></p></li>
+<li><p>设置编译环境：在 <code class="docutils literal notranslate"><span class="pre">FlatBuffers</span></code> 的根目录，执行 <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">-G</span> <span class="pre">&quot;Unix</span> <span class="pre">Makefiles&quot;</span> <span class="pre">-DCMAKE_BUILD_TYPE=Release</span></code></p></li>
+<li><p>编译：在 <code class="docutils literal notranslate"><span class="pre">FlatBuffers</span></code> 的根目录，执行 <code class="docutils literal notranslate"><span class="pre">make</span></code></p></li>
+</ol>
+<p>编译完成后，会在跟目录生成 <code class="docutils literal notranslate"><span class="pre">flatc</span></code>，这个可执行文件是 <code class="docutils literal notranslate"><span class="pre">visualize.py</span></code> 运行所依赖的。</p>
+</div>
+<p><strong>visualize.py使用方法</strong></p>
+<p>在tensorflow/tensorflow/lite/tools目录下，执行如下命令</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python visualize.py mnist_savedmodel_quantized.tflite mnist_savedmodel_quantized.html
+</pre></div>
+</div>
+<p>生成可视化报告的关键信息</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/visualize1.png"><img alt="../../_images/visualize1.png" src="../../_images/visualize1.png" style="width: 100%;" /></a>
+</div>
+<p>模型结构</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/visualize2.png"><img alt="../../_images/visualize2.png" src="../../_images/visualize2.png" style="width: 40%;" /></a>
+</div>
+<p>可见，Input/Output格式都是 <code class="docutils literal notranslate"><span class="pre">FLOAT32</span></code> 的多维数组，Input的min和max分别是0.0和255.0。</p>
+<p>跟Float模型对比，Input/Output格式是一致的，所以可以复用Float模型Android部署过程中的配置。</p>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>暂不确定这里是否是TF2.0上的优化，如果是这样的话，对开发者来说是非常友好的，如此就归一化了Float和Quantized模型处理了。</p>
+</div>
+<p>具体配置如下：</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// Quantized模型相关参数</span>
+<span class="c1">// com/dpthinker/mnistclassifier/model/QuantSavedModelConfig.java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">QuantSavedModelConfig</span> <span class="kd">extends</span> <span class="n">BaseModelConfig</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">setConfigs</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">setModelName</span><span class="o">(</span><span class="s">&quot;mnist_savedmodel_quantized.tflite&quot;</span><span class="o">);</span>
+
+        <span class="n">setNumBytesPerChannel</span><span class="o">(</span><span class="mi">4</span><span class="o">);</span>
+
+        <span class="n">setDimBatchSize</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="n">setDimPixelSize</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+
+        <span class="n">setDimImgWeight</span><span class="o">(</span><span class="mi">28</span><span class="o">);</span>
+        <span class="n">setDimImgHeight</span><span class="o">(</span><span class="mi">28</span><span class="o">);</span>
+
+        <span class="n">setImageMean</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+        <span class="n">setImageSTD</span><span class="o">(</span><span class="mf">255.0f</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addImgValue</span><span class="o">(</span><span class="n">ByteBuffer</span> <span class="n">imgData</span><span class="o">,</span> <span class="kt">int</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">imgData</span><span class="o">.</span><span class="na">putFloat</span><span class="o">(((</span><span class="n">val</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="o">)</span> <span class="o">-</span> <span class="n">getImageMean</span><span class="o">())</span> <span class="o">/</span> <span class="n">getImageSTD</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>运行效果如下:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/quantized.png"><img alt="../../_images/quantized.png" src="../../_images/quantized.png" style="width: 40%;" /></a>
+</div>
+<p>Float模型与 Quantized模型大小与性能对比：</p>
+<p>可见， Quantized模型在模型大小和运行性能上相对Float模型都有非常大的提升。不过，在笔者试验的过程中，发现有些图片在Float模型上识别正确的，在 Quantized模型上会识别错，可见 <code class="docutils literal notranslate"><span class="pre">Quantization</span></code> 对模型的识别精度还是有影响的。在边缘设备上资源有限，需要在模型大小、运行速度与识别精度上找到一个权衡。</p>
+</div>
+<div class="section" id="id3">
+<h2>总结<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>本节介绍了如何从零开始部署TFLite到Android应用中，包括：</p>
+<ol class="arabic simple">
+<li><p>如何将训练好的MNIST SavedModel模型，转换为Float模型和 Quantized模型</p></li>
+<li><p>如何使用 <code class="docutils literal notranslate"><span class="pre">visualize.py</span></code> 和解读其结果信息</p></li>
+<li><p>如何将转换后的模型部署到Android应用中</p></li>
+</ol>
+<p>笔者刚开始写这部分内容的时候还是TF1.0，在最近（2019年10月初）跟TF2.0的时候，发现有了很多变化，整体上是比原来更简单了。不过文档部分很多还是讲的比较模糊，很多地方还是需要看源码摸索。</p>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>本节Android相关代码存放路径：
+<code class="docutils literal notranslate"><span class="pre">https://github.com/snowkylin/tensorflow-handbook/tree/master/source/android</span></code></p>
+</div>
 </div>
 </div>
 

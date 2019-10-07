@@ -81,7 +81,7 @@ Keras Sequential save方法（Jinpeng）
 我们以keras模型训练和保存为例进行讲解，如下是keras官方的mnist模型训练样例。
 
 源码地址::
-    
+
     https://github.com/keras-team/keras/blob/master/examples/mnist_cnn.py
 
 以上代码，是基于keras的Sequential构建了多层的卷积神经网络，并进行训练。

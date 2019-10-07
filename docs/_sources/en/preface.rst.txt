@@ -1,33 +1,59 @@
 Preface
-=========
+=======
 
-On Mar. 30th, 2018, Google held the second TensorFlow Dev Summit in Mountain View, California and announced the official release of TensorFlow version 1.8. I was fortunate to attend the summit with Google's sponsorship, witnessing the release of this new version, a milestone. Lots of new functions added and supported shows the ambition of TensorFlow. Meanwhile, Eager Execution, which has been tested since 2017 fall, was finally included officially in this version and became the recommended mode for newcomers of TensorFlow.
+2018年3月30日，Google在加州山景城举行了第二届TensorFlow Dev Summit开发者峰会，并宣布正式发布TensorFlow 1.8版本。笔者有幸获得Google的资助亲临峰会现场，见证了这一具有里程碑式意义的新版本发布。众多新功能的加入和支持展示了TensorFlow的雄心壮志，同时早在2017年秋就开始测试的Eager Execution（动态图机制）在这一版本中终于正式加入，并成为了入门TensorFlow的官方推荐模式。
 
     The easiest way to get started with TensorFlow is using Eager Execution.
     
     —— https://www.tensorflow.org/get_started/
 
-Before then, the disadvantages of Graph Execution mode in TensorFlow, such as high learning threshold, difficulty in debugging, poor flexibility and inability to use Python native controlling statements, have already been criticized by developers for a long time. Some new deep learning frameworks based on dynamic computational graph (e.g. PyTorch) have come out and won their places by their usability and efficiency for development. These dynamic deep learning frameworks are popular especially in academic researches where fast iterative development of models are required. In fact, I was the only person who used "old-fashioned" TensorFlow in my machine learning laboratory where I worked with dozens of colleagues. However, until now, most of the Chinese technical books and materials about TensorFlow still based on Graph Execution mode, which really dissuades beginners (especially those undergraduates who have just finished their machine learning courses) from learning. Therefore, as TensorFlow officially supports Eager Execution, it's necessary to publish a brand new handbook which helps beginners and researchers who need to iterate models rapidly and to get started quickly from a new perspective.
+在此之前，TensorFlow所基于的传统Graph Execution的弊端，如入门门槛高、调试困难、灵活性差、无法使用Python原生控制语句等早已被开发者诟病许久。一些新的基于动态图机制的深度学习框架（如PyTorch）也横空出世，并以其易用性和快速开发的特性而占据了一席之地。尤其是在学术研究等需要快速迭代模型的领域，PyTorch等新兴深度学习框架已经成为主流。笔者所在的数十人的机器学习实验室中，竟只有笔者一人“守旧”地使用TensorFlow。然而，直到目前，市面上相关的TensorFlow相关的中文技术书籍及资料仍然基于传统的Graph Execution模式，让不少初学者（尤其是刚学过机器学习课程的大学生）望而却步。由此，在TensorFlow正式支持Eager Execution之际，有必要出现一本全新的技术手册，帮助初学者及需要快速迭代模型的研究者，以一个全新的角度快速入门TensorFlow。
 
-Meanwhile, this handbook has another mission. Most Chinese technical books about TensorFlow focus mainly on deep learning and regard TensorFlow as a mere tool to implement deep learning models. Admittedly, they are self-contained, but it's not friendly enough for those who have already known about machine learning and deep learning theories and want to focus on learning TensorFlow itself. In addition, though TensorFlow has its official documentation (https://tensorflow.google.cn/tutorials), its structure is not well organized, lacking the step-by-step feature of a common tutorial, thus being more similar to a technological documentation. Therefore, I hope to write a handbook to show the main features of TensorFlow as a computing framework as much as possible, and to make up for the shortcomings of the official manual, in an effort to make readers who already have certain machine learning/deep learning knowledge and programming skills get started quickly. TensorFlow, and can solve practical problems during the actual programming process.
+同时，本手册还有第二个任务。市面上与TensorFlow相关的中文技术书籍大部分都以深度学习为主线，而将TensorFlow作为这些深度学习模型的实现方式。这样固然有体系完整的优点，然而对于已经对机器学习或深度学习理论有所了解，希望侧重于学习TensorFlow本身的读者而言，就显得不够友好。于是，笔者希望编写一本手册，以尽量精简的篇幅展示TensorFlow作为一个计算框架的主要特性，并弥补官方手册的不足，力图能让已经有一定机器学习/深度学习知识及编程能力的读者迅速上手TensorFlow，并在实际编程过程中可以随时查阅并解决实际问题。
 
-The main features of this handbook are:
+本手册的主要特征有：
 
-* This book is mainly based on the most up-to-date Eager Execution mode in TensorFlow for fast iterative development of models. However, traditional Graph Execution mode is also included and we will do our best to make the codes provided in this book compatible with both modes.
-* We position this book mainly as a tutorial and handbook, and arrange the concepts and functions of TensorFlow as the core part, for TensorFlow developers to refer quickly. Chapters are relatively independent with one another, therefore it's not necessary to read this book in a sequential order. There won't be much theory of deep learning and machine learning in the text, however some recommendation is still provided for beginners to grasp related basic knowledge.
-* All codes are carefully written in order to be concise and efficient. All models are implemented based on the ``tf.keras.Model`` and ``tf.keras.layers.Layer`` methods, which just proposed by `TensorFlow official documentation <https://www.tensorflow.org/programmers_guide/eager#build_a_model>`_ and are barely introduced in other technical documentations. This implementation guarantees high reusability. Each project is written by codes fewer than 100 lines for readers to understand and practice quickly.
-* Less is more. No all-rounded or large blocks of details.
+* 主要基于TensorFlow最新的Eager Execution（动态图）模式，以便于模型的快速迭代开发。但依然会包含传统的Graph Execution模式，代码上尽可能兼容两者；
+* 定位以技术手册为主，编排以TensorFlow的各项概念和功能为核心，力求能够让TensorFlow开发者快速查阅。各章相对独立，不一定需要按顺序阅读；
+* 代码实现均进行仔细推敲，力图简洁高效和表意清晰。模型实现均统一使用 `TensorFlow官方文档 <https://www.tensorflow.org/programmers_guide/eager#build_a_model>`_ 最新提出的继承 ``tf.keras.Model`` 和 ``tf.keras.layers.Layer`` 的方式，保证代码的高度可复用性。每个完整项目的代码总行数均不过百行，让读者可以快速理解并举一反三；
+* 注重详略，少即是多，不追求巨细靡遗和面面俱到，不在正文中进行大篇幅的细节论述。
 
-The parts marked "*" are optional in this handbook.
+Target audience
+^^^^^^^^^^^^^^^
 
-This handbook is tentatively named as "A Concise Handbook of TensorFlow" in order to pay a tribute to the book "A Concise Handbook of :math:`\text{\LaTeX}`" (https://github.com/wklchris/Note-by-LaTeX) written by my friend and colleague Chris Wu. The latter is a rare Chinese material about :math:`\text{\LaTeX}`. I also learned from it while I was writing this handbook. This handbook was initially written and used by meself as a prerequisite handout in a deep learning seminar organized by my friend Ji-An Li. My friends' wise and selflessness also prompted me to finish this work.
+本书适用于以下读者：
 
-The English version of this handbook is translated by my friend Zida Jin (Chapter 1-4) and Ming (Chapter 5-6), and revised by Ji-An Li and me. My three friends sacrificed a lot of valuable time to translate and proofread this handbook. Ji-An Li also provided valuable comments on the teaching content and code details of this manual. I would like to express my heartfelt thanks to my friends for their hard work.
+* 已有一定机器学习/深度学习基础，希望将所学理论知识使用TensorFlow进行具体实现的学生和研究者；
+* 曾使用或正在使用TensorFlow 1.X版本或其他深度学习框架（比如PyTorch），希望了解TensorFlow 2.0新特性的开发者；
+* 希望将已有的TensorFlow模型应用于业界的开发者或工程师。
 
-I am grateful to the members of the Google China Developer Relations team and the TensorFlow engineering team for their help in writing this handbook. Among them, Luke Cheng of the Developer Relations team provided inspiration and continuous encouragement throughout the writing of this manual. Rui Li and Pryce Mu of the Developer Relations team provided strong support in the promotion of this manual, as well as Tiezhen Wang of TensorFlow team provided many suggestions to the engineering details of the manual.
+.. hint:: 本书不是一本机器学习/深度学习原理入门手册。若希望进行机器学习/深度学习理论的入门学习，可参考 :doc:`附录 <appendix/recommended_books>` 中提供的一些入门资料。
+
+Usage
+^^^^^
+
+对于已有一定机器学习/深度学习基础，着重于模型建立与训练的学生和研究者，建议顺序阅读本书的“基础”部分。对于希望将TensorFlow模型部署到实际环境中的开发者和工程师，则建议重点阅读本书的“部署”一章。每章的开头提供了“前置知识”部分，方便读者查漏补缺。部分周边补充知识以可折叠信息框的方式给出，可随时使用页面最上方的“折叠全部注释”按钮折叠所有信息框的内容。
+
+在整本手册中，带“*”的部分均为选读。
+
+Acknowledgement
+^^^^^^^^^^^^^^^
+
+本手册的暂定名称《简单粗暴TensorFlow》是向我的好友兼同学Chris Wu编写的《简单粗暴 :math:`\text{\LaTeX}` 》（https://github.com/wklchris/Note-by-LaTeX）致敬。该手册清晰精炼，是 :math:`\text{\LaTeX}` 领域不可多得的中文资料，也是我在编写这一技术文档时所学习的对象。本手册最初是在我的好友Ji-An Li所组织的深度学习研讨小组中，由我作为预备知识的讲义而编写和使用。好友们的才学卓著与无私分享的品格也是编写此拙作的重要助力。
+
+本手册的TensorFlow.js和TensorFlow Lite部分分别由Huan Li和Jinpeng Zhu两位在JavaScript和Android领域有丰富履历的Google Developers Expert编写，同时Huan提供了TensorFlow for Swift和TPU部分的介绍。以及来自豆瓣的Ziyang Wang提供了TensorFlow for Julia的介绍及部分示例代码和说明。相关贡献者撰写的内容均在文章中进行了标注，在此特别表示感谢。
+
+..
+    本手册的英文版由我的好友Zida Jin（2-5章）和Ming（6-7章）翻译，并由Ji-An Li和笔者审校。三位朋友牺牲了自己的大量宝贵时间翻译和校对本手册，同时Ji-An Li亦对本手册的教学内容和代码细节提供了诸多宝贵意见。我谨向好友们为本手册的辛勤付出致以衷心的感谢。
+
+衷心感谢Google中国开发者关系团队和TensorFlow工程团队的成员们对本手册编写所提供的帮助。其中包括开发者关系团队的Luke Cheng在本手册写作全程提供的思路启发和持续鼓励（以及提供本手册在线版本的域名 ``tf.wiki`` ），开发者关系团队的Rui Li, Pryce Mu和TensorFlow社群维护的小伙伴们在本手册宣发及推广上提供的大力支持，TensorFlow工程团队的Tiezhen Wang在本手册工程细节方面提供的诸多建议和补充，以及TensorFlow工程团队的Shuangfeng Li等其他工程师们对本手册的审阅意见。
+
+关于本手册的意见和建议，欢迎在 https://github.com/snowkylin/tensorflow-handbook/issues 提交。这是一个开源项目，您的宝贵意见将促进本手册的持续更新。
 
 |
 
-Xihan Li (Snowkylin)
+Google Developers Expert in Machine Learning
 
-August 2018 in Yanyuan
+Xihan Li（雪麒）
+
+2019年8月于燕园
