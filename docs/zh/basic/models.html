@@ -428,7 +428,7 @@
 <li><p>将这批数据送入模型，计算出模型的预测值；</p></li>
 <li><p>将模型预测值与真实值进行比较，计算损失函数（loss）。这里使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> 中的交叉熵函数作为损失函数；</p></li>
 <li><p>计算损失函数关于模型变量的导数；</p></li>
-<li><p>将求出的导数值传入优化器，使用优化器的 <code class="docutils literal notranslate"><span class="pre">apply_gradients</span></code> 方法更新模型参数以最小化损失函数（优化器的详细使用方法见 <a class="reference internal" href="basic.html#optimizer"><span class="std std-ref">前章</span></a>  ）。</p></li>
+<li><p>将求出的导数值传入优化器，使用优化器的 <code class="docutils literal notranslate"><span class="pre">apply_gradients</span></code> 方法更新模型参数以最小化损失函数（优化器的详细使用方法见 <a class="reference internal" href="../../en/basic/basic.html#optimizer"><span class="std std-ref">前章</span></a>  ）。</p></li>
 </ul>
 <p>具体代码实现如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">num_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">num_train_data</span> <span class="o">//</span> <span class="n">batch_size</span> <span class="o">*</span> <span class="n">num_epochs</span><span class="p">)</span>
@@ -572,7 +572,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">classes</span></code> ：分类数，默认为1000。修改该参数需要 <code class="docutils literal notranslate"><span class="pre">include_top</span></code> 参数为 <code class="docutils literal notranslate"><span class="pre">True</span></code> 且 <code class="docutils literal notranslate"><span class="pre">weights</span></code> 参数为 <code class="docutils literal notranslate"><span class="pre">None</span></code> 。</p></li>
 </ul>
 <p>各网络模型参数的详细介绍可参考 <a class="reference external" href="https://keras.io/applications/">Keras文档</a> 。</p>
-<p>以下展示一个例子，使用 <code class="docutils literal notranslate"><span class="pre">MobileNetV2</span></code> 网络在 <code class="docutils literal notranslate"><span class="pre">tf_flowers</span></code> 五分类数据集上进行训练（为了代码的简短高效，在该示例中我们使用了 <a class="reference internal" href="../appendix/tfds.html"><span class="doc">TensorFlow Datasets</span></a> 和 <a class="reference internal" href="tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 载入和预处理数据）。通过将 <code class="docutils literal notranslate"><span class="pre">weights</span></code> 设置为 <code class="docutils literal notranslate"><span class="pre">None</span></code> ，我们随机初始化变量而不使用预训练权值。同时将 <code class="docutils literal notranslate"><span class="pre">classes</span></code> 设置为5，对应于5分类的数据集。</p>
+<p>以下展示一个例子，使用 <code class="docutils literal notranslate"><span class="pre">MobileNetV2</span></code> 网络在 <code class="docutils literal notranslate"><span class="pre">tf_flowers</span></code> 五分类数据集上进行训练（为了代码的简短高效，在该示例中我们使用了 <a class="reference internal" href="../appendix/tfds.html"><span class="doc">TensorFlow Datasets</span></a> 和 <a class="reference internal" href="../../en/basic/tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 载入和预处理数据）。通过将 <code class="docutils literal notranslate"><span class="pre">weights</span></code> 设置为 <code class="docutils literal notranslate"><span class="pre">None</span></code> ，我们随机初始化变量而不使用预训练权值。同时将 <code class="docutils literal notranslate"><span class="pre">classes</span></code> 设置为5，对应于5分类的数据集。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
 
@@ -966,7 +966,11 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <li><p>小球移动的信息很重要，如果只知道单帧画面而不知道小球往哪边运动，即使是人也很难判断挡板应当移动的方向。因此，必须在状态中加入表征小球运动方向的信息。一个简单的方式是将当前帧与前面几帧的画面进行叠加，得到一个 <code class="docutils literal notranslate"><span class="pre">210</span> <span class="pre">*</span> <span class="pre">160</span> <span class="pre">*</span> <span class="pre">X</span></code> （X 为叠加帧数）的状态表示；</p></li>
 <li><p>每帧的分辨率不需要特别高，只要能大致表征方块、小球和挡板的位置以做出决策即可，因此对于每帧的长宽可做适当压缩。</p></li>
 </ul>
-<p>而考虑到我们需要从图像信息中提取特征，使用 CNN 作为拟合 Q 函数的网络将更为适合。将上面的 <code class="docutils literal notranslate"><span class="pre">QNetwork</span></code> 更换为 CNN 网络，即可用于玩一些简单的视频游戏。</p>
+<p>而考虑到我们需要从图像信息中提取特征，使用 CNN 作为拟合 Q 函数的网络将更为适合。由此，将上面的 <code class="docutils literal notranslate"><span class="pre">QNetwork</span></code> 更换为 CNN 网络，并对状态做一些修改，即可用于玩一些简单的视频游戏。</p>
+<div class="admonition- admonition">
+<p class="admonition-title">强化学习原理初探</p>
+<p>强化学习</p>
+</div>
 </div>
 <div class="section" id="keras-pipeline">
 <h2>Keras Pipeline *<a class="headerlink" href="#keras-pipeline" title="永久链接至标题">¶</a></h2>
@@ -1024,7 +1028,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <li><p><code class="docutils literal notranslate"><span class="pre">validation_data</span></code> ：验证数据，可用于在训练过程中监控模型的性能。</p></li>
 </ul>
 </div></blockquote>
-<p>Keras 支持使用 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 进行训练，详见 <a class="reference internal" href="tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 。</p>
+<p>Keras 支持使用 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 进行训练，详见 <a class="reference internal" href="../../en/basic/tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 。</p>
 <p>最后，使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model.evaluate</span></code> 评估训练效果，提供测试数据及标签即可：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">,</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">test_label</span><span class="p">))</span>
 </pre></div>

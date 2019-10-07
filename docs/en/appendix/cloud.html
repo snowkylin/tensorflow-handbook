@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using TensorFlow on cloud &mdash; 简单粗暴TensorFlow 2.0 0.4 alpha 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴TensorFlow 2.0
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/julia.html">TensorFlow in Julia（Ziyang）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/static.html">图模型下的TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/optimization.html">TensorFlow性能优化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/terms.html">术语中英对照表</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴TensorFlow 2.0</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Using TensorFlow on cloud</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/en/appendix/cloud.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-tensorflow-on-cloud">
+<h1>Using TensorFlow on cloud<a class="headerlink" href="#using-tensorflow-on-cloud" title="永久链接至标题">¶</a></h1>
+<div class="section" id="using-tensorflow-in-colab">
+<span id="colab"></span><h2>Using TensorFlow in Colab<a class="headerlink" href="#using-tensorflow-in-colab" title="永久链接至标题">¶</a></h2>
+<p>Google Colab是谷歌的免费在线交互式Python运行环境，且提供GPU支持，使得机器学习开发者们无需在自己的电脑上安装环境，就能随时随地从云端访问和运行自己的机器学习代码。</p>
+<div class="admonition- admonition">
+<p class="admonition-title">学习资源</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://colab.research.google.com/notebooks/welcome.ipynb">Colab官方教程</a></p></li>
+<li><p><a class="reference external" href="https://medium.com/deep-learning-turkey/google-colab-free-gpu-tutorial-e113627b9f5d">Google Colab Free GPU Tutorial</a> （<a class="reference external" href="https://juejin.im/post/5c05e1bc518825689f1b4948">中文翻译</a>）</p></li>
+</ul>
+</div>
+<p>进入Colab（<a class="reference external" href="https://colab.research.google.com">https://colab.research.google.com</a>），新建一个Python3笔记本，界面如下：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/new.png"><img alt="../../_images/new.png" src="../../_images/new.png" style="width: 100%;" /></a>
+</div>
+<p>如果需要使用GPU，则点击菜单“代码执行程序-更改运行时类型”，在“硬件加速器”一项中选择“GPU”，如下图所示：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/select_env.png"><img alt="../../_images/select_env.png" src="../../_images/select_env.png" style="width: 40%;" /></a>
+</div>
+<p>我们在主界面输入一行代码，例如 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">tensorflow</span> <span class="pre">as</span> <span class="pre">tf</span></code> ，然后按 <code class="docutils literal notranslate"><span class="pre">ctrl</span> <span class="pre">+</span> <span class="pre">enter</span></code> 执行代码（如果直接按下 <code class="docutils literal notranslate"><span class="pre">enter</span></code> 是换行，可以一次输入多行代码并运行）。此时Colab会自动连接到云端的运行环境，并将状态显示在右上角。</p>
+<p>运行完后，点击界面左上角的“+代码”，此时界面上会新增一个输入框，我们输入 <code class="docutils literal notranslate"><span class="pre">tf.__version__</span></code> ，再次按下 <code class="docutils literal notranslate"><span class="pre">ctrl</span> <span class="pre">+</span> <span class="pre">enter</span></code> 执行代码，以查看Colab默认的TensorFlow版本，执行情况如下：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/tf_version.png"><img alt="../../_images/tf_version.png" src="../../_images/tf_version.png" style="width: 100%;" /></a>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>Colab支持代码提示，可以在输入 <code class="docutils literal notranslate"><span class="pre">tf.</span></code> 后按下 <code class="docutils literal notranslate"><span class="pre">tab</span></code> 键，即会弹出代码提示的下拉菜单。</p>
+</div>
+<p>可见，截至本文写作时，Colab中的TensorFlow默认版本是1.14.0。在Colab中，可以使用 <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">!apt-get</span> <span class="pre">install</span></code> 来安装Colab中尚未安装的Python库或Linux软件包。比如在这里，我们希望使用TensorFlow 2.0 beta1版本，即点击左上角的“+代码”，输入:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!pip install tensorflow-gpu==2.0.0-beta1
+</pre></div>
+</div>
+<p>按下 <code class="docutils literal notranslate"><span class="pre">ctrl</span> <span class="pre">+</span> <span class="pre">enter</span></code> 执行，结果如下：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/install_tf.png"><img alt="../../_images/install_tf.png" src="../../_images/install_tf.png" style="width: 100%;" /></a>
+</div>
+<p>可见，Colab提示我们重启运行环境以使用新安装的TensorFlow版本。于是我们点击运行框最下方的Restart Runtime（或者菜单“代码执行程序-重新启动代码执行程序”），然后再次导入TensorFlow并查看版本，结果如下：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/view_tf_version.png"><img alt="../../_images/view_tf_version.png" src="../../_images/view_tf_version.png" style="width: 100%;" /></a>
+</div>
+<p>我们可以使用 <code class="docutils literal notranslate"><span class="pre">tf.test.is_gpu_available</span></code> 函数来查看当前环境的GPU是否可用：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/view_gpu.png"><img alt="../../_images/view_gpu.png" src="../../_images/view_gpu.png" style="width: 100%;" /></a>
+</div>
+<p>可见，我们成功在Colab中配置了TensorFlow 2.0环境并启用了GPU支持。</p>
+<p>你甚至可以通过 <code class="docutils literal notranslate"><span class="pre">!nvidia-smi</span></code> 查看当前的GPU信息：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/nvidia_smi.png"><img alt="../../_images/nvidia_smi.png" src="../../_images/nvidia_smi.png" style="width: 100%;" /></a>
+</div>
+<p>可见GPU的型号为Tesla T4。</p>
+</div>
+<div class="section" id="using-tensorflow-on-google-cloud-platform-gcp">
+<span id="gcp"></span><h2>Using TensorFlow on Google Cloud Platform (GCP)<a class="headerlink" href="#using-tensorflow-on-google-cloud-platform-gcp" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="https://cloud.google.com/">Google Cloud Platform（GCP）</a> 是Google的云计算服务。GCP收费灵活，默认按时长计费。也就是说，你可以迅速建立一个带GPU的实例，训练一个模型，然后立即关闭（关机或删除实例）。GCP只收取在实例开启时所产生的费用，关机时只收取磁盘存储的费用，删除后即不再继续收费。</p>
+<p>我们可以通过两种方式在GCP中使用TensorFlow：使用Compute Engine建立带GPU的实例，或使用AI Platform中的Notebook建立带GPU的在线JupyterLab环境。</p>
+<div class="section" id="instantiating-on-compute-engine-with-gpu-and-deploying-tensorflow">
+<h3>Instantiating on Compute Engine with GPU and deploying TensorFlow<a class="headerlink" href="#instantiating-on-compute-engine-with-gpu-and-deploying-tensorflow" title="永久链接至标题">¶</a></h3>
+<p>GCP的Compute Engine类似于AWS、阿里云等，允许用户快速建立自己的虚拟机实例。在Compute Engine中，可以很方便地建立具有GPU的虚拟机实例，只需要进入Compute Engine的VM实例（<a class="reference external" href="https://console.cloud.google.com/compute/instances">https://console.cloud.google.com/compute/instances</a>），并在创建实例的时候选择GPU类型和数量即可。</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/create_instance.png"><img alt="../../_images/create_instance.png" src="../../_images/create_instance.png" style="width: 100%;" /></a>
+</div>
+<p>需要注意两点：</p>
+<ol class="arabic simple">
+<li><p>只有特定区域的机房具有GPU，且不同类型的GPU地区范围也不同，可参考 <a class="reference external" href="https://cloud.google.com/compute/docs/gpus">GCP官方文档</a> 并选择适合的地区建立实例；</p></li>
+<li><p>默认情况下GCP账号的GPU配额非常有限（可能是怕你付不起钱？）。你很可能需要在使用前申请提升自己账号在特定地区的特定型号GPU的配额，可参考 <a class="reference external" href="https://cloud.google.com/compute/quotas?hl=zh-cn#requesting_additional_quota">GCP官方文档：申请提升配额</a> ，GCP会有工作人员手动处理申请，并给你的邮箱发送邮件通知，大约需要数小时至两个工作日不等。</p></li>
+</ol>
+<p>当建立好具有GPU的GCP虚拟机实例后，配置工作与在本地基本相同。系统中默认并没有NVIDIA显卡驱动，依然需要自己安装。</p>
+<p>以下命令示例了在Tesla K80，Ubuntu 18.04 LTS的GCP虚拟机实例中配置NVIDIA 410驱动、CUDA 10.0、cuDNN 7.6.0以及TensorFlow 2.0 beta环境的过程：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install build-essential    <span class="c1"># 安装编译环境</span>
+wget http://us.download.nvidia.com/tesla/410.104/NVIDIA-Linux-x86_64-410.104.run    <span class="c1"># 下载NVIDIA驱动</span>
+sudo bash NVIDIA-Linux-x86_64-410.104.run   <span class="c1"># 安装驱动（一路Next）</span>
+<span class="c1"># nvidia-smi  # 查看虚拟机中的GPU型号</span>
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh  <span class="c1"># 下载Miniconda</span>
+bash Miniconda3-latest-Linux-x86_64.sh      <span class="c1"># 安装Miniconda（安装完需要重启终端）</span>
+conda create -n tf2.0-beta-gpu <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.6
+conda activate tf2.0-beta-gpu
+conda install <span class="nv">cudatoolkit</span><span class="o">=</span><span class="m">10</span>.0
+conda install <span class="nv">cudnn</span><span class="o">=</span><span class="m">7</span>.6.0
+pip install tensorflow-gpu<span class="o">==</span><span class="m">2</span>.0.0-beta1
+</pre></div>
+</div>
+<p>输入 <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> 会显示：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~$ nvidia-smi
+Fri Jul <span class="m">12</span> <span class="m">10</span>:30:37 <span class="m">2019</span>
++-----------------------------------------------------------------------------+
+<span class="p">|</span> NVIDIA-SMI <span class="m">410</span>.104      Driver Version: <span class="m">410</span>.104      CUDA Version: <span class="m">10</span>.0     <span class="p">|</span>
+<span class="p">|</span>-------------------------------+----------------------+----------------------+
+<span class="p">|</span> GPU  Name        Persistence-M<span class="p">|</span> Bus-Id        Disp.A <span class="p">|</span> Volatile Uncorr. ECC <span class="p">|</span>
+<span class="p">|</span> Fan  Temp  Perf  Pwr:Usage/Cap<span class="p">|</span>         Memory-Usage <span class="p">|</span> GPU-Util  Compute M. <span class="p">|</span>
+<span class="p">|</span><span class="o">===============================</span>+<span class="o">======================</span>+<span class="o">======================</span><span class="p">|</span>
+<span class="p">|</span>   <span class="m">0</span>  Tesla K80           Off  <span class="p">|</span> <span class="m">00000000</span>:00:04.0 Off <span class="p">|</span>                    <span class="m">0</span> <span class="p">|</span>
+<span class="p">|</span> N/A   63C    P0    88W / 149W <span class="p">|</span>      0MiB / 11441MiB <span class="p">|</span>    <span class="m">100</span>%      Default <span class="p">|</span>
++-------------------------------+----------------------+----------------------+
+
++-----------------------------------------------------------------------------+
+<span class="p">|</span> Processes:                                                       GPU Memory <span class="p">|</span>
+<span class="p">|</span>  GPU       PID   Type   Process name                             Usage      <span class="p">|</span>
+<span class="p">|</span><span class="o">=============================================================================</span><span class="p">|</span>
+<span class="p">|</span>  No running processes found                                                 <span class="p">|</span>
++-----------------------------------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-notebook-in-ai-platform-to-establish-online-jupyterlab-environment-with-gpu">
+<span id="notebook"></span><h3>Using Notebook in AI Platform to establish online JupyterLab environment with GPU<a class="headerlink" href="#using-notebook-in-ai-platform-to-establish-online-jupyterlab-environment-with-gpu" title="永久链接至标题">¶</a></h3>
+<p>如果你不希望繁杂的配置，希望迅速获得一个开箱即用的在线交互式Python环境，可以使用GCP的AI Platform中的Notebook。其预安装了JupyterLab，可以理解为Colab的付费升级版，具备更多功能且限制较少。</p>
+<p>进入 <a class="reference external" href="https://console.cloud.google.com/mlengine/notebooks">https://console.cloud.google.com/mlengine/notebooks</a> ，点击“新建实例-TensorFlow 2.0-With 1 NVIDIA Tesla K80”，界面如下：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/create_notebook.png"><img alt="../../_images/create_notebook.png" src="../../_images/create_notebook.png" style="width: 100%;" /></a>
+</div>
+<p>也可以点击“自定义”来进一步配置实例，例如选择区域、GPU类型和个数，与创建Compute Engine实例类似。</p>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>和Compute Engine实例一样，你很可能需要在这里选择自己适合的区域，以及申请提升自己账号在特定地区的特定型号GPU的配额。</p>
+</div>
+<p>建立完成后，点击“打开JUPYTERLAB”，即可进入以下界面：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/notebook_index.png"><img alt="../../_images/notebook_index.png" src="../../_images/notebook_index.png" style="width: 100%;" /></a>
+</div>
+<p>建立一个Python 3笔记本，测试TensorFlow环境：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/notebook_test.png"><img alt="../../_images/notebook_test.png" src="../../_images/notebook_test.png" style="width: 100%;" /></a>
+</div>
+<p>我们还可以点击左上角的“+”号，新建一个终端：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/notebook_terminal.png"><img alt="../../_images/notebook_terminal.png" src="../../_images/notebook_terminal.png" style="width: 100%;" /></a>
+</div>
+</div>
+</div>
+<div class="section" id="running-tensorflow-on-aliyun-instance-with-gpu">
+<h2>Running TensorFlow on Aliyun instance with GPU<a class="headerlink" href="#running-tensorflow-on-aliyun-instance-with-gpu" title="永久链接至标题">¶</a></h2>
+<p>国内也有部分云服务商（如 <a class="reference external" href="https://cn.aliyun.com/product/ecs/gpu">阿里云</a> 和 <a class="reference external" href="https://cloud.tencent.com/product/gpu">腾讯云</a> ）提供了 GPU 实例，且可按量计费。至本手册撰写时，具备单个GPU的实例价格在数元（Tesla P4）至二十多元（Tesla V100）每小时不等。以下我们简要介绍在阿里云使用 GPU 实例。</p>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>根据不同的地区、配置和付费方式，实例的价格也是多样化的，请根据需要合理选择。如果是临时需要的计算任务，可以考虑按量付费以及使用抢占式VPS，以节约资金。</p>
+</div>
+<p>访问 <a class="reference external" href="https://cn.aliyun.com/product/ecs/gpu">https://cn.aliyun.com/product/ecs/gpu</a> ，点击购买，界面如下：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/vps_select.png"><img alt="../../_images/vps_select.png" src="../../_images/vps_select.png" style="width: 100%;" /></a>
+</div>
+<p>此处，我们选择一个带有 Tesla P4 计算卡的实例。</p>
+<p>在系统镜像中，阿里云提供多种选择，可以根据需要选择合适的镜像。</p>
+<div class="figure align-center" id="id7">
+<a class="reference internal image-reference" href="../../_images/os_image_config_with_driver.png"><img alt="../../_images/os_image_config_with_driver.png" src="../../_images/os_image_config_with_driver.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-text">如果选择“公共镜像”，可以根据提示选择提前预装GPU驱动，可以避免后续安装驱动的麻烦。</span><a class="headerlink" href="#id7" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id8">
+<a class="reference internal image-reference" href="../../_images/os_image_with_RAPIDS.png"><img alt="../../_images/os_image_with_RAPIDS.png" src="../../_images/os_image_with_RAPIDS.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-text">在“镜像市场”中，官方也提供了适合深度学习的定制镜像。在本示例中我们选择预装了 NVIDIA RAPIDS 的 Ubuntu 16.04 镜像。</span><a class="headerlink" href="#id8" title="永久链接至图片">¶</a></p>
+</div>
+<p>然后，通过 ssh 连接上我们选购的服务器，并使用 <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> 查看 GPU 信息：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rapids<span class="o">)</span> root@iZ8vb2567465uc1ty3f4ovZ:~# nvidia-smi
+Sun Aug <span class="m">11</span> <span class="m">23</span>:53:52 <span class="m">2019</span>
++-----------------------------------------------------------------------------+
+<span class="p">|</span> NVIDIA-SMI <span class="m">418</span>.67       Driver Version: <span class="m">418</span>.67       CUDA Version: <span class="m">10</span>.1     <span class="p">|</span>
+<span class="p">|</span>-------------------------------+----------------------+----------------------+
+<span class="p">|</span> GPU  Name        Persistence-M<span class="p">|</span> Bus-Id        Disp.A <span class="p">|</span> Volatile Uncorr. ECC <span class="p">|</span>
+<span class="p">|</span> Fan  Temp  Perf  Pwr:Usage/Cap<span class="p">|</span>         Memory-Usage <span class="p">|</span> GPU-Util  Compute M. <span class="p">|</span>
+<span class="p">|</span><span class="o">===============================</span>+<span class="o">======================</span>+<span class="o">======================</span><span class="p">|</span>
+<span class="p">|</span>   <span class="m">0</span>  Tesla P4            On   <span class="p">|</span> <span class="m">00000000</span>:00:07.0 Off <span class="p">|</span>                    <span class="m">0</span> <span class="p">|</span>
+<span class="p">|</span> N/A   29C    P8     6W /  75W <span class="p">|</span>      0MiB /  7611MiB <span class="p">|</span>      <span class="m">0</span>%      Default <span class="p">|</span>
++-------------------------------+----------------------+----------------------+
+
++-----------------------------------------------------------------------------+
+<span class="p">|</span> Processes:                                                       GPU Memory <span class="p">|</span>
+<span class="p">|</span>  GPU       PID   Type   Process name                             Usage      <span class="p">|</span>
+<span class="p">|</span><span class="o">=============================================================================</span><span class="p">|</span>
+<span class="p">|</span>  No running processes found                                                 <span class="p">|</span>
++-----------------------------------------------------------------------------+
+</pre></div>
+</div>
+<p>确认了驱动无误之后，其他操作就可以照常执行了。</p>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>阿里云这类国内的云服务提供商一般对于 VPS 的端口进行了安全策略限制，请关注所使用的端口是否在安全策略的放行列表中，以免影响Tensorflow Serving和Tensorboard的使用。</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

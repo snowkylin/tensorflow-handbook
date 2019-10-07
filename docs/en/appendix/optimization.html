@@ -1,0 +1,241 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TensorFlow Performance Optimization &mdash; 简单粗暴TensorFlow 2.0 0.4 alpha 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴TensorFlow 2.0
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/julia.html">TensorFlow in Julia（Ziyang）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/static.html">图模型下的TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/optimization.html">TensorFlow性能优化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/terms.html">术语中英对照表</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴TensorFlow 2.0</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>TensorFlow Performance Optimization</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/en/appendix/optimization.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorflow-performance-optimization">
+<h1>TensorFlow Performance Optimization<a class="headerlink" href="#tensorflow-performance-optimization" title="永久链接至标题">¶</a></h1>
+<p>尽量减少operation的个数，尽量多用矩阵或者张量运算而不是for循环，这样可以让后端更有空间对你的模型计算进行并行优化，计算机做矩阵张量运算是有很高效的方法的（这点和MATLAB很像）</p>
+<p>相对于模型的训练而言，有时候预处理反而是一件更为耗时的工作，搞不好训练只花1秒结果准备数据花了5秒，这时候你再怎么提高模型性能都没辙，优化预处理的步骤以及调整pipeline才是关键。这方面tf.data或许可以帮到你的忙，可以参考这篇文章。 <a class="reference external" href="https://www.tensorflow.org/guide/performance/datasets">https://www.tensorflow.org/guide/performance/datasets</a></p>
+<p>模型本身的类型也会对性能有影响，一个非常不严谨的大致印象是加速效率CNN&gt;RNN&gt;RL。CNN相对比较好GPU加速，RNN因为存在时间依赖的序列结构，很多运算必须顺序进行，因此GPU带来的性能提升相对较少。RL（增强学习）不仅存在时间依赖的序列结构，还要频繁和环境交互，GPU带来的提升就更为有限。由于CPU和GPU之间的切换本身需要耗费资源，有些时候使用GPU进行强化学习反而性能明显次于CPU，尤其是模型本身较小而交互特别频繁的场景（比如非联合动作的多智能体强化学习）。</p>
+<p>总之，模型运行得慢，不见得一定是机器性能不够好的缘故，在购买高性能硬件的时候可以多思考一下自己有没有充分使用现有硬件的性能，或者借/租一台高性能机器（如GCP）看看性能到底能提升多少。（当然如果只是想找个买新机器的借口的话当我没说）</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

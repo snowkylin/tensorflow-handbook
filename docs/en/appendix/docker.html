@@ -1,0 +1,316 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using Docker to deploy TensorFlow environment &mdash; 简单粗暴TensorFlow 2.0 0.4 alpha 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴TensorFlow 2.0
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/julia.html">TensorFlow in Julia（Ziyang）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/static.html">图模型下的TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/optimization.html">TensorFlow性能优化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/terms.html">术语中英对照表</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴TensorFlow 2.0</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Using Docker to deploy TensorFlow environment</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/en/appendix/docker.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-docker-to-deploy-tensorflow-environment">
+<span id="install-by-docker"></span><h1>Using Docker to deploy TensorFlow environment<a class="headerlink" href="#using-docker-to-deploy-tensorflow-environment" title="永久链接至标题">¶</a></h1>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>本部分面向没有Docker经验的读者。对于已熟悉Docker的读者，可直接参考 <a class="reference external" href="https://www.tensorflow.org/install/docker">TensorFlow官方文档</a> 进行部署。</p>
+</div>
+<p>Docker是轻量级的容器（Container）环境，通过将程序放在虚拟的“容器”或者说“保护层”中运行，既避免了配置各种库、依赖和环境变量的麻烦，又克服了虚拟机资源占用多、启动慢的缺点。使用Docker部署TensorFlow的步骤如下：</p>
+<ol class="arabic simple">
+<li><p>安装 <a class="reference external" href="https://www.docker.com/">Docker</a> 。Windows下，下载官方网站的安装包进行安装即可。Linux下建议使用 <a class="reference external" href="https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-convenience-script">官方的快速脚本</a> 进行安装，即命令行下输入：</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="o">-</span><span class="n">qO</span><span class="o">-</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">get</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">com</span><span class="o">/</span> <span class="o">|</span> <span class="n">sh</span>
+</pre></div>
+</div>
+<p>如果当前的用户非root用户，可以执行 <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">usermod</span> <span class="pre">-aG</span> <span class="pre">docker</span> <span class="pre">your-user</span></code> 命令将当前用户加入 <code class="docutils literal notranslate"><span class="pre">docker</span></code> 用户组。重新登录后即可直接运行Docker。</p>
+<p>Linux下通过以下命令启动Docker服务：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">service</span> <span class="n">docker</span> <span class="n">start</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>拉取TensorFlow映像。Docker将应用程序及其依赖打包在映像文件中，通过映像文件生成容器。使用 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">image</span> <span class="pre">pull</span></code> 命令拉取适合自己需求的TensorFlow映像，例如：</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">image</span> <span class="n">pull</span> <span class="n">tensorflow</span><span class="o">/</span><span class="n">tensorflow</span><span class="p">:</span><span class="n">latest</span><span class="o">-</span><span class="n">py3</span>        <span class="c1"># 最新稳定版本TensorFlow（Python 3.5，CPU版）</span>
+<span class="n">docker</span> <span class="n">image</span> <span class="n">pull</span> <span class="n">tensorflow</span><span class="o">/</span><span class="n">tensorflow</span><span class="p">:</span><span class="n">latest</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py3</span>    <span class="c1"># 最新稳定版本TensorFlow（Python 3.5，GPU版）</span>
+</pre></div>
+</div>
+<p>更多映像版本可参考 <a class="reference external" href="https://www.tensorflow.org/install/docker#download_a_tensorflow_docker_image">TensorFlow官方文档</a> 。</p>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>在国内，推荐使用 <a class="reference external" href="https://www.daocloud.io/mirror">DaoCloud的Docker映像镜像</a> ，将显著提高下载速度。</p>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>基于拉取的映像文件，创建并启动TensorFlow容器。使用  <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">container</span> <span class="pre">run</span></code> 命令创建一个新的TensorFlow容器并启动。</p></li>
+</ol>
+<p><strong>CPU版本的TensorFlow：</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">container</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="n">tensorflow</span><span class="o">/</span><span class="n">tensorflow</span><span class="p">:</span><span class="n">latest</span><span class="o">-</span><span class="n">py3</span> <span class="n">bash</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">container</span> <span class="pre">run</span></code> 命令的部分选项如下：</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">-it</span></code> 让docker运行的容器能够在终端进行交互，具体而言：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-i</span></code> （ <code class="docutils literal notranslate"><span class="pre">--interactive</span></code> ）：允许与容器内的标准输入 (STDIN) 进行交互。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-t</span></code> （ <code class="docutils literal notranslate"><span class="pre">--tty</span></code> ）：在新容器中指定一个伪终端。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--rm</span></code> ：当容器中的进程运行完毕后自动删除容器。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tensorflow/tensorflow:latest-py3</span></code> ：新容器基于的映像。如果本地不存在指定的映像，会自动从公有仓库下载。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bash</span></code> 在容器中运行的命令（进程）。Bash是大多数Linux系统的默认Shell。</p></li>
+</ul>
+</div>
+<p><strong>GPU版本的TensorFlow：</strong></p>
+<p>若需在TensorFlow Docker容器中开启GPU支持，需要具有一块NVIDIA显卡并已正确安装驱动程序（详见 <a class="reference internal" href="../basic/installation.html#gpu-tensorflow"><span class="std std-ref">“TensorFlow安装”一章</span></a> ）。同时需要安装 <a class="reference external" href="https://github.com/NVIDIA/nvidia-docker">nvidia-docker</a> 。依照官方文档中的quickstart部分逐行输入命令即可。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>当前nvidia-docker仅支持Linux。</p>
+</div>
+<p>安装完毕后，在 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">container</span> <span class="pre">run</span></code> 命令中添加 <code class="docutils literal notranslate"><span class="pre">--runtime=nvidia</span></code> 选项，并基于具有GPU支持的TensorFlow Docker映像启动容器即可，即：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">container</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="o">--</span><span class="n">runtime</span><span class="o">=</span><span class="n">nvidia</span> <span class="n">tensorflow</span><span class="o">/</span><span class="n">tensorflow</span><span class="p">:</span><span class="n">latest</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py3</span> <span class="n">bash</span>
+</pre></div>
+</div>
+<div class="admonition-docker admonition">
+<p class="admonition-title">Docker常用命令</p>
+<p>映像（image）相关操作：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">image</span> <span class="n">pull</span> <span class="p">[</span><span class="n">image_name</span><span class="p">]</span>  <span class="c1"># 从仓库中拉取映像[image_name]到本机</span>
+<span class="n">docker</span> <span class="n">image</span> <span class="n">ls</span>                 <span class="c1"># 列出所有本地映像</span>
+<span class="n">docker</span> <span class="n">image</span> <span class="n">rm</span> <span class="p">[</span><span class="n">image_name</span><span class="p">]</span>    <span class="c1"># 删除名为[image_name]的本地映像</span>
+</pre></div>
+</div>
+<p>容器（container）相关操作：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">container</span> <span class="n">run</span> <span class="p">[</span><span class="n">image_name</span><span class="p">]</span> <span class="p">[</span><span class="n">command</span><span class="p">]</span> <span class="c1"># 基于[image_name]映像建立并启动容器，并运行[command]</span>
+<span class="n">docker</span> <span class="n">container</span> <span class="n">ls</span>                         <span class="c1"># 列出本机正在运行的容器</span>
+                                            <span class="c1"># （加入--all参数列出所有容器，包括已停止运行的容器）</span>
+<span class="n">docker</span> <span class="n">container</span> <span class="n">rm</span> <span class="p">[</span><span class="n">container_id</span><span class="p">]</span>          <span class="c1"># 删除ID为[container_id]的容器</span>
+</pre></div>
+</div>
+<p>Docker入门教程可参考 <a class="reference external" href="http://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html">阮一峰的Docker入门教程</a> 和 <a class="reference external" href="https://www.docker.com/sites/default/files/Docker_CheatSheet_08.09.2016_0.pdf">Docker Cheat Sheet</a> 。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
