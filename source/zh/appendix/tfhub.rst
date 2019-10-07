@@ -49,4 +49,4 @@ mnist图像资源获取地址：https://github.com/dpinthinker/mnist_image_png_j
     9 0.010902734
     7 0.0056838035
 
-这里产生的模型output_graph.pb，在移动端部署章节会被使用到。
+这里产生的模型output_graph.pb，可以在通过服务器端部署，也可以在通过 ``tflite_convert`` 转换后部署到边缘设备。
