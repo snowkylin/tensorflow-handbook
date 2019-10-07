@@ -65,7 +65,7 @@ tf_flowers    22s/epoch                       7s/epoch                        5s
 
     为了进一步理解MirroredStrategy的过程，以下展示一个手工构建训练流程的示例，相对而言要复杂不少：
 
-
+    # TODO
 
 多机训练： ``MultiWorkerMirroredStrategy`` 
 -------------------------------------------
