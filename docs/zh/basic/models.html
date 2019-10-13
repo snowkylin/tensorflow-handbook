@@ -853,12 +853,12 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <li><p><a class="reference internal" href="#mnih2013" id="id21"><span>[Mnih2013]</span></a></p></li>
 </ul>
 </div>
-<p>这里，我们使用深度强化学习玩 CartPole（平衡杆）游戏。简单说，我们需要让模型控制杆的左右运动，以让其一直保持竖直平衡状态。</p>
+<p>这里，我们使用深度强化学习玩 CartPole（倒立摆）游戏。倒立摆是控制论中的经典问题，在这个游戏中，一根杆的底部与一个小车通过轴相连，而杆的重心在轴之上，因此是一个不稳定的系统。在重力的作用下，杆很容易倒下。而我们则需要控制小车在水平的轨道上进行左右运动，以使得杆一直保持竖直平衡状态。</p>
 <div class="figure align-center" id="id36">
 <a class="reference internal image-reference" href="../../_images/cartpole.gif"><img alt="../../_images/cartpole.gif" src="../../_images/cartpole.gif" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">CartPole 游戏</span><a class="headerlink" href="#id36" title="永久链接至图片">¶</a></p>
 </div>
-<p>我们使用 <a class="reference external" href="https://gym.openai.com/">OpenAI 推出的 Gym 环境库</a> 中的 CartPole 游戏环境，具体安装步骤和教程可参考 <a class="reference external" href="https://gym.openai.com/docs/">官方文档</a> 和 <a class="reference external" href="https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-4-gym/">这里</a> 。Gym 的基本调用方法如下：</p>
+<p>我们使用 <a class="reference external" href="https://gym.openai.com/">OpenAI 推出的 Gym 环境库</a> 中的 CartPole 游戏环境，可使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">gym</span></code> 进行安装，具体安装步骤和教程可参考 <a class="reference external" href="https://gym.openai.com/docs/">官方文档</a> 和 <a class="reference external" href="https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-4-gym/">这里</a> 。和Gym的交互过程很像是一个回合制游戏，我们首先获得游戏的初始状态（比如杆的初始角度和小车位置），然后在每个回合t，我们都需要在当前可行的动作中选择一个并交由Gym执行（比如向左或者向右推动小车，每个回合中二者只能择一），Gym在执行动作后，会返回动作执行后的下一个状态和当前回合所获得的奖励值（比如我们选择向左推动小车并执行后，小车位置更加偏左，而杆的角度更加偏右，Gym将新的角度和位置返回给我们。而如果杆在这一回合仍没有倒下，Gym同时返回给我们一个小的正奖励）。这个过程可以一直迭代下去，直到游戏终止（比如杆倒下了）。在 Python 中，Gym 的基本调用方法如下：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gym</span>
 
 <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;CartPole-v1&#39;</span><span class="p">)</span>       <span class="c1"># 实例化一个游戏环境，参数为游戏名称</span>
@@ -871,26 +871,26 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
         <span class="k">break</span>
 </pre></div>
 </div>
-<p>那么，我们的任务就是训练出一个模型，能够根据当前的状态预测出应该进行的一个好的动作。粗略地说，一个好的动作应当能够最大化整个游戏过程中获得的奖励之和，这也是强化学习的目标。</p>
-<p>以下代码展示了如何使用深度强化学习中的 Deep Q-Learning 方法来训练模型。</p>
+<p>那么，我们的任务就是训练出一个模型，能够根据当前的状态预测出应该进行的一个好的动作。粗略地说，一个好的动作应当能够最大化整个游戏过程中获得的奖励之和，这也是强化学习的目标。以CartPole游戏为例，我们的目标是希望做出合适的动作使得杆一直不倒，即游戏交互的回合数尽可能地多。而回合每进行一次，我们都会获得一个小的正奖励，回合数越多则累积的奖励值也越高。因此，我们最大化游戏过程中的奖励之和与我们的最终目标是一致的。</p>
+<p>以下代码展示了如何使用深度强化学习中的 Deep Q-Learning 方法来训练模型。首先，我们引入TensorFlow、Gym和一些常用库，并定义一些模型超参数：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">gym</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">deque</span>
 
-<span class="n">num_episodes</span> <span class="o">=</span> <span class="mi">500</span>
-<span class="n">num_exploration_episodes</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">max_len_episode</span> <span class="o">=</span> <span class="mi">1000</span>
-<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>
-<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">1e-3</span>
-<span class="n">gamma</span> <span class="o">=</span> <span class="mf">1.</span>
-<span class="n">initial_epsilon</span> <span class="o">=</span> <span class="mf">1.</span>
-<span class="n">final_epsilon</span> <span class="o">=</span> <span class="mf">0.01</span>
-
-
-<span class="c1"># Q-network用于拟合Q函数，和前节的多层感知机类似。输入state，输出各个action下的Q-value（CartPole下为2维）。</span>
-<span class="k">class</span> <span class="nc">QNetwork</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="n">num_episodes</span> <span class="o">=</span> <span class="mi">500</span>              <span class="c1"># 游戏训练的总episode数量</span>
+<span class="n">num_exploration_episodes</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># 探索过程所占的episode数量</span>
+<span class="n">max_len_episode</span> <span class="o">=</span> <span class="mi">1000</span>          <span class="c1"># 每个episode的最大回合数</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>                 <span class="c1"># 批次大小</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">1e-3</span>            <span class="c1"># 学习率</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mf">1.</span>                      <span class="c1"># 折扣因子</span>
+<span class="n">initial_epsilon</span> <span class="o">=</span> <span class="mf">1.</span>            <span class="c1"># 探索起始时的探索率</span>
+<span class="n">final_epsilon</span> <span class="o">=</span> <span class="mf">0.01</span>            <span class="c1"># 探索终止时的探索率</span>
+</pre></div>
+</div>
+<p>然后，我们使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 建立一个Q函数网络（Q-network），用于拟合Q Learning中的Q函数。这里我们使用较简单的多层全连接神经网络进行拟合。该网络输入当前状态，输出各个动作下的Q-value（CartPole下为2维，即向左和向右推动小车）。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">QNetwork</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">)</span>
@@ -906,55 +906,55 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
     <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
         <span class="n">q_values</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">q_values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>最后，我们在主程序中实现Q Learning算法。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;CartPole-v1&#39;</span><span class="p">)</span>       <span class="c1"># 实例化一个游戏环境，参数为游戏名称</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">QNetwork</span><span class="p">()</span>
     <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
-    <span class="n">replay_buffer</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="n">maxlen</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+    <span class="n">replay_buffer</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="n">maxlen</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span> <span class="c1"># 使用一个 deque 作为 Q Learning 的经验回放池</span>
     <span class="n">epsilon</span> <span class="o">=</span> <span class="n">initial_epsilon</span>
     <span class="k">for</span> <span class="n">episode_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_episodes</span><span class="p">):</span>
         <span class="n">state</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>             <span class="c1"># 初始化环境，获得初始状态</span>
-        <span class="n">epsilon</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+        <span class="n">epsilon</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>                  <span class="c1"># 计算当前探索率</span>
             <span class="n">initial_epsilon</span> <span class="o">*</span> <span class="p">(</span><span class="n">num_exploration_episodes</span> <span class="o">-</span> <span class="n">episode_id</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_exploration_episodes</span><span class="p">,</span>
             <span class="n">final_epsilon</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_len_episode</span><span class="p">):</span>
             <span class="n">env</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>                                <span class="c1"># 对当前帧进行渲染，绘图到屏幕</span>
-            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">:</span>               <span class="c1"># epsilon-greedy探索策略</span>
-                <span class="n">action</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>      <span class="c1"># 以epsilon的概率选择随机动作</span>
+            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">:</span>               <span class="c1"># epsilon-greedy 探索策略，以 epsilon 的概率选择随机动作</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>      <span class="c1"># 选择随机动作（探索）</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">action</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
-                    <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>   <span class="c1"># 选择模型计算出的 Q Value 最大的动作</span>
                 <span class="n">action</span> <span class="o">=</span> <span class="n">action</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
             <span class="c1"># 让环境执行动作，获得执行完动作的下一个状态，动作的奖励，游戏是否已结束以及额外信息</span>
             <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
             <span class="c1"># 如果游戏Game Over，给予大的负奖励</span>
             <span class="n">reward</span> <span class="o">=</span> <span class="o">-</span><span class="mf">10.</span> <span class="k">if</span> <span class="n">done</span> <span class="k">else</span> <span class="n">reward</span>
-            <span class="c1"># 将(state, action, reward, next_state)的四元组（外加done标签表示是否结束）放入经验重放池</span>
+            <span class="c1"># 将(state, action, reward, next_state)的四元组（外加 done 标签表示是否结束）放入经验回放池</span>
             <span class="n">replay_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">done</span> <span class="k">else</span> <span class="mi">0</span><span class="p">))</span>
-            <span class="c1"># 更新当前state</span>
+            <span class="c1"># 更新当前 state</span>
             <span class="n">state</span> <span class="o">=</span> <span class="n">next_state</span>
 
-            <span class="k">if</span> <span class="n">done</span><span class="p">:</span>                                    <span class="c1"># 游戏结束则退出本轮循环，进行下一个episode</span>
+            <span class="k">if</span> <span class="n">done</span><span class="p">:</span>                                    <span class="c1"># 游戏结束则退出本轮循环，进行下一个 episode</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;episode </span><span class="si">%d</span><span class="s2">, epsilon </span><span class="si">%f</span><span class="s2">, score </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">episode_id</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">t</span><span class="p">))</span>
                 <span class="k">break</span>
 
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">replay_buffer</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">batch_size</span><span class="p">:</span>
-                <span class="c1"># 从经验回放池中随机取一个批次的四元组，并分别转换为NumPy数组</span>
+                <span class="c1"># 从经验回放池中随机取一个批次的四元组，并分别转换为 NumPy 数组</span>
                 <span class="n">batch_state</span><span class="p">,</span> <span class="n">batch_action</span><span class="p">,</span> <span class="n">batch_reward</span><span class="p">,</span> <span class="n">batch_next_state</span><span class="p">,</span> <span class="n">batch_done</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span>
                     <span class="o">*</span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">replay_buffer</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">))</span>
                 <span class="n">batch_state</span><span class="p">,</span> <span class="n">batch_reward</span><span class="p">,</span> <span class="n">batch_next_state</span><span class="p">,</span> <span class="n">batch_done</span> <span class="o">=</span> \
                     <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="p">[</span><span class="n">batch_state</span><span class="p">,</span> <span class="n">batch_reward</span><span class="p">,</span> <span class="n">batch_next_state</span><span class="p">,</span> <span class="n">batch_done</span><span class="p">]]</span>
                 <span class="n">batch_action</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">batch_action</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
 
-                <span class="n">q_value</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">batch_next_state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
-                <span class="n">y</span> <span class="o">=</span> <span class="n">batch_reward</span> <span class="o">+</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_max</span><span class="p">(</span><span class="n">q_value</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">batch_done</span><span class="p">)</span>  <span class="c1"># 按照论文计算y值</span>
+                <span class="n">q_value</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">batch_next_state</span><span class="p">)</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">batch_reward</span> <span class="o">+</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_max</span><span class="p">(</span><span class="n">q_value</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">batch_done</span><span class="p">)</span>  <span class="c1"># 计算 y 值</span>
                 <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
-                    <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">mean_squared_error</span><span class="p">(</span>  <span class="c1"># 最小化y和Q-value的距离</span>
+                    <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">mean_squared_error</span><span class="p">(</span>  <span class="c1"># 最小化 y 和 Q-value 的距离</span>
                         <span class="n">y_true</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
-                        <span class="n">y_pred</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">batch_state</span><span class="p">))</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">batch_action</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                        <span class="n">y_pred</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">batch_state</span><span class="p">)</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">batch_action</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
                     <span class="p">)</span>
                 <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
                 <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">))</span>       <span class="c1"># 计算梯度并更新参数</span>
@@ -968,8 +968,8 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </ul>
 <p>而考虑到我们需要从图像信息中提取特征，使用 CNN 作为拟合 Q 函数的网络将更为适合。由此，将上面的 <code class="docutils literal notranslate"><span class="pre">QNetwork</span></code> 更换为 CNN 网络，并对状态做一些修改，即可用于玩一些简单的视频游戏。</p>
 <div class="admonition- admonition">
-<p class="admonition-title">强化学习原理初探</p>
-<p>强化学习</p>
+<p class="admonition-title">深度强化学习原理初探</p>
+<p>与前面所介绍的卷积神经网络和循环神经网络不同，强化学习（Reinforcement Learning）是一种学习算法的类型</p>
 </div>
 </div>
 <div class="section" id="keras-pipeline">
