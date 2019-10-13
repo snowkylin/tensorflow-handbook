@@ -91,7 +91,7 @@ GPU版本TensorFlow安装指南
 
 GPU版本的TensorFlow可以利用NVIDIA GPU强大的计算加速能力，使TensorFlow的运行更为高效，尤其是可以成倍提升模型训练的速度。
 
-在安装GPU版本的TensorFlow前，你需要具有一块不太旧的NVIDIA显卡，以及正确安装NVIDIA显卡驱动程序、CUDA Toolkit和cnDNN。
+在安装GPU版本的TensorFlow前，你需要具有一块不太旧的NVIDIA显卡，以及正确安装NVIDIA显卡驱动程序、CUDA Toolkit和cuDNN。
 
 GPU硬件的准备
 -------------------------------------------
@@ -145,7 +145,7 @@ NVIDIA驱动程序安装完成后，可在命令行下使用 ``nvidia-smi`` 命�
 
 更详细的GPU环境配置指导可以参考 `这篇文章 <https://www.linkedin.com/pulse/installing-nvidia-cuda-80-ubuntu-1604-linux-gpu-new-victor/>`_ 和 `这篇中文博客 <https://blog.csdn.net/wf19930209/article/details/81877822>`_ 。
 
-CUDA Toolkit和cnDNN的安装
+CUDA Toolkit和cuDNN的安装
 -------------------------------------------
 
 在Anaconda环境下，推荐使用 
@@ -155,7 +155,7 @@ CUDA Toolkit和cnDNN的安装
     conda install cudatoolkit=X.X
     conda install cudnn=X.X.X
 
-安装CUDA Toolkit和cnDNN，其中X.X和X.X.X分别为需要安装的CUDA Toolkit和cuDNN版本号，必须严格按照TensorFlow官方网站所说明的版本安装。在安装前，可使用 ``conda search cudatoolkit`` 和 ``conda search cudnn`` 搜索conda源中可用的版本号。
+安装CUDA Toolkit和cuDNN，其中X.X和X.X.X分别为需要安装的CUDA Toolkit和cuDNN版本号，必须严格按照TensorFlow官方网站所说明的版本安装。在安装前，可使用 ``conda search cudatoolkit`` 和 ``conda search cudnn`` 搜索conda源中可用的版本号。
 
 当然，也可以按照 `TensorFlow官方网站上的说明 <https://www.tensorflow.org/install/gpu>`_ 手动下载CUDA Toolkit和cuDNN并安装，不过过程会稍繁琐。
 
