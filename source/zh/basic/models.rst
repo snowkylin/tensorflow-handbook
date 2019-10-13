@@ -499,7 +499,7 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
     - `Demystifying Deep Reinforcement Learning <https://ai.intel.com/demystifying-deep-reinforcement-learning/>`_ （`中文编译 <https://snowkylin.github.io/rl/2017/01/04/Reinforcement-Learning.html>`_）
     - [Mnih2013]_
 
-这里，我们使用深度强化学习玩 CartPole（平衡杆）游戏。简单说，我们需要让模型控制杆的左右运动，以让其一直保持竖直平衡状态。
+这里，我们使用深度强化学习玩 CartPole（倒立摆）游戏。倒立摆是控制论中的经典问题，在这个游戏中，一根杆的底部与一个小车通过轴相连，而杆的重心在轴之上，因此是一个不稳定的系统。在重力的作用下，杆很容易倒下。而我们则需要控制小车在水平的轨道上进行左右运动，以使得杆一直保持竖直平衡状态。
 
 .. only:: html
 
@@ -517,7 +517,7 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
 
         CartPole 游戏
 
-我们使用 `OpenAI 推出的 Gym 环境库 <https://gym.openai.com/>`_ 中的 CartPole 游戏环境，具体安装步骤和教程可参考 `官方文档 <https://gym.openai.com/docs/>`_ 和 `这里 <https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-4-gym/>`_ 。Gym 的基本调用方法如下：
+我们使用 `OpenAI 推出的 Gym 环境库 <https://gym.openai.com/>`_ 中的 CartPole 游戏环境，可使用 ``pip install gym`` 进行安装，具体安装步骤和教程可参考 `官方文档 <https://gym.openai.com/docs/>`_ 和 `这里 <https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-4-gym/>`_ 。和Gym的交互过程很像是一个回合制游戏，我们首先获得游戏的初始状态（比如杆的初始角度和小车位置），然后在每个回合t，我们都需要在当前可行的动作中选择一个并交由Gym执行（比如向左或者向右推动小车，每个回合中二者只能择一），Gym在执行动作后，会返回动作执行后的下一个状态和当前回合所获得的奖励值（比如我们选择向左推动小车并执行后，小车位置更加偏左，而杆的角度更加偏右，Gym将新的角度和位置返回给我们。而如果杆在这一回合仍没有倒下，Gym同时返回给我们一个小的正奖励）。这个过程可以一直迭代下去，直到游戏终止（比如杆倒下了）。在 Python 中，Gym 的基本调用方法如下：
 
 .. code-block:: python
 
@@ -532,11 +532,22 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
         if done:                        # 如果游戏结束则退出循环
             break
 
-那么，我们的任务就是训练出一个模型，能够根据当前的状态预测出应该进行的一个好的动作。粗略地说，一个好的动作应当能够最大化整个游戏过程中获得的奖励之和，这也是强化学习的目标。
+那么，我们的任务就是训练出一个模型，能够根据当前的状态预测出应该进行的一个好的动作。粗略地说，一个好的动作应当能够最大化整个游戏过程中获得的奖励之和，这也是强化学习的目标。以CartPole游戏为例，我们的目标是希望做出合适的动作使得杆一直不倒，即游戏交互的回合数尽可能地多。而回合每进行一次，我们都会获得一个小的正奖励，回合数越多则累积的奖励值也越高。因此，我们最大化游戏过程中的奖励之和与我们的最终目标是一致的。
 
-以下代码展示了如何使用深度强化学习中的 Deep Q-Learning 方法来训练模型。
+以下代码展示了如何使用深度强化学习中的 Deep Q-Learning 方法来训练模型。首先，我们引入TensorFlow、Gym和一些常用库，并定义一些模型超参数：
 
 .. literalinclude:: /_static/code/zh/model/rl/rl.py
+    :lines: 1-14
+
+然后，我们使用 ``tf.keras.Model`` 建立一个Q函数网络（Q-network），用于拟合Q Learning中的Q函数。这里我们使用较简单的多层全连接神经网络进行拟合。该网络输入当前状态，输出各个动作下的Q-value（CartPole下为2维，即向左和向右推动小车）。
+
+.. literalinclude:: /_static/code/zh/model/rl/rl.py
+    :lines: 16-31
+
+最后，我们在主程序中实现Q Learning算法。
+
+.. literalinclude:: /_static/code/zh/model/rl/rl.py
+    :lines: 34-82
 
 对于不同的任务（或者说环境），我们需要根据任务的特点，设计不同的状态以及采取合适的网络来拟合 Q 函数。例如，如果我们考虑经典的打砖块游戏（Gym 环境库中的  `Breakout-v0 <https://gym.openai.com/envs/Breakout-v0/>`_ ），每一次执行动作（挡板向左、向右或不动），都会返回一个 ``210 * 160 * 3`` 的 RGB 图片，表示当前屏幕画面。为了给打砖块游戏这个任务设计合适的状态表示，我们有以下分析：
 
@@ -544,7 +555,13 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
 * 小球移动的信息很重要，如果只知道单帧画面而不知道小球往哪边运动，即使是人也很难判断挡板应当移动的方向。因此，必须在状态中加入表征小球运动方向的信息。一个简单的方式是将当前帧与前面几帧的画面进行叠加，得到一个 ``210 * 160 * X`` （X 为叠加帧数）的状态表示；
 * 每帧的分辨率不需要特别高，只要能大致表征方块、小球和挡板的位置以做出决策即可，因此对于每帧的长宽可做适当压缩。
 
-而考虑到我们需要从图像信息中提取特征，使用 CNN 作为拟合 Q 函数的网络将更为适合。将上面的 ``QNetwork`` 更换为 CNN 网络，即可用于玩一些简单的视频游戏。
+而考虑到我们需要从图像信息中提取特征，使用 CNN 作为拟合 Q 函数的网络将更为适合。由此，将上面的 ``QNetwork`` 更换为 CNN 网络，并对状态做一些修改，即可用于玩一些简单的视频游戏。
+
+.. admonition:: 深度强化学习原理初探
+
+    与前面所介绍的卷积神经网络和循环神经网络不同，强化学习（Reinforcement Learning）是一种学习算法的类型
+
+    TODO
 
 Keras Pipeline *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
