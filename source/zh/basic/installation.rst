@@ -1,24 +1,14 @@
 TensorFlow安装与环境配置
 ======================================
 
-TensorFlow的最新安装步骤可参考官方网站上的说明（https://tensorflow.google.cn/install）。TensorFlow支持Python、Java、Go、C等多种编程语言以及Windows、OSX、Linux等多种操作系统，此处及后文均以主流的Python 3.6为准。
+TensorFlow的最新安装步骤可参考官方网站上的说明（https://tensorflow.google.cn/install）。TensorFlow支持Python、Java、Go、C等多种编程语言以及Windows、OSX、Linux等多种操作系统，此处及后文均以Python 3.7为准。
 
-.. hint:: 本章介绍在一般的个人电脑或服务器上直接安装TensorFlow的方法。关于在容器环境（Docker）、云平台中部署TensorFlow或在线上环境中使用TensorFlow的方法，见附录 :doc:`使用Docker部署TensorFlow环境 <../appendix/docker>` 和 :doc:`在云端使用TensorFlow <../appendix/cloud>` 。
-
-..
-    .. tip:: 如果只是安装一个运行在自己电脑上的，**无需GPU加速计算** 的简易环境，不希望在环境配置上花费太多精力，可以按以下步骤简易安装（以Windows系统为例）：
-
-        - 下载并安装Python集成环境 `Anaconda <https://www.anaconda.com/download/>`_ （Python 3.6版本）；
-        - 下载并安装Python的IDE `PyCharm <http://www.jetbrains.com/pycharm/>`_ （Community版本，或学生可申请Professional版本的 `免费授权 <https://sales.jetbrains.com/hc/zh-cn/articles/207154369>`_）；
-        - 打开开始菜单中的“Anaconda Prompt”，输入 ``pip install tensorflow``；
-        - 启动PyCharm，新建工程（使用默认python interpreter），在工程内新建一个Python文件。
-
-        完毕。
+.. hint:: 本章介绍在一般的个人电脑或服务器上直接安装TensorFlow 2.0的方法。关于在容器环境（Docker）、云平台中部署TensorFlow或在线上环境中使用TensorFlow的方法，见附录 :doc:`使用Docker部署TensorFlow环境 <../appendix/docker>` 和 :doc:`在云端使用TensorFlow <../appendix/cloud>` 。软件的安装方法往往具有时效性，本节的更新日期为2019年10月。
 
 一般安装步骤
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1. 安装Python环境。此处建议安装 `Anaconda <https://www.anaconda.com/>`_ 的Python 3.6版本（后文均以此为准），这是一个开源的Python发行版本，提供了一个完整的科学计算环境，包括NumPy、SciPy等常用科学计算库。当然，你有权选择自己喜欢的Python环境。
+1. 安装Python环境。此处建议安装 `Anaconda <https://www.anaconda.com/>`_ 的Python 3.7版本（后文均以此为准），这是一个开源的Python发行版本，提供了一个完整的科学计算环境，包括NumPy、SciPy等常用科学计算库。当然，你有权选择自己喜欢的Python环境。Anaconda的安装包可在 `这里 <https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/>`_ 获得。
 
 2. 使用Anaconda自带的conda包管理器建立一个Conda虚拟环境，并进入该虚拟环境。在命令行下输入：
 
@@ -31,13 +21,13 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 
 ::
 
-    pip install tensorflow==2.0.0-rc0      # TensorFlow CPU版本
+    pip install tensorflow==2.0.0           # TensorFlow CPU版本
 
 或
 
 ::
 
-    pip install tensorflow-gpu==2.0.0-rc0  # TensorFlow GPU版本，需要具有NVIDIA显卡及正确安装驱动程序，详见下文
+    pip install tensorflow-gpu==2.0.0       # TensorFlow GPU版本，需要具有NVIDIA显卡及正确安装驱动程序，详见后文
 
 等待片刻即安装完毕。
 
@@ -49,7 +39,7 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
         
         - 清华大学的pypi镜像：https://mirrors.tuna.tsinghua.edu.cn/help/pypi/
         - 清华大学的Anaconda镜像：https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/
-    4. 如果对磁盘空间要求严格（比如服务器环境），可以安装 `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ ，仅包含Python和Conda，其他的包可自己按需安装。
+    4. 如果对磁盘空间要求严格（比如服务器环境），可以安装 `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ ，仅包含Python和Conda，其他的包可自己按需安装。Miniconda的安装包可在 `这里 <https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/>`_ 获得。
 
 .. admonition:: pip和conda包管理器
 

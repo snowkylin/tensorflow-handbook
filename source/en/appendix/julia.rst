@@ -1,36 +1,35 @@
 TensorFlow in Julia
-=============================
+===================
 
-Introduction of TensorFlow.jl
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Introduction to TensorFlow.jl
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-TensorFlow.jl is Tensorflow 's Julia version, made by `malmaud <https://github.com/malmaud/>`_ 's packaging for the original Tensorflow.
+虽然 Julia 是一门非常优秀的语言，但是目前 TensorFlow 并不直接支持 Julia 。如果有需要，你可以选择 TensorFlow.jl ，
+这是一个由 `malmaud <https://github.com/malmaud/>`_ 封装的第三方 Julia 包。它有和 Python 版本类似的 API ，也能支持 GPU 加速。
 
-As a wrapper for Tensorflow, TensorFlow.jl and the Python version of TensorFlow have similar APIs and support for GPU acceleration.
+Why using Julia to develop TensorFlow?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Why use julia for Tensorflow development?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+先进的语法糖，让你能简明扼要的表述计算过程。而高性能的 JIT ，提供了媲美静态语言的速度（这一点是在数据预处理中非常重要，但也是 Python 难以企及的）。
+所以，使用 Julia ，写的快，跑的更快。
+（你可以通过 `这个视频 <https://www.youtube.com/watch?v=n2MwJ1guGVQ>`_ 了解更多）
 
-Although Julia has no effect on the operation of Tensorflow itself, TensorFlow.jl does have      advantages.
+本章我们将基于 TensorFlow.jl 0.12，向大家简要介绍 Tensorflow 在 Julia 下的使用. 你可以参考最新的 `TensorFlow.jl 文档 <https://malmaud.github.io/TensorFlow.jl/stable/tutorial.html>`_.
 
-As a modern programming language for numerical computing, Julia has a series of advanced grammatical features. Excellent Just-In-Time allows you to extract data at high speed and process the output of Tensorflow. Thanks to Julia's grammar design, writing expressions are also More flexible and natural.
+TensorFlow.jl environment configuration
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In this chapter we will introduce Tensorflow to Julia based on TensorFlow.jl 0.12. You can refer to the latest `TensorFlow.jl documentation <https://malmaud.github.io/TensorFlow.jl/stable/tutorial.html>`_.
+TensorFlow.jl express experience on docker
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Try TensorFlow.jl in docker
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+在本机已有 docker 环境的情况下，使用预装 TensorFlow.jl 的 docker image 是非常方便的。
 
-If you already have docker installed, it is very convenient to use the docker image pre-installed with TensorFlow.jl.
+在命令行中执行 ``docker run -it malmaud/julia:tf`` ，然后就可以获得一个已经安装好 TensorFlow.jl 的 Julia REPL 环境。 (如果你不想直接打开 Julia，请在执行 ``docker run -it malmaud/julia:tf /bin/bash`` 来打开一个bash终端. 如需执行您需要的jl代码文件，可以使用 docker 的目录映射)
 
-Execute ``docker run -it malmaud/julia:tf`` on the command line, 
-then you can get a Julia REPL environment with TensorFlow.jl installed.
-( If you don't want to open Julia directly, you can open a bash terminal by executing ``docker run -it malmaud/julia:tf /bin/bash``. 
-To execute the julia code files you need, you can use dcoker's directory mapping.)
+Installing TensorFlow.jl in Julia package manager
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Install TensorFlow.jl in the julia package manager
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Execute ``julia`` on the command line to enter the Julia REPL environment, then execute the following command to install TensorFlow.jl
+在命令行中执行 ``julia`` 进入 Julia REPL 环境，然后执行以下命令安装 TensorFlow.jl
 
 .. code-block:: julia
 
@@ -38,49 +37,47 @@ Execute ``julia`` on the command line to enter the Julia REPL environment, then 
     Pkg.add("TensorFlow")
 
 
-Basic Usage
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Basic usage of TensorFlow.jl
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: julia
 
     using TensorFlow
 
-    # Define a Session
+    # 定义一个 Session
     sess = TensorFlow.Session()
 
-    # Define a constant and a variable
+    # 定义一个常量和变量
     x = TensorFlow.constant([1])
     y = TensorFlow.Variable([2])
 
-    # Define a calculation
+    # 定义一个计算
     w = x + y
 
-    # Performing the calculation process
+    # 执行计算过程
     run(sess, TensorFlow.global_variables_initializer())
     res = run(sess, w)
 
-    # Output result
+    # 输出结果
     println(res)
 
+MNIST digit catagorization
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-MNIST number classification
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This example comes from `TensorFlow.jl documentation <https://malmaud.github.io/TensorFlow.jl/stable/tutorial.html>`_,
-can compare python version of API.
+这个例子来自于 `TensorFlow.jl 文档 <https://malmaud.github.io/TensorFlow.jl/stable/tutorial.html>`_ ，可以用于对比 python 版本的 API.
 
 .. code-block:: julia
 
-    # Load data using mnist_loader.jl in the example
+    # 使用自带例子中的 mnist_loader.jl 加载数据
     include(Pkg.dir("TensorFlow", "examples", "mnist_loader.jl"))
     loader = DataLoader()
 
-    # Define a Session
+    # 定义一个 Session
     using TensorFlow
     sess = Session()
 
 
-    # Building a softmax regression model
+    # 构建 softmax 回归模型
     x = placeholder(Float32)
     y_ = placeholder(Float32)
     W = Variable(zeros(Float32, 784, 10))
@@ -88,18 +85,18 @@ can compare python version of API.
 
     run(sess, global_variables_initializer())
 
-    # Predicted Class and Loss Function
+    # 预测类和损失函数
     y = nn.softmax(x*W + b)
     cross_entropy = reduce_mean(-reduce_sum(y_ .* log(y), axis=[2]))
 
-    # Train the model
+    # 开始训练模型
     train_step = train.minimize(train.GradientDescentOptimizer(.00001), cross_entropy)
     for i in 1:1000
         batch = next_batch(loader, 100)
         run(sess, train_step, Dict(x=>batch[1], y_=>batch[2]))
     end
 
-    # Output results and evaluate models
+    # 查看结果并评估模型
     correct_prediction = indmax(y, 2) .== indmax(y_, 2)
     accuracy=reduce_mean(cast(correct_prediction, Float32))
     testx, testy = load_test_set()
