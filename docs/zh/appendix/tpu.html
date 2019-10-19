@@ -349,9 +349,7 @@
 <h3>免费 TPU：Google Colab<a class="headerlink" href="#tpu-google-colab" title="永久链接至标题">¶</a></h3>
 <p>最方便使用 TPU 的方法，就是使用 Google 的 Colab ，不但通过浏览器访问直接可以用，而且还免费。</p>
 <p>在 <a class="reference external" href="https://colab.research.google.com">Google Colab</a> 的 Notebook 界面中，打开界面中，打开主菜单 <cite>Runtime</cite> ，然后选择 <cite>Change runtime type</cite>，会弹出 <cite>Notebook settings</cite> 的窗口。选择里面的 <cite>Hardware accelerator</cite> 为 <cite>TPU</cite> 就可以了。</p>
-<p>为了确认 Colab Notebook 中的确分配了 TPU 资源，我们可以运行以下测试代码。</p>
-<p>1. 如果输出 ERROR 信息，则表示目前的 Runetime 并没有分配到 TPU；
-1. 如果输出 TPU 地址及设备列表，则表示 Colab 已经分配了 TPU；</p>
+<p>为了确认 Colab Notebook 中的确分配了 TPU 资源，我们可以运行以下测试代码。如果输出 ERROR 信息，则表示目前的 Runetime 并没有分配到 TPU；如果输出 TPU 地址及设备列表，则表示 Colab 已经分配了 TPU。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pprint</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>

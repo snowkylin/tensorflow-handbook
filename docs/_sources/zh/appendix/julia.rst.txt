@@ -4,18 +4,17 @@ TensorFlow in Julia（Ziyang）
 TensorFlow.jl 简介
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-TensorFlow.jl 是 TensorFlow 的 Julia 版本, 经由 `malmaud <https://github.com/malmaud/>`_ 对于原版 TensorFlow 的包装实现.
+虽然 Julia 是一门非常优秀的语言，但是目前 TensorFlow 并不直接支持 Julia 。如果有需要，你可以选择 TensorFlow.jl ，
+这是一个由 `malmaud <https://github.com/malmaud/>`_ 封装的第三方 Julia 包。它有和 Python 版本类似的 API ，也能支持 GPU 加速。
 
-作为一个对于 TensorFlow 的封装, TensorFlow.jl 和 Python 版本的 TensorFlow 具有类似的API, 并支持 GPU 加速.
-
-为什么要使用 julia 进行 TensorFlow 开发
+为什么要使用 Julia ？
 ---------------------------------------------
 
-虽然 Julia 对于 TensorFlow 本身的运行并没有什么影响, 但是 TensorFlow.jl 确实具有相当的优势.
+先进的语法糖，让你能简明扼要的表述计算过程。而高性能的 JIT ，提供了媲美静态语言的速度（这一点是在数据预处理中非常重要，但也是 Python 难以企及的）。
+所以，使用 Julia ，写的快，跑的更快。
+（你可以通过 `这个视频 <https://www.youtube.com/watch?v=n2MwJ1guGVQ>`_ 了解更多）
 
-作为面向数值计算而生的现代语言，Julia 拥有一系列先进的语法特性. 优异的 JIT 能让你高速提取数据, 并处理 Tensorflow 的输出结果. 而得益于Julia的语法设计, 书写表达式也更加灵活自然.
-
-本章我们将基于 TensorFlow.jl 0.12, 向大家简要介绍 Tensorflow 在 Julia 下的使用. 你可以参考最新的 `TensorFlow.jl 文档 <https://malmaud.github.io/TensorFlow.jl/stable/tutorial.html>`_.
+本章我们将基于 TensorFlow.jl 0.12，向大家简要介绍 Tensorflow 在 Julia 下的使用. 你可以参考最新的 `TensorFlow.jl 文档 <https://malmaud.github.io/TensorFlow.jl/stable/tutorial.html>`_.
 
 TensorFlow.jl 环境配置
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -23,14 +22,14 @@ TensorFlow.jl 环境配置
 在 docker 中快速体验 TensorFlow.jl
 --------------------------------------------
 
-在本机已有 docker 环境的情况下, 使用预装 TensorFlow.jl 的 docker image 是非常方便的。
+在本机已有 docker 环境的情况下，使用预装 TensorFlow.jl 的 docker image 是非常方便的。
 
-在命令行中执行 ``docker run -it malmaud/julia:tf`` , 然后就可以获得一个已经安装好 TensorFlow.jl 的 Julia REPL 环境。 (如果你不想直接打开 Julia, 请在执行 ``docker run -it malmaud/julia:tf /bin/bash`` 来打开一个bash终端. 如需执行您需要的jl代码文件, 可以使用 docker 的目录映射)
+在命令行中执行 ``docker run -it malmaud/julia:tf`` ，然后就可以获得一个已经安装好 TensorFlow.jl 的 Julia REPL 环境。 (如果你不想直接打开 Julia，请在执行 ``docker run -it malmaud/julia:tf /bin/bash`` 来打开一个bash终端. 如需执行您需要的jl代码文件，可以使用 docker 的目录映射)
 
 在 julia 包管理器中安装 TensorFlow.jl
 --------------------------------------------
 
-在命令行中执行 ``julia`` 进入 Julia REPL 环境, 然后执行以下命令安装 TensorFlow.jl
+在命令行中执行 ``julia`` 进入 Julia REPL 环境，然后执行以下命令安装 TensorFlow.jl
 
 .. code-block:: julia
 
@@ -65,7 +64,7 @@ TensorFlow.jl 基础使用
 MNIST数字分类
 ---------------------------------------------
 
-这个例子来自于 `TensorFlow.jl 文档 <https://malmaud.github.io/TensorFlow.jl/stable/tutorial.html>`_, 可以用于对比 python 版本的 API.
+这个例子来自于 `TensorFlow.jl 文档 <https://malmaud.github.io/TensorFlow.jl/stable/tutorial.html>`_ ，可以用于对比 python 版本的 API.
 
 .. code-block:: julia
 
