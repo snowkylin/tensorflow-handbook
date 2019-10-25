@@ -60,34 +60,89 @@ TF Hub模型的复用非常简单，代码模式如下：
     hub_model = hub.load(hub_handle)
     outputs = hub_model(inputs)
 
-在 ``stylization`` 模型的界面，我们可以找到样例代码如下：
+根据 ``stylization`` 模型的参考代码和notebook，进行了精简和修改，实现了图像的风格转换功能。
 
 .. code-block:: python
 
-    # Load content and style images (see example in the attached colab).
-    content_image = plt.imread(content_image_path)
-    style_image = plt.imread(style_image_path)
+    import matplotlib.pyplot as plt
+    import numpy as np
+    import tensorflow as tf
+    import tensorflow_hub as hub
 
-    # Convert to float32 numpy array, add batch dimension, and normalize to range [0, 1]. Example using numpy:
-    content_image = content_image.astype(np.float32)[np.newaxis, ...] / 255.
-    style_image = style_image.astype(np.float32)[np.newaxis, ...] / 255.
+    def crop_center(image):
+        """Returns a cropped square image."""
+        shape = image.shape
+        new_shape = min(shape[1], shape[2])
+        offset_y = max(shape[1] - shape[2], 0) // 2
+        offset_x = max(shape[2] - shape[1], 0) // 2
+        image = tf.image.crop_to_bounding_box(image, offset_y, offset_x, new_shape, new_shape)
+        return image
 
-    # Optionally resize the images. It is recommended that the style image is about
-    # 256 pixels (this size was used when training the style transfer network).
-    # The content image can be any size.
-    style_image = tf.image.resize(style_image, (256, 256))
-    
+    def load_image_local(image_path, image_size=(512, 512), preserve_aspect_ratio=True):
+        """Loads and preprocesses images."""
+        # Load and convert to float32 numpy array, add batch dimension, and normalize to range [0, 1].
+        img = plt.imread(image_path).astype(np.float32)[np.newaxis, ...]
+        if img.max() > 1.0:
+            img = img / 255.
+        if len(img.shape) == 3:
+            img = tf.stack([img, img, img], axis=-1)
+        img = crop_center(img)
+        img = tf.image.resize(img, image_size, preserve_aspect_ratio=True)
+        return img
+
+    def show_image(image, title, save=False):
+        plt.imshow(image, aspect='equal')
+        plt.axis('off')
+        if save:
+            plt.savefig(title + '.png', bbox_inches='tight', dpi=fig.dpi,pad_inches=0.0)
+        else:
+            plt.show()
+
+    content_image_path = "images/contentimg.jpeg"
+    style_image_path = "images/styleimg.jpeg"
+
+    content_image = load_image_local(content_image_path)
+    style_image = load_image_local(style_image_path)
+
+    show_image(content_image[0], "Content Image")
+    show_image(style_image[0], "Style Image")
+
     # Load image stylization module.
-    hub_module = hub.load('https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2')
-    
+    hub_module = hub.load('https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2');
+
     # Stylize image.
     outputs = hub_module(tf.constant(content_image), tf.constant(style_image))
     stylized_image = outputs[0]
 
+    show_image(stylized_image[0], "Stylized Image", True)
 
 其中， ``hub.load(url)`` 就是把TF Hub的模型从网络下载和加载进来， ``hub_module`` 就是运行模型， ``outputs`` 即为输出。
 
-可在谷歌提供的如下notebook体验：
+上面的代码，输入的图像是一张笔者拍的风景照片，风格图片是故宫馆藏的《王希孟千里江山图卷》部分截屏。
+
+输入图片：
+
+.. figure:: /_static/image/appendix/contentimg.jpeg
+    :width: 90%
+    :align: center
+
+风格图片：
+
+.. figure:: /_static/image/appendix/styleimg.jpeg
+    :width: 90%
+    :align: center
+
+输出图片：
+
+.. figure:: /_static/image/appendix/stylized_img.png
+    :width: 90%
+    :align: center
+
+大家可以在如下路径获取notebook和代码体验：
+
+https://github.com/snowkylin/tensorflow-handbook/tree/master/source/tfhub
+
+也可在谷歌提供的如下notebook体验：
 
 https://colab.research.google.com/github/tensorflow/hub/blob/master/examples/colab/tf2_arbitrary_image_stylization.ipynb
 
