@@ -114,7 +114,13 @@
 </ul>
 <p class="caption"><span class="caption-text">扩展</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Hub 模型复用（Jinpeng）</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tf-hub">TF Hub 网站</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">TF Hub 安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">TF Hub 模型使用样例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tf-hub-retrain">TF Hub 模型retrain样例</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets 数据集载入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="julia.html">TensorFlow in Julia（Ziyang）</a></li>
@@ -194,49 +200,162 @@
             
   <div class="section" id="tensorflow-hub-jinpeng">
 <h1>TensorFlow Hub 模型复用（Jinpeng）<a class="headerlink" href="#tensorflow-hub-jinpeng" title="永久链接至标题">¶</a></h1>
-<p>TF Hub目的是为了更好复用已训练好的模型，可节省海量的训练时间和计算资源。预训练好的模型，可以进行直接部署，也可以进行迁移学习（Transfer Learning）。</p>
-<p>本书是使用TF Hub中的Inception V3模型，针对mnist图像进行迁移学习。
-mnist图像资源获取地址：<a class="reference external" href="https://github.com/dpinthinker/mnist_image_png_jpeg">https://github.com/dpinthinker/mnist_image_png_jpeg</a></p>
-<p>具体操作方法参考https://www.tensorflow.org/hub/tutorials/image_retraining，如下</p>
+<p>在软件开发中，我们经常复用开源软件或者库，避免了相同功能的代码重复开发，减少了大量的重复劳动，也有效缩短了软件开发周期。代码复用，对软件产业的蓬勃发展，有着极大的助推作用。</p>
+<p>相应的，TF Hub目的是为了更好的复用已训练好且经过充分验证的模型，可节省海量的训练时间和计算资源。这些预训练好的模型，可以进行直接部署，也可以进行迁移学习（Transfer Learning）。对个人开发者来说，TF Hub是非常有意义的，他们可以快速复用像谷歌这样的大公司使用海量计算资源训练的模型，而他们个人去获取这些资源是很不现实的。</p>
+<div class="section" id="tf-hub">
+<h2>TF Hub 网站<a class="headerlink" href="#tf-hub" title="永久链接至标题">¶</a></h2>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/tfhub_main.png"><img alt="../../_images/tfhub_main.png" src="../../_images/tfhub_main.png" style="width: 90%;" /></a>
+</div>
+<p>打开主页 <code class="docutils literal notranslate"><span class="pre">https://tfhub.dev/</span></code> ，在左侧有Text、Image、Video和Publishers等选项，可以选取关注的类别，然后在顶部的搜索框输入关键字可以搜索模型。</p>
+<p>以 <code class="docutils literal notranslate"><span class="pre">stylization</span></code> 为例，我们搜索到如下模型：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/tfhub_example.png"><img alt="../../_images/tfhub_example.png" src="../../_images/tfhub_example.png" style="width: 90%;" /></a>
+</div>
+<p>该模型的地址如下：</p>
+<p><a class="reference external" href="https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2">https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2</a></p>
+<p>其中，末尾的 <code class="docutils literal notranslate"><span class="pre">2</span></code> 为该模型的版本号。</p>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
 <ol class="arabic simple">
-<li><p>获取retrain.py脚本</p></li>
+<li><p>注意目前还有很多模型是基于TF1.0的，选择的过程中请注意甄别，有些模型会明确写出来是试用哪个版本，或者，检查使用是否是tfhub 0.5.0或以上版本的API <code class="docutils literal notranslate"><span class="pre">hub.load(url)</span></code> ，在之前版本使用的是 <code class="docutils literal notranslate"><span class="pre">hub.Module(url)</span></code> 。</p></li>
+<li><p>如果不能访问tfhub.dev，请大家转换域名到国内镜像 <code class="docutils literal notranslate"><span class="pre">https://hub.tensorflow.google.cn/</span></code> ，模型下载地址也需要相应转换。</p></li>
 </ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -LO https://github.com/tensorflow/hub/raw/master/examples/image_retraining/retrain.py
+</div>
+</div>
+<div class="section" id="id1">
+<h2>TF Hub 安装<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>TF Hub是单独的一个库，需要单独安装，安装命令如下：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install tensorflow-hub
 </pre></div>
 </div>
-<ol class="arabic simple" start="2">
-<li><p>进行迁移学习，该过程会持续很长时间，停止后可以增量训练</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python retrain.py --image_dir your_mnist_img_path
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>在TF2.0上，必须使用0.5.0或以上版本，因为接口有变动。</p>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>TF Hub 模型使用样例<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>TF Hub模型的复用非常简单，代码模式如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow_hub</span> <span class="kn">as</span> <span class="nn">hub</span>
+
+<span class="n">hub_handle</span> <span class="o">=</span> <span class="s1">&#39;https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2&#39;</span>
+<span class="n">hub_model</span> <span class="o">=</span> <span class="n">hub</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">hub_handle</span><span class="p">)</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">hub_model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>默认生成的模型在/tmp/output_graph.pb，对应的label数据在/tmp/output_labels.txt。</p>
-<ol class="arabic simple" start="3">
-<li><p>获取label_imange.py脚本</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl -LO https://github.com/tensorflow/tensorflow/raw/master/tensorflow/examples/label_image/label_image.py
+<p>根据 <code class="docutils literal notranslate"><span class="pre">stylization</span></code> 模型的参考代码和notebook，进行了精简和修改，实现了图像的风格转换功能。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_hub</span> <span class="k">as</span> <span class="nn">hub</span>
+
+<span class="k">def</span> <span class="nf">crop_center</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns a cropped square image.&quot;&quot;&quot;</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">new_shape</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">offset_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">offset_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">crop_to_bounding_box</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">offset_y</span><span class="p">,</span> <span class="n">offset_x</span><span class="p">,</span> <span class="n">new_shape</span><span class="p">,</span> <span class="n">new_shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image</span>
+
+<span class="k">def</span> <span class="nf">load_image_local</span><span class="p">(</span><span class="n">image_path</span><span class="p">,</span> <span class="n">image_size</span><span class="o">=</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span> <span class="n">preserve_aspect_ratio</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Loads and preprocesses images.&quot;&quot;&quot;</span>
+    <span class="c1"># Load and convert to float32 numpy array, add batch dimension, and normalize to range [0, 1].</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">img</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">img</span> <span class="o">/</span> <span class="mf">255.</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">img</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">img</span><span class="p">],</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">crop_center</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">image_size</span><span class="p">,</span> <span class="n">preserve_aspect_ratio</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">img</span>
+
+<span class="k">def</span> <span class="nf">show_image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">title</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">dpi</span><span class="p">,</span><span class="n">pad_inches</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">content_image_path</span> <span class="o">=</span> <span class="s2">&quot;images/contentimg.jpeg&quot;</span>
+<span class="n">style_image_path</span> <span class="o">=</span> <span class="s2">&quot;images/styleimg.jpeg&quot;</span>
+
+<span class="n">content_image</span> <span class="o">=</span> <span class="n">load_image_local</span><span class="p">(</span><span class="n">content_image_path</span><span class="p">)</span>
+<span class="n">style_image</span> <span class="o">=</span> <span class="n">load_image_local</span><span class="p">(</span><span class="n">style_image_path</span><span class="p">)</span>
+
+<span class="n">show_image</span><span class="p">(</span><span class="n">content_image</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;Content Image&quot;</span><span class="p">)</span>
+<span class="n">show_image</span><span class="p">(</span><span class="n">style_image</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;Style Image&quot;</span><span class="p">)</span>
+
+<span class="c1"># Load image stylization module.</span>
+<span class="n">hub_module</span> <span class="o">=</span> <span class="n">hub</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2&#39;</span><span class="p">);</span>
+
+<span class="c1"># Stylize image.</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">hub_module</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">content_image</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">style_image</span><span class="p">))</span>
+<span class="n">stylized_image</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">show_image</span><span class="p">(</span><span class="n">stylized_image</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;Stylized Image&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<ol class="arabic simple" start="4">
-<li><p>对迁移学习训练完的模型进行验证</p></li>
-</ol>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python label_image.py <span class="se">\</span>
---graph<span class="o">=</span>/tmp/output_graph.pb <span class="se">\</span>
---labels<span class="o">=</span>/tmp/output_labels.txt <span class="se">\</span>
---input_layer<span class="o">=</span>Placeholder <span class="se">\</span>
---output_layer<span class="o">=</span>final_result <span class="se">\</span>
---image<span class="o">=</span>your_mnist_test_img_&lt;number&gt;.jpg
+<p>其中， <code class="docutils literal notranslate"><span class="pre">hub.load(url)</span></code> 就是把TF Hub的模型从网络下载和加载进来， <code class="docutils literal notranslate"><span class="pre">hub_module</span></code> 就是运行模型， <code class="docutils literal notranslate"><span class="pre">outputs</span></code> 即为输出。</p>
+<p>上面的代码，输入的图像是一张笔者拍的风景照片，风格图片是故宫馆藏的《王希孟千里江山图卷》部分截屏。</p>
+<p>输入图片：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/contentimg.jpeg"><img alt="../../_images/contentimg.jpeg" src="../../_images/contentimg.jpeg" style="width: 90%;" /></a>
+</div>
+<p>风格图片：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/styleimg.jpeg"><img alt="../../_images/styleimg.jpeg" src="../../_images/styleimg.jpeg" style="width: 90%;" /></a>
+</div>
+<p>输出图片：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/stylized_img.png"><img alt="../../_images/stylized_img.png" src="../../_images/stylized_img.png" style="width: 90%;" /></a>
+</div>
+<p>大家可以在如下路径获取notebook和代码体验：</p>
+<p><a class="reference external" href="https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/zh/tfhub">https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/zh/tfhub</a></p>
+<p>也可在谷歌提供的如下notebook体验：</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/tensorflow/hub/blob/master/examples/colab/tf2_arbitrary_image_stylization.ipynb">https://colab.research.google.com/github/tensorflow/hub/blob/master/examples/colab/tf2_arbitrary_image_stylization.ipynb</a></p>
+</div>
+<div class="section" id="tf-hub-retrain">
+<h2>TF Hub 模型retrain样例<a class="headerlink" href="#tf-hub-retrain" title="永久链接至标题">¶</a></h2>
+<p>相信预预训练的模型不一定满足开发者的实际诉求，还需要进行二次训练。针对这种情况，TF Hub提供了很方便的Keras接口 <code class="docutils literal notranslate"><span class="pre">hub.KerasLayer(url)</span></code> ，其可以封装在Keras的 <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> 层状结构中，进而可以针对开发者的需求和数据进行再训练。</p>
+<p>我们以 <code class="docutils literal notranslate"><span class="pre">inception_v3</span></code> 的模型为例，简单介绍 <code class="docutils literal notranslate"><span class="pre">hub.KerasLayer(url)</span></code> 使用的方法：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_hub</span> <span class="kn">as</span> <span class="nn">hub</span>
+
+<span class="n">num_classes</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1"># 使用 hub.KerasLayer 组件待训练模型</span>
+<span class="n">new_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">hub</span><span class="o">.</span><span class="n">KerasLayer</span><span class="p">(</span><span class="s2">&quot;https://tfhub.dev/google/tf2-preview/inception_v3/feature_vector/4&quot;</span><span class="p">,</span> <span class="n">output_shape</span><span class="o">=</span><span class="p">[</span><span class="mi">2048</span><span class="p">],</span> <span class="n">trainable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
+<span class="p">])</span>
+<span class="n">new_model</span><span class="o">.</span><span class="n">build</span><span class="p">([</span><span class="bp">None</span><span class="p">,</span> <span class="mi">299</span><span class="p">,</span> <span class="mi">299</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="c1"># 输出模型结构</span>
+<span class="n">new_model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>结果如下：</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="m">3</span> <span class="m">0</span>.92819667
-<span class="m">2</span> <span class="m">0</span>.027902907
-<span class="m">5</span> <span class="m">0</span>.018210107
-<span class="m">9</span> <span class="m">0</span>.010902734
-<span class="m">7</span> <span class="m">0</span>.0056838035
+<p>执行以上代码输出结果如下，其中 <code class="docutils literal notranslate"><span class="pre">keras_layer</span> <span class="pre">(KerasLayer)</span></code> 就是从TF Hub上获取的模型。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Model: <span class="s2">&quot;sequential&quot;</span>
+_________________________________________________________________
+Layer <span class="o">(</span><span class="nb">type</span><span class="o">)</span>                 Output Shape              Param <span class="c1">#</span>
+<span class="o">=================================================================</span>
+keras_layer <span class="o">(</span>KerasLayer<span class="o">)</span>     multiple                  <span class="m">21802784</span>
+_________________________________________________________________
+dense <span class="o">(</span>Dense<span class="o">)</span>                multiple                  <span class="nv">20490</span>
+<span class="o">=================================================================</span>
+Total params: <span class="m">21</span>,823,274
+Trainable params: <span class="m">20</span>,490
+Non-trainable params: <span class="m">21</span>,802,784
+_________________________________________________________________
 </pre></div>
 </div>
-<p>这里产生的模型output_graph.pb，可以在通过服务器端部署，也可以在通过 <code class="docutils literal notranslate"><span class="pre">tflite_convert</span></code> 转换后部署到边缘设备。</p>
+<p>剩下的训练和模型保存跟正常的Keras的 <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> 模型完全一样。</p>
+<p>可在谷歌提供的如下notebook体验：</p>
+<p><a class="reference external" href="https://colab.research.google.com/github/tensorflow/hub/blob/master/examples/colab/tf2_image_retraining.ipynb">https://colab.research.google.com/github/tensorflow/hub/blob/master/examples/colab/tf2_image_retraining.ipynb</a></p>
+</div>
 </div>
 
 

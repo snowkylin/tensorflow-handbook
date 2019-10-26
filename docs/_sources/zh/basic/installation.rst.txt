@@ -96,7 +96,7 @@ GPU版本的TensorFlow可以利用NVIDIA GPU强大的计算加速能力，使Ten
 GPU硬件的准备
 -------------------------------------------
 
-TensorFlow对NVIDIA显卡的支持较为完备。对于NVIDIA显卡，要求其CUDA Compute Capability须不低于3.0，可以到 `NVIDIA的官方网站 <https://developer.nvidia.com/cuda-gpus/>`_ 查询自己所用显卡的CUDA Compute Capability。目前，AMD的显卡也开始对TensorFlow提供支持，可访问  `这篇博客文章 <https://medium.com/tensorflow/amd-rocm-gpu-support-for-tensorflow-33c78cc6a6cf>`_  查看详情。
+TensorFlow对NVIDIA显卡的支持较为完备。对于NVIDIA显卡，要求其CUDA Compute Capability须不低于3.5，可以到 `NVIDIA的官方网站 <https://developer.nvidia.com/cuda-gpus/>`_ 查询自己所用显卡的CUDA Compute Capability。目前，AMD的显卡也开始对TensorFlow提供支持，可访问  `这篇博客文章 <https://medium.com/tensorflow/amd-rocm-gpu-support-for-tensorflow-33c78cc6a6cf>`_  查看详情。
 
 NVIDIA驱动程序的安装
 -------------------------------------------
