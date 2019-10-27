@@ -1,5 +1,5 @@
-TensorFlow Hub Model Reuse
-==========================
+TensorFlow Hub: Model Reuse
+===========================
 
 TF Hub目的是为了更好复用已训练好的模型，可节省海量的训练时间和计算资源。预训练好的模型，可以进行直接部署，也可以进行迁移学习（Transfer Learning）。
 

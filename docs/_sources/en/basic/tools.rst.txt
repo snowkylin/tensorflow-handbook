@@ -7,7 +7,7 @@ Common Modules in TensorFlow
     * `Python的特殊函数参数**kwargs <https://eastlakeside.gitbooks.io/interpy-zh/content/args_kwargs/Usage_kwargs.html>`_ （非必须）
     * `Python的迭代器 <https://www.runoob.com/python3/python3-iterator-generator.html>`_ 
 
-Variables saving and recovery: ``tf.train.Checkpoint``
+Variables saving and restore: ``tf.train.Checkpoint``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ..
@@ -159,7 +159,7 @@ TensorBoard的使用有以下注意事项：
 
 .. _tfdata:
 
-Datasets construction and preprocessing: ``tf.data``
+Dataset construction and preprocessing: ``tf.data``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ..
@@ -167,7 +167,7 @@ Datasets construction and preprocessing: ``tf.data``
 
 很多时候，我们希望使用自己的数据集来训练模型。然而，面对一堆格式不一的原始数据文件，将其预处理并读入程序的过程往往十分繁琐，甚至比模型的设计还要耗费精力。比如，为了读入一批图像文件，我们可能需要纠结于python的各种图像处理包（比如 ``pillow`` ），自己设计Batch的生成方式，最后还可能在运行的效率上不尽如人意。为此，TensorFlow提供了 ``tf.data`` 这一模块，包括了一套灵活的数据集构建API，能够帮助我们快速、高效地构建数据输入的流水线，尤其适用于数据量巨大的场景。
 
-Dataset objects construction
+Dataset construction
 ----------------------------
 
 ``tf.data`` 的核心是 ``tf.data.Dataset`` 类，提供了对数据集的高层封装。``tf.data.Dataset`` 由一系列的可迭代访问的元素（element）组成，每个元素包含一个或多个张量。比如说，对于一个由图像组成的数据集，每个元素可以是一个形状为 ``长×宽×通道数`` 的图片张量，也可以是由图片张量和图片标签张量组成的元组（Tuple）。
@@ -209,7 +209,7 @@ Dataset objects construction
 
     即可快速载入MNIST数据集。
 
-Dataset objects preprocessing
+Dataset preprocessing
 -----------------------------
 
 ``tf.data.Dataset`` 类为我们提供了多种数据集预处理方法。最常用的如：
@@ -282,7 +282,7 @@ Dataset objects preprocessing
     - 当 ``buffer_size`` 设置为1时，其实等价于没有进行任何打散；
     - 当数据集的标签顺序分布极为不均匀（例如二元分类时数据集前N个的标签为0，后N个的标签为1）时，较小的缓冲区大小会使得训练时取出的Batch数据很可能全为同一标签，从而影响训练效果。一般而言，数据集的顺序分布若较为随机，则缓冲区的大小可较小，否则则需要设置较大的缓冲区。
 
-Dataset elements collection and usage
+Fetching element from datasets
 -------------------------------------
 
 构建好数据并预处理后，我们需要从其中迭代获取数据以用于训练。``tf.data.Dataset`` 是一个Python的可迭代对象，因此可以使用For循环迭代获取数据，即：
@@ -318,7 +318,7 @@ Keras支持使用 ``tf.data.Dataset`` 直接作为输入。当调用 ``tf.keras.
 
 .. _cats_vs_dogs:
 
-An example: cats_vs_dogs image classification
+Example: cats_vs_dogs image classification
 ---------------------------------------------
 
 以下代码以猫狗图片二分类任务为示例，展示了使用 ``tf.data`` 结合 ``tf.io`` 和 ``tf.image`` 建立 ``tf.data.Dataset`` 数据集，并进行训练和测试的完整过程。数据集可至 `这里 <https://www.floydhub.com/fastai/datasets/cats-vs-dogs>`_ 下载。
@@ -430,8 +430,8 @@ Internal mechanism of ``@tf.function``
 
 正如同正文里的例子一样，你可以在被 ``@tf.function`` 修饰的函数里调用 ``tf.Variable`` 、 ``tf.keras.optimizers`` 、 ``tf.keras.Model`` 等包含有变量的数据结构。一旦被调用，这些结构将作为隐含的参数提供给函数。当这些结构内的值在函数内被修改时，在函数外也同样生效。
 
-Converting Python control flows into TensorFlow graphs
-------------------------------------------------------
+Autograph: Converting Python control flows into TensorFlow graphs
+-----------------------------------------------------------------
 
 前面提到，``@tf.function`` 使用名为AutoGraph的机制将函数中的Python控制流语句转换成TensorFlow计算图中的对应节点。以下是一个示例，使用 ``tf.autograph`` 模块的低层API ``tf.autograph.to_code`` 将函数 ``square_if_positive`` 转换成TensorFlow计算图：
 

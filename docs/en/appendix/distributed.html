@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TensorFlow Distributed Training &mdash; 简单粗暴TensorFlow 2.0 0.4 alpha 文档</title>
+  <title>Distributed Training with TensorFlow &mdash; 简单粗暴TensorFlow 2.0 0.4 alpha 文档</title>
   
 
   
@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
@@ -150,7 +151,7 @@
 </ul>
 <p class="caption"><span class="caption-text">Large-scale Training</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Distributed Training</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Distributed Training with TensorFlow</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#training-on-a-single-machine-with-multiple-gpus-mirroredstrategy">Training on a single machine with multiple GPUs: <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#training-on-multiple-machines-multiworkermirroredstrategy">Training on multiple machines: <code class="docutils literal notranslate"><span class="pre">MultiWorkerMirroredStrategy</span></code></a></li>
 </ul>
@@ -159,8 +160,8 @@
 </ul>
 <p class="caption"><span class="caption-text">Extensions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub Model Reuse</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets Dataset Loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="swift.html">Swift for TensorFlow (S4TF)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="julia.html">TensorFlow in Julia</a></li>
 </ul>
@@ -218,7 +219,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>TensorFlow Distributed Training</li>
+      <li>Distributed Training with TensorFlow</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -237,8 +238,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="tensorflow-distributed-training">
-<h1>TensorFlow Distributed Training<a class="headerlink" href="#tensorflow-distributed-training" title="永久链接至标题">¶</a></h1>
+  <div class="section" id="distributed-training-with-tensorflow">
+<h1>Distributed Training with TensorFlow<a class="headerlink" href="#distributed-training-with-tensorflow" title="永久链接至标题">¶</a></h1>
 <p>当我们拥有大量计算资源时，通过使用合适的分布式策略，我们可以充分利用这些计算资源，从而大幅压缩模型训练的时间。针对不同的使用场景，TensorFlow在 <code class="docutils literal notranslate"><span class="pre">tf.distribute.Strategy</span></code> 中为我们提供了若干种分布式策略，使得我们能够更高效地训练模型。</p>
 <div class="section" id="training-on-a-single-machine-with-multiple-gpus-mirroredstrategy">
 <span id="multi-gpu"></span><h2>Training on a single machine with multiple GPUs: <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code><a class="headerlink" href="#training-on-a-single-machine-with-multiple-gpus-mirroredstrategy" title="永久链接至标题">¶</a></h2>

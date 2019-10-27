@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
@@ -140,19 +141,19 @@
 <li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow Basic</a></li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Model Construction and Training</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Common Modules in TensorFlow</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#variables-saving-and-recovery-tf-train-checkpoint">Variables saving and recovery: <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#variables-saving-and-restore-tf-train-checkpoint">Variables saving and restore: <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#visualization-of-training-process-tensorboard">Visualization of training process: TensorBoard</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#datasets-construction-and-preprocessing-tf-data">Datasets construction and preprocessing: <code class="docutils literal notranslate"><span class="pre">tf.data</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#dataset-objects-construction">Dataset objects construction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dataset-objects-preprocessing">Dataset objects preprocessing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dataset-elements-collection-and-usage">Dataset elements collection and usage</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#an-example-cats-vs-dogs-image-classification">An example: cats_vs_dogs image classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dataset-construction-and-preprocessing-tf-data">Dataset construction and preprocessing: <code class="docutils literal notranslate"><span class="pre">tf.data</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dataset-construction">Dataset construction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dataset-preprocessing">Dataset preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fetching-element-from-datasets">Fetching element from datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-cats-vs-dogs-image-classification">Example: cats_vs_dogs image classification</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#graph-execution-mode-tf-function">Graph Execution mode: <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> *</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#basic-usage-of-tf-function">Basic usage of <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#internal-mechanism-of-tf-function">Internal mechanism of <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#converting-python-control-flows-into-tensorflow-graphs">Converting Python control flows into TensorFlow graphs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#autograph-converting-python-control-flows-into-tensorflow-graphs">Autograph: Converting Python control flows into TensorFlow graphs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#using-traditional-tf-session">Using traditional <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code></a></li>
 </ul>
 </li>
@@ -175,13 +176,13 @@
 </ul>
 <p class="caption"><span class="caption-text">Large-scale Training</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">TensorFlow Distributed Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">Distributed Training with TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">Training TensorFlow models with TPU</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Extensions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub Model Reuse</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets Dataset Loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia</a></li>
 </ul>
@@ -268,8 +269,8 @@
 <li><p><a class="reference external" href="https://www.runoob.com/python3/python3-iterator-generator.html">Python的迭代器</a></p></li>
 </ul>
 </div>
-<div class="section" id="variables-saving-and-recovery-tf-train-checkpoint">
-<h2>Variables saving and recovery: <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code><a class="headerlink" href="#variables-saving-and-recovery-tf-train-checkpoint" title="永久链接至标题">¶</a></h2>
+<div class="section" id="variables-saving-and-restore-tf-train-checkpoint">
+<h2>Variables saving and restore: <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code><a class="headerlink" href="#variables-saving-and-restore-tf-train-checkpoint" title="永久链接至标题">¶</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>
 <p>Checkpoint只保存模型的参数，不保存模型的计算过程，因此一般用于在具有模型源代码的时候恢复之前训练好的模型参数。如果需要导出模型（无需源代码也能运行模型），请参考 <a class="reference internal" href="../deployment/export.html#savedmodel"><span class="std std-ref">“部署”章节中的SavedModel</span></a> 。</p>
@@ -324,7 +325,7 @@
 <p class="admonition-title">注解</p>
 <p><code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code> 与以前版本常用的 <code class="docutils literal notranslate"><span class="pre">tf.train.Saver</span></code> 相比，强大之处在于其支持在Eager Execution下“延迟”恢复变量。具体而言，当调用了 <code class="docutils literal notranslate"><span class="pre">checkpoint.restore()</span></code> ，但模型中的变量还没有被建立的时候，Checkpoint可以等到变量被建立的时候再进行数值的恢复。Eager Execution下，模型中各个层的初始化和变量的建立是在模型第一次被调用的时候才进行的（好处在于可以根据输入的张量形状而自动确定变量形状，无需手动指定）。这意味着当模型刚刚被实例化的时候，其实里面还一个变量都没有，这时候使用以往的方式去恢复变量数值是一定会报错的。比如，你可以试试在train.py调用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的 <code class="docutils literal notranslate"><span class="pre">save_weight()</span></code> 方法保存model的参数，并在test.py中实例化model后立即调用 <code class="docutils literal notranslate"><span class="pre">load_weight()</span></code> 方法，就会出错，只有当调用了一遍model之后再运行 <code class="docutils literal notranslate"><span class="pre">load_weight()</span></code> 方法才能得到正确的结果。可见， <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code> 在这种情况下可以给我们带来相当大的便利。另外， <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code> 同时也支持Graph Execution模式。</p>
 </div>
-<p>最后提供一个实例，以前章的 <a class="reference internal" href="../../zh/basic/models.html#mlp"><span class="std std-ref">多层感知机模型</span></a> 为例展示模型变量的保存和载入：</p>
+<p>最后提供一个实例，以前章的 <a class="reference internal" href="models.html#mlp"><span class="std std-ref">多层感知机模型</span></a> 为例展示模型变量的保存和载入：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
@@ -477,7 +478,7 @@
 <li><p>如果需要重新训练，需要删除掉记录文件夹内的信息并重启TensorBoard（或者建立一个新的记录文件夹并开启TensorBoard， <code class="docutils literal notranslate"><span class="pre">--logdir</span></code> 参数设置为新建立的文件夹）；</p></li>
 <li><p>记录文件夹目录保持全英文。</p></li>
 </ul>
-<p>最后提供一个实例，以前章的 <a class="reference internal" href="../../zh/basic/models.html#mlp"><span class="std std-ref">多层感知机模型</span></a> 为例展示TensorBoard的使用：</p>
+<p>最后提供一个实例，以前章的 <a class="reference internal" href="models.html#mlp"><span class="std std-ref">多层感知机模型</span></a> 为例展示TensorBoard的使用：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">from</span> <span class="nn">zh.model.mnist.mlp</span> <span class="k">import</span> <span class="n">MLP</span>
 <span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="k">import</span> <span class="n">MNISTLoader</span>
@@ -503,11 +504,11 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="datasets-construction-and-preprocessing-tf-data">
-<span id="tfdata"></span><h2>Datasets construction and preprocessing: <code class="docutils literal notranslate"><span class="pre">tf.data</span></code><a class="headerlink" href="#datasets-construction-and-preprocessing-tf-data" title="永久链接至标题">¶</a></h2>
+<div class="section" id="dataset-construction-and-preprocessing-tf-data">
+<span id="tfdata"></span><h2>Dataset construction and preprocessing: <code class="docutils literal notranslate"><span class="pre">tf.data</span></code><a class="headerlink" href="#dataset-construction-and-preprocessing-tf-data" title="永久链接至标题">¶</a></h2>
 <p>很多时候，我们希望使用自己的数据集来训练模型。然而，面对一堆格式不一的原始数据文件，将其预处理并读入程序的过程往往十分繁琐，甚至比模型的设计还要耗费精力。比如，为了读入一批图像文件，我们可能需要纠结于python的各种图像处理包（比如 <code class="docutils literal notranslate"><span class="pre">pillow</span></code> ），自己设计Batch的生成方式，最后还可能在运行的效率上不尽如人意。为此，TensorFlow提供了 <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 这一模块，包括了一套灵活的数据集构建API，能够帮助我们快速、高效地构建数据输入的流水线，尤其适用于数据量巨大的场景。</p>
-<div class="section" id="dataset-objects-construction">
-<h3>Dataset objects construction<a class="headerlink" href="#dataset-objects-construction" title="永久链接至标题">¶</a></h3>
+<div class="section" id="dataset-construction">
+<h3>Dataset construction<a class="headerlink" href="#dataset-construction" title="永久链接至标题">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 的核心是 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 类，提供了对数据集的高层封装。<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 由一系列的可迭代访问的元素（element）组成，每个元素包含一个或多个张量。比如说，对于一个由图像组成的数据集，每个元素可以是一个形状为 <code class="docutils literal notranslate"><span class="pre">长×宽×通道数</span></code> 的图片张量，也可以是由图片张量和图片标签张量组成的元组（Tuple）。</p>
 <p>最基础的建立 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 的方法是使用 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.from_tensor_slices()</span></code> ，适用于数据量较小（能够整个装进内存）的情况。具体而言，如果我们的数据集中的所有元素通过张量的第0维，拼接成一个大的张量（例如，前节的MNIST数据集的训练集即为一个 <code class="docutils literal notranslate"><span class="pre">[60000,</span> <span class="pre">28,</span> <span class="pre">28,</span> <span class="pre">1]</span></code> 的张量，表示了60000张28*28的单通道灰度图像），那么我们提供一个这样的张量或者第0维大小相同的多个张量作为输入，即可按张量的第0维展开来构建数据集，数据集的元素数量为张量第0位的大小。具体示例如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
@@ -565,8 +566,8 @@
 <p>即可快速载入MNIST数据集。</p>
 </div>
 </div>
-<div class="section" id="dataset-objects-preprocessing">
-<h3>Dataset objects preprocessing<a class="headerlink" href="#dataset-objects-preprocessing" title="永久链接至标题">¶</a></h3>
+<div class="section" id="dataset-preprocessing">
+<h3>Dataset preprocessing<a class="headerlink" href="#dataset-preprocessing" title="永久链接至标题">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 类为我们提供了多种数据集预处理方法。最常用的如：</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">Dataset.map(f)</span></code> ：对数据集中的每个元素应用函数 <code class="docutils literal notranslate"><span class="pre">f</span></code> ，得到一个新的数据集（这部分往往结合 <code class="docutils literal notranslate"><span class="pre">tf.io</span></code> 进行读写和解码文件， <code class="docutils literal notranslate"><span class="pre">tf.image</span></code> 进行图像处理）；</p></li>
@@ -645,8 +646,8 @@
 </ul>
 </div>
 </div>
-<div class="section" id="dataset-elements-collection-and-usage">
-<h3>Dataset elements collection and usage<a class="headerlink" href="#dataset-elements-collection-and-usage" title="永久链接至标题">¶</a></h3>
+<div class="section" id="fetching-element-from-datasets">
+<h3>Fetching element from datasets<a class="headerlink" href="#fetching-element-from-datasets" title="永久链接至标题">¶</a></h3>
 <p>构建好数据并预处理后，我们需要从其中迭代获取数据以用于训练。<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 是一个Python的可迭代对象，因此可以使用For循环迭代获取数据，即：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="o">...</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="o">...</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
@@ -670,8 +671,8 @@
 </div>
 <p>由于已经通过 <code class="docutils literal notranslate"><span class="pre">Dataset.batch()</span></code> 方法划分了数据集的批次，所以这里也无需提供批次的大小。</p>
 </div>
-<div class="section" id="an-example-cats-vs-dogs-image-classification">
-<span id="cats-vs-dogs"></span><h3>An example: cats_vs_dogs image classification<a class="headerlink" href="#an-example-cats-vs-dogs-image-classification" title="永久链接至标题">¶</a></h3>
+<div class="section" id="example-cats-vs-dogs-image-classification">
+<span id="cats-vs-dogs"></span><h3>Example: cats_vs_dogs image classification<a class="headerlink" href="#example-cats-vs-dogs-image-classification" title="永久链接至标题">¶</a></h3>
 <p>以下代码以猫狗图片二分类任务为示例，展示了使用 <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 结合 <code class="docutils literal notranslate"><span class="pre">tf.io</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.image</span></code> 建立 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 数据集，并进行训练和测试的完整过程。数据集可至 <a class="reference external" href="https://www.floydhub.com/fastai/datasets/cats-vs-dogs">这里</a> 下载。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -881,8 +882,8 @@
 </div>
 <p>正如同正文里的例子一样，你可以在被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰的函数里调用 <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizers</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 等包含有变量的数据结构。一旦被调用，这些结构将作为隐含的参数提供给函数。当这些结构内的值在函数内被修改时，在函数外也同样生效。</p>
 </div>
-<div class="section" id="converting-python-control-flows-into-tensorflow-graphs">
-<h3>Converting Python control flows into TensorFlow graphs<a class="headerlink" href="#converting-python-control-flows-into-tensorflow-graphs" title="永久链接至标题">¶</a></h3>
+<div class="section" id="autograph-converting-python-control-flows-into-tensorflow-graphs">
+<h3>Autograph: Converting Python control flows into TensorFlow graphs<a class="headerlink" href="#autograph-converting-python-control-flows-into-tensorflow-graphs" title="永久链接至标题">¶</a></h3>
 <p>前面提到，<code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 使用名为AutoGraph的机制将函数中的Python控制流语句转换成TensorFlow计算图中的对应节点。以下是一个示例，使用 <code class="docutils literal notranslate"><span class="pre">tf.autograph</span></code> 模块的低层API <code class="docutils literal notranslate"><span class="pre">tf.autograph.to_code</span></code> 将函数 <code class="docutils literal notranslate"><span class="pre">square_if_positive</span></code> 转换成TensorFlow计算图：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
