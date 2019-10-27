@@ -25,6 +25,7 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="_static/js/custom.js"></script>
         <script type="text/javascript" src="_static/translations.js"></script>
@@ -149,13 +150,13 @@
 </ul>
 <p class="caption"><span class="caption-text">Large-scale Training</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="en/appendix/distributed.html">TensorFlow Distributed Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/appendix/distributed.html">Distributed Training with TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="en/appendix/tpu.html">Training TensorFlow models with TPU</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Extensions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="en/appendix/tfhub.html">TensorFlow Hub Model Reuse</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/appendix/tfds.html">TensorFlow Datasets Dataset Loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="en/appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="en/appendix/julia.html">TensorFlow in Julia</a></li>
 </ul>
@@ -238,7 +239,10 @@
 <table style="width: 100%; margin: 20px 0">
     <tbody witth=100%>
     <tr>
-        <td width=50% style="text-align: center"><b><a href="#id3">中文版</a></b></td>
+        <td width=50% style="text-align: center">
+            <b><a href="#id3">中文版</a></b>
+            <button id="translateLink" onclick="javascript:translatePage();">切換到繁體</button>
+        </td>
         <td width=50% style="text-align: center"><b><a href="#english-version-in-progress">English Version (in progress)</a></b></td>
     </tr>
     </tbody>
@@ -554,7 +558,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="en/basic/models.html">Model Construction and Training</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="en/basic/models.html#models-and-layers">Models and layers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="en/basic/models.html#a-basic-example-multiple-layer-perceptron-mlp">A basic example: Multiple layer perceptron (MLP)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="en/basic/models.html#a-basic-example-multilayer-perceptron-mlp">A basic example: Multilayer Perceptron (MLP)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="en/basic/models.html#data-collection-and-preprocessing-tf-keras-datasets">Data collection and preprocessing: <code class="docutils literal notranslate"><span class="pre">tf.keras.datasets</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="en/basic/models.html#model-construction-tf-keras-model-and-tf-keras-layers">Model construction: <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> and <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="en/basic/models.html#model-training-tf-keras-losses-and-tf-keras-optimizer">Model training: <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> and <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizer</span></code></a></li>
@@ -581,19 +585,19 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="en/basic/tools.html">Common Modules in TensorFlow</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="en/basic/tools.html#variables-saving-and-recovery-tf-train-checkpoint">Variables saving and recovery: <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/basic/tools.html#variables-saving-and-restore-tf-train-checkpoint">Variables saving and restore: <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="en/basic/tools.html#visualization-of-training-process-tensorboard">Visualization of training process: TensorBoard</a></li>
-<li class="toctree-l2"><a class="reference internal" href="en/basic/tools.html#datasets-construction-and-preprocessing-tf-data">Datasets construction and preprocessing: <code class="docutils literal notranslate"><span class="pre">tf.data</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="en/basic/tools.html#dataset-objects-construction">Dataset objects construction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="en/basic/tools.html#dataset-objects-preprocessing">Dataset objects preprocessing</a></li>
-<li class="toctree-l3"><a class="reference internal" href="en/basic/tools.html#dataset-elements-collection-and-usage">Dataset elements collection and usage</a></li>
-<li class="toctree-l3"><a class="reference internal" href="en/basic/tools.html#an-example-cats-vs-dogs-image-classification">An example: cats_vs_dogs image classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/basic/tools.html#dataset-construction-and-preprocessing-tf-data">Dataset construction and preprocessing: <code class="docutils literal notranslate"><span class="pre">tf.data</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="en/basic/tools.html#dataset-construction">Dataset construction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="en/basic/tools.html#dataset-preprocessing">Dataset preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="en/basic/tools.html#fetching-element-from-datasets">Fetching element from datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="en/basic/tools.html#example-cats-vs-dogs-image-classification">Example: cats_vs_dogs image classification</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="en/basic/tools.html#graph-execution-mode-tf-function">Graph Execution mode: <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> *</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="en/basic/tools.html#basic-usage-of-tf-function">Basic usage of <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="en/basic/tools.html#internal-mechanism-of-tf-function">Internal mechanism of <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="en/basic/tools.html#converting-python-control-flows-into-tensorflow-graphs">Converting Python control flows into TensorFlow graphs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="en/basic/tools.html#autograph-converting-python-control-flows-into-tensorflow-graphs">Autograph: Converting Python control flows into TensorFlow graphs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="en/basic/tools.html#using-traditional-tf-session">Using traditional <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code></a></li>
 </ul>
 </li>
@@ -661,7 +665,7 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Large-scale Training</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="en/appendix/distributed.html">TensorFlow Distributed Training</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="en/appendix/distributed.html">Distributed Training with TensorFlow</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="en/appendix/distributed.html#training-on-a-single-machine-with-multiple-gpus-mirroredstrategy">Training on a single machine with multiple GPUs: <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="en/appendix/distributed.html#training-on-multiple-machines-multiworkermirroredstrategy">Training on multiple machines: <code class="docutils literal notranslate"><span class="pre">MultiWorkerMirroredStrategy</span></code></a></li>
 </ul>
@@ -686,8 +690,8 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Extensions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="en/appendix/tfhub.html">TensorFlow Hub Model Reuse</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/appendix/tfds.html">TensorFlow Datasets Dataset Loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="en/appendix/swift.html">Swift for TensorFlow (S4TF)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="en/appendix/swift.html#introduction-to-s4tf">Introduction to S4TF</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="en/appendix/swift.html#why-using-swift-for-tensorflow-development">Why using Swift for TensorFlow Development</a></li>

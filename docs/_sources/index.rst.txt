@@ -14,7 +14,10 @@
     <table style="width: 100%; margin: 20px 0">
         <tbody witth=100%>
         <tr>
-            <td width=50% style="text-align: center"><b><a href="#id3">中文版</a></b></td>
+            <td width=50% style="text-align: center">
+                <b><a href="#id3">中文版</a></b> 
+                <button id="translateLink" onclick="javascript:translatePage();">切換到繁體</button>               
+            </td>
             <td width=50% style="text-align: center"><b><a href="#english-version-in-progress">English Version (in progress)</a></b></td>
         </tr>
         </tbody>

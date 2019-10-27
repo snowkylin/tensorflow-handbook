@@ -1,5 +1,5 @@
-TensorFlow Datasets Dataset Loading
-===================================
+TensorFlow Datasets: Ready-to-use Datasets
+==========================================
 
 `TensorFlow Datasets <https://www.tensorflow.org/datasets/>`_ 是一个开箱即用的数据集集合，包含数十种常用的机器学习数据集。通过简单的几行代码即可将数据以 ``tf.data.Datasets`` 的格式载入。关于 ``tf.data.Datasets`` 的使用可参考 :ref:`tf.data <tfdata>`。
 

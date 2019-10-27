@@ -1,5 +1,5 @@
-TensorFlow Distributed Training
-===============================
+Distributed Training with TensorFlow
+====================================
 
 ..
     https://www.tensorflow.org/beta/guide/distribute_strategy

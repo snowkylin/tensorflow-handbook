@@ -25,6 +25,7 @@
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
         <script type="text/javascript" src="../../_static/js/custom.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
@@ -140,7 +141,7 @@
 <li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow Basic</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Model Construction and Training</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#models-and-layers">Models and layers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#a-basic-example-multiple-layer-perceptron-mlp">A basic example: Multiple layer perceptron (MLP)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#a-basic-example-multilayer-perceptron-mlp">A basic example: Multilayer Perceptron (MLP)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#data-collection-and-preprocessing-tf-keras-datasets">Data collection and preprocessing: <code class="docutils literal notranslate"><span class="pre">tf.keras.datasets</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#model-construction-tf-keras-model-and-tf-keras-layers">Model construction: <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> and <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#model-training-tf-keras-losses-and-tf-keras-optimizer">Model training: <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> and <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizer</span></code></a></li>
@@ -177,13 +178,13 @@
 </ul>
 <p class="caption"><span class="caption-text">Large-scale Training</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">TensorFlow Distributed Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">Distributed Training with TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">Training TensorFlow models with TPU</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Extensions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub Model Reuse</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets Dataset Loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia</a></li>
 </ul>
@@ -367,8 +368,8 @@
 <p>在 Python 中，对类的实例 <code class="docutils literal notranslate"><span class="pre">myClass</span></code> 进行形如 <code class="docutils literal notranslate"><span class="pre">myClass()</span></code> 的调用等价于 <code class="docutils literal notranslate"><span class="pre">myClass.__call__()</span></code> （具体请见本章初 “前置知识” 的 <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> 部分）。那么看起来，为了使用 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">model(X)</span></code> 的形式调用模型类，应该重写 <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> 方法才对呀？原因是 Keras 在模型调用的前后还需要有一些自己的内部操作，所以暴露出一个专门用于重载的 <code class="docutils literal notranslate"><span class="pre">call()</span></code> 方法。 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 这一父类已经包含 <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> 的定义。 <code class="docutils literal notranslate"><span class="pre">__call__()</span></code> 中主要调用了 <code class="docutils literal notranslate"><span class="pre">call()</span></code> 方法，同时还需要在进行一些 keras 的内部操作。这里，我们通过继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 并重载 <code class="docutils literal notranslate"><span class="pre">call()</span></code> 方法，即可在保持 keras 结构的同时加入模型调用的代码。</p>
 </div>
 </div>
-<div class="section" id="a-basic-example-multiple-layer-perceptron-mlp">
-<span id="mlp"></span><h2>A basic example: Multiple layer perceptron (MLP)<a class="headerlink" href="#a-basic-example-multiple-layer-perceptron-mlp" title="永久链接至标题">¶</a></h2>
+<div class="section" id="a-basic-example-multilayer-perceptron-mlp">
+<span id="mlp"></span><h2>A basic example: Multilayer Perceptron (MLP)<a class="headerlink" href="#a-basic-example-multilayer-perceptron-mlp" title="永久链接至标题">¶</a></h2>
 <p>我们从编写一个最简单的 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8">多层感知机</a> （Multilayer Perceptron, MLP），或者说 “多层全连接神经网络” 开始，介绍 TensorFlow 的模型编写方式。在这一部分，我们依次进行以下步骤：</p>
 <ul class="simple">
 <li><p>使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.datasets</span></code> 获得数据集并预处理</p></li>
