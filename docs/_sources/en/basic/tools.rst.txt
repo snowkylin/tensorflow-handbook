@@ -1,4 +1,4 @@
-Common modules in TensorFlow
+Common Modules in TensorFlow
 ============================
 
 .. admonition:: 前置知识
@@ -361,7 +361,7 @@ Basic usage of ``@tf.function``
     https://www.tensorflow.org/beta/guide/autograph
     Functions can be faster than eager code, for graphs with many small ops. But for graphs with a few expensive ops (like convolutions), you may not see much speedup.
 
-Instrinsic mechanism of ``@tf.function``
+Internal mechanism of ``@tf.function``
 ----------------------------------------
 
 当被 ``@tf.function`` 修饰的函数第一次被调用的时候，进行以下操作：
