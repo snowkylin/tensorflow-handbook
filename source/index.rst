@@ -9,6 +9,17 @@
 
 *基于Eager Execution | Based on Eager Execution*
 
+.. raw:: html
+
+    <table style="width: 100%; margin: 10px 0">
+        <tbody witth=100%>
+        <tr>
+            <td width=50% style="text-align: center"><a href="#id3">中文版</a></td>
+            <td width=50% style="text-align: center"><a href="#english-in-progress">English Version (in progress)</a></td>
+        </tr>
+        </tbody>
+    </table>
+
 ..
     本文档为未完成版本，内容会随时更改修订，目前请不要扩散。
 
@@ -16,7 +27,7 @@
 
 这是一本简明的 TensorFlow 2.0 入门指导手册，基于 Keras 和 Eager Execution（即时运行）模式，力图让具备一定机器学习及Python基础的开发者们快速上手TensorFlow 2.0。
 
-本手册的所有代码基于 TensorFlow 2.0 正式版及 beta1 版本。文中的所有示例代码可至 `这里 <https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/zh>`_ 获得。
+本手册的所有代码基于 TensorFlow 2.0 正式版及 beta1 版本。文中的所有示例代码可至 `这里 <https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/en>`_ 获得。
 
 本手册正于TensorFlow官方微信公众号（TensorFlow_official）连载，可点此查看 `连载文章目录 <https://mp.weixin.qq.com/s/cvZHUWS3MiGHq3UDynucxw>`_ 。本手册的英文版仍在翻译中。请访问 https://v1.tf.wiki 以查看本手册上一版的英文版。本手册是 Google Summer of Code 2019 项目之一。
 
@@ -61,6 +72,9 @@ GitHub： https://github.com/snowkylin/tensorflow-handbook
     |    zh/config           |    en/config           |
     |    zh/recommended_books|    en/recommended_books|
     +------------------------+------------------------+
+
+中文版
+==========================
 
 .. toctree:: 
     :maxdepth: 2
@@ -123,6 +137,70 @@ GitHub： https://github.com/snowkylin/tensorflow-handbook
     zh/appendix/recommended_books
     zh/appendix/terms
 
+English (in progress)
+==============================================
+
+.. toctree:: 
+    :maxdepth: 2
+    :caption: Preface
+
+    en/preface
+    en/introduction
+
+.. toctree:: 
+    :maxdepth: 3
+    :caption: Basic
+
+    en/basic/installation
+    en/basic/basic
+    en/basic/models
+    en/basic/tools
+
+.. toctree:: 
+    :maxdepth: 3
+    :caption: Deployment
+
+    en/deployment/export
+    en/deployment/serving
+    en/deployment/lite
+    en/deployment/javascript
+
+.. toctree:: 
+    :maxdepth: 3
+    :caption: Large-scale Training
+
+    en/appendix/distributed
+    en/appendix/tpu
+
+.. toctree:: 
+    :maxdepth: 3
+    :caption: Extensions
+
+    en/appendix/tfhub
+    en/appendix/tfds  
+    en/appendix/swift
+    en/appendix/julia
+
+..
+    .. toctree:: 
+        :maxdepth: 2
+        :caption: 应用
+
+        en/application/rl
+        en/application/chatbot
+
+.. toctree:: 
+    :maxdepth: 3
+    :caption: Appendix
+
+    en/appendix/static 
+    en/appendix/docker
+    en/appendix/cloud
+    en/appendix/jupyterlab
+    en/appendix/optimization
+    en/appendix/recommended_books
+    en/appendix/terms
+
 ..
     .. toctree:: 
         en/preface
@@ -137,24 +215,26 @@ GitHub： https://github.com/snowkylin/tensorflow-handbook
 - （中文）TensorFlow中文社区“简单粗暴TensorFlow”版面： https://www.tensorflowers.cn/b/48 （中文的疑问和建议请来此处，将以中文回答和讨论。欢迎使用中文的开发者们前来TensorFlow中文社区交流讨论）
 - （英文）https://github.com/snowkylin/tensorflow-handbook/releases （英文的疑问或建议可在GitHub issue中提出，会以英文回答）
 
-PDF下载（旧版）：
+..
+    PDF下载（旧版）：
 
-- 中文版：https://www.tensorflowers.cn/t/6230 （同时也有英文版下载）
-- 英文版：https://github.com/snowkylin/tensorflow-handbook/releases
+    - 中文版：https://www.tensorflowers.cn/t/6230 （同时也有英文版下载）
+    - 英文版：https://github.com/snowkylin/tensorflow-handbook/releases
 
-GitHub: https://github.com/snowkylin/tensorflow-handbook
+    GitHub: https://github.com/snowkylin/tensorflow-handbook
 
 Q&A area
 
 - (Chinese) TensorFlow Chinese community "A Concise Handbook of TensorFlow" forum: https://www.tensorflowers.cn/b/48 
 - (English) https://github.com/snowkylin/tensorflow-handbook/issues
 
-PDF download (old version): 
+..
+    PDF download (old version): 
 
-- Chinese version: https://www.tensorflowers.cn/t/6230
-- English version: https://github.com/snowkylin/tensorflow-handbook/releases
+    - Chinese version: https://www.tensorflowers.cn/t/6230
+    - English version: https://github.com/snowkylin/tensorflow-handbook/releases
 
-GitHub: https://github.com/snowkylin/tensorflow-handbook
+    GitHub: https://github.com/snowkylin/tensorflow-handbook
 
 ..  
    preface

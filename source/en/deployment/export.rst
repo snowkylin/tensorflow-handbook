@@ -1,9 +1,9 @@
-TensorFlow模型导出
+TensorFlow Model Saving
 ====================================================
 
 .. _savedmodel:
 
-使用SavedModel完整导出模型
+Using SavedModel to export a model
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ..
@@ -75,7 +75,7 @@ Keras模型均可方便地导出为SavedModel格式。不过需要注意的是�
         y_pred = model.call(data_loader.test_data[start_index: end_index])
         ...
 
-Keras Sequential save方法（Jinpeng）
+Keras Sequential save (Jinpeng)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 我们以keras模型训练和保存为例进行讲解，如下是keras官方的mnist模型训练样例。
