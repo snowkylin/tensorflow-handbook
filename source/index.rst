@@ -15,8 +15,8 @@
         <tbody witth=100%>
         <tr>
             <td width=50% style="text-align: center">
-                <b><a href="#id3">中文版</a></b> 
-                <button id="translateLink" onclick="javascript:translatePage();">切換到繁體</button>               
+                <b><a href="#id1">中文版</a></b>
+                <small>（點擊頁面上方按鈕切換繁簡）</small>           
             </td>
             <td width=50% style="text-align: center"><b><a href="#english-version-in-progress">English Version (in progress)</a></b></td>
         </tr>

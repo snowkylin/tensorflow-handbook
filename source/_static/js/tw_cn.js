@@ -8,6 +8,8 @@ var currentEncoding = defaultEncoding;
 var targetEncodingCookie = "targetEncoding" + cookieDomain.replace(/\./g, "");
 var targetEncoding = (getCookie(targetEncodingCookie) == null ? defaultEncoding: getCookie(targetEncodingCookie));
 var translateButtonObject;
+var wordzh = ['面向对象', '程序', '国内', '清华大学', '硬件', '软件', '数据', '导出'];
+var wordtw = ['物件導向', '程式', '中國大陸', '北京清華大學', '硬體', '軟體', '資料', '匯出'];
 function translateText(txt) {
 	if (txt == "" || txt == null) return "";
 	if (currentEncoding == 1 && targetEncoding == 2) return Simplized(txt);
@@ -50,6 +52,9 @@ function FTPYStr() {
 }
 function Traditionalized(cc) {
 	var str = '';
+	for (var i = 0; i < wordzh.length; i++) {
+		cc = cc.replace(RegExp(wordzh[i], 'g'), wordtw[i]);
+	}
 	var ss = JTPYStr();
 	var tt = FTPYStr();
 	for (var i = 0; i < cc.length; i++) {
