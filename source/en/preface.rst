@@ -18,7 +18,7 @@ Preface
 * 代码实现均进行仔细推敲，力图简洁高效和表意清晰。模型实现均统一使用 `TensorFlow官方文档 <https://www.tensorflow.org/programmers_guide/eager#build_a_model>`_ 最新提出的继承 ``tf.keras.Model`` 和 ``tf.keras.layers.Layer`` 的方式，保证代码的高度可复用性。每个完整项目的代码总行数均不过百行，让读者可以快速理解并举一反三；
 * 注重详略，少即是多，不追求巨细靡遗和面面俱到，不在正文中进行大篇幅的细节论述。
 
-Target audience
+Target readers
 ^^^^^^^^^^^^^^^
 
 本书适用于以下读者：
