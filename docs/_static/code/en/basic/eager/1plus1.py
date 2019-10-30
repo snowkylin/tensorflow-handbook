@@ -1,14 +1,23 @@
 import tensorflow as tf
-tf.enable_eager_execution()
 
-a = tf.constant(1)
-b = tf.constant(1)
-c = tf.add(a, b)    # The expression c = a + b is equivalent.
+# declare a random float (scalar)
+random_float = tf.random.uniform(shape=())
 
-print(c)
+# declare a zero vector with two elements
+zero_vector = tf.zeros(shape=(2))
 
-A = tf.constant([[1, 2], [3, 4]])
-B = tf.constant([[5, 6], [7, 8]])
-C = tf.matmul(A, B)
+# declare 2x2 constant matrices A and B
+A = tf.constant([[1., 2.], [3., 4.]])
+B = tf.constant([[5., 6.], [7., 8.]])
+
+# view the shape, type and value of matrix A
+print(A.shape)      # output (2, 2), which means the number of rows and cols are both 2
+print(A.dtype)      # output <dtype: 'float32'>
+print(A.numpy())    # output [[1. 2.]
+                    #         [3. 4.]]
+
+C = tf.add(A, B)    # calculate the element-wise sum of A and B 
+D = tf.matmul(A, B) # calculate the multiplication of A and B 
 
 print(C)
+print(D)

@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-A = tf.ones(shape=[2, 3])   # tf.ones(shape) defines a all one matrix with shape
+A = tf.ones(shape=[2, 3])   # tf.ones(shape)定义了一个形状为shape的全1矩阵
 B = tf.ones(shape=[3, 2])
 C = tf.matmul(A, B)
 
