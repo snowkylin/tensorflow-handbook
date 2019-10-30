@@ -11,11 +11,11 @@ a, b = 0, 0
 num_epoch = 10000
 learning_rate = 1e-3
 for e in range(num_epoch):
-    # Calculate the gradient of the loss function with respect to arguments (model parameters) manually.
+    # 手动计算损失函数关于自变量（模型参数）的梯度
     y_pred = a * X + b
     grad_a, grad_b = (y_pred - y).dot(X), (y_pred - y).sum()
 
-    # Update parameters.
+    # 更新参数
     a, b = a - learning_rate * grad_a, b - learning_rate * grad_b
 
 print(a, b)

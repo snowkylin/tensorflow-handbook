@@ -17,7 +17,7 @@ b = tf.get_variable('b', dtype=tf.float32, shape=[], initializer=tf.zeros_initia
 y_pred = a * X_ + b
 loss = tf.constant(0.5) * tf.reduce_sum(tf.square(y_pred - y_))
 
-# Back propagation，calculate and update gradient of varaibles(model parameters) with TensorFlow's GradientDescentOptimier 
+# 反向传播，利用TensorFlow的梯度下降优化器自动计算并更新变量（模型参数）的梯度
 train_op = tf.train.GradientDescentOptimizer(learning_rate=learning_rate_).minimize(loss)
 
 num_epoch = 10000

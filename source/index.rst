@@ -120,7 +120,7 @@ This is a concise handbook of TensorFlow 2.0 based on Keras and Eager Execution 
 
 The code of this handbook is based on TensorFlow 2.0 stable version and beta1 version. All sample code in this handbook can be viewed `here <https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/>`_ .
 
-The English version of this handbook is still in progress. Please refer to https://v1.tf.wiki for the eariler version. This handbook is a project of `Google Summer of Code 2019 <https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/>`_ .
+The English version of this handbook is still in progress (section title with a ✔️ means that the translation of this section is finished). Please refer to https://v1.tf.wiki for the eariler version. This handbook is a project of `Google Summer of Code 2019 <https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/>`_ .
 
 GitHub： https://github.com/snowkylin/tensorflow-handbook
 
