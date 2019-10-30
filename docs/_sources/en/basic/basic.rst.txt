@@ -1,67 +1,55 @@
 TensorFlow Basic
 ================
 
-.. 
-    https://www.datacamp.com/community/tutorials/tensorflow-tutorial
+This chapter describes basic operations in TensorFlow.
 
-    TensorFlow，顾名思义，就是Tensor（张量）进行Flow（流动）的过程。所谓张量，即对向量（一维）和矩阵（二维）的一种推广，类似于多维数组。而张量的流动则是基于数据流图（Dataflow Graph，也称计算图Computational Graph）。一个典型的TensorFlow程序由以下几个部分组成：
+Prerequisites:
 
-    1. 定义一个数据流图（在深度学习中往往称之为“模型”），其中往往包含大量的变量（深度学习中“模型的待训练参数”）；
-    2. 反复进行以下步骤：
+* `Basic Python operations <https://docs.python.org/3/tutorial/>`_ (assignment, branch & loop statement, library import)
+* `'With' statement in Python <https://docs.python.org/3/reference/compound_stmts.html#the-with-statement>`_
+* `NumPy <https://docs.scipy.org/doc/numpy/user/quickstart.html>`_ , a commonly used Python library for scientific computation. TensorFlow 2.X has a close integration with NumPy.
+* `Vectors <https://en.wikipedia.org/wiki/Euclidean_vector>`_ & `Matrices <https://en.wikipedia.org/wiki/Matrix_(mathematics)>`_ operations (matrix addition & subtraction, matrix multiplication with vectors & matrices, matrix transpose, etc., Quiz: :math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \times \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = ?`)
+* `Derivatives of functions <https://en.wikipedia.org/wiki/Derivative>`_ , `derivatives of multivariable functions <https://en.wikipedia.org/wiki/Partial_derivative>`_ (Quiz: :math:`f(x, y) = x^2 + xy + y^2, \frac{\partial f}{\partial x} = ?, \frac{\partial f}{\partial y} = ?`)
+* `Linear regression <https://en.wikipedia.org/wiki/Linear_regression>`_;
+* `Gradient descent <https://en.wikipedia.org/wiki/Gradient_descent>`_ that searches local minima of a function.
 
-    1. 将训练数据转换为张量，并送入数据流图进行计算（前向传播）；
-    #. 计算损失函数的值，并对各变量求偏导数（反向传播）；
-    #. 使用梯度下降或其他优化器（Optimizer）对变量进行更新以减小损失函数的值（即“对参数进行训练”）。
+TensorFlow 1+1 ✔️
+^^^^^^^^^^^^^^^^^^^^
 
-    在步骤2重复足够多的次数（训练足够长的时间）后，损失函数达到较小的值并保持稳定，即完成了模型的训练。
+We can first simply regarded TensorFlow as a library of scientific calculation (like Numpy in Python).
 
-    在对TensorFlow的具体概念，如张量（Tensor）、数据流图（Dataflow Graph）、变量（Variable）、优化器（Optimizer）等进行具体介绍之前，本手册先举一个具体的例子，以让读者能对TensorFlow的基本运作方式有一个直观的理解。
-
-    https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html
-
-本章介绍TensorFlow的基本操作。
-
-.. admonition:: 前置知识
-
-    * `Python基本操作 <http://www.runoob.com/python3/python3-tutorial.html>`_ （赋值、分支及循环语句、使用import导入库）；
-    * `Python的With语句 <https://www.ibm.com/developerworks/cn/opensource/os-cn-pythonwith/index.html>`_ ；
-    * `NumPy <https://docs.scipy.org/doc/numpy/user/quickstart.html>`_ ，Python下常用的科学计算库。TensorFlow与之结合紧密；
-    * `向量 <https://zh.wikipedia.org/wiki/%E5%90%91%E9%87%8F>`_ 和 `矩阵 <https://zh.wikipedia.org/wiki/%E7%9F%A9%E9%98%B5>`_ 运算（矩阵的加减法、矩阵与向量相乘、矩阵与矩阵相乘、矩阵的转置等。测试题：:math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \times \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = ?`）；
-    * `函数的导数 <http://old.pep.com.cn/gzsx/jszx_1/czsxtbjxzy/qrzptgjzxjc/dzkb/dscl/>`_ ，`多元函数求导 <https://zh.wikipedia.org/wiki/%E5%81%8F%E5%AF%BC%E6%95%B0>`_ （测试题：:math:`f(x, y) = x^2 + xy + y^2, \frac{\partial f}{\partial x} = ?, \frac{\partial f}{\partial y} = ?`）；
-    * `线性回归 <http://old.pep.com.cn/gzsx/jszx_1/czsxtbjxzy/qrzptgjzxjc/dzkb/dscl/>`_ ；
-    * `梯度下降方法 <https://zh.wikipedia.org/wiki/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95>`_ 求函数的局部最小值。
-
-TensorFlow 1+1
-^^^^^^^^^^^^^^
-
-我们可以先简单地将TensorFlow视为一个科学计算库（类似于Python下的NumPy）。
-
-首先，我们导入TensorFlow：
+As the first step, let's import TensorFlow:
 
 .. code-block:: python
 
     import tensorflow as tf
 
-.. warning:: 本手册基于TensorFlow的Eager Execution模式。在TensorFlow 1.X版本中， **必须** 在导入TensorFlow库后调用 ``tf.enable_eager_execution()`` 函数以启用Eager Execution模式。在TensorFlow 2.0版本中，Eager Execution模式将成为默认模式，无需额外调用 ``tf.enable_eager_execution()`` 函数（不过若要关闭Eager Execution，则需调用 ``tf.compat.v1.disable_eager_execution()`` 函数）。
+.. admonition:: Warning
 
-TensorFlow使用 **张量** （Tensor）作为数据的基本单位。TensorFlow的张量在概念上等同于多维数组，我们可以使用它来描述数学中的标量（0维数组）、向量（1维数组）、矩阵（2维数组）等各种量，示例如下：
+    This handbook is based on the Eager Execution mode of TensorFlow. In TensorFlow 1.X, you must run ``tf.enable_eager_execution()`` after importing to enable Eager Execution mode. in TensorFlow 2.X, Eager Execution is the default mode. Thus you do not need to run ``tf.enable_eager_execution()``. (However, if you want to disable Eager Execution mode, you should run ``tf.compat.v1.disable_eager_execution()``)
 
-.. literalinclude:: /_static/code/zh/basic/eager/1plus1.py  
+TensorFlow use **Tensors** as the basic element of data. Tensors in TensorFlow is conceptually equal to multidimensional arrays. We can use it to describe scalars, vectors, matrics and so on. The followings are some examples:
+
+.. literalinclude:: /_static/code/en/basic/eager/1plus1.py  
     :lines: 3-11
 
-张量的重要属性是其形状、类型和值。可以通过张量的 ``shape`` 、 ``dtype`` 属性和 ``numpy()`` 方法获得。例如：
+There are three important attributes of a Tensor: shape, data type and value. You can use ``shape`` 、 ``dtype`` attribute and ``numpy()`` method to fetch them. For example:
 
-.. literalinclude:: /_static/code/zh/basic/eager/1plus1.py  
+.. literalinclude:: /_static/code/en/basic/eager/1plus1.py  
     :lines: 13-17
 
-.. tip:: TensorFlow的大多数API函数会根据输入的值自动推断张量中元素的类型（一般默认为 ``tf.float32`` ）。不过你也可以通过加入 ``dtype`` 参数来自行指定类型，例如 ``zero_vector = tf.zeros(shape=(2), dtype=tf.int32)`` 将使得张量中的元素类型均为整数。张量的 ``numpy()`` 方法是将张量的值转换为一个NumPy数组。
+.. admonition:: Tip
 
-TensorFlow里有大量的 **操作** （Operation），使得我们可以将已有的张量进行运算后得到新的张量。示例如下：
+    Most of the API functions of TensorFlow will guess the data type automatically from the input (most of the time it will be ``tf.float32``). However, you can add parameter ``dtype`` to assign the data type manually. For example, ``zero_vector = tf.zeros(shape=(2), dtype=tf.int32)`` will return a Tensor with all element as ``tf.int32``.
 
-.. literalinclude:: /_static/code/zh/basic/eager/1plus1.py  
+    The ``numpy()`` method of a Tensor is to return a NumPy array whose value is equal to the value of the tensor.
+
+There are lots of **operations** in TensorFlow, so that we can obtain new tensors as the result of operations between tensors. For example:
+
+.. literalinclude:: /_static/code/en/basic/eager/1plus1.py  
     :lines: 19-20
 
-操作完成后， ``C`` 和 ``D`` 的值分别为::
+After the operations, the value of ``C`` and ``D`` are::
     
     tf.Tensor(
     [[ 6.  8.]
@@ -70,7 +58,7 @@ TensorFlow里有大量的 **操作** （Operation），使得我们可以将已�
     [[19. 22.]
      [43. 50.]], shape=(2, 2), dtype=float32)
 
-可见，我们成功使用 ``tf.add()`` 操作计算出 :math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} + \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = \begin{bmatrix} 6 & 8 \\ 10 & 12 \end{bmatrix}`，使用 ``tf.matmul()`` 操作计算出 :math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \times \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = \begin{bmatrix} 19 & 22 \\43 & 50 \end{bmatrix}` 。
+So we can see that we successfully use ``tf.add()`` to compute :math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} + \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = \begin{bmatrix} 6 & 8 \\ 10 & 12 \end{bmatrix}`, and use ``tf.matmul()`` to compute :math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \times \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = \begin{bmatrix} 19 & 22 \\43 & 50 \end{bmatrix}`.
 
 Automatic differentiation mechanism
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
