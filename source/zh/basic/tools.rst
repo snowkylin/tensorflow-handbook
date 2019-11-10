@@ -331,7 +331,7 @@ Keras支持使用 ``tf.data.Dataset`` 直接作为输入。当调用 ``tf.keras.
 .. literalinclude:: /_static/code/zh/tools/tfdata/cats_vs_dogs.py
     :lines: 53-67
 
-TFRecord ：TensorFlow数据集储存格式
+TFRecord ：TensorFlow数据集存储格式
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ..
