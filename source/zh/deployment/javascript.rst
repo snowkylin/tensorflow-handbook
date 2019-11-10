@@ -281,50 +281,16 @@ TensorFlow.js 模型训练 *
 
 首先，我们定义数据，进行基本的归一化操作。
 
-.. code-block:: javascript
-
-    import * as tf from '@tensorflow/tfjs'
-
-    const xsRaw = tf.tensor([2013, 2014, 2015, 2016, 2017])
-    const ysRaw = tf.tensor([12000, 14000, 15000, 16500, 17500])
-
-    // 归一化
-    const xs = xsRaw.sub(xsRaw.min())
-                    .div(xsRaw.max().sub(xsRaw.min()))
-    const ys = ysRaw.sub(ysRaw.min())
-                    .div(ysRaw.max().sub(ysRaw.min()))
-
+.. literalinclude:: /_static/code/zh/deployment/javascript/index.html
+    :lines: 5-12
 
 接下来，我们来求线性模型中两个参数 ``a`` 和 ``b`` 的值。
 
 使用 ``loss()`` 计算损失；
 使用 ``optimizer.minimize()`` 自动更新模型参数。
 
-.. code-block:: javascript
-
-    const a = tf.scalar(Math.random()).variable()
-    const b = tf.scalar(Math.random()).variable()
-
-    // y = a * x + b.
-    const f = (x: tf.Tensor) => a.mul(x).add(b)
-    const loss = (pred: tf.Tensor, label: tf.Tensor) => pred.sub(label).square().mean() as tf.Scalar
-
-    const learningRate = 1e-3
-    const optimizer = tf.train.sgd(learningRate)
-
-    // 训练模型
-    for (let i = 0; i < 10000; i++) {
-       optimizer.minimize(() => loss(f(xs), ys))
-    }
-
-    // 预测
-    console.log(`a: ${a.dataSync()}, b: ${b.dataSync()}`)
-    const preds = f(xs).dataSync() as Float32Array
-    const trues = ys.arraySync() as number[]
-    preds.forEach((pred, i) => {
-       console.log(`x: ${i}, pred: ${pred.toFixed(2)}, true: ${trues[i].toFixed(2)}`)
-    })
-
+.. literalinclude:: /_static/code/zh/deployment/javascript/index.html
+    :lines: 14-35
 
 从下面的输出样例中我们可以看到，已经拟合的比较接近了。
 
@@ -339,42 +305,9 @@ TensorFlow.js 模型训练 *
 
 可以直接在浏览器中运行，完整的 HTML 代码如下：
 
-.. code-block:: html
+.. literalinclude:: /_static/code/zh/deployment/javascript/index.html
+    :lines: 1-
 
-    <html>
-      <head>
-        <script src="http://unpkg.com/@tensorflow/tfjs/dist/tf.min.js"></script>
-        <script>
-          const xsRaw = tf.tensor([2013, 2014, 2015, 2016, 2017])
-          const ysRaw = tf.tensor([12000, 14000, 15000, 16500, 17500])
+.. admonition:: 在浏览器中和 Node 环境中引入 TFJS 的区别
 
-          // 归一化
-          const xs = xsRaw.sub(xsRaw.min())
-                          .div(xsRaw.max().sub(xsRaw.min()))
-          const ys = ysRaw.sub(ysRaw.min())
-                          .div(ysRaw.max().sub(ysRaw.min()))
-          const a = tf.scalar(Math.random()).variable()
-          const b = tf.scalar(Math.random()).variable()
-
-          // y = a * x + b.
-          const f = (x) => a.mul(x).add(b)
-          const loss = (pred, label) => pred.sub(label).square().mean()
-
-          const learningRate = 1e-3
-          const optimizer = tf.train.sgd(learningRate)
-
-          // 训练模型
-          for (let i = 0; i < 10000; i++) {
-             optimizer.minimize(() => loss(f(xs), ys))
-          }
-
-          // 预测
-          console.log(`a: ${a.dataSync()}, b: ${b.dataSync()}`)
-          const preds = f(xs).dataSync()
-          const trues = ys.arraySync()
-          preds.forEach((pred, i) => {
-             console.log(`x: ${i}, pred: ${pred.toFixed(2)}, true: ${trues[i].toFixed(2)}`)
-          })
-        </script>
-      </head>
-    </html>
+    我们本节的例子中，是在浏览器中引用 TFJS 库。如果你需要在 Node 环境中操作，那么需要使用 `import * as tf from '@tensorflow/tfjs'` 替换掉 `<script src="http://unpkg.com/@tensorflow/tfjs/dist/tf.min.js"></script>` 进行 TFJS 引入。
