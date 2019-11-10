@@ -153,11 +153,13 @@ TensorFlow.js 环境配置
 
     $ node
     > require('@tensorflow/tfjs').version
-    { 'tfjs-core': '1.0.1',
-      'tfjs-data': '1.0.1',
-      'tfjs-layers': '1.0.1',
-      'tfjs-converter': '1.0.1',
-      tfjs: '1.0.1' }
+    {
+        'tfjs-core': '1.3.1',
+        'tfjs-data': '1.3.1',
+        'tfjs-layers': '1.3.1',
+        'tfjs-converter': '1.3.1',
+        tfjs: '1.3.1'
+    }
     > 
 
 如果你看到了上面的 ``tfjs-core``, ``tfjs-data``, ``tfjs-layers`` 和 ``tfjs-converter`` 的输出信息，那么就说明环境配置没有问题了。
