@@ -10,3 +10,4 @@ source/_future
 source/_static/code/.idea
 source/_static/code/zh/tools/tfdata/cat_and_dog
 *.log
+.DS_Store
