@@ -31,7 +31,7 @@ TensorFlow.js 支持 GPU 硬件加速。在 Node.js 环境中，如果有 CUDA �
 
     微信小程序也提供了官方插件，封装了TensorFlow.js库，利用小程序WebGL API给第三方小程序调用时提供GPU加速。
 
-本章，我们将基于 TensorFlow.js 1.0，向大家简单的介绍如何基于 ES6 的 JavaScript 进行 TensorFlow.js 的开发，然后提供两个例子，并基于例子进行详细的讲解和介绍，最终实现使用纯 JavaScript 进行 TensorFlow 模型的开发、训练和部署。
+本章，我们将基于 TensorFlow.js 1.0，向大家简单地介绍如何基于 ES6 的 JavaScript 进行 TensorFlow.js 的开发，然后提供两个例子，并基于例子进行详细的讲解和介绍，最终实现使用纯 JavaScript 进行 TensorFlow 模型的开发、训练和部署。
 
 .. admonition:: 章节代码地址
 
@@ -44,7 +44,7 @@ TensorFlow.js 支持 GPU 硬件加速。在 Node.js 环境中，如果有 CUDA �
     :width: 60%
     :align: center
 
-TensorFlow.js 可以让我们直接在浏览器中加载 TensorFlow，让用户立即通过本地的CPU/GPU资源进行我们所需要的机器学习运算，更灵活的进行AI应用的开发。
+TensorFlow.js 可以让我们直接在浏览器中加载 TensorFlow，让用户立即通过本地的CPU/GPU资源进行我们所需要的机器学习运算，更灵活地进行AI应用的开发。
 
 浏览器中进行机器学习，相对比与服务器端来讲，将拥有以下四大优势：
 
@@ -53,7 +53,7 @@ TensorFlow.js 可以让我们直接在浏览器中加载 TensorFlow，让用户�
 * 可以通过手机浏览器，调用手机硬件的各种传感器（如：GPS、电子罗盘、加速度传感器、摄像头等）；
 * 用户的数据可以无需上传到服务器，在本地即可完成所需操作。
 
-通过这些优势，TensorFlow.js 将带给开发者带来极高的灵活性。比如在 Google Creative Lab 在2018年7月发布的 Move Mirror 里，我们可以在手机上打开浏览器，通过手机摄像头检测视频中用户的身体动作姿势，然后通过对图片数据库中类似身体动作姿势的检索，给用户显示一个最能够和他当前动作相似的照片。在Move Mirror的运行过程中，数据没有上传到服务器，所有的运算都是在手机本地，基于手机的CPU/GPU完成的，而这项技术，将使Servreless与AI应用结合起来成为可能。
+通过这些优势，TensorFlow.js 将给开发者带来极高的灵活性。比如在 Google Creative Lab 在2018年7月发布的 Move Mirror 里，我们可以在手机上打开浏览器，通过手机摄像头检测视频中用户的身体动作姿势，然后通过对图片数据库中类似身体动作姿势的检索，给用户显示一个最能够和他当前动作相似的照片。在Move Mirror的运行过程中，数据没有上传到服务器，所有的运算都是在手机本地，基于手机的CPU/GPU完成的，而这项技术，将使Servreless与AI应用结合起来成为可能。
 
 .. figure:: /_static/image/javascript/move-mirror.jpg
     :width: 60%
@@ -68,7 +68,7 @@ TensorFlow.js 环境配置
 在浏览器中使用 TensorFlow.js
 --------------------------------------------
 
-在浏览器中加载 TensorFlow.js ，最方便的办法是在 HTML 中直接引用 TensorFlow.js 发布的 NPM 包中，已经打包安装好的 JavaScript 代码。
+在浏览器中加载 TensorFlow.js ，最方便的办法是在 HTML 中直接引用 TensorFlow.js 发布的 NPM 包中已经打包安装好的 JavaScript 代码。
 
 .. literalinclude:: /_static/code/zh/deployment/javascript/regression.html
     :lines: 1-3
@@ -81,7 +81,7 @@ TensorFlow.js 环境配置
 
 然后，完成以下四个步骤即可完成配置：
 
-1. 确认 Node.js 版本（v10，或更新）::
+1. 确认 Node.js 版本（v10 或更新的版本）::
 
     $ node --verion
     v10.5.0
@@ -123,21 +123,17 @@ TensorFlow.js 环境配置
 
 如果你看到了上面的 ``tfjs-core``, ``tfjs-data``, ``tfjs-layers`` 和 ``tfjs-converter`` 的输出信息，那么就说明环境配置没有问题了。
 
-然後，在 JavaScript 程序中，通過以下指令，既可以引入 TensorFlow.js：
-
-.. admonition:: 使用 `import` 加载 JavaScript 模块
-
-    `import` 是 JavaScript ES6 版本新开始拥有的新特性。粗略可以认为等价于 `require`。
-
-    比如：`import * as tf from '@tensorflow/tfjs'` 和 `const tf = require('@tensorflow/tfjs')` 对下面的示例代码是等价的。
-
-    希望了解更多的读者，可以访问 MDN 文档：https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
+然後，在 JavaScript 程序中，通过以下指令，即可引入 TensorFlow.js：
 
 .. code-block:: javascript
 
     import * as tf from '@tensorflow/tfjs'
     console.log(tf.version.tfjs)
     // Output: 1.3.1
+
+.. admonition:: 使用 `import` 加载 JavaScript 模块
+
+    ``import`` 是 JavaScript ES6 版本新开始拥有的新特性。粗略可以认为等价于 ``require``。比如：``import * as tf from '@tensorflow/tfjs'`` 和 ``const tf = require('@tensorflow/tfjs')`` 对上面的示例代码是等价的。希望了解更多的读者，可以访问 `MDN 文档 <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import>`_ 。
 
 
 在微信小程序中使用 TensorFlow.js
@@ -153,7 +149,7 @@ TensorFlow.js 微信小程序插件封装了 TensorFlow.js 库，用于提供给
 
 .. admonition:: TensorFlow.js 微信小程序教程
 
-    为了推动微信小程序中人工智能应用的发展，Google 专门为微信小程序打造了最新 TensorFlow.js 插件，并联合 Google 认证机器学习专家、微信、腾讯课堂 NEXT 学院，联合推出了“【NEXT学院】TensorFlow.js遇到小程序”课程，帮助小程序开发者带来更加易于上手和流畅的 TensorFlow.js 开发体验。
+    为了推动微信小程序中人工智能应用的发展，Google 专门为微信小程序打造了最新 TensorFlow.js 插件，并联合 Google 认证机器学习专家、微信、腾讯课堂 NEXT 学院，联合推出了“NEXT学院：TensorFlow.js遇到小程序”课程，帮助小程序开发者带来更加易于上手和流畅的 TensorFlow.js 开发体验。
 
     上述课程主要介绍了如何将 TensorFlow.js 插件嵌入到微信小程序中，并基于其进行开发。课程中以一个姿态检测的模型 PoseNet 作为案例，介绍了 TensorFlow.js 插件导入到微信小程序开发工具中后，在项目开发中的配置，功能调用，加载模型等方法应用；此外，还介绍了在 Python 环境下训练好的模型如何转换并载入到小程序中。
 
@@ -168,7 +164,7 @@ TensorFlow.js 模型部署
 通过 TensorFlow.js 加载 Python 模型
 --------------------------------------------
 
-一般 TensorFlow 的模型，会被存储为 SavedModel 格式。这也是 Google 目前推荐的模型保存最佳实践。SavedModel 格式可以通过 tensorflowjs-converter 转换器，将其转换为可以直接被 TensorFlow.js 加载的格式，在JavaScript语言中进行使用。
+一般 TensorFlow 的模型，会被存储为 SavedModel 格式。这也是 Google 目前推荐的模型保存最佳实践。SavedModel 格式可以通过 tensorflowjs-converter 转换器转换为可以直接被 TensorFlow.js 加载的格式，从而在JavaScript语言中进行使用。
 
 1. 安装 ``tensorflowjs_converter`` ::
 
@@ -192,8 +188,8 @@ TensorFlow.js 模型部署
     
 转换完成的模型，保存为了两类文件：
 
-    - `model.json` 模型架构
-    - `group1-shard*of*` 模型参数
+    - ``model.json``：模型架构
+    - ``group1-shard*of*``：模型参数
 
 举例来说，我们对 MobileNet v2 转换出来的文件，如下：
 
@@ -209,12 +205,6 @@ TensorFlow.js 模型部署
 
 4. 然后，我们就可以通过 JavaScript 来加载 TensorFlow 模型了！
 
-.. admonition:: 使用 `const` 声明 JavaScript 只读变量
-
-    `const` 是 JavaScript ES6 版本新开始拥有的新特性，用来替代变量声明 `var` 关键字。
-
-    比如：`const n = 42` 和 `var n = 42` 都是用来声明一个变量 `n` 并且赋值为 `42` 。 他们之间的区别是：`const` 声明的变量，在未来不允许被重新赋值，是只读的。
-
 .. code-block:: javascript
 
     import * as tf from '@tensorflow/tfjs'
@@ -228,7 +218,7 @@ TensorFlow.js 模型部署
 
 .. admonition:: 转换 TFHub 模型
 
-    将 TFHub 模型 ``https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/classification/1`` 转换到 ``/mobilenet/tfjs_model``：
+    将 TFHub 模型 ``https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/classification/1`` 转换到 ``/mobilenet/tfjs_model``::
 
         tensorflowjs_converter \\
             --input_format=tf_hub \\
@@ -239,7 +229,7 @@ TensorFlow.js 模型部署
 使用 TensorFlow.js 模型库
 --------------------------------------------
 
-TensorFlow.js 提供了一系列预训练好的模型，方便大家快速的给自己的程序引入人工智能能力。
+TensorFlow.js 提供了一系列预训练好的模型，方便大家快速地给自己的程序引入人工智能能力。
 
 模型库 GitHub 地址：https://github.com/tensorflow/tfjs-models，其中模型分类包括图像识别、语音识别、人体姿态识别、物体识别、文字分类等。
 
@@ -255,27 +245,27 @@ TensorFlow.js 提供了一系列预训练好的模型，方便大家快速的给
 
 这里我们将通过一个简单的 HTML 页面，来调用 TensorFlow.js 和与训练好的 MobileNet ，在用户的浏览器中，通过摄像头来识别图像中的物体是什么。
 
-1. 我们建立一个 HTML 文件，在头信息中，通过将 NPM 模块转换为在线可以引用的免费服务 `unpkg.com`，来加载 `@tensorflow/tfjs` 和 `@tensorflow-models/mobilenet` 两个 TFJS 模块：
+1. 我们建立一个 HTML 文件，在头信息中，通过将 NPM 模块转换为在线可以引用的免费服务 ``unpkg.com``，来加载 ``@tensorflow/tfjs`` 和 ``@tensorflow-models/mobilenet`` 两个 TFJS 模块：
 
 .. literalinclude:: /_static/code/zh/deployment/javascript/mobilenet.html
     :lines: 3-6
 
-2. 我们声明三个 HTML 元素：用来显示视频的 `<video>`，用来显示我们截取特定帧的 `<img>`，和用来显示检测文字结果的 `<p>`：
+2. 我们声明三个 HTML 元素：用来显示视频的 ``<video>``，用来显示我们截取特定帧的 ``<img>``，和用来显示检测文字结果的 ``<p>``：
 
 .. literalinclude:: /_static/code/zh/deployment/javascript/mobilenet.html
     :lines: 8-10
 
-3. 我们通过 JavaScript ，将对应的 HTML 元素进行初始化：`video`, `image`, `status` 三个变量分别用来对应 `<video>`, `<img>`, `<p>` 三个 HTML 元素，`canves` 和 `ctx` 用来做从摄像头获取视频流数据的中转存储。`model` 将用来存储我们从网络上加载的 MobileNet：
+3. 我们通过 JavaScript ，将对应的 HTML 元素进行初始化：``video``, ``image``, ``status`` 三个变量分别用来对应 ``<video>``, ``<img>``, ``<p>`` 三个 HTML 元素，``canvas`` 和 ``ctx`` 用来做从摄像头获取视频流数据的中转存储。``model`` 将用来存储我们从网络上加载的 MobileNet：
 
 .. literalinclude:: /_static/code/zh/deployment/javascript/mobilenet.html
     :lines: 13-20
 
-4. `main()` 用来初始化整个系统，完成加载 MobileNet 模型，将用户摄像头的数据绑定 `<video>` 这个 HTML 元素上，最后触发 `refresh()` 函数，进行定期刷新操作：
+4. ``main()`` 用来初始化整个系统，完成加载 MobileNet 模型，将用户摄像头的数据绑定 ``<video>`` 这个 HTML 元素上，最后触发 ``refresh()`` 函数，进行定期刷新操作：
 
 .. literalinclude:: /_static/code/zh/deployment/javascript/mobilenet.html
     :lines: 24-37
 
-5. `refresh()` 函数，用来从视频中取出当前一帧图像，然后通过 MobileNet 模型进行分类，并将分类结果，显示在网页上。然后，通过 `setTimeout`，重复执行自己，实现持续对视频图像进行处理的功能：
+5. ``refresh()`` 函数，用来从视频中取出当前一帧图像，然后通过 MobileNet 模型进行分类，并将分类结果，显示在网页上。然后，通过 ``setTimeout``，重复执行自己，实现持续对视频图像进行处理的功能：
 
 .. literalinclude:: /_static/code/zh/deployment/javascript/mobilenet.html
     :lines: 39-52
@@ -313,9 +303,7 @@ TensorFlow.js 模型训练 *
 
 .. admonition:: JavaScript 中的胖箭头函数（Fat Arrow Function）
 
-    从 JavaScript 的 ES6 版本开始，允许使用箭头函数（`=>`）来简化函数的声明和书写，并且带来一些和传统函数（function）的区别。在 TensorFlow.js 中，会比较常见到箭头函数，这里做简单说明。
-
-    针对以下箭头函数：
+    从 JavaScript 的 ES6 版本开始，允许使用箭头函数（``=>``）来简化函数的声明和书写，类似于Python中的lambda表达式。例如，以下箭头函数：
 
     .. code-block:: javascript
 
@@ -323,7 +311,7 @@ TensorFlow.js 模型训练 *
             return a + b
         }
 
-    基本等价为如下的传统函数：
+    在效果上等价为如下的传统函数：
 
     .. code-block:: javascript
 
@@ -331,14 +319,12 @@ TensorFlow.js 模型训练 *
             return a + b
         }
 
-    其区别为：箭头函数中，没有自己的 `this`、`arguments`，也不可以被当做构造函数（`new`），不可以被当做 `Generator`（无法使用 `yield`）。
-    
-    感兴趣的读者可以参考 MDN 文档了解更多：https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+    不过箭头函数中没有自己的 ``this`` 和 ``arguments``，不可以被当做构造函数（``new``），也不可以被当做 ``Generator``（无法使用 ``yield``）。感兴趣的读者可以参考 `MDN 文档 <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions>`_ 以了解更多。
 
 .. literalinclude:: /_static/code/zh/deployment/javascript/regression.html
     :lines: 14-35
 
-从下面的输出样例中我们可以看到，已经拟合的比较接近了。
+从下面的输出样例中我们可以看到，已经拟合得比较接近了。
 
 ::
 
@@ -357,7 +343,7 @@ TensorFlow.js 模型训练 *
 TensorFlow.js 性能对比
 --------------------------------------------
 
-TensorFlow.js 的性能如何，Google 官方做了一份基于 MobileNet 的评测，可以作为参考。具体评测是基于 MobileNet 的 TensorFlow 模型，将其 JavaScript 版本和 Python 版本各运行两百次，其评测结论如下。
+关于 TensorFlow.js 的性能，Google 官方做了一份基于 MobileNet 的评测，可以作为参考。具体评测是基于 MobileNet 的 TensorFlow 模型，将其 JavaScript 版本和 Python 版本各运行两百次，其评测结论如下。
 
 手机浏览器性能：（单位：毫秒ms）
 
@@ -367,7 +353,7 @@ TensorFlow.js 的性能如何，Google 官方做了一份基于 MobileNet 的评
 
 TensorFlow.js 在手机浏览器中运行一次推理：
 
-- 在 IPhoneX 上需要时间为 22ms
+- 在 iPhoneX 上需要时间为 22ms
 - 在 Pixel3 上需要时间为 100ms
 
 与 TensorFlow Lite 代码基准相比，手机浏览器中的 TensorFlow.js 在 IPhoneX 上的运行时间为基准的1.2倍，在 Pixel3 上运行的时间为基准的 1.8 倍。
@@ -398,6 +384,6 @@ Node.js 性能：
 TensorFlow.js 在 Node.js 运行一次推理：
 
 * 在 CPU 上需要时间为56ms
-* 在 GPU(CUDA) 上需要时间为14ms
+* 在 GPU (CUDA) 上需要时间为14ms
 
 与 Python 代码基准相比，Node.js 的 TensorFlow.js 在 CPU 上的运行时间与基准相同，在 GPU（CUDA） 上运行的时间是基准的1.6倍。
