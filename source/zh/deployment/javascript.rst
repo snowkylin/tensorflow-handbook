@@ -319,7 +319,7 @@ TensorFlow.js 模型训练 *
             return a + b
         }
 
-    不过箭头函数中没有自己的 ``this`` 和 ``arguments``，不可以被当做构造函数（``new``），也不可以被当做 ``Generator``（无法使用 ``yield``）。感兴趣的读者可以参考 `MDN 文档 <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions>`_ 以了解更多。
+    不过箭头函数中没有自己的 ``this`` 和 ``arguments``，不可以被当做构造函数（``new``），也不可以被当做 ``Generator`` （无法使用 ``yield``）。感兴趣的读者可以参考 `MDN 文档 <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions>`_ 以了解更多。
 
 .. literalinclude:: /_static/code/zh/deployment/javascript/regression.html
     :lines: 14-35
