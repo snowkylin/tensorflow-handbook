@@ -27,11 +27,15 @@ TensorFlow.js 是 TensorFlow 的 JavaScript 版本，支持GPU硬件加速，可
 
 TensorFlow.js 支持 GPU 硬件加速。在 Node.js 环境中，如果有 CUDA 环境支持，或者在浏览器环境中，有 WebGL 环境支持，那么 TensorFlow.js 可以使用硬件进行加速。
 
-微信小程序也提供了官方插件，封装了TensorFlow.js库，利用小程序WebGL API给第三方小程序调用时提供GPU加速。
+.. admonition:: 微信小程序
+
+    微信小程序也提供了官方插件，封装了TensorFlow.js库，利用小程序WebGL API给第三方小程序调用时提供GPU加速。
 
 本章，我们将基于 TensorFlow.js 1.0，向大家简单的介绍如何基于 ES6 的 JavaScript 进行 TensorFlow.js 的开发，然后提供两个例子，并基于例子进行详细的讲解和介绍，最终实现使用纯 JavaScript 进行 TensorFlow 模型的开发、训练和部署。
 
-本章中提到的 JavaScript 版 TensorFlow 的相关代码，使用说明，和训练好的模型文件及参数，都可以在作者的 GitHub 上找到。地址： https://github.com/huan/tensorflow-handbook-javascript
+.. admonition:: 章节代码地址
+
+    本章中提到的 JavaScript 版 TensorFlow 的相关代码，使用说明，和训练好的模型文件及参数，都可以在作者的 GitHub 上找到。地址： https://github.com/huan/tensorflow-handbook-javascript
 
 浏览器中使用 TensorFlow.js 的优势
 --------------------------------------------
@@ -61,11 +65,9 @@ TensorFlow.js 可以让我们直接在浏览器中加载 TensorFlow，让用户�
 TensorFlow.js 性能对比
 --------------------------------------------
 
-TensorFlow.js 的性能如何，Google 官方做了一份基于 MobileNet 的评测，可以作为参考。具体评测是基于 MobileNet 的 TensorFlow 模型，将其 JavaScript 版本和 Python 版本各运行两百次。
+TensorFlow.js 的性能如何，Google 官方做了一份基于 MobileNet 的评测，可以作为参考。具体评测是基于 MobileNet 的 TensorFlow 模型，将其 JavaScript 版本和 Python 版本各运行两百次，其评测结论如下。
 
-其评测结论如下。
-
-手机浏览器性能：
+手机浏览器性能：（单位：毫秒ms）
 
 .. figure:: /_static/image/javascript/performance-mobile.png
     :width: 60%
@@ -73,12 +75,12 @@ TensorFlow.js 的性能如何，Google 官方做了一份基于 MobileNet 的评
 
 TensorFlow.js 在手机浏览器中运行一次推理：
 
-1. 在 IPhoneX 上需要时间为 22ms
-1. 在 Pixel3 上需要时间为 100ms
+- 在 IPhoneX 上需要时间为 22ms
+- 在 Pixel3 上需要时间为 100ms
 
 与 TensorFlow Lite 代码基准相比，手机浏览器中的 TensorFlow.js 在 IPhoneX 上的运行时间为基准的1.2倍，在 Pixel3 上运行的时间为基准的 1.8 倍。
 
-台式机浏览器性能：
+台式机浏览器性能：（单位：毫秒ms）
 
 在浏览器中，TensorFlow.js 可以使用 WebGL 进行硬件加速，将 GPU 资源使用起来。
 
@@ -88,8 +90,8 @@ TensorFlow.js 在手机浏览器中运行一次推理：
 
 TensorFlow.js 在浏览器中运行一次推理：
 
-* 在 CPU 上需要时间为 97ms
-* 在 GPU (WebGL)上需要时间为 10ms
+- 在 CPU 上需要时间为 97ms
+- 在 GPU (WebGL)上需要时间为 10ms
 
 与 Python 代码基准相比，浏览器中的 TensorFlow.js 在 CPU 上的运行时间为基准的1.7倍，在 GPU (WebGL) 上运行的时间为基准的3.8倍。
 
@@ -114,6 +116,12 @@ TensorFlow.js 环境配置
 
 在浏览器中使用 TensorFlow.js
 --------------------------------------------
+
+在浏览器中加载 TensorFlow.js ，最方便的办法是在 HTML 中直接引用 TensorFlow.js 发布的 NPM 包中，已经打包安装好的 JavaScript 代码。
+
+.. literalinclude:: /_static/code/zh/deployment/javascript/regression.html
+    :lines: 1-3
+
 
 在 Node.js 中使用 TensorFlow.js
 --------------------------------------------
@@ -164,6 +172,23 @@ TensorFlow.js 环境配置
 
 如果你看到了上面的 ``tfjs-core``, ``tfjs-data``, ``tfjs-layers`` 和 ``tfjs-converter`` 的输出信息，那么就说明环境配置没有问题了。
 
+然後，在 JavaScript 程序中，通過以下指令，既可以引入 TensorFlow.js：
+
+.. admonition:: 使用 `import` 加载 JavaScript 模块
+
+    `import` 是 JavaScript ES6 版本新开始拥有的新特性。粗略可以认为等价于 `require`。
+
+    比如：`import * as tf from '@tensorflow/tfjs'` 和 `const tf = require('@tensorflow/tfjs')` 对下面的示例代码是等价的。
+
+    希望了解更多的读者，可以访问 MDN 文档：https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
+
+.. code-block:: javascript
+
+    import * as tf from '@tensorflow/tfjs'
+    console.log(tf.version.tfjs)
+    // Output: 1.3.1
+
+
 在微信小程序中使用 TensorFlow.js
 --------------------------------------------
 
@@ -179,11 +204,11 @@ TensorFlow.js 微信小程序插件封装了 TensorFlow.js 库，用于提供给
 
     为了推动微信小程序中人工智能应用的发展，Google 专门为微信小程序打造了最新 TensorFlow.js 插件，并联合 Google 认证机器学习专家、微信、腾讯课堂 NEXT 学院，联合推出了“【NEXT学院】TensorFlow.js遇到小程序”课程，帮助小程序开发者带来更加易于上手和流畅的 TensorFlow.js 开发体验。
 
-    本课程主要介绍了如何将 TensorFlow.js 插件嵌入到微信小程序中，并基于其进行开发。课程中以一个姿态检测的模型 PoseNet 作为案例，介绍了 TensorFlow.js 插件导入到微信小程序开发工具中后，在项目开发中的配置，功能调用，加载模型等方法应用；此外，还介绍了在 Python 环境下训练好的模型如何转换并载入到小程序中。
+    上述课程主要介绍了如何将 TensorFlow.js 插件嵌入到微信小程序中，并基于其进行开发。课程中以一个姿态检测的模型 PoseNet 作为案例，介绍了 TensorFlow.js 插件导入到微信小程序开发工具中后，在项目开发中的配置，功能调用，加载模型等方法应用；此外，还介绍了在 Python 环境下训练好的模型如何转换并载入到小程序中。
 
     本章作者也参与了课程制作，课程中的案列简单有趣易上手，通过学习，可以快速熟悉 TensorFlow.js 在小程序中的开发和应用.有兴趣的读者可以前往 NEXT 学院，进行后续深度学习。
 
-    课程地址：<https://ke.qq.com/course/428263>
+    课程地址：https://ke.qq.com/course/428263
 
 
 TensorFlow.js 模型部署
@@ -192,16 +217,9 @@ TensorFlow.js 模型部署
 通过 TensorFlow.js 加载 Python 模型
 --------------------------------------------
 
-一般 TensorFlow 的模型，以 Python 版本为例，会被存储为以下三种格式之一：
+一般 TensorFlow 的模型，会被存储为 SavedModel 格式。这也是 Google 目前推荐的模型保存最佳实践。SavedModel 格式可以通过 tensorflowjs-converter 转换器，将其转换为可以直接被 TensorFlow.js 加载的格式，在JavaScript语言中进行使用。
 
-* TensorFlow SavedModel
-* TensorFlow Hub Module
-
-Google 目前最佳实践中，推荐使用 SavedModel 方法进行模型保存。同时所有以上格式，都可以通过 tensorflowjs-converter 转换器，将其转换为可以直接被 TensorFlow.js 加载的格式，在JavaScript语言中进行使用。
-
-``tensorflowjs_converter`` 可以将Python存储的模型格式，转换为JavaScript可以直接调用的模型格式。
-
-安装 ``tensorflowjs_converter`` ::
+1. 安装 ``tensorflowjs_converter`` ::
 
     $ pip install tensorflowjs
 
@@ -210,22 +228,15 @@ Google 目前最佳实践中，推荐使用 SavedModel 方法进行模型保存�
 
     $ tensorflowjs_converter --help
 
-以下我们以 MobilenetV1 为例，看一下如何对模型文件进行转换操作，并将可以被 TensorFlow.js 加载的模型文件，存放到 ``/mobilenet/tfjs_model`` 目录下。
+2. 以下我们以 MobilenetV1 为例，看一下如何对模型文件进行转换操作，并将可以被 TensorFlow.js 加载的模型文件，存放到 ``/mobilenet/tfjs_model`` 目录下。
 
-1. 转换 SavedModel：将 ``/mobilenet/saved_model`` 转换到 ``/mobilenet/tfjs_model`` ::
+转换 SavedModel：将 ``/mobilenet/saved_model`` 转换到 ``/mobilenet/tfjs_model`` ::
 
     tensorflowjs_converter \
         --input_format=tf_saved_model \
         --output_node_names='MobilenetV1/Predictions/Reshape_1' \
         --saved_model_tags=serve \
         /mobilenet/saved_model \
-        /mobilenet/tfjs_model
-
-2. 转换 TFHub：将 ``https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/classification/1`` 转换到 ``/mobilenet/tfjs_model`` ::
-
-    tensorflowjs_converter \
-        --input_format=tf_hub \
-        'https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/classification/1' \
         /mobilenet/tfjs_model
     
 转换完成的模型，保存为了两类文件：
@@ -241,22 +252,38 @@ Google 目前最佳实践中，推荐使用 SavedModel 方法进行模型保存�
     /mobilenet/tfjs_model/group1-shard5of5
 
 
-为了加载转换完成的模型文件，我们需要安装 ``tfjs-converter`` 和 ``@tensorflow/tfjs`` 模块::
+3. 为了加载转换完成的模型文件，我们需要安装 ``tfjs-converter`` 和 ``@tensorflow/tfjs`` 模块::
 
     $ npm install @tensorflow/tfjs
 
-然后，我们就可以通过 JavaScript 来加载 TensorFlow 模型了！
+4. 然后，我们就可以通过 JavaScript 来加载 TensorFlow 模型了！
+
+.. admonition:: 使用 `const` 声明 JavaScript 只读变量
+
+    `const` 是 JavaScript ES6 版本新开始拥有的新特性，用来替代变量声明 `var` 关键字。
+
+    比如：`const n = 42` 和 `var n = 42` 都是用来声明一个变量 `n` 并且赋值为 `42` 。 他们之间的区别是：`const` 声明的变量，在未来不允许被重新赋值，是只读的。
 
 .. code-block:: javascript
 
-    import * as tf from '@tensorflow/tfjs';
+    import * as tf from '@tensorflow/tfjs'
 
-    const MODEL_URL = '/mobilenet/tfjs_model/model.json';
+    const MODEL_URL = '/mobilenet/tfjs_model/model.json'
 
-    const model = await tf.loadGraphModel(MODEL_URL);
+    const model = await tf.loadGraphModel(MODEL_URL)
 
-    const cat = document.getElementById('cat');
+    const cat = document.getElementById('cat')
     model.execute(tf.browser.fromPixels(cat))
+
+.. admonition:: 转换 TFHub 模型
+
+    将 TFHub 模型 ``https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/classification/1`` 转换到 ``/mobilenet/tfjs_model``：
+
+        tensorflowjs_converter \\
+            --input_format=tf_hub \\
+            'https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/classification/1' \\
+            /mobilenet/tfjs_model
+
 
 使用 TensorFlow.js 模型库
 --------------------------------------------
@@ -283,7 +310,7 @@ TensorFlow.js 模型训练 *
 
 首先，我们定义数据，进行基本的归一化操作。
 
-.. literalinclude:: /_static/code/zh/deployment/javascript/index.html
+.. literalinclude:: /_static/code/zh/deployment/javascript/regression.html
     :lines: 5-12
 
 接下来，我们来求线性模型中两个参数 ``a`` 和 ``b`` 的值。
@@ -291,7 +318,31 @@ TensorFlow.js 模型训练 *
 使用 ``loss()`` 计算损失；
 使用 ``optimizer.minimize()`` 自动更新模型参数。
 
-.. literalinclude:: /_static/code/zh/deployment/javascript/index.html
+.. admonition:: JavaScript 中的胖箭头函数（Fat Arrow Function）
+
+    从 JavaScript 的 ES6 版本开始，允许使用箭头函数（`=>`）来简化函数的声明和书写，并且带来一些和传统函数（function）的区别。在 TensorFlow.js 中，会比较常见到箭头函数，这里做简单说明。
+
+    针对以下箭头函数：
+
+    .. code-block:: javascript
+
+        const sum = (a, b) => {
+            return a + b
+        }
+
+    基本等价为如下的传统函数：
+
+    .. code-block:: javascript
+
+        const sum = function (a, b) {
+            return a + b
+        }
+
+    其区别为：箭头函数中，没有自己的 `this`、`arguments`，也不可以被当做构造函数（`new`），不可以被当做 `Generator`（无法使用 `yield`）。
+    
+    感兴趣的读者可以参考 MDN 文档了解更多：https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+
+.. literalinclude:: /_static/code/zh/deployment/javascript/regression.html
     :lines: 14-35
 
 从下面的输出样例中我们可以看到，已经拟合的比较接近了。
@@ -307,9 +358,5 @@ TensorFlow.js 模型训练 *
 
 可以直接在浏览器中运行，完整的 HTML 代码如下：
 
-.. literalinclude:: /_static/code/zh/deployment/javascript/index.html
+.. literalinclude:: /_static/code/zh/deployment/javascript/regression.html
     :lines: 1-
-
-.. admonition:: 在浏览器中和 Node 环境中引入 TFJS 的区别
-
-    我们本节的例子中，是在浏览器中引用 TFJS 库。如果你需要在 Node 环境中操作，那么需要使用 `import * as tf from '@tensorflow/tfjs'` 替换掉 `<script src="http://unpkg.com/@tensorflow/tfjs/dist/tf.min.js"></script>` 进行 TFJS 引入。
