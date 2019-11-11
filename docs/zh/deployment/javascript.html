@@ -650,7 +650,7 @@ $ npm install @tensorflow/tfjs-node-gpu
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>不过箭头函数中没有自己的 <code class="docutils literal notranslate"><span class="pre">this</span></code> 和 <code class="docutils literal notranslate"><span class="pre">arguments</span></code>，不可以被当做构造函数（<code class="docutils literal notranslate"><span class="pre">new</span></code>），也不可以被当做 <code class="docutils literal notranslate"><span class="pre">Generator``（无法使用</span> <span class="pre">``yield</span></code>）。感兴趣的读者可以参考 <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">MDN 文档</a> 以了解更多。</p>
+<p>不过箭头函数中没有自己的 <code class="docutils literal notranslate"><span class="pre">this</span></code> 和 <code class="docutils literal notranslate"><span class="pre">arguments</span></code>，不可以被当做构造函数（<code class="docutils literal notranslate"><span class="pre">new</span></code>），也不可以被当做 <code class="docutils literal notranslate"><span class="pre">Generator</span></code> （无法使用 <code class="docutils literal notranslate"><span class="pre">yield</span></code>）。感兴趣的读者可以参考 <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">MDN 文档</a> 以了解更多。</p>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    const a = tf.scalar(Math.random()).variable()
     const b = tf.scalar(Math.random()).variable()

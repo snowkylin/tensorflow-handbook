@@ -209,6 +209,8 @@ TensorBoard的使用有以下注意事项：
 
     即可快速载入MNIST数据集。
 
+对于特别巨大而无法完整载入内存的数据集，我们可以先将数据集处理为 TFRecord 格式，然后使用 ``tf.data.TFRocrdDataset()`` 进行载入。详情请参考 :ref:`后节 <tfrecord>`：
+
 数据集对象的预处理
 -------------------------------------------
 
@@ -216,10 +218,9 @@ TensorBoard的使用有以下注意事项：
 
 - ``Dataset.map(f)`` ：对数据集中的每个元素应用函数 ``f`` ，得到一个新的数据集（这部分往往结合 ``tf.io`` 进行读写和解码文件， ``tf.image`` 进行图像处理）；
 - ``Dataset.shuffle(buffer_size)`` ：将数据集打乱（设定一个固定大小的缓冲区（Buffer），取出前 ``buffer_size`` 个元素放入，并从缓冲区中随机采样，采样后的数据用后续数据替换）；
-- ``Dataset.batch(batch_size)`` ：将数据集分成批次，即对每 ``batch_size`` 个元素，使用 ``tf.stack()`` 在第0维合并，成为一个元素。
-- ``Dataset.prefetch()`` ：预取出数据集中的若干个元素
+- ``Dataset.batch(batch_size)`` ：将数据集分成批次，即对每 ``batch_size`` 个元素，使用 ``tf.stack()`` 在第0维合并，成为一个元素；
 
-除此以外，还有 ``Dataset.repeat()`` （重复数据集的元素）、 ``Dataset.reduce()`` （与Map相对的聚合操作）、 ``Dataset.take()``（）等，可参考 `API文档 <https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/data/Dataset>`_ 进一步了解。
+除此以外，还有 ``Dataset.repeat()`` （重复数据集的元素）、 ``Dataset.reduce()`` （与Map相对的聚合操作）、 ``Dataset.take()`` （截取数据集中的前若干个元素）等，可参考 `API文档 <https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/data/Dataset>`_ 进一步了解。
 
 以下以MNIST数据集进行示例。
 
@@ -282,6 +283,54 @@ TensorBoard的使用有以下注意事项：
     - 当 ``buffer_size`` 设置为1时，其实等价于没有进行任何打散；
     - 当数据集的标签顺序分布极为不均匀（例如二元分类时数据集前N个的标签为0，后N个的标签为1）时，较小的缓冲区大小会使得训练时取出的Batch数据很可能全为同一标签，从而影响训练效果。一般而言，数据集的顺序分布若较为随机，则缓冲区的大小可较小，否则则需要设置较大的缓冲区。
 
+使用 ``tf.data.Dataset.prefetch`` 提高训练流程效率
+--------------------------------------------------------------------------------------
+
+..
+    https://www.tensorflow.org/guide/data_performance
+
+当训练模型时，我们希望充分利用计算资源，减少CPU/GPU的空载时间。然而有时，数据集的准备处理非常耗时，使得我们在每进行一次训练前都需要花费大量的时间准备待训练的数据，而此时GPU只能空载而等待数据，造成了计算资源的浪费，如下图所示：
+
+.. figure:: /_static/image/tools/datasets_without_pipelining.png
+    :width: 100%
+    :align: center
+
+    常规训练流程，在准备数据时，GPU只能空载。`1图示来源 <https://www.tensorflow.org/guide/data_performance>`_ 。
+
+此时， ``tf.data`` 的数据集对象为我们提供了 ``Dataset.prefetch()`` 方法，使得我们可以让数据集对象 ``Dataset`` 在训练时预取出若干个元素，使得在GPU训练的同时CPU可以准备数据，从而提升训练流程的效率，如下图所示：
+
+.. figure:: /_static/image/tools/datasets_with_pipelining.png
+    :width: 100%
+    :align: center
+    
+    使用 ``Dataset.prefetch()`` 方法进行数据预加载后的训练流程，在GPU进行训练的同时CPU进行数据预加载，提高了训练效率。 `2图示来源  <https://www.tensorflow.org/guide/data_performance>`_ 。
+
+``Dataset.prefetch()`` 的使用方法和前节的 ``Dataset.batch()`` 、 ``Dataset.shuffle()`` 等非常类似。继续以前节的MNIST数据集为例，若希望开启预加载数据，使用如下代码即可：
+
+.. code-block:: python
+
+    mnist_dataset = mnist_dataset.prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
+
+此处参数 ``buffer_size`` 既可手工设置，也可设置为 ``tf.data.experimental.AUTOTUNE`` 从而由TensorFlow自动选择合适的数值。
+
+与此类似， ``Dataset.map()`` 也可以利用多GPU资源，并行化地对数据项进行变换，从而提高效率。以前节的MNIST数据集为例，假设用于训练的计算机具有2核的CPU，我们希望充分利用多核心的优势对数据进行并行化变换（比如前节的旋转90度函数 ``rot90`` ），可以使用以下代码：
+
+其运行过程如下图所示：
+
+.. code-block:: python
+
+    mnist_dataset = mnist_dataset.map(map_func=rot90, num_parallel_calls=2)
+
+.. figure:: /_static/image/tools/datasets_parallel_map.png
+    :width: 100%
+    :align: center
+
+    通过设置 ``Dataset.map()`` 的 ``num_parallel_calls`` 参数实现数据转换的并行化。上部分是未并行化的图示，下部分是2核并行的图示。 `3图示来源  <https://www.tensorflow.org/guide/data_performance>`_ 。
+
+当然，这里同样可以将 ``num_parallel_calls`` 设置为 ``tf.data.experimental.AUTOTUNE`` 以让TensorFlow自动选择合适的数值。
+
+除此以外，还有很多提升数据集处理性能的方式，可参考 `TensorFlow文档 <https://www.tensorflow.org/guide/data_performance>`_ 进一步了解。
+
 数据集元素的获取与使用
 -------------------------------------------
 构建好数据并预处理后，我们需要从其中迭代获取数据以用于训练。``tf.data.Dataset`` 是一个Python的可迭代对象，因此可以使用For循环迭代获取数据，即：
@@ -330,6 +379,8 @@ Keras支持使用 ``tf.data.Dataset`` 直接作为输入。当调用 ``tf.keras.
 
 .. literalinclude:: /_static/code/zh/tools/tfdata/cats_vs_dogs.py
     :lines: 53-67
+
+.. _tfrecord:
 
 TFRecord ：TensorFlow数据集存储格式
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
