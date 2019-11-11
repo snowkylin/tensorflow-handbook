@@ -62,55 +62,6 @@ TensorFlow.js 可以让我们直接在浏览器中加载 TensorFlow，让用户�
 - Move Mirror 地址：https://experiments.withgoogle.com/move-mirror
 - Move Mirror 所使用的 PoseNet 地址：https://github.com/tensorflow/tfjs-models/tree/master/posenet
 
-TensorFlow.js 性能对比
---------------------------------------------
-
-TensorFlow.js 的性能如何，Google 官方做了一份基于 MobileNet 的评测，可以作为参考。具体评测是基于 MobileNet 的 TensorFlow 模型，将其 JavaScript 版本和 Python 版本各运行两百次，其评测结论如下。
-
-手机浏览器性能：（单位：毫秒ms）
-
-.. figure:: /_static/image/javascript/performance-mobile.png
-    :width: 60%
-    :align: center
-
-TensorFlow.js 在手机浏览器中运行一次推理：
-
-- 在 IPhoneX 上需要时间为 22ms
-- 在 Pixel3 上需要时间为 100ms
-
-与 TensorFlow Lite 代码基准相比，手机浏览器中的 TensorFlow.js 在 IPhoneX 上的运行时间为基准的1.2倍，在 Pixel3 上运行的时间为基准的 1.8 倍。
-
-台式机浏览器性能：（单位：毫秒ms）
-
-在浏览器中，TensorFlow.js 可以使用 WebGL 进行硬件加速，将 GPU 资源使用起来。
-
-.. figure:: /_static/image/javascript/performance-browser.gif
-    :width: 60%
-    :align: center
-
-TensorFlow.js 在浏览器中运行一次推理：
-
-- 在 CPU 上需要时间为 97ms
-- 在 GPU (WebGL)上需要时间为 10ms
-
-与 Python 代码基准相比，浏览器中的 TensorFlow.js 在 CPU 上的运行时间为基准的1.7倍，在 GPU (WebGL) 上运行的时间为基准的3.8倍。
-
-Node.js 性能：
-
-在 Node.js 中，TensorFlow.js 使用 TensorFlow 的 C Binding ，所以基本上可以达到和 Python 接近的效果。
-
-.. figure:: /_static/image/javascript/performance-node.png
-    :width: 60%
-    :align: center
-
-TensorFlow.js 在 Node.js 运行一次推理：
-
-* 在 CPU 上需要时间为56ms
-* 在 GPU(CUDA) 上需要时间为14ms
-
-与 Python 代码基准相比，Node.js 的 TensorFlow.js 在 CPU 上的运行时间与基准相同，在 GPU（CUDA） 上运行的时间是基准的1.6倍。
-
-
 TensorFlow.js 环境配置
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -360,3 +311,51 @@ TensorFlow.js 模型训练 *
 
 .. literalinclude:: /_static/code/zh/deployment/javascript/regression.html
     :lines: 1-
+
+TensorFlow.js 性能对比
+--------------------------------------------
+
+TensorFlow.js 的性能如何，Google 官方做了一份基于 MobileNet 的评测，可以作为参考。具体评测是基于 MobileNet 的 TensorFlow 模型，将其 JavaScript 版本和 Python 版本各运行两百次，其评测结论如下。
+
+手机浏览器性能：（单位：毫秒ms）
+
+.. figure:: /_static/image/javascript/performance-mobile.png
+    :width: 60%
+    :align: center
+
+TensorFlow.js 在手机浏览器中运行一次推理：
+
+- 在 IPhoneX 上需要时间为 22ms
+- 在 Pixel3 上需要时间为 100ms
+
+与 TensorFlow Lite 代码基准相比，手机浏览器中的 TensorFlow.js 在 IPhoneX 上的运行时间为基准的1.2倍，在 Pixel3 上运行的时间为基准的 1.8 倍。
+
+台式机浏览器性能：（单位：毫秒ms）
+
+在浏览器中，TensorFlow.js 可以使用 WebGL 进行硬件加速，将 GPU 资源使用起来。
+
+.. figure:: /_static/image/javascript/performance-browser.gif
+    :width: 60%
+    :align: center
+
+TensorFlow.js 在浏览器中运行一次推理：
+
+- 在 CPU 上需要时间为 97ms
+- 在 GPU (WebGL)上需要时间为 10ms
+
+与 Python 代码基准相比，浏览器中的 TensorFlow.js 在 CPU 上的运行时间为基准的1.7倍，在 GPU (WebGL) 上运行的时间为基准的3.8倍。
+
+Node.js 性能：
+
+在 Node.js 中，TensorFlow.js 使用 TensorFlow 的 C Binding ，所以基本上可以达到和 Python 接近的效果。
+
+.. figure:: /_static/image/javascript/performance-node.png
+    :width: 60%
+    :align: center
+
+TensorFlow.js 在 Node.js 运行一次推理：
+
+* 在 CPU 上需要时间为56ms
+* 在 GPU(CUDA) 上需要时间为14ms
+
+与 Python 代码基准相比，Node.js 的 TensorFlow.js 在 CPU 上的运行时间与基准相同，在 GPU（CUDA） 上运行的时间是基准的1.6倍。
