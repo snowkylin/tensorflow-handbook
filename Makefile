@@ -20,6 +20,10 @@ install:
 	pip3 install sphinx_markdown_builder
 	pip3 install sphinx_rtd_theme
 
+.PHONHY: watch
+watch:
+	fswatch source/ | xargs -n 1 -I{} make html
+
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
