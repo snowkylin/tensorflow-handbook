@@ -666,10 +666,10 @@
 </div>
 <p>此处参数 <code class="docutils literal notranslate"><span class="pre">buffer_size</span></code> 既可手工设置，也可设置为 <code class="docutils literal notranslate"><span class="pre">tf.data.experimental.AUTOTUNE</span></code> 从而由TensorFlow自动选择合适的数值。</p>
 <p>与此类似， <code class="docutils literal notranslate"><span class="pre">Dataset.map()</span></code> 也可以利用多GPU资源，并行化地对数据项进行变换，从而提高效率。以前节的MNIST数据集为例，假设用于训练的计算机具有2核的CPU，我们希望充分利用多核心的优势对数据进行并行化变换（比如前节的旋转90度函数 <code class="docutils literal notranslate"><span class="pre">rot90</span></code> ），可以使用以下代码：</p>
-<p>其运行过程如下图所示：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mnist_dataset</span> <span class="o">=</span> <span class="n">mnist_dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">map_func</span><span class="o">=</span><span class="n">rot90</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>其运行过程如下图所示：</p>
 <div class="figure align-center" id="id18">
 <a class="reference internal image-reference" href="../../_images/datasets_parallel_map.png"><img alt="../../_images/datasets_parallel_map.png" src="../../_images/datasets_parallel_map.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">通过设置 <code class="docutils literal notranslate"><span class="pre">Dataset.map()</span></code> 的 <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> 参数实现数据转换的并行化。上部分是未并行化的图示，下部分是2核并行的图示。 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">3图示来源</a> 。</span><a class="headerlink" href="#id18" title="永久链接至图片">¶</a></p>

@@ -315,11 +315,11 @@ TensorBoard的使用有以下注意事项：
 
 与此类似， ``Dataset.map()`` 也可以利用多GPU资源，并行化地对数据项进行变换，从而提高效率。以前节的MNIST数据集为例，假设用于训练的计算机具有2核的CPU，我们希望充分利用多核心的优势对数据进行并行化变换（比如前节的旋转90度函数 ``rot90`` ），可以使用以下代码：
 
-其运行过程如下图所示：
-
 .. code-block:: python
 
     mnist_dataset = mnist_dataset.map(map_func=rot90, num_parallel_calls=2)
+
+其运行过程如下图所示：
 
 .. figure:: /_static/image/tools/datasets_parallel_map.png
     :width: 100%
