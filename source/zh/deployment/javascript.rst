@@ -250,6 +250,48 @@ TensorFlow.js 提供了一系列预训练好的模型，方便大家快速的给
 - 谷歌云地址是：**https://storage.googleapis.com**/tfjs-models/savedmodel/posenet/mobilenet/float/050/model-stride16.json
 - 中国镜像地址是：**https://www.gstaticcnapps.cn**/tfjs-models/savedmodel/posenet/mobilenet/float/050/model-stride16.json
 
+在浏览器中使用 MobileNet 进行摄像头物体识别
+--------------------------------------------
+
+这里我们将通过一个简单的 HTML 页面，来调用 TensorFlow.js 和与训练好的 MobileNet ，在用户的浏览器中，通过摄像头来识别图像中的物体是什么。
+
+1. 我们建立一个 HTML 文件，在头信息中，通过将 NPM 模块转换为在线可以引用的免费服务 `unpkg.com`，来加载 `@tensorflow/tfjs` 和 `@tensorflow-models/mobilenet` 两个 TFJS 模块：
+
+.. literalinclude:: /_static/code/zh/deployment/javascript/mobilenet.html
+    :lines: 3-6
+
+2. 我们声明三个 HTML 元素：用来显示视频的 `<video>`，用来显示我们截取特定帧的 `<img>`，和用来显示检测文字结果的 `<p>`：
+
+.. literalinclude:: /_static/code/zh/deployment/javascript/mobilenet.html
+    :lines: 8-10
+
+3. 我们通过 JavaScript ，将对应的 HTML 元素进行初始化：`video`, `image`, `status` 三个变量分别用来对应 `<video>`, `<img>`, `<p>` 三个 HTML 元素，`canves` 和 `ctx` 用来做从摄像头获取视频流数据的中转存储。`model` 将用来存储我们从网络上加载的 MobileNet：
+
+.. literalinclude:: /_static/code/zh/deployment/javascript/mobilenet.html
+    :lines: 13-20
+
+4. `main()` 用来初始化整个系统，完成加载 MobileNet 模型，将用户摄像头的数据绑定 `<video>` 这个 HTML 元素上，最后触发 `refresh()` 函数，进行定期刷新操作：
+
+.. literalinclude:: /_static/code/zh/deployment/javascript/mobilenet.html
+    :lines: 24-37
+
+5. `refresh()` 函数，用来从视频中取出当前一帧图像，然后通过 MobileNet 模型进行分类，并将分类结果，显示在网页上。然后，通过 `setTimeout`，重复执行自己，实现持续对视频图像进行处理的功能：
+
+.. literalinclude:: /_static/code/zh/deployment/javascript/mobilenet.html
+    :lines: 39-52
+
+整体功能，只需要一个文件，几十行 HTML/JavaScript 即可实现。可以直接在浏览器中运行，完整的 HTML 代码如下：
+
+.. literalinclude:: /_static/code/zh/deployment/javascript/mobilenet.html
+    :lines: 1-
+
+运行效果截图如下。可以看到，水杯被系统识别为了 “beer glass” 啤酒杯，置信度 90% ：
+
+.. figure:: /_static/image/javascript/mobilenet.png
+    :width: 60%
+    :align: center
+
+
 TensorFlow.js 模型训练 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
