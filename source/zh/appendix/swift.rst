@@ -5,7 +5,7 @@ Swift for TensorFlow (S4TF) (Huan）
     :width: 60%
     :align: center
      
-    “Swift for Tensorflow is an attempt to change the default tools used by the entire machine learning and data science ecosystem.”
+    “Swift for TensorFlow is an attempt to change the default tools used by the entire machine learning and data science ecosystem.”
      
      -- Jameson Toole,  Co-founder & CTO of Fritz.ai
 
@@ -14,18 +14,18 @@ S4TF 简介
 
 Google 推出的 Swift for TensorFlow （简称S4TF）是专门针对 TensorFlow 优化过的 Swift 版本。（目前处在 Pre-Alpha 阶段）
 
-为了能够在程序语言级支持 Tensorflow 所需的所有功能特性，S4TF 做为了 Swift 语言本身的一个分支，为 Swift 语言添加了机器学习所需要的所有功能扩展。它不仅仅是一个用 Swift 写成的 TensorFlow API 封装，Google 还为 Swift 增加了编译器和语言增强功能，提供了一种新的编程模型，结合了图的性能、Eager Execution 的灵活性和表达能力。
+为了能够在程序语言级支持 TensorFlow 所需的所有功能特性，S4TF 做为了 Swift 语言本身的一个分支，为 Swift 语言添加了机器学习所需要的所有功能扩展。它不仅仅是一个用 Swift 写成的 TensorFlow API 封装，Google 还为 Swift 增加了编译器和语言增强功能，提供了一种新的编程模型，结合了图的性能、Eager Execution 的灵活性和表达能力。
 
 .. admonition:: Swift 语言创始人 Chris Lattner
 
-    Swift 语言是 Chris Lattner 在苹果公司工作时创建的。 现在 Chris Lattner 在 Google Brain 工作，专门从事深度学习的研究，并为 Swift 重写了编译器，为 Tensorflow 做定制优化。
+    Swift 语言是 Chris Lattner 在苹果公司工作时创建的。 现在 Chris Lattner 在 Google Brain 工作，专门从事深度学习的研究，并为 Swift 重写了编译器，为 TensorFlow 做定制优化。
 
-本章我们将向大家简要介绍 Swift for Tensorflow 的使用。你可以参考最新的 `Swift for TensorFlow 文档 <https://www.tensorflow.org/swift>`_.
+本章我们将向大家简要介绍 Swift for TensorFlow 的使用。你可以参考最新的 `Swift for TensorFlow 文档 <https://www.tensorflow.org/swift>`_.
 
-为什么要使用 Swift 进行 Tensorflow 开发
+为什么要使用 Swift 进行 TensorFlow 开发
 ---------------------------------------------
 
-相对于 Tensorflow 的其他版本（如 Python，C++ 等），S4TF 拥有其独有的优势，比如：
+相对于 TensorFlow 的其他版本（如 Python，C++ 等），S4TF 拥有其独有的优势，比如：
 
 #. 开发效率高：强类型语言，能够静态检查变量类型
 #. 迁移成本低：与 Python，C，C++ 能够无缝结合
@@ -36,28 +36,20 @@ Google 推出的 Swift for TensorFlow （简称S4TF）是专门针对 TensorFlow
 
 .. admonition:: 更多使用 Swift 的理由
 
-    有兴趣的读者可以参考官方文档：`Why Swift for Tensorflow <https://github.com/tensorflow/swift/blob/master/docs/WhySwiftForTensorFlow.md>`_
+    有兴趣的读者可以参考官方文档：`Why Swift for TensorFlow <https://github.com/tensorflow/swift/blob/master/docs/WhySwiftForTensorFlow.md>`_
 
 S4TF 环境配置
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-本地安装 Swift for Tensorflow
+本地安装 Swift for TensorFlow
 ---------------------------------------------------------------
 
-目前 S4TF 支持 Mac 和 Linux 两个运行环境。安装需要下载预先编译好的软件包，同时按照对应的操作系统的说明进行操作。安装后，即可以使用全套 Swift 工具，包括 Swift（Swift REPL / Interpreter）和 Swiftc（Swift编译器）。
+目前 S4TF 支持 Mac 和 Linux 两个运行环境。安装需要下载预先编译好的软件包，同时按照对应的操作系统的说明进行操作。安装后，即可以使用全套 Swift 工具，包括 Swift（Swift REPL / Interpreter）和 Swiftc（Swift编译器）。官方文档（含下载地址）可见 `这里 <https://github.com/tensorflow/swift/blob/master/Installation.md>`_ 。
 
-.. admonition:: 官方文档（含下载地址）
-
-    https://github.com/tensorflow/swift/blob/master/Installation.md
-
-在 Colaboratory 中快速体验 Swift for Tensorflow
+在 Colaboratory 中快速体验 Swift for TensorFlow
 ---------------------------------------------------------------
 
-Google 的 Colaboratory 可以直接支持 Swift 语言的运行环境。可以通过下面的链接，直接打开一个 Swift 运行环境的 Colab Notebook ，这是一个最方便立即可以体验 Swift for Tensorflow 的方法。
-
-.. admonition:: Blank Swift on Colab
-
-    这里有一个直接打开就可以运行 Swift 的空白 `Colab Notebook <https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-blank.ipynb>`_
+Google 的 Colaboratory 可以直接支持 Swift 语言的运行环境。可以 `点此 <https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-blank.ipynb>`_ 直接打开一个空白的，具备 Swift 运行环境的 Colab Notebook ，这是立即体验 Swift for TensorFlow 的最方便的办法。
 
 在 Docker 中快速体验 Swift for TensorFlow
 ---------------------------------------------------------------
@@ -117,7 +109,7 @@ Swift 是动态强类型语言，也就是说 Swift 支持通过编译器自动�
 在 Swift 中使用标准的 TensorFlow API
 ---------------------------------------------
 
-在基础的 Tensorflow API 上，Swift 封装了 Tensorflow 的标准 API 接口。比如看一下处理数字的代码，API 与 Tensorflow 高度保持了一致：
+在基础的 TensorFlow API 上，Swift 封装了 TensorFlow 的标准 API 接口。比如看一下处理数字的代码，API 与 TensorFlow 高度保持了一致：
 
 .. code-block:: swift
 
@@ -184,7 +176,7 @@ Swift 语言支持直接加载 Python 函数库（比如 NumPy），也支持直
 语言原生支持自动微分
 ---------------------------------------------
 
-我们可以通过 ``@differentiable`` 参数，非常容易的定义一个可被微分的函数。
+我们可以通过 ``@differentiable`` 参数，非常容易地定义一个可被微分的函数：
 
 .. code-block:: swift
 
@@ -267,10 +259,4 @@ MNIST数字分类
     Constructing data tensors.
     Test Accuracy: 0.9116667
 
-.. admonition:: 源代码地址
-
-    本小节的源代码可以在 https://github.com/huan/tensorflow-handbook-swift 找到。加载 `MNIST` 数据集使用了作者封装的 Swift Module： `swift-MNIST <https://github.com/huan/swift-MNIST>`_。
-
-.. admonition:: 使用 Google Colab 运行 Swift for TensorFlow （推荐）
-
-    更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址： https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb 
+本小节的源代码可以在 https://github.com/huan/tensorflow-handbook-swift 找到。加载 `MNIST` 数据集使用了作者封装的 Swift Module： `swift-MNIST <https://github.com/huan/swift-MNIST>`_。更方便的是在 Google Colab 上直接打开 `本例子的 Jupyter Notebook <https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb>`_ 直接运行。
