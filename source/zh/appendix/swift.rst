@@ -14,9 +14,11 @@ S4TF 简介
 
 Google 推出的 Swift for TensorFlow （简称S4TF）是专门针对 TensorFlow 优化过的 Swift 版本。（目前处在 Pre-Alpha 阶段）
 
-Swift 语言是 Chris Lattner 在苹果公司工作时创建的。 现在 Chris Lattner 在 Google Brain 工作，专门从事深度学习的研究，并为 Swift 重写了编译器，为 Tensorflow 做定制优化，
-
 为了能够在程序语言级支持 Tensorflow 所需的所有功能特性，S4TF 做为了 Swift 语言本身的一个分支，为 Swift 语言添加了机器学习所需要的所有功能扩展。它不仅仅是一个用 Swift 写成的 TensorFlow API 封装，Google 还为 Swift 增加了编译器和语言增强功能，提供了一种新的编程模型，结合了图的性能、Eager Execution 的灵活性和表达能力。
+
+.. admonition:: Swift 语言创始人 Chris Lattner
+
+    Swift 语言是 Chris Lattner 在苹果公司工作时创建的。 现在 Chris Lattner 在 Google Brain 工作，专门从事深度学习的研究，并为 Swift 重写了编译器，为 Tensorflow 做定制优化。
 
 本章我们将向大家简要介绍 Swift for Tensorflow 的使用。你可以参考最新的 `Swift for TensorFlow 文档 <https://www.tensorflow.org/swift>`_.
 
@@ -70,10 +72,6 @@ Google 的 Colaboratory 可以直接支持 Swift 语言的运行环境。可以�
     
     在命令行中执行 ``docker run -it --privileged --userns=host zixia/swift swift``
 
-- 获得一个 S4TF 的 Bash 终端
-    
-    在命令行中执行 ``docker run -it --privileged --userns=host zixia/swift bash`` 来打开一个 Bash 终端
-
 .. admonition:: 使用 Docker 执行 Swift 代码文件
 
     通过使用 Docker 的目录映射，可以启动 Docker 之后执行本地代码文件。详细使用方法可以参考 Docker Image `zixia/swift` 开源项目的地址：https://github.com/huan/docker-swift-tensorflow
@@ -112,6 +110,10 @@ Swift 是动态强类型语言，也就是说 Swift 支持通过编译器自动�
     // 输出结果
     print(w)
 
+.. admonition::  `Tensor<Float>` 中的 `<Float>`
+
+    在这里的 `Float` 是用来指定 Tensor 这个类所相关的内部数据类型。可以根据需要替换为其他合理数据类型，比如 “Double”。
+
 在 Swift 中使用标准的 TensorFlow API
 ---------------------------------------------
 
@@ -139,6 +141,10 @@ Swift 是动态强类型语言，也就是说 Swift 支持通过编译器自动�
         let loss = (y - label).squared().mean()
         print(loss)
     }
+
+.. admonition::  `•` 计算符
+
+    `•` 在这里为 Swift for TensorFlow 中定义的矩阵乘法操作符号
 
 在 Swift 中直接加载 Python 语言库
 ---------------------------------------------
@@ -183,17 +189,25 @@ Swift 语言支持直接加载 Python 函数库（比如 NumPy），也支持直
 .. code-block:: swift
 
     @differentiable
-    func frac(_ x:Double) -> Double {
+    func frac(x: Double) -> Double {
         return 1/x
     }
 
-    gradient(at:0.5) { x in frac(x) }
+    gradient(of: frac)(0.5)
 
 输出：
 
 ::
 
     -4.0
+
+在上面的代码例子中，我们通过将函数 `frac()` 标记为 `@differentiable` ，然后就可以通过 `gradient()` 函数，将其转换为求解微分的新函数 `gradient(of: trac)`，接下来就可以根据任意 x 值求解函数 frac 所在 x 点的梯度了。
+
+.. admonition:: Swift 函数声明中的参数名称和类型
+
+    Swift 使用 `func` 声明一个函数。在函数的参数中，变量名的冒号后面代表的是“参数类型”；在函数参数和函数体（`{}`） 之前，还可以通过瘦箭头（`->`）来指定函数的`返回值类型`。
+
+    比如在上面的代码中，参数变量名为 “x”；参数类型为 “Double”；函数返回类型为 “Double”。
 
 MNIST数字分类
 ---------------------------------------------
@@ -203,27 +217,45 @@ MNIST数字分类
 1. 首先，引入S4TF模块 `TensorFlow`、Python桥接模块 `Python`，基础模块 `Foundation` 和 MNIST 数据集模块 `MNIST`：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 1-9
+    :lines: 1-5
+
+.. admonition:: Swift MNIST Dataset 模块
+
+    Swift MNIST Dataset 模块是一个简单易用的 MNIST 数据集加载模块，基于 Swift 语言，提供了完整的数据集加载 API。项目 Github：https://github.com/huan/swift-MNIST
 
 2. 其次，声明一个最简单的 MLP 神经网络架构，将输入的 784 个图像数据，转换为 10 个神经元的输出：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 11-22
+    :lines: 7-18
 
 3. 接下来，我们实例化这个 MLP 神经网络模型，实例化 MNIST 数据集，并将其存入 `imageBatch` 和 `labelBatch` 变量：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 24-31
+    :lines: 20-27
 
 4. 然后，我们通过对数据集的循环，计算模型的梯度 `grads` 并通过 `optimizer.update()` 来反向传播更新模型的参数，进行训练：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 33-42
+    :lines: 29-38
+
+.. admonition:: Swift 闭包函数（Closure）
+
+    Swift 的闭包函数声明为：`{ (parameters) -> return type in statements }`，其中：`parameters` 为闭包接受的参数，`return type` 为闭包运行完毕的返回值类型，`statements` 为闭包内的运行代码。
+    
+    比如上述代码中的  `{ model -> Tensor<Float> in` 这一段，就声明了一个传入参数为 `model`，返回类型为 `Tensor<Float>` 的闭包函数。
+
+.. admonition:: Swift 尾随闭包语法 (Trailing Closure Syntax)
+
+    如果函数需要一个闭包作为参数，且这个参数是最后一个参数，那么我们可以将闭包函数放在函数参数列表外（也就是括号外），这种格式称为尾随闭包。
+
+.. admonition:: Swift 输入输出参数 (In-Out Parameters)
+
+    在 Swift 语言中，函数缺省是不可以修改参数的值的。为了让函数能够修改传入的参数变量，需要将传入的参数作为输入输出参数（In-Out Parmeters）。具体表现为需要在参数前加 `&` 符号，表示这个值可以被函数修改。
 
 5. 最后，我们使用训练好的模型，在测试数据集上进行检查，得到模型的准度：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 44-
+    :lines: 40-
 
 以上程序运行输出为：
 

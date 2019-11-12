@@ -2,10 +2,6 @@ import TensorFlow
 import Python
 import Foundation
 
-/**
- * The Swift Module for MNIST Dataset:
- * https://github.com/huan/swift-MNIST
- */
 import MNIST
 
 struct MLP: Layer {
@@ -32,7 +28,7 @@ let labelBatch = Dataset(elements: trainLabels).batched(32)
 
 for (X, y) in zip(imageBatch, labelBatch) {
     // Caculate the gradient
-    let (_, grads) = valueWithGradient(at: model) { model -> Tensor<Float> in
+    let grads = gradient(at: model) { model -> Tensor<Float> in
         let logits = model(X)
         return softmaxCrossEntropy(logits: logits, labels: y)
     }
