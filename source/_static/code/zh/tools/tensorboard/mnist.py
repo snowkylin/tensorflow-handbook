@@ -2,13 +2,15 @@ import tensorflow as tf
 from zh.model.mnist.mlp import MLP
 from zh.model.utils import MNISTLoader
 
-num_batches = 10000
+num_batches = 1000
 batch_size = 50
 learning_rate = 0.001
+log_dir = 'tensorboard'
 model = MLP()
 data_loader = MNISTLoader()
 optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
-summary_writer = tf.summary.create_file_writer('./tensorboard')     # 实例化记录器
+summary_writer = tf.summary.create_file_writer(log_dir)     # 实例化记录器
+tf.summary.trace_on(profiler=True)  # 开启Trace（可选）
 for batch_index in range(num_batches):
     X, y = data_loader.get_batch(batch_size)
     with tf.GradientTape() as tape:
@@ -20,3 +22,5 @@ for batch_index in range(num_batches):
             tf.summary.scalar("loss", loss, step=batch_index)       # 将当前损失函数的值写入记录器
     grads = tape.gradient(loss, model.variables)
     optimizer.apply_gradients(grads_and_vars=zip(grads, model.variables))
+with summary_writer.as_default():
+    tf.summary.trace_export(name="model_trace", step=0, profiler_outdir=log_dir)    # 保存Trace信息到文件（可选）

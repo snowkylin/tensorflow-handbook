@@ -152,10 +152,25 @@ TensorBoard的使用有以下注意事项：
 * 如果需要重新训练，需要删除掉记录文件夹内的信息并重启TensorBoard（或者建立一个新的记录文件夹并开启TensorBoard， ``--logdir`` 参数设置为新建立的文件夹）；
 * 记录文件夹目录保持全英文。
 
+除此以外，我们可以在训练时使用 ``tf.summary.trace_on`` 开启Trace，此时TensorFlow会将训练时的大量信息（如计算图的结构，每个操作所耗费的时间等）记录下来。在训练完成后，使用 ``tf.summary.trace_export`` 将记录结果输出到文件。
+
+.. code-block:: python
+
+    tf.summary.trace_on(graph=True, profiler=True)  # 开启Trace，可以记录图结构和profile信息
+    # 进行训练
+    with summary_writer.as_default():
+        tf.summary.trace_export(name="model_trace", step=0, profiler_outdir=log_dir)    # 保存Trace信息到文件
+
+之后，我们就可以在TensorBoard中选择“Profile”，以时间轴的方式查看各操作的耗时情况。如果使用了 :ref:`@tf.function <tffunction>` 建立了计算图，也可以点击“Graphs”查看图结构。
+
+.. figure:: /_static/image/tools/profiling.png
+    :width: 100%
+    :align: center
+
 最后提供一个实例，以前章的 :ref:`多层感知机模型 <mlp>` 为例展示TensorBoard的使用：
 
 .. literalinclude:: /_static/code/zh/tools/tensorboard/mnist.py
-    :emphasize-lines: 11, 19-20
+    :emphasize-lines: 12-13, 21-22, 25-26
 
 .. _tfdata:
 
@@ -283,7 +298,7 @@ TensorBoard的使用有以下注意事项：
     - 当 ``buffer_size`` 设置为1时，其实等价于没有进行任何打散；
     - 当数据集的标签顺序分布极为不均匀（例如二元分类时数据集前N个的标签为0，后N个的标签为1）时，较小的缓冲区大小会使得训练时取出的Batch数据很可能全为同一标签，从而影响训练效果。一般而言，数据集的顺序分布若较为随机，则缓冲区的大小可较小，否则则需要设置较大的缓冲区。
 
-使用 ``tf.data.Dataset.prefetch`` 提高训练流程效率
+使用 ``tf.data`` 的并行化策略提高训练流程效率
 --------------------------------------------------------------------------------------
 
 ..
@@ -329,7 +344,7 @@ TensorBoard的使用有以下注意事项：
 
 当然，这里同样可以将 ``num_parallel_calls`` 设置为 ``tf.data.experimental.AUTOTUNE`` 以让TensorFlow自动选择合适的数值。
 
-除此以外，还有很多提升数据集处理性能的方式，可参考 `TensorFlow文档 <https://www.tensorflow.org/guide/data_performance>`_ 进一步了解。
+除此以外，还有很多提升数据集处理性能的方式，可参考 `TensorFlow文档 <https://www.tensorflow.org/guide/data_performance>`_ 进一步了解。后文的实例中展示了tf.data并行化策略的强大性能，可 :ref:`点此 <tfdata_performance>` 查看。
 
 数据集元素的获取与使用
 -------------------------------------------
@@ -369,16 +384,26 @@ Keras支持使用 ``tf.data.Dataset`` 直接作为输入。当调用 ``tf.keras.
 实例：cats_vs_dogs图像分类
 -------------------------------------------
 
-以下代码以猫狗图片二分类任务为示例，展示了使用 ``tf.data`` 结合 ``tf.io`` 和 ``tf.image`` 建立 ``tf.data.Dataset`` 数据集，并进行训练和测试的完整过程。数据集可至 `这里 <https://www.floydhub.com/fastai/datasets/cats-vs-dogs>`_ 下载。
+以下代码以猫狗图片二分类任务为示例，展示了使用 ``tf.data`` 结合 ``tf.io`` 和 ``tf.image`` 建立 ``tf.data.Dataset`` 数据集，并进行训练和测试的完整过程。数据集可至 `这里 <https://www.floydhub.com/fastai/datasets/cats-vs-dogs>`_ 下载。使用前须将数据集解压到代码中 ``data_dir`` 所设置的目录（此处默认设置为 ``C:/datasets/cats_vs_dogs`` ，可根据自己的需求进行修改）。
 
 .. literalinclude:: /_static/code/zh/tools/tfdata/cats_vs_dogs.py
-    :lines: 1-51
-    :emphasize-lines: 14-17, 29-33, 51
+    :lines: 1-54
+    :emphasize-lines: 13-17, 29-36, 54
 
 使用以下代码进行测试：
 
 .. literalinclude:: /_static/code/zh/tools/tfdata/cats_vs_dogs.py
-    :lines: 53-67
+    :lines: 56-70
+
+.. _tfdata_performance:
+
+通过对以上示例进行性能测试，我们可以感受到 ``tf.data`` 的强大并行化性能。通过 ``prefetch()`` 的使用和在 ``map()`` 过程中加入 ``num_parallel_calls`` 参数，模型训练的时间可缩减至原来的一半甚至更低。测试结果如下：
+
+.. figure:: /_static/image/tools/tfdata_performance.jpg
+    :width: 100%
+    :align: center
+
+    tf.data 的并行化策略性能测试（纵轴为每epoch训练所需时间，单位：秒）
 
 .. _tfrecord:
 
