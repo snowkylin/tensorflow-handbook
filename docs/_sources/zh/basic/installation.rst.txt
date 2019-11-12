@@ -155,18 +155,23 @@ CUDA Toolkit和cuDNN的安装
     conda install cudatoolkit=X.X
     conda install cudnn=X.X.X
 
-安装CUDA Toolkit和cuDNN，其中X.X和X.X.X分别为需要安装的CUDA Toolkit和cuDNN版本号，必须严格按照TensorFlow官方网站所说明的版本安装。在安装前，可使用 ``conda search cudatoolkit`` 和 ``conda search cudnn`` 搜索conda源中可用的版本号。
+安装CUDA Toolkit和cuDNN，其中X.X和X.X.X分别为需要安装的CUDA Toolkit和cuDNN版本号，必须严格按照 `TensorFlow官方网站所说明的版本 <https://www.tensorflow.org/install/gpu#software_requirements>`_ 安装。例如，对于TensorFlow 2.0，可使用::
+
+    conda install cudatoolkit=10.0
+    conda install cudnn=7.6.4
+
+在安装前，可使用 ``conda search cudatoolkit`` 和 ``conda search cudnn`` 搜索conda源中可用的版本号。
 
 当然，也可以按照 `TensorFlow官方网站上的说明 <https://www.tensorflow.org/install/gpu>`_ 手动下载CUDA Toolkit和cuDNN并安装，不过过程会稍繁琐。
 
-使用conda包管理器安装GPU版本的TensorFlow时，会自动安装对应版本的CUDA Toolkit和cuDNN。conda源的更新较慢，如果对版本不太介意，推荐直接使用 ``conda install tensorflow-gpu`` 进行安装。
+使用conda包管理器安装GPU版本的TensorFlow时，会自动安装对应版本的CUDA Toolkit和cuDNN。conda源的更新往往较慢，如果对版本不太介意，也可以直接使用 ``conda install tensorflow-gpu`` 进行安装。
 
 第一个程序
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 安装完毕后，我们来编写一个简单的程序来验证安装。
 
-在命令行下输入 ``conda activate tensorflow`` 进入之前建立的安装有TensorFlow的Conda虚拟环境，再输入 ``python`` 进入Python环境，逐行输入以下代码：
+在命令行下输入 ``conda activate tf2.0`` 进入之前建立的安装有TensorFlow的Conda虚拟环境，再输入 ``python`` 进入Python环境，逐行输入以下代码：
 
 .. code-block:: python
 

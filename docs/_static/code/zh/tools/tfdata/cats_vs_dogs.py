@@ -27,10 +27,13 @@ if __name__ == '__main__':
         axis=-1)
 
     train_dataset = tf.data.Dataset.from_tensor_slices((train_filenames, train_labels))
-    train_dataset = train_dataset.map(_decode_and_resize)
+    train_dataset = train_dataset.map(
+        map_func=_decode_and_resize, 
+        num_parallel_calls=tf.data.experimental.AUTOTUNE)
     # 取出前buffer_size个数据放入buffer，并从其中随机采样，采样后的数据用后续数据替换
     train_dataset = train_dataset.shuffle(buffer_size=23000)    
     train_dataset = train_dataset.batch(batch_size)
+    train_dataset = train_dataset.prefetch(tf.data.experimental.AUTOTUNE)
 
     model = tf.keras.Sequential([
         tf.keras.layers.Conv2D(32, 3, activation='relu', input_shape=(256, 256, 3)),

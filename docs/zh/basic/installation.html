@@ -104,9 +104,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#cuda-toolkitcudnn">CUDA Toolkit和cuDNN的安装</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id11">第一个程序</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">第一个程序</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ide">IDE设置</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id15">TensorFlow所需的硬件配置 *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id16">TensorFlow所需的硬件配置 *</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow基础</a></li>
@@ -387,15 +387,20 @@ Mon Jun 10 23:19:54 2019
 <span class="n">conda</span> <span class="n">install</span> <span class="n">cudnn</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">X</span>
 </pre></div>
 </div>
-<p>安装CUDA Toolkit和cuDNN，其中X.X和X.X.X分别为需要安装的CUDA Toolkit和cuDNN版本号，必须严格按照TensorFlow官方网站所说明的版本安装。在安装前，可使用 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">search</span> <span class="pre">cudatoolkit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">search</span> <span class="pre">cudnn</span></code> 搜索conda源中可用的版本号。</p>
+<p>安装CUDA Toolkit和cuDNN，其中X.X和X.X.X分别为需要安装的CUDA Toolkit和cuDNN版本号，必须严格按照 <a class="reference external" href="https://www.tensorflow.org/install/gpu#software_requirements">TensorFlow官方网站所说明的版本</a> 安装。例如，对于TensorFlow 2.0，可使用:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">cudatoolkit</span><span class="o">=</span><span class="mf">10.0</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">cudnn</span><span class="o">=</span><span class="mf">7.6</span><span class="o">.</span><span class="mi">4</span>
+</pre></div>
+</div>
+<p>在安装前，可使用 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">search</span> <span class="pre">cudatoolkit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">search</span> <span class="pre">cudnn</span></code> 搜索conda源中可用的版本号。</p>
 <p>当然，也可以按照 <a class="reference external" href="https://www.tensorflow.org/install/gpu">TensorFlow官方网站上的说明</a> 手动下载CUDA Toolkit和cuDNN并安装，不过过程会稍繁琐。</p>
-<p>使用conda包管理器安装GPU版本的TensorFlow时，会自动安装对应版本的CUDA Toolkit和cuDNN。conda源的更新较慢，如果对版本不太介意，推荐直接使用 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">tensorflow-gpu</span></code> 进行安装。</p>
+<p>使用conda包管理器安装GPU版本的TensorFlow时，会自动安装对应版本的CUDA Toolkit和cuDNN。conda源的更新往往较慢，如果对版本不太介意，也可以直接使用 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">tensorflow-gpu</span></code> 进行安装。</p>
 </div>
 </div>
-<div class="section" id="id11">
-<h2>第一个程序<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id12">
+<h2>第一个程序<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
 <p>安装完毕后，我们来编写一个简单的程序来验证安装。</p>
-<p>在命令行下输入 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">tensorflow</span></code> 进入之前建立的安装有TensorFlow的Conda虚拟环境，再输入 <code class="docutils literal notranslate"><span class="pre">python</span></code> 进入Python环境，逐行输入以下代码：</p>
+<p>在命令行下输入 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">tf2.0</span></code> 进入之前建立的安装有TensorFlow的Conda虚拟环境，再输入 <code class="docutils literal notranslate"><span class="pre">python</span></code> 进入Python环境，逐行输入以下代码：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
 
 <span class="n">A</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
@@ -418,20 +423,20 @@ Mon Jun 10 23:19:54 2019
 <h2>IDE设置<a class="headerlink" href="#ide" title="永久链接至标题">¶</a></h2>
 <p>对于机器学习的研究者和从业者，建议使用 <a class="reference external" href="http://www.jetbrains.com/pycharm/">PyCharm</a> 作为Python开发的IDE。</p>
 <p>在新建项目时，你需要选定项目的Python Interpreter，也就是用怎样的Python环境来运行你的项目。在安装部分，你所建立的每个Conda虚拟环境其实都有一个自己独立的Python Interpreter，你只需要将它们添加进来即可。选择“Add”，并在接下来的窗口选择“Existing Environment”，在Interpreter处选择 <code class="docutils literal notranslate"><span class="pre">Anaconda安装目录/envs/所需要添加的Conda环境名字/python.exe</span></code> （Linux下无 <code class="docutils literal notranslate"><span class="pre">.exe</span></code> 后缀）并点击“OK”即可。如果选中了“Make available to all projects”，则在所有项目中都可以选择该Python Interpreter。注意，在Windows下Anaconda的默认安装目录比较特殊，一般为  <code class="docutils literal notranslate"><span class="pre">C:\Users\用户名\Anaconda3\</span></code> 或 <code class="docutils literal notranslate"><span class="pre">C:\Users\用户名\AppData\Local\Continuum\anaconda3</span></code> 。此处 <code class="docutils literal notranslate"><span class="pre">AppData</span></code> 是隐藏文件夹。</p>
-<p>对于TensorFlow开发而言，PyCharm的Professonal版本非常有用的一个特性是 <strong>远程调试</strong> （Remote Debugging）。当你编写程序的终端机性能有限，但又有一台可远程ssh访问的高性能计算机（一般具有高性能GPU）时，远程调试功能可以让你在终端机编写程序的同时，在远程计算机上调试和运行程序（尤其是训练模型）。你在终端机上对代码和数据的修改可以自动同步到远程机，在实际使用的过程中如同在远程机上编写程序一般，与串流游戏有异曲同工之妙。不过远程调试对网络的稳定性要求高，如果需要长时间训练模型，建议登录远程机终端直接训练模型（Linux下可以结合 <code class="docutils literal notranslate"><span class="pre">nohup</span></code> 命令 <a class="footnote-reference brackets" href="#nohup" id="id12">1</a> ，让进程在后端运行，不受终端退出的影响）。远程调试功能的具体配置步骤见 <a class="reference external" href="https://www.jetbrains.com/help/pycharm/remote-debugging-with-product.html">PyCharm文档</a> 。</p>
+<p>对于TensorFlow开发而言，PyCharm的Professonal版本非常有用的一个特性是 <strong>远程调试</strong> （Remote Debugging）。当你编写程序的终端机性能有限，但又有一台可远程ssh访问的高性能计算机（一般具有高性能GPU）时，远程调试功能可以让你在终端机编写程序的同时，在远程计算机上调试和运行程序（尤其是训练模型）。你在终端机上对代码和数据的修改可以自动同步到远程机，在实际使用的过程中如同在远程机上编写程序一般，与串流游戏有异曲同工之妙。不过远程调试对网络的稳定性要求高，如果需要长时间训练模型，建议登录远程机终端直接训练模型（Linux下可以结合 <code class="docutils literal notranslate"><span class="pre">nohup</span></code> 命令 <a class="footnote-reference brackets" href="#nohup" id="id13">1</a> ，让进程在后端运行，不受终端退出的影响）。远程调试功能的具体配置步骤见 <a class="reference external" href="https://www.jetbrains.com/help/pycharm/remote-debugging-with-product.html">PyCharm文档</a> 。</p>
 <div class="admonition tip">
 <p class="admonition-title">小技巧</p>
 <p>如果你是学生并有.edu结尾的邮箱的话，可以在 <a class="reference external" href="http://www.jetbrains.com/student/">这里</a> 申请PyCharm的免费Professional版本授权。</p>
 </div>
 <p>对于TensorFlow及深度学习的业余爱好者或者初学者， <a class="reference external" href="https://code.visualstudio.com/">Visual Studio Code</a> 或者一些在线的交互式Python环境（比如免费的 <a class="reference external" href="https://colab.research.google.com/">Google Colab</a> ）也是不错的选择。Colab的使用方式可参考 <a class="reference internal" href="../../en/appendix/cloud.html#colab"><span class="std std-ref">附录</span></a> 。</p>
 <dl class="footnote brackets">
-<dt class="label" id="nohup"><span class="brackets"><a class="fn-backref" href="#id12">1</a></span></dt>
+<dt class="label" id="nohup"><span class="brackets"><a class="fn-backref" href="#id13">1</a></span></dt>
 <dd><p>关于  <code class="docutils literal notranslate"><span class="pre">nohup</span></code> 命令可参考 <a class="reference external" href="https://www.ibm.com/developerworks/cn/linux/l-cn-nohup/">https://www.ibm.com/developerworks/cn/linux/l-cn-nohup/</a></p>
 </dd>
 </dl>
 </div>
-<div class="section" id="id15">
-<h2>TensorFlow所需的硬件配置 *<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id16">
+<h2>TensorFlow所需的硬件配置 *<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h2>
 <div class="admonition hint">
 <p class="admonition-title">提示</p>
 <p>对于学习而言，TensorFlow的硬件门槛并不高。甚至，借助 <a class="reference internal" href="../../en/appendix/cloud.html#colab"><span class="std std-ref">免费</span></a> 或 <a class="reference internal" href="../../en/appendix/cloud.html#gcp"><span class="std std-ref">灵活</span></a> 的云端计算资源，只要你有一台能上网的电脑，就能够熟练掌握TensorFlow！</p>

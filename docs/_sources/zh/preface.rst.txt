@@ -36,6 +36,8 @@
 
 在整本手册中，带“*”的部分均为选读。
 
+本书的所有示例代码可至 `这里 <https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code>`_ 获得。在使用时，建议将代码根目录加入到 ``PYTHONPATH`` 环境变量，或者使用合适的IDE（如PyCharm）打开代码根目录，从而使得代码间的相互调用（形如 ``import zh.XXX`` 的代码）能够顺利运行。
+
 致谢
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
