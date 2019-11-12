@@ -3,9 +3,9 @@ import Python
 import Foundation
 
 /**
-* The Swift Module for MNIST Dataset:
-* https://github.com/huan/swift-MNIST
-*/
+ * The Swift Module for MNIST Dataset:
+ * https://github.com/huan/swift-MNIST
+ */
 import MNIST
 
 struct MLP: Layer {

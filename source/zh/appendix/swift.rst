@@ -32,7 +32,9 @@ Swift 语言是 Chris Lattner 在苹果公司工作时创建的。 现在 Chris 
 
 与其他语言相比，S4TF 还有更多优势。谷歌正在大力投资，使 Swift 成为其 TensorFlow ML 基础设施的一个关键组件，而且很有可能 Swift 将成为深度学习的专属语言。
 
-更多使用 Swift 的理由，有兴趣的读者可以参考官方文档：`Why Swift for Tensorflow <https://github.com/tensorflow/swift/blob/master/docs/WhySwiftForTensorFlow.md>`_
+.. admonition:: 更多使用 Swift 的理由
+
+    有兴趣的读者可以参考官方文档：`Why Swift for Tensorflow <https://github.com/tensorflow/swift/blob/master/docs/WhySwiftForTensorFlow.md>`_
 
 S4TF 环境配置
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -42,31 +44,39 @@ S4TF 环境配置
 
 目前 S4TF 支持 Mac 和 Linux 两个运行环境。安装需要下载预先编译好的软件包，同时按照对应的操作系统的说明进行操作。安装后，即可以使用全套 Swift 工具，包括 Swift（Swift REPL / Interpreter）和 Swiftc（Swift编译器）。
 
-官方文档（含下载地址）：https://github.com/tensorflow/swift/blob/master/Installation.md
+.. admonition:: 官方文档（含下载地址）
+
+    https://github.com/tensorflow/swift/blob/master/Installation.md
 
 在 Colaboratory 中快速体验 Swift for Tensorflow
 ---------------------------------------------------------------
 
 Google 的 Colaboratory 可以直接支持 Swift 语言的运行环境。可以通过下面的链接，直接打开一个 Swift 运行环境的 Colab Notebook ，这是一个最方便立即可以体验 Swift for Tensorflow 的方法。
 
-Blank Swift on Colab: https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-blank.ipynb
+.. admonition:: Blank Swift on Colab
+
+    这里有一个直接打开就可以运行 Swift 的空白 `Colab Notebook <https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-blank.ipynb>`_
 
 在 Docker 中快速体验 Swift for TensorFlow
 ---------------------------------------------------------------
 
 在本机已有 docker 环境的情况下, 使用预装 Swift for TensorFlow 的 Docker Image 是非常方便的。
 
-- 获得一个已经安装好 S4TF 的 Swift REPL 环境
-    
-    在命令行中执行 ``docker run -it --privileged --userns=host zixia/swift swift``
-- 获得一个 S4TF 的 Bash 终端
-    
-    在命令行中执行 ``docker run -it --privileged --userns=host zixia/swift bash`` 来打开一个 Bash 终端
 - 获得一个 S4TS 的 Jupyter Notebook
 
     在命令行中执行 ``nvidia-docker run -ti --rm -p 8888:8888 --cap-add SYS_PTRACE -v "$(pwd)":/notebooks zixia/swift`` 来启动 Jupyter ，然后根据提示的 URL ，打开浏览器访问即可。
 
-如需执行您需要的 Swift 代码文件, 可以使用 Docker 的目录映射。详细使用方法可以参考 Docker Image `zixia/swift` 开源项目的地址：https://github.com/huan/docker-swift-tensorflow
+- 获得一个已经安装好 S4TF 的 Swift REPL 环境
+    
+    在命令行中执行 ``docker run -it --privileged --userns=host zixia/swift swift``
+
+- 获得一个 S4TF 的 Bash 终端
+    
+    在命令行中执行 ``docker run -it --privileged --userns=host zixia/swift bash`` 来打开一个 Bash 终端
+
+.. admonition:: 使用 Docker 执行 Swift 代码文件
+
+    通过使用 Docker 的目录映射，可以启动 Docker 之后执行本地代码文件。详细使用方法可以参考 Docker Image `zixia/swift` 开源项目的地址：https://github.com/huan/docker-swift-tensorflow
 
 S4TF 基础使用
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -188,15 +198,32 @@ Swift 语言支持直接加载 Python 函数库（比如 NumPy），也支持直
 MNIST数字分类
 ---------------------------------------------
 
-本小节的源代码可以在 <https://github.com/huan/tensorflow-handbook-swift> 找到。加载 `MNIST` 数据集使用了作者封装的 Swift Module [swift-MNIST](https://github.com/huan/swift-MNIST)。
+下面我们以最简单的 MNIST 数字分类为例子，给大家介绍一下基础的 S4TF 编程代码实现。
 
-更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址： https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb （推荐）
-
-代码：
+1. 首先，引入S4TF模块 `TensorFlow`、Python桥接模块 `Python`，基础模块 `Foundation` 和 MNIST 数据集模块 `MNIST`：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 1-
+    :lines: 1-9
 
+2. 其次，声明一个最简单的 MLP 神经网络架构，将输入的 784 个图像数据，转换为 10 个神经元的输出：
+
+.. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
+    :lines: 11-22
+
+3. 接下来，我们实例化这个 MLP 神经网络模型，实例化 MNIST 数据集，并将其存入 `imageBatch` 和 `labelBatch` 变量：
+
+.. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
+    :lines: 24-31
+
+4. 然后，我们通过对数据集的循环，计算模型的梯度 `grads` 并通过 `optimizer.update()` 来反向传播更新模型的参数，进行训练：
+
+.. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
+    :lines: 33-42
+
+5. 最后，我们使用训练好的模型，在测试数据集上进行检查，得到模型的准度：
+
+.. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
+    :lines: 44-
 
 以上程序运行输出为：
 
@@ -207,3 +234,11 @@ MNIST数字分类
     Reading data.
     Constructing data tensors.
     Test Accuracy: 0.9116667
+
+.. admonition:: 源代码地址
+
+    本小节的源代码可以在 https://github.com/huan/tensorflow-handbook-swift 找到。加载 `MNIST` 数据集使用了作者封装的 Swift Module： `swift-MNIST <https://github.com/huan/swift-MNIST>`_。
+
+.. admonition:: 使用 Google Colab 运行 Swift for TensorFlow （推荐）
+
+    更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址： https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb 
