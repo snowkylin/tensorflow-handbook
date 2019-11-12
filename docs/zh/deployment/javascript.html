@@ -124,7 +124,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id9">TensorFlow.js 模型训练 *</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id11">TensorFlow.js 性能对比</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">TensorFlow.js 性能对比</a></li>
 </ul>
 </li>
 </ul>
@@ -652,6 +652,14 @@ $ npm install @tensorflow/tfjs-node-gpu
 </div>
 <p>不过箭头函数中没有自己的 <code class="docutils literal notranslate"><span class="pre">this</span></code> 和 <code class="docutils literal notranslate"><span class="pre">arguments</span></code>，不可以被当做构造函数（<code class="docutils literal notranslate"><span class="pre">new</span></code>），也不可以被当做 <code class="docutils literal notranslate"><span class="pre">Generator</span></code> （无法使用 <code class="docutils literal notranslate"><span class="pre">yield</span></code>）。感兴趣的读者可以参考 <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">MDN 文档</a> 以了解更多。</p>
 </div>
+<div class="admonition-tensorflow-js-datasync admonition">
+<p class="admonition-title">TensorFlow.js 中的 <cite>dataSync()</cite> 系列数据同步函数</p>
+<p>它的作用是把 Tensor 数据从 GPU 中取回来，可以理解为与 Python 中的 <cite>.numpy()</cite> 功能相当，即将数据取回，供本地显示，或本地计算使用。感兴趣的读者可以参考 <a class="reference external" href="https://js.tensorflow.org/api/latest/#tf.Tensor.dataSync">TensorFlow.js 文档</a> 以了解更多。</p>
+</div>
+<div class="admonition-tensorflow-js-sub admonition">
+<p class="admonition-title">TensorFlow.js 中的 <cite>sub()</cite> 系列数学计算函数</p>
+<p>TensorFlow.js 支持 <cite>tf.sub(a, b)</cite> 和 <cite>a.sub(b)</cite> 两种方法的数学函数调用。其效果是等价的，读者可以根据自己的喜好来选择。感兴趣的读者可以参考 <a class="reference external" href="https://js.tensorflow.org/api/latest/#sub">TensorFlow.js 文档</a> 以了解更多。</p>
+</div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    const a = tf.scalar(Math.random()).variable()
     const b = tf.scalar(Math.random()).variable()
 
@@ -726,8 +734,8 @@ $ npm install @tensorflow/tfjs-node-gpu
 &lt;/html&gt;
 </pre></div>
 </div>
-<div class="section" id="id11">
-<h3>TensorFlow.js 性能对比<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id13">
+<h3>TensorFlow.js 性能对比<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
 <p>关于 TensorFlow.js 的性能，Google 官方做了一份基于 MobileNet 的评测，可以作为参考。具体评测是基于 MobileNet 的 TensorFlow 模型，将其 JavaScript 版本和 Python 版本各运行两百次，其评测结论如下。</p>
 <p>手机浏览器性能：（单位：毫秒ms）</p>
 <div class="figure align-center">

@@ -321,6 +321,15 @@ TensorFlow.js 模型训练 *
 
     不过箭头函数中没有自己的 ``this`` 和 ``arguments``，不可以被当做构造函数（``new``），也不可以被当做 ``Generator`` （无法使用 ``yield``）。感兴趣的读者可以参考 `MDN 文档 <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions>`_ 以了解更多。
 
+.. admonition:: TensorFlow.js 中的 `dataSync()` 系列数据同步函数
+
+    它的作用是把 Tensor 数据从 GPU 中取回来，可以理解为与 Python 中的 `.numpy()` 功能相当，即将数据取回，供本地显示，或本地计算使用。感兴趣的读者可以参考 `TensorFlow.js 文档 <https://js.tensorflow.org/api/latest/#tf.Tensor.dataSync>`_ 以了解更多。
+
+
+.. admonition:: TensorFlow.js 中的 `sub()` 系列数学计算函数
+
+    TensorFlow.js 支持 `tf.sub(a, b)` 和 `a.sub(b)` 两种方法的数学函数调用。其效果是等价的，读者可以根据自己的喜好来选择。感兴趣的读者可以参考 `TensorFlow.js 文档 <https://js.tensorflow.org/api/latest/#sub>`_ 以了解更多。
+
 .. literalinclude:: /_static/code/zh/deployment/javascript/regression.html
     :lines: 14-35
 
