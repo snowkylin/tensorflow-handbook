@@ -1,7 +1,7 @@
 TensorFlow Datasets 数据集载入
 ============================================
 
-`TensorFlow Datasets <https://www.tensorflow.org/datasets/>`_ 是一个开箱即用的数据集集合，包含数十种常用的机器学习数据集。通过简单的几行代码即可将数据以 ``tf.data.Datasets`` 的格式载入。关于 ``tf.data.Datasets`` 的使用可参考 :ref:`tf.data <tfdata>`。
+`TensorFlow Datasets <https://www.tensorflow.org/datasets/>`_ 是一个开箱即用的数据集集合，包含数十种常用的机器学习数据集。通过简单的几行代码即可将数据以 ``tf.data.Dataset`` 的格式载入。关于 ``tf.data.Dataset`` 的使用可参考 :ref:`tf.data <tfdata>`。
 
 该工具是一个独立的Python包，可以通过::
 
@@ -24,7 +24,7 @@ TensorFlow Datasets 数据集载入
     dataset = tfds.load("cats_vs_dogs", split=tfds.Split.TRAIN, as_supervised=True)
     dataset = tfds.load("tf_flowers", split=tfds.Split.TRAIN, as_supervised=True)
 
-该方法返回一个 ``tf.data.Datasets`` 对象。部分重要的参数如下：
+该方法返回一个 ``tf.data.Dataset`` 对象。部分重要的参数如下：
 
 ..
     https://www.tensorflow.org/datasets/api_docs/python/tfds/load
@@ -34,7 +34,7 @@ TensorFlow Datasets 数据集载入
 
 当前支持的数据集可在 `官方文档 <https://www.tensorflow.org/datasets/datasets>`_ 或使用 ``tfds.list_builders()`` 查看。
 
-当得到了 ``tf.data.Datasets`` 类型的数据集后，我们即可使用 ``tf.data`` 对数据集进行各种预处理以及读取数据。例如：
+当得到了 ``tf.data.Dataset`` 类型的数据集后，我们即可使用 ``tf.data`` 对数据集进行各种预处理以及读取数据。例如：
 
 .. code-block:: python
     
