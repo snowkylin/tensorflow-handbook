@@ -11,8 +11,8 @@ test_cats_dir = data_dir + '/valid/cats/'
 test_dogs_dir = data_dir + '/valid/dogs/'
 
 def _decode_and_resize(filename, label):
-    image_string = tf.io.read_file(filename)
-    image_decoded = tf.image.decode_jpeg(image_string)
+    image_string = tf.io.read_file(filename)            # 读取原始文件
+    image_decoded = tf.image.decode_jpeg(image_string)  # 解码JPEG图片
     image_resized = tf.image.resize(image_decoded, [256, 256]) / 255.0
     return image_resized, label
 

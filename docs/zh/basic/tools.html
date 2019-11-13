@@ -110,10 +110,14 @@
 <li class="toctree-l3"><a class="reference internal" href="#cats-vs-dogs">实例：cats_vs_dogs图像分类</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#tfrecord-tensorflow">TFRecord ：TensorFlow数据集存储格式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tfrecord-tensorflow">TFRecord ：TensorFlow数据集存储格式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id12">将数据集存储为 TFRecord 文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">读取 TFRecord 文件</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#tf-function-graph-execution"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> ：Graph Execution模式 *</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#tf-function"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 基础使用方法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id13"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 内在机制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id16"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 内在机制</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#autograph-pythontensorflow">AutoGraph：将Python控制流转换为TensorFlow计算图</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#tf-session">使用传统的 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code></a></li>
 </ul>
@@ -121,7 +125,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#tf-tensorarray-tensorflow"><code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> ：TensorFlow 动态数组 *</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tf-config-gpu"><code class="docutils literal notranslate"><span class="pre">tf.config</span></code>：GPU的使用与分配 *</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#gpu">指定当前程序使用的GPU</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id14">设置显存使用策略</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id17">设置显存使用策略</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#gpugpu">单GPU模拟多GPU环境</a></li>
 </ul>
 </li>
@@ -639,13 +643,13 @@
 </pre></div>
 </div>
 <p>输出</p>
-<div class="figure align-center" id="id15">
+<div class="figure align-center" id="id18">
 <a class="reference internal image-reference" href="../../_images/mnist_shuffle_1.png"><img alt="../../_images/mnist_shuffle_1.png" src="../../_images/mnist_shuffle_1.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">第一次运行</span><a class="headerlink" href="#id15" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">第一次运行</span><a class="headerlink" href="#id18" title="永久链接至图片">¶</a></p>
 </div>
-<div class="figure align-center" id="id16">
+<div class="figure align-center" id="id19">
 <a class="reference internal image-reference" href="../../_images/mnist_shuffle_2.png"><img alt="../../_images/mnist_shuffle_2.png" src="../../_images/mnist_shuffle_2.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">第二次运行</span><a class="headerlink" href="#id16" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">第二次运行</span><a class="headerlink" href="#id19" title="永久链接至图片">¶</a></p>
 </div>
 <p>可见每次的数据都会被随机打散。</p>
 <div class="admonition-dataset-shuffle-buffer-size admonition">
@@ -666,14 +670,14 @@
 <div class="section" id="id4">
 <h3>使用 <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 的并行化策略提高训练流程效率<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
 <p>当训练模型时，我们希望充分利用计算资源，减少CPU/GPU的空载时间。然而有时，数据集的准备处理非常耗时，使得我们在每进行一次训练前都需要花费大量的时间准备待训练的数据，而此时GPU只能空载而等待数据，造成了计算资源的浪费，如下图所示：</p>
-<div class="figure align-center" id="id17">
+<div class="figure align-center" id="id20">
 <a class="reference internal image-reference" href="../../_images/datasets_without_pipelining.png"><img alt="../../_images/datasets_without_pipelining.png" src="../../_images/datasets_without_pipelining.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">常规训练流程，在准备数据时，GPU只能空载。<a class="reference external" href="https://www.tensorflow.org/guide/data_performance">1图示来源</a> 。</span><a class="headerlink" href="#id17" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">常规训练流程，在准备数据时，GPU只能空载。<a class="reference external" href="https://www.tensorflow.org/guide/data_performance">1图示来源</a> 。</span><a class="headerlink" href="#id20" title="永久链接至图片">¶</a></p>
 </div>
 <p>此时， <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 的数据集对象为我们提供了 <code class="docutils literal notranslate"><span class="pre">Dataset.prefetch()</span></code> 方法，使得我们可以让数据集对象 <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> 在训练时预取出若干个元素，使得在GPU训练的同时CPU可以准备数据，从而提升训练流程的效率，如下图所示：</p>
-<div class="figure align-center" id="id18">
+<div class="figure align-center" id="id21">
 <a class="reference internal image-reference" href="../../_images/datasets_with_pipelining.png"><img alt="../../_images/datasets_with_pipelining.png" src="../../_images/datasets_with_pipelining.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">使用 <code class="docutils literal notranslate"><span class="pre">Dataset.prefetch()</span></code> 方法进行数据预加载后的训练流程，在GPU进行训练的同时CPU进行数据预加载，提高了训练效率。 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">2图示来源</a> 。</span><a class="headerlink" href="#id18" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">使用 <code class="docutils literal notranslate"><span class="pre">Dataset.prefetch()</span></code> 方法进行数据预加载后的训练流程，在GPU进行训练的同时CPU进行数据预加载，提高了训练效率。 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">2图示来源</a> 。</span><a class="headerlink" href="#id21" title="永久链接至图片">¶</a></p>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">Dataset.prefetch()</span></code> 的使用方法和前节的 <code class="docutils literal notranslate"><span class="pre">Dataset.batch()</span></code> 、 <code class="docutils literal notranslate"><span class="pre">Dataset.shuffle()</span></code> 等非常类似。继续以前节的MNIST数据集为例，若希望开启预加载数据，使用如下代码即可：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mnist_dataset</span> <span class="o">=</span> <span class="n">mnist_dataset</span><span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="n">buffer_size</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">AUTOTUNE</span><span class="p">)</span>
@@ -685,9 +689,9 @@
 </pre></div>
 </div>
 <p>其运行过程如下图所示：</p>
-<div class="figure align-center" id="id19">
+<div class="figure align-center" id="id22">
 <a class="reference internal image-reference" href="../../_images/datasets_parallel_map.png"><img alt="../../_images/datasets_parallel_map.png" src="../../_images/datasets_parallel_map.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">通过设置 <code class="docutils literal notranslate"><span class="pre">Dataset.map()</span></code> 的 <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> 参数实现数据转换的并行化。上部分是未并行化的图示，下部分是2核并行的图示。 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">3图示来源</a> 。</span><a class="headerlink" href="#id19" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">通过设置 <code class="docutils literal notranslate"><span class="pre">Dataset.map()</span></code> 的 <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> 参数实现数据转换的并行化。上部分是未并行化的图示，下部分是2核并行的图示。 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">3图示来源</a> 。</span><a class="headerlink" href="#id22" title="永久链接至图片">¶</a></p>
 </div>
 <p>当然，这里同样可以将 <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> 设置为 <code class="docutils literal notranslate"><span class="pre">tf.data.experimental.AUTOTUNE</span></code> 以让TensorFlow自动选择合适的数值。</p>
 <p>除此以外，还有很多提升数据集处理性能的方式，可参考 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">TensorFlow文档</a> 进一步了解。后文的实例中展示了tf.data并行化策略的强大性能，可 <a class="reference internal" href="#tfdata-performance"><span class="std std-ref">点此</span></a> 查看。</p>
@@ -733,8 +737,8 @@
 <span class="n">test_dogs_dir</span> <span class="o">=</span> <span class="n">data_dir</span> <span class="o">+</span> <span class="s1">&#39;/valid/dogs/&#39;</span>
 
 <span class="hll"><span class="k">def</span> <span class="nf">_decode_and_resize</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
-</span><span class="hll">    <span class="n">image_string</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-</span><span class="hll">    <span class="n">image_decoded</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">decode_jpeg</span><span class="p">(</span><span class="n">image_string</span><span class="p">)</span>
+</span><span class="hll">    <span class="n">image_string</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>            <span class="c1"># 读取原始文件</span>
+</span><span class="hll">    <span class="n">image_decoded</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">decode_jpeg</span><span class="p">(</span><span class="n">image_string</span><span class="p">)</span>  <span class="c1"># 解码JPEG图片</span>
 </span><span class="hll">    <span class="n">image_resized</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">image_decoded</span><span class="p">,</span> <span class="p">[</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">])</span> <span class="o">/</span> <span class="mf">255.0</span>
 </span><span class="hll">    <span class="k">return</span> <span class="n">image_resized</span><span class="p">,</span> <span class="n">label</span>
 </span>
@@ -795,15 +799,116 @@
 </pre></div>
 </div>
 <p id="tfdata-performance">通过对以上示例进行性能测试，我们可以感受到 <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 的强大并行化性能。通过 <code class="docutils literal notranslate"><span class="pre">prefetch()</span></code> 的使用和在 <code class="docutils literal notranslate"><span class="pre">map()</span></code> 过程中加入 <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> 参数，模型训练的时间可缩减至原来的一半甚至更低。测试结果如下：</p>
-<div class="figure align-center" id="id20">
+<div class="figure align-center" id="id23">
 <a class="reference internal image-reference" href="../../_images/tfdata_performance.jpg"><img alt="../../_images/tfdata_performance.jpg" src="../../_images/tfdata_performance.jpg" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">tf.data 的并行化策略性能测试（纵轴为每epoch训练所需时间，单位：秒）</span><a class="headerlink" href="#id20" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">tf.data 的并行化策略性能测试（纵轴为每epoch训练所需时间，单位：秒）</span><a class="headerlink" href="#id23" title="永久链接至图片">¶</a></p>
 </div>
 </div>
 </div>
 <div class="section" id="tfrecord-tensorflow">
 <span id="tfrecord"></span><h2>TFRecord ：TensorFlow数据集存储格式<a class="headerlink" href="#tfrecord-tensorflow" title="永久链接至标题">¶</a></h2>
-<p># TODO</p>
+<p>TFRecord 是TensorFlow 中的数据集存储格式。当我们将数据集整理成 TFRecord 格式后，TensorFlow就可以高效地读取和处理这些数据集，从而帮助我们更高效地进行大规模的模型训练。</p>
+<p>TFRecord可以理解为一系列序列化的 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 元素所组成的列表文件，而每一个 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 又由若干个 <code class="docutils literal notranslate"><span class="pre">tf.train.Feature</span></code> 的字典组成。形式如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># dataset.tfrecords</span>
+<span class="p">[</span>
+    <span class="p">{</span>   <span class="c1"># example 1 (tf.train.Example)</span>
+        <span class="s1">&#39;feature_1&#39;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Feature</span><span class="p">,</span>
+        <span class="o">...</span>
+        <span class="s1">&#39;feature_k&#39;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Feature</span>
+    <span class="p">},</span>
+    <span class="o">...</span>
+    <span class="p">{</span>   <span class="c1"># example N (tf.train.Example)</span>
+        <span class="s1">&#39;feature_1&#39;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Feature</span><span class="p">,</span>
+        <span class="o">...</span>
+        <span class="s1">&#39;feature_k&#39;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Feature</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>为了将形式各样的数据集整理为 TFRecord 格式，我们可以对数据集中的每个元素进行以下步骤：</p>
+<ul class="simple">
+<li><p>读取该数据元素到内存；</p></li>
+<li><p>将该元素转换为 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 对象（每一个 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 由若干个 <code class="docutils literal notranslate"><span class="pre">tf.train.Feature</span></code> 的字典组成，因此需要先建立Feature的字典）；</p></li>
+<li><p>将该 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 对象序列化为字符串，并通过一个预先定义的 <code class="docutils literal notranslate"><span class="pre">tf.io.TFRecordWriter</span></code> 写入 TFRecord 文件。</p></li>
+</ul>
+<p>而读取 TFRecord 数据则可按照以下步骤：</p>
+<ul class="simple">
+<li><p>通过 <code class="docutils literal notranslate"><span class="pre">tf.data.TFRecordDataset</span></code> 读入原始的 TFRecord 文件（此时文件中的 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 对象尚未被反序列化），获得一个 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 数据集对象；</p></li>
+<li><p>通过 <code class="docutils literal notranslate"><span class="pre">Dataset.map</span></code> 方法，对该数据集对象中的每一个序列化的 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 字符串执行 <code class="docutils literal notranslate"><span class="pre">tf.io.parse_single_example</span></code> 函数，从而实现反序列化。</p></li>
+</ul>
+<p>以下我们通过一个实例，展示将 <a class="reference internal" href="#cats-vs-dogs"><span class="std std-ref">上一节</span></a> 中使用的cats_vs_dogs二分类数据集的训练集部分转换为TFRecord文件，并读取该文件的过程。</p>
+<div class="section" id="id12">
+<h3>将数据集存储为 TFRecord 文件<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<p>首先，与 <a class="reference internal" href="#cats-vs-dogs"><span class="std std-ref">上一节</span></a> 类似，我们进行一些准备工作，<a class="reference external" href="https://www.floydhub.com/fastai/datasets/cats-vs-dogs">下载数据集</a> 并解压到 <code class="docutils literal notranslate"><span class="pre">data_dir</span></code> ，初始化数据集的图片文件名列表及标签。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">data_dir</span> <span class="o">=</span> <span class="s1">&#39;C:/datasets/cats_vs_dogs&#39;</span>
+<span class="n">train_cats_dir</span> <span class="o">=</span> <span class="n">data_dir</span> <span class="o">+</span> <span class="s1">&#39;/train/cats/&#39;</span>
+<span class="n">train_dogs_dir</span> <span class="o">=</span> <span class="n">data_dir</span> <span class="o">+</span> <span class="s1">&#39;/train/dogs/&#39;</span>
+<span class="n">tfrecord_file</span> <span class="o">=</span> <span class="n">data_dir</span> <span class="o">+</span> <span class="s1">&#39;/train/train.tfrecords&#39;</span>
+
+<span class="n">train_cat_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">train_cats_dir</span> <span class="o">+</span> <span class="n">filename</span> <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">train_cats_dir</span><span class="p">)]</span>
+<span class="n">train_dog_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="n">train_dogs_dir</span> <span class="o">+</span> <span class="n">filename</span> <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">train_dogs_dir</span><span class="p">)]</span>
+<span class="n">train_filenames</span> <span class="o">=</span> <span class="n">train_cat_filenames</span> <span class="o">+</span> <span class="n">train_dog_filenames</span>
+<span class="n">train_labels</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_cat_filenames</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_dog_filenames</span><span class="p">)</span>  <span class="c1"># 将 cat 类的标签设为0，dog 类的标签设为1</span>
+</pre></div>
+</div>
+<p>然后，通过以下代码，迭代读取每张图片，建立 <code class="docutils literal notranslate"><span class="pre">tf.train.Feature</span></code> 字典和 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 对象，序列化并写入TFRecord文件。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">TFRecordWriter</span><span class="p">(</span><span class="n">tfrecord_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">filename</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">train_filenames</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">):</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>     <span class="c1"># 读取数据集图片到内存，image 为一个 Byte 类型的字符串</span>
+        <span class="n">feature</span> <span class="o">=</span> <span class="p">{</span>                             <span class="c1"># 建立 tf.train.Feature 字典</span>
+            <span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Feature</span><span class="p">(</span><span class="n">bytes_list</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">BytesList</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="p">[</span><span class="n">image</span><span class="p">])),</span>  <span class="c1"># 图片是一个 Bytes 对象</span>
+            <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Feature</span><span class="p">(</span><span class="n">int64_list</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Int64List</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="p">[</span><span class="n">label</span><span class="p">]))</span>   <span class="c1"># 标签是一个 Int 对象</span>
+        <span class="p">}</span>
+        <span class="n">example</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Example</span><span class="p">(</span><span class="n">features</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Features</span><span class="p">(</span><span class="n">feature</span><span class="o">=</span><span class="n">feature</span><span class="p">))</span> <span class="c1"># 通过字典建立 Example</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">())</span>   <span class="c1"># 将Example序列化并写入 TFRecord 文件</span>
+</pre></div>
+</div>
+<p>值得注意的是， <code class="docutils literal notranslate"><span class="pre">tf.train.Feature</span></code> 支持三种数据格式：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tf.train.BytesList</span></code> ：字符串或原始Byte文件（如图片），通过 <code class="docutils literal notranslate"><span class="pre">bytes_list</span></code> 参数传入一个由字符串数组初始化的 <code class="docutils literal notranslate"><span class="pre">tf.train.BytesList</span></code> 对象；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tf.train.FloatList</span></code> ：浮点数，通过 <code class="docutils literal notranslate"><span class="pre">float_list</span></code> 参数传入一个由浮点数数组初始化的 <code class="docutils literal notranslate"><span class="pre">tf.train.FloatList</span></code> 对象；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tf.train.Int64List</span></code> ：整数，通过 <code class="docutils literal notranslate"><span class="pre">int64_list</span></code> 参数传入一个由整数数组初始化的 <code class="docutils literal notranslate"><span class="pre">tf.train.Int64List</span></code> 对象。</p></li>
+</ul>
+<p>如果只希望保存一个元素而非数组，传入一个只有一个元素的数组即可。</p>
+<p>运行以上代码，不出片刻，我们即可在 <code class="docutils literal notranslate"><span class="pre">tfrecord_file</span></code> 所指向的文件地址获得一个 500MB 左右的 <code class="docutils literal notranslate"><span class="pre">train.tfrecords</span></code> 文件。</p>
+</div>
+<div class="section" id="id14">
+<h3>读取 TFRecord 文件<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
+<p>我们可以通过以下代码，读取之间建立的 <code class="docutils literal notranslate"><span class="pre">train.tfrecords</span></code> 文件，并通过 <code class="docutils literal notranslate"><span class="pre">Dataset.map</span></code> 方法，使用 <code class="docutils literal notranslate"><span class="pre">tf.io.parse_single_example</span></code> 函数对数据集中的每一个序列化的 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 对象解码。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">raw_dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TFRecordDataset</span><span class="p">(</span><span class="n">tfrecord_file</span><span class="p">)</span>    <span class="c1"># 读取 TFRecord 文件</span>
+
+<span class="n">feature_description</span> <span class="o">=</span> <span class="p">{</span> <span class="c1"># 定义Feature结构，告诉解码器每个Feature的类型是什么</span>
+    <span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">FixedLenFeature</span><span class="p">([],</span> <span class="n">tf</span><span class="o">.</span><span class="n">string</span><span class="p">),</span>
+    <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">FixedLenFeature</span><span class="p">([],</span> <span class="n">tf</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">_parse_example</span><span class="p">(</span><span class="n">example_string</span><span class="p">):</span> <span class="c1"># 将 TFRecord 文件中的每一个序列化的 tf.train.Example 解码</span>
+    <span class="n">feature_dict</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">parse_single_example</span><span class="p">(</span><span class="n">example_string</span><span class="p">,</span> <span class="n">feature_description</span><span class="p">)</span>
+    <span class="n">feature_dict</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">decode_jpeg</span><span class="p">(</span><span class="n">feature_dict</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">])</span>    <span class="c1"># 解码JPEG图片</span>
+    <span class="k">return</span> <span class="n">feature_dict</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">],</span> <span class="n">feature_dict</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">raw_dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_parse_example</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>这里的 <code class="docutils literal notranslate"><span class="pre">feature_description</span></code> 字典类似于一个数据集的“描述文件”， <code class="docutils literal notranslate"><span class="pre">tf.io.FixedLenFeature</span></code> 的三个输入参数 <code class="docutils literal notranslate"><span class="pre">shape</span></code> 、 <code class="docutils literal notranslate"><span class="pre">dtype</span></code> 和 <code class="docutils literal notranslate"><span class="pre">default_value</span></code> （可省略）为每个Feature的形状、类型和默认值。这里我们的数据项都是单个的数值或者字符串，所以 <code class="docutils literal notranslate"><span class="pre">shape</span></code> 为空数组。</p>
+<p>运行以上代码后，我们获得一个数据集对象 <code class="docutils literal notranslate"><span class="pre">dataset</span></code> ，这已经是一个可以用于训练的 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 对象了！我们从该数据集中读取元素并输出验证：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span> 
+
+<span class="k">for</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;cat&#39;</span> <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;dog&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>显示：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/tfrecord_cat.png"><img alt="../../_images/tfrecord_cat.png" src="../../_images/tfrecord_cat.png" style="width: 60%;" /></a>
+</div>
+<p>可见图片和标签都正确显示，数据集构建成功。</p>
+</div>
 </div>
 <div class="section" id="tf-function-graph-execution">
 <span id="tffunction"></span><h2><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> ：Graph Execution模式 *<a class="headerlink" href="#tf-function-graph-execution" title="永久链接至标题">¶</a></h2>
@@ -848,8 +953,8 @@
 </div>
 <p>运行400个Batch进行测试，加入 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 的程序耗时35.5秒，未加入 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 的纯Eager Execution程序耗时43.8秒。可见 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 带来了一定的性能提升。一般而言，当模型由较多小的操作组成的时候， <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 带来的提升效果较大。而当模型的操作数量较少，但单一操作均很耗时的时候，则 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 带来的性能提升不会太大。</p>
 </div>
-<div class="section" id="id13">
-<h3><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 内在机制<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id16">
+<h3><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 内在机制<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h3>
 <p>当被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰的函数第一次被调用的时候，进行以下操作：</p>
 <ul class="simple">
 <li><p>在Eager Execution模式关闭的环境下，函数内的代码依次运行。也就是说，每个 <code class="docutils literal notranslate"><span class="pre">tf.</span></code> 方法都只是定义了计算节点，而并没有进行任何实质的计算。这与TensorFlow 1.X的Graph Execution是一致的；</p></li>
@@ -878,12 +983,6 @@
 <span class="n">f</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 <span class="n">d</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 <span class="n">f</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-<span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">f</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="n">f</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
-<span class="n">f</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>思考一下，上面这段程序的结果是什么？</p>
@@ -895,16 +994,6 @@
 <span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
 <span class="mf">0.1</span>
 <span class="mf">0.2</span>
-<span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
-<span class="mi">1</span>
-<span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
-<span class="mi">2</span>
-<span class="mi">1</span>
-<span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
-<span class="mf">0.1</span>
-<span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
-<span class="mf">0.2</span>
-<span class="mf">0.1</span>
 </pre></div>
 </div>
 <p>当计算 <code class="docutils literal notranslate"><span class="pre">f(a)</span></code> 时，由于是第一次调用该函数，TensorFlow进行了以下操作：</p>
@@ -916,7 +1005,30 @@
 <p>计算 <code class="docutils literal notranslate"><span class="pre">f(b)</span></code> 时，由于b的类型与a相同，所以TensorFlow重复使用了之前已构建的计算图并运行（因此输出了2）。这里由于并没有真正地逐行运行函数中的代码，所以函数第一行的文本输出代码没有运行。计算 <code class="docutils literal notranslate"><span class="pre">f(b_)</span></code> 时，TensorFlow自动将numpy的数据结构转换成了TensorFlow中的张量，因此依然能够复用之前已构建的计算图。</p>
 <p>计算 <code class="docutils literal notranslate"><span class="pre">f(c)</span></code> 时，虽然张量 <code class="docutils literal notranslate"><span class="pre">c</span></code> 的shape和 <code class="docutils literal notranslate"><span class="pre">a</span></code> 、 <code class="docutils literal notranslate"><span class="pre">b</span></code> 均相同，但类型为 <code class="docutils literal notranslate"><span class="pre">tf.float32</span></code> ，因此TensorFlow重新运行了函数内代码（从而再次输出了文本）并建立了一个输入为 <code class="docutils literal notranslate"><span class="pre">tf.float32</span></code> 类型的计算图。</p>
 <p>计算 <code class="docutils literal notranslate"><span class="pre">f(d)</span></code> 时，由于 <code class="docutils literal notranslate"><span class="pre">d</span></code> 和 <code class="docutils literal notranslate"><span class="pre">c</span></code> 的类型相同，所以TensorFlow复用了计算图，同理没有输出文本。</p>
-<p>之后的计算结果则显示出 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 对Python内置的整数和浮点数类型的处理方式。简而言之，只有当值完全一致的时候， <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 才会复用之前建立的计算图，而并不会自动将Python内置的整数或浮点数等转换成张量。因此，当函数参数包含Python内置整数或浮点数时，需要额外小心。一般而言，应当只在指定超参数等少数场合使用Python内置类型作为被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰的函数的参数。</p>
+<p>而对于 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 对Python内置的整数和浮点数类型的处理方式，我们通过以下示例展现：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>结果为:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
+<span class="mi">1</span>
+<span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
+<span class="mi">2</span>
+<span class="mi">1</span>
+<span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
+<span class="mf">0.1</span>
+<span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
+<span class="mf">0.2</span>
+<span class="mf">0.1</span>
+</pre></div>
+</div>
+<p>简而言之，对于Python内置的整数和浮点数类型，只有当值完全一致的时候， <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 才会复用之前建立的计算图，而并不会自动将Python内置的整数或浮点数等转换成张量。因此，当函数参数包含Python内置整数或浮点数时，需要格外小心。一般而言，应当只在指定超参数等少数场合使用Python内置类型作为被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰的函数的参数。</p>
 <p>下一个思考题：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
@@ -1107,8 +1219,8 @@
 <p>即可指定程序只在显卡2,3上运行。</p>
 </div>
 </div>
-<div class="section" id="id14">
-<h3>设置显存使用策略<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id17">
+<h3>设置显存使用策略<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h3>
 <p>默认情况下，TensorFlow将使用几乎所有可用的显存，以避免内存碎片化所带来的性能损失。不过，TensorFlow提供两种显存使用策略，让我们能够更灵活地控制程序的显存使用方式：</p>
 <ul class="simple">
 <li><p>仅在需要时申请显存空间（程序初始运行时消耗很少的显存，随着程序的运行而动态申请显存）；</p></li>

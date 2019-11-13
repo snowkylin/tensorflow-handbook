@@ -413,7 +413,86 @@ TFRecord ：TensorFlow数据集存储格式
 ..
     https://www.tensorflow.org/tutorials/load_data/tfrecord
 
-# TODO
+TFRecord 是TensorFlow 中的数据集存储格式。当我们将数据集整理成 TFRecord 格式后，TensorFlow就可以高效地读取和处理这些数据集，从而帮助我们更高效地进行大规模的模型训练。
+
+TFRecord可以理解为一系列序列化的 ``tf.train.Example`` 元素所组成的列表文件，而每一个 ``tf.train.Example`` 又由若干个 ``tf.train.Feature`` 的字典组成。形式如下：
+
+::
+
+    # dataset.tfrecords
+    [
+        {   # example 1 (tf.train.Example)
+            'feature_1': tf.train.Feature,
+            ...
+            'feature_k': tf.train.Feature
+        },
+        ...
+        {   # example N (tf.train.Example)
+            'feature_1': tf.train.Feature,
+            ...
+            'feature_k': tf.train.Feature
+        }
+    ]
+
+
+为了将形式各样的数据集整理为 TFRecord 格式，我们可以对数据集中的每个元素进行以下步骤：
+
+- 读取该数据元素到内存；
+- 将该元素转换为 ``tf.train.Example`` 对象（每一个 ``tf.train.Example`` 由若干个 ``tf.train.Feature`` 的字典组成，因此需要先建立Feature的字典）；
+- 将该 ``tf.train.Example`` 对象序列化为字符串，并通过一个预先定义的 ``tf.io.TFRecordWriter`` 写入 TFRecord 文件。
+
+而读取 TFRecord 数据则可按照以下步骤：
+
+- 通过 ``tf.data.TFRecordDataset`` 读入原始的 TFRecord 文件（此时文件中的 ``tf.train.Example`` 对象尚未被反序列化），获得一个 ``tf.data.Dataset`` 数据集对象；
+- 通过 ``Dataset.map`` 方法，对该数据集对象中的每一个序列化的 ``tf.train.Example`` 字符串执行 ``tf.io.parse_single_example`` 函数，从而实现反序列化。
+
+以下我们通过一个实例，展示将 :ref:`上一节 <cats_vs_dogs>` 中使用的cats_vs_dogs二分类数据集的训练集部分转换为TFRecord文件，并读取该文件的过程。
+
+将数据集存储为 TFRecord 文件
+-------------------------------------------
+
+首先，与 :ref:`上一节 <cats_vs_dogs>` 类似，我们进行一些准备工作，`下载数据集 <https://www.floydhub.com/fastai/datasets/cats-vs-dogs>`_ 并解压到 ``data_dir`` ，初始化数据集的图片文件名列表及标签。
+
+.. literalinclude:: /_static/code/zh/tools/tfrecord/cats_vs_dogs.py
+    :lines: 1-12
+
+然后，通过以下代码，迭代读取每张图片，建立 ``tf.train.Feature`` 字典和 ``tf.train.Example`` 对象，序列化并写入TFRecord文件。
+
+.. literalinclude:: /_static/code/zh/tools/tfrecord/cats_vs_dogs.py
+    :lines: 14-22
+
+值得注意的是， ``tf.train.Feature`` 支持三种数据格式：
+
+- ``tf.train.BytesList`` ：字符串或原始Byte文件（如图片），通过 ``bytes_list`` 参数传入一个由字符串数组初始化的 ``tf.train.BytesList`` 对象；
+- ``tf.train.FloatList`` ：浮点数，通过 ``float_list`` 参数传入一个由浮点数数组初始化的 ``tf.train.FloatList`` 对象；
+- ``tf.train.Int64List`` ：整数，通过 ``int64_list`` 参数传入一个由整数数组初始化的 ``tf.train.Int64List`` 对象。
+
+如果只希望保存一个元素而非数组，传入一个只有一个元素的数组即可。
+
+运行以上代码，不出片刻，我们即可在 ``tfrecord_file`` 所指向的文件地址获得一个 500MB 左右的 ``train.tfrecords`` 文件。
+
+读取 TFRecord 文件
+-------------------------------------------
+
+我们可以通过以下代码，读取之间建立的 ``train.tfrecords`` 文件，并通过 ``Dataset.map`` 方法，使用 ``tf.io.parse_single_example`` 函数对数据集中的每一个序列化的 ``tf.train.Example`` 对象解码。
+
+.. literalinclude:: /_static/code/zh/tools/tfrecord/cats_vs_dogs.py
+    :lines: 24-36
+
+这里的 ``feature_description`` 字典类似于一个数据集的“描述文件”， ``tf.io.FixedLenFeature`` 的三个输入参数 ``shape`` 、 ``dtype`` 和 ``default_value`` （可省略）为每个Feature的形状、类型和默认值。这里我们的数据项都是单个的数值或者字符串，所以 ``shape`` 为空数组。
+
+运行以上代码后，我们获得一个数据集对象 ``dataset`` ，这已经是一个可以用于训练的 ``tf.data.Dataset`` 对象了！我们从该数据集中读取元素并输出验证：
+
+.. literalinclude:: /_static/code/zh/tools/tfrecord/cats_vs_dogs.py
+    :lines: 38-43
+
+显示：
+
+.. figure:: /_static/image/tools/tfrecord_cat.png
+    :width: 60%
+    :align: center
+
+可见图片和标签都正确显示，数据集构建成功。
 
 .. _tffunction:
 
@@ -460,6 +539,7 @@ TFRecord ：TensorFlow数据集存储格式
 以下是一个测试题：
 
 .. literalinclude:: /_static/code/zh/model/autograph/quiz.py
+    :lines: 1-18
 
 思考一下，上面这段程序的结果是什么？
 
@@ -471,17 +551,7 @@ TFRecord ：TensorFlow数据集存储格式
     2
     The function is running in Python
     0.1
-    0.2
-    The function is running in Python
-    1
-    The function is running in Python
-    2
-    1
-    The function is running in Python
-    0.1
-    The function is running in Python
-    0.2
-    0.1
+    0.2    
 
 当计算 ``f(a)`` 时，由于是第一次调用该函数，TensorFlow进行了以下操作：
 
@@ -495,7 +565,25 @@ TFRecord ：TensorFlow数据集存储格式
 
 计算 ``f(d)`` 时，由于 ``d`` 和 ``c`` 的类型相同，所以TensorFlow复用了计算图，同理没有输出文本。
 
-之后的计算结果则显示出 ``@tf.function`` 对Python内置的整数和浮点数类型的处理方式。简而言之，只有当值完全一致的时候， ``@tf.function`` 才会复用之前建立的计算图，而并不会自动将Python内置的整数或浮点数等转换成张量。因此，当函数参数包含Python内置整数或浮点数时，需要额外小心。一般而言，应当只在指定超参数等少数场合使用Python内置类型作为被 ``@tf.function`` 修饰的函数的参数。
+而对于 ``@tf.function`` 对Python内置的整数和浮点数类型的处理方式，我们通过以下示例展现：
+
+.. literalinclude:: /_static/code/zh/model/autograph/quiz.py
+    :lines: 18-24
+
+结果为::
+
+    The function is running in Python
+    1
+    The function is running in Python
+    2
+    1
+    The function is running in Python
+    0.1
+    The function is running in Python
+    0.2
+    0.1
+
+简而言之，对于Python内置的整数和浮点数类型，只有当值完全一致的时候， ``@tf.function`` 才会复用之前建立的计算图，而并不会自动将Python内置的整数或浮点数等转换成张量。因此，当函数参数包含Python内置整数或浮点数时，需要格外小心。一般而言，应当只在指定超参数等少数场合使用Python内置类型作为被 ``@tf.function`` 修饰的函数的参数。
 
 ..
     https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/function

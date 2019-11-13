@@ -236,7 +236,7 @@
             
   <div class="section" id="tensorflow-datasets">
 <h1>TensorFlow Datasets 数据集载入<a class="headerlink" href="#tensorflow-datasets" title="永久链接至标题">¶</a></h1>
-<p><a class="reference external" href="https://www.tensorflow.org/datasets/">TensorFlow Datasets</a> 是一个开箱即用的数据集集合，包含数十种常用的机器学习数据集。通过简单的几行代码即可将数据以 <code class="docutils literal notranslate"><span class="pre">tf.data.Datasets</span></code> 的格式载入。关于 <code class="docutils literal notranslate"><span class="pre">tf.data.Datasets</span></code> 的使用可参考 <a class="reference internal" href="../basic/tools.html#tfdata"><span class="std std-ref">tf.data</span></a>。</p>
+<p><a class="reference external" href="https://www.tensorflow.org/datasets/">TensorFlow Datasets</a> 是一个开箱即用的数据集集合，包含数十种常用的机器学习数据集。通过简单的几行代码即可将数据以 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 的格式载入。关于 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 的使用可参考 <a class="reference internal" href="../basic/tools.html#tfdata"><span class="std std-ref">tf.data</span></a>。</p>
 <p>该工具是一个独立的Python包，可以通过:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">-</span><span class="n">datasets</span>
 </pre></div>
@@ -253,13 +253,13 @@
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;tf_flowers&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">tfds</span><span class="o">.</span><span class="n">Split</span><span class="o">.</span><span class="n">TRAIN</span><span class="p">,</span> <span class="n">as_supervised</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>该方法返回一个 <code class="docutils literal notranslate"><span class="pre">tf.data.Datasets</span></code> 对象。部分重要的参数如下：</p>
+<p>该方法返回一个 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 对象。部分重要的参数如下：</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">as_supervised</span></code> ：若为True，则根据数据集的特性返回为 <code class="docutils literal notranslate"><span class="pre">(input,</span> <span class="pre">label)</span></code> 格式，否则返回所有特征的字典。</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">split</span></code>：指定返回数据集的特定部分，若无则返回整个数据集。一般有 <code class="docutils literal notranslate"><span class="pre">tfds.Split.TRAIN</span></code> （训练集）和 <code class="docutils literal notranslate"><span class="pre">tfds.Split.TEST</span></code> （测试集）选项。</p></li>
 </ul>
 <p>当前支持的数据集可在 <a class="reference external" href="https://www.tensorflow.org/datasets/datasets">官方文档</a> 或使用 <code class="docutils literal notranslate"><span class="pre">tfds.list_builders()</span></code> 查看。</p>
-<p>当得到了 <code class="docutils literal notranslate"><span class="pre">tf.data.Datasets</span></code> 类型的数据集后，我们即可使用 <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 对数据集进行各种预处理以及读取数据。例如：</p>
+<p>当得到了 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 类型的数据集后，我们即可使用 <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 对数据集进行各种预处理以及读取数据。例如：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 使用 TessorFlow Datasets 载入“tf_flowers”数据集</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;tf_flowers&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">tfds</span><span class="o">.</span><span class="n">Split</span><span class="o">.</span><span class="n">TRAIN</span><span class="p">,</span> <span class="n">as_supervised</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="c1"># 对 dataset 进行大小调整、打散和分批次操作</span>
