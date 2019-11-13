@@ -115,6 +115,9 @@ TensorBoard：训练过程可视化
 
 有时，你希望查看模型训练过程中各个参数的变化情况（例如损失函数loss的值）。虽然可以通过命令行输出来查看，但有时显得不够直观。而TensorBoard就是一个能够帮助我们将训练过程可视化的工具。
 
+实时查看参数变化情况
+-------------------------------------------
+
 首先在代码目录下建立一个文件夹（如 ``./tensorboard`` ）存放TensorBoard的记录文件，并在代码中实例化一个记录器：
 
 .. code-block:: python
@@ -152,6 +155,9 @@ TensorBoard的使用有以下注意事项：
 * 如果需要重新训练，需要删除掉记录文件夹内的信息并重启TensorBoard（或者建立一个新的记录文件夹并开启TensorBoard， ``--logdir`` 参数设置为新建立的文件夹）；
 * 记录文件夹目录保持全英文。
 
+查看Graph和Profile信息
+-------------------------------------------
+
 除此以外，我们可以在训练时使用 ``tf.summary.trace_on`` 开启Trace，此时TensorFlow会将训练时的大量信息（如计算图的结构，每个操作所耗费的时间等）记录下来。在训练完成后，使用 ``tf.summary.trace_export`` 将记录结果输出到文件。
 
 .. code-block:: python
@@ -166,6 +172,9 @@ TensorBoard的使用有以下注意事项：
 .. figure:: /_static/image/tools/profiling.png
     :width: 100%
     :align: center
+
+实例：查看多层感知机模型的训练情况
+-------------------------------------------
 
 最后提供一个实例，以前章的 :ref:`多层感知机模型 <mlp>` 为例展示TensorBoard的使用：
 
@@ -670,13 +679,33 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
 ``tf.TensorArray`` ：TensorFlow 动态数组 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+..
+    https://www.tensorflow.org/api_docs/python/tf/TensorArray
+
 在部分网络结构，尤其是涉及到时间序列的结构中，我们可能需要将一系列张量以数组的方式依次存放起来，以供进一步处理。当然，在Eager Execution下，你可以直接使用一个Python列表（List）存放数组。不过，如果你需要基于计算图的特性（例如使用 ``@tf.function`` 加速模型运行或者使用SavedModel导出模型），就无法使用这种方式了。因此，TensorFlow提供了 ``tf.TensorArray`` ，一种支持计算图特性的TensorFlow动态数组。
 
-由于需要支持计算图， ``tf.TensorArray`` 的使用方式和一般编程语言中的列表/数组类型略有不同，包括4个方法：
+其声明的方式为：
 
-- 
+- ``arr = tf.TensorArray(dtype, size, dynamic_size=False)`` ：声明一个大小为 ``size`` ，类型为 ``dtype`` 的TensorArray ``arr`` 。如果将 ``dynamic_size`` 参数设置为 ``True`` ，则该数组会自动增长空间。
 
-# TODO
+其读取和写入的方法为：
+
+- ``write(index, value)`` ：将 ``value`` 写入数组的第 ``index`` 个位置；
+- ``read(index)`` ：读取数组的第 ``index`` 个值；
+
+除此以外，TensorArray还包括 ``stack()`` 、 ``unstack()`` 等常用操作，可参考 `文档 <https://www.tensorflow.org/api_docs/python/tf/TensorArray>`_ 以了解详情。
+
+请注意，由于需要支持计算图， ``tf.TensorArray`` 的 ``write()`` 方法是不可以忽略左值的！也就是说，在Graph Execution模式下，必须按照以下的形式写入数组：
+
+.. code-block:: python
+
+    arr = arr.write(index, value)
+
+这样才可以正常生成一个计算图操作，并将该操作返回给 ``arr`` 。而不可以写成：
+
+.. code-block:: python
+
+    arr.write(index, value)     # 生成的计算图操作没有左值接收，从而丢失
 
 一个简单的示例如下：
 
