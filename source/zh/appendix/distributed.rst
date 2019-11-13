@@ -63,9 +63,9 @@ tf_flowers    22s/epoch                       7s/epoch                        5s
     ..
         https://www.tensorflow.org/beta/tutorials/distribute/training_loops
 
-    为了进一步理解MirroredStrategy的过程，以下展示一个手工构建训练流程的示例，相对而言要复杂不少：
+        为了进一步理解MirroredStrategy的过程，以下展示一个手工构建训练流程的示例，相对而言要复杂不少：
 
-    # TODO
+        # TODO
 
 多机训练： ``MultiWorkerMirroredStrategy`` 
 -------------------------------------------
