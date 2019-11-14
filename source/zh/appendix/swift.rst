@@ -109,16 +109,18 @@ Swift 是动态强类型语言，也就是说 Swift 支持通过编译器自动�
 在 Swift 中使用标准的 TensorFlow API
 ---------------------------------------------
 
-在基础的 TensorFlow API 上，Swift 封装了 TensorFlow 的标准 API 接口。比如看一下处理数字的代码，API 与 TensorFlow 高度保持了一致：
+在 ``import TensorFlow`` 之后，既可以在 Swift 语言中，使用核心的 TensorFlow API。
+
+1. 处理数字和矩阵的代码，API 与 TensorFlow 高度保持了一致：
 
 .. code-block:: swift
 
     let x = Tensor<BFloat16>(zeros: [32, 128])
-    let h1 = sigmoid(TensorFlow.matmul(x, w1) + b1)
-    let h2 = tanh(TensorFlow.matmul(h1, w1) + b1)
-    let h3 = softmax(TensorFlow.matmul(h2, w1) + b1)
+    let h1 = sigmoid(matmul(x, w1) + b1)
+    let h2 = tanh(matmul(h1, w1) + b1)
+    let h3 = softmax(matmul(h2, w1) + b1)
 
-再比如 Data API ，也是同名函数直接改写为 Swift 语法即可直接使用：
+2. 处理 Dataset 的代码，基本上将 Python API 中的 ``tf.data.Dataset`` 同名函数直接改写为 Swift 语法即可直接使用：
 
 .. code-block:: swift
 
@@ -129,14 +131,14 @@ Swift 是动态强类型语言，也就是说 Swift 支持通过编译器自动�
     let imageBatch = Dataset(elements: images)
     let labelBatch = Dataset(elements: labels)
     for (image, label) in zip(imageBatch, labelBatch) {
-        let y = TensorFlow.matmul(image, w) + b
+        let y = matmul(image, w) + b
         let loss = (y - label).squared().mean()
         print(loss)
     }
 
-.. admonition:: ``TensorFlow.matmul()`` 可以用 ``•`` 计算符替换
+.. admonition:: ``matmul()`` 的别名： ``•``
 
-    ``TensorFlow.matmul(a, b)`` 等价为 ``a • b``
+    为了代码更加简洁，``matmul(a, b)`` 可以简写为 ``a • b``。``•`` 符号在 Mac 上，可以通过键盘按键 `Option + 8` 输入。
 
 在 Swift 中直接加载 Python 语言库
 ---------------------------------------------
