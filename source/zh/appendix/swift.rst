@@ -222,6 +222,14 @@ MNIST数字分类
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
     :lines: 7-18
 
+.. admonition:: Swift 参数标签
+
+    在代码中，我们会看到形如 ``callAsFunction(_ input: Input)`` 这样的函数声明。其中，``_`` 代表忽略参数标签。
+
+    Swift 中，每个函数参数都有一个 `参数标签` (Argument Label) 以及一个 `参数名称` (Parameter Name)。 `参数标签` 主要应用在调用函数的情况，使得函数的实参与真实命名相关联，更加容易理解实参的意义。同时因为有 `参数标签` 的存在，实在的顺序是可以随意改变的。
+    
+    如果你不希望为参数添加标签，可以使用一个下划线(_)来代替一个明确的 `参数标签`。
+
 3. 接下来，我们实例化这个 MLP 神经网络模型，实例化 MNIST 数据集，并将其存入 ``imageBatch`` 和 ``labelBatch`` 变量：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
