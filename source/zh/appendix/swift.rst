@@ -219,8 +219,18 @@ MNIST数字分类
 
 2. 其次，声明一个最简单的 MLP 神经网络架构，将输入的 784 个图像数据，转换为 10 个神经元的输出：
 
+.. admonition:: 使用 ``Layer`` 协议定义神经网络模型
+
+    为了定义一个 Swift 神经网络模型，我们需要建立一个遵循 ``Layer`` 协议，来声明一个定义神经网络结构的 ``Struct``。
+    
+    其中，最为核心的部分是声明 ``callAsFunction(_:)`` 方法，来定义输入和输出 Tensor 的映射关系。
+    
+    ``callAsFunction(_:)`` 中可以通过类似 Keras 的 Sequential 的方法进行定义：``input.sequences(through: layer1, layer2, ...)`` 将输入和所有的后续处理层 ``layer1``, ``layer2``, ... 等衔接起来。
+
+import TensorFlow
+
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 7-18
+    :lines: 7-22
 
 .. admonition:: Swift 参数标签
 
@@ -233,12 +243,12 @@ MNIST数字分类
 3. 接下来，我们实例化这个 MLP 神经网络模型，实例化 MNIST 数据集，并将其存入 ``imageBatch`` 和 ``labelBatch`` 变量：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 20-27
+    :lines: 24-31
 
 4. 然后，我们通过对数据集的循环，计算模型的梯度 ``grads`` 并通过 ``optimizer.update()`` 来反向传播更新模型的参数，进行训练：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 29-38
+    :lines: 33-42
 
 .. admonition:: Swift 闭包函数（Closure）
 
@@ -257,7 +267,7 @@ MNIST数字分类
 5. 最后，我们使用训练好的模型，在测试数据集上进行检查，得到模型的准度：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 40-
+    :lines: 44-
 
 以上程序运行输出为：
 
