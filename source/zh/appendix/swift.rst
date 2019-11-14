@@ -66,7 +66,7 @@ Google 的 Colaboratory 可以直接支持 Swift 语言的运行环境。可以 
 
 .. admonition:: 使用 Docker 执行 Swift 代码文件
 
-    通过使用 Docker 的目录映射，可以启动 Docker 之后执行本地代码文件。详细使用方法可以参考 Docker Image `zixia/swift` 开源项目的地址：https://github.com/huan/docker-swift-tensorflow
+    通过使用 Docker 的目录映射，可以启动 Docker 之后执行本地代码文件。详细使用方法可以参考 Docker Image ``zixia/swift`` 开源项目的地址：https://github.com/huan/docker-swift-tensorflow
 
 S4TF 基础使用
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -102,23 +102,25 @@ Swift 是动态强类型语言，也就是说 Swift 支持通过编译器自动�
     // 输出结果
     print(w)
 
-.. admonition::  `Tensor<Float>` 中的 `<Float>`
+.. admonition::  ``Tensor<Float>`` 中的 ``<Float>``
 
-    在这里的 `Float` 是用来指定 Tensor 这个类所相关的内部数据类型。可以根据需要替换为其他合理数据类型，比如 “Double”。
+    在这里的 ``Float`` 是用来指定 Tensor 这个类所相关的内部数据类型。可以根据需要替换为其他合理数据类型，比如 “Double”。
 
 在 Swift 中使用标准的 TensorFlow API
 ---------------------------------------------
 
-在基础的 TensorFlow API 上，Swift 封装了 TensorFlow 的标准 API 接口。比如看一下处理数字的代码，API 与 TensorFlow 高度保持了一致：
+在 ``import TensorFlow`` 之后，既可以在 Swift 语言中，使用核心的 TensorFlow API。
+
+1. 处理数字和矩阵的代码，API 与 TensorFlow 高度保持了一致：
 
 .. code-block:: swift
 
     let x = Tensor<BFloat16>(zeros: [32, 128])
-    let h1 = sigmoid(x • w1 + b1)
-    let h2 = tanh(h1 • w1 + b1)
-    let h3 = softmax(h2 • w1 + b1)
+    let h1 = sigmoid(matmul(x, w1) + b1)
+    let h2 = tanh(matmul(h1, w1) + b1)
+    let h3 = softmax(matmul(h2, w1) + b1)
 
-再比如 Data API ，也是同名函数直接改写为 Swift 语法即可直接使用：
+2. 处理 Dataset 的代码，基本上将 Python API 中的 ``tf.data.Dataset`` 同名函数直接改写为 Swift 语法即可直接使用：
 
 .. code-block:: swift
 
@@ -129,14 +131,14 @@ Swift 是动态强类型语言，也就是说 Swift 支持通过编译器自动�
     let imageBatch = Dataset(elements: images)
     let labelBatch = Dataset(elements: labels)
     for (image, label) in zip(imageBatch, labelBatch) {
-        let y = image • w + b
+        let y = matmul(image, w) + b
         let loss = (y - label).squared().mean()
         print(loss)
     }
 
-.. admonition::  `•` 计算符
+.. admonition:: ``matmul()`` 的别名： ``•``
 
-    `•` 在这里为 Swift for TensorFlow 中定义的矩阵乘法操作符号
+    为了代码更加简洁，``matmul(a, b)`` 可以简写为 ``a • b``。``•`` 符号在 Mac 上，可以通过键盘按键 `Option + 8` 输入。
 
 在 Swift 中直接加载 Python 语言库
 ---------------------------------------------
@@ -193,11 +195,11 @@ Swift 语言支持直接加载 Python 函数库（比如 NumPy），也支持直
 
     -4.0
 
-在上面的代码例子中，我们通过将函数 `frac()` 标记为 `@differentiable` ，然后就可以通过 `gradient()` 函数，将其转换为求解微分的新函数 `gradient(of: trac)`，接下来就可以根据任意 x 值求解函数 frac 所在 x 点的梯度了。
+在上面的代码例子中，我们通过将函数 ``frac()`` 标记为 ``@differentiable`` ，然后就可以通过 ``gradient()`` 函数，将其转换为求解微分的新函数 ``gradient(of: trac)``，接下来就可以根据任意 x 值求解函数 frac 所在 x 点的梯度了。
 
 .. admonition:: Swift 函数声明中的参数名称和类型
 
-    Swift 使用 `func` 声明一个函数。在函数的参数中，变量名的冒号后面代表的是“参数类型”；在函数参数和函数体（`{}`） 之前，还可以通过瘦箭头（`->`）来指定函数的`返回值类型`。
+    Swift 使用 ``func`` 声明一个函数。在函数的参数中，变量名的冒号后面代表的是“参数类型”；在函数参数和函数体（``{}``） 之前，还可以通过瘦箭头（``->``）来指定函数的``返回值类型``。
 
     比如在上面的代码中，参数变量名为 “x”；参数类型为 “Double”；函数返回类型为 “Double”。
 
@@ -206,7 +208,7 @@ MNIST数字分类
 
 下面我们以最简单的 MNIST 数字分类为例子，给大家介绍一下基础的 S4TF 编程代码实现。
 
-1. 首先，引入S4TF模块 `TensorFlow`、Python桥接模块 `Python`，基础模块 `Foundation` 和 MNIST 数据集模块 `MNIST`：
+1. 首先，引入S4TF模块 ``TensorFlow``、Python桥接模块 ``Python``，基础模块 ``Foundation`` 和 MNIST 数据集模块 ``MNIST``：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
     :lines: 1-5
@@ -217,24 +219,42 @@ MNIST数字分类
 
 2. 其次，声明一个最简单的 MLP 神经网络架构，将输入的 784 个图像数据，转换为 10 个神经元的输出：
 
+.. admonition:: 使用 ``Layer`` 协议定义神经网络模型
+
+    为了定义一个 Swift 神经网络模型，我们需要建立一个遵循 ``Layer`` 协议，来声明一个定义神经网络结构的 ``Struct``。
+    
+    其中，最为核心的部分是声明 ``callAsFunction(_:)`` 方法，来定义输入和输出 Tensor 的映射关系。
+    
+    ``callAsFunction(_:)`` 中可以通过类似 Keras 的 Sequential 的方法进行定义：``input.sequences(through: layer1, layer2, ...)`` 将输入和所有的后续处理层 ``layer1``, ``layer2``, ... 等衔接起来。
+
+import TensorFlow
+
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 7-18
+    :lines: 7-22
 
-3. 接下来，我们实例化这个 MLP 神经网络模型，实例化 MNIST 数据集，并将其存入 `imageBatch` 和 `labelBatch` 变量：
+.. admonition:: Swift 参数标签
+
+    在代码中，我们会看到形如 ``callAsFunction(_ input: Input)`` 这样的函数声明。其中，``_`` 代表忽略参数标签。
+
+    Swift 中，每个函数参数都有一个 `参数标签` (Argument Label) 以及一个 `参数名称` (Parameter Name)。 `参数标签` 主要应用在调用函数的情况，使得函数的实参与真实命名相关联，更加容易理解实参的意义。同时因为有 `参数标签` 的存在，实在的顺序是可以随意改变的。
+    
+    如果你不希望为参数添加标签，可以使用一个下划线(_)来代替一个明确的 `参数标签`。
+
+3. 接下来，我们实例化这个 MLP 神经网络模型，实例化 MNIST 数据集，并将其存入 ``imageBatch`` 和 ``labelBatch`` 变量：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 20-27
+    :lines: 24-31
 
-4. 然后，我们通过对数据集的循环，计算模型的梯度 `grads` 并通过 `optimizer.update()` 来反向传播更新模型的参数，进行训练：
+4. 然后，我们通过对数据集的循环，计算模型的梯度 ``grads`` 并通过 ``optimizer.update()`` 来反向传播更新模型的参数，进行训练：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 29-38
+    :lines: 33-42
 
 .. admonition:: Swift 闭包函数（Closure）
 
-    Swift 的闭包函数声明为：`{ (parameters) -> return type in statements }`，其中：`parameters` 为闭包接受的参数，`return type` 为闭包运行完毕的返回值类型，`statements` 为闭包内的运行代码。
+    Swift 的闭包函数声明为：``{ (parameters) -> return type in statements }``，其中：``parameters`` 为闭包接受的参数，``return type`` 为闭包运行完毕的返回值类型，``statements`` 为闭包内的运行代码。
     
-    比如上述代码中的  `{ model -> Tensor<Float> in` 这一段，就声明了一个传入参数为 `model`，返回类型为 `Tensor<Float>` 的闭包函数。
+    比如上述代码中的  ``{ model -> Tensor<Float> in`` 这一段，就声明了一个传入参数为 ``model``，返回类型为 ``Tensor<Float>`` 的闭包函数。
 
 .. admonition:: Swift 尾随闭包语法 (Trailing Closure Syntax)
 
@@ -242,12 +262,12 @@ MNIST数字分类
 
 .. admonition:: Swift 输入输出参数 (In-Out Parameters)
 
-    在 Swift 语言中，函数缺省是不可以修改参数的值的。为了让函数能够修改传入的参数变量，需要将传入的参数作为输入输出参数（In-Out Parmeters）。具体表现为需要在参数前加 `&` 符号，表示这个值可以被函数修改。
+    在 Swift 语言中，函数缺省是不可以修改参数的值的。为了让函数能够修改传入的参数变量，需要将传入的参数作为输入输出参数（In-Out Parmeters）。具体表现为需要在参数前加 ``&`` 符号，表示这个值可以被函数修改。
 
 5. 最后，我们使用训练好的模型，在测试数据集上进行检查，得到模型的准度：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 40-
+    :lines: 44-
 
 以上程序运行输出为：
 
