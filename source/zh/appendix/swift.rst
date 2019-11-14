@@ -193,11 +193,11 @@ Swift 语言支持直接加载 Python 函数库（比如 NumPy），也支持直
 
     -4.0
 
-在上面的代码例子中，我们通过将函数 `frac()` 标记为 `@differentiable` ，然后就可以通过 `gradient()` 函数，将其转换为求解微分的新函数 `gradient(of: trac)`，接下来就可以根据任意 x 值求解函数 frac 所在 x 点的梯度了。
+在上面的代码例子中，我们通过将函数 ``frac()`` 标记为 ``@differentiable`` ，然后就可以通过 ``gradient()`` 函数，将其转换为求解微分的新函数 ``gradient(of: trac)``，接下来就可以根据任意 x 值求解函数 frac 所在 x 点的梯度了。
 
 .. admonition:: Swift 函数声明中的参数名称和类型
 
-    Swift 使用 `func` 声明一个函数。在函数的参数中，变量名的冒号后面代表的是“参数类型”；在函数参数和函数体（`{}`） 之前，还可以通过瘦箭头（`->`）来指定函数的`返回值类型`。
+    Swift 使用 ``func`` 声明一个函数。在函数的参数中，变量名的冒号后面代表的是“参数类型”；在函数参数和函数体（``{}``） 之前，还可以通过瘦箭头（``->``）来指定函数的``返回值类型``。
 
     比如在上面的代码中，参数变量名为 “x”；参数类型为 “Double”；函数返回类型为 “Double”。
 
@@ -206,7 +206,7 @@ MNIST数字分类
 
 下面我们以最简单的 MNIST 数字分类为例子，给大家介绍一下基础的 S4TF 编程代码实现。
 
-1. 首先，引入S4TF模块 `TensorFlow`、Python桥接模块 `Python`，基础模块 `Foundation` 和 MNIST 数据集模块 `MNIST`：
+1. 首先，引入S4TF模块 ``TensorFlow``、Python桥接模块 ``Python``，基础模块 ``Foundation`` 和 MNIST 数据集模块 ``MNIST``：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
     :lines: 1-5
@@ -220,21 +220,21 @@ MNIST数字分类
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
     :lines: 7-18
 
-3. 接下来，我们实例化这个 MLP 神经网络模型，实例化 MNIST 数据集，并将其存入 `imageBatch` 和 `labelBatch` 变量：
+3. 接下来，我们实例化这个 MLP 神经网络模型，实例化 MNIST 数据集，并将其存入 ``imageBatch`` 和 ``labelBatch`` 变量：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
     :lines: 20-27
 
-4. 然后，我们通过对数据集的循环，计算模型的梯度 `grads` 并通过 `optimizer.update()` 来反向传播更新模型的参数，进行训练：
+4. 然后，我们通过对数据集的循环，计算模型的梯度 ``grads`` 并通过 ``optimizer.update()`` 来反向传播更新模型的参数，进行训练：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
     :lines: 29-38
 
 .. admonition:: Swift 闭包函数（Closure）
 
-    Swift 的闭包函数声明为：`{ (parameters) -> return type in statements }`，其中：`parameters` 为闭包接受的参数，`return type` 为闭包运行完毕的返回值类型，`statements` 为闭包内的运行代码。
+    Swift 的闭包函数声明为：``{ (parameters) -> return type in statements }``，其中：``parameters`` 为闭包接受的参数，``return type`` 为闭包运行完毕的返回值类型，``statements`` 为闭包内的运行代码。
     
-    比如上述代码中的  `{ model -> Tensor<Float> in` 这一段，就声明了一个传入参数为 `model`，返回类型为 `Tensor<Float>` 的闭包函数。
+    比如上述代码中的  ``{ model -> Tensor<Float> in`` 这一段，就声明了一个传入参数为 ``model``，返回类型为 ``Tensor<Float>`` 的闭包函数。
 
 .. admonition:: Swift 尾随闭包语法 (Trailing Closure Syntax)
 
@@ -242,7 +242,7 @@ MNIST数字分类
 
 .. admonition:: Swift 输入输出参数 (In-Out Parameters)
 
-    在 Swift 语言中，函数缺省是不可以修改参数的值的。为了让函数能够修改传入的参数变量，需要将传入的参数作为输入输出参数（In-Out Parmeters）。具体表现为需要在参数前加 `&` 符号，表示这个值可以被函数修改。
+    在 Swift 语言中，函数缺省是不可以修改参数的值的。为了让函数能够修改传入的参数变量，需要将传入的参数作为输入输出参数（In-Out Parmeters）。具体表现为需要在参数前加 ``&`` 符号，表示这个值可以被函数修改。
 
 5. 最后，我们使用训练好的模型，在测试数据集上进行检查，得到模型的准度：
 
