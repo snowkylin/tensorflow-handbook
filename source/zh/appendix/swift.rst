@@ -66,7 +66,7 @@ Google 的 Colaboratory 可以直接支持 Swift 语言的运行环境。可以 
 
 .. admonition:: 使用 Docker 执行 Swift 代码文件
 
-    通过使用 Docker 的目录映射，可以启动 Docker 之后执行本地代码文件。详细使用方法可以参考 Docker Image `zixia/swift` 开源项目的地址：https://github.com/huan/docker-swift-tensorflow
+    通过使用 Docker 的目录映射，可以启动 Docker 之后执行本地代码文件。详细使用方法可以参考 Docker Image ``zixia/swift`` 开源项目的地址：https://github.com/huan/docker-swift-tensorflow
 
 S4TF 基础使用
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -102,9 +102,9 @@ Swift 是动态强类型语言，也就是说 Swift 支持通过编译器自动�
     // 输出结果
     print(w)
 
-.. admonition::  `Tensor<Float>` 中的 `<Float>`
+.. admonition::  ``Tensor<Float>`` 中的 ``<Float>``
 
-    在这里的 `Float` 是用来指定 Tensor 这个类所相关的内部数据类型。可以根据需要替换为其他合理数据类型，比如 “Double”。
+    在这里的 ``Float`` 是用来指定 Tensor 这个类所相关的内部数据类型。可以根据需要替换为其他合理数据类型，比如 “Double”。
 
 在 Swift 中使用标准的 TensorFlow API
 ---------------------------------------------
@@ -114,9 +114,9 @@ Swift 是动态强类型语言，也就是说 Swift 支持通过编译器自动�
 .. code-block:: swift
 
     let x = Tensor<BFloat16>(zeros: [32, 128])
-    let h1 = sigmoid(x • w1 + b1)
-    let h2 = tanh(h1 • w1 + b1)
-    let h3 = softmax(h2 • w1 + b1)
+    let h1 = sigmoid(TensorFlow.matmul(x, w1) + b1)
+    let h2 = tanh(TensorFlow.matmul(h1, w1) + b1)
+    let h3 = softmax(TensorFlow.matmul(h2, w1) + b1)
 
 再比如 Data API ，也是同名函数直接改写为 Swift 语法即可直接使用：
 
@@ -129,14 +129,14 @@ Swift 是动态强类型语言，也就是说 Swift 支持通过编译器自动�
     let imageBatch = Dataset(elements: images)
     let labelBatch = Dataset(elements: labels)
     for (image, label) in zip(imageBatch, labelBatch) {
-        let y = image • w + b
+        let y = TensorFlow.matmul(image, w) + b
         let loss = (y - label).squared().mean()
         print(loss)
     }
 
-.. admonition::  `•` 计算符
+.. admonition:: ``TensorFlow.matmul()`` 可以用 ``•`` 计算符替换
 
-    `•` 在这里为 Swift for TensorFlow 中定义的矩阵乘法操作符号
+    ``TensorFlow.matmul(a, b)`` 等价为 ``a • b``
 
 在 Swift 中直接加载 Python 语言库
 ---------------------------------------------
