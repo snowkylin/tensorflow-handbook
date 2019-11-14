@@ -56,17 +56,20 @@ Google 的 Colaboratory 可以直接支持 Swift 语言的运行环境。可以 
 
 在本机已有 docker 环境的情况下, 使用预装 Swift for TensorFlow 的 Docker Image 是非常方便的。
 
-- 获得一个 S4TS 的 Jupyter Notebook
+1. 获得一个 S4TS 的 Jupyter Notebook
 
     在命令行中执行 ``nvidia-docker run -ti --rm -p 8888:8888 --cap-add SYS_PTRACE -v "$(pwd)":/notebooks zixia/swift`` 来启动 Jupyter ，然后根据提示的 URL ，打开浏览器访问即可。
 
-- 获得一个已经安装好 S4TF 的 Swift REPL 环境
+2. 执行一个本地的 Swift 代码文件
     
-    在命令行中执行 ``docker run -it --privileged --userns=host zixia/swift swift``
+    为了运行本地的 ``s4tf.swift`` 文件，我们可以用如下 docker 命令：
 
-.. admonition:: 使用 Docker 执行 Swift 代码文件
+    ::
 
-    通过使用 Docker 的目录映射，可以启动 Docker 之后执行本地代码文件。详细使用方法可以参考 Docker Image ``zixia/swift`` 开源项目的地址：https://github.com/huan/docker-swift-tensorflow
+        nvidia-docker run -ti --rm --privileged --userns=host \
+            -v "$(pwd)":/notebooks \  
+            zixia/swift \
+            swift ./s4tf.swift
 
 S4TF 基础使用
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
