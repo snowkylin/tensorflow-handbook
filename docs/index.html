@@ -121,7 +121,7 @@
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="zh/appendix/static.html">图模型下的TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/appendix/static.html">图执行模式下的 TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
@@ -344,9 +344,9 @@
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id16">读取 TFRecord 文件</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="zh/basic/tools.html#tf-function-graph-execution"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> ：Graph Execution模式 *</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#tf-function"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 基础使用方法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id18"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 内在机制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic/tools.html#tf-function"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> ：图执行模式 *</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id17"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 基础使用方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id19"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 内在机制</a></li>
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#autograph-pythontensorflow">AutoGraph：将Python控制流转换为TensorFlow计算图</a></li>
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#tf-session">使用传统的 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code></a></li>
 </ul>
@@ -354,7 +354,7 @@
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/tools.html#tf-tensorarray-tensorflow"><code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> ：TensorFlow 动态数组 *</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/tools.html#tf-config-gpu"><code class="docutils literal notranslate"><span class="pre">tf.config</span></code>：GPU的使用与分配 *</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#gpu">指定当前程序使用的GPU</a></li>
-<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id20">设置显存使用策略</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id21">设置显存使用策略</a></li>
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#gpugpu">单GPU模拟多GPU环境</a></li>
 </ul>
 </li>
@@ -493,8 +493,14 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="zh/appendix/static.html">图模型下的TensorFlow</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/static.html#tensorflow-1-1">TensorFlow 1+1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/appendix/static.html">图执行模式下的 TensorFlow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/static.html#tensorflow-1-1">TensorFlow 1+1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/static.html#id1">使用计算图与会话进行基本运算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/static.html#placeholder-feed-dict">占位符（Placeholder）与 <code class="docutils literal notranslate"><span class="pre">feed_dict</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/static.html#variable">变量（Variable）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/static.html#id2">矩阵及张量计算</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="zh/appendix/static.html#id3">基础示例：线性回归</a></li>
 </ul>
 </li>

@@ -134,7 +134,7 @@
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/static.html">图模型下的TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/static.html">图执行模式下的 TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
@@ -251,7 +251,7 @@
 <p>TensorFlow的最新安装步骤可参考官方网站上的说明（<a class="reference external" href="https://tensorflow.google.cn/install">https://tensorflow.google.cn/install</a>）。TensorFlow支持Python、Java、Go、C等多种编程语言以及Windows、OSX、Linux等多种操作系统，此处及后文均以Python 3.7为准。</p>
 <div class="admonition hint">
 <p class="admonition-title">提示</p>
-<p>本章介绍在一般的个人电脑或服务器上直接安装TensorFlow 2.0的方法。关于在容器环境（Docker）、云平台中部署TensorFlow或在线上环境中使用TensorFlow的方法，见附录 <a class="reference internal" href="../appendix/docker.html"><span class="doc">使用Docker部署TensorFlow环境</span></a> 和 <a class="reference internal" href="../appendix/cloud.html"><span class="doc">在云端使用TensorFlow</span></a> 。软件的安装方法往往具有时效性，本节的更新日期为2019年10月。</p>
+<p>本章介绍在一般的个人电脑或服务器上直接安装TensorFlow 2的方法。关于在容器环境（Docker）、云平台中部署TensorFlow或在线上环境中使用TensorFlow的方法，见附录 <a class="reference internal" href="../appendix/docker.html"><span class="doc">使用Docker部署TensorFlow环境</span></a> 和 <a class="reference internal" href="../appendix/cloud.html"><span class="doc">在云端使用TensorFlow</span></a> 。软件的安装方法往往具有时效性，本节的更新日期为2019年10月。</p>
 </div>
 <div class="section" id="id1">
 <h2>一般安装步骤<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
@@ -259,25 +259,22 @@
 <li><p>安装Python环境。此处建议安装 <a class="reference external" href="https://www.anaconda.com/">Anaconda</a> 的Python 3.7版本（后文均以此为准），这是一个开源的Python发行版本，提供了一个完整的科学计算环境，包括NumPy、SciPy等常用科学计算库。当然，你有权选择自己喜欢的Python环境。Anaconda的安装包可在 <a class="reference external" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">这里</a> 获得。</p></li>
 <li><p>使用Anaconda自带的conda包管理器建立一个Conda虚拟环境，并进入该虚拟环境。在命令行下输入：</p></li>
 </ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">tf2</span><span class="o">.</span><span class="mi">0</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.7</span>   <span class="c1"># “tf2.0”是你建立的Conda虚拟环境的名字</span>
-<span class="n">conda</span> <span class="n">activate</span> <span class="n">tf2</span><span class="o">.</span><span class="mi">0</span>                   <span class="c1"># 进入名为“tf2.0”的虚拟环境</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">tf2</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.7</span>      <span class="c1"># “tf2”是你建立的conda虚拟环境的名字</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">tf2</span>                      <span class="c1"># 进入名为“tf2”的conda虚拟环境</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
 <li><p>使用Python包管理器pip安装TensorFlow。在命令行下输入：</p></li>
 </ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">==</span><span class="mf">2.0</span><span class="o">.</span><span class="mi">0</span>           <span class="c1"># TensorFlow CPU版本</span>
-</pre></div>
-</div>
-<p>或</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">-</span><span class="n">gpu</span><span class="o">==</span><span class="mf">2.0</span><span class="o">.</span><span class="mi">0</span>       <span class="c1"># TensorFlow GPU版本，需要具有NVIDIA显卡及正确安装驱动程序，详见后文</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span>
 </pre></div>
 </div>
 <p>等待片刻即安装完毕。</p>
 <div class="admonition tip">
 <p class="admonition-title">小技巧</p>
 <ol class="arabic">
-<li><p>也可以使用 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">tensorflow</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">tensorflow-gpu</span></code> 来安装TensorFlow，不过conda源的版本往往更新较慢，难以第一时间获得最新的TensorFlow版本；</p></li>
+<li><p>也可以使用 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">tensorflow</span></code> 来安装TensorFlow，不过conda源的版本往往更新较慢，难以第一时间获得最新的TensorFlow版本；</p></li>
+<li><p>从 TensorFlow 2.1 开始，pip 包 <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> 即同时包含 GPU 支持，无需通过特定的 pip 包 <code class="docutils literal notranslate"><span class="pre">tensorflow-gpu</span></code> 安装GPU版本。如果对pip包的大小敏感，可使用 <code class="docutils literal notranslate"><span class="pre">tensorflow-cpu</span></code> 包安装仅支持CPU的TensorFlow版本。</p></li>
 <li><p>在Windows下，需要打开开始菜单中的“Anaconda Prompt”进入Anaconda的命令行环境；</p></li>
 <li><p>在国内环境下，推荐使用国内的pypi镜像和Anaconda镜像，将显著提升pip和conda的下载速度；</p>
 <blockquote>
@@ -400,7 +397,7 @@ Mon Jun 10 23:19:54 2019
 <div class="section" id="id12">
 <h2>第一个程序<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
 <p>安装完毕后，我们来编写一个简单的程序来验证安装。</p>
-<p>在命令行下输入 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">tf2.0</span></code> 进入之前建立的安装有TensorFlow的Conda虚拟环境，再输入 <code class="docutils literal notranslate"><span class="pre">python</span></code> 进入Python环境，逐行输入以下代码：</p>
+<p>在命令行下输入 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">tf2</span></code> 进入之前建立的安装有TensorFlow的Conda虚拟环境，再输入 <code class="docutils literal notranslate"><span class="pre">python</span></code> 进入Python环境，逐行输入以下代码：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
 
 <span class="n">A</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
@@ -417,6 +414,10 @@ Mon Jun 10 23:19:54 2019
 </pre></div>
 </div>
 <p>说明TensorFlow已安装成功。运行途中可能会输出一些TensorFlow的提示信息，属于正常现象。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>如果你在Windows下安装了TensorFlow 2.1正式版，可能会在导入TensorFlow时出现 <a class="reference external" href="https://github.com/tensorflow/tensorflow/issues/35749">DLL载入错误</a> 。此时安装 <a class="reference external" href="https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads">Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019</a> 即可正常使用。</p>
+</div>
 <p>此处使用的是Python语言，关于Python语言的入门教程可以参考 <a class="reference external" href="http://www.runoob.com/python3/python3-tutorial.html">runoob网站的Python 3教程</a> 或 <a class="reference external" href="https://www.liaoxuefeng.com">廖雪峰的Python教程</a> ，本手册之后将默认读者拥有Python语言的基本知识。不用紧张，Python语言易于上手，而TensorFlow本身也不会用到Python语言的太多高级特性。</p>
 </div>
 <div class="section" id="ide">
@@ -428,7 +429,11 @@ Mon Jun 10 23:19:54 2019
 <p class="admonition-title">小技巧</p>
 <p>如果你是学生并有.edu结尾的邮箱的话，可以在 <a class="reference external" href="http://www.jetbrains.com/student/">这里</a> 申请PyCharm的免费Professional版本授权。</p>
 </div>
-<p>对于TensorFlow及深度学习的业余爱好者或者初学者， <a class="reference external" href="https://code.visualstudio.com/">Visual Studio Code</a> 或者一些在线的交互式Python环境（比如免费的 <a class="reference external" href="https://colab.research.google.com/">Google Colab</a> ）也是不错的选择。Colab的使用方式可参考 <a class="reference internal" href="../../en/appendix/cloud.html#colab"><span class="std std-ref">附录</span></a> 。</p>
+<p>对于TensorFlow及深度学习的业余爱好者或者初学者， <a class="reference external" href="https://code.visualstudio.com/">Visual Studio Code</a> 或者一些在线的交互式Python环境（比如免费的 <a class="reference external" href="https://colab.research.google.com/">Google Colab</a> ）也是不错的选择。Colab的使用方式可参考 <a class="reference internal" href="../appendix/cloud.html#colab"><span class="std std-ref">附录</span></a> 。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>如果你使用的是旧版本的 PyCharm ，可能会在安装 TensorFlow 2 后出现部分代码自动补全功能丧失的问题。升级到新版的 PyCharm （2019.3及以后版本）即可解决这一问题。</p>
+</div>
 <dl class="footnote brackets">
 <dt class="label" id="nohup"><span class="brackets"><a class="fn-backref" href="#id13">1</a></span></dt>
 <dd><p>关于  <code class="docutils literal notranslate"><span class="pre">nohup</span></code> 命令可参考 <a class="reference external" href="https://www.ibm.com/developerworks/cn/linux/l-cn-nohup/">https://www.ibm.com/developerworks/cn/linux/l-cn-nohup/</a></p>
@@ -439,11 +444,11 @@ Mon Jun 10 23:19:54 2019
 <h2>TensorFlow所需的硬件配置 *<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h2>
 <div class="admonition hint">
 <p class="admonition-title">提示</p>
-<p>对于学习而言，TensorFlow的硬件门槛并不高。甚至，借助 <a class="reference internal" href="../../en/appendix/cloud.html#colab"><span class="std std-ref">免费</span></a> 或 <a class="reference internal" href="../../en/appendix/cloud.html#gcp"><span class="std std-ref">灵活</span></a> 的云端计算资源，只要你有一台能上网的电脑，就能够熟练掌握TensorFlow！</p>
+<p>对于学习而言，TensorFlow的硬件门槛并不高。甚至，借助 <a class="reference internal" href="../appendix/cloud.html#colab"><span class="std std-ref">免费</span></a> 或 <a class="reference internal" href="../appendix/cloud.html#gcp"><span class="std std-ref">灵活</span></a> 的云端计算资源，只要你有一台能上网的电脑，就能够熟练掌握TensorFlow！</p>
 </div>
 <p>在很多人的刻板印象中，TensorFlow乃至深度学习是一件非常“吃硬件”的事情，以至于一接触TensorFlow，第一件事情可能就是想如何升级自己的电脑硬件。不过，TensorFlow所需的硬件配置很大程度是视任务和使用环境而定的：</p>
 <ul class="simple">
-<li><p>对于TensorFlow初学者，无需硬件升级也可以很好地学习和掌握TensorFlow。本手册中的大部分教学示例，大部分当前主流的个人电脑（即使没有GPU）均可胜任，无需添置其他硬件设备。对于本手册中部分计算量较大的示例（例如 <a class="reference internal" href="tools.html#cats-vs-dogs"><span class="std std-ref">在cats_vs_dogs数据集上训练CNN图像分类</span></a> ），一块主流的NVIDIA GPU会大幅加速训练。如果自己的个人电脑难以胜任，可以考虑在云端（例如 <a class="reference internal" href="../../en/appendix/cloud.html#colab"><span class="std std-ref">免费的 Colab</span></a> ）进行模型训练。</p></li>
+<li><p>对于TensorFlow初学者，无需硬件升级也可以很好地学习和掌握TensorFlow。本手册中的大部分教学示例，大部分当前主流的个人电脑（即使没有GPU）均可胜任，无需添置其他硬件设备。对于本手册中部分计算量较大的示例（例如 <a class="reference internal" href="tools.html#cats-vs-dogs"><span class="std std-ref">在cats_vs_dogs数据集上训练CNN图像分类</span></a> ），一块主流的NVIDIA GPU会大幅加速训练。如果自己的个人电脑难以胜任，可以考虑在云端（例如 <a class="reference internal" href="../appendix/cloud.html#colab"><span class="std std-ref">免费的 Colab</span></a> ）进行模型训练。</p></li>
 <li><p>对于参加数据科学竞赛（比如Kaggle）或者经常在本机进行训练的个人爱好者或开发者，一块高性能的NVIDIA GPU往往是必要的。CUDA核心数和显存大小是决定显卡机器学习性能的两个关键参数，前者决定训练速度，后者决定可以训练多大的模型以及训练时的最大Batch Size，对于较大规模的训练而言尤其敏感。</p></li>
 <li><p>对于前沿的机器学习研究（尤其是计算机视觉和自然语言处理领域），多GPU并行训练是标准配置。为了快速迭代实验结果以及训练更大规模的模型以提升性能，4卡、8卡或更高的GPU数量是常态。</p></li>
 </ul>

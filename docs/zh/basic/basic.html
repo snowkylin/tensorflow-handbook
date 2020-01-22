@@ -131,7 +131,7 @@
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/static.html">图模型下的TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/static.html">图执行模式下的 TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
@@ -267,7 +267,7 @@
 </div>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>
-<p>本手册基于TensorFlow的Eager Execution模式。在TensorFlow 1.X版本中， <strong>必须</strong> 在导入TensorFlow库后调用 <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code> 函数以启用Eager Execution模式。在TensorFlow 2.0版本中，Eager Execution模式将成为默认模式，无需额外调用 <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code> 函数（不过若要关闭Eager Execution，则需调用 <code class="docutils literal notranslate"><span class="pre">tf.compat.v1.disable_eager_execution()</span></code> 函数）。</p>
+<p>本手册基于TensorFlow的即时执行模式（Eager Execution）。在TensorFlow 1.X版本中， <strong>必须</strong> 在导入TensorFlow库后调用 <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code> 函数以启用即时执行模式。在 TensorFlow 2 中，即时执行模式将成为默认模式，无需额外调用 <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code> 函数（不过若要关闭即时执行模式，则需调用 <code class="docutils literal notranslate"><span class="pre">tf.compat.v1.disable_eager_execution()</span></code> 函数）。</p>
 </div>
 <p>TensorFlow使用 <strong>张量</strong> （Tensor）作为数据的基本单位。TensorFlow的张量在概念上等同于多维数组，我们可以使用它来描述数学中的标量（0维数组）、向量（1维数组）、矩阵（2维数组）等各种量，示例如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定义一个随机数（标量）</span>
@@ -440,7 +440,7 @@
 </div>
 <div class="section" id="optimizer">
 <span id="id16"></span><h3>TensorFlow下的线性回归<a class="headerlink" href="#optimizer" title="永久链接至标题">¶</a></h3>
-<p>TensorFlow的 <strong>Eager Execution（动态图）模式</strong> <a class="footnote-reference brackets" href="#f4" id="id17">5</a> 与上述NumPy的运行方式十分类似，然而提供了更快速的运算（GPU支持）、自动求导、优化器等一系列对深度学习非常重要的功能。以下展示了如何使用TensorFlow计算线性回归。可以注意到，程序的结构和前述NumPy的实现非常类似。这里，TensorFlow帮助我们做了两件重要的工作：</p>
+<p>TensorFlow的 <strong>即时执行模式</strong> <a class="footnote-reference brackets" href="#f4" id="id17">5</a> 与上述NumPy的运行方式十分类似，然而提供了更快速的运算（GPU支持）、自动求导、优化器等一系列对深度学习非常重要的功能。以下展示了如何使用TensorFlow计算线性回归。可以注意到，程序的结构和前述NumPy的实现非常类似。这里，TensorFlow帮助我们做了两件重要的工作：</p>
 <ul class="simple">
 <li><p>使用 <code class="docutils literal notranslate"><span class="pre">tape.gradient(ys,</span> <span class="pre">xs)</span></code> 自动计算梯度；</p></li>
 <li><p>使用 <code class="docutils literal notranslate"><span class="pre">optimizer.apply_gradients(grads_and_vars)</span></code> 自动更新模型参数。</p></li>
@@ -492,7 +492,7 @@
 <dd><p>此处的损失函数为均方差 <img class="math" src="../../_images/math/0bc351bdadeec4a1c3fd5c4be10715182daaf528.png" alt="L(x) = \frac{1}{2} \sum_{i=1}^5 (ax_i + b - y_i)^2"/>。其关于参数 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的偏导数为 <img class="math" src="../../_images/math/88db165663835c22d80d377dd4fb4026f321f9cc.png" alt="\frac{\partial L}{\partial a} = \sum_{i=1}^5 (ax_i + b - y) x_i"/>，<img class="math" src="../../_images/math/82027e450db611dc25d2918eb05c312b38bae6a0.png" alt="\frac{\partial L}{\partial b} = \sum_{i=1}^5 (ax_i + b - y)"/></p>
 </dd>
 <dt class="label" id="f4"><span class="brackets"><a class="fn-backref" href="#id17">5</a></span></dt>
-<dd><p>与Eager Execution相对的是Graph Execution（静态图）模式，即TensorFlow在2018年3月的1.8版本发布之前所主要使用的模式。本手册以面向快速迭代开发的动态模式为主，但会在附录中介绍静态图模式的基本使用，供需要的读者查阅。</p>
+<dd><p>与即时执行模式相对的是图执行模式（Graph Execution），即 TensorFlow 2 之前所主要使用的执行模式。本手册以面向快速迭代开发的即时执行模式为主，但会在 <a class="reference internal" href="../appendix/static.html"><span class="doc">附录</span></a> 中介绍图执行模式的基本使用，供需要的读者查阅。</p>
 </dd>
 </dl>
 </div>

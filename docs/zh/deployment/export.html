@@ -126,7 +126,7 @@
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/static.html">图模型下的TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/static.html">图执行模式下的 TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
@@ -256,7 +256,7 @@
 <p class="admonition-title">提示</p>
 <p>对于使用继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 类建立的Keras模型 <code class="docutils literal notranslate"><span class="pre">model</span></code> ，使用SavedModel载入后将无法使用 <code class="docutils literal notranslate"><span class="pre">model()</span></code> 直接进行推断，而需要使用 <code class="docutils literal notranslate"><span class="pre">model.call()</span></code> 。</p>
 </div>
-<p>以下是一个简单的示例，将 <a class="reference internal" href="../../en/basic/models.html#mlp"><span class="std std-ref">前文MNIST手写体识别的模型</span></a> 进行导出和导入。</p>
+<p>以下是一个简单的示例，将 <a class="reference internal" href="../basic/models.html#mlp"><span class="std std-ref">前文MNIST手写体识别的模型</span></a> 进行导出和导入。</p>
 <p>导出模型到 <code class="docutils literal notranslate"><span class="pre">saved/1</span></code> 文件夹：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="k">import</span> <span class="n">MNISTLoader</span>

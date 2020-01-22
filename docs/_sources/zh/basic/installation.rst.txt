@@ -3,7 +3,7 @@ TensorFlow安装与环境配置
 
 TensorFlow的最新安装步骤可参考官方网站上的说明（https://tensorflow.google.cn/install）。TensorFlow支持Python、Java、Go、C等多种编程语言以及Windows、OSX、Linux等多种操作系统，此处及后文均以Python 3.7为准。
 
-.. hint:: 本章介绍在一般的个人电脑或服务器上直接安装TensorFlow 2.0的方法。关于在容器环境（Docker）、云平台中部署TensorFlow或在线上环境中使用TensorFlow的方法，见附录 :doc:`使用Docker部署TensorFlow环境 <../appendix/docker>` 和 :doc:`在云端使用TensorFlow <../appendix/cloud>` 。软件的安装方法往往具有时效性，本节的更新日期为2019年10月。
+.. hint:: 本章介绍在一般的个人电脑或服务器上直接安装TensorFlow 2的方法。关于在容器环境（Docker）、云平台中部署TensorFlow或在线上环境中使用TensorFlow的方法，见附录 :doc:`使用Docker部署TensorFlow环境 <../appendix/docker>` 和 :doc:`在云端使用TensorFlow <../appendix/cloud>` 。软件的安装方法往往具有时效性，本节的更新日期为2019年10月。
 
 一般安装步骤
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -14,32 +14,27 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 
 ::
 
-    conda create --name tf2.0 python=3.7   # “tf2.0”是你建立的Conda虚拟环境的名字
-    conda activate tf2.0                   # 进入名为“tf2.0”的虚拟环境
+    conda create --name tf2 python=3.7      # “tf2”是你建立的conda虚拟环境的名字
+    conda activate tf2                      # 进入名为“tf2”的conda虚拟环境
 
 3. 使用Python包管理器pip安装TensorFlow。在命令行下输入：
 
 ::
 
-    pip install tensorflow==2.0.0           # TensorFlow CPU版本
-
-或
-
-::
-
-    pip install tensorflow-gpu==2.0.0       # TensorFlow GPU版本，需要具有NVIDIA显卡及正确安装驱动程序，详见后文
+    pip install tensorflow
 
 等待片刻即安装完毕。
 
 .. tip:: 
 
-    1. 也可以使用 ``conda install tensorflow`` 或者 ``conda install tensorflow-gpu`` 来安装TensorFlow，不过conda源的版本往往更新较慢，难以第一时间获得最新的TensorFlow版本；
-    2. 在Windows下，需要打开开始菜单中的“Anaconda Prompt”进入Anaconda的命令行环境；
-    3. 在国内环境下，推荐使用国内的pypi镜像和Anaconda镜像，将显著提升pip和conda的下载速度；
+    1. 也可以使用 ``conda install tensorflow`` 来安装TensorFlow，不过conda源的版本往往更新较慢，难以第一时间获得最新的TensorFlow版本；
+    2. 从 TensorFlow 2.1 开始，pip 包 ``tensorflow`` 即同时包含 GPU 支持，无需通过特定的 pip 包 ``tensorflow-gpu`` 安装GPU版本。如果对pip包的大小敏感，可使用 ``tensorflow-cpu`` 包安装仅支持CPU的TensorFlow版本。
+    3. 在Windows下，需要打开开始菜单中的“Anaconda Prompt”进入Anaconda的命令行环境；
+    4. 在国内环境下，推荐使用国内的pypi镜像和Anaconda镜像，将显著提升pip和conda的下载速度；
         
         - 清华大学的pypi镜像：https://mirrors.tuna.tsinghua.edu.cn/help/pypi/
         - 清华大学的Anaconda镜像：https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/
-    4. 如果对磁盘空间要求严格（比如服务器环境），可以安装 `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ ，仅包含Python和Conda，其他的包可自己按需安装。Miniconda的安装包可在 `这里 <https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/>`_ 获得。
+    5. 如果对磁盘空间要求严格（比如服务器环境），可以安装 `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ ，仅包含Python和Conda，其他的包可自己按需安装。Miniconda的安装包可在 `这里 <https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/>`_ 获得。
 
 .. admonition:: pip和conda包管理器
 
@@ -171,7 +166,7 @@ CUDA Toolkit和cuDNN的安装
 
 安装完毕后，我们来编写一个简单的程序来验证安装。
 
-在命令行下输入 ``conda activate tf2.0`` 进入之前建立的安装有TensorFlow的Conda虚拟环境，再输入 ``python`` 进入Python环境，逐行输入以下代码：
+在命令行下输入 ``conda activate tf2`` 进入之前建立的安装有TensorFlow的Conda虚拟环境，再输入 ``python`` 进入Python环境，逐行输入以下代码：
 
 .. code-block:: python
 
@@ -191,6 +186,9 @@ CUDA Toolkit和cuDNN的安装
 
 说明TensorFlow已安装成功。运行途中可能会输出一些TensorFlow的提示信息，属于正常现象。
 
+.. warning:: 如果你在Windows下安装了TensorFlow 2.1正式版，可能会在导入TensorFlow时出现 `DLL载入错误 <https://github.com/tensorflow/tensorflow/issues/35749>`_ 。此时安装 `Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019 <https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads>`_ 即可正常使用。
+
+
 此处使用的是Python语言，关于Python语言的入门教程可以参考 `runoob网站的Python 3教程 <http://www.runoob.com/python3/python3-tutorial.html>`_ 或 `廖雪峰的Python教程 <https://www.liaoxuefeng.com>`_ ，本手册之后将默认读者拥有Python语言的基本知识。不用紧张，Python语言易于上手，而TensorFlow本身也不会用到Python语言的太多高级特性。
 
 IDE设置
@@ -205,6 +203,9 @@ IDE设置
 .. tip:: 如果你是学生并有.edu结尾的邮箱的话，可以在 `这里 <http://www.jetbrains.com/student/>`_ 申请PyCharm的免费Professional版本授权。
 
 对于TensorFlow及深度学习的业余爱好者或者初学者， `Visual Studio Code <https://code.visualstudio.com/>`_ 或者一些在线的交互式Python环境（比如免费的 `Google Colab <https://colab.research.google.com/>`_ ）也是不错的选择。Colab的使用方式可参考 :ref:`附录 <colab>` 。
+
+.. warning:: 如果你使用的是旧版本的 PyCharm ，可能会在安装 TensorFlow 2 后出现部分代码自动补全功能丧失的问题。升级到新版的 PyCharm （2019.3及以后版本）即可解决这一问题。
+
 
 .. [#nohup] 关于  ``nohup`` 命令可参考 https://www.ibm.com/developerworks/cn/linux/l-cn-nohup/
 
