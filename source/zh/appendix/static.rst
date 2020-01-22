@@ -1,10 +1,23 @@
-图模型下的TensorFlow
+图执行模式下的 TensorFlow
 ======================================
+
+尽管 TensorFlow 2 建议以即时执行模式（Eager Execution）作为主要执行模式，然而，图执行模式（Graph Execution）作为 TensorFlow 2 之前的主要执行模式，依旧对于我们理解 TensorFlow 具有重要意义。尤其是当我们需要使用 :ref:`tf.function <tffunction>` 时，对图执行模式的理解更是不可或缺。以下我们即介绍 TensorFlow 在图执行模式下的基本使用方法。
+
+.. note:: 为了使用图执行模式，建议使用 TensorFlow 1.X 的API进行操作，即使用 ``import tensorflow.compat.v1 as tf`` 导入TensorFlow，并通过 ``tf.disable_eager_execution()`` 禁用默认的即时执行模式。
+
 
 TensorFlow 1+1
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-TensorFlow本质上是一个符号式的（基于计算图的）计算框架。这里以计算1+1作为Hello World的示例。
+TensorFlow 的图执行模式是一个符号式的（基于计算图的）计算框架。简而言之，如果你需要进行一系列计算，则需要依次进行如下两步：
+
+- 建立一个“计算图”，这个图描述了如何将输入数据通过一系列计算而得到输出；
+- 建立一个会话，并在会话中与计算图进行交互，即向计算图传入计算所需的数据，并从计算图中获取结果。
+
+使用计算图与会话进行基本运算
+-------------------------------------------
+
+这里以计算1+1作为Hello World的示例。
 
 .. literalinclude:: /_static/code/zh/basic/graph/1plus1.py      
 
@@ -12,7 +25,14 @@ TensorFlow本质上是一个符号式的（基于计算图的）计算框架。�
     
     2
 
-上面这个程序只能计算1+1，以下程序通过 ``tf.placeholder()`` （占位符张量）和 ``sess.run()`` 的 ``feed_dict=`` 参数展示了如何使用TensorFlow计算任意两个数的和：
+以上代码与下面基于 ``tf.function`` 的代码等价：
+
+.. literalinclude:: /_static/code/zh/basic/graph/1plus1_tffunc.py  
+
+占位符（Placeholder）与 ``feed_dict`` 
+-------------------------------------------
+
+上面这个程序只能计算1+1，以下程序通过 ``tf.placeholder()`` （占位符张量）和 ``sess.run()`` 的 ``feed_dict`` 参数展示了如何使用TensorFlow计算任意两个数的和：
 
 .. literalinclude:: /_static/code/zh/basic/graph/aplusb.py      
 
@@ -22,7 +42,19 @@ TensorFlow本质上是一个符号式的（基于计算图的）计算框架。�
     >>> b = 3
     a + b = 5
 
-**变量**（Variable）是一种特殊类型的张量，使用 ``tf.get_variable()`` 建立，与编程语言中的变量很相似。使用变量前需要先初始化，变量内存储的值可以在计算图的计算过程中被修改。以下示例如何建立一个变量，将其值初始化为0，并逐次累加1。
+以上代码与下面基于 ``tf.function`` 的代码等价：
+
+.. literalinclude:: /_static/code/zh/basic/graph/aplusb_tffunc.py   
+
+由以上例子，我们可以看出：
+
+- ``tf.placeholder()`` 相当于 ``tf.function`` 的函数参数；
+- ``sess.run()`` 的 ``feed_dict`` 参数相当于给被 ``@tf.function`` 修饰的函数传值。
+
+变量（Variable）
+-----------------------------
+
+**变量** （Variable）是一种特殊类型的张量，使用 ``tf.get_variable()`` 建立，与编程语言中的变量很相似。使用变量前需要先初始化，变量内存储的值可以在计算图的计算过程中被修改。以下示例代码展示了如何建立一个变量，将其值初始化为0，并逐次累加1。
 
 .. literalinclude:: /_static/code/zh/basic/graph/variable.py
 
@@ -34,9 +66,16 @@ TensorFlow本质上是一个符号式的（基于计算图的）计算框架。�
     4.0
     5.0
 
-以下代码和上述代码等价，在声明变量时指定初始化器，并通过 ``tf.global_variables_initializer()`` 一次性初始化所有变量，在实际工程中更常用：
+.. hint:: 为了初始化变量，也可以在声明变量时指定初始化器（initializer），并通过 ``tf.global_variables_initializer()`` 一次性初始化所有变量，在实际工程中更常用：
 
-.. literalinclude:: /_static/code/zh/basic/graph/variable_with_initializer.py
+    .. literalinclude:: /_static/code/zh/basic/graph/variable_with_initializer.py
+
+以上代码与下面基于 ``tf.function`` 的代码等价：
+
+.. literalinclude:: /_static/code/zh/basic/graph/variable_tffunc.py  
+
+矩阵及张量计算
+-----------------------------
 
 矩阵乃至张量运算是科学计算（包括机器学习）的基本操作。以下程序展示如何计算两个矩阵 :math:`\begin{bmatrix} 1 & 1 & 1 \\ 1 & 1 & 1 \end{bmatrix}` 和 :math:`\begin{bmatrix} 1 & 1 \\ 1 & 1 \\ 1 & 1 \end{bmatrix}` 的乘积：
 

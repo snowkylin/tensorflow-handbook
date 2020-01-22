@@ -42,7 +42,7 @@ TensorFlow 1+1
 
     import tensorflow as tf
 
-.. warning:: 本手册基于TensorFlow的Eager Execution模式。在TensorFlow 1.X版本中， **必须** 在导入TensorFlow库后调用 ``tf.enable_eager_execution()`` 函数以启用Eager Execution模式。在TensorFlow 2.0版本中，Eager Execution模式将成为默认模式，无需额外调用 ``tf.enable_eager_execution()`` 函数（不过若要关闭Eager Execution，则需调用 ``tf.compat.v1.disable_eager_execution()`` 函数）。
+.. warning:: 本手册基于TensorFlow的即时执行模式（Eager Execution）。在TensorFlow 1.X版本中， **必须** 在导入TensorFlow库后调用 ``tf.enable_eager_execution()`` 函数以启用即时执行模式。在 TensorFlow 2 中，即时执行模式将成为默认模式，无需额外调用 ``tf.enable_eager_execution()`` 函数（不过若要关闭即时执行模式，则需调用 ``tf.compat.v1.disable_eager_execution()`` 函数）。
 
 TensorFlow使用 **张量** （Tensor）作为数据的基本单位。TensorFlow的张量在概念上等同于多维数组，我们可以使用它来描述数学中的标量（0维数组）、向量（1维数组）、矩阵（2维数组）等各种量，示例如下：
 
@@ -171,7 +171,7 @@ NumPy下的线性回归
 TensorFlow下的线性回归
 -------------------------------------------
 
-TensorFlow的 **Eager Execution（动态图）模式** [#f4]_ 与上述NumPy的运行方式十分类似，然而提供了更快速的运算（GPU支持）、自动求导、优化器等一系列对深度学习非常重要的功能。以下展示了如何使用TensorFlow计算线性回归。可以注意到，程序的结构和前述NumPy的实现非常类似。这里，TensorFlow帮助我们做了两件重要的工作：
+TensorFlow的 **即时执行模式** [#f4]_ 与上述NumPy的运行方式十分类似，然而提供了更快速的运算（GPU支持）、自动求导、优化器等一系列对深度学习非常重要的功能。以下展示了如何使用TensorFlow计算线性回归。可以注意到，程序的结构和前述NumPy的实现非常类似。这里，TensorFlow帮助我们做了两件重要的工作：
 
 * 使用 ``tape.gradient(ys, xs)`` 自动计算梯度；
 * 使用 ``optimizer.apply_gradients(grads_and_vars)`` 自动更新模型参数。
@@ -204,7 +204,7 @@ TensorFlow的 **Eager Execution（动态图）模式** [#f4]_ 与上述NumPy的�
 .. [#f3] 主要可以参考 `Tensor Transformations <https://www.tensorflow.org/versions/r1.9/api_guides/python/array_ops>`_ 和 `Math <https://www.tensorflow.org/versions/r1.9/api_guides/python/math_ops>`_ 两个页面。可以注意到，TensorFlow的张量操作API在形式上和Python下流行的科学计算库NumPy非常类似，如果对后者有所了解的话可以快速上手。
 .. [#f1] 其实线性回归是有解析解的。这里使用梯度下降方法只是为了展示TensorFlow的运作方式。
 .. [#f2] 此处的损失函数为均方差 :math:`L(x) = \frac{1}{2} \sum_{i=1}^5 (ax_i + b - y_i)^2`。其关于参数 ``a`` 和 ``b`` 的偏导数为 :math:`\frac{\partial L}{\partial a} = \sum_{i=1}^5 (ax_i + b - y) x_i`，:math:`\frac{\partial L}{\partial b} = \sum_{i=1}^5 (ax_i + b - y)`
-.. [#f4] 与Eager Execution相对的是Graph Execution（静态图）模式，即TensorFlow在2018年3月的1.8版本发布之前所主要使用的模式。本手册以面向快速迭代开发的动态模式为主，但会在附录中介绍静态图模式的基本使用，供需要的读者查阅。
+.. [#f4] 与即时执行模式相对的是图执行模式（Graph Execution），即 TensorFlow 2 之前所主要使用的执行模式。本手册以面向快速迭代开发的即时执行模式为主，但会在 :doc:`附录 <../appendix/static>` 中介绍图执行模式的基本使用，供需要的读者查阅。
 
 ..  
     张量（变量、常量与占位符）

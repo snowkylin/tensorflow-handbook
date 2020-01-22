@@ -559,7 +559,7 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
 
 .. admonition:: 深度强化学习原理初探
 
-    与前面所介绍的卷积神经网络和循环神经网络不同，强化学习（Reinforcement Learning）是一种学习算法的类型
+    与前面所介绍的卷积神经网络和循环神经网络不同，强化学习（Reinforcement Learning）是一种学习算法的类型。
 
     TODO
 

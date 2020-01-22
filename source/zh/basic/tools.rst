@@ -75,7 +75,7 @@ TensorFlow常用模块
     checkpoint.restore(tf.train.latest_checkpoint('./save'))    # 从文件恢复模型参数
     # 模型使用代码
 
-.. note:: ``tf.train.Checkpoint`` 与以前版本常用的 ``tf.train.Saver`` 相比，强大之处在于其支持在Eager Execution下“延迟”恢复变量。具体而言，当调用了 ``checkpoint.restore()`` ，但模型中的变量还没有被建立的时候，Checkpoint可以等到变量被建立的时候再进行数值的恢复。Eager Execution下，模型中各个层的初始化和变量的建立是在模型第一次被调用的时候才进行的（好处在于可以根据输入的张量形状而自动确定变量形状，无需手动指定）。这意味着当模型刚刚被实例化的时候，其实里面还一个变量都没有，这时候使用以往的方式去恢复变量数值是一定会报错的。比如，你可以试试在train.py调用 ``tf.keras.Model`` 的 ``save_weight()`` 方法保存model的参数，并在test.py中实例化model后立即调用 ``load_weight()`` 方法，就会出错，只有当调用了一遍model之后再运行 ``load_weight()`` 方法才能得到正确的结果。可见， ``tf.train.Checkpoint`` 在这种情况下可以给我们带来相当大的便利。另外， ``tf.train.Checkpoint`` 同时也支持Graph Execution模式。
+.. note:: ``tf.train.Checkpoint`` 与以前版本常用的 ``tf.train.Saver`` 相比，强大之处在于其支持在即时执行模式下“延迟”恢复变量。具体而言，当调用了 ``checkpoint.restore()`` ，但模型中的变量还没有被建立的时候，Checkpoint可以等到变量被建立的时候再进行数值的恢复。即时执行模式下，模型中各个层的初始化和变量的建立是在模型第一次被调用的时候才进行的（好处在于可以根据输入的张量形状而自动确定变量形状，无需手动指定）。这意味着当模型刚刚被实例化的时候，其实里面还一个变量都没有，这时候使用以往的方式去恢复变量数值是一定会报错的。比如，你可以试试在train.py调用 ``tf.keras.Model`` 的 ``save_weight()`` 方法保存model的参数，并在test.py中实例化model后立即调用 ``load_weight()`` 方法，就会出错，只有当调用了一遍model之后再运行 ``load_weight()`` 方法才能得到正确的结果。可见， ``tf.train.Checkpoint`` 在这种情况下可以给我们带来相当大的便利。另外， ``tf.train.Checkpoint`` 同时也支持图执行模式。
 
 最后提供一个实例，以前章的 :ref:`多层感知机模型 <mlp>` 为例展示模型变量的保存和载入：
 
@@ -488,7 +488,7 @@ TFRecord可以理解为一系列序列化的 ``tf.train.Example`` 元素所组�
 .. literalinclude:: /_static/code/zh/tools/tfrecord/cats_vs_dogs.py
     :lines: 24-36
 
-这里的 ``feature_description`` 字典类似于一个数据集的“描述文件”， ``tf.io.FixedLenFeature`` 的三个输入参数 ``shape`` 、 ``dtype`` 和 ``default_value`` （可省略）为每个Feature的形状、类型和默认值。这里我们的数据项都是单个的数值或者字符串，所以 ``shape`` 为空数组。
+这里的 ``feature_description`` 类似于一个数据集的“描述文件”，通过一个由键值对组成的字典，告知 ``tf.io.parse_single_example`` 函数每个 ``tf.train.Example`` 数据项有哪些Feature，以及这些Feature的类型、形状等属性。 ``tf.io.FixedLenFeature`` 的三个输入参数 ``shape`` 、 ``dtype`` 和 ``default_value`` （可省略）为每个Feature的形状、类型和默认值。这里我们的数据项都是单个的数值或者字符串，所以 ``shape`` 为空数组。
 
 运行以上代码后，我们获得一个数据集对象 ``dataset`` ，这已经是一个可以用于训练的 ``tf.data.Dataset`` 对象了！我们从该数据集中读取元素并输出验证：
 
@@ -505,8 +505,10 @@ TFRecord可以理解为一系列序列化的 ``tf.train.Example`` 元素所组�
 
 .. _tffunction:
 
-``@tf.function`` ：Graph Execution模式 *
+``@tf.function`` ：图执行模式 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+虽然默认的即时执行模式（Eager Execution）为我们带来了灵活及易调试的特性，但在特定的场合，例如追求高性能或部署模型时，我们依然希望使用 TensorFlow 1.X 中默认的图执行模式（Graph Execution），将模型转换为高效的 TensorFlow 图模型。此时，TensorFlow 2 为我们提供了 ``tf.function`` 模块，结合 AutoGraph 机制，使得我们仅需加入一个简单的 ``@tf.function`` 修饰符，就能轻松将模型以图执行模式运行。
 
 ``@tf.function`` 基础使用方法
 -------------------------------------------
@@ -519,14 +521,14 @@ TFRecord可以理解为一系列序列化的 ``tf.train.Example`` 元素所组�
     https://pgaleone.eu/tensorflow/tf.function/2019/04/03/dissecting-tf-function-part-2/
     https://pgaleone.eu/tensorflow/tf.function/2019/05/10/dissecting-tf-function-part-3/
 
-在TensorFlow 2.0中，推荐使用 ``@tf.function`` （而非1.X中的 ``tf.Session`` ）实现Graph Execution，从而将模型转换为易于部署且高性能的TensorFlow图模型。只需要将我们希望以Graph Execution模式运行的代码封装在一个函数内，并在函数前加上 ``@tf.function`` 即可，如下例所示。关于TensorFlow 1.X版本中的Graph Execution可参考 :doc:`附录 <../appendix/static>` 。
+在 TensorFlow 2 中，推荐使用 ``@tf.function`` （而非1.X中的 ``tf.Session`` ）实现图执行模式，从而将模型转换为易于部署且高性能的TensorFlow图模型。只需要将我们希望以图执行模式运行的代码封装在一个函数内，并在函数前加上 ``@tf.function`` 即可，如下例所示。关于TensorFlow 1.X版本中的图执行模式可参考 :doc:`附录 <../appendix/static>` 。
 
-.. warning:: 并不是任何函数都可以被 ``@tf.function`` 修饰！``@tf.function`` 使用静态编译将函数内的代码转换成计算图，因此对函数内可使用的语句有一定限制（仅支持Python语言的一个子集），且需要函数内的操作本身能够被构建为计算图。建议在函数内只使用TensorFlow的原生操作，不要使用过于复杂的Python语句，函数参数只包括TensorFlow张量或NumPy数组，并最好是能够按照计算图的思想去构建函数（换言之，``@tf.function`` 只是给了你一种更方便的写计算图的方法，而不是一颗能给任何函数加速的 `银子弹 <https://en.wikipedia.org/wiki/No_Silver_Bullet>`_ ）。详细内容可参考 `AutoGraph Capabilities and Limitations <https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/autograph/g3doc/reference/limitations.md>`_ 。
+.. warning:: 并不是任何函数都可以被 ``@tf.function`` 修饰！``@tf.function`` 使用静态编译将函数内的代码转换成计算图，因此对函数内可使用的语句有一定限制（仅支持Python语言的一个子集），且需要函数内的操作本身能够被构建为计算图。建议在函数内只使用TensorFlow的原生操作，不要使用过于复杂的Python语句，函数参数只包括TensorFlow张量或NumPy数组，并最好是能够按照计算图的思想去构建函数（换言之，``@tf.function`` 只是给了你一种更方便的写计算图的方法，而不是一颗能给任何函数加速的 `银子弹 <https://en.wikipedia.org/wiki/No_Silver_Bullet>`_ ）。详细内容可参考 `AutoGraph Capabilities and Limitations <https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/autograph/g3doc/reference/limitations.md>`_ 。建议配合 :doc:`附录 <../appendix/static>` 一同阅读本节以获得较深入的理解。
 
 .. literalinclude:: /_static/code/zh/model/autograph/main.py
     :emphasize-lines: 11, 18
 
-运行400个Batch进行测试，加入 ``@tf.function`` 的程序耗时35.5秒，未加入 ``@tf.function`` 的纯Eager Execution程序耗时43.8秒。可见 ``@tf.function`` 带来了一定的性能提升。一般而言，当模型由较多小的操作组成的时候， ``@tf.function`` 带来的提升效果较大。而当模型的操作数量较少，但单一操作均很耗时的时候，则 ``@tf.function`` 带来的性能提升不会太大。
+运行400个Batch进行测试，加入 ``@tf.function`` 的程序耗时35.5秒，未加入 ``@tf.function`` 的纯即时执行模式程序耗时43.8秒。可见 ``@tf.function`` 带来了一定的性能提升。一般而言，当模型由较多小的操作组成的时候， ``@tf.function`` 带来的提升效果较大。而当模型的操作数量较少，但单一操作均很耗时的时候，则 ``@tf.function`` 带来的性能提升不会太大。
 
 ..
     https://www.tensorflow.org/beta/guide/autograph
@@ -537,7 +539,7 @@ TFRecord可以理解为一系列序列化的 ``tf.train.Example`` 元素所组�
 
 当被 ``@tf.function`` 修饰的函数第一次被调用的时候，进行以下操作：
 
-- 在Eager Execution模式关闭的环境下，函数内的代码依次运行。也就是说，每个 ``tf.`` 方法都只是定义了计算节点，而并没有进行任何实质的计算。这与TensorFlow 1.X的Graph Execution是一致的；
+- 在即时执行模式关闭的环境下，函数内的代码依次运行。也就是说，每个 ``tf.`` 方法都只是定义了计算节点，而并没有进行任何实质的计算。这与TensorFlow 1.X的图执行模式是一致的；
 - 使用AutoGraph将函数中的Python控制流语句转换成TensorFlow计算图中的对应节点（比如说 ``while`` 和 ``for`` 语句转换为 ``tf.while`` ， ``if`` 语句转换为 ``tf.cond`` 等等；
 - 基于上面的两步，建立函数内代码的计算图表示（为了保证图的计算顺序，图中还会自动加入一些 ``tf.control_dependencies`` 节点）；
 - 运行一次这个计算图；
@@ -666,7 +668,7 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
 使用传统的 ``tf.Session`` 
 ------------------------------------------- 
 
-不过，如果你依然钟情于TensorFlow传统的Graph Execution模式也没有问题。TensorFlow 2.0提供了 ``tf.compat.v1`` 模块以支持TensorFlow 1.X版本的API。同时，只要在编写模型的时候稍加注意，Keras的模型是可以同时兼容Eager Execution模式和Graph Execution模式的。注意，在Graph Execution模式下， ``model(input_tensor)`` 只需运行一次以完成图的建立操作。
+不过，如果你依然钟情于TensorFlow传统的图执行模式也没有问题。TensorFlow 2 提供了 ``tf.compat.v1`` 模块以支持TensorFlow 1.X版本的API。同时，只要在编写模型的时候稍加注意，Keras的模型是可以同时兼容即时执行模式和图执行模式的。注意，在图执行模式下， ``model(input_tensor)`` 只需运行一次以完成图的建立操作。
 
 例如，通过以下代码，同样可以在MNIST数据集上训练前面所建立的MLP或CNN模型：
 
@@ -674,7 +676,7 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
     :lines: 112-136
 
 
-关于Graph Execution的更多内容可参见 :doc:`/zh/appendix/static`。
+关于图执行模式的更多内容可参见 :doc:`/zh/appendix/static`。
 
 ``tf.TensorArray`` ：TensorFlow 动态数组 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -682,7 +684,7 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
 ..
     https://www.tensorflow.org/api_docs/python/tf/TensorArray
 
-在部分网络结构，尤其是涉及到时间序列的结构中，我们可能需要将一系列张量以数组的方式依次存放起来，以供进一步处理。当然，在Eager Execution下，你可以直接使用一个Python列表（List）存放数组。不过，如果你需要基于计算图的特性（例如使用 ``@tf.function`` 加速模型运行或者使用SavedModel导出模型），就无法使用这种方式了。因此，TensorFlow提供了 ``tf.TensorArray`` ，一种支持计算图特性的TensorFlow动态数组。
+在部分网络结构，尤其是涉及到时间序列的结构中，我们可能需要将一系列张量以数组的方式依次存放起来，以供进一步处理。当然，在即时执行模式下，你可以直接使用一个Python列表（List）存放数组。不过，如果你需要基于计算图的特性（例如使用 ``@tf.function`` 加速模型运行或者使用SavedModel导出模型），就无法使用这种方式了。因此，TensorFlow提供了 ``tf.TensorArray`` ，一种支持计算图特性的TensorFlow动态数组。
 
 其声明的方式为：
 
@@ -695,7 +697,7 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
 
 除此以外，TensorArray还包括 ``stack()`` 、 ``unstack()`` 等常用操作，可参考 `文档 <https://www.tensorflow.org/api_docs/python/tf/TensorArray>`_ 以了解详情。
 
-请注意，由于需要支持计算图， ``tf.TensorArray`` 的 ``write()`` 方法是不可以忽略左值的！也就是说，在Graph Execution模式下，必须按照以下的形式写入数组：
+请注意，由于需要支持计算图， ``tf.TensorArray`` 的 ``write()`` 方法是不可以忽略左值的！也就是说，在图执行模式下，必须按照以下的形式写入数组：
 
 .. code-block:: python
 
@@ -782,7 +784,7 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
 
     gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
     for gpu in gpus:
-        tf.config.experimental.set_memory_growth(device=gpu, True)
+        tf.config.experimental.set_memory_growth(device=gpu, enable=True)
 
 以下代码通过 ``tf.config.experimental.set_virtual_device_configuration`` 选项并传入 ``tf.config.experimental.VirtualDeviceConfiguration`` 实例，设置TensorFlow固定消耗 ``GPU:0`` 的1GB显存（其实可以理解为建立了一个显存大小为1GB的“虚拟GPU”）：
 
@@ -793,7 +795,7 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
         gpus[0],
         [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=1024)])
 
-.. hint:: TensorFlow 1.X 的 Graph Execution 下，可以在实例化新的session时传入 ``tf.compat.v1.ConfigPhoto`` 类来设置TensorFlow使用显存的策略。具体方式是实例化一个 ``tf.ConfigProto`` 类，设置参数，并在创建 ``tf.compat.v1.Session`` 时指定Config参数。以下代码通过 ``allow_growth`` 选项设置TensorFlow仅在需要时申请显存空间：
+.. hint:: TensorFlow 1.X 的 图执行模式 下，可以在实例化新的session时传入 ``tf.compat.v1.ConfigPhoto`` 类来设置TensorFlow使用显存的策略。具体方式是实例化一个 ``tf.ConfigProto`` 类，设置参数，并在创建 ``tf.compat.v1.Session`` 时指定Config参数。以下代码通过 ``allow_growth`` 选项设置TensorFlow仅在需要时申请显存空间：
 
     .. code-block:: python
 
