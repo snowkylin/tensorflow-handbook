@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>简单粗暴 TensorFlow 2.0 | A Concise Handbook of TensorFlow 2.0 &mdash; 简单粗暴TensorFlow 2.0 0.4 alpha 文档</title>
+  <title>简单粗暴 TensorFlow 2 | A Concise Handbook of TensorFlow 2 &mdash; 简单粗暴 TensorFlow 2 0.4 alpha 文档</title>
   
 
   
@@ -54,7 +54,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> 简单粗暴TensorFlow 2.0
+            <a href="#" class="icon icon-home"> 简单粗暴 TensorFlow 2
           
 
           
@@ -183,7 +183,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">简单粗暴TensorFlow 2.0</a>
+          <a href="#">简单粗暴 TensorFlow 2</a>
         
       </nav>
 
@@ -214,7 +214,7 @@
     
       <li><a href="#">Docs</a> &raquo;</li>
         
-      <li>简单粗暴 TensorFlow 2.0 | A Concise Handbook of TensorFlow 2.0</li>
+      <li>简单粗暴 TensorFlow 2 | A Concise Handbook of TensorFlow 2</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -233,8 +233,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="tensorflow-2-0-a-concise-handbook-of-tensorflow-2-0">
-<h1>简单粗暴 TensorFlow 2.0 | A Concise Handbook of TensorFlow 2.0<a class="headerlink" href="#tensorflow-2-0-a-concise-handbook-of-tensorflow-2-0" title="永久链接至标题">¶</a></h1>
+  <div class="section" id="tensorflow-2-a-concise-handbook-of-tensorflow-2">
+<h1>简单粗暴 TensorFlow 2 | A Concise Handbook of TensorFlow 2<a class="headerlink" href="#tensorflow-2-a-concise-handbook-of-tensorflow-2" title="永久链接至标题">¶</a></h1>
 <p><em>基于Keras和Eager Execution | Based on Keras and Eager Execution</em></p>
 <table style="width: 100%; margin: 20px 0">
     <tbody witth=100%>
@@ -248,8 +248,8 @@
     </tbody>
 </table><div class="section" id="id1">
 <h2>中文版<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
-<p>这是一本简明的 TensorFlow 2.0 入门指导手册，基于 Keras 和 Eager Execution（即时运行）模式，力图让具备一定机器学习及Python基础的开发者们快速上手TensorFlow 2.0。</p>
-<p>本手册的所有代码基于 TensorFlow 2.0 正式版及 beta1 版本。文中的所有示例代码可至 <a class="reference external" href="https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/en">这里</a> 获得。</p>
+<p>这是一本简明的 TensorFlow 2 入门指导手册，基于 Keras 和即时执行模式（Eager Execution），力图让具备一定机器学习及Python基础的开发者们快速上手TensorFlow 2。</p>
+<p>本手册的所有代码基于 TensorFlow 2.1 和 2.0 正式版。文中的所有示例代码可至 <a class="reference external" href="https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/en">这里</a> 获得。</p>
 <p>本手册正于TensorFlow官方微信公众号（TensorFlow_official）连载，可点此查看 <a class="reference external" href="https://mp.weixin.qq.com/s/cvZHUWS3MiGHq3UDynucxw">连载文章目录</a> 。本手册的英文版仍在翻译中。请访问 <a class="reference external" href="https://v1.tf.wiki">https://v1.tf.wiki</a> 以查看本手册上一版的英文版。本手册是  <a class="reference external" href="https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/">Google Summer of Code 2019</a>  项目之一。</p>
 <p>GitHub： <a class="reference external" href="https://github.com/snowkylin/tensorflow-handbook">https://github.com/snowkylin/tensorflow-handbook</a></p>
 <div class="toctree-wrapper compound">
@@ -287,7 +287,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zh/basic/basic.html">TensorFlow基础</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/basic.html#tensorflow-1-1">TensorFlow 1+1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/basic/basic.html#id7">自动求导机制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic/basic.html#automatic-derivation">自动求导机制</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/basic.html#linear-regression">基础示例：线性回归</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/basic.html#id14">NumPy下的线性回归</a></li>
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/basic.html#optimizer">TensorFlow下的线性回归</a></li>
@@ -501,7 +501,11 @@
 <li class="toctree-l3"><a class="reference internal" href="zh/appendix/static.html#id2">矩阵及张量计算</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/static.html#id3">基础示例：线性回归</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/static.html#id3">基础示例：线性回归</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/static.html#id4">自动求导机制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/static.html#id5">优化器</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>

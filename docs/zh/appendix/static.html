@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>图执行模式下的 TensorFlow &mdash; 简单粗暴TensorFlow 2.0 0.4 alpha 文档</title>
+  <title>图执行模式下的 TensorFlow &mdash; 简单粗暴 TensorFlow 2 0.4 alpha 文档</title>
   
 
   
@@ -55,7 +55,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 简单粗暴TensorFlow 2.0
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴 TensorFlow 2
           
 
           
@@ -130,7 +130,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#id2">矩阵及张量计算</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">基础示例：线性回归</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">基础示例：线性回归</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">自动求导机制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">优化器</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="docker.html">使用Docker部署TensorFlow环境</a></li>
@@ -194,7 +198,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">简单粗暴TensorFlow 2.0</a>
+          <a href="../../index.html">简单粗暴 TensorFlow 2</a>
         
       </nav>
 
@@ -416,12 +420,13 @@
  <span class="p">[</span><span class="mf">3.</span> <span class="mf">3.</span><span class="p">]]</span>
 </pre></div>
 </div>
-<p>Placeholder（占位符张量）和Variable（变量张量）也同样可以为向量、矩阵乃至更高维的张量。</p>
+<p>占位符和变量也同样可以为向量、矩阵乃至更高维的张量。</p>
 </div>
 </div>
 <div class="section" id="id3">
 <h2>基础示例：线性回归<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
-<p>与前面的NumPy和Eager Execution模式不同，TensorFlow的Graph Execution模式使用 <strong>符号式编程</strong> 来进行数值运算。首先，我们需要将待计算的过程抽象为数据流图，将输入、运算和输出都用符号化的节点来表达。然后，我们将数据不断地送入输入节点，让数据沿着数据流图进行计算和流动，最终到达我们需要的特定输出节点。以下代码展示了如何基于TensorFlow的符号式编程方法完成与前节相同的任务。其中， <code class="docutils literal notranslate"><span class="pre">tf.placeholder()</span></code> 即可以视为一种“符号化的输入节点”，使用 <code class="docutils literal notranslate"><span class="pre">tf.get_variable()</span></code> 定义模型的参数（Variable类型的张量可以使用 <code class="docutils literal notranslate"><span class="pre">tf.assign()</span></code> 进行赋值），而 <code class="docutils literal notranslate"><span class="pre">sess.run(output_node,</span> <span class="pre">feed_dict={input_node:</span> <span class="pre">data})</span></code> 可以视作将数据送入输入节点，沿着数据流图计算并到达输出节点并返回值的过程。</p>
+<p>与 <a class="reference internal" href="../basic/basic.html#linear-regression"><span class="std std-ref">第一章的NumPy和即时执行模式</span></a> 不同，TensorFlow的图执行模式使用 <strong>符号式编程</strong> 来进行数值运算。首先，我们需要将待计算的过程抽象为计算图，将输入、运算和输出都用符号化的节点来表达。然后，我们将数据不断地送入输入节点，让数据沿着计算图进行计算和流动，最终到达我们需要的特定输出节点。</p>
+<p>以下代码展示了如何基于TensorFlow的符号式编程方法完成与前节相同的任务。其中， <code class="docutils literal notranslate"><span class="pre">tf.placeholder()</span></code> 即可以视为一种“符号化的输入节点”，使用 <code class="docutils literal notranslate"><span class="pre">tf.get_variable()</span></code> 定义模型的参数（Variable类型的张量可以使用 <code class="docutils literal notranslate"><span class="pre">tf.assign()</span></code> 操作进行赋值），而 <code class="docutils literal notranslate"><span class="pre">sess.run(output_node,</span> <span class="pre">feed_dict={input_node:</span> <span class="pre">data})</span></code> 可以视作将数据送入输入节点，沿着计算图计算并到达输出节点并返回值的过程。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="c1"># 定义数据流图</span>
@@ -459,7 +464,9 @@
     <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]))</span>
 </pre></div>
 </div>
-<p>在上面的两个示例中，我们都是手工计算获得损失函数关于各参数的偏导数。但当模型和损失函数都变得十分复杂时（尤其是深度学习模型），这种手动求导的工程量就难以接受了。TensorFlow提供了 <strong>自动求导机制</strong> ，免去了手工计算导数的繁琐。利用TensorFlow的求导函数 <code class="docutils literal notranslate"><span class="pre">tf.gradients(ys,</span> <span class="pre">xs)</span></code> 求出损失函数loss关于a，b的偏导数。由此，我们可以将上节中的两行手工计算导数的代码</p>
+<div class="section" id="id4">
+<h3>自动求导机制<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>在上面的两个示例中，我们都是手工计算获得损失函数关于各参数的偏导数。但当模型和损失函数都变得十分复杂时（尤其是深度学习模型），这种手动求导的工程量就难以接受了。因此，在图执行模式中，TensorFlow同样提供了 <strong>自动求导机制</strong> 。类似于即时执行模式下的 <code class="docutils literal notranslate"><span class="pre">tape.grad(ys,</span> <span class="pre">xs)</span></code> ，可以利用TensorFlow的求导操作 <code class="docutils literal notranslate"><span class="pre">tf.gradients(ys,</span> <span class="pre">xs)</span></code> 求出损失函数 <code class="docutils literal notranslate"><span class="pre">loss</span></code> 关于 <code class="docutils literal notranslate"><span class="pre">a</span></code> ， <code class="docutils literal notranslate"><span class="pre">b</span></code> 的偏导数。由此，我们可以将上节中的两行手工计算导数的代码</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 反向传播，手动计算变量（模型参数）的梯度</span>
 <span class="n">grad_a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)</span> <span class="o">*</span> <span class="n">X_</span><span class="p">)</span>
 <span class="n">grad_b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)</span>
@@ -470,7 +477,10 @@
 </pre></div>
 </div>
 <p>计算结果将不会改变。</p>
-<p>甚至不仅于此，TensorFlow附带有多种 <strong>优化器</strong> （optimizer），可以将求导和梯度更新一并完成。我们可以将上节的代码</p>
+</div>
+<div class="section" id="id5">
+<h3>优化器<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>TensorFlow在图执行模式下也附带有多种 <strong>优化器</strong> （optimizer），可以将求导和梯度更新一并完成。我们可以将上节的代码</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 反向传播，手动计算变量（模型参数）的梯度</span>
 <span class="n">grad_a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)</span> <span class="o">*</span> <span class="n">X_</span><span class="p">)</span>
 <span class="n">grad_b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)</span>
@@ -495,7 +505,7 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_op</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate_</span><span class="p">)</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>简化后的代码如下：</p>
+<p>使用自动求导机制和优化器简化后的代码如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="n">learning_rate_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
@@ -518,6 +528,7 @@
         <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">train_op</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">X_</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span> <span class="n">learning_rate_</span><span class="p">:</span> <span class="n">learning_rate</span><span class="p">})</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]))</span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>

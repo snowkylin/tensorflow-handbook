@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TensorFlow自定义运算操作 &mdash; 简单粗暴 TensorFlow 2 0.4 alpha 文档</title>
+  <title>tf.GradientTape 详解 &mdash; 简单粗暴 TensorFlow 2 0.4 alpha 文档</title>
   
 
   
@@ -213,13 +213,13 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>TensorFlow自定义运算操作</li>
+      <li><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 详解</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/zh/appendix/custom_op.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/zh/appendix/tape.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -232,26 +232,54 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="tensorflow">
-<h1>TensorFlow自定义运算操作<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
-<div class="admonition- admonition">
-<p class="admonition-title">前置知识</p>
-<ul class="simple">
-<li><p>Docker基本操作（非必须，但强烈建议）</p></li>
-<li><p>C++基础知识</p></li>
-</ul>
+  <div class="section" id="tf-gradienttape">
+<h1><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 详解<a class="headerlink" href="#tf-gradienttape" title="永久链接至标题">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的出现是 TensorFlow 2 最大的变化之一。其以一种简洁优雅的方式，提供了即时执行模式下的自动求导功能。不过对于从 TensorFlow 1.X 过渡到 TensorFlow 2 的开发人员而言，也增加了一定的学习门槛。本部分即在 <a class="reference internal" href="../basic/basic.html#automatic-derivation"><span class="std std-ref">第一章“自动求导机制”一节</span></a> 的基础上，详细介绍 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的使用方法及机制。</p>
+<div class="section" id="id1">
+<h2><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 基本使用<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<div class="section" id="watch">
+<h3>Watch 机制<a class="headerlink" href="#watch" title="永久链接至标题">¶</a></h3>
 </div>
-<div class="section" id="tf-function">
-<h2>使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 定义新运算操作<a class="headerlink" href="#tf-function" title="永久链接至标题">¶</a></h2>
-<p><a class="reference external" href="https://www.tensorflow.org/alpha/tutorials/eager/tf_function">https://www.tensorflow.org/alpha/tutorials/eager/tf_function</a></p>
+<div class="section" id="id2">
+<h3>高阶求导<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
 </div>
-<div class="section" id="c">
-<h2>自定义底层C++运算操作<a class="headerlink" href="#c" title="永久链接至标题">¶</a></h2>
-<p><a class="reference external" href="https://github.com/tensorflow/custom-op">https://github.com/tensorflow/custom-op</a></p>
+<div class="section" id="id3">
+<h3>多次求导与持久化<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
 </div>
-<div class="section" id="tf-py-func">
-<h2>使用 <code class="docutils literal notranslate"><span class="pre">tf.py_func()</span></code> 定义新运算操作 *<a class="headerlink" href="#tf-py-func" title="永久链接至标题">¶</a></h2>
-<p>如果不在意效率</p>
+</div>
+<div class="section" id="id4">
+<h2><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 内在机制<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+</div>
+<div class="section" id="id5">
+<h2>实例：对神经网络的各层变量独立求导<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">zh.model.mnist.mlp</span> <span class="k">import</span> <span class="n">MLP</span>
+<span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="k">import</span> <span class="n">MNISTLoader</span>
+
+<span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">learning_rate_1</span> <span class="o">=</span> <span class="mf">0.001</span>
+<span class="n">learning_rate_2</span> <span class="o">=</span> <span class="mf">0.01</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MLP</span><span class="p">()</span>
+<span class="n">data_loader</span> <span class="o">=</span> <span class="n">MNISTLoader</span><span class="p">()</span>
+<span class="c1"># 声明两个优化器，设定不同的学习率，分别用于更新MLP模型的第一层和第二层</span>
+<span class="n">optimizer_1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate_1</span><span class="p">)</span>
+<span class="n">optimizer_2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate_2</span><span class="p">)</span>
+<span class="n">num_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">num_train_data</span> <span class="o">//</span> <span class="n">batch_size</span> <span class="o">*</span> <span class="n">num_epochs</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">batch_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_batches</span><span class="p">):</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">get_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">(</span><span class="n">persistent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>  <span class="c1"># 声明一个持久的GradientTape，允许我们多次调用tape.gradient方法</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;batch </span><span class="si">%d</span><span class="s2">: loss </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">batch_index</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+    <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">dense1</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>    <span class="c1"># 单独求第一层参数的梯度</span>
+    <span class="n">optimizer_1</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">dense1</span><span class="o">.</span><span class="n">variables</span><span class="p">))</span> <span class="c1"># 单独对第一层参数更新，学习率0.001</span>
+    <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">dense2</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>    <span class="c1"># 单独求第二层参数的梯度</span>
+    <span class="n">optimizer_1</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">dense2</span><span class="o">.</span><span class="n">variables</span><span class="p">))</span> <span class="c1"># 单独对第二层参数更新，学习率0.01</span>
+</pre></div>
+</div>
 </div>
 </div>
 

@@ -16,7 +16,7 @@ TensorFlow Datasets 数据集载入
     import tensorflow as tf
     import tensorflow_datasets as tfds
 
-然后，最基础的用法是使用 ``tfds.load`` 方法，载入所需的数据集，如：
+然后，最基础的用法是使用 ``tfds.load`` 方法，载入所需的数据集。例如，以下三行代码分别载入了MNIST、猫狗分类和 ``tf_flowers`` 三个图像分类数据集：
 
 .. code-block:: python
 
@@ -24,7 +24,21 @@ TensorFlow Datasets 数据集载入
     dataset = tfds.load("cats_vs_dogs", split=tfds.Split.TRAIN, as_supervised=True)
     dataset = tfds.load("tf_flowers", split=tfds.Split.TRAIN, as_supervised=True)
 
-该方法返回一个 ``tf.data.Dataset`` 对象。部分重要的参数如下：
+当第一次载入特定数据集时，TensorFlow Datasets 会自动从云端下载数据集到本地，并显示下载进度。例如，载入MNIST数据集时，终端输出提示如下：
+
+::
+
+    Downloading and preparing dataset mnist (11.06 MiB) to C:\Users\snowkylin\tensorflow_datasets\mnist\3.0.0...
+    WARNING:absl:Dataset mnist is hosted on GCS. It will automatically be downloaded to your
+    local data directory. If you'd instead prefer to read directly from our public
+    GCS bucket (recommended if you're running on GCP), you can instead set
+    data_dir=gs://tfds-data/datasets.
+
+    Dl Completed...: 100%|██████████████████████████████████████████████████████████████████████████████████████| 4/4 [00:10<00:00,  2.93s/ file] 
+    Dl Completed...: 100%|██████████████████████████████████████████████████████████████████████████████████████| 4/4 [00:10<00:00,  2.73s/ file] 
+    Dataset mnist downloaded and prepared to C:\Users\snowkylin\tensorflow_datasets\mnist\3.0.0. Subsequent calls will reuse this data.
+
+``tfds.load`` 方法返回一个 ``tf.data.Dataset`` 对象。部分重要的参数如下：
 
 ..
     https://www.tensorflow.org/datasets/api_docs/python/tfds/load
