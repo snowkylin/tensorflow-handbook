@@ -86,17 +86,22 @@ TensorFlow 的图执行模式是一个符号式的（基于计算图的）计算
     [[3. 3.]
      [3. 3.]]
 
-Placeholder（占位符张量）和Variable（变量张量）也同样可以为向量、矩阵乃至更高维的张量。
+占位符和变量也同样可以为向量、矩阵乃至更高维的张量。
 
 基础示例：线性回归
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-与前面的NumPy和Eager Execution模式不同，TensorFlow的Graph Execution模式使用 **符号式编程** 来进行数值运算。首先，我们需要将待计算的过程抽象为数据流图，将输入、运算和输出都用符号化的节点来表达。然后，我们将数据不断地送入输入节点，让数据沿着数据流图进行计算和流动，最终到达我们需要的特定输出节点。以下代码展示了如何基于TensorFlow的符号式编程方法完成与前节相同的任务。其中， ``tf.placeholder()`` 即可以视为一种“符号化的输入节点”，使用 ``tf.get_variable()`` 定义模型的参数（Variable类型的张量可以使用 ``tf.assign()`` 进行赋值），而 ``sess.run(output_node, feed_dict={input_node: data})`` 可以视作将数据送入输入节点，沿着数据流图计算并到达输出节点并返回值的过程。
+与 :ref:`第一章的NumPy和即时执行模式 <linear-regression>` 不同，TensorFlow的图执行模式使用 **符号式编程** 来进行数值运算。首先，我们需要将待计算的过程抽象为计算图，将输入、运算和输出都用符号化的节点来表达。然后，我们将数据不断地送入输入节点，让数据沿着计算图进行计算和流动，最终到达我们需要的特定输出节点。
+
+以下代码展示了如何基于TensorFlow的符号式编程方法完成与前节相同的任务。其中， ``tf.placeholder()`` 即可以视为一种“符号化的输入节点”，使用 ``tf.get_variable()`` 定义模型的参数（Variable类型的张量可以使用 ``tf.assign()`` 操作进行赋值），而 ``sess.run(output_node, feed_dict={input_node: data})`` 可以视作将数据送入输入节点，沿着计算图计算并到达输出节点并返回值的过程。
 
 .. literalinclude:: /_static/code/zh/basic/example/tensorflow_manual_grad.py
     :lines: 9-
 
-在上面的两个示例中，我们都是手工计算获得损失函数关于各参数的偏导数。但当模型和损失函数都变得十分复杂时（尤其是深度学习模型），这种手动求导的工程量就难以接受了。TensorFlow提供了 **自动求导机制** ，免去了手工计算导数的繁琐。利用TensorFlow的求导函数 ``tf.gradients(ys, xs)`` 求出损失函数loss关于a，b的偏导数。由此，我们可以将上节中的两行手工计算导数的代码
+自动求导机制
+-----------------------------
+
+在上面的两个示例中，我们都是手工计算获得损失函数关于各参数的偏导数。但当模型和损失函数都变得十分复杂时（尤其是深度学习模型），这种手动求导的工程量就难以接受了。因此，在图执行模式中，TensorFlow同样提供了 **自动求导机制** 。类似于即时执行模式下的 ``tape.grad(ys, xs)`` ，可以利用TensorFlow的求导操作 ``tf.gradients(ys, xs)`` 求出损失函数 ``loss`` 关于 ``a`` ， ``b`` 的偏导数。由此，我们可以将上节中的两行手工计算导数的代码
 
 .. literalinclude:: /_static/code/zh/basic/example/tensorflow_manual_grad.py
     :lines: 21-23
@@ -109,7 +114,10 @@ Placeholder（占位符张量）和Variable（变量张量）也同样可以为�
 
 计算结果将不会改变。
 
-甚至不仅于此，TensorFlow附带有多种 **优化器** （optimizer），可以将求导和梯度更新一并完成。我们可以将上节的代码
+优化器
+-----------------------------
+
+TensorFlow在图执行模式下也附带有多种 **优化器** （optimizer），可以将求导和梯度更新一并完成。我们可以将上节的代码
 
 .. literalinclude:: /_static/code/zh/basic/example/tensorflow_manual_grad.py
     :lines: 21-31
@@ -130,7 +138,7 @@ Placeholder（占位符张量）和Variable（变量张量）也同样可以为�
 
     train_op = tf.train.GradientDescentOptimizer(learning_rate=learning_rate_).minimize(loss)
 
-简化后的代码如下：
+使用自动求导机制和优化器简化后的代码如下：
 
 .. literalinclude:: /_static/code/zh/basic/example/tensorflow_autograd.py
     :lines: 9-29
