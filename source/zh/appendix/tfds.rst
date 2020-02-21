@@ -38,15 +38,21 @@ TensorFlow Datasets 数据集载入
     Dl Completed...: 100%|██████████████████████████████████████████████████████████████████████████████████████| 4/4 [00:10<00:00,  2.73s/ file] 
     Dataset mnist downloaded and prepared to C:\Users\snowkylin\tensorflow_datasets\mnist\3.0.0. Subsequent calls will reuse this data.
 
+.. hint:: 在使用 TensorFlow Datasets 时，可能需要设置代理。较为简易的方式是设置 ``TFDS_HTTPS_PROXY`` 环境变量，即
+
+    ::
+
+        export TFDS_HTTPS_PROXY=http://代理服务器IP:端口
+
 ``tfds.load`` 方法返回一个 ``tf.data.Dataset`` 对象。部分重要的参数如下：
 
 ..
     https://www.tensorflow.org/datasets/api_docs/python/tfds/load
 
-- ``as_supervised`` ：若为True，则根据数据集的特性返回为 ``(input, label)`` 格式，否则返回所有特征的字典。
-- ``split``：指定返回数据集的特定部分，若无则返回整个数据集。一般有 ``tfds.Split.TRAIN`` （训练集）和 ``tfds.Split.TEST`` （测试集）选项。
+- ``as_supervised`` ：若为True，则根据数据集的特性，将数据集中的每行元素整理为有监督的二元组 ``(input, label)`` （即“数据+标签”）形式，否则数据集中的每行元素为包含所有特征的字典。
+- ``split``：指定返回数据集的特定部分。若不指定，则返回整个数据集。一般有 ``tfds.Split.TRAIN`` （训练集）和 ``tfds.Split.TEST`` （测试集）选项。
 
-当前支持的数据集可在 `官方文档 <https://www.tensorflow.org/datasets/datasets>`_ 或使用 ``tfds.list_builders()`` 查看。
+TensorFlow Datasets 当前支持的数据集可在 `官方文档 <https://www.tensorflow.org/datasets/datasets>`_ 查看，或者也可以使用 ``tfds.list_builders()`` 查看。
 
 当得到了 ``tf.data.Dataset`` 类型的数据集后，我们即可使用 ``tf.data`` 对数据集进行各种预处理以及读取数据。例如：
 
@@ -62,10 +68,4 @@ TensorFlow Datasets 数据集载入
     for images, labels in dataset:
         # 对images和labels进行操作
 
-详细操作说明可见 :ref:`本文档的 tf.data 一节 <tfdata>` 。
-
-.. hint:: 在使用 TensorFlow Datasets 时，可能需要设置代理。较为简易的方式是设置 ``TFDS_HTTPS_PROXY`` 环境变量，即
-
-    ::
-
-        export TFDS_HTTPS_PROXY=http://代理服务器IP:端口
+详细操作说明可见 :ref:`本手册的 tf.data 一节 <tfdata>` 。同时，本手册的 :doc:`分布式训练 <../appendix/distributed>` 一章也使用了 TensorFlow Datasets 载入数据集。可以参考这些章节的示例代码以进一步了解 TensorFlow Datasets 的使用方法。

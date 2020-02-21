@@ -1,7 +1,7 @@
 import tensorflow.compat.v1 as tf
 tf.disable_eager_execution()
 
-x = tf.Variable(initial_value=1.)
+x = tf.get_variable('x', dtype=tf.float32, shape=[], initializer=tf.constant_initializer(3.))
 y = tf.square(x)    # y = x ^ 2
 y_grad = tf.gradients(y, x)
 

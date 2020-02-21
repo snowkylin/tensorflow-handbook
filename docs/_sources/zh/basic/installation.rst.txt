@@ -150,10 +150,10 @@ CUDA Toolkit和cuDNN的安装
     conda install cudatoolkit=X.X
     conda install cudnn=X.X.X
 
-安装CUDA Toolkit和cuDNN，其中X.X和X.X.X分别为需要安装的CUDA Toolkit和cuDNN版本号，必须严格按照 `TensorFlow官方网站所说明的版本 <https://www.tensorflow.org/install/gpu#software_requirements>`_ 安装。例如，对于TensorFlow 2.0，可使用::
+安装CUDA Toolkit和cuDNN，其中X.X和X.X.X分别为需要安装的CUDA Toolkit和cuDNN版本号，必须严格按照 `TensorFlow官方网站所说明的版本 <https://www.tensorflow.org/install/gpu#software_requirements>`_ 安装。例如，对于TensorFlow 2.1，可使用::
 
-    conda install cudatoolkit=10.0
-    conda install cudnn=7.6.4
+    conda install cudatoolkit=10.1
+    conda install cudnn=7.6.5
 
 在安装前，可使用 ``conda search cudatoolkit`` 和 ``conda search cudnn`` 搜索conda源中可用的版本号。
 
@@ -187,7 +187,6 @@ CUDA Toolkit和cuDNN的安装
 说明TensorFlow已安装成功。运行途中可能会输出一些TensorFlow的提示信息，属于正常现象。
 
 .. warning:: 如果你在Windows下安装了TensorFlow 2.1正式版，可能会在导入TensorFlow时出现 `DLL载入错误 <https://github.com/tensorflow/tensorflow/issues/35749>`_ 。此时安装 `Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019 <https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads>`_ 即可正常使用。
-
 
 此处使用的是Python语言，关于Python语言的入门教程可以参考 `runoob网站的Python 3教程 <http://www.runoob.com/python3/python3-tutorial.html>`_ 或 `廖雪峰的Python教程 <https://www.liaoxuefeng.com>`_ ，本手册之后将默认读者拥有Python语言的基本知识。不用紧张，Python语言易于上手，而TensorFlow本身也不会用到Python语言的太多高级特性。
 

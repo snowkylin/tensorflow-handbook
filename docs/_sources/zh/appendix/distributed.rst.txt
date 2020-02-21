@@ -31,7 +31,7 @@ TensorFlow分布式训练
     
     即指定只使用第0、1号GPU参与分布式策略。
     
-以下代码展示了使用 ``MirroredStrategy`` 策略，在TensorFlow Datasets中的部分图像数据集上使用Keras训练MobileNetV2的过程：
+以下代码展示了使用 ``MirroredStrategy`` 策略，在 :doc:`TensorFlow Datasets <../appendix/tfds>` 中的部分图像数据集上使用Keras训练MobileNetV2的过程：
 
 .. literalinclude:: /_static/code/zh/distributed/multi_gpu.py
     :emphasize-lines: 8-10, 21

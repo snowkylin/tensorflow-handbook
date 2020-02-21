@@ -155,6 +155,8 @@ TensorBoard的使用有以下注意事项：
 * 如果需要重新训练，需要删除掉记录文件夹内的信息并重启TensorBoard（或者建立一个新的记录文件夹并开启TensorBoard， ``--logdir`` 参数设置为新建立的文件夹）；
 * 记录文件夹目录保持全英文。
 
+.. _graph_profile:
+
 查看Graph和Profile信息
 -------------------------------------------
 
@@ -167,9 +169,13 @@ TensorBoard的使用有以下注意事项：
     with summary_writer.as_default():
         tf.summary.trace_export(name="model_trace", step=0, profiler_outdir=log_dir)    # 保存Trace信息到文件
 
-之后，我们就可以在TensorBoard中选择“Profile”，以时间轴的方式查看各操作的耗时情况。如果使用了 :ref:`@tf.function <tffunction>` 建立了计算图，也可以点击“Graphs”查看图结构。
+之后，我们就可以在TensorBoard中选择“Profile”，以时间轴的方式查看各操作的耗时情况。如果使用了 :ref:`tf.function <tffunction>` 建立了计算图，也可以点击“Graphs”查看图结构。
 
 .. figure:: /_static/image/tools/profiling.png
+    :width: 100%
+    :align: center
+
+.. figure:: /_static/image/tools/graph.png
     :width: 100%
     :align: center
 
@@ -306,6 +312,8 @@ TensorBoard的使用有以下注意事项：
 
     - 当 ``buffer_size`` 设置为1时，其实等价于没有进行任何打散；
     - 当数据集的标签顺序分布极为不均匀（例如二元分类时数据集前N个的标签为0，后N个的标签为1）时，较小的缓冲区大小会使得训练时取出的Batch数据很可能全为同一标签，从而影响训练效果。一般而言，数据集的顺序分布若较为随机，则缓冲区的大小可较小，否则则需要设置较大的缓冲区。
+
+.. _prefetch:
 
 使用 ``tf.data`` 的并行化策略提高训练流程效率
 --------------------------------------------------------------------------------------
@@ -505,12 +513,12 @@ TFRecord可以理解为一系列序列化的 ``tf.train.Example`` 元素所组�
 
 .. _tffunction:
 
-``@tf.function`` ：图执行模式 *
+``tf.function`` ：图执行模式 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 虽然默认的即时执行模式（Eager Execution）为我们带来了灵活及易调试的特性，但在特定的场合，例如追求高性能或部署模型时，我们依然希望使用 TensorFlow 1.X 中默认的图执行模式（Graph Execution），将模型转换为高效的 TensorFlow 图模型。此时，TensorFlow 2 为我们提供了 ``tf.function`` 模块，结合 AutoGraph 机制，使得我们仅需加入一个简单的 ``@tf.function`` 修饰符，就能轻松将模型以图执行模式运行。
 
-``@tf.function`` 基础使用方法
+``tf.function`` 基础使用方法
 -------------------------------------------
 
 ..
@@ -521,7 +529,7 @@ TFRecord可以理解为一系列序列化的 ``tf.train.Example`` 元素所组�
     https://pgaleone.eu/tensorflow/tf.function/2019/04/03/dissecting-tf-function-part-2/
     https://pgaleone.eu/tensorflow/tf.function/2019/05/10/dissecting-tf-function-part-3/
 
-在 TensorFlow 2 中，推荐使用 ``@tf.function`` （而非1.X中的 ``tf.Session`` ）实现图执行模式，从而将模型转换为易于部署且高性能的TensorFlow图模型。只需要将我们希望以图执行模式运行的代码封装在一个函数内，并在函数前加上 ``@tf.function`` 即可，如下例所示。关于TensorFlow 1.X版本中的图执行模式可参考 :doc:`附录 <../appendix/static>` 。
+在 TensorFlow 2 中，推荐使用 ``tf.function`` （而非1.X中的 ``tf.Session`` ）实现图执行模式，从而将模型转换为易于部署且高性能的TensorFlow图模型。只需要将我们希望以图执行模式运行的代码封装在一个函数内，并在函数前加上 ``@tf.function`` 即可，如下例所示。关于图执行模式的深入探讨可参考 :doc:`附录 <../appendix/static>` 。
 
 .. warning:: 并不是任何函数都可以被 ``@tf.function`` 修饰！``@tf.function`` 使用静态编译将函数内的代码转换成计算图，因此对函数内可使用的语句有一定限制（仅支持Python语言的一个子集），且需要函数内的操作本身能够被构建为计算图。建议在函数内只使用TensorFlow的原生操作，不要使用过于复杂的Python语句，函数参数只包括TensorFlow张量或NumPy数组，并最好是能够按照计算图的思想去构建函数（换言之，``@tf.function`` 只是给了你一种更方便的写计算图的方法，而不是一颗能给任何函数加速的 `银子弹 <https://en.wikipedia.org/wiki/No_Silver_Bullet>`_ ）。详细内容可参考 `AutoGraph Capabilities and Limitations <https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/autograph/g3doc/reference/limitations.md>`_ 。建议配合 :doc:`附录 <../appendix/static>` 一同阅读本节以获得较深入的理解。
 
@@ -534,7 +542,7 @@ TFRecord可以理解为一系列序列化的 ``tf.train.Example`` 元素所组�
     https://www.tensorflow.org/beta/guide/autograph
     Functions can be faster than eager code, for graphs with many small ops. But for graphs with a few expensive ops (like convolutions), you may not see much speedup.
 
-``@tf.function`` 内在机制
+``tf.function`` 内在机制
 -------------------------------------------
 
 当被 ``@tf.function`` 修饰的函数第一次被调用的时候，进行以下操作：
@@ -546,6 +554,14 @@ TFRecord可以理解为一系列序列化的 ``tf.train.Example`` 元素所组�
 - 基于函数的名字和输入的函数参数的类型生成一个哈希值，并将建立的计算图缓存到一个哈希表中。
 
 在被 ``@tf.function`` 修饰的函数之后再次被调用的时候，根据函数名和输入的函数参数的类型计算哈希值，检查哈希表中是否已经有了对应计算图的缓存。如果是，则直接使用已缓存的计算图，否则重新按上述步骤建立计算图。
+
+.. hint:: 对于熟悉 TensorFlow 1.X 的开发者，如果想要直接获得 ``tf.function`` 所生成的计算图以进行进一步处理和调试，可以使用被修饰函数的 ``get_concrete_function`` 方法。该方法接受的参数与被修饰函数相同。例如，为了获取前节被 ``@tf.function`` 修饰的函数 ``train_one_step`` 所生成的计算图，可以使用以下代码：
+
+    .. code-block:: python
+
+        graph = train_one_step.get_concrete_function(X, y)
+
+    其中 ``graph`` 即为一个 ``tf.Graph`` 对象。
 
 以下是一个测试题：
 

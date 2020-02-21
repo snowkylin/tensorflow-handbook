@@ -121,11 +121,9 @@
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="zh/appendix/static.html">图执行模式下的 TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/appendix/optimization.html">TensorFlow性能优化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/terms.html">术语中英对照表</a></li>
 </ul>
@@ -334,7 +332,7 @@
 <li class="toctree-l2"><a class="reference internal" href="zh/basic/tools.html#tf-data"><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> ：数据集的构建与预处理</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id4">数据集对象的建立</a></li>
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id5">数据集对象的预处理</a></li>
-<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id6">使用 <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 的并行化策略提高训练流程效率</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#prefetch">使用 <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 的并行化策略提高训练流程效率</a></li>
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id11">数据集元素的获取与使用</a></li>
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#cats-vs-dogs">实例：cats_vs_dogs图像分类</a></li>
 </ul>
@@ -344,9 +342,9 @@
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id16">读取 TFRecord 文件</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="zh/basic/tools.html#tf-function"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> ：图执行模式 *</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id17"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 基础使用方法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id19"><code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 内在机制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic/tools.html#tf-function"><code class="docutils literal notranslate"><span class="pre">tf.function</span></code> ：图执行模式 *</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id17"><code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 基础使用方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#id19"><code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 内在机制</a></li>
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#autograph-pythontensorflow">AutoGraph：将Python控制流转换为TensorFlow计算图</a></li>
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/tools.html#tf-session">使用传统的 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code></a></li>
 </ul>
@@ -493,21 +491,6 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="zh/appendix/static.html">图执行模式下的 TensorFlow</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/static.html#tensorflow-1-1">TensorFlow 1+1</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="zh/appendix/static.html#id1">使用计算图与会话进行基本运算</a></li>
-<li class="toctree-l3"><a class="reference internal" href="zh/appendix/static.html#placeholder-feed-dict">占位符（Placeholder）与 <code class="docutils literal notranslate"><span class="pre">feed_dict</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="zh/appendix/static.html#variable">变量（Variable）</a></li>
-<li class="toctree-l3"><a class="reference internal" href="zh/appendix/static.html#id2">矩阵及张量计算</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/static.html#id3">基础示例：线性回归</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="zh/appendix/static.html#id4">自动求导机制</a></li>
-<li class="toctree-l3"><a class="reference internal" href="zh/appendix/static.html#id5">优化器</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/cloud.html">在云端使用TensorFlow</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zh/appendix/cloud.html#colabtensorflow">在Colab中使用TensorFlow</a></li>
@@ -520,7 +503,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/appendix/optimization.html">TensorFlow性能优化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/terms.html">术语中英对照表</a></li>
 </ul>
@@ -571,7 +553,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="en/basic/basic.html">TensorFlow Basic</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="en/basic/basic.html#tensorflow-1-1">TensorFlow 1+1 ✔️</a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/basic/basic.html#tensorflow-1-1">TensorFlow 1+1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="en/basic/basic.html#automatic-differentiation-mechanism">Automatic differentiation mechanism</a></li>
 <li class="toctree-l2"><a class="reference internal" href="en/basic/basic.html#a-basic-example-linear-regression">A basic example: Linear regression</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="en/basic/basic.html#linear-regression-under-numpy">Linear regression under numPy</a></li>

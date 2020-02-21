@@ -1,0 +1,416 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>tf.GradientTape 详解 &mdash; 简单粗暴 TensorFlow 2 0.4 alpha 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
+        <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴 TensorFlow 2
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia（Ziyang）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Preface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/introduction.html">TensorFlow Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/installation.html">Installation and Environment Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/basic.html">TensorFlow Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/models.html">Model Construction and Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/tools.html">Common Modules in TensorFlow</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/lite.html">TensorFlow Lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/javascript.html">TensorFlow in JavaScript</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Large-scale Training</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/distributed.html">Distributed Training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/julia.html">TensorFlow in Julia</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/static.html">TensorFlow Under Graph Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/docker.html">Using Docker to deploy TensorFlow environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/cloud.html">Using TensorFlow on cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/optimization.html">TensorFlow Performance Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/recommended_books.html">References and Recommendations for Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴 TensorFlow 2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 详解</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/zh/advanced/tape.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tf-gradienttape">
+<h1><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 详解<a class="headerlink" href="#tf-gradienttape" title="永久链接至标题">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的出现是 TensorFlow 2 最大的变化之一。其以一种简洁优雅的方式，为 TensorFlow 的即时执行模式和图执行模式提供了统一的自动求导 API。不过对于从 TensorFlow 1.X 过渡到 TensorFlow 2 的开发人员而言，也增加了一定的学习门槛。本章即在 <a class="reference internal" href="../basic/basic.html#automatic-derivation"><span class="std std-ref">第一章“自动求导机制”一节</span></a> 的基础上，详细介绍 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的使用方法及机制。</p>
+<div class="section" id="id1">
+<h2>基本使用<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 是一个记录器，能够记录在其上下文环境中的计算步骤和操作，并用于自动求导。其使用方法分为两步：</p>
+<ol class="arabic simple">
+<li><p>使用 with 语句，将需要求导的计算步骤封装在 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的上下文中；</p></li>
+<li><p>使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法计算导数。</p></li>
+</ol>
+<p>回顾 <a class="reference internal" href="../basic/basic.html#automatic-derivation"><span class="std std-ref">第一章“自动求导机制”一节</span></a> 所举的例子，使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 计算函数 <img class="math" src="../../_images/math/4e8a9c0003b5511a6cedaafcbb0075edf9089443.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/8153c976979a8a4fe01919cd83dda44e9e81f769.png" alt="x = 3"/> 时的导数：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial_value</span><span class="o">=</span><span class="mf">3.</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>     <span class="c1"># 在 tf.GradientTape() 的上下文内，所有计算步骤都会被记录以用于求导</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y_grad</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>        <span class="c1"># 计算y关于x的导数</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">y</span><span class="p">,</span> <span class="n">y_grad</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>在这里，初学者往往迷惑于此处 with 语句的用法，即“为什么离开了上下文环境， <code class="docutils literal notranslate"><span class="pre">tape</span></code> 还可以被使用？”。这样的疑惑是有一定道理的，因为在实际应用中，with 语句大多用于对资源进行访问的场合，保证资源在使用后得到恰当的清理或释放，例如我们熟悉的文件写入：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;test.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>    <span class="c1"># open() 是文件资源的上下文管理器，f 是文件资源对象</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;hello world&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;another string&#39;</span><span class="p">)</span>   <span class="c1"># 报错，因为离开上下文环境时，资源对象 f 被其上下文管理器所释放</span>
+</pre></div>
+</div>
+<p>在 TensorFlow 2 中，<code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 尽管也可以被视为一种“资源”的上下文管理器，但和传统的资源有所区别。传统的资源在进入上下文管理器时获取资源对象，离开时释放资源对象，因此在离开上下文环境后再访问资源对象往往无效。而 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 则是在进入上下文管理器时新建记录器并开启记录，离开上下文管理器时让记录器停止记录。停止记录不代表记录器被释放，事实上，记录器所记录的信息仍然保留，只是不再记录新的信息。因此 <code class="docutils literal notranslate"><span class="pre">tape</span></code> 的 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法依然可以使用，以利用已记录的信息计算导数。我们使用以下示例代码来说明这一点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial_value</span><span class="o">=</span><span class="mf">3.</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>     <span class="c1"># tf.GradientTape() 是上下文管理器，tape 是记录器</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">tape</span><span class="o">.</span><span class="n">stop_recording</span><span class="p">():</span>     <span class="c1"># 在上下文管理器内，记录进行中，暂时停止记录成功</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;temporarily stop recording&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">tape</span><span class="o">.</span><span class="n">stop_recording</span><span class="p">():</span>         <span class="c1"># 在上下文管理器外，记录已停止，尝试暂时停止记录报错</span>
+    <span class="k">pass</span>
+<span class="n">y_grad</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>        <span class="c1"># 在上下文管理器外，tape 的记录信息仍然保留，导数计算成功</span>
+</pre></div>
+</div>
+<p>在以上代码中， <code class="docutils literal notranslate"><span class="pre">tape.stop_recording()</span></code> 上下文管理器可以暂停计算步骤的记录。也就是说，在该上下文内的计算步骤都无法使用  <code class="docutils literal notranslate"><span class="pre">tape</span></code> 的 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法求导。在第一次调用 <code class="docutils literal notranslate"><span class="pre">tape.stop_recording()</span></code> 时， <code class="docutils literal notranslate"><span class="pre">tape</span></code> 是处于记录状态的，因此调用成功。而第二次调用 <code class="docutils literal notranslate"><span class="pre">tape.stop_recording()</span></code> 时，由于 <code class="docutils literal notranslate"><span class="pre">tape</span></code> 已经离开了 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 上下文，在离开时 <code class="docutils literal notranslate"><span class="pre">tape</span></code> 的记录状态被停止，所以调用失败，报错： <code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">Tape</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">recording.</span></code> （记录器已经停止记录）。</p>
+</div>
+<div class="section" id="id2">
+<h2>监视机制<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>在 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 中，通过监视（Watch）机制来决定 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 可以对哪些变量求导。默认情况下，可训练（Trainable）的变量，如 <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code> 会被自动加入 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的监视列表，从而 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 可以直接对这些变量求导。而另一些类型的张量（例如 <code class="docutils literal notranslate"><span class="pre">tf.Constant</span></code> ）则不在默认列表中，若需要对这些张量求导，需要使用 <code class="docutils literal notranslate"><span class="pre">watch</span></code> 方法手工将张量加入监视列表中。以下示例代码说明了这一点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">3.</span><span class="p">)</span>                 <span class="c1"># x 为常量类型张量，默认无法对其求导</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y_grad_1</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>      <span class="c1"># 求导结果为 None</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
+    <span class="n">tape</span><span class="o">.</span><span class="n">watch</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>                   <span class="c1"># 使用 tape.watch 手动将 x 加入监视列表</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y_grad_2</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>      <span class="c1"># 求导结果为 tf.Tensor(6.0, shape=(), dtype=float32)</span>
+</pre></div>
+</div>
+<p>当然，如果你希望自己掌控需要监视的变量，可以将 <code class="docutils literal notranslate"><span class="pre">watch_accessed_variables=False</span></code> 选项传入 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> ，并使用 <code class="docutils literal notranslate"><span class="pre">watch</span></code> 方法手动逐个加入需要监视的变量。</p>
+</div>
+<div class="section" id="id3">
+<h2>高阶求导<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 支持嵌套使用。通过嵌套 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 上下文管理器，可以轻松地实现二阶、三阶甚至更多阶的求导。以下示例代码计算了 <img class="math" src="../../_images/math/4e8a9c0003b5511a6cedaafcbb0075edf9089443.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/8153c976979a8a4fe01919cd83dda44e9e81f769.png" alt="x = 3"/> 时的一阶导数 <code class="docutils literal notranslate"><span class="pre">dy_dx</span></code> 和二阶导数 <code class="docutils literal notranslate"><span class="pre">d2y_dx2</span></code> ：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mf">3.</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape_1</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape_2</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">dy_dx</span> <span class="o">=</span> <span class="n">tape_2</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>   <span class="c1"># 值为 6.0</span>
+<span class="n">d2y_dx2</span> <span class="o">=</span> <span class="n">tape_1</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">dy_dx</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="c1"># 值为 2.0</span>
+</pre></div>
+</div>
+<p>由于 <img class="math" src="../../_images/math/f22de251bb8fdc8eea7c81b3b265e5fed577c957.png" alt="\frac{dy}{dx} = 2x"/> ， <img class="math" src="../../_images/math/47aad425c19c97a1dcd9ace367ae2ba763040924.png" alt="\frac{d^2y}{dx^2} = \frac{d}{dx}\frac{dy}{dx} = 2"/> ，故期望值为 <code class="docutils literal notranslate"><span class="pre">dy_dx</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">3</span> <span class="pre">=</span> <span class="pre">6</span></code> ， <code class="docutils literal notranslate"><span class="pre">d2y_dx2</span> <span class="pre">=</span> <span class="pre">2</span></code> ，可见实际计算值与预期相符。</p>
+<p>我们可以从上面的代码看出，高阶求导实际上是通过对使用 <code class="docutils literal notranslate"><span class="pre">tape</span></code> 的 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法求得的导数继续求导来实现的。也就是说，求导操作（即 <code class="docutils literal notranslate"><span class="pre">tape</span></code> 的 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法）和其他计算步骤（如 <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">tf.square(x)</span></code> ）没有什么本质的不同，同样是可以被 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 记录的计算步骤。</p>
+</div>
+<div class="section" id="id4">
+<h2>持久保持记录与多次求导<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>默认情况下，每个 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的记录器在调用一次 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法后，其记录的信息就会被释放，也就是说这个记录器就无法再使用了。但如果我们要多次调用 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法进行求导，可以将 <code class="docutils literal notranslate"><span class="pre">persistent=True</span></code> 参数传入 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> ，使得该记录器持久保持记录的信息。并在求导完成后手工使用 <code class="docutils literal notranslate"><span class="pre">del</span></code> 释放记录器资源。以下示例展示了用一个持久的记录器 <code class="docutils literal notranslate"><span class="pre">tape</span></code> 分别计算 <img class="math" src="../../_images/math/4e8a9c0003b5511a6cedaafcbb0075edf9089443.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/8153c976979a8a4fe01919cd83dda44e9e81f769.png" alt="x = 3"/> 时的导数，以及 <img class="math" src="../../_images/math/663196af723d161650f772de5cf74330d25352c3.png" alt="y(x) = x^3"/> 在 <img class="math" src="../../_images/math/170fe36af27d1498865f1027ef07284a67122e06.png" alt="x = 2"/> 时的导数。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="n">x_1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mf">3.</span><span class="p">)</span>
+<span class="n">x_2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mf">2.</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">(</span><span class="n">persistent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
+    <span class="n">y_1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x_1</span><span class="p">)</span>
+    <span class="n">y_2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">x_2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">y_grad_1</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y_1</span><span class="p">,</span> <span class="n">x_1</span><span class="p">)</span>  <span class="c1"># 6.0 = 2 * 3.0</span>
+<span class="n">y_grad_2</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y_2</span><span class="p">,</span> <span class="n">x_2</span><span class="p">)</span>  <span class="c1"># 12.0 = 3 * 2.0 ^ 2</span>
+<span class="k">del</span> <span class="n">tape</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>图执行模式<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>在图执行模式（即使用 <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 封装计算图）下也可以使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 。此时，其与 TensorFlow 1.X 中的 <code class="docutils literal notranslate"><span class="pre">tf.gradients</span></code> 基本等同。详情见 <a class="reference internal" href="static.html#graph-compare"><span class="std std-ref">自动求导机制的计算图对比 *</span></a> 。</p>
+</div>
+<div class="section" id="id6">
+<h2>性能优化<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>由于 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 上下文中的任何计算步骤都会被记录器所记录，因此，为了提高 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的记录效率，应当尽量只将需要求导的计算步骤封装在 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的上下文中。如果需要在中途临时加入一些无需记录求导的计算步骤，可以使用本章第一节介绍的 <code class="docutils literal notranslate"><span class="pre">tape.stop_recording()</span></code> 暂时停止上下文记录器的记录。同时，正如我们在本章“高阶求导”一节所介绍的那样，求导动作本身（即 <code class="docutils literal notranslate"><span class="pre">tape</span></code> 的 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法）也是一个计算步骤。因此，一般而言，除非需要进行高阶求导，否则应当避免在 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的上下文内调用其 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法。这会导致求导操作本身被 GradientTape 所记录，从而造成效率的降低。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mf">3.</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">(</span><span class="n">persistent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">y_grad</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>    <span class="c1"># 如果后续并不需要对 y_grad 求导，则不建议在上下文环境中求导</span>
+    <span class="k">with</span> <span class="n">tape</span><span class="o">.</span><span class="n">stop_recording</span><span class="p">():</span>     <span class="c1"># 对于无需记录求导的计算步骤，可以暂停记录器后计算</span>
+        <span class="n">y_grad_not_recorded</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="n">d2y_dx2</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y_grad</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>  <span class="c1"># 如果后续需要对 y_grad 求导，则 y_grad 必须写在上下文中</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>实例：对神经网络的各层变量独立求导<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>在实际的训练流程中，我们有时需要对 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 模型的部分变量求导，或者对模型不同部分的变量采取不同的优化策略。此时，我们可以通过模型中各个 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 层的 <code class="docutils literal notranslate"><span class="pre">variables</span></code> 属性取出层内的部分变量，并对这部分变量单独应用优化器。以下示例展示了使用一个持久的 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 记录器，对前节 <a class="reference internal" href="../basic/models.html#mlp"><span class="std std-ref">基础示例：多层感知机（MLP）</span></a> 中多层感知机的第一层和第二层独立进行优化的过程。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">zh.model.mnist.mlp</span> <span class="k">import</span> <span class="n">MLP</span>
+<span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="k">import</span> <span class="n">MNISTLoader</span>
+
+<span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">learning_rate_1</span> <span class="o">=</span> <span class="mf">0.001</span>
+<span class="n">learning_rate_2</span> <span class="o">=</span> <span class="mf">0.01</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MLP</span><span class="p">()</span>
+<span class="n">data_loader</span> <span class="o">=</span> <span class="n">MNISTLoader</span><span class="p">()</span>
+<span class="c1"># 声明两个优化器，设定不同的学习率，分别用于更新MLP模型的第一层和第二层</span>
+<span class="n">optimizer_1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate_1</span><span class="p">)</span>
+<span class="n">optimizer_2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate_2</span><span class="p">)</span>
+<span class="n">num_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">num_train_data</span> <span class="o">//</span> <span class="n">batch_size</span> <span class="o">*</span> <span class="n">num_epochs</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">batch_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_batches</span><span class="p">):</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">get_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">(</span><span class="n">persistent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>  <span class="c1"># 声明一个持久的GradientTape，允许我们多次调用tape.gradient方法</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;batch </span><span class="si">%d</span><span class="s2">: loss </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">batch_index</span><span class="p">,</span> <span class="n">loss</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+    <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">dense1</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>    <span class="c1"># 单独求第一层参数的梯度</span>
+    <span class="n">optimizer_1</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">dense1</span><span class="o">.</span><span class="n">variables</span><span class="p">))</span> <span class="c1"># 单独对第一层参数更新，学习率0.001</span>
+    <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">dense2</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>    <span class="c1"># 单独求第二层参数的梯度</span>
+    <span class="n">optimizer_1</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">dense2</span><span class="o">.</span><span class="n">variables</span><span class="p">))</span> <span class="c1"># 单独对第二层参数更新，学习率0.01</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

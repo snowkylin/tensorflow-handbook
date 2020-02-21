@@ -126,11 +126,9 @@
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="static.html">图执行模式下的 TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="optimization.html">TensorFlow性能优化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="terms.html">术语中英对照表</a></li>
 </ul>
@@ -260,7 +258,7 @@
 </div>
 <p>即指定只使用第0、1号GPU参与分布式策略。</p>
 </div>
-<p>以下代码展示了使用 <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 策略，在TensorFlow Datasets中的部分图像数据集上使用Keras训练MobileNetV2的过程：</p>
+<p>以下代码展示了使用 <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 策略，在 <a class="reference internal" href="tfds.html"><span class="doc">TensorFlow Datasets</span></a> 中的部分图像数据集上使用Keras训练MobileNetV2的过程：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
 
@@ -277,7 +275,7 @@
     <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">[</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">])</span> <span class="o">/</span> <span class="mf">255.0</span>
     <span class="k">return</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span>
 
-<span class="c1"># 当as_supervised为True时，返回image和label两个键值</span>
+<span class="c1"># 使用 TensorFlow Datasets 载入猫狗分类数据集，详见“TensorFlow Datasets数据集载入”一章</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;cats_vs_dogs&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">tfds</span><span class="o">.</span><span class="n">Split</span><span class="o">.</span><span class="n">TRAIN</span><span class="p">,</span> <span class="n">as_supervised</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">resize</span><span class="p">)</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
 

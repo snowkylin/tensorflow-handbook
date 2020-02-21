@@ -87,16 +87,22 @@ GitHub： https://github.com/snowkylin/tensorflow-handbook
 
         zh/application/rl
         zh/application/chatbot
+..
+    .. toctree:: 
+        :maxdepth: 3
+        :caption: 高级
+
+        zh/advanced/static 
+        zh/advanced/tape
+        zh/advanced/optimization
 
 .. toctree:: 
     :maxdepth: 3
     :caption: 附录
-
-    zh/appendix/static 
+    
     zh/appendix/docker
     zh/appendix/cloud
-    zh/appendix/jupyterlab
-    zh/appendix/optimization
+    zh/appendix/jupyterlab    
     zh/appendix/recommended_books
     zh/appendix/terms
 

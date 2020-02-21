@@ -122,11 +122,9 @@
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="static.html">图执行模式下的 TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="optimization.html">TensorFlow性能优化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="terms.html">术语中英对照表</a></li>
 </ul>
@@ -265,12 +263,19 @@ Dl Completed...: 100%|███████████████████�
 Dataset mnist downloaded and prepared to C:\Users\snowkylin\tensorflow_datasets\mnist\3.0.0. Subsequent calls will reuse this data.
 </pre></div>
 </div>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>在使用 TensorFlow Datasets 时，可能需要设置代理。较为简易的方式是设置 <code class="docutils literal notranslate"><span class="pre">TFDS_HTTPS_PROXY</span></code> 环境变量，即</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">TFDS_HTTPS_PROXY</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理服务器IP</span><span class="p">:</span><span class="n">端口</span>
+</pre></div>
+</div>
+</div>
 <p><code class="docutils literal notranslate"><span class="pre">tfds.load</span></code> 方法返回一个 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 对象。部分重要的参数如下：</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">as_supervised</span></code> ：若为True，则根据数据集的特性返回为 <code class="docutils literal notranslate"><span class="pre">(input,</span> <span class="pre">label)</span></code> 格式，否则返回所有特征的字典。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">split</span></code>：指定返回数据集的特定部分，若无则返回整个数据集。一般有 <code class="docutils literal notranslate"><span class="pre">tfds.Split.TRAIN</span></code> （训练集）和 <code class="docutils literal notranslate"><span class="pre">tfds.Split.TEST</span></code> （测试集）选项。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">as_supervised</span></code> ：若为True，则根据数据集的特性，将数据集中的每行元素整理为有监督的二元组 <code class="docutils literal notranslate"><span class="pre">(input,</span> <span class="pre">label)</span></code> （即“数据+标签”）形式，否则数据集中的每行元素为包含所有特征的字典。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">split</span></code>：指定返回数据集的特定部分。若不指定，则返回整个数据集。一般有 <code class="docutils literal notranslate"><span class="pre">tfds.Split.TRAIN</span></code> （训练集）和 <code class="docutils literal notranslate"><span class="pre">tfds.Split.TEST</span></code> （测试集）选项。</p></li>
 </ul>
-<p>当前支持的数据集可在 <a class="reference external" href="https://www.tensorflow.org/datasets/datasets">官方文档</a> 或使用 <code class="docutils literal notranslate"><span class="pre">tfds.list_builders()</span></code> 查看。</p>
+<p>TensorFlow Datasets 当前支持的数据集可在 <a class="reference external" href="https://www.tensorflow.org/datasets/datasets">官方文档</a> 查看，或者也可以使用 <code class="docutils literal notranslate"><span class="pre">tfds.list_builders()</span></code> 查看。</p>
 <p>当得到了 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 类型的数据集后，我们即可使用 <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 对数据集进行各种预处理以及读取数据。例如：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 使用 TessorFlow Datasets 载入“tf_flowers”数据集</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;tf_flowers&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">tfds</span><span class="o">.</span><span class="n">Split</span><span class="o">.</span><span class="n">TRAIN</span><span class="p">,</span> <span class="n">as_supervised</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -283,14 +288,7 @@ Dataset mnist downloaded and prepared to C:\Users\snowkylin\tensorflow_datasets\
     <span class="c1"># 对images和labels进行操作</span>
 </pre></div>
 </div>
-<p>详细操作说明可见 <a class="reference internal" href="../basic/tools.html#tfdata"><span class="std std-ref">本文档的 tf.data 一节</span></a> 。</p>
-<div class="admonition hint">
-<p class="admonition-title">提示</p>
-<p>在使用 TensorFlow Datasets 时，可能需要设置代理。较为简易的方式是设置 <code class="docutils literal notranslate"><span class="pre">TFDS_HTTPS_PROXY</span></code> 环境变量，即</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">TFDS_HTTPS_PROXY</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理服务器IP</span><span class="p">:</span><span class="n">端口</span>
-</pre></div>
-</div>
-</div>
+<p>详细操作说明可见 <a class="reference internal" href="../basic/tools.html#tfdata"><span class="std std-ref">本手册的 tf.data 一节</span></a> 。同时，本手册的 <a class="reference internal" href="distributed.html"><span class="doc">分布式训练</span></a> 一章也使用了 TensorFlow Datasets 载入数据集。可以参考这些章节的示例代码以进一步了解 TensorFlow Datasets 的使用方法。</p>
 </div>
 
 
