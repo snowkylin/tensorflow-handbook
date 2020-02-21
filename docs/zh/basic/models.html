@@ -149,11 +149,9 @@
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/static.html">图执行模式下的 TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/optimization.html">TensorFlow性能优化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">术语中英对照表</a></li>
 </ul>
@@ -470,7 +468,7 @@
 <li><p>将这批数据送入模型，计算出模型的预测值；</p></li>
 <li><p>将模型预测值与真实值进行比较，计算损失函数（loss）。这里使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> 中的交叉熵函数作为损失函数；</p></li>
 <li><p>计算损失函数关于模型变量的导数；</p></li>
-<li><p>将求出的导数值传入优化器，使用优化器的 <code class="docutils literal notranslate"><span class="pre">apply_gradients</span></code> 方法更新模型参数以最小化损失函数（优化器的详细使用方法见 <a class="reference internal" href="basic.html#optimizer"><span class="std std-ref">前章</span></a>  ）。</p></li>
+<li><p>将求出的导数值传入优化器，使用优化器的 <code class="docutils literal notranslate"><span class="pre">apply_gradients</span></code> 方法更新模型参数以最小化损失函数（优化器的详细使用方法见 <a class="reference internal" href="../../en/basic/basic.html#optimizer"><span class="std std-ref">前章</span></a>  ）。</p></li>
 </ul>
 <p>具体代码实现如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">num_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">num_train_data</span> <span class="o">//</span> <span class="n">batch_size</span> <span class="o">*</span> <span class="n">num_epochs</span><span class="p">)</span>

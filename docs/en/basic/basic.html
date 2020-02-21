@@ -122,11 +122,9 @@
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/static.html">图执行模式下的 TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/optimization.html">TensorFlow性能优化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/terms.html">术语中英对照表</a></li>
 </ul>
@@ -139,7 +137,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation and Environment Configuration</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Basic</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#tensorflow-1-1">TensorFlow 1+1 ✔️</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tensorflow-1-1">TensorFlow 1+1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#automatic-differentiation-mechanism">Automatic differentiation mechanism</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#a-basic-example-linear-regression">A basic example: Linear regression</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#linear-regression-under-numpy">Linear regression under numPy</a></li>
@@ -248,53 +246,53 @@
 <p>This chapter describes basic operations in TensorFlow.</p>
 <p>Prerequisites:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/tutorial/">Basic Python operations</a> (assignment, branch &amp; loop statement, library import)</p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/reference/compound_stmts.html#the-with-statement">‘With’ statement in Python</a></p></li>
-<li><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/user/quickstart.html">NumPy</a> , a commonly used Python library for scientific computation. TensorFlow 2.X has a close integration with NumPy.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/tutorial/">Basic Python operations</a> (assignments, branch &amp; loop statements, importing libraries)</p></li>
+<li><p>The <a class="reference external" href="https://docs.python.org/3/reference/compound_stmts.html#the-with-statement">‘With’ statement in Python</a></p></li>
+<li><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/user/quickstart.html">NumPy</a> , a commonly used Python library for scientific computing. TensorFlow 2.X is integrated closely with NumPy.</p></li>
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Euclidean_vector">Vectors</a> &amp; <a class="reference external" href="https://en.wikipedia.org/wiki/Matrix_(mathematics)">Matrices</a> operations (matrix addition &amp; subtraction, matrix multiplication with vectors &amp; matrices, matrix transpose, etc., Quiz: <img class="math" src="../../_images/math/b480b0a427e86cd07160321578c23a8f30222019.png" alt="\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} \times \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = ?"/>)</p></li>
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Derivative">Derivatives of functions</a> , <a class="reference external" href="https://en.wikipedia.org/wiki/Partial_derivative">derivatives of multivariable functions</a> (Quiz: <img class="math" src="../../_images/math/902db65185d3560d091fe47fdbf1fb561f082a76.png" alt="f(x, y) = x^2 + xy + y^2, \frac{\partial f}{\partial x} = ?, \frac{\partial f}{\partial y} = ?"/>)</p></li>
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Linear_regression">Linear regression</a>;</p></li>
 <li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient descent</a> that searches local minima of a function.</p></li>
 </ul>
 <div class="section" id="tensorflow-1-1">
-<h2>TensorFlow 1+1 ✔️<a class="headerlink" href="#tensorflow-1-1" title="永久链接至标题">¶</a></h2>
-<p>We can first simply regarded TensorFlow as a library of scientific calculation (like Numpy in Python).</p>
-<p>As the first step, let’s import TensorFlow:</p>
+<h2>TensorFlow 1+1<a class="headerlink" href="#tensorflow-1-1" title="永久链接至标题">¶</a></h2>
+<p>In the beginning, we can simply regard TensorFlow as a library for scientific computing (like Numpy in Python).</p>
+<p>First, let us import TensorFlow:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
 </pre></div>
 </div>
 <div class="admonition-warning admonition">
 <p class="admonition-title">Warning</p>
-<p>This handbook is based on the Eager Execution mode of TensorFlow. In TensorFlow 1.X, you must run <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code> after importing to enable Eager Execution mode. in TensorFlow 2.X, Eager Execution is the default mode. Thus you do not need to run <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code>. (However, if you want to disable Eager Execution mode, you should run <code class="docutils literal notranslate"><span class="pre">tf.compat.v1.disable_eager_execution()</span></code>)</p>
+<p>This handbook is based on the Eager Execution mode of TensorFlow. In TensorFlow 1.X, you MUST run <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code> after importing it to enable Eager Execution mode. In TensorFlow 2.X, the Eager Execution is default thus you do not need to run <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code>. (However, if you want to disable it, you should run <code class="docutils literal notranslate"><span class="pre">tf.compat.v1.disable_eager_execution()</span></code>.)</p>
 </div>
-<p>TensorFlow use <strong>Tensors</strong> as the basic element of data. Tensors in TensorFlow is conceptually equal to multidimensional arrays. We can use it to describe scalars, vectors, matrics and so on. The followings are some examples:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># declare a random float (scalar)</span>
+<p>TensorFlow uses <strong>tensors</strong> as its basic elements of data. Tensors in TensorFlow are conceptually equal to multidimensional arrays. We can use them to describe scalars, vectors, matrices and so on. Here are some examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Declare a random float (scalar).</span>
 <span class="n">random_float</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">())</span>
 
-<span class="c1"># declare a zero vector with two elements</span>
+<span class="c1"># Declare a zero vector with two elements.</span>
 <span class="n">zero_vector</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 
-<span class="c1"># declare 2x2 constant matrices A and B</span>
+<span class="c1"># Declare two 2*2 constant matrices A and B.</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">]])</span>
 <span class="n">B</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">5.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">],</span> <span class="p">[</span><span class="mf">7.</span><span class="p">,</span> <span class="mf">8.</span><span class="p">]])</span>
 </pre></div>
 </div>
-<p>There are three important attributes of a Tensor: shape, data type and value. You can use <code class="docutils literal notranslate"><span class="pre">shape</span></code> 、 <code class="docutils literal notranslate"><span class="pre">dtype</span></code> attribute and <code class="docutils literal notranslate"><span class="pre">numpy()</span></code> method to fetch them. For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># view the shape, type and value of matrix A</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>      <span class="c1"># output (2, 2), which means the number of rows and cols are both 2</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>      <span class="c1"># output &lt;dtype: &#39;float32&#39;&gt;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>    <span class="c1"># output [[1. 2.]</span>
-                    <span class="c1">#         [3. 4.]]</span>
+<p>A tensor have three important attributes: shape, data type and value. You can use the <code class="docutils literal notranslate"><span class="pre">shape</span></code> 、 <code class="docutils literal notranslate"><span class="pre">dtype</span></code> attribute and the <code class="docutils literal notranslate"><span class="pre">numpy()</span></code> method to fetch them. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># View the shape, type and value of matrix A.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>      <span class="c1"># Output (2, 2), which means the number of rows and cols are both 2.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>      <span class="c1"># Output &lt;dtype: &#39;float32&#39;&gt;.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>    <span class="c1"># Output [[1. 2.]</span>
+                    <span class="c1">#         [3. 4.]].</span>
 </pre></div>
 </div>
 <div class="admonition-tip admonition">
 <p class="admonition-title">Tip</p>
-<p>Most of the API functions of TensorFlow will guess the data type automatically from the input (most of the time it will be <code class="docutils literal notranslate"><span class="pre">tf.float32</span></code>). However, you can add parameter <code class="docutils literal notranslate"><span class="pre">dtype</span></code> to assign the data type manually. For example, <code class="docutils literal notranslate"><span class="pre">zero_vector</span> <span class="pre">=</span> <span class="pre">tf.zeros(shape=(2),</span> <span class="pre">dtype=tf.int32)</span></code> will return a Tensor with all element as <code class="docutils literal notranslate"><span class="pre">tf.int32</span></code>.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">numpy()</span></code> method of a Tensor is to return a NumPy array whose value is equal to the value of the tensor.</p>
+<p>Most of the TensorFlow API functions will infer the data type automatically from the input (<code class="docutils literal notranslate"><span class="pre">tf.float32</span></code> in most cases). However, you can add the parameter <code class="docutils literal notranslate"><span class="pre">dtype</span></code> to assign the data type manually. For example, <code class="docutils literal notranslate"><span class="pre">zero_vector</span> <span class="pre">=</span> <span class="pre">tf.zeros(shape=(2),</span> <span class="pre">dtype=tf.int32)</span></code> will return a tensor with all elements in type of <code class="docutils literal notranslate"><span class="pre">tf.int32</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">numpy()</span></code> method of a tensor is to return a NumPy array whose value is equal to the value of the tensor.</p>
 </div>
-<p>There are lots of <strong>operations</strong> in TensorFlow, so that we can obtain new tensors as the result of operations between tensors. For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>    <span class="c1"># calculate the element-wise sum of A and B </span>
-<span class="n">D</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="c1"># calculate the multiplication of A and B </span>
+<p>There are lots of <strong>operations</strong> in TensorFlow so that we can obtain new tensors as the result of operations between given tensors. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>    <span class="c1"># Compute the elementwise sum of A and B.</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="c1"># Compute the multiplication of A and B.</span>
 </pre></div>
 </div>
 <p>After the operations, the value of <code class="docutils literal notranslate"><span class="pre">C</span></code> and <code class="docutils literal notranslate"><span class="pre">D</span></code> are:</p>
@@ -306,44 +304,44 @@
  <span class="p">[</span><span class="mf">43.</span> <span class="mf">50.</span><span class="p">]],</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>So we can see that we successfully use <code class="docutils literal notranslate"><span class="pre">tf.add()</span></code> to compute <img class="math" src="../../_images/math/566eba2c3d156dfc5cad7752068c88b66571d7ed.png" alt="\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} + \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = \begin{bmatrix} 6 &amp; 8 \\ 10 &amp; 12 \end{bmatrix}"/>, and use <code class="docutils literal notranslate"><span class="pre">tf.matmul()</span></code> to compute <img class="math" src="../../_images/math/1980ffd31d76ab574c087f62f2f8b3b2de215357.png" alt="\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} \times \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = \begin{bmatrix} 19 &amp; 22 \\43 &amp; 50 \end{bmatrix}"/>.</p>
+<p>So we can see that we have successfully used <code class="docutils literal notranslate"><span class="pre">tf.add()</span></code> to compute <img class="math" src="../../_images/math/566eba2c3d156dfc5cad7752068c88b66571d7ed.png" alt="\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} + \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = \begin{bmatrix} 6 &amp; 8 \\ 10 &amp; 12 \end{bmatrix}"/>, and have used <code class="docutils literal notranslate"><span class="pre">tf.matmul()</span></code> to compute <img class="math" src="../../_images/math/1980ffd31d76ab574c087f62f2f8b3b2de215357.png" alt="\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} \times \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = \begin{bmatrix} 19 &amp; 22 \\43 &amp; 50 \end{bmatrix}"/>.</p>
 </div>
 <div class="section" id="automatic-differentiation-mechanism">
 <h2>Automatic differentiation mechanism<a class="headerlink" href="#automatic-differentiation-mechanism" title="永久链接至标题">¶</a></h2>
-<p>在机器学习中，我们经常需要计算函数的导数。TensorFlow提供了强大的 <strong>自动求导机制</strong> 来计算导数。以下代码展示了如何使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 计算函数 <img class="math" src="../../_images/math/4e8a9c0003b5511a6cedaafcbb0075edf9089443.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/8153c976979a8a4fe01919cd83dda44e9e81f769.png" alt="x = 3"/> 时的导数：</p>
+<p>In machine learning, we often need to compute derivatives of functions. TensorFlow provides the powerful <strong>Automatic differentiation mechanism</strong> for computing derivatives. The following codes show how to use <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> to computer the derivative of the function <img class="math" src="../../_images/math/4e8a9c0003b5511a6cedaafcbb0075edf9089443.png" alt="y(x) = x^2"/> at <img class="math" src="../../_images/math/8153c976979a8a4fe01919cd83dda44e9e81f769.png" alt="x = 3"/>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial_value</span><span class="o">=</span><span class="mf">3.</span><span class="p">)</span>
-<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>     <span class="c1"># 在 tf.GradientTape() 的上下文内，所有计算步骤都会被记录以用于求导</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>     <span class="c1"># All calculation steps will be recorded within the context of tf.GradientTape() for differentiation.</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">y_grad</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>        <span class="c1"># 计算y关于x的导数</span>
+<span class="n">y_grad</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>        <span class="c1"># Compute the derivative of y with respect to x.</span>
 <span class="nb">print</span><span class="p">([</span><span class="n">y</span><span class="p">,</span> <span class="n">y_grad</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>输出:</p>
+<p>Output:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">array</span><span class="p">([</span><span class="mf">9.</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">),</span> <span class="n">array</span><span class="p">([</span><span class="mf">6.</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)]</span>
 </pre></div>
 </div>
-<p>这里 <code class="docutils literal notranslate"><span class="pre">x</span></code> 是一个初始化为3的 <strong>变量</strong> （Variable），使用 <code class="docutils literal notranslate"><span class="pre">tf.Variable()</span></code> 声明。与普通张量一样，变量同样具有形状、类型和值三种属性。使用变量需要有一个初始化过程，可以通过在 <code class="docutils literal notranslate"><span class="pre">tf.Variable()</span></code> 中指定 <code class="docutils literal notranslate"><span class="pre">initial_value</span></code> 参数来指定初始值。这里将变量 <code class="docutils literal notranslate"><span class="pre">x</span></code> 初始化为 <code class="docutils literal notranslate"><span class="pre">3.</span></code> <a class="footnote-reference brackets" href="#f0" id="id1">1</a>。变量与普通张量的一个重要区别是其默认能够被TensorFlow的自动求导机制所求导，因此往往被用于定义机器学习模型的参数。</p>
-<p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 是一个自动求导的记录器，在其中的变量和计算步骤都会被自动记录。在上面的示例中，变量 <code class="docutils literal notranslate"><span class="pre">x</span></code> 和计算步骤 <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">tf.square(x)</span></code> 被自动记录，因此可以通过 <code class="docutils literal notranslate"><span class="pre">y_grad</span> <span class="pre">=</span> <span class="pre">tape.gradient(y,</span> <span class="pre">x)</span></code> 求张量 <code class="docutils literal notranslate"><span class="pre">y</span></code> 对变量 <code class="docutils literal notranslate"><span class="pre">x</span></code> 的导数。</p>
-<p>在机器学习中，更加常见的是对多元函数求偏导数，以及对向量或矩阵的求导。这些对于TensorFlow也不在话下。以下代码展示了如何使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 计算函数 <img class="math" src="../../_images/math/bc1111827c1a7e4977fba4f9ff1c28062b80fefe.png" alt="L(w, b) = \|Xw + b - y\|^2"/> 在 <img class="math" src="../../_images/math/d89c25edfe26bc3a38e198e6a69f47d1e0c964ad.png" alt="w = (1, 2)^T, b = 1"/> 时分别对 <img class="math" src="../../_images/math/d982c1679f77f34dd991ceb8f8696a24b1f83072.png" alt="w, b"/> 的偏导数。其中 <img class="math" src="../../_images/math/cdde5d2adfb12f753c17b723d04e0708298df0d0.png" alt="X = \begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix},  y = \begin{bmatrix} 1 \\ 2\end{bmatrix}"/>。</p>
+<p>Here <code class="docutils literal notranslate"><span class="pre">x</span></code> is a <strong>variable</strong> initialized to 3, declared by <code class="docutils literal notranslate"><span class="pre">tf.Variable()</span></code>. Same as an ordinary tensor, a variable also has three attributes: shape, data type and value. An initialization is required before using a variable, which can be specified by the parameters <code class="docutils literal notranslate"><span class="pre">initial_value</span></code> in <code class="docutils literal notranslate"><span class="pre">tf.Variable()</span></code>. Here <code class="docutils literal notranslate"><span class="pre">x</span></code> is initialized to <code class="docutils literal notranslate"><span class="pre">3.</span></code> <a class="footnote-reference brackets" href="#f0" id="id1">1</a>. One significant difference between the variables and the tensors is the former can be used to differentiate by the automatic differentiation mechanism of TensorFlow by default, which is often used to define parameters of machine learning models.</p>
+<p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> is an automatic differentiation recorder, in which variables and calculation steps are automatically recorded. In the previous example, the variable <code class="docutils literal notranslate"><span class="pre">x</span></code> and the step <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">tf.square(x)</span></code> were recorded automatically, thus the derivative of the tensor <code class="docutils literal notranslate"><span class="pre">y</span></code> with respect to the variable <code class="docutils literal notranslate"><span class="pre">x</span></code> can be obtained by <code class="docutils literal notranslate"><span class="pre">y_grad</span> <span class="pre">=</span> <span class="pre">tape.gradient(y,</span> <span class="pre">x)</span></code>.</p>
+<p>The more common case in machine learning is partial differentiation of multivariable functions as well as differentiation of vectors and matrices. TensorFlow can handle these as well. The following codes show how to obtain the partial derivative of the function <img class="math" src="../../_images/math/bc1111827c1a7e4977fba4f9ff1c28062b80fefe.png" alt="L(w, b) = \|Xw + b - y\|^2"/> for <img class="math" src="../../_images/math/d982c1679f77f34dd991ceb8f8696a24b1f83072.png" alt="w, b"/> respectively by <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> where <img class="math" src="../../_images/math/cdde5d2adfb12f753c17b723d04e0708298df0d0.png" alt="X = \begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix},  y = \begin{bmatrix} 1 \\ 2\end{bmatrix}"/>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">]])</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.</span><span class="p">]])</span>
 <span class="n">w</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial_value</span><span class="o">=</span><span class="p">[[</span><span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.</span><span class="p">]])</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial_value</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
 <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
     <span class="n">L</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span> <span class="o">-</span> <span class="n">y</span><span class="p">))</span>
-<span class="n">w_grad</span><span class="p">,</span> <span class="n">b_grad</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>        <span class="c1"># 计算L(w, b)关于w, b的偏导数</span>
+<span class="n">w_grad</span><span class="p">,</span> <span class="n">b_grad</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>        <span class="c1"># Compute the partial derivative of L(w, b) with respect to w and b.</span>
 <span class="nb">print</span><span class="p">([</span><span class="n">L</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">w_grad</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">b_grad</span><span class="o">.</span><span class="n">numpy</span><span class="p">()])</span>
 </pre></div>
 </div>
-<p>输出:</p>
+<p>Output:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">62.5</span><span class="p">,</span> <span class="n">array</span><span class="p">([[</span><span class="mf">35.</span><span class="p">],</span>
    <span class="p">[</span><span class="mf">50.</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">),</span> <span class="n">array</span><span class="p">([</span><span class="mf">15.</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)]</span>
 </pre></div>
 </div>
-<p>这里， <code class="docutils literal notranslate"><span class="pre">tf.square()</span></code> 操作代表对输入张量的每一个元素求平方，不改变张量形状。 <code class="docutils literal notranslate"><span class="pre">tf.reduce_sum()</span></code> 操作代表对输入张量的所有元素求和，输出一个形状为空的纯量张量（可以通过 <code class="docutils literal notranslate"><span class="pre">axis</span></code> 参数来指定求和的维度，不指定则默认对所有元素求和）。TensorFlow中有大量的张量操作API，包括数学运算、张量形状操作（如 <code class="docutils literal notranslate"><span class="pre">tf.reshape()</span></code>）、切片和连接（如 <code class="docutils literal notranslate"><span class="pre">tf.concat()</span></code>）等多种类型，可以通过查阅TensorFlow的官方API文档 <a class="footnote-reference brackets" href="#f3" id="id2">2</a> 来进一步了解。</p>
-<p>从输出可见，TensorFlow帮助我们计算出了</p>
+<p><code class="docutils literal notranslate"><span class="pre">tf.square()</span></code> here squared each element of the input tensor without altering its shape. <code class="docutils literal notranslate"><span class="pre">tf.reduce_sum()</span></code> summed up all the elements of the input tensor, outputing a scalar tensor with a none shape (the dimensions for sum can be specified by the parameter <code class="docutils literal notranslate"><span class="pre">axis</span></code>, without which all elements will be summed up by default). There are a large number of tensor operation APIs in TensorFlow, including mathematical operations, tensor shape operations (e.g., <code class="docutils literal notranslate"><span class="pre">tf.reshape()</span></code>), slicing and concatenation (e.g., <code class="docutils literal notranslate"><span class="pre">tf.concat()</span></code>), etc. Further information can be acquired by viewing the TensorFlow official API documentaion <a class="footnote-reference brackets" href="#f3" id="id2">2</a>.</p>
+<p>From the output we can see TensorFlow has helped us obtained that</p>
 <div class="math">
 <p><img src="../../_images/math/fa385fac979f9a8a42b02cbed89f2e3e2b2ca14b.png" alt="L((1, 2)^T, 1) &amp;= 62.5
 
@@ -353,13 +351,13 @@
 </div></div>
 <div class="section" id="a-basic-example-linear-regression">
 <span id="id3"></span><h2>A basic example: Linear regression<a class="headerlink" href="#a-basic-example-linear-regression" title="永久链接至标题">¶</a></h2>
-<div class="admonition- admonition">
-<p class="admonition-title">基础知识和原理</p>
+<div class="admonition-basics admonition">
+<p class="admonition-title">Basics</p>
 <ul class="simple">
-<li><p>UFLDL教程 <a class="reference external" href="http://ufldl.stanford.edu/tutorial/supervised/LinearRegression/">Linear Regression</a> 一节。</p></li>
+<li><p>UFLDL Tutorial, <a class="reference external" href="http://ufldl.stanford.edu/tutorial/supervised/LinearRegression/">Linear Regression</a>.</p></li>
 </ul>
 </div>
-<p>考虑一个实际问题，某城市在2013年-2017年的房价如下表所示：</p>
+<p>Consider a practical problem. The estate price of a city between 2013 and 2017 are listed below:</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 19%" />
@@ -370,14 +368,14 @@
 <col style="width: 16%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p>年份</p></td>
+<tr class="row-odd"><td><p>Year</p></td>
 <td><p>2013</p></td>
 <td><p>2014</p></td>
 <td><p>2015</p></td>
 <td><p>2016</p></td>
 <td><p>2017</p></td>
 </tr>
-<tr class="row-even"><td><p>房价</p></td>
+<tr class="row-even"><td><p>Price</p></td>
 <td><p>12000</p></td>
 <td><p>14000</p></td>
 <td><p>15000</p></td>
@@ -386,8 +384,8 @@
 </tr>
 </tbody>
 </table>
-<p>现在，我们希望通过对该数据进行线性回归，即使用线性模型 <img class="math" src="../../_images/math/4b73dd4430869b9fd6bcb231d4cc119b153f5d10.png" alt="y = ax + b"/> 来拟合上述数据，此处 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 是待求的参数。</p>
-<p>首先，我们定义数据，进行基本的归一化操作。</p>
+<p>Now we wish to perform a linear regression on this data, that is, use the linar model <img class="math" src="../../_images/math/4b73dd4430869b9fd6bcb231d4cc119b153f5d10.png" alt="y = ax + b"/> to fit the data above, where <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> are parameters yet to be determined.</p>
+<p>First we define the data and conduct basic normalization.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="n">X_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">2014</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">,</span> <span class="mi">2017</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
@@ -397,52 +395,52 @@
 <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_raw</span> <span class="o">-</span> <span class="n">y_raw</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">y_raw</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">y_raw</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
 </pre></div>
 </div>
-<p>接下来，我们使用梯度下降方法来求线性模型中两个参数 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的值 <a class="footnote-reference brackets" href="#f1" id="id5">3</a>。</p>
-<p>回顾机器学习的基础知识，对于多元函数 <img class="math" src="../../_images/math/95aabe3d9002fe03d54b9b9d9fbfc27c0eaeb56f.png" alt="f(x)"/> 求局部极小值，<a class="reference external" href="https://zh.wikipedia.org/wiki/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95">梯度下降</a> 的过程如下：</p>
+<p>In the following steps we use gradient descent to find the parameters <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> in the linear model <a class="footnote-reference brackets" href="#f1" id="id5">3</a>.</p>
+<p>Recall the basic knowledge of machine learning, to find a local minimum of a multivariable function <img class="math" src="../../_images/math/95aabe3d9002fe03d54b9b9d9fbfc27c0eaeb56f.png" alt="f(x)"/>, the process of <a class="reference external" href="https://en.wikipedia.org/wiki/Gradient_descent">gradient descent</a> is as follows:</p>
 <ul>
-<li><p>初始化自变量为 <img class="math" src="../../_images/math/ed7fb0260e58d3ca5851e823ff991dae4cde5671.png" alt="x_0"/> ， <img class="math" src="../../_images/math/7b22543df34ec7a2c80b915646591f6cc5eb31f8.png" alt="k=0"/></p></li>
-<li><p>迭代进行下列步骤直到满足收敛条件：</p>
+<li><p>Initialize the independent variable to <img class="math" src="../../_images/math/ed7fb0260e58d3ca5851e823ff991dae4cde5671.png" alt="x_0"/>, <img class="math" src="../../_images/math/7b22543df34ec7a2c80b915646591f6cc5eb31f8.png" alt="k=0"/>.</p></li>
+<li><p>Iterate the following steps until the convergence criterion is met:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>求函数 <img class="math" src="../../_images/math/95aabe3d9002fe03d54b9b9d9fbfc27c0eaeb56f.png" alt="f(x)"/> 关于自变量的梯度 <img class="math" src="../../_images/math/73b95e346989ee4b13399239a32f9e7463e377d9.png" alt="\nabla f(x_k)"/></p></li>
-<li><p>更新自变量： <img class="math" src="../../_images/math/9a588336e13e66832cae445d20d75d3134dc8b89.png" alt="x_{k+1} = x_{k} - \gamma \nabla f(x_k)"/> 。这里 <img class="math" src="../../_images/math/34d137cf01c787ecda732761c3f95b0f65a6c3e9.png" alt="\gamma"/> 是学习率（也就是梯度下降一次迈出的“步子”大小）</p></li>
-<li><p><img class="math" src="../../_images/math/7a323dca731267c98cff9fe8afdf6ec1e699b223.png" alt="k \leftarrow k+1"/></p></li>
+<li><p>Find the gradient <img class="math" src="../../_images/math/73b95e346989ee4b13399239a32f9e7463e377d9.png" alt="\nabla f(x_k)"/>  of the function <img class="math" src="../../_images/math/95aabe3d9002fe03d54b9b9d9fbfc27c0eaeb56f.png" alt="f(x)"/> with respect to the independent variable.</p></li>
+<li><p>Update the independent variable: <img class="math" src="../../_images/math/9a588336e13e66832cae445d20d75d3134dc8b89.png" alt="x_{k+1} = x_{k} - \gamma \nabla f(x_k)"/> where <img class="math" src="../../_images/math/34d137cf01c787ecda732761c3f95b0f65a6c3e9.png" alt="\gamma"/> is the learning rate (i.e. the “stride” in one gradient descent).</p></li>
+<li><p><img class="math" src="../../_images/math/7a323dca731267c98cff9fe8afdf6ec1e699b223.png" alt="k \leftarrow k+1"/>.</p></li>
 </ul>
 </div></blockquote>
 </li>
 </ul>
-<p>接下来，我们考虑如何使用程序来实现梯度下降方法，求得线性回归的解 <img class="math" src="../../_images/math/3d80f73898766e92897c82400278aaf4c60cf373.png" alt="\min_{a, b} L(a, b) = \sum_{i=1}^n(ax_i + b - y_i)^2"/> 。</p>
+<p>Next, we consider how to program to implement the gradient descent method to find the solution of the linear regression <img class="math" src="../../_images/math/3d80f73898766e92897c82400278aaf4c60cf373.png" alt="\min_{a, b} L(a, b) = \sum_{i=1}^n(ax_i + b - y_i)^2"/>.</p>
 <div class="section" id="linear-regression-under-numpy">
 <h3>Linear regression under numPy<a class="headerlink" href="#linear-regression-under-numpy" title="永久链接至标题">¶</a></h3>
-<p>机器学习模型的实现并不是TensorFlow的专利。事实上，对于简单的模型，即使使用常规的科学计算库或者工具也可以求解。在这里，我们使用NumPy这一通用的科学计算库来实现梯度下降方法。NumPy提供了多维数组支持，可以表示向量、矩阵以及更高维的张量。同时，也提供了大量支持在多维数组上进行操作的函数（比如下面的 <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code> 是求内积， <code class="docutils literal notranslate"><span class="pre">np.sum()</span></code> 是求和）。在这方面，NumPy和MATLAB比较类似。在以下代码中，我们手工求损失函数关于参数 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的偏导数 <a class="footnote-reference brackets" href="#f2" id="id7">4</a>，并使用梯度下降法反复迭代，最终获得 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的值。</p>
+<p>Implementations of machine learning models are not preserved for TensorFlow. In fact, simple models can be solved even by using regular scientific computing libraries. Here we use Numpy, the common scientific computing library to implement gradient descent. NumPy provides support for multidimensional arrays, which can represent vectors, matrices and even higher dimensional tensors. Meanwhile, it also provides many functions that support operations on multidimensional arrays (e.g. the following <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code> evaluates the dot product and <code class="docutils literal notranslate"><span class="pre">np.sum()</span></code> gets the sum). NumPy and MATLAB are similar in this regard. In the following codes, we will find the partial derivative of the loss function with respect to the parameters <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> manually <a class="footnote-reference brackets" href="#f2" id="id7">4</a> and use gradient descent iteratively to obtain the values of <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> eventually.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
 
 <span class="n">num_epoch</span> <span class="o">=</span> <span class="mi">10000</span>
 <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">1e-3</span>
 <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epoch</span><span class="p">):</span>
-    <span class="c1"># 手动计算损失函数关于自变量（模型参数）的梯度</span>
+    <span class="c1"># Compute the gradient of the loss function with respect to independent variables (model parameters) manually.</span>
     <span class="n">y_pred</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">X</span> <span class="o">+</span> <span class="n">b</span>
     <span class="n">grad_a</span><span class="p">,</span> <span class="n">grad_b</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
-    <span class="c1"># 更新参数</span>
+    <span class="c1"># Update parameters.</span>
     <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">grad_a</span><span class="p">,</span> <span class="n">b</span> <span class="o">-</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">grad_b</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>然而，你或许已经可以注意到，使用常规的科学计算库实现机器学习模型有两个痛点：</p>
+<p>However, you may have already noticed that there are two pain points for implementing machine learning models when using conventional scientific computing libraries:</p>
 <ul class="simple">
-<li><p>经常需要手工求函数关于参数的偏导数。如果是简单的函数或许还好，但一旦函数的形式变得复杂（尤其是深度学习模型），手工求导的过程将变得非常痛苦，甚至不可行。</p></li>
-<li><p>经常需要手工根据求导的结果更新参数。这里使用了最基础的梯度下降方法，因此参数的更新还较为容易。但如果使用更加复杂的参数更新方法（例如Adam或者Adagrad），这个更新过程的编写同样会非常繁杂。</p></li>
+<li><p>You have to find the partial derivatives with respect to parameters by yourself often. It may be easy for simple functions, but the process would be very painful or even impossible once the functions become complex.</p></li>
+<li><p>You have to update the parameters according to the result of the derivative by yourself frequently. Here we used gradient descent, the most fundamental approach, thus it was not hard updating parameters. However, the process would have been very complicated if you use more advanced approaches updating parameters (e.g., Adam or Adagrad).</p></li>
 </ul>
-<p>而TensorFlow等深度学习框架的出现很大程度上解决了这些痛点，为机器学习模型的实现带来了很大的便利。</p>
+<p>The emergence of deep learning frameworks such as TensorFlow has largely solved these problems and has brought considerable convenience for implementing machine learning models.</p>
 </div>
 <div class="section" id="linear-regression-under-tensorflow">
 <span id="optimizer"></span><h3>Linear regression under TensorFlow<a class="headerlink" href="#linear-regression-under-tensorflow" title="永久链接至标题">¶</a></h3>
-<p>TensorFlow的 <strong>Eager Execution（动态图）模式</strong> <a class="footnote-reference brackets" href="#f4" id="id8">5</a> 与上述NumPy的运行方式十分类似，然而提供了更快速的运算（GPU支持）、自动求导、优化器等一系列对深度学习非常重要的功能。以下展示了如何使用TensorFlow计算线性回归。可以注意到，程序的结构和前述NumPy的实现非常类似。这里，TensorFlow帮助我们做了两件重要的工作：</p>
+<p>TensorFlow <strong>Eager Execution Mode</strong> <a class="footnote-reference brackets" href="#f4" id="id8">5</a> is quite similar with how NumPy worked above, while it provides a series of features which are rather crucial for deep learning, such as faster computation (GPU support), automatic differentiation, optimizers, etc. The following shows how to use TensorFlow to compute linear regression. You can notice that the structure of the program is very similar with the previous implemention with NumPy. Here TensorFlow helps us accomplished two crucial tasks:</p>
 <ul class="simple">
-<li><p>使用 <code class="docutils literal notranslate"><span class="pre">tape.gradient(ys,</span> <span class="pre">xs)</span></code> 自动计算梯度；</p></li>
-<li><p>使用 <code class="docutils literal notranslate"><span class="pre">optimizer.apply_gradients(grads_and_vars)</span></code> 自动更新模型参数。</p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">tape.gradient(ys,</span> <span class="pre">xs)</span></code> to compute the gradient automatically;</p></li>
+<li><p>Using <code class="docutils literal notranslate"><span class="pre">optimizer.apply_gradients(grads_and_vars)</span></code> to update model parameters automatically.</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
@@ -454,44 +452,44 @@
 <span class="n">num_epoch</span> <span class="o">=</span> <span class="mi">10000</span>
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epoch</span><span class="p">):</span>
-    <span class="c1"># 使用tf.GradientTape()记录损失函数的梯度信息</span>
+    <span class="c1"># Use tf.GradientTape() to record information about the gradient of the loss function.</span>
     <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
         <span class="n">y_pred</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">X</span> <span class="o">+</span> <span class="n">b</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y</span><span class="p">))</span>
-    <span class="c1"># TensorFlow自动计算损失函数关于自变量（模型参数）的梯度</span>
+    <span class="c1"># TensorFlow computes the gradients of the loss function with respect to independent variables (model parameters) automatically.</span>
     <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">variables</span><span class="p">)</span>
-    <span class="c1"># TensorFlow自动根据梯度更新参数</span>
+    <span class="c1"># TensorFlow updates parameters according to the gradient automatically.</span>
     <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">variables</span><span class="p">))</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>在这里，我们使用了前文的方式计算了损失函数关于参数的偏导数。同时，使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizers.SGD(learning_rate=1e-3)</span></code> 声明了一个梯度下降 <strong>优化器</strong> （Optimizer），其学习率为1e-3。优化器可以帮助我们根据计算出的求导结果更新模型参数，从而最小化某个特定的损失函数，具体使用方式是调用其 <code class="docutils literal notranslate"><span class="pre">apply_gradients()</span></code> 方法。</p>
-<p>注意到这里，更新模型参数的方法 <code class="docutils literal notranslate"><span class="pre">optimizer.apply_gradients()</span></code> 需要提供参数 <code class="docutils literal notranslate"><span class="pre">grads_and_vars</span></code>，即待更新的变量（如上述代码中的 <code class="docutils literal notranslate"><span class="pre">variables</span></code> ）及损失函数关于这些变量的偏导数（如上述代码中的 <code class="docutils literal notranslate"><span class="pre">grads</span></code> ）。具体而言，这里需要传入一个Python列表（List），列表中的每个元素是一个 <code class="docutils literal notranslate"><span class="pre">（变量的偏导数，变量）</span></code> 对。比如这里是 <code class="docutils literal notranslate"><span class="pre">[(grad_a,</span> <span class="pre">a),</span> <span class="pre">(grad_b,</span> <span class="pre">b)]</span></code> 。我们通过 <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">tape.gradient(loss,</span> <span class="pre">variables)</span></code> 求出tape中记录的 <code class="docutils literal notranslate"><span class="pre">loss</span></code> 关于 <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> 中每个变量的偏导数，也就是 <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">[grad_a,</span> <span class="pre">grad_b]</span></code>，再使用Python的 <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函数将 <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">[grad_a,</span> <span class="pre">grad_b]</span></code> 和 <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> 拼装在一起，就可以组合出所需的参数了。</p>
-<div class="admonition-python-zip admonition">
-<p class="admonition-title">Python的 <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函数</p>
-<p><code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函数是Python的内置函数。用自然语言描述这个函数的功能很绕口，但如果举个例子就很容易理解了：如果 <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5]</span></code>， <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">[2,</span> <span class="pre">4,</span> <span class="pre">6]</span></code>，那么 <code class="docutils literal notranslate"><span class="pre">zip(a,</span> <span class="pre">b)</span> <span class="pre">=</span> <span class="pre">[(1,</span> <span class="pre">2),</span> <span class="pre">(3,</span> <span class="pre">4),</span> <span class="pre">...,</span> <span class="pre">(5,</span> <span class="pre">6)]</span></code> 。即“将可迭代的对象作为参数，将对象中对应的元素打包成一个个元组，然后返回由这些元组组成的列表”。在Python 3中， <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函数返回的是一个对象，需要调用 <code class="docutils literal notranslate"><span class="pre">list()</span></code> 来将对象转换成列表。</p>
+<p>Here we used the approach mentioned before to compute the partial derivative of the loss function with respect to parameters. Meanwhile, we declared a gradient descent <strong>optimizer</strong> whose learning rate was 1e-3 by <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizers.SGD(learning_rate=1e-3)</span></code>. The optimizer can help us update model parameters based on the calculated derivative result, thereby minimizing a certain loss function. Specifically, you should call the method <code class="docutils literal notranslate"><span class="pre">apply_gradients()</span></code> for doing so.</p>
+<p>Notice here we needed to provide the parameter <code class="docutils literal notranslate"><span class="pre">grads_and_vars</span></code>, which were the variables to be updated (like <code class="docutils literal notranslate"><span class="pre">variables</span></code> in the codes above) and the partial derivatives of the loss function with respect to them (like <code class="docutils literal notranslate"><span class="pre">grads</span></code> in the codes above), to the method <code class="docutils literal notranslate"><span class="pre">optimizer.apply_gradients()</span></code> that updated model paramters. Specifically, you need to pass in a Python list here whose elements are <code class="docutils literal notranslate"><span class="pre">(the</span> <span class="pre">partial</span> <span class="pre">derivative</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">variable,</span> <span class="pre">the</span> <span class="pre">variable)</span></code> pairs, e.g., <code class="docutils literal notranslate"><span class="pre">[(grad_a,</span> <span class="pre">a),</span> <span class="pre">(grad_b,</span> <span class="pre">b)]</span></code> in this case. By <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">tape.gradient(loss,</span> <span class="pre">variables)</span></code> we found the partial derivatives of <code class="docutils literal notranslate"><span class="pre">loss</span></code> with respect to each variable in <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> recorded in tape, which are <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">[grad_a,</span> <span class="pre">grad_b]</span></code>. Then we used the <code class="docutils literal notranslate"><span class="pre">zip()</span></code> function in Python to assemble <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">[grad_a,</span> <span class="pre">grad_b]</span></code> and <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> together to get the parameters we needed.</p>
+<div class="admonition-python-zip-function admonition">
+<p class="admonition-title">Python <code class="docutils literal notranslate"><span class="pre">zip()</span></code> function</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">zip()</span></code> function is a built-in function of Python. It would be confounding to describe it with natural language, but it will be much more accessible by giving an example: If <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5]</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">[2,</span> <span class="pre">4,</span> <span class="pre">6]</span></code>, then <code class="docutils literal notranslate"><span class="pre">zip(a,</span> <span class="pre">b)</span> <span class="pre">=</span> <span class="pre">[(1,</span> <span class="pre">2),</span> <span class="pre">(3,</span> <span class="pre">4),</span> <span class="pre">...,</span> <span class="pre">(5,</span> <span class="pre">6)]</span></code>. In other words, it “takes iterable objects as parameters, packs their corresponding elements into tuples and returns a list of these tuples”. In Python 3, the <code class="docutils literal notranslate"><span class="pre">zip()</span></code> function returns an object, which needs to be converted into a list by calling <code class="docutils literal notranslate"><span class="pre">list()</span></code>.</p>
 <div class="figure align-center" id="id9">
 <a class="reference internal image-reference" href="../../_images/zip.jpg"><img alt="../../_images/zip.jpg" src="../../_images/zip.jpg" style="width: 60%;" /></a>
-<p class="caption"><span class="caption-text">Python的 <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函数图示</span><a class="headerlink" href="#id9" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">Python <code class="docutils literal notranslate"><span class="pre">zip()</span></code> function diagram</span><a class="headerlink" href="#id9" title="永久链接至图片">¶</a></p>
 </div>
 </div>
-<p>在实际应用中，我们编写的模型往往比这里一行就能写完的线性模型 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> （模型参数为 <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> ）要复杂得多。所以，我们往往会编写并实例化一个模型类 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">Model()</span></code> ，然后使用 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">model(X)</span></code> 调用模型，使用 <code class="docutils literal notranslate"><span class="pre">model.variables</span></code> 获取模型参数。关于模型类的编写方式可见 <a class="reference internal" href="models.html"><span class="doc">“TensorFlow模型”一章</span></a>。</p>
+<p>In practical applications, the models we code are usually much more complicated than the linear model <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> (whose paramters are <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code>) which can be written in a single line. Therefore we will often create and instantiate a model class <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">Model()</span></code>, then use <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">model(X)</span></code> to call it and use <code class="docutils literal notranslate"><span class="pre">model.variables</span></code> to acquire model parameters. Refer to <a class="reference internal" href="models.html"><span class="doc">chapter “TensorFlow Models”</span></a> for writing model classes.</p>
 <dl class="footnote brackets">
 <dt class="label" id="f0"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>Python中可以使用整数后加小数点表示将该整数定义为浮点数类型。例如 <code class="docutils literal notranslate"><span class="pre">3.</span></code> 代表浮点数 <code class="docutils literal notranslate"><span class="pre">3.0</span></code>。</p>
+<dd><p>In Python an integer can be defined in float type by adding a period after it. E.g., <code class="docutils literal notranslate"><span class="pre">3.</span></code> means the float <code class="docutils literal notranslate"><span class="pre">3.0</span></code>.</p>
 </dd>
 <dt class="label" id="f3"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
-<dd><p>主要可以参考 <a class="reference external" href="https://www.tensorflow.org/versions/r1.9/api_guides/python/array_ops">Tensor Transformations</a> 和 <a class="reference external" href="https://www.tensorflow.org/versions/r1.9/api_guides/python/math_ops">Math</a> 两个页面。可以注意到，TensorFlow的张量操作API在形式上和Python下流行的科学计算库NumPy非常类似，如果对后者有所了解的话可以快速上手。</p>
+<dd><p>Refer to <a class="reference external" href="https://www.tensorflow.org/versions/r1.9/api_guides/python/array_ops">Tensor Transformations</a> and <a class="reference external" href="https://www.tensorflow.org/versions/r1.9/api_guides/python/math_ops">Math</a>. Notice that tensor operations in TensorFlow are quite similar in form with the popular Python scientific computing library NumPy. You can get started quickly if you have already known about the latter.</p>
 </dd>
 <dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id5">3</a></span></dt>
-<dd><p>其实线性回归是有解析解的。这里使用梯度下降方法只是为了展示TensorFlow的运作方式。</p>
+<dd><p>In fact, there has already been an analytical solution of linear regression. We used gradient descent here only for demonstrating how TensorFlow works.</p>
 </dd>
 <dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id7">4</a></span></dt>
-<dd><p>此处的损失函数为均方差 <img class="math" src="../../_images/math/0bc351bdadeec4a1c3fd5c4be10715182daaf528.png" alt="L(x) = \frac{1}{2} \sum_{i=1}^5 (ax_i + b - y_i)^2"/>。其关于参数 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的偏导数为 <img class="math" src="../../_images/math/88db165663835c22d80d377dd4fb4026f321f9cc.png" alt="\frac{\partial L}{\partial a} = \sum_{i=1}^5 (ax_i + b - y) x_i"/>，<img class="math" src="../../_images/math/82027e450db611dc25d2918eb05c312b38bae6a0.png" alt="\frac{\partial L}{\partial b} = \sum_{i=1}^5 (ax_i + b - y)"/></p>
+<dd><p>The loss function here is the mean squared error <img class="math" src="../../_images/math/0bc351bdadeec4a1c3fd5c4be10715182daaf528.png" alt="L(x) = \frac{1}{2} \sum_{i=1}^5 (ax_i + b - y_i)^2"/>, whose partial derivatives with respect to the parameters <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> are <img class="math" src="../../_images/math/88db165663835c22d80d377dd4fb4026f321f9cc.png" alt="\frac{\partial L}{\partial a} = \sum_{i=1}^5 (ax_i + b - y) x_i"/> and <img class="math" src="../../_images/math/82027e450db611dc25d2918eb05c312b38bae6a0.png" alt="\frac{\partial L}{\partial b} = \sum_{i=1}^5 (ax_i + b - y)"/>.</p>
 </dd>
 <dt class="label" id="f4"><span class="brackets"><a class="fn-backref" href="#id8">5</a></span></dt>
-<dd><p>与Eager Execution相对的是Graph Execution（静态图）模式，即TensorFlow在2018年3月的1.8版本发布之前所主要使用的模式。本手册以面向快速迭代开发的动态模式为主，但会在附录中介绍静态图模式的基本使用，供需要的读者查阅。</p>
+<dd><p>The opposite of the Eager Execution mode is the Graph Execution mode, which is the primary mode of TensorFlow before version 1.8 published in March 2018. In this handbook we focus on the Eager Execution mode for rapid iterative development, but we will get to the Graph Execution mode in the appendix for readers in need.</p>
 </dd>
 </dl>
 </div>

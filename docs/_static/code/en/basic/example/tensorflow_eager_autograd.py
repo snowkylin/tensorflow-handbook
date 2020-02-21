@@ -17,13 +17,13 @@ variables = [a, b]
 num_epoch = 10000
 optimizer = tf.keras.optimizers.SGD(learning_rate=1e-3)
 for e in range(num_epoch):
-    # 使用tf.GradientTape()记录损失函数的梯度信息
+    # Use tf.GradientTape() to record information about the gradient of the loss function.
     with tf.GradientTape() as tape:
         y_pred = a * X + b
         loss = 0.5 * tf.reduce_sum(tf.square(y_pred - y))
-    # TensorFlow自动计算损失函数关于自变量（模型参数）的梯度
+    # TensorFlow computes the gradients of the loss function with respect to independent variables (model parameters) automatically.
     grads = tape.gradient(loss, variables)
-    # TensorFlow自动根据梯度更新参数
+    # TensorFlow updates parameters according to the gradient automatically.
     optimizer.apply_gradients(grads_and_vars=zip(grads, variables))
 
 print(a, b)

@@ -14,7 +14,7 @@ def resize(image, label):
     image = tf.image.resize(image, [224, 224]) / 255.0
     return image, label
 
-# 当as_supervised为True时，返回image和label两个键值
+# 使用 TensorFlow Datasets 载入猫狗分类数据集，详见“TensorFlow Datasets数据集载入”一章
 dataset = tfds.load("cats_vs_dogs", split=tfds.Split.TRAIN, as_supervised=True)
 dataset = dataset.map(resize).shuffle(1024).batch(batch_size)
 

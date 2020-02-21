@@ -1,0 +1,745 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>图执行模式下的 TensorFlow 2 &mdash; 简单粗暴 TensorFlow 2 0.4 alpha 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
+        <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴 TensorFlow 2
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia（Ziyang）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Preface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/introduction.html">TensorFlow Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/installation.html">Installation and Environment Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/basic.html">TensorFlow Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/models.html">Model Construction and Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/tools.html">Common Modules in TensorFlow</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/lite.html">TensorFlow Lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/javascript.html">TensorFlow in JavaScript</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Large-scale Training</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/distributed.html">Distributed Training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/julia.html">TensorFlow in Julia</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/static.html">TensorFlow Under Graph Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/docker.html">Using Docker to deploy TensorFlow environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/cloud.html">Using TensorFlow on cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/optimization.html">TensorFlow Performance Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/recommended_books.html">References and Recommendations for Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴 TensorFlow 2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>图执行模式下的 TensorFlow 2</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/zh/advanced/static.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorflow-2">
+<h1>图执行模式下的 TensorFlow 2<a class="headerlink" href="#tensorflow-2" title="永久链接至标题">¶</a></h1>
+<p>尽管 TensorFlow 2 建议以即时执行模式（Eager Execution）作为主要执行模式，然而，图执行模式（Graph Execution）作为 TensorFlow 2 之前的主要执行模式，依旧对于我们理解 TensorFlow 具有重要意义。尤其是当我们需要使用 <a class="reference internal" href="../basic/tools.html#tffunction"><span class="std std-ref">tf.function</span></a> 时，对图执行模式的理解更是不可或缺。</p>
+<p>图执行模式在 TensorFlow 1.X 和 2.X 版本中的 API 不同：</p>
+<ul class="simple">
+<li><p>在 TensorFlow 1.X 中，图执行模式主要通过“直接构建计算图 + <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code>” 进行操作；</p></li>
+<li><p>在 TensorFlow 2 中，图执行模式主要通过 <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 进行操作。</p></li>
+</ul>
+<p>在本章，我们将在 <a class="reference internal" href="../basic/tools.html#tffunction"><span class="std std-ref">tf.function：图执行模式</span></a> 一节的基础上，进一步对图执行模式的这两种 API 进行对比说明，以帮助已熟悉 TensorFlow 1.X 的用户过渡到 TensorFlow 2。</p>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>TensorFlow 2 依然支持 TensorFlow 1.X 的 API。为了在 TensorFlow 2 中使用 TensorFlow 1.X 的 API ，我们可以使用 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">tensorflow.compat.v1</span> <span class="pre">as</span> <span class="pre">tf</span></code> 导入 TensorFlow，并通过 <code class="docutils literal notranslate"><span class="pre">tf.disable_eager_execution()</span></code> 禁用默认的即时执行模式。</p>
+</div>
+<div class="section" id="tensorflow-1-1">
+<h2>TensorFlow 1+1<a class="headerlink" href="#tensorflow-1-1" title="永久链接至标题">¶</a></h2>
+<p>TensorFlow 的图执行模式是一个符号式的（基于计算图的）计算框架。简而言之，如果你需要进行一系列计算，则需要依次进行如下两步：</p>
+<ul class="simple">
+<li><p>建立一个“计算图”，这个图描述了如何将输入数据通过一系列计算而得到输出；</p></li>
+<li><p>建立一个会话，并在会话中与计算图进行交互，即向计算图传入计算所需的数据，并从计算图中获取结果。</p></li>
+</ul>
+<div class="section" id="id1">
+<h3>使用计算图进行基本运算<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h3>
+<p>这里以计算 1+1 作为 Hello World 的示例。以下代码通过 TensorFlow 1.X 的图执行模式 API 计算 1+1：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow.compat.v1</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">disable_eager_execution</span><span class="p">()</span>
+
+<span class="c1"># 以下三行定义了一个简单的“计算图”</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 定义一个常量张量（Tensor）</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>           <span class="c1"># 等价于 c = tf.add(a, b)，c是张量a和张量b通过 tf.add 这一操作（Operation）所形成的新张量</span>
+<span class="c1"># 到此为止，计算图定义完毕，然而程序还没有进行任何实质计算。</span>
+<span class="c1"># 如果此时直接输出张量 c 的值，是无法获得 c = 2 的结果的</span>
+
+<span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>     <span class="c1"># 实例化一个会话（Session）</span>
+<span class="n">c_</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>        <span class="c1"># 通过会话的 run() 方法对计算图里的节点（张量）进行实际的计算</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c_</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>输出:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>而在 TensorFlow 2 中，我们将计算图的建立步骤封装在一个函数中，并使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰符对函数进行修饰。当需要运行此计算图时，只需调用修饰后的函数即可。由此，我们可以将以上代码改写如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="c1"># 以下被 @tf.function 修饰的函数定义了一个计算图</span>
+<span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+<span class="k">def</span> <span class="nf">graph</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="k">return</span> <span class="n">c</span>
+<span class="c1"># 到此为止，计算图定义完毕。由于 graph() 是一个函数，在其被调用之前，程序是不会进行任何实质计算的。</span>
+<span class="c1"># 只有调用函数，才能通过函数返回值，获得 c = 2 的结果</span>
+
+<span class="n">c_</span> <span class="o">=</span> <span class="n">graph</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c_</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">小结</p>
+<ul class="simple">
+<li><p>在 TensorFlow 1.X 的 API 中，我们直接在主程序中建立计算图。而在 TensorFlow 2 中，计算图的建立需要被封装在一个被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰的函数中；</p></li>
+<li><p>在 TensorFlow 1.X 的 API 中，我们通过实例化一个 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code> ，并使用其 <code class="docutils literal notranslate"><span class="pre">run</span></code> 方法执行计算图的实际运算。而在 TensorFlow 2 中，我们通过直接调用被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰的函数来执行实际运算。</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>计算图中的占位符与数据输入<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>上面这个程序只能计算1+1，以下代码通过 TensorFlow 1.X 的图执行模式 API 中的 <code class="docutils literal notranslate"><span class="pre">tf.placeholder()</span></code> （占位符张量）和 <code class="docutils literal notranslate"><span class="pre">sess.run()</span></code> 的 <code class="docutils literal notranslate"><span class="pre">feed_dict</span></code> 参数，展示了如何使用TensorFlow计算任意两个数的和：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow.compat.v1</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">disable_eager_execution</span><span class="p">()</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>  <span class="c1"># 定义一个占位符Tensor</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="n">a_</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;a = &quot;</span><span class="p">))</span>  <span class="c1"># 从终端读入一个整数并放入变量a_</span>
+<span class="n">b_</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;b = &quot;</span><span class="p">))</span>
+
+<span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+<span class="n">c_</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">a</span><span class="p">:</span> <span class="n">a_</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">b_</span><span class="p">})</span>  <span class="c1"># feed_dict参数传入为了计算c所需要的张量的值</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a + b = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">c_</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>运行程序:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="go">a + b = 5</span>
+</pre></div>
+</div>
+<p>而在 TensorFlow 2 中，我们可以通过为函数指定参数来实现与占位符张量相同的功能。为了在计算图运行时送入占位符数据，只需在调用被修饰后的函数时，将数据作为参数传入即可。由此，我们可以将以上代码改写如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+<span class="k">def</span> <span class="nf">graph</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="k">return</span> <span class="n">c</span>
+
+<span class="n">a_</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;a = &quot;</span><span class="p">))</span>
+<span class="n">b_</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;b = &quot;</span><span class="p">))</span>
+<span class="n">c_</span> <span class="o">=</span> <span class="n">graph</span><span class="p">(</span><span class="n">a_</span><span class="p">,</span> <span class="n">b_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a + b = </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">c_</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">小结</p>
+<p>在 TensorFlow 1.X 的 API 中，我们使用 <code class="docutils literal notranslate"><span class="pre">tf.placeholder()</span></code> 在计算图中声明占位符张量，并通过 <code class="docutils literal notranslate"><span class="pre">sess.run()</span></code> 的 <code class="docutils literal notranslate"><span class="pre">feed_dict</span></code> 参数向计算图中的占位符传入实际数据。而在 TensorFlow 2 中，我们使用 <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 的函数参数作为占位符张量，通过向被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰的函数传递参数，来为计算图中的占位符张量提供实际数据。</p>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>计算图中的变量<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id4">
+<h4>变量的声明<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h4>
+<p><strong>变量</strong> （Variable）是一种特殊类型的张量，在 TensorFlow 1.X 的图执行模式 API 中使用 <code class="docutils literal notranslate"><span class="pre">tf.get_variable()</span></code> 建立。与编程语言中的变量很相似。使用变量前需要先初始化，变量内存储的值可以在计算图的计算过程中被修改。以下示例代码展示了如何建立一个变量，将其值初始化为0，并逐次累加1。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow.compat.v1</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">disable_eager_execution</span><span class="p">()</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[])</span>
+<span class="n">initializer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>   <span class="c1"># tf.assign(x, y)返回一个“将张量y的值赋给变量x”的操作</span>
+<span class="n">plus_one_op</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span>
+
+<span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+<span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">initializer</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plus_one_op</span><span class="p">)</span>       <span class="c1"># 对变量a执行加一操作</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>          <span class="c1"># 输出此时变量a在当前会话的计算图中的值</span>
+</pre></div>
+</div>
+<p>输出:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.0</span>
+<span class="mf">2.0</span>
+<span class="mf">3.0</span>
+<span class="mf">4.0</span>
+<span class="mf">5.0</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>为了初始化变量，也可以在声明变量时指定初始化器（initializer），并通过 <code class="docutils literal notranslate"><span class="pre">tf.global_variables_initializer()</span></code> 一次性初始化所有变量，在实际工程中更常用：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow.compat.v1</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">disable_eager_execution</span><span class="p">()</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[],</span> 
+    <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">)</span>   <span class="c1"># 指定初始化器为全0初始化</span>
+<span class="n">plus_one_op</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span>
+
+<span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+<span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span> <span class="c1"># 初始化所有变量</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plus_one_op</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>在 TensorFlow 2 中，我们通过实例化 <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code> 类来声明变量。由此，我们可以将以上代码改写如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+
+<span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+<span class="k">def</span> <span class="nf">plus_one_op</span><span class="p">():</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">plus_one_op</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">小结</p>
+<p>在 TensorFlow 1.X 的 API 中，我们使用 <code class="docutils literal notranslate"><span class="pre">tf.get_variable()</span></code> 在计算图中声明变量节点。而在 TensorFlow 2 中，我们直接通过 <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code> 实例化变量对象，并在计算图中使用这一变量对象。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h4>变量的作用域与重用<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h4>
+<p>在 TensorFlow 1.X 中，我们建立模型时经常需要指定变量的作用域，以及复用变量。此时，TensorFlow 1.X 的图执行模式 API 为我们提供了 <code class="docutils literal notranslate"><span class="pre">tf.variable_scope()</span></code> 及 <code class="docutils literal notranslate"><span class="pre">reuse</span></code> 参数来实现变量作用域和复用变量的功能。以下的例子使用了 TensorFlow 1.X 的图执行模式 API 建立了一个三层的全连接神经网络，其中第三层复用了第二层的变量。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow.compat.v1</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">disable_eager_execution</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">dense</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">num_units</span><span class="p">):</span>
+    <span class="n">weight</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;weight&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">num_units</span><span class="p">])</span>
+    <span class="n">bias</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;bias&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">num_units</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">weight</span><span class="p">)</span> <span class="o">+</span> <span class="n">bias</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s1">&#39;dense1&#39;</span><span class="p">):</span>   <span class="c1"># 限定变量的作用域为 dense1</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">dense</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>           <span class="c1"># 声明了 dense1/weight 和 dense1/bias 两个变量</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s1">&#39;dense2&#39;</span><span class="p">):</span>   <span class="c1"># 限定变量的作用域为 dense2</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">dense</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>                <span class="c1"># 声明了 dense2/weight 和 dense2/bias 两个变量</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">variable_scope</span><span class="p">(</span><span class="s1">&#39;dense2&#39;</span><span class="p">,</span> <span class="n">reuse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>   <span class="c1"># 第三层复用第二层的变量</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">dense</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+<span class="n">inputs</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables</span><span class="p">())</span>    <span class="c1"># 输出当前计算图中的所有变量节点</span>
+<span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+<span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">())</span>
+<span class="n">outputs_</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">inputs</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">32</span><span class="p">)})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">outputs_</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在上例中，计算图的所有变量节点为：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">tf</span><span class="o">.</span><span class="n">Variable</span> <span class="s1">&#39;dense1/weight:0&#39;</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">tf</span><span class="o">.</span><span class="n">Variable</span> <span class="s1">&#39;dense1/bias:0&#39;</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,)</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">tf</span><span class="o">.</span><span class="n">Variable</span> <span class="s1">&#39;dense2/weight:0&#39;</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">tf</span><span class="o">.</span><span class="n">Variable</span> <span class="s1">&#39;dense2/bias:0&#39;</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,)</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>可见， <code class="docutils literal notranslate"><span class="pre">tf.variable_scope()</span></code> 为在其上下文中的，以 <code class="docutils literal notranslate"><span class="pre">tf.get_variable</span></code> 建立的变量的名称添加了“前缀”或“作用域”，使得变量在计算图中的层次结构更为清晰，不同“作用域”下的同名变量各司其职，不会冲突。同时，虽然我们在上例中调用了3次 <code class="docutils literal notranslate"><span class="pre">dense</span></code> 函数，即调用了6次 <code class="docutils literal notranslate"><span class="pre">tf.get_variable</span></code> 函数，但实际建立的变量节点只有4个。这即是 <code class="docutils literal notranslate"><span class="pre">tf.variable_scope()</span></code> 的 <code class="docutils literal notranslate"><span class="pre">reuse</span></code> 参数所起到的作用。当 <code class="docutils literal notranslate"><span class="pre">reuse=True</span></code> 时， <code class="docutils literal notranslate"><span class="pre">tf.get_variable</span></code> 遇到重名变量时将会自动获取先前建立的同名变量，而不会新建变量，从而达到了变量重用的目的。</p>
+<p>而在 TensorFlow 2 的图执行模式 API 中，不再鼓励使用 <code class="docutils literal notranslate"><span class="pre">tf.variable_scope()</span></code> ，而应当使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 和  <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 来封装代码和指定作用域，具体可参考 <a class="reference internal" href="../basic/models.html"><span class="doc">本手册第三章</span></a>。上面的例子与下面基于 <code class="docutils literal notranslate"><span class="pre">tf.keras</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 的代码等价。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">class</span> <span class="nc">Dense</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_units</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_units</span> <span class="o">=</span> <span class="n">num_units</span>
+
+    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;weight&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">input_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_units</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;bias&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">num_units</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span>
+        <span class="k">return</span> <span class="n">y_pred</span>
+
+<span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="n">num_units</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;dense1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span> <span class="o">=</span> <span class="n">Dense</span><span class="p">(</span><span class="n">num_units</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;dense2&#39;</span><span class="p">)</span>
+
+    <span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">32</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>我们可以注意到，在 TensorFlow 2 中，变量的作用域以及复用变量的问题自然地淡化了。基于Python类的模型建立方式自然地为变量指定了作用域，而变量的重用也可以通过简单地多次调用同一个层来实现。</p>
+<p>为了详细了解上面的代码对变量作用域的处理方式，我们使用 <code class="docutils literal notranslate"><span class="pre">get_concrete_function</span></code> 导出计算图，并输出计算图中的所有变量节点：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">graph</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">call</span><span class="o">.</span><span class="n">get_concrete_function</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">32</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>输出如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">&lt;</span><span class="n">tf</span><span class="o">.</span><span class="n">Variable</span> <span class="s1">&#39;dense1/weight:0&#39;</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">,</span> <span class="n">numpy</span><span class="o">=...&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">tf</span><span class="o">.</span><span class="n">Variable</span> <span class="s1">&#39;dense1/bias:0&#39;</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,)</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">,</span> <span class="n">numpy</span><span class="o">=...&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">tf</span><span class="o">.</span><span class="n">Variable</span> <span class="s1">&#39;dense2/weight:0&#39;</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">,</span> <span class="n">numpy</span><span class="o">=...&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">tf</span><span class="o">.</span><span class="n">Variable</span> <span class="s1">&#39;dense2/bias:0&#39;</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,)</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">,</span> <span class="n">numpy</span><span class="o">=...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>可见，TensorFlow 2 的图执行模式在变量的作用域上与 TensorFlow 1.X 实际保持了一致。我们通过 <code class="docutils literal notranslate"><span class="pre">name</span></code> 参数为每个层指定的名称将成为层内变量的作用域。</p>
+<div class="admonition- admonition">
+<p class="admonition-title">小结</p>
+<p>在 TensorFlow 1.X 的 API 中，使用 <code class="docutils literal notranslate"><span class="pre">tf.variable_scope()</span></code> 及 <code class="docutils literal notranslate"><span class="pre">reuse</span></code> 参数来实现变量作用域和复用变量的功能。在 TensorFlow 2 中，使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 和  <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 来封装代码和指定作用域，从而使变量的作用域以及复用变量的问题自然淡化。两者的实质是一样的。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>自动求导机制与优化器<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>在本节中，我们对 TensorFlow 1.X 和 TensorFlow 2 在图执行模式下的自动求导机制进行较深入的比较说明。</p>
+<div class="section" id="id7">
+<h3>自动求导机制<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>我们首先回顾 TensorFlow 1.X 中的自动求导机制。在 TensorFlow 1.X 的图执行模式 API 中，可以使用 <code class="docutils literal notranslate"><span class="pre">tf.gradients(y,</span> <span class="pre">x)</span></code> 计算计算图中的张量节点 <code class="docutils literal notranslate"><span class="pre">y</span></code> 相对于变量 <code class="docutils literal notranslate"><span class="pre">x</span></code> 的导数。以下示例展示了在 TensorFlow 1.X 的图执行模式 API 中计算 <img class="math" src="../../_images/math/7f06ef1ddc255070c8055a17d07f36a81e4b18e8.png" alt="y = x^2"/> 在 <img class="math" src="../../_images/math/8153c976979a8a4fe01919cd83dda44e9e81f769.png" alt="x = 3"/> 时的导数。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="mf">3.</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>    <span class="c1"># y = x ^ 2</span>
+<span class="n">y_grad</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>以上代码中，计算图中的节点 <code class="docutils literal notranslate"><span class="pre">y_grad</span></code> 即为 <code class="docutils literal notranslate"><span class="pre">y</span></code> 相对于 <code class="docutils literal notranslate"><span class="pre">x</span></code> 的导数。</p>
+<p>而在 TensorFlow 2 的图执行模式 API 中，我们使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 这一上下文管理器封装需要求导的计算步骤，并使用其 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法求导，代码示例如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mf">3.</span><span class="p">)</span>
+<span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+<span class="k">def</span> <span class="nf">grad</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">y_grad</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">y_grad</span>
+</pre></div>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">小结</p>
+<p>在 TensorFlow 1.X 中，我们使用 <code class="docutils literal notranslate"><span class="pre">tf.gradients()</span></code> 求导。而在 TensorFlow 2 中，我们使用使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 这一上下文管理器封装需要求导的计算步骤，并使用其 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法求导。</p>
+</div>
+</div>
+<div class="section" id="id8">
+<h3>优化器<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<p>由于机器学习中的求导往往伴随着优化，所以 TensorFlow 中更常用的是优化器（Optimizer）。在 TensorFlow 1.X 的图执行模式 API 中，我们往往使用 <code class="docutils literal notranslate"><span class="pre">tf.train</span></code> 中的各种优化器，将求导和调整变量值的步骤合二为一。例如，以下代码片段在计算图构建过程中，使用 <code class="docutils literal notranslate"><span class="pre">tf.train.GradientDescentOptimizer</span></code> 这一梯度下降优化器优化损失函数 <code class="docutils literal notranslate"><span class="pre">loss</span></code> ：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data_placeholder</span><span class="p">)</span>    <span class="c1"># 模型构建</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="o">...</span>                          <span class="c1"># 计算模型的损失函数 loss</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+<span class="n">train_one_step</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+<span class="c1"># 上面一步也可拆分为</span>
+<span class="c1"># grad = optimizer.compute_gradients(loss)</span>
+<span class="c1"># train_one_step = optimizer.apply_gradients(grad)</span>
+</pre></div>
+</div>
+<p>以上代码中， <code class="docutils literal notranslate"><span class="pre">train_one_step</span></code> 即为一个将求导和变量值更新合二为一的计算图节点（操作），也就是训练过程中的“一步”。特别需要注意的是，对于优化器的 <code class="docutils literal notranslate"><span class="pre">minimize</span></code> 方法而言，只需要指定待优化的损失函数张量节点 <code class="docutils literal notranslate"><span class="pre">loss</span></code> 即可，求导的变量可以自动从计算图中获得（即 <code class="docutils literal notranslate"><span class="pre">tf.trainable_variables</span></code> ）。在计算图构建完成后，只需启动会话，使用 <code class="docutils literal notranslate"><span class="pre">sess.run</span></code> 方法运行 <code class="docutils literal notranslate"><span class="pre">train_one_step</span></code> 这一计算图节点，并通过 <code class="docutils literal notranslate"><span class="pre">feed_dict</span></code> 参数送入训练数据，即可完成一步训练。代码片段如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+    <span class="n">data_dict</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># 将训练所需数据放入字典 data 内</span>
+    <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">train_one_step</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="n">data_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>而在 TensorFlow 2 的 API 中，无论是图执行模式还是即时执行模式，均先使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 进行求导操作，然后再使用优化器的 <code class="docutils literal notranslate"><span class="pre">apply_gradients</span></code> 方法应用已求得的导数，进行变量值的更新。也就是说，和 TensorFlow 1.X 中优化器的 <code class="docutils literal notranslate"><span class="pre">compute_gradients</span></code> + <code class="docutils literal notranslate"><span class="pre">apply_gradients</span></code> 十分类似。同时，在 TensorFlow 2 中，无论是求导还是使用导数更新变量值，都需要显式地指定变量。计算图的构建代码结构如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=...</span><span class="p">)</span>
+
+<span class="nd">@tf.function</span>
+<span class="k">def</span> <span class="nf">train_one_step</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>    <span class="c1"># 模型构建</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="o">...</span>              <span class="c1"># 计算模型的损失函数 loss</span>
+    <span class="n">grad</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>在计算图构建完成后，我们直接调用 <code class="docutils literal notranslate"><span class="pre">train_one_step</span></code> 函数并送入训练数据即可：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+    <span class="n">train_one_step</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">小结</p>
+<p>在 TensorFlow 1.X 中，我们多使用优化器的 <code class="docutils literal notranslate"><span class="pre">minimize</span></code> 方法，将求导和变量值更新合二为一。而在 TensorFlow 2 中，我们需要先使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 进行求导操作，然后再使用优化器的 <code class="docutils literal notranslate"><span class="pre">apply_gradients</span></code> 方法应用已求得的导数，进行变量值的更新。而且在这两步中，都需要显式指定待求导和待更新的变量。</p>
+</div>
+</div>
+<div class="section" id="graph-compare">
+<span id="id9"></span><h3>自动求导机制的计算图对比 *<a class="headerlink" href="#graph-compare" title="永久链接至标题">¶</a></h3>
+<p>在本节，为了帮助读者更深刻地理解 TensorFlow 的自动求导机制，我们以前节的“计算 <img class="math" src="../../_images/math/7f06ef1ddc255070c8055a17d07f36a81e4b18e8.png" alt="y = x^2"/> 在 <img class="math" src="../../_images/math/8153c976979a8a4fe01919cd83dda44e9e81f769.png" alt="x = 3"/> 时的导数”为例，展示 TensorFlow 1.X 和 TensorFlow 2 在图执行模式下，为这一求导过程所建立的计算图，并进行详细讲解。</p>
+<p>在 TensorFlow 1.X 的图执行模式 API 中，将生成的计算图使用 TensorBoard 进行展示：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/grad_v1.png"><img alt="../../_images/grad_v1.png" src="../../_images/grad_v1.png" style="width: 60%;" /></a>
+</div>
+<p>在计算图中，灰色的块为节点的命名空间（Namespace，后文简称“块”），椭圆形代表操作节点（OpNode），圆形代表常量，灰色的箭头代表数据流。为了弄清计算图节点 <code class="docutils literal notranslate"><span class="pre">x</span></code> 、 <code class="docutils literal notranslate"><span class="pre">y</span></code> 和 <code class="docutils literal notranslate"><span class="pre">y_grad</span></code> 与计算图中节点的对应关系，我们将这些变量节点输出，可见：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> : <code class="docutils literal notranslate"><span class="pre">&lt;tf.Variable</span> <span class="pre">'x:0'</span> <span class="pre">shape=()</span> <span class="pre">dtype=float32&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code> : <code class="docutils literal notranslate"><span class="pre">Tensor(&quot;Square:0&quot;,</span> <span class="pre">shape=(),</span> <span class="pre">dtype=float32)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y_grad</span></code> : <code class="docutils literal notranslate"><span class="pre">[&lt;tf.Tensor</span> <span class="pre">'gradients/Square_grad/Mul_1:0'</span> <span class="pre">shape=()</span> <span class="pre">dtype=float32&gt;]</span></code></p></li>
+</ul>
+<p>在 TensorBoard 中，我们也可以通过点击节点获得节点名称。通过比较我们可以得知，变量 <code class="docutils literal notranslate"><span class="pre">x</span></code> 对应计算图最下方的x，节点 <code class="docutils literal notranslate"><span class="pre">y</span></code> 对应计算图“Square”块的“ <code class="docutils literal notranslate"><span class="pre">(Square)</span></code> ”，节点 <code class="docutils literal notranslate"><span class="pre">y_grad</span></code> 对应计算图上方“Square_grad”的 <code class="docutils literal notranslate"><span class="pre">Mul_1</span></code> 节点。同时我们还可以通过点击节点发现，“Square_grad”块里的const节点值为2，“gradients”块里的 <code class="docutils literal notranslate"><span class="pre">grad_ys_0</span></code> 值为1， <code class="docutils literal notranslate"><span class="pre">Shape</span></code> 值为空，以及“x”块的const节点值为3。</p>
+<p>接下来，我们开始具体分析这个计算图的结构。我们可以注意到，这个计算图的结构是比较清晰的，“x”块负责变量的读取和初始化，“Square”块负责求平方 <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">x</span> <span class="pre">^</span> <span class="pre">2</span></code> ，而“gradients”块则负责对“Square”块的操作求导，即计算 <code class="docutils literal notranslate"><span class="pre">y_grad</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">x</span></code>。由此我们可以看出， <code class="docutils literal notranslate"><span class="pre">tf.gradients</span></code> 是一个相对比较“庞大”的操作，并非如一般的操作一样往计算图中添加了一个或几个节点，而是建立了一个庞大的子图，以应用链式法则求计算图中特定节点的导数。</p>
+<p>在 TensorFlow 2 的图执行模式 API 中，将生成的计算图使用 TensorBoard 进行展示：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/grad_v2.png"><img alt="../../_images/grad_v2.png" src="../../_images/grad_v2.png" style="width: 60%;" /></a>
+</div>
+<p>我们可以注意到，除了求导过程没有封装在“gradients”块内，以及变量的处理简化以外，其他的区别并不大。由此，我们可以看出，在图执行模式下， <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 这一上下文管理器的 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法和 TensorFlow 1.X 的 <code class="docutils literal notranslate"><span class="pre">tf.gradients</span></code> 是基本等价的。</p>
+<div class="admonition- admonition">
+<p class="admonition-title">小结</p>
+<p>TensorFlow 1.X 中的 <code class="docutils literal notranslate"><span class="pre">tf.gradients</span></code> 和 TensorFlow 2 图执行模式下的  <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 上下文管理器尽管在 API 层面的调用方法略有不同，但最终生成的计算图是基本一致的。</p>
+</div>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>基础示例：线性回归<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<p>在本节，我们为 <a class="reference internal" href="../../en/basic/basic.html#id3"><span class="std std-ref">第一章的线性回归示例</span></a> 提供一个基于 TensorFlow 1.X 的图执行模式 API 的版本，供有需要的读者对比参考。</p>
+<p>与第一章的NumPy和即时执行模式不同，TensorFlow的图执行模式使用 <strong>符号式编程</strong> 来进行数值运算。首先，我们需要将待计算的过程抽象为计算图，将输入、运算和输出都用符号化的节点来表达。然后，我们将数据不断地送入输入节点，让数据沿着计算图进行计算和流动，最终到达我们需要的特定输出节点。</p>
+<p>以下代码展示了如何基于TensorFlow的符号式编程方法完成与前节相同的任务。其中， <code class="docutils literal notranslate"><span class="pre">tf.placeholder()</span></code> 即可以视为一种“符号化的输入节点”，使用 <code class="docutils literal notranslate"><span class="pre">tf.get_variable()</span></code> 定义模型的参数（Variable类型的张量可以使用 <code class="docutils literal notranslate"><span class="pre">tf.assign()</span></code> 操作进行赋值），而 <code class="docutils literal notranslate"><span class="pre">sess.run(output_node,</span> <span class="pre">feed_dict={input_node:</span> <span class="pre">data})</span></code> 可以视作将数据送入输入节点，沿着计算图计算并到达输出节点并返回值的过程。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="c1"># 定义数据流图</span>
+<span class="n">learning_rate_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">X_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">)</span>
+
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">X_</span> <span class="o">+</span> <span class="n">b</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">))</span>
+
+<span class="c1"># 反向传播，手动计算变量（模型参数）的梯度</span>
+<span class="n">grad_a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)</span> <span class="o">*</span> <span class="n">X_</span><span class="p">)</span>
+<span class="n">grad_b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)</span>
+
+<span class="c1"># 梯度下降法，手动更新参数</span>
+<span class="n">new_a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">learning_rate_</span> <span class="o">*</span> <span class="n">grad_a</span>
+<span class="n">new_b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">learning_rate_</span> <span class="o">*</span> <span class="n">grad_b</span>
+<span class="n">update_a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">new_a</span><span class="p">)</span>
+<span class="n">update_b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">new_b</span><span class="p">)</span>
+
+<span class="n">train_op</span> <span class="o">=</span> <span class="p">[</span><span class="n">update_a</span><span class="p">,</span> <span class="n">update_b</span><span class="p">]</span> 
+<span class="c1"># 数据流图定义到此结束</span>
+<span class="c1"># 注意，直到目前，我们都没有进行任何实质的数据计算，仅仅是定义了一个数据图</span>
+
+<span class="n">num_epoch</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">1e-3</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="c1"># 初始化变量a和b</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="c1"># 循环将数据送入上面建立的数据流图中进行计算和更新变量</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epoch</span><span class="p">):</span>
+        <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">train_op</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">X_</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span> <span class="n">learning_rate_</span><span class="p">:</span> <span class="n">learning_rate</span><span class="p">})</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]))</span>
+</pre></div>
+</div>
+<div class="section" id="id11">
+<h3>自动求导机制<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<p>在上面的两个示例中，我们都是手工计算获得损失函数关于各参数的偏导数。但当模型和损失函数都变得十分复杂时（尤其是深度学习模型），这种手动求导的工程量就难以接受了。因此，在图执行模式中，TensorFlow同样提供了 <strong>自动求导机制</strong> 。类似于即时执行模式下的 <code class="docutils literal notranslate"><span class="pre">tape.grad(ys,</span> <span class="pre">xs)</span></code> ，可以利用TensorFlow的求导操作 <code class="docutils literal notranslate"><span class="pre">tf.gradients(ys,</span> <span class="pre">xs)</span></code> 求出损失函数 <code class="docutils literal notranslate"><span class="pre">loss</span></code> 关于 <code class="docutils literal notranslate"><span class="pre">a</span></code> ， <code class="docutils literal notranslate"><span class="pre">b</span></code> 的偏导数。由此，我们可以将上节中的两行手工计算导数的代码</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 反向传播，手动计算变量（模型参数）的梯度</span>
+<span class="n">grad_a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)</span> <span class="o">*</span> <span class="n">X_</span><span class="p">)</span>
+<span class="n">grad_b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>替换为</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">grad_a</span><span class="p">,</span> <span class="n">grad_b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>计算结果将不会改变。</p>
+</div>
+<div class="section" id="id12">
+<h3>优化器<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<p>TensorFlow在图执行模式下也附带有多种 <strong>优化器</strong> （optimizer），可以将求导和梯度更新一并完成。我们可以将上节的代码</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 反向传播，手动计算变量（模型参数）的梯度</span>
+<span class="n">grad_a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)</span> <span class="o">*</span> <span class="n">X_</span><span class="p">)</span>
+<span class="n">grad_b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)</span>
+
+<span class="c1"># 梯度下降法，手动更新参数</span>
+<span class="n">new_a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">learning_rate_</span> <span class="o">*</span> <span class="n">grad_a</span>
+<span class="n">new_b</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">learning_rate_</span> <span class="o">*</span> <span class="n">grad_b</span>
+<span class="n">update_a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">new_a</span><span class="p">)</span>
+<span class="n">update_b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">new_b</span><span class="p">)</span>
+
+<span class="n">train_op</span> <span class="o">=</span> <span class="p">[</span><span class="n">update_a</span><span class="p">,</span> <span class="n">update_b</span><span class="p">]</span> 
+</pre></div>
+</div>
+<p>整体替换为</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate_</span><span class="p">)</span>
+<span class="n">grad</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">compute_gradients</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+<span class="n">train_op</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>这里，我们先实例化了一个TensorFlow中的梯度下降优化器 <code class="docutils literal notranslate"><span class="pre">tf.train.GradientDescentOptimizer()</span></code> 并设置学习率。然后利用其 <code class="docutils literal notranslate"><span class="pre">compute_gradients(loss)</span></code> 方法求出 <code class="docutils literal notranslate"><span class="pre">loss</span></code> 对所有变量（参数）的梯度。最后通过 <code class="docutils literal notranslate"><span class="pre">apply_gradients(grad)</span></code> 方法，根据前面算出的梯度来梯度下降更新变量（参数）。</p>
+<p>以上三行代码等价于下面一行代码：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">train_op</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate_</span><span class="p">)</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>使用自动求导机制和优化器简化后的代码如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="n">learning_rate_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">X_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">)</span>
+
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">X_</span> <span class="o">+</span> <span class="n">b</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y_</span><span class="p">))</span>
+
+<span class="c1"># 反向传播，利用TensorFlow的梯度下降优化器自动计算并更新变量（模型参数）的梯度</span>
+<span class="n">train_op</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate_</span><span class="p">)</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+
+<span class="n">num_epoch</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">1e-3</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">sess</span><span class="p">:</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">global_variables_initializer</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epoch</span><span class="p">):</span>
+        <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">train_op</span><span class="p">,</span> <span class="n">feed_dict</span><span class="o">=</span><span class="p">{</span><span class="n">X_</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span> <span class="n">y_</span><span class="p">:</span> <span class="n">y</span><span class="p">,</span> <span class="n">learning_rate_</span><span class="p">:</span> <span class="n">learning_rate</span><span class="p">})</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

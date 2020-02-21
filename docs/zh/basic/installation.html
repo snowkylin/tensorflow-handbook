@@ -134,11 +134,9 @@
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/static.html">图执行模式下的 TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/optimization.html">TensorFlow性能优化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">术语中英对照表</a></li>
 </ul>
@@ -384,9 +382,9 @@ Mon Jun 10 23:19:54 2019
 <span class="n">conda</span> <span class="n">install</span> <span class="n">cudnn</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">X</span>
 </pre></div>
 </div>
-<p>安装CUDA Toolkit和cuDNN，其中X.X和X.X.X分别为需要安装的CUDA Toolkit和cuDNN版本号，必须严格按照 <a class="reference external" href="https://www.tensorflow.org/install/gpu#software_requirements">TensorFlow官方网站所说明的版本</a> 安装。例如，对于TensorFlow 2.0，可使用:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">cudatoolkit</span><span class="o">=</span><span class="mf">10.0</span>
-<span class="n">conda</span> <span class="n">install</span> <span class="n">cudnn</span><span class="o">=</span><span class="mf">7.6</span><span class="o">.</span><span class="mi">4</span>
+<p>安装CUDA Toolkit和cuDNN，其中X.X和X.X.X分别为需要安装的CUDA Toolkit和cuDNN版本号，必须严格按照 <a class="reference external" href="https://www.tensorflow.org/install/gpu#software_requirements">TensorFlow官方网站所说明的版本</a> 安装。例如，对于TensorFlow 2.1，可使用:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">cudatoolkit</span><span class="o">=</span><span class="mf">10.1</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">cudnn</span><span class="o">=</span><span class="mf">7.6</span><span class="o">.</span><span class="mi">5</span>
 </pre></div>
 </div>
 <p>在安装前，可使用 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">search</span> <span class="pre">cudatoolkit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">search</span> <span class="pre">cudnn</span></code> 搜索conda源中可用的版本号。</p>

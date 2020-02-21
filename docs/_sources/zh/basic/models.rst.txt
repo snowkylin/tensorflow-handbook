@@ -16,7 +16,6 @@ TensorFlow 模型建立与训练
     * 多层感知机、卷积神经网络、循环神经网络和强化学习（每节之前给出参考资料）。
     *  `Python 的函数装饰器 <https://www.runoob.com/w3cnote/python-func-decorators.html>`_ （非必须）
 
-
 模型（Model）与层（Layer）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ..  https://www.tensorflow.org/programmers_guide/eager
