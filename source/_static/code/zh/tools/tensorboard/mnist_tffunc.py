@@ -1,14 +1,17 @@
 import tensorflow as tf
 import time
-from zh.model.mnist.cnn import CNN
+from zh.model.mnist.mlp import MLP
 from zh.model.utils import MNISTLoader
 
-num_batches = 1000
+num_batches = 400
 batch_size = 50
 learning_rate = 0.001
+log_dir = 'tensorboard'
 data_loader = MNISTLoader()
-model = CNN()
-optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
+model = MLP()
+optimizer = tf.keras.optimizers.SGD(learning_rate=learning_rate)
+summary_writer = tf.summary.create_file_writer(log_dir) 
+tf.summary.trace_on(graph=True, profiler=True) 
 
 @tf.function
 def train_one_step(X, y):    
@@ -27,3 +30,5 @@ for batch_index in range(num_batches):
     train_one_step(X, y)
 end_time = time.time()
 print(end_time - start_time)
+with summary_writer.as_default():
+    tf.summary.trace_export(name="model_trace", step=0, profiler_outdir=log_dir)

@@ -9,6 +9,6 @@ source/.vscode
 source/_future
 source/_static/code/.idea
 source/_static/code/zh/tools/tfdata/cat_and_dog
-source/zh/appendix/tape.rst
+source/zh/advanced
 *.log
 .DS_Store
