@@ -13,7 +13,7 @@ Prerequisites:
 * `Linear regression <https://en.wikipedia.org/wiki/Linear_regression>`_;
 * `Gradient descent <https://en.wikipedia.org/wiki/Gradient_descent>`_ that searches local minima of a function.
 
-TensorFlow 1+1 ✔️
+TensorFlow 1+1
 ^^^^^^^^^^^^^^
 
 In the beginning, we can simply regard TensorFlow as a library for scientific computing (like Numpy in Python).
