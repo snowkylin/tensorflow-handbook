@@ -72,7 +72,7 @@ Output::
     
     [array([9.], dtype=float32), array([6.], dtype=float32)]
 
-Here ``x`` is a **variable** initialized to 3, declared by ``tf.Variable()``. Same as an ordinary tensor, a variable also has three attributes: shape, data type and value. An initialization is required before using a variable, which can be specified by the parameters ``initial_value`` in ``tf.Variable()``. Here ``x`` is initialized to ``3.`` [#f0]_. One significant difference between the variables and the tensors is the former can be used to differentiate by the automatic differentiation mechanism of TensorFlow by default, which is often used to define parameters of machine learning models.
+Here ``x`` is a **variable** initialized to 3, declared by ``tf.Variable()``. Same as an ordinary tensor, a variable also has three attributes: shape, data type and value. An initialization is required before using a variable, which can be specified by the parameters ``initial_value`` in ``tf.Variable()``. Here ``x`` is initialized to ``3.`` [#f0]_. One significant difference between the variables and the tensors is the former can be used to differentiate by the automatic differentiation mechanism of TensorFlow by default, which is often used to define parameters of ML models.
 
 ``tf.GradientTape()`` is an automatic differentiation recorder, in which variables and calculation steps are automatically recorded. In the previous example, the variable ``x`` and the step ``y = tf.square(x)`` were recorded automatically, thus the derivative of the tensor ``y`` with respect to the variable ``x`` can be obtained by ``y_grad = tape.gradient(y, x)``.
 
@@ -137,22 +137,22 @@ Recall the basic knowledge of machine learning, to find a local minimum of a mul
     * Update the independent variable: :math:`x_{k+1} = x_{k} - \gamma \nabla f(x_k)` where :math:`\gamma` is the learning rate (i.e. the "stride" in one gradient descent).
     * :math:`k \leftarrow k+1`.
 
-Next, we consider how to program to implement the gradient descent method to find the solution of the linear regression :math:`\min_{a, b} L(a, b) = \sum_{i=1}^n(ax_i + b - y_i)^2`. 
+Next, we consider how to programme to implement the gradient descent method to find the solution of the linear regression :math:`\min_{a, b} L(a, b) = \sum_{i=1}^n(ax_i + b - y_i)^2`. 
 
 Linear regression under numPy
 -----------------------------
 
-Implementations of machine learning models are not preserved for TensorFlow. In fact, simple models can be solved even by using regular scientific computing libraries. Here we use Numpy, the common scientific computing library to implement gradient descent. NumPy provides support for multidimensional arrays, which can represent vectors, matrices and even higher dimensional tensors. Meanwhile, it also provides many functions that support operations on multidimensional arrays (e.g. the following ``np.dot()`` evaluates the dot product and ``np.sum()`` gets the sum). NumPy and MATLAB are similar in this regard. In the following codes, we will find the partial derivative of the loss function with respect to the parameters ``a`` and ``b`` manually [#f2]_ and use gradient descent iteratively to obtain the values of ``a`` and ``b`` eventually.
+Implementations of ML models are not preserved for TensorFlow. In fact, simple models can be solved even by using regular scientific computing libraries. Here we use Numpy, the common scientific computing library to implement gradient descent. NumPy provides support for multidimensional arrays, which can represent vectors, matrices and even higher dimensional tensors. Meanwhile, it also provides many functions that support operations on multidimensional arrays (e.g. the following ``np.dot()`` evaluates the dot product and ``np.sum()`` gets the sum). NumPy and MATLAB are similar in this regard. In the following codes, we will find the partial derivative of the loss function with respect to the parameters ``a`` and ``b`` manually [#f2]_ and use gradient descent iteratively to obtain the values of ``a`` and ``b`` eventually.
 
 .. literalinclude:: /_static/code/en/basic/example/numpy_manual_grad.py
     :lines: 9-
 
-However, you may have already noticed that there are two pain points for implementing machine learning models when using conventional scientific computing libraries:
+However, you may have already noticed that there are two pain points for implementing ML models when using conventional scientific computing libraries:
 
 - You have to find the partial derivatives with respect to parameters by yourself often. It may be easy for simple functions, but the process would be very painful or even impossible once the functions become complex.
 - You have to update the parameters according to the result of the derivative by yourself frequently. Here we used gradient descent, the most fundamental approach, thus it was not hard updating parameters. However, the process would have been very complicated if you use more advanced approaches updating parameters (e.g., Adam or Adagrad).
 
-The emergence of deep learning frameworks such as TensorFlow has largely solved these problems and has brought considerable convenience for implementing machine learning models.
+The emergence of DL frameworks such as TensorFlow has largely solved these problems and has brought considerable convenience for implementing ML models.
 
 .. _optimizer:
 
@@ -161,8 +161,8 @@ Linear regression under TensorFlow
 
 TensorFlow **Eager Execution Mode** [#f4]_ is quite similar with how NumPy worked above, while it provides a series of features which are rather crucial for deep learning, such as faster computation (GPU support), automatic differentiation, optimizers, etc. The following shows how to use TensorFlow to compute linear regression. You can notice that the structure of the program is very similar with the previous implemention with NumPy. Here TensorFlow helps us accomplished two crucial tasks:
 
-* Using ``tape.gradient(ys, xs)`` to compute the gradient automatically;
-* Using ``optimizer.apply_gradients(grads_and_vars)`` to update model parameters automatically.
+* Using ``tape.gradient(ys, xs)`` to compute the gradient automatically
+* Using ``optimizer.apply_gradients(grads_and_vars)`` to update model parameters automatically
 
 .. literalinclude:: /_static/code/en/basic/example/tensorflow_eager_autograd.py
     :lines: 10-29
