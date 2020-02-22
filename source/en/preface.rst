@@ -49,7 +49,8 @@ The TensorFlow.js and TensorFlow Lite sections of this handbook were respectivel
 
 Sincere thanks to the members of the Google China Developer Relations team and the TensorFlow engineering team for their assistance in writing this handbook. which includes the insipiration and continuous encouragement from Luke Cheng of the Developer Relations team throughout the writing of this manual (and the domain name ``tf.wiki`` of the online version), the strong support on the publication and promotion of this manual from Rui Li, Pryce Mu of the Developer Relations team and friends who maintain the TensorFlow community, many suggestions and supplements on the engineering details from Tiezhen Wang of TensorFlow engineering team, and reviews from other engineers such as Shuangfeng Li of the TensorFlow engineering team.
 
-The English version of this handbook is translated by my friend Zida Jin and Ming, and revised by Ji-An Li and me （still in progress). My three friends sacrificed a lot of valuable time to translate and proofread this handbook. Ji-An Li also provided valuable comments on the teaching content and code details of this manual. I would like to express my heartfelt thanks to my friends for their hard work.
+..
+    The English version of this handbook is translated by my friend Zida Jin and Ming, and revised by Ji-An Li and me （still in progress). My three friends sacrificed a lot of valuable time to translate and proofread this handbook. Ji-An Li also provided valuable comments on the teaching content and code details of this manual. I would like to express my heartfelt thanks to my friends for their hard work.
 
 Please feel free to submit any comment and suggestion about this handbook at https://github.com/snowkylin/tensorflow-handbook/issues. This is an open source project and your valuable feedback will facilitate the continuous updating of this handbook.
 
