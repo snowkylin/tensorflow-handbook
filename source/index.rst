@@ -31,7 +31,7 @@
 中文版
 ==========================
 
-这是一本简明的 TensorFlow 2 入门指导手册，基于 Keras 和即时执行模式（Eager Execution），力图让具备一定机器学习及Python基础的开发者们快速上手TensorFlow 2。
+这是一本简明的 TensorFlow 2 入门指导手册，基于 Keras 和即时执行模式（Eager Execution），力图让具备一定机器学习及 Python 基础的开发者们快速上手 TensorFlow 2。
 
 本手册的所有代码基于 TensorFlow 2.1 和 2.0 正式版。文中的所有示例代码可至 `这里 <https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/en>`_ 获得。
 
@@ -108,13 +108,13 @@ GitHub： https://github.com/snowkylin/tensorflow-handbook
 
 答疑区 
 
-- （中文）TensorFlow中文社区“简单粗暴TensorFlow”版面： https://www.tensorflowers.cn/b/48 （中文的疑问和建议请来此处，将以中文回答和讨论。欢迎使用中文的开发者们前来TensorFlow中文社区交流讨论）
-- （英文）https://github.com/snowkylin/tensorflow-handbook/releases （英文的疑问或建议可在GitHub issue中提出，会以英文回答）
+- （中文）https://discuss.tf.wiki/ （中文的疑问和建议请来此处，将以中文回答和讨论。欢迎使用中文的开发者们前来交流讨论。）
+- （英文）https://github.com/snowkylin/tensorflow-handbook/releases （英文的疑问或建议可在 GitHub issue 中提出，会以英文回答）
 
 ..
     PDF下载（旧版）：
 
-    - 中文版：https://www.tensorflowers.cn/t/6230 （同时也有英文版下载）
+    - 中文版：https://discuss.tf.wiki/t/topic/23 （同时也有英文版下载）
     - 英文版：https://github.com/snowkylin/tensorflow-handbook/releases
 
     GitHub: https://github.com/snowkylin/tensorflow-handbook
@@ -202,13 +202,13 @@ GitHub： https://github.com/snowkylin/tensorflow-handbook
 
 Q&A area
 
-- (Chinese) TensorFlow Chinese community "A Concise Handbook of TensorFlow" forum: https://www.tensorflowers.cn/b/48 
+- (Chinese) The tf.wiki community site: https://discuss.tf.wiki
 - (English) https://github.com/snowkylin/tensorflow-handbook/issues
 
 ..
     PDF download (old version): 
 
-    - Chinese version: https://www.tensorflowers.cn/t/6230
+    - Chinese version: https://discuss.tf.wiki/t/topic/23
     - English version: https://github.com/snowkylin/tensorflow-handbook/releases
 
     GitHub: https://github.com/snowkylin/tensorflow-handbook
