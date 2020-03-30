@@ -153,31 +153,13 @@ TPU 环境配置
         tpu_address = 'grpc://' + os.environ['COLAB_TPU_ADDR']
         print ('TPU address is', tpu_address)
 
-        with tf.Session(tpu_address) as session:
-          devices = session.list_devices()
-
-        print('TPU devices:')
-        pprint.pprint(devices)
-
 输出信息：
 
 ::
 
     TPU address is grpc://10.49.237.2:8470
-    TPU devices:
-    [_DeviceAttributes(/job:tpu_worker/.../device:CPU:0, CPU, ...),
-     _DeviceAttributes(/job:tpu_worker/.../device:XLA_CPU:0, XLA_CPU, ...),
-     _DeviceAttributes(/job:tpu_worker/.../device:TPU:0, TPU, ...),
-     _DeviceAttributes(/job:tpu_worker/.../device:TPU:1, TPU, ...),
-     _DeviceAttributes(/job:tpu_worker/.../device:TPU:2, TPU, ...),
-     _DeviceAttributes(/job:tpu_worker/.../device:TPU:3, TPU, ...),
-     _DeviceAttributes(/job:tpu_worker/.../device:TPU:4, TPU, ...),
-     _DeviceAttributes(/job:tpu_worker/.../device:TPU:5, TPU, ...),
-     _DeviceAttributes(/job:tpu_worker/.../device:TPU:6, TPU, ...),
-     _DeviceAttributes(/job:tpu_worker/.../device:TPU:7, TPU, ...),
-     _DeviceAttributes(/job:tpu_worker/.../device:TPU_SYSTEM:0, TPU_SYSTEM, ...)]
 
-看到以上信息（一个CPU worker，8个TPU workers），既可以确认 Colab 的 TPU 环境设置正常。
+看到以上信息（TPU grpc address），既可以确认 Colab 的 TPU 环境设置正常。
 
 Cloud TPU
 --------------------------------------------
@@ -199,13 +181,12 @@ TPU 基础使用
 
 .. code-block:: python
 
-    resolver = tf.distribute.resolver.TPUClusterResolver(
-        tpu='grpc://' + os.environ['COLAB_TPU_ADDR'])
-    tf.config.experimental_connect_to_host(resolver.master())
-    tf.tpu.experimental.initialize_tpu_system(resolver)
-    strategy = tf.distribute.experimental.TPUStrategy(resolver)
+    tpu = tf.distribute.cluster_resolver.TPUClusterResolver()
+    tf.config.experimental_connect_to_cluster(tpu)
+    tf.tpu.experimental.initialize_tpu_system(tpu)
+    strategy = tf.distribute.experimental.TPUStrategy(tpu)
 
-在上面的代码中，首先我们通过 TPU 的 IP 和端口实例化 `TPUClusterResolver`；然后，我们通过 `resolver` 连接到 TPU 上，并对其进行初始化；最后，完成实例化 `TPUStrategy`。
+在上面的代码中，首先我们实例化 `TPUClusterResolver`；然后，我们连接 TPU Cluster，并对其进行初始化；最后，完成实例化 `TPUStrategy`。
 
 以下使用 Fashion MNIST 分类任务展示 TPU 的使用方式。本小节的源代码可以在 https://github.com/huan/tensorflow-handbook-tpu 找到。
 
@@ -236,11 +217,10 @@ TPU 基础使用
         
         return model
 
-    resolver = tf.distribute.resolver.TPUClusterResolver(
-        tpu='grpc://' + os.environ['COLAB_TPU_ADDR'])
-    tf.config.experimental_connect_to_host(resolver.master())
-    tf.tpu.experimental.initialize_tpu_system(resolver)
-    strategy = tf.distribute.experimental.TPUStrategy(resolver)
+    tpu = tf.distribute.cluster_resolver.TPUClusterResolver()
+    tf.config.experimental_connect_to_cluster(tpu)
+    tf.tpu.experimental.initialize_tpu_system(tpu)
+    strategy = tf.distribute.experimental.TPUStrategy(tpu)
 
     with strategy.scope():
         model = create_model()
