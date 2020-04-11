@@ -283,3 +283,17 @@ MNIST数字分类
     Test Accuracy: 0.9116667
 
 本小节的源代码可以在 https://github.com/huan/tensorflow-handbook-swift 找到。加载 `MNIST` 数据集使用了作者封装的 Swift Module： `swift-MNIST <https://github.com/huan/swift-MNIST>`_。更方便的是在 Google Colab 上直接打开 `本例子的 Jupyter Notebook <https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb>`_ 直接运行。
+
+.. raw:: html
+
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 200 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>

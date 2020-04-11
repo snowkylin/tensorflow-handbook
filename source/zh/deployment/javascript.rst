@@ -421,3 +421,17 @@ TensorFlow.js 在 Node.js 运行一次推理：
 * 在 GPU (CUDA) 上运行原生模型时间为 7.68ms
 
 与 Python 代码基准相比，Node.js 的 TensorFlow.js 在 CPU 和 GPU 上的运行时间都比基准快 4% 。
+
+.. raw:: html
+
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 195 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>
