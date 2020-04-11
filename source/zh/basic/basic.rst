@@ -1,24 +1,6 @@
 TensorFlow基础
 ======================
 
-.. 
-    https://www.datacamp.com/community/tutorials/tensorflow-tutorial
-
-    TensorFlow，顾名思义，就是Tensor（张量）进行Flow（流动）的过程。所谓张量，即对向量（一维）和矩阵（二维）的一种推广，类似于多维数组。而张量的流动则是基于数据流图（Dataflow Graph，也称计算图Computational Graph）。一个典型的TensorFlow程序由以下几个部分组成：
-
-    1. 定义一个数据流图（在深度学习中往往称之为“模型”），其中往往包含大量的变量（深度学习中“模型的待训练参数”）；
-    2. 反复进行以下步骤：
-
-    1. 将训练数据转换为张量，并送入数据流图进行计算（前向传播）；
-    #. 计算损失函数的值，并对各变量求偏导数（反向传播）；
-    #. 使用梯度下降或其他优化器（Optimizer）对变量进行更新以减小损失函数的值（即“对参数进行训练”）。
-
-    在步骤2重复足够多的次数（训练足够长的时间）后，损失函数达到较小的值并保持稳定，即完成了模型的训练。
-
-    在对TensorFlow的具体概念，如张量（Tensor）、数据流图（Dataflow Graph）、变量（Variable）、优化器（Optimizer）等进行具体介绍之前，本手册先举一个具体的例子，以让读者能对TensorFlow的基本运作方式有一个直观的理解。
-
-    https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html
-
 本章介绍TensorFlow的基本操作。
 
 .. admonition:: 前置知识
@@ -208,19 +190,16 @@ TensorFlow的 **即时执行模式** [#f4]_ 与上述NumPy的运行方式十分�
 .. [#f2] 此处的损失函数为均方差 :math:`L(x) = \frac{1}{2} \sum_{i=1}^5 (ax_i + b - y_i)^2`。其关于参数 ``a`` 和 ``b`` 的偏导数为 :math:`\frac{\partial L}{\partial a} = \sum_{i=1}^5 (ax_i + b - y) x_i`，:math:`\frac{\partial L}{\partial b} = \sum_{i=1}^5 (ax_i + b - y)`
 .. [#f4] 与即时执行模式相对的是图执行模式（Graph Execution），即 TensorFlow 2 之前所主要使用的执行模式。本手册以面向快速迭代开发的即时执行模式为主，但会在 :doc:`附录 <../appendix/static>` 中介绍图执行模式的基本使用，供需要的读者查阅。
 
-..  
-    张量（变量、常量与占位符）
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. raw:: html
 
-    会话与计算图
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-    自动求导与优化器
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-    变量的范围（Scope）
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ..  https://tensorflow.google.cn/versions/master/api_docs/python/tf/variable_scope
-
-    保存、恢复和持久化
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 189 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>

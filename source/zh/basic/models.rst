@@ -692,5 +692,17 @@ Keras 支持使用 ``tf.data.Dataset`` 进行训练，详见 :ref:`tf.data <tfda
 .. [Graves2013] Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.
 .. [Mnih2013] Mnih, Volodymyr, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. “Playing Atari with Deep Reinforcement Learning.” ArXiv:1312.5602 [Cs], December 19, 2013. http://arxiv.org/abs/1312.5602.
 
+.. raw:: html
 
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 190 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>
 
