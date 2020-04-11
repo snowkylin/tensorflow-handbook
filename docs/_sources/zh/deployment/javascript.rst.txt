@@ -161,7 +161,7 @@ TensorFlow.js 微信小程序插件封装了 TensorFlow.js 库，用于提供给
 TensorFlow.js 模型部署
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-通过 TensorFlow.js 加载 Python 模型
+在浏览器中加载 Python 模型
 --------------------------------------------
 
 一般 TensorFlow 的模型，会被存储为 SavedModel 格式。这也是 Google 目前推荐的模型保存最佳实践。SavedModel 格式可以通过 tensorflowjs-converter 转换器转换为可以直接被 TensorFlow.js 加载的格式，从而在JavaScript语言中进行使用。
@@ -225,6 +225,31 @@ TensorFlow.js 模型部署
             'https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/classification/1' \\
             /mobilenet/tfjs_model
 
+在 Node.js 中执行原生 SavedModel 模型
+--------------------------------------------
+
+除了通过转换工具 tfjs-converter 将 TensorFlow SavedModel、TFHub 模型或 Keras 模型转换为 JavaScript 浏览器兼容格式之外，如果我们在 Node.js 环境中运行，那么还可以使用 TensorFlow C++ 的接口，直接运行原生的 SavedModel 模型。
+
+在 TensorFlow.js 中运行原生的 SavedModel 模型非常简单。我们只需要把预训练的 TensorFlow 模型存为 SavedModel 格式，并通过 ``@tensorflow/tfjs-node`` 或 ``tfjs-node-gpu`` 包将模型加载到 Node.js 进行推理即可，无需使用转换工具 ``tfjs-converter``。
+
+预训练的 TensorFlow SavedModel 可以通过一行代码在 JavaScript 中加载模型并用于推理：
+
+.. code-block:: javascript
+
+    const model = await tf.node.loadSavedModel(path)
+    const output = model.predict(input)
+
+也可以将多个输入以数组或图的形式提供给模型：
+
+.. code-block:: javascript
+
+    const model1 = await tf.node.loadSavedModel(path1, [tag], signatureKey)
+    const outputArray = model1.predict([inputTensor1, inputTensor2])
+
+    const model2 = await tf.node.loadSavedModel(path2, [tag], signatureKey)
+    const outputMap = model2.predict({input1: inputTensor1, input2:inputTensor2})
+
+此功能需要 ``@tensorflow/tfjs-node`` 版本为 1.3.2 或更高，同时支持 CPU 和 GPU。它支持在 TensorFlow Python 1.x 和 2.0 版本中训练和导出的 TensorFlow SavedModel。由此带来的好处除了无需进行任何转换，原生执行 TensorFlow SavedModel 意味着您可以在模型中使用 TensorFlow.js 尚未支持的算子。这要通过将 SavedModel 作为 TensorFlow 会话加载到 C++ 中进行绑定予以实现。
 
 使用 TensorFlow.js 模型库
 --------------------------------------------
@@ -384,7 +409,7 @@ TensorFlow.js 在浏览器中运行一次推理：
 
 Node.js 性能：
 
-在 Node.js 中，TensorFlow.js 使用 TensorFlow 的 C Binding ，所以基本上可以达到和 Python 接近的效果。
+在 Node.js 中，TensorFlow.js 可以用 JavaScript 加载转换后模型，或使用 TensorFlow 的 C++ Binding ，分别接近和超越了 Python 的性能。
 
 .. figure:: /_static/image/javascript/performance-node.png
     :width: 60%
@@ -392,7 +417,21 @@ Node.js 性能：
 
 TensorFlow.js 在 Node.js 运行一次推理：
 
-* 在 CPU 上需要时间为56ms
-* 在 GPU (CUDA) 上需要时间为14ms
+* 在 CPU 上运行原生模型时间为 19.6ms
+* 在 GPU (CUDA) 上运行原生模型时间为 7.68ms
 
-与 Python 代码基准相比，Node.js 的 TensorFlow.js 在 CPU 上的运行时间与基准相同，在 GPU（CUDA） 上运行的时间是基准的1.6倍。
+与 Python 代码基准相比，Node.js 的 TensorFlow.js 在 CPU 和 GPU 上的运行时间都比基准快 4% 。
+
+.. raw:: html
+
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 195 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>

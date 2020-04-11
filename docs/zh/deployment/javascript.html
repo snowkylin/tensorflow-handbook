@@ -118,7 +118,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id7">TensorFlow.js 模型部署</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#tensorflow-js-python">通过 TensorFlow.js 加载 Python 模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python">在浏览器中加载 Python 模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#node-js-savedmodel">在 Node.js 中执行原生 SavedModel 模型</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id8">使用 TensorFlow.js 模型库</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mobilenet">在浏览器中使用 MobileNet 进行摄像头物体识别</a></li>
 </ul>
@@ -399,8 +400,8 @@ $ npm install @tensorflow/tfjs-node-gpu
 </div>
 <div class="section" id="id7">
 <h2>TensorFlow.js 模型部署<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
-<div class="section" id="tensorflow-js-python">
-<h3>通过 TensorFlow.js 加载 Python 模型<a class="headerlink" href="#tensorflow-js-python" title="永久链接至标题">¶</a></h3>
+<div class="section" id="python">
+<h3>在浏览器中加载 Python 模型<a class="headerlink" href="#python" title="永久链接至标题">¶</a></h3>
 <p>一般 TensorFlow 的模型，会被存储为 SavedModel 格式。这也是 Google 目前推荐的模型保存最佳实践。SavedModel 格式可以通过 tensorflowjs-converter 转换器转换为可以直接被 TensorFlow.js 加载的格式，从而在JavaScript语言中进行使用。</p>
 <ol class="arabic">
 <li><p>安装 <code class="docutils literal notranslate"><span class="pre">tensorflowjs_converter</span></code></p>
@@ -467,6 +468,25 @@ $ npm install @tensorflow/tfjs-node-gpu
 </pre></div>
 </div>
 </div>
+</div>
+<div class="section" id="node-js-savedmodel">
+<h3>在 Node.js 中执行原生 SavedModel 模型<a class="headerlink" href="#node-js-savedmodel" title="永久链接至标题">¶</a></h3>
+<p>除了通过转换工具 tfjs-converter 将 TensorFlow SavedModel、TFHub 模型或 Keras 模型转换为 JavaScript 浏览器兼容格式之外，如果我们在 Node.js 环境中运行，那么还可以使用 TensorFlow C++ 的接口，直接运行原生的 SavedModel 模型。</p>
+<p>在 TensorFlow.js 中运行原生的 SavedModel 模型非常简单。我们只需要把预训练的 TensorFlow 模型存为 SavedModel 格式，并通过 <code class="docutils literal notranslate"><span class="pre">&#64;tensorflow/tfjs-node</span></code> 或 <code class="docutils literal notranslate"><span class="pre">tfjs-node-gpu</span></code> 包将模型加载到 Node.js 进行推理即可，无需使用转换工具 <code class="docutils literal notranslate"><span class="pre">tfjs-converter</span></code>。</p>
+<p>预训练的 TensorFlow SavedModel 可以通过一行代码在 JavaScript 中加载模型并用于推理：</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">model</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">node</span><span class="p">.</span><span class="nx">loadSavedModel</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">output</span> <span class="o">=</span> <span class="nx">model</span><span class="p">.</span><span class="nx">predict</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>也可以将多个输入以数组或图的形式提供给模型：</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">model1</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">node</span><span class="p">.</span><span class="nx">loadSavedModel</span><span class="p">(</span><span class="nx">path1</span><span class="p">,</span> <span class="p">[</span><span class="nx">tag</span><span class="p">],</span> <span class="nx">signatureKey</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">outputArray</span> <span class="o">=</span> <span class="nx">model1</span><span class="p">.</span><span class="nx">predict</span><span class="p">([</span><span class="nx">inputTensor1</span><span class="p">,</span> <span class="nx">inputTensor2</span><span class="p">])</span>
+
+<span class="kr">const</span> <span class="nx">model2</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">node</span><span class="p">.</span><span class="nx">loadSavedModel</span><span class="p">(</span><span class="nx">path2</span><span class="p">,</span> <span class="p">[</span><span class="nx">tag</span><span class="p">],</span> <span class="nx">signatureKey</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">outputMap</span> <span class="o">=</span> <span class="nx">model2</span><span class="p">.</span><span class="nx">predict</span><span class="p">({</span><span class="nx">input1</span><span class="o">:</span> <span class="nx">inputTensor1</span><span class="p">,</span> <span class="nx">input2</span><span class="o">:</span><span class="nx">inputTensor2</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>此功能需要 <code class="docutils literal notranslate"><span class="pre">&#64;tensorflow/tfjs-node</span></code> 版本为 1.3.2 或更高，同时支持 CPU 和 GPU。它支持在 TensorFlow Python 1.x 和 2.0 版本中训练和导出的 TensorFlow SavedModel。由此带来的好处除了无需进行任何转换，原生执行 TensorFlow SavedModel 意味着您可以在模型中使用 TensorFlow.js 尚未支持的算子。这要通过将 SavedModel 作为 TensorFlow 会话加载到 C++ 中进行绑定予以实现。</p>
 </div>
 <div class="section" id="id8">
 <h3>使用 TensorFlow.js 模型库<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
@@ -757,17 +777,27 @@ $ npm install @tensorflow/tfjs-node-gpu
 </ul>
 <p>与 Python 代码基准相比，浏览器中的 TensorFlow.js 在 CPU 上的运行时间为基准的1.7倍，在 GPU (WebGL) 上运行的时间为基准的3.8倍。</p>
 <p>Node.js 性能：</p>
-<p>在 Node.js 中，TensorFlow.js 使用 TensorFlow 的 C Binding ，所以基本上可以达到和 Python 接近的效果。</p>
+<p>在 Node.js 中，TensorFlow.js 可以用 JavaScript 加载转换后模型，或使用 TensorFlow 的 C++ Binding ，分别接近和超越了 Python 的性能。</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/performance-node.png"><img alt="../../_images/performance-node.png" src="../../_images/performance-node.png" style="width: 60%;" /></a>
 </div>
 <p>TensorFlow.js 在 Node.js 运行一次推理：</p>
 <ul class="simple">
-<li><p>在 CPU 上需要时间为56ms</p></li>
-<li><p>在 GPU (CUDA) 上需要时间为14ms</p></li>
+<li><p>在 CPU 上运行原生模型时间为 19.6ms</p></li>
+<li><p>在 GPU (CUDA) 上运行原生模型时间为 7.68ms</p></li>
 </ul>
-<p>与 Python 代码基准相比，Node.js 的 TensorFlow.js 在 CPU 上的运行时间与基准相同，在 GPU（CUDA） 上运行的时间是基准的1.6倍。</p>
-</div>
+<p>与 Python 代码基准相比，Node.js 的 TensorFlow.js 在 CPU 和 GPU 上的运行时间都比基准快 4% 。</p>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 195 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
 </div>
 </div>
 

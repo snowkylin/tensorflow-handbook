@@ -300,22 +300,24 @@
 <div class="section" id="docker-swift-for-tensorflow">
 <h3>在 Docker 中快速体验 Swift for TensorFlow<a class="headerlink" href="#docker-swift-for-tensorflow" title="永久链接至标题">¶</a></h3>
 <p>在本机已有 docker 环境的情况下, 使用预装 Swift for TensorFlow 的 Docker Image 是非常方便的。</p>
-<ul>
+<ol class="arabic">
 <li><p>获得一个 S4TS 的 Jupyter Notebook</p>
 <blockquote>
 <div><p>在命令行中执行 <code class="docutils literal notranslate"><span class="pre">nvidia-docker</span> <span class="pre">run</span> <span class="pre">-ti</span> <span class="pre">--rm</span> <span class="pre">-p</span> <span class="pre">8888:8888</span> <span class="pre">--cap-add</span> <span class="pre">SYS_PTRACE</span> <span class="pre">-v</span> <span class="pre">&quot;$(pwd)&quot;:/notebooks</span> <span class="pre">zixia/swift</span></code> 来启动 Jupyter ，然后根据提示的 URL ，打开浏览器访问即可。</p>
 </div></blockquote>
 </li>
-<li><p>获得一个已经安装好 S4TF 的 Swift REPL 环境</p>
+<li><p>执行一个本地的 Swift 代码文件</p>
 <blockquote>
-<div><p>在命令行中执行 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">--privileged</span> <span class="pre">--userns=host</span> <span class="pre">zixia/swift</span> <span class="pre">swift</span></code></p>
+<div><p>为了运行本地的 <code class="docutils literal notranslate"><span class="pre">s4tf.swift</span></code> 文件，我们可以用如下 docker 命令：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nvidia</span><span class="o">-</span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">ti</span> <span class="o">--</span><span class="n">rm</span> <span class="o">--</span><span class="n">privileged</span> <span class="o">--</span><span class="n">userns</span><span class="o">=</span><span class="n">host</span> \
+    <span class="o">-</span><span class="n">v</span> <span class="s2">&quot;$(pwd)&quot;</span><span class="p">:</span><span class="o">/</span><span class="n">notebooks</span> \
+    <span class="n">zixia</span><span class="o">/</span><span class="n">swift</span> \
+    <span class="n">swift</span> <span class="o">./</span><span class="n">s4tf</span><span class="o">.</span><span class="n">swift</span>
+</pre></div>
+</div>
 </div></blockquote>
 </li>
-</ul>
-<div class="admonition-docker-swift admonition">
-<p class="admonition-title">使用 Docker 执行 Swift 代码文件</p>
-<p>通过使用 Docker 的目录映射，可以启动 Docker 之后执行本地代码文件。详细使用方法可以参考 Docker Image <code class="docutils literal notranslate"><span class="pre">zixia/swift</span></code> 开源项目的地址：<a class="reference external" href="https://github.com/huan/docker-swift-tensorflow">https://github.com/huan/docker-swift-tensorflow</a></p>
-</div>
+</ol>
 </div>
 </div>
 <div class="section" id="id5">
@@ -451,11 +453,9 @@
 </ol>
 <div class="admonition-layer admonition">
 <p class="admonition-title">使用 <code class="docutils literal notranslate"><span class="pre">Layer</span></code> 协议定义神经网络模型</p>
-<p>为了定义一个 Swift 神经网络模型，我们需要建立一个遵循 <code class="docutils literal notranslate"><span class="pre">Layer</span></code> 协议，来声明一个定义神经网络结构的 <code class="docutils literal notranslate"><span class="pre">Struct</span></code>。</p>
+<p>为了在 Swift 中定义一个神经网络模型，我们需要建立一个 <code class="docutils literal notranslate"><span class="pre">Struct</span></code> 来实现模型结构，并确保其符合 <code class="docutils literal notranslate"><span class="pre">Layer</span></code> 协议。</p>
 <p>其中，最为核心的部分是声明 <code class="docutils literal notranslate"><span class="pre">callAsFunction(_:)</span></code> 方法，来定义输入和输出 Tensor 的映射关系。</p>
-<p><code class="docutils literal notranslate"><span class="pre">callAsFunction(_:)</span></code> 中可以通过类似 Keras 的 Sequential 的方法进行定义：<code class="docutils literal notranslate"><span class="pre">input.sequences(through:</span> <span class="pre">layer1,</span> <span class="pre">layer2,</span> <span class="pre">...)</span></code> 将输入和所有的后续处理层 <code class="docutils literal notranslate"><span class="pre">layer1</span></code>, <code class="docutils literal notranslate"><span class="pre">layer2</span></code>, … 等衔接起来。</p>
 </div>
-<p>import TensorFlow</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>struct MLP: Layer {
     // 定义模型的输入、输出数据类型
     typealias Input = Tensor&lt;Float&gt;
@@ -468,8 +468,10 @@
     
     @differentiable
     public func callAsFunction(_ input: Input) -&gt; Output {
-        // 模型运行时，将 input 顺序传递给：flatten 和 dense 层，将结果返回作为模型输出。
-        return input.sequenced(through: flatten, dense)
+        var x = input
+        x = flatten(x)
+        x = dense(x)
+        return x
     }  
 }
 </pre></div>
@@ -497,13 +499,13 @@
 <li><p>然后，我们通过对数据集的循环，计算模型的梯度 <code class="docutils literal notranslate"><span class="pre">grads</span></code> 并通过 <code class="docutils literal notranslate"><span class="pre">optimizer.update()</span></code> 来反向传播更新模型的参数，进行训练：</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">imageBatch</span><span class="p">,</span> <span class="n">labelBatch</span><span class="p">)</span> <span class="p">{</span>
-    <span class="o">//</span> <span class="n">Caculate</span> <span class="n">the</span> <span class="n">gradient</span>
+    <span class="o">//</span> <span class="n">计算梯度</span>
     <span class="n">let</span> <span class="n">grads</span> <span class="o">=</span> <span class="n">gradient</span><span class="p">(</span><span class="n">at</span><span class="p">:</span> <span class="n">model</span><span class="p">)</span> <span class="p">{</span> <span class="n">model</span> <span class="o">-&gt;</span> <span class="n">Tensor</span><span class="o">&lt;</span><span class="n">Float</span><span class="o">&gt;</span> <span class="ow">in</span>
         <span class="n">let</span> <span class="n">logits</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">softmaxCrossEntropy</span><span class="p">(</span><span class="n">logits</span><span class="p">:</span> <span class="n">logits</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="n">y</span><span class="p">)</span>
     <span class="p">}</span>
 
-    <span class="o">//</span> <span class="n">Update</span> <span class="n">parameters</span> <span class="n">by</span> <span class="n">optimizer</span>
+    <span class="o">//</span> <span class="n">优化器根据梯度更新模型参数</span>
     <span class="n">optimizer</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">&amp;</span><span class="n">model</span><span class="o">.</span><span class="n">self</span><span class="p">,</span> <span class="n">along</span><span class="p">:</span> <span class="n">grads</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
@@ -520,6 +522,10 @@
 <div class="admonition-swift-in-out-parameters admonition">
 <p class="admonition-title">Swift 输入输出参数 (In-Out Parameters)</p>
 <p>在 Swift 语言中，函数缺省是不可以修改参数的值的。为了让函数能够修改传入的参数变量，需要将传入的参数作为输入输出参数（In-Out Parmeters）。具体表现为需要在参数前加 <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> 符号，表示这个值可以被函数修改。</p>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">优化器的参数</p>
+<p>优化器更新模型参数的方法是 <code class="docutils literal notranslate"><span class="pre">update(variables,</span> <span class="pre">along:</span> <span class="pre">direction)</span></code> 。其中，<code class="docutils literal notranslate"><span class="pre">variables</span></code> 是需要更新的模型（内部包含的参数），因为需要被更新，所以我们通过添加 <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> 在参数变量前，通过引用的方式传入。<code class="docutils literal notranslate"><span class="pre">direction</span></code> 是模型参数所对应的梯度，需要通过参数标签 <code class="docutils literal notranslate"><span class="pre">along</span></code> 来指定输入。</p>
 </div>
 <ol class="arabic simple" start="5">
 <li><p>最后，我们使用训练好的模型，在测试数据集上进行检查，得到模型的准度：</p></li>
@@ -539,7 +545,17 @@
 </pre></div>
 </div>
 <p>本小节的源代码可以在 <a class="reference external" href="https://github.com/huan/tensorflow-handbook-swift">https://github.com/huan/tensorflow-handbook-swift</a> 找到。加载 <cite>MNIST</cite> 数据集使用了作者封装的 Swift Module： <a class="reference external" href="https://github.com/huan/swift-MNIST">swift-MNIST</a>。更方便的是在 Google Colab 上直接打开 <a class="reference external" href="https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb">本例子的 Jupyter Notebook</a> 直接运行。</p>
-</div>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 200 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
 </div>
 </div>
 
