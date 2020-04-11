@@ -229,3 +229,17 @@ TensorFlow所需的硬件配置 *
 尽管科研机构或公司使用的计算硬件配置堪称豪华，不过与其他前沿科研领域（例如生物）动辄几十上百万的仪器试剂费用相比，依然不算太贵（毕竟一台六七万至二三十万的深度学习服务器就可以供数位研究者使用很长时间）。因此，机器学习相对而言还是十分平易近人的。
 
 关于深度学习工作站的具体配置，由于硬件行情更新较快，故不在此列出具体配置，推荐关注 `知乎问题 - 如何配置一台适用于深度学习的工作站？ <https://www.zhihu.com/question/33996159>`_ ，并结合最新市场情况进行配置。
+
+.. raw:: html
+
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 188 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>

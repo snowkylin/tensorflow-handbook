@@ -116,7 +116,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia（Ziyang）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
@@ -593,7 +593,7 @@
 </div>
 <div class="section" id="id10">
 <h2>基础示例：线性回归<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
-<p>在本节，我们为 <a class="reference internal" href="../../en/basic/basic.html#id3"><span class="std std-ref">第一章的线性回归示例</span></a> 提供一个基于 TensorFlow 1.X 的图执行模式 API 的版本，供有需要的读者对比参考。</p>
+<p>在本节，我们为 <a class="reference internal" href="../basic/basic.html#linear-regression"><span class="std std-ref">第一章的线性回归示例</span></a> 提供一个基于 TensorFlow 1.X 的图执行模式 API 的版本，供有需要的读者对比参考。</p>
 <p>与第一章的NumPy和即时执行模式不同，TensorFlow的图执行模式使用 <strong>符号式编程</strong> 来进行数值运算。首先，我们需要将待计算的过程抽象为计算图，将输入、运算和输出都用符号化的节点来表达。然后，我们将数据不断地送入输入节点，让数据沿着计算图进行计算和流动，最终到达我们需要的特定输出节点。</p>
 <p>以下代码展示了如何基于TensorFlow的符号式编程方法完成与前节相同的任务。其中， <code class="docutils literal notranslate"><span class="pre">tf.placeholder()</span></code> 即可以视为一种“符号化的输入节点”，使用 <code class="docutils literal notranslate"><span class="pre">tf.get_variable()</span></code> 定义模型的参数（Variable类型的张量可以使用 <code class="docutils literal notranslate"><span class="pre">tf.assign()</span></code> 操作进行赋值），而 <code class="docutils literal notranslate"><span class="pre">sess.run(output_node,</span> <span class="pre">feed_dict={input_node:</span> <span class="pre">data})</span></code> 可以视作将数据送入输入节点，沿着计算图计算并到达输出节点并返回值的过程。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>

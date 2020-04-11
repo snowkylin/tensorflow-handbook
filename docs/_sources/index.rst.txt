@@ -31,13 +31,15 @@
 中文版
 ==========================
 
-这是一本简明的 TensorFlow 2 入门指导手册，基于 Keras 和即时执行模式（Eager Execution），力图让具备一定机器学习及Python基础的开发者们快速上手TensorFlow 2。
+这是一本简明的 TensorFlow 2 入门指导手册，基于 Keras 和即时执行模式（Eager Execution），力图让具备一定机器学习及 Python 基础的开发者们快速上手 TensorFlow 2。
 
 本手册的所有代码基于 TensorFlow 2.1 和 2.0 正式版。文中的所有示例代码可至 `这里 <https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/en>`_ 获得。
 
-本手册正于TensorFlow官方微信公众号（TensorFlow_official）连载，可点此查看 `连载文章目录 <https://mp.weixin.qq.com/s/cvZHUWS3MiGHq3UDynucxw>`_ 。本手册的英文版仍在翻译中。请访问 https://v1.tf.wiki 以查看本手册上一版的英文版。本手册是  `Google Summer of Code 2019 <https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/>`_  项目之一。
+本手册正于TensorFlow官方微信公众号（TensorFlow_official）连载，可点此查看 `连载文章目录 <https://mp.weixin.qq.com/s/cvZHUWS3MiGHq3UDynucxw>`_ 。本手册的英文版仍在翻译中。请访问 https://v1.tf.wiki 以查看本手册上一版的英文版。本手册是  `Google Summer of Code 2019 <https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/>`_  项目之一。每章文末设有留言区，供有需要的读者讨论交流使用。
 
 GitHub： https://github.com/snowkylin/tensorflow-handbook
+
+答疑区： https://discuss.tf.wiki
 
 .. toctree:: 
     :maxdepth: 2
@@ -78,7 +80,7 @@ GitHub： https://github.com/snowkylin/tensorflow-handbook
     zh/appendix/tfhub
     zh/appendix/tfds  
     zh/appendix/swift
-    zh/appendix/julia
+    zh/appendix/quantum
 
 ..
     .. toctree:: 
@@ -106,11 +108,6 @@ GitHub： https://github.com/snowkylin/tensorflow-handbook
     zh/appendix/recommended_books
     zh/appendix/terms
 
-答疑区 
-
-- （中文）https://discuss.tf.wiki/ （中文的疑问和建议请来此处，将以中文回答和讨论。欢迎使用中文的开发者们前来交流讨论。）
-- （英文）https://github.com/snowkylin/tensorflow-handbook/releases （英文的疑问或建议可在 GitHub issue 中提出，会以英文回答）
-
 ..
     PDF下载（旧版）：
 
@@ -129,6 +126,8 @@ The code of this handbook is based on TensorFlow 2.0 stable version and beta1 ve
 The English version of this handbook is still in progress (section title with a ✔️ means that the translation of this section is finished). Please refer to https://v1.tf.wiki for the eariler version. This handbook is a project of `Google Summer of Code 2019 <https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/>`_ .
 
 GitHub： https://github.com/snowkylin/tensorflow-handbook
+
+Q&A: https://discuss.tf.wiki
 
 .. toctree:: 
     :maxdepth: 2
@@ -199,11 +198,6 @@ GitHub： https://github.com/snowkylin/tensorflow-handbook
         en/models
         en/extended 
         en/static
-
-Q&A area
-
-- (Chinese) The tf.wiki community site: https://discuss.tf.wiki
-- (English) https://github.com/snowkylin/tensorflow-handbook/issues
 
 ..
     PDF download (old version): 

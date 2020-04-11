@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>（仅纸质版）TensorFlow.js在线聊天机器人 &mdash; 简单粗暴 TensorFlow 2 0.4 alpha 文档</title>
+  <title>TensorFlow Quantum: 混合量子-经典机器学习 * &mdash; 简单粗暴 TensorFlow 2 0.4 alpha 文档</title>
   
 
   
@@ -39,7 +39,9 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
-    <link rel="search" title="搜索" href="../../search.html" /> 
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="使用Docker部署TensorFlow环境" href="docker.html" />
+    <link rel="prev" title="Swift for TensorFlow (S4TF) (Huan）" href="swift.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -108,23 +110,38 @@
 </ul>
 <p class="caption"><span class="caption-text">大规模训练与加速</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">TensorFlow分布式训练</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
 </ul>
 <p class="caption"><span class="caption-text">扩展</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Quantum: 混合量子-经典机器学习 *</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">量子计算基本概念</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">量子位</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">量子门</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">量子电路</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">混合量子-经典机器学习</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">参数化的量子电路</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">将参数化的量子电路嵌入机器学习模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">量子数据集</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">实例：对量子数据集进行二分类</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">参考资料与推荐阅读</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">术语中英对照表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms.html">术语中英对照表</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Preface</span></p>
 <ul>
@@ -211,13 +228,13 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>（仅纸质版）TensorFlow.js在线聊天机器人</li>
+      <li>TensorFlow Quantum: 混合量子-经典机器学习 *</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/zh/application/rnn.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/zh/appendix/quantum.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -230,8 +247,53 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="tensorflow-js">
-<h1>（仅纸质版）TensorFlow.js在线聊天机器人<a class="headerlink" href="#tensorflow-js" title="永久链接至标题">¶</a></h1>
+  <div class="section" id="tensorflow-quantum">
+<h1>TensorFlow Quantum: 混合量子-经典机器学习 *<a class="headerlink" href="#tensorflow-quantum" title="永久链接至标题">¶</a></h1>
+<p>我们身边的经典计算机利用比特位和逻辑门进行二进制运算。在物理硬件上，这种运算主要是通过半导体的特殊导电性质实现的。经过几十年的发展，我们已经可以在一片小小的半导体芯片上集成上亿个半导体晶体管，从而实现高性能的经典计算。</p>
+<p>而量子计算（Quantum Computing）旨在利用具有量子特性（例如量子态叠加和量子纠缠）的“量子比特位”和“量子逻辑门”进行计算。这种新的计算模式可以在搜索和大数分解等重要领域达成指数级的加速，让当前无法实现的一些超大规模运算成为可能，从而可能在未来深远地改变世界。在物理硬件上，这类量子运算也可以通过一些具有量子特性的结构（例如超导约瑟夫森结）实现。</p>
+<p>然而不幸的是，尽管量子计算的理论已经有了比较深入的发展，可在物理硬件上，我们目前仍然造不出一台超越经典计算机的通用量子计算机 <a class="footnote-reference brackets" href="#f0" id="id1">1</a> 。尽管IBM和谷歌等业界巨头在通用量子计算机的物理构建上已经取得了一些成绩，但无论是量子比特的个数还是在退相干问题的解决上，都还远无法达到实用的层级。</p>
+<div class="section" id="id2">
+<h2>量子计算基本概念<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h3>量子位<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="id4">
+<h3>量子门<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="id5">
+<h3>量子电路<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>混合量子-经典机器学习<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id7">
+<h3>参数化的量子电路<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="id8">
+<h3>将参数化的量子电路嵌入机器学习模型<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="id9">
+<h3>量子数据集<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>实例：对量子数据集进行二分类<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<dl class="footnote brackets">
+<dt class="label" id="f0"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>此手册的行文时间为2020年，如果你来自未来，请理解作者的时代局限性。</p>
+</dd>
+</dl>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 23 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
 </div>
 
 
@@ -239,6 +301,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="docker.html" class="btn btn-neutral float-right" title="使用Docker部署TensorFlow环境" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="swift.html" class="btn btn-neutral float-left" title="Swift for TensorFlow (S4TF) (Huan）" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
