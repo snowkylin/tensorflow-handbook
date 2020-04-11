@@ -56,17 +56,20 @@ Google 的 Colaboratory 可以直接支持 Swift 语言的运行环境。可以 
 
 在本机已有 docker 环境的情况下, 使用预装 Swift for TensorFlow 的 Docker Image 是非常方便的。
 
-- 获得一个 S4TS 的 Jupyter Notebook
+1. 获得一个 S4TS 的 Jupyter Notebook
 
     在命令行中执行 ``nvidia-docker run -ti --rm -p 8888:8888 --cap-add SYS_PTRACE -v "$(pwd)":/notebooks zixia/swift`` 来启动 Jupyter ，然后根据提示的 URL ，打开浏览器访问即可。
 
-- 获得一个已经安装好 S4TF 的 Swift REPL 环境
+2. 执行一个本地的 Swift 代码文件
     
-    在命令行中执行 ``docker run -it --privileged --userns=host zixia/swift swift``
+    为了运行本地的 ``s4tf.swift`` 文件，我们可以用如下 docker 命令：
 
-.. admonition:: 使用 Docker 执行 Swift 代码文件
+    ::
 
-    通过使用 Docker 的目录映射，可以启动 Docker 之后执行本地代码文件。详细使用方法可以参考 Docker Image ``zixia/swift`` 开源项目的地址：https://github.com/huan/docker-swift-tensorflow
+        nvidia-docker run -ti --rm --privileged --userns=host \
+            -v "$(pwd)":/notebooks \  
+            zixia/swift \
+            swift ./s4tf.swift
 
 S4TF 基础使用
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -221,16 +224,12 @@ MNIST数字分类
 
 .. admonition:: 使用 ``Layer`` 协议定义神经网络模型
 
-    为了定义一个 Swift 神经网络模型，我们需要建立一个遵循 ``Layer`` 协议，来声明一个定义神经网络结构的 ``Struct``。
+    为了在 Swift 中定义一个神经网络模型，我们需要建立一个 ``Struct`` 来实现模型结构，并确保其符合 ``Layer`` 协议。
     
     其中，最为核心的部分是声明 ``callAsFunction(_:)`` 方法，来定义输入和输出 Tensor 的映射关系。
     
-    ``callAsFunction(_:)`` 中可以通过类似 Keras 的 Sequential 的方法进行定义：``input.sequences(through: layer1, layer2, ...)`` 将输入和所有的后续处理层 ``layer1``, ``layer2``, ... 等衔接起来。
-
-import TensorFlow
-
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 7-22
+    :lines: 7-24
 
 .. admonition:: Swift 参数标签
 
@@ -243,12 +242,12 @@ import TensorFlow
 3. 接下来，我们实例化这个 MLP 神经网络模型，实例化 MNIST 数据集，并将其存入 ``imageBatch`` 和 ``labelBatch`` 变量：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 24-31
+    :lines: 26-33
 
 4. 然后，我们通过对数据集的循环，计算模型的梯度 ``grads`` 并通过 ``optimizer.update()`` 来反向传播更新模型的参数，进行训练：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 33-42
+    :lines: 35-44
 
 .. admonition:: Swift 闭包函数（Closure）
 
@@ -264,10 +263,14 @@ import TensorFlow
 
     在 Swift 语言中，函数缺省是不可以修改参数的值的。为了让函数能够修改传入的参数变量，需要将传入的参数作为输入输出参数（In-Out Parmeters）。具体表现为需要在参数前加 ``&`` 符号，表示这个值可以被函数修改。
 
+.. admonition:: 优化器的参数
+
+    优化器更新模型参数的方法是 ``update(variables, along: direction)`` 。其中，``variables`` 是需要更新的模型（内部包含的参数），因为需要被更新，所以我们通过添加 ``&`` 在参数变量前，通过引用的方式传入。``direction`` 是模型参数所对应的梯度，需要通过参数标签 ``along`` 来指定输入。
+
 5. 最后，我们使用训练好的模型，在测试数据集上进行检查，得到模型的准度：
 
 .. literalinclude:: /_static/code/zh/appendix/swift/mnist.swift
-    :lines: 44-
+    :lines: 46-
 
 以上程序运行输出为：
 

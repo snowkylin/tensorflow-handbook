@@ -369,7 +369,7 @@ Float模型与 Quantized模型大小与性能对比：
    :align: center
 
    * - 模型类别
-     -Float
+     - Float
      - Quantized
    * - 模型大小
      - 312K
