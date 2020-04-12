@@ -638,7 +638,7 @@ $ npm install @tensorflow/tfjs-node-gpu
 <div class="section" id="id9">
 <h2>TensorFlow.js 模型训练 *<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
 <p>与 TensorFlow Serving 和 TensorFlow Lite 不同，TensorFlow.js 不仅支持模型的部署和推断，还支持直接在 TensorFlow.js 中进行模型训练、</p>
-<p>在 TensorFlow 基础章节中，我们已经用 Python 实现过，针对某城市在 2013-2017 年的房价的任务，通过对该数据进行线性回归，即使用线性模型 <img class="math" src="../../_images/math/4b73dd4430869b9fd6bcb231d4cc119b153f5d10.png" alt="y = ax + b"/> 来拟合上述数据，此处 <img class="math" src="../../_images/math/b3e65e3b6408fcfa00452530b73f55d1755f9965.png" alt="a"/> 和 <img class="math" src="../../_images/math/68c7c8c65602677ab56cf7fd88002023f0edc575.png" alt="b"/> 是待求的参数。</p>
+<p>在 TensorFlow 基础章节中，我们已经用 Python 实现过，针对某城市在 2013-2017 年的房价的任务，通过对该数据进行线性回归，即使用线性模型 <img class="math" src="../../_images/math/6ee3a3353577adda12aea610224ed23b240df852.png" alt="y = ax + b"/> 来拟合上述数据，此处 <img class="math" src="../../_images/math/45bfd5f5191f26371415d8d186a6276ccb5b7061.png" alt="a"/> 和 <img class="math" src="../../_images/math/d7855244d3a0e8ad7e883af9a3c6143159a6efb4.png" alt="b"/> 是待求的参数。</p>
 <p>下面我们改用 TensorFlow.js 来实现一个 JavaScript 版本。</p>
 <p>首先，我们定义数据，进行基本的归一化操作。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">const</span> <span class="n">xsRaw</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">2014</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">,</span> <span class="mi">2017</span><span class="p">])</span>
