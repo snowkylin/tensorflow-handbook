@@ -19,7 +19,7 @@ q_data = tfq.convert_to_tensor(
 label = np.array([0] * 100 + [1] * 100)
 
 theta = sympy.Symbol('theta')
-q_model = cirq.Circuit()
+q_model = cirq.Circuit(cirq.rx(theta)(q))
 q_data_input = tf.keras.Input(shape=() ,dtype=tf.dtypes.string)
 expectation_output = tfq.layers.PQC(q_model, cirq.Z(q))(q_data_input)
 classifier_output = tf.keras.layers.Dense(2, activation=tf.keras.activations.softmax)(expectation_output)
