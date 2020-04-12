@@ -34,6 +34,8 @@
 # imgmath or mathjax
 extensions = [ 'sphinx.ext.imgmath', 'sphinx.ext.intersphinx']
 
+imgmath_latex_preamble = '\\usepackage{braket}'
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
