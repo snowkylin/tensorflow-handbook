@@ -122,16 +122,17 @@
 <li class="toctree-l2"><a class="reference internal" href="#id2">量子计算基本概念</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id4">量子比特</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id7">量子逻辑门</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id9">量子电路</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">量子线路</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cirq">实例：使用Cirq建立简单的量子线路</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id10">混合量子-经典机器学习</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#pqc">参数化的量子电路（PQC）</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id11">将参数化的量子电路嵌入机器学习模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">混合量子-经典机器学习</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id12">量子数据集</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pqc">参数化的量子线路（PQC）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">将参数化的量子线路嵌入机器学习模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">实例：对量子数据集进行二分类</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id13">实例：对量子数据集进行二分类</a></li>
 </ul>
 </li>
 </ul>
@@ -252,10 +253,10 @@
 <p>我们身边的经典计算机利用比特位和逻辑门进行二进制运算。在物理硬件上，这种运算主要是通过半导体的特殊导电性质实现的。经过几十年的发展，我们已经可以在一片小小的半导体芯片上集成上亿个晶体管，从而实现高性能的经典计算。</p>
 <p>而量子计算（Quantum Computing）旨在利用具有量子特性（例如量子态叠加和量子纠缠）的“量子比特位”和“量子逻辑门”进行计算。这种新的计算模式可以在搜索和大数分解等重要领域达成指数级的加速，让当前无法实现的一些超大规模运算成为可能，从而可能在未来深远地改变世界。在物理硬件上，这类量子运算也可以通过一些具有量子特性的结构（例如超导约瑟夫森结）实现。</p>
 <p>不幸的是，尽管量子计算的理论已经有了比较深入的发展，可在物理硬件上，我们目前仍然造不出一台超越经典计算机的通用量子计算机 <a class="footnote-reference brackets" href="#f0" id="id1">1</a> 。IBM和谷歌等业界巨头在通用量子计算机的物理构建上已经取得了一些成绩，但无论是量子比特的个数还是在退相干问题的解决上，都还远无法达到实用的层级。</p>
-<p>以上是量子计算的基本背景，接下来我们讨论量子机器学习。量子机器学习的一种最直接的思路是使用量子计算加速传统的机器学习任务，例如量子版本的PCA、SVM和K-Means算法，然而这些算法目前都尚未达到可实用的程度。我们在本章讨论的量子机器学习则采用另一种思路，即构建参数化的量子电路（Parameterized Quantum Circuits, PQCs）。PQC可以作为深度学习模型中的层而被使用，如果我们在普通深度学习模型的基础上加入PQC，即称为混合量子-经典机器学习（Hybrid Quantum-Classical Machine Learning）。这种混合模型尤其适合于量子数据集（Quantum Data）上的任务。而TensorFlow Quantum正是帮助我们构建这种混合量子-经典机器学习模型的利器。接下来，我们会对量子计算的若干基本概念进行简介，然后介绍使用TensorFlow Quantum构建PQC、将PQC嵌入Keras模型、并在量子数据集上训练混合模型的流程。</p>
+<p>以上是量子计算的基本背景，接下来我们讨论量子机器学习。量子机器学习的一种最直接的思路是使用量子计算加速传统的机器学习任务，例如量子版本的PCA、SVM和K-Means算法，然而这些算法目前都尚未达到可实用的程度。我们在本章讨论的量子机器学习则采用另一种思路，即构建参数化的量子线路（Parameterized Quantum Circuits, PQCs）。PQC可以作为深度学习模型中的层而被使用，如果我们在普通深度学习模型的基础上加入PQC，即称为混合量子-经典机器学习（Hybrid Quantum-Classical Machine Learning）。这种混合模型尤其适合于量子数据集（Quantum Data）上的任务。而TensorFlow Quantum正是帮助我们构建这种混合量子-经典机器学习模型的利器。接下来，我们会对量子计算的若干基本概念进行简介，然后介绍使用TensorFlow Quantum和谷歌的量子计算库Cirq构建PQC、将PQC嵌入Keras模型、并在量子数据集上训练混合模型的流程。</p>
 <div class="section" id="id2">
 <h2>量子计算基本概念<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<p>本节将简述量子计算的一些基本概念，包括量子比特、量子门、量子电路等。</p>
+<p>本节将简述量子计算的一些基本概念，包括量子比特、量子门、量子线路等。</p>
 <div class="admonition- admonition">
 <p class="admonition-title">推荐阅读</p>
 <p>如果你希望更深入地了解量子力学以及量子计算的基本原理，建议可以从以下两本书入手：</p>
@@ -268,9 +269,9 @@
 <h3>量子比特<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
 <p>在二进制的经典计算机中，我们用比特（Bit，也称“位”）作为信息存储的基本单位，一个比特只有0或者1两种状态。而在量子计算机中，我们使用量子比特（Quantum Bit, Qubit，也称“量子位”）进行信息的表示。量子比特也有两种基本状态 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/8608cd3b3cc62b519ce7f4f6c1389666f01e993e.png" alt="\ket{1}"/> 。不过量子比特除了可以处于这两种基本状态以外，还可以处于两者之间的叠加态（Superposition State），即 <img class="math" src="../../_images/math/ba7da30812bc25406300571ecfb01d8ea26b54fd.png" alt="\ket{\psi} = a \ket{0} + b \ket{1}"/> （其中a和b是复数， <img class="math" src="../../_images/math/247adfb6a6ed859e452c5bfdad86d02976d1d831.png" alt="|a|^2 + |b|^2 = 1"/> ）。例如， <img class="math" src="../../_images/math/bd024c459a020c3c88e0e9616024b9fbbe3737db.png" alt="\ket{\psi_0} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> 和 <img class="math" src="../../_images/math/18f1ee94a093c360dc9af94215afca14bf915e17.png" alt="\ket{\psi_1} = \frac{1}{\sqrt{2}} \ket{0} - \frac{1}{\sqrt{2}} \ket{1}"/> 都是合法的量子态。我们也可以使用向量化的语言来表示量子比特的状态。如果我们令 <img class="math" src="../../_images/math/3e9098cb6b6560f6c46215a4cb4bc7aeadb4f74c.png" alt="\ket{0} = \begin{bmatrix}1 \\ 0\end{bmatrix}"/> 、 <img class="math" src="../../_images/math/0555b4e8a4c4987d04935506315169b60593bf81.png" alt="\ket{1} = \begin{bmatrix}0 \\ 1\end{bmatrix}"/>，则 <img class="math" src="../../_images/math/e4011b3af48419bf18489706314b43392b3bc2e2.png" alt="\ket{\psi} = \begin{bmatrix}a \\ b\end{bmatrix}"/>、<img class="math" src="../../_images/math/64a16a37f8a6c1bdcefdb69ccfee614cb9631cad.png" alt="\ket{\psi_0} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix}"/>、<img class="math" src="../../_images/math/4bc0ad2452f0a2e12f1e4ae1fb35d6c9bb71548e.png" alt="\ket{\psi_1} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ -\frac{1}{\sqrt{2}}\end{bmatrix}"/>。</p>
 <p>同时，我们可以用布洛赫球面（Bloch Sphere）来形象地展示单个量子比特的状态。球面的最顶端为 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> ，最底端为 <img class="math" src="../../_images/math/8608cd3b3cc62b519ce7f4f6c1389666f01e993e.png" alt="\ket{1}"/> ，而从原点到球面上任何一点的单位向量都可以是一个量子比特的状态。</p>
-<div class="figure align-center" id="id14">
+<div class="figure align-center" id="id15">
 <a class="reference internal image-reference" href="../../_images/bloch_sphere.png"><img alt="../../_images/bloch_sphere.png" src="../../_images/bloch_sphere.png" style="width: 30%;" /></a>
-<p class="caption"><span class="caption-text">布洛赫球面（ <a class="reference external" href="https://en.wikipedia.org/wiki/Bloch_sphere">Bloch Sphere</a> ）。其中Z轴正负方向的量子态分别为基本态 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/8608cd3b3cc62b519ce7f4f6c1389666f01e993e.png" alt="\ket{1}"/> ，X轴正负方向的量子态分别为 <img class="math" src="../../_images/math/461143ce71f8cb66f4e290fb4f40ebabcf9daebc.png" alt="\frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> 和 <img class="math" src="../../_images/math/b111422ef4a031e380439315e2a1cfa4ffdec5f4.png" alt="\frac{1}{\sqrt{2}} \ket{0} - \frac{1}{\sqrt{2}} \ket{1}"/> ，Y轴正负方向的量子态分别为 <img class="math" src="../../_images/math/07fb592c41a97037d1f74e1c42a5ca4858ab3604.png" alt="\frac{1}{\sqrt{2}} \ket{0} + \frac{i}{\sqrt{2}} \ket{1}"/> 和 <img class="math" src="../../_images/math/06b3756d92c3411db8b9d9dfc88eceaa800602d7.png" alt="\frac{1}{\sqrt{2}} \ket{0} - \frac{i}{\sqrt{2}} \ket{1}"/> 。<a class="reference external" href="https://en.wikipedia.org/wiki/File:Bloch_sphere.svg">图示来源</a></span><a class="headerlink" href="#id14" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">布洛赫球面（ <a class="reference external" href="https://en.wikipedia.org/wiki/Bloch_sphere">Bloch Sphere</a> ）。其中Z轴正负方向的量子态分别为基本态 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/8608cd3b3cc62b519ce7f4f6c1389666f01e993e.png" alt="\ket{1}"/> ，X轴正负方向的量子态分别为 <img class="math" src="../../_images/math/461143ce71f8cb66f4e290fb4f40ebabcf9daebc.png" alt="\frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> 和 <img class="math" src="../../_images/math/b111422ef4a031e380439315e2a1cfa4ffdec5f4.png" alt="\frac{1}{\sqrt{2}} \ket{0} - \frac{1}{\sqrt{2}} \ket{1}"/> ，Y轴正负方向的量子态分别为 <img class="math" src="../../_images/math/07fb592c41a97037d1f74e1c42a5ca4858ab3604.png" alt="\frac{1}{\sqrt{2}} \ket{0} + \frac{i}{\sqrt{2}} \ket{1}"/> 和 <img class="math" src="../../_images/math/06b3756d92c3411db8b9d9dfc88eceaa800602d7.png" alt="\frac{1}{\sqrt{2}} \ket{0} - \frac{i}{\sqrt{2}} \ket{1}"/> 。<a class="reference external" href="https://en.wikipedia.org/wiki/File:Bloch_sphere.svg">图示来源</a></span><a class="headerlink" href="#id15" title="永久链接至图片">¶</a></p>
 </div>
 <p>值得一提的是，尽管量子比特 <img class="math" src="../../_images/math/ba7da30812bc25406300571ecfb01d8ea26b54fd.png" alt="\ket{\psi} = a \ket{0} + b \ket{1}"/> 可能的状态相当之多，但一旦我们对其进行观测，则其状态会立即坍缩 <a class="footnote-reference brackets" href="#f1" id="id6">2</a> 到 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/8608cd3b3cc62b519ce7f4f6c1389666f01e993e.png" alt="\ket{1}"/> 这两个基本状态中的一个，其概率分别为 <img class="math" src="../../_images/math/79bb1190efa1bf87dd9c6a4338f3625cfb0c431f.png" alt="|a|^2"/> 和  <img class="math" src="../../_images/math/1e845242cecb914ce0e3c290a9fb55f85dace31f.png" alt="|b|^2"/> 。</p>
 </div>
@@ -281,27 +282,110 @@
 <p>可能有些读者已经想到了，既然单个量子比特的状态不止 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/8608cd3b3cc62b519ce7f4f6c1389666f01e993e.png" alt="\ket{1}"/> 两种，那么量子逻辑门作为作为对量子比特的变换，其实也完全可以不局限于与或非。事实上，只要满足一定条件的矩阵都可以作为量子逻辑门。例如，将量子态在布洛赫球面上绕X、Y、Z轴旋转的变换 <img class="math" src="../../_images/math/8b743f9b76a6635768cfa9068954d187f12c35c7.png" alt="Rx(\theta)"/> 、<img class="math" src="../../_images/math/4cdf85508628114508b064b5d9be8ab3b34b3ceb.png" alt="Ry(\theta)"/> 、<img class="math" src="../../_images/math/a08d43570b70848dc75287351742416b8968d782.png" alt="Rz(\theta)"/> （其中 <img class="math" src="../../_images/math/d0221b527fc400ea962deb6eea7e53620bfa962e.png" alt="\theta"/> 是旋转角度，当 <img class="math" src="../../_images/math/baf2214b6578a3750ce0a5b5c94992ee73ddfc25.png" alt="\theta=180^\circ"/> 时记为 <img class="math" src="../../_images/math/46576b8590e8b4079f3b0f5ab065d47943b9d3d1.png" alt="X"/> 、<img class="math" src="../../_images/math/b3fcdebed7b07ecc43edf648aa59e68d9b306997.png" alt="Y"/> 、<img class="math" src="../../_images/math/acd9531391929f72b7fa8163df542f6d27e97e3f.png" alt="Z"/> ）都是量子逻辑门。另外，有一个量子逻辑门“阿达马门”（Hadamard Gate） <img class="math" src="../../_images/math/c6f12868abee21e5021402d7aca6d69a5eb0b17e.png" alt="H = \frac{1}{\sqrt{2}} \begin{bmatrix}1 &amp; 1 \\ 1 &amp; -1\end{bmatrix}"/> 可以将量子状态从基本态转换为叠加态，在很多量子计算的场景中占据了重要地位。</p>
 </div>
 <div class="section" id="id9">
-<h3>量子电路<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<h3>量子线路<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>当我们将量子比特以及量子逻辑门按顺序标记在一条或多条平行的线条上时，就构成了量子线路（Quantum Circuit，或称量子电路）。例如，对于我们在上一节讨论的，使用量子非门 <img class="math" src="../../_images/math/46576b8590e8b4079f3b0f5ab065d47943b9d3d1.png" alt="X"/> 对基本态 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> 进行变换的过程，我们可以写出量子线路如下：</p>
+<div class="figure align-center" id="id16">
+<a class="reference internal image-reference" href="../../_images/X_circuit.png"><img alt="../../_images/X_circuit.png" src="../../_images/X_circuit.png" style="width: 30%;" /></a>
+<p class="caption"><span class="caption-text">一个简单的量子线路</span><a class="headerlink" href="#id16" title="永久链接至图片">¶</a></p>
+</div>
+<p>在量子线路中，每条横线代表一个量子比特。上图中最左边的 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> 代表量子比特的初始态。中间的X方块代表量子非门 <img class="math" src="../../_images/math/46576b8590e8b4079f3b0f5ab065d47943b9d3d1.png" alt="X"/> ，最右边的表盘符号代表测量操作。这个线路的意义是“对初始状态为 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> 的量子比特执行量子非门 <img class="math" src="../../_images/math/46576b8590e8b4079f3b0f5ab065d47943b9d3d1.png" alt="X"/> 操作，并测量变换后的量子比特状态”。根据我们在前节的讨论，变换后的量子比特状态为基本态 <img class="math" src="../../_images/math/8608cd3b3cc62b519ce7f4f6c1389666f01e993e.png" alt="\ket{1}"/> ，因此我们可以期待该量子线路最后的测量结果始终为1。</p>
+<p>接下来，我们考虑将上图中量子线路的量子非门 <img class="math" src="../../_images/math/46576b8590e8b4079f3b0f5ab065d47943b9d3d1.png" alt="X"/> 换为阿达马门 <img class="math" src="../../_images/math/3e607e9c6cb486234e0d9d052e8bbc665fa4f4cb.png" alt="H"/> ：</p>
+<div class="figure align-center" id="id17">
+<a class="reference internal image-reference" href="../../_images/H_circuit.png"><img alt="../../_images/H_circuit.png" src="../../_images/H_circuit.png" style="width: 30%;" /></a>
+<p class="caption"><span class="caption-text">将量子非门 <img class="math" src="../../_images/math/46576b8590e8b4079f3b0f5ab065d47943b9d3d1.png" alt="X"/> 换为阿达马门 <img class="math" src="../../_images/math/3e607e9c6cb486234e0d9d052e8bbc665fa4f4cb.png" alt="H"/> 后的量子线路</span><a class="headerlink" href="#id17" title="永久链接至图片">¶</a></p>
+</div>
+<p>阿达马门对应的矩阵表示为 <img class="math" src="../../_images/math/c6f12868abee21e5021402d7aca6d69a5eb0b17e.png" alt="H = \frac{1}{\sqrt{2}} \begin{bmatrix}1 &amp; 1 \\ 1 &amp; -1\end{bmatrix}"/> ，于是我们可以计算出变换后的量子态为 <img class="math" src="../../_images/math/0dc92ddea3cd4da5d808bcfe148bf0b62af2682b.png" alt="H\ket{0} = \frac{1}{\sqrt{2}} \begin{bmatrix}1 &amp; 1 \\ 1 &amp; -1\end{bmatrix}\begin{bmatrix}1 \\ 0\end{bmatrix} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> 。这是一个 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/8608cd3b3cc62b519ce7f4f6c1389666f01e993e.png" alt="\ket{1}"/> 的叠加态，在观测后会坍缩到基本态，其概率分别为 <img class="math" src="../../_images/math/68e71fe272ba0acd299e12f0762640a2c9adc4cc.png" alt="|\frac{1}{\sqrt{2}}|^2 = \frac{1}{2}"/> 。也就是说，这个量子线路的观测结果类似于扔硬币。假若观测20次，则大约10次的结果是 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> ，10次的结果是 <img class="math" src="../../_images/math/8608cd3b3cc62b519ce7f4f6c1389666f01e993e.png" alt="\ket{1}"/> 。</p>
+</div>
+<div class="section" id="cirq">
+<h3>实例：使用Cirq建立简单的量子线路<a class="headerlink" href="#cirq" title="永久链接至标题">¶</a></h3>
+<p><a class="reference external" href="https://cirq.readthedocs.io/">Cirq</a> 是谷歌主导的开源量子计算库，可以帮助我们方便地建立量子线路并模拟测量结果（我们在下一节介绍TensorFlow Quantum的时候还会用到它）。以下代码实现了上节所建立的两个简单的量子线路，并分别进行了20次的模拟测量。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cirq</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">LineQubit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>           <span class="c1"># 实例化一个量子比特</span>
+<span class="n">simulator</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Simulator</span><span class="p">()</span>    <span class="c1"># 实例化一个模拟器</span>
+
+<span class="n">X_circuit</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span>       <span class="c1"># 建立一个包含量子非门和测量的量子线路</span>
+    <span class="n">cirq</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="n">q</span><span class="p">),</span>
+    <span class="n">cirq</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_circuit</span><span class="p">)</span>                <span class="c1"># 在终端可视化输出量子线路</span>
+
+<span class="c1"># 使用模拟器对该量子线路进行20次的模拟测量</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">X_circuit</span><span class="p">,</span> <span class="n">repetitions</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>                   <span class="c1"># 输出模拟测量结果</span>
+
+<span class="n">H_circuit</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span>       <span class="c1"># 建立一个包含阿达马门和测量的量子线路</span>
+    <span class="n">cirq</span><span class="o">.</span><span class="n">H</span><span class="p">(</span><span class="n">q</span><span class="p">),</span>
+    <span class="n">cirq</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">H_circuit</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">H_circuit</span><span class="p">,</span> <span class="n">repetitions</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>结果如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>0: ───X───M───
+0=11111111111111111111
+0: ───H───M───
+0=00100111001111101100
+</pre></div>
+</div>
+<p>可见第一个量子线路的测量结果始终为1，第二个量子态的20次测量结果中有9次是0，11次是1（如果你多运行几次，会发现0和1出现的概率趋近于 <img class="math" src="../../_images/math/5da8fbc0d91bea238016b0dc6ae8dac801ab6755.png" alt="\frac{1}{2}"/> ）。可见结果符合我们在上节中的分析。</p>
 </div>
 </div>
-<div class="section" id="id10">
-<h2>混合量子-经典机器学习<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id11">
+<h2>混合量子-经典机器学习<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h2>
 <div class="admonition- admonition">
 <p class="admonition-title">推荐阅读</p>
 <p>Broughton, Michael, Guillaume Verdon, Trevor McCourt, Antonio J. Martinez, Jae Hyeon Yoo, Sergei V. Isakov, Philip Massey, et al. “ <a class="reference external" href="http://arxiv.org/abs/2003.02989">TensorFlow Quantum: A Software Framework for Quantum Machine Learning.</a> ” ArXiv:2003.02989 [Cond-Mat, Physics:Quant-Ph], March 5, 2020. （TensorFlow Quantum 白皮书）</p>
 </div>
-<div class="section" id="pqc">
-<h3>参数化的量子电路（PQC）<a class="headerlink" href="#pqc" title="永久链接至标题">¶</a></h3>
-</div>
-<div class="section" id="id11">
-<h3>将参数化的量子电路嵌入机器学习模型<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
-</div>
 <div class="section" id="id12">
 <h3>量子数据集<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
 </div>
+<div class="section" id="pqc">
+<h3>参数化的量子线路（PQC）<a class="headerlink" href="#pqc" title="永久链接至标题">¶</a></h3>
 </div>
 <div class="section" id="id13">
-<h2>实例：对量子数据集进行二分类<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h2>
+<h3>将参数化的量子线路嵌入机器学习模型<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="id14">
+<h3>实例：对量子数据集进行二分类<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cirq</span>
+<span class="kn">import</span> <span class="nn">sympy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_quantum</span> <span class="k">as</span> <span class="nn">tfq</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">GridQubit</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">add_noise</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">q_data</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span>
+        <span class="n">cirq</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">add_noise</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))(</span><span class="n">q</span><span class="p">),</span> 
+        <span class="n">cirq</span><span class="o">.</span><span class="n">ry</span><span class="p">(</span><span class="n">add_noise</span><span class="p">(</span><span class="mi">0</span><span class="p">))(</span><span class="n">q</span><span class="p">)</span>
+        <span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span> <span class="o">+</span> 
+    <span class="p">[</span><span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span>
+        <span class="n">cirq</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">add_noise</span><span class="p">(</span><span class="mf">1.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))(</span><span class="n">q</span><span class="p">),</span> 
+        <span class="n">cirq</span><span class="o">.</span><span class="n">ry</span><span class="p">(</span><span class="n">add_noise</span><span class="p">(</span><span class="mi">0</span><span class="p">))(</span><span class="n">q</span><span class="p">)</span>
+        <span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span>
+<span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="n">theta</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">)</span>
+<span class="n">q_model</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="n">cirq</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">theta</span><span class="p">)(</span><span class="n">q</span><span class="p">))</span>
+<span class="n">q_data_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">()</span> <span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
+<span class="n">expectation_output</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">PQC</span><span class="p">(</span><span class="n">q_model</span><span class="p">,</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Z</span><span class="p">(</span><span class="n">q</span><span class="p">))(</span><span class="n">q_data_input</span><span class="p">)</span>
+<span class="n">classifier_output</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">softmax</span><span class="p">)(</span><span class="n">expectation_output</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">q_data_input</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">classifier_output</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">),</span>
+    <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">,</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">sparse_categorical_accuracy</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">q_data</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">q_data</span><span class="p">))</span>
+</pre></div>
+</div>
 <dl class="footnote brackets">
 <dt class="label" id="f0"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p>此手册的行文时间为公元2020年，如果你来自未来，请理解作者的时代局限性。</p>
@@ -324,6 +408,7 @@
         })();
     });
 </script></div>
+</div>
 </div>
 
 

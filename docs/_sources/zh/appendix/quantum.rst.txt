@@ -7,7 +7,7 @@ TensorFlow Quantum: 混合量子-经典机器学习 *
 
 不幸的是，尽管量子计算的理论已经有了比较深入的发展，可在物理硬件上，我们目前仍然造不出一台超越经典计算机的通用量子计算机 [#f0]_ 。IBM和谷歌等业界巨头在通用量子计算机的物理构建上已经取得了一些成绩，但无论是量子比特的个数还是在退相干问题的解决上，都还远无法达到实用的层级。
 
-以上是量子计算的基本背景，接下来我们讨论量子机器学习。量子机器学习的一种最直接的思路是使用量子计算加速传统的机器学习任务，例如量子版本的PCA、SVM和K-Means算法，然而这些算法目前都尚未达到可实用的程度。我们在本章讨论的量子机器学习则采用另一种思路，即构建参数化的量子电路（Parameterized Quantum Circuits, PQCs）。PQC可以作为深度学习模型中的层而被使用，如果我们在普通深度学习模型的基础上加入PQC，即称为混合量子-经典机器学习（Hybrid Quantum-Classical Machine Learning）。这种混合模型尤其适合于量子数据集（Quantum Data）上的任务。而TensorFlow Quantum正是帮助我们构建这种混合量子-经典机器学习模型的利器。接下来，我们会对量子计算的若干基本概念进行简介，然后介绍使用TensorFlow Quantum构建PQC、将PQC嵌入Keras模型、并在量子数据集上训练混合模型的流程。
+以上是量子计算的基本背景，接下来我们讨论量子机器学习。量子机器学习的一种最直接的思路是使用量子计算加速传统的机器学习任务，例如量子版本的PCA、SVM和K-Means算法，然而这些算法目前都尚未达到可实用的程度。我们在本章讨论的量子机器学习则采用另一种思路，即构建参数化的量子线路（Parameterized Quantum Circuits, PQCs）。PQC可以作为深度学习模型中的层而被使用，如果我们在普通深度学习模型的基础上加入PQC，即称为混合量子-经典机器学习（Hybrid Quantum-Classical Machine Learning）。这种混合模型尤其适合于量子数据集（Quantum Data）上的任务。而TensorFlow Quantum正是帮助我们构建这种混合量子-经典机器学习模型的利器。接下来，我们会对量子计算的若干基本概念进行简介，然后介绍使用TensorFlow Quantum和谷歌的量子计算库Cirq构建PQC、将PQC嵌入Keras模型、并在量子数据集上训练混合模型的流程。
 
 ..
     https://www.tensorflow.org/quantum
@@ -17,7 +17,7 @@ TensorFlow Quantum: 混合量子-经典机器学习 *
 量子计算基本概念
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-本节将简述量子计算的一些基本概念，包括量子比特、量子门、量子电路等。
+本节将简述量子计算的一些基本概念，包括量子比特、量子门、量子线路等。
 
 .. admonition:: 推荐阅读
 
@@ -51,8 +51,51 @@ TensorFlow Quantum: 混合量子-经典机器学习 *
 
 可能有些读者已经想到了，既然单个量子比特的状态不止 :math:`\ket{0}` 和 :math:`\ket{1}` 两种，那么量子逻辑门作为作为对量子比特的变换，其实也完全可以不局限于与或非。事实上，只要满足一定条件的矩阵都可以作为量子逻辑门。例如，将量子态在布洛赫球面上绕X、Y、Z轴旋转的变换 :math:`Rx(\theta)` 、:math:`Ry(\theta)` 、:math:`Rz(\theta)` （其中 :math:`\theta` 是旋转角度，当 :math:`\theta=180^\circ` 时记为 :math:`X` 、:math:`Y` 、:math:`Z` ）都是量子逻辑门。另外，有一个量子逻辑门“阿达马门”（Hadamard Gate） :math:`H = \frac{1}{\sqrt{2}} \begin{bmatrix}1 & 1 \\ 1 & -1\end{bmatrix}` 可以将量子状态从基本态转换为叠加态，在很多量子计算的场景中占据了重要地位。
 
-量子电路
+量子线路
 -------------------------------------------
+
+..
+    https://www.overleaf.com/read/brpwwxrqbvhh
+    http://physics.unm.edu/CQuIC/Qcircuit/Qtutorial.pdf
+
+当我们将量子比特以及量子逻辑门按顺序标记在一条或多条平行的线条上时，就构成了量子线路（Quantum Circuit，或称量子电路）。例如，对于我们在上一节讨论的，使用量子非门 :math:`X` 对基本态 :math:`\ket{0}` 进行变换的过程，我们可以写出量子线路如下：
+
+.. figure:: /_static/image/quantum/X_circuit.png
+    :width: 30%
+    :align: center
+
+    一个简单的量子线路
+
+在量子线路中，每条横线代表一个量子比特。上图中最左边的 :math:`\ket{0}` 代表量子比特的初始态。中间的X方块代表量子非门 :math:`X` ，最右边的表盘符号代表测量操作。这个线路的意义是“对初始状态为 :math:`\ket{0}` 的量子比特执行量子非门 :math:`X` 操作，并测量变换后的量子比特状态”。根据我们在前节的讨论，变换后的量子比特状态为基本态 :math:`\ket{1}` ，因此我们可以期待该量子线路最后的测量结果始终为1。
+
+接下来，我们考虑将上图中量子线路的量子非门 :math:`X` 换为阿达马门 :math:`H` ：
+
+.. figure:: /_static/image/quantum/H_circuit.png
+    :width: 30%
+    :align: center
+
+    将量子非门 :math:`X` 换为阿达马门 :math:`H` 后的量子线路
+
+阿达马门对应的矩阵表示为 :math:`H = \frac{1}{\sqrt{2}} \begin{bmatrix}1 & 1 \\ 1 & -1\end{bmatrix}` ，于是我们可以计算出变换后的量子态为 :math:`H\ket{0} = \frac{1}{\sqrt{2}} \begin{bmatrix}1 & 1 \\ 1 & -1\end{bmatrix}\begin{bmatrix}1 \\ 0\end{bmatrix} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}` 。这是一个 :math:`\ket{0}` 和 :math:`\ket{1}` 的叠加态，在观测后会坍缩到基本态，其概率分别为 :math:`|\frac{1}{\sqrt{2}}|^2 = \frac{1}{2}` 。也就是说，这个量子线路的观测结果类似于扔硬币。假若观测20次，则大约10次的结果是 :math:`\ket{0}` ，10次的结果是 :math:`\ket{1}` 。
+
+
+实例：使用Cirq建立简单的量子线路
+-------------------------------------------
+
+`Cirq <https://cirq.readthedocs.io/>`_ 是谷歌主导的开源量子计算库，可以帮助我们方便地建立量子线路并模拟测量结果（我们在下一节介绍TensorFlow Quantum的时候还会用到它）。以下代码实现了上节所建立的两个简单的量子线路，并分别进行了20次的模拟测量。
+
+.. literalinclude:: /_static/code/zh/appendix/quantum/basic.py
+
+结果如下：
+
+::
+
+    0: ───X───M───
+    0=11111111111111111111
+    0: ───H───M───
+    0=00100111001111101100
+
+可见第一个量子线路的测量结果始终为1，第二个量子态的20次测量结果中有9次是0，11次是1（如果你多运行几次，会发现0和1出现的概率趋近于 :math:`\frac{1}{2}` ）。可见结果符合我们在上节中的分析。
 
 混合量子-经典机器学习
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -61,19 +104,19 @@ TensorFlow Quantum: 混合量子-经典机器学习 *
 
     Broughton, Michael, Guillaume Verdon, Trevor McCourt, Antonio J. Martinez, Jae Hyeon Yoo, Sergei V. Isakov, Philip Massey, et al. “ `TensorFlow Quantum: A Software Framework for Quantum Machine Learning. <http://arxiv.org/abs/2003.02989>`_ ” ArXiv:2003.02989 [Cond-Mat, Physics:Quant-Ph], March 5, 2020. （TensorFlow Quantum 白皮书）
 
-
-
-参数化的量子电路（PQC）
--------------------------------------------
-
-将参数化的量子电路嵌入机器学习模型
--------------------------------------------
-
 量子数据集
 -------------------------------------------
 
+参数化的量子线路（PQC）
+-------------------------------------------
+
+将参数化的量子线路嵌入机器学习模型
+-------------------------------------------
+
 实例：对量子数据集进行二分类
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------------------------
+
+.. literalinclude:: /_static/code/zh/appendix/quantum/binary_classification.py
 
 .. [#f0] 此手册的行文时间为公元2020年，如果你来自未来，请理解作者的时代局限性。
 .. [#f1] “坍缩”一词多用于量子观测的哥本哈根诠释，除此以外还有多世界理论等。此处使用“坍缩”一词仅是方便表述。
