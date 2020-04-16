@@ -122,11 +122,16 @@
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/rl.html">强化学习简介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/mlstudyjam.html">ML Study Jam 2020</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Preface</span></p>
 <ul>
@@ -468,7 +473,7 @@ $ npm install @tensorflow/tfjs-node-gpu
 <div class="section" id="tensorflow-js-model-training">
 <h2>TensorFlow.js model training<a class="headerlink" href="#tensorflow-js-model-training" title="永久链接至标题">¶</a></h2>
 <p>与 TensorFlow Serving 和 TensorFlow Lite 不同，TensorFlow.js 不仅支持模型的部署和推断，还支持直接在 TensorFlow.js 中进行模型训练、</p>
-<p>在 TensorFlow 基础章节中，我们已经用 Python 实现过，针对某城市在2013年-2017年的房价的任务，通过对该数据进行线性回归，即使用线性模型 <img class="math" src="../../_images/math/6ee3a3353577adda12aea610224ed23b240df852.png" alt="y = ax + b"/> 来拟合上述数据，此处 <img class="math" src="../../_images/math/45bfd5f5191f26371415d8d186a6276ccb5b7061.png" alt="a"/> 和 <img class="math" src="../../_images/math/d7855244d3a0e8ad7e883af9a3c6143159a6efb4.png" alt="b"/> 是待求的参数。</p>
+<p>在 TensorFlow 基础章节中，我们已经用 Python 实现过，针对某城市在2013年-2017年的房价的任务，通过对该数据进行线性回归，即使用线性模型 <img class="math" src="../../_images/math/08657936072cefe083681bc78c8c9bcda2c86e2d.png" alt="y = ax + b"/> 来拟合上述数据，此处 <img class="math" src="../../_images/math/c13eacc8d78956859939555ea65552aa2f4f15a5.png" alt="a"/> 和 <img class="math" src="../../_images/math/3de2ed824326dc0eb383a42dd6ec44d3b401047b.png" alt="b"/> 是待求的参数。</p>
 <p>下面我们改用 TensorFlow.js 来实现一个 JavaScript 版本。</p>
 <p>首先，我们定义数据，进行基本的归一化操作。</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">tf</span> <span class="nx">from</span> <span class="s1">&#39;@tensorflow/tfjs&#39;</span>

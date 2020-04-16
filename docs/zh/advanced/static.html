@@ -120,11 +120,16 @@
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/rl.html">强化学习简介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Preface</span></p>
 <ul>
@@ -503,7 +508,7 @@
 <p>在本节中，我们对 TensorFlow 1.X 和 TensorFlow 2 在图执行模式下的自动求导机制进行较深入的比较说明。</p>
 <div class="section" id="id7">
 <h3>自动求导机制<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
-<p>我们首先回顾 TensorFlow 1.X 中的自动求导机制。在 TensorFlow 1.X 的图执行模式 API 中，可以使用 <code class="docutils literal notranslate"><span class="pre">tf.gradients(y,</span> <span class="pre">x)</span></code> 计算计算图中的张量节点 <code class="docutils literal notranslate"><span class="pre">y</span></code> 相对于变量 <code class="docutils literal notranslate"><span class="pre">x</span></code> 的导数。以下示例展示了在 TensorFlow 1.X 的图执行模式 API 中计算 <img class="math" src="../../_images/math/601cb88773b0c94c6a59860380b302e2db82d743.png" alt="y = x^2"/> 在 <img class="math" src="../../_images/math/441310575c9c15bdb8a141ce07504ec371104818.png" alt="x = 3"/> 时的导数。</p>
+<p>我们首先回顾 TensorFlow 1.X 中的自动求导机制。在 TensorFlow 1.X 的图执行模式 API 中，可以使用 <code class="docutils literal notranslate"><span class="pre">tf.gradients(y,</span> <span class="pre">x)</span></code> 计算计算图中的张量节点 <code class="docutils literal notranslate"><span class="pre">y</span></code> 相对于变量 <code class="docutils literal notranslate"><span class="pre">x</span></code> 的导数。以下示例展示了在 TensorFlow 1.X 的图执行模式 API 中计算 <img class="math" src="../../_images/math/310ab0ef1ada6edb2b67c308ecc0af9d5a3b36f1.png" alt="y = x^2"/> 在 <img class="math" src="../../_images/math/6242bf7ca264a34d82d13f3307438c9bd77b8e15.png" alt="x = 3"/> 时的导数。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">constant_initializer</span><span class="p">(</span><span class="mf">3.</span><span class="p">))</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>    <span class="c1"># y = x ^ 2</span>
 <span class="n">y_grad</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">gradients</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
@@ -567,7 +572,7 @@
 </div>
 <div class="section" id="graph-compare">
 <span id="id9"></span><h3>自动求导机制的计算图对比 *<a class="headerlink" href="#graph-compare" title="永久链接至标题">¶</a></h3>
-<p>在本节，为了帮助读者更深刻地理解 TensorFlow 的自动求导机制，我们以前节的“计算 <img class="math" src="../../_images/math/601cb88773b0c94c6a59860380b302e2db82d743.png" alt="y = x^2"/> 在 <img class="math" src="../../_images/math/441310575c9c15bdb8a141ce07504ec371104818.png" alt="x = 3"/> 时的导数”为例，展示 TensorFlow 1.X 和 TensorFlow 2 在图执行模式下，为这一求导过程所建立的计算图，并进行详细讲解。</p>
+<p>在本节，为了帮助读者更深刻地理解 TensorFlow 的自动求导机制，我们以前节的“计算 <img class="math" src="../../_images/math/310ab0ef1ada6edb2b67c308ecc0af9d5a3b36f1.png" alt="y = x^2"/> 在 <img class="math" src="../../_images/math/6242bf7ca264a34d82d13f3307438c9bd77b8e15.png" alt="x = 3"/> 时的导数”为例，展示 TensorFlow 1.X 和 TensorFlow 2 在图执行模式下，为这一求导过程所建立的计算图，并进行详细讲解。</p>
 <p>在 TensorFlow 1.X 的图执行模式 API 中，将生成的计算图使用 TensorBoard 进行展示：</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/grad_v1.png"><img alt="../../_images/grad_v1.png" src="../../_images/grad_v1.png" style="width: 60%;" /></a>

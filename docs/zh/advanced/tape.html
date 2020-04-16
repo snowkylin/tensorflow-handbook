@@ -120,11 +120,16 @@
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/rl.html">强化学习简介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Preface</span></p>
 <ul>
@@ -240,7 +245,7 @@
 <li><p>使用 with 语句，将需要求导的计算步骤封装在 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的上下文中；</p></li>
 <li><p>使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法计算导数。</p></li>
 </ol>
-<p>回顾 <a class="reference internal" href="../basic/basic.html#automatic-derivation"><span class="std std-ref">第一章“自动求导机制”一节</span></a> 所举的例子，使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 计算函数 <img class="math" src="../../_images/math/f641e8779cd2b77c4670f7c9ecfe24427354a57c.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/441310575c9c15bdb8a141ce07504ec371104818.png" alt="x = 3"/> 时的导数：</p>
+<p>回顾 <a class="reference internal" href="../basic/basic.html#automatic-derivation"><span class="std std-ref">第一章“自动求导机制”一节</span></a> 所举的例子，使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 计算函数 <img class="math" src="../../_images/math/2261dfa63cebc11353c25f3b42ab8812925703e7.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/6242bf7ca264a34d82d13f3307438c9bd77b8e15.png" alt="x = 3"/> 时的导数：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial_value</span><span class="o">=</span><span class="mf">3.</span><span class="p">)</span>
@@ -290,7 +295,7 @@
 </div>
 <div class="section" id="id3">
 <h2>高阶求导<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 支持嵌套使用。通过嵌套 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 上下文管理器，可以轻松地实现二阶、三阶甚至更多阶的求导。以下示例代码计算了 <img class="math" src="../../_images/math/f641e8779cd2b77c4670f7c9ecfe24427354a57c.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/441310575c9c15bdb8a141ce07504ec371104818.png" alt="x = 3"/> 时的一阶导数 <code class="docutils literal notranslate"><span class="pre">dy_dx</span></code> 和二阶导数 <code class="docutils literal notranslate"><span class="pre">d2y_dx2</span></code> ：</p>
+<p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 支持嵌套使用。通过嵌套 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 上下文管理器，可以轻松地实现二阶、三阶甚至更多阶的求导。以下示例代码计算了 <img class="math" src="../../_images/math/2261dfa63cebc11353c25f3b42ab8812925703e7.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/6242bf7ca264a34d82d13f3307438c9bd77b8e15.png" alt="x = 3"/> 时的一阶导数 <code class="docutils literal notranslate"><span class="pre">dy_dx</span></code> 和二阶导数 <code class="docutils literal notranslate"><span class="pre">d2y_dx2</span></code> ：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mf">3.</span><span class="p">)</span>
@@ -301,12 +306,12 @@
 <span class="n">d2y_dx2</span> <span class="o">=</span> <span class="n">tape_1</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">dy_dx</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="c1"># 值为 2.0</span>
 </pre></div>
 </div>
-<p>由于 <img class="math" src="../../_images/math/67c9e7f5a4bd9e0830cd1852c64a997ae3f7fa7d.png" alt="\frac{dy}{dx} = 2x"/> ， <img class="math" src="../../_images/math/9204f7ca2f102e81b8feb0d690e1c4f15ade957f.png" alt="\frac{d^2y}{dx^2} = \frac{d}{dx}\frac{dy}{dx} = 2"/> ，故期望值为 <code class="docutils literal notranslate"><span class="pre">dy_dx</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">3</span> <span class="pre">=</span> <span class="pre">6</span></code> ， <code class="docutils literal notranslate"><span class="pre">d2y_dx2</span> <span class="pre">=</span> <span class="pre">2</span></code> ，可见实际计算值与预期相符。</p>
+<p>由于 <img class="math" src="../../_images/math/76e17810ac75959a92d4bb2465a71e4472696774.png" alt="\frac{dy}{dx} = 2x"/> ， <img class="math" src="../../_images/math/bd7d4b9c7e5643075cbeb96dc2f3ccdb97fac53c.png" alt="\frac{d^2y}{dx^2} = \frac{d}{dx}\frac{dy}{dx} = 2"/> ，故期望值为 <code class="docutils literal notranslate"><span class="pre">dy_dx</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">3</span> <span class="pre">=</span> <span class="pre">6</span></code> ， <code class="docutils literal notranslate"><span class="pre">d2y_dx2</span> <span class="pre">=</span> <span class="pre">2</span></code> ，可见实际计算值与预期相符。</p>
 <p>我们可以从上面的代码看出，高阶求导实际上是通过对使用 <code class="docutils literal notranslate"><span class="pre">tape</span></code> 的 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法求得的导数继续求导来实现的。也就是说，求导操作（即 <code class="docutils literal notranslate"><span class="pre">tape</span></code> 的 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法）和其他计算步骤（如 <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">tf.square(x)</span></code> ）没有什么本质的不同，同样是可以被 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 记录的计算步骤。</p>
 </div>
 <div class="section" id="id4">
 <h2>持久保持记录与多次求导<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
-<p>默认情况下，每个 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的记录器在调用一次 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法后，其记录的信息就会被释放，也就是说这个记录器就无法再使用了。但如果我们要多次调用 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法进行求导，可以将 <code class="docutils literal notranslate"><span class="pre">persistent=True</span></code> 参数传入 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> ，使得该记录器持久保持记录的信息。并在求导完成后手工使用 <code class="docutils literal notranslate"><span class="pre">del</span></code> 释放记录器资源。以下示例展示了用一个持久的记录器 <code class="docutils literal notranslate"><span class="pre">tape</span></code> 分别计算 <img class="math" src="../../_images/math/f641e8779cd2b77c4670f7c9ecfe24427354a57c.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/441310575c9c15bdb8a141ce07504ec371104818.png" alt="x = 3"/> 时的导数，以及 <img class="math" src="../../_images/math/d5ab188af8ade4a2540b1df409cb6f17493cf653.png" alt="y(x) = x^3"/> 在 <img class="math" src="../../_images/math/2e807f8aea81667aa9034e23757d48114117a092.png" alt="x = 2"/> 时的导数。</p>
+<p>默认情况下，每个 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的记录器在调用一次 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法后，其记录的信息就会被释放，也就是说这个记录器就无法再使用了。但如果我们要多次调用 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法进行求导，可以将 <code class="docutils literal notranslate"><span class="pre">persistent=True</span></code> 参数传入 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> ，使得该记录器持久保持记录的信息。并在求导完成后手工使用 <code class="docutils literal notranslate"><span class="pre">del</span></code> 释放记录器资源。以下示例展示了用一个持久的记录器 <code class="docutils literal notranslate"><span class="pre">tape</span></code> 分别计算 <img class="math" src="../../_images/math/2261dfa63cebc11353c25f3b42ab8812925703e7.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/6242bf7ca264a34d82d13f3307438c9bd77b8e15.png" alt="x = 3"/> 时的导数，以及 <img class="math" src="../../_images/math/7893faf5cbb0aecc221cadd4dbe71a05e3233c52.png" alt="y(x) = x^3"/> 在 <img class="math" src="../../_images/math/bf37d4838174ef61fbf93a49bc09c17de8674300.png" alt="x = 2"/> 时的导数。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="n">x_1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mf">3.</span><span class="p">)</span>

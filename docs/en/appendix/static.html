@@ -122,11 +122,16 @@
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/rl.html">强化学习简介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh/appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/mlstudyjam.html">ML Study Jam 2020</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Preface</span></p>
 <ul>
@@ -320,7 +325,7 @@
     <span class="nb">print</span><span class="p">(</span><span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>矩阵乃至张量运算是科学计算（包括机器学习）的基本操作。以下程序展示如何计算两个矩阵 <img class="math" src="../../_images/math/00ab3c366e7ff41f5acb03e83374d20379341eba.png" alt="\begin{bmatrix} 1 &amp; 1 &amp; 1 \\ 1 &amp; 1 &amp; 1 \end{bmatrix}"/> 和 <img class="math" src="../../_images/math/c76f9fd9481203aa75ac38991d725df1555884ee.png" alt="\begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 1 \\ 1 &amp; 1 \end{bmatrix}"/> 的乘积：</p>
+<p>矩阵乃至张量运算是科学计算（包括机器学习）的基本操作。以下程序展示如何计算两个矩阵 <img class="math" src="../../_images/math/029b79e45589b6a25e33bb8b7a7c34d2d962c750.png" alt="\begin{bmatrix} 1 &amp; 1 &amp; 1 \\ 1 &amp; 1 &amp; 1 \end{bmatrix}"/> 和 <img class="math" src="../../_images/math/b176d013848c7f0bda72b14090355d6f05f83377.png" alt="\begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 1 \\ 1 &amp; 1 \end{bmatrix}"/> 的乘积：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow.compat.v1</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="n">tf</span><span class="o">.</span><span class="n">disable_eager_execution</span><span class="p">()</span>
 

@@ -102,11 +102,18 @@ GitHub： https://github.com/snowkylin/tensorflow-handbook
     :maxdepth: 3
     :caption: 附录
     
+    zh/appendix/rl
     zh/appendix/docker
     zh/appendix/cloud
     zh/appendix/jupyterlab    
     zh/appendix/recommended_books
     zh/appendix/terms
+
+.. toctree:: 
+    :maxdepth: 3
+    :caption: 教学活动
+    
+    zh/mlstudyjam
 
 ..
     PDF下载（旧版）：

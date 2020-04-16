@@ -40,7 +40,7 @@
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
-    <link rel="next" title="使用Docker部署TensorFlow环境" href="docker.html" />
+    <link rel="next" title="强化学习简介" href="rl.html" />
     <link rel="prev" title="Swift for TensorFlow (S4TF) (Huan）" href="swift.html" /> 
 </head>
 
@@ -122,15 +122,15 @@
 <li class="toctree-l2"><a class="reference internal" href="#id2">量子计算基本概念</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id4">量子比特</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id7">量子逻辑门</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id9">量子线路</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">量子线路</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cirq">实例：使用Cirq建立简单的量子线路</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id11">混合量子-经典机器学习</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id12">量子数据集</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">混合量子-经典机器学习</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id13">量子数据集</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#pqc">参数化的量子线路（PQC）</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id13">将参数化的量子线路嵌入机器学习模型</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id14">实例：对量子数据集进行二分类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">将参数化的量子线路嵌入机器学习模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">实例：对量子数据集进行二分类</a></li>
 </ul>
 </li>
 </ul>
@@ -138,11 +138,16 @@
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="rl.html">强化学习简介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Preface</span></p>
 <ul>
@@ -267,34 +272,34 @@
 </div>
 <div class="section" id="id4">
 <h3>量子比特<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
-<p>在二进制的经典计算机中，我们用比特（Bit，也称“位”）作为信息存储的基本单位，一个比特只有0或者1两种状态。而在量子计算机中，我们使用量子比特（Quantum Bit, Qubit，也称“量子位”）进行信息的表示。量子比特也有两种基本状态 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/8608cd3b3cc62b519ce7f4f6c1389666f01e993e.png" alt="\ket{1}"/> 。不过量子比特除了可以处于这两种基本状态以外，还可以处于两者之间的叠加态（Superposition State），即 <img class="math" src="../../_images/math/ba7da30812bc25406300571ecfb01d8ea26b54fd.png" alt="\ket{\psi} = a \ket{0} + b \ket{1}"/> （其中a和b是复数， <img class="math" src="../../_images/math/247adfb6a6ed859e452c5bfdad86d02976d1d831.png" alt="|a|^2 + |b|^2 = 1"/> ）。例如， <img class="math" src="../../_images/math/bd024c459a020c3c88e0e9616024b9fbbe3737db.png" alt="\ket{\psi_0} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> 和 <img class="math" src="../../_images/math/18f1ee94a093c360dc9af94215afca14bf915e17.png" alt="\ket{\psi_1} = \frac{1}{\sqrt{2}} \ket{0} - \frac{1}{\sqrt{2}} \ket{1}"/> 都是合法的量子态。我们也可以使用向量化的语言来表示量子比特的状态。如果我们令 <img class="math" src="../../_images/math/3e9098cb6b6560f6c46215a4cb4bc7aeadb4f74c.png" alt="\ket{0} = \begin{bmatrix}1 \\ 0\end{bmatrix}"/> 、 <img class="math" src="../../_images/math/0555b4e8a4c4987d04935506315169b60593bf81.png" alt="\ket{1} = \begin{bmatrix}0 \\ 1\end{bmatrix}"/>，则 <img class="math" src="../../_images/math/e4011b3af48419bf18489706314b43392b3bc2e2.png" alt="\ket{\psi} = \begin{bmatrix}a \\ b\end{bmatrix}"/>、<img class="math" src="../../_images/math/64a16a37f8a6c1bdcefdb69ccfee614cb9631cad.png" alt="\ket{\psi_0} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix}"/>、<img class="math" src="../../_images/math/4bc0ad2452f0a2e12f1e4ae1fb35d6c9bb71548e.png" alt="\ket{\psi_1} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ -\frac{1}{\sqrt{2}}\end{bmatrix}"/>。</p>
-<p>同时，我们可以用布洛赫球面（Bloch Sphere）来形象地展示单个量子比特的状态。球面的最顶端为 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> ，最底端为 <img class="math" src="../../_images/math/8608cd3b3cc62b519ce7f4f6c1389666f01e993e.png" alt="\ket{1}"/> ，而从原点到球面上任何一点的单位向量都可以是一个量子比特的状态。</p>
-<div class="figure align-center" id="id15">
+<p>在二进制的经典计算机中，我们用比特（Bit，也称“位”）作为信息存储的基本单位，一个比特只有0或者1两种状态。而在量子计算机中，我们使用量子比特（Quantum Bit, Qubit，也称“量子位”）进行信息的表示。量子比特也有两种基本状态 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> 。不过量子比特除了可以处于这两种基本状态以外，还可以处于两者之间的叠加态（Superposition State），即 <img class="math" src="../../_images/math/cb62f6b814018e36a06acdc07ddd8de7ce8dafff.png" alt="\ket{\psi} = a \ket{0} + b \ket{1}"/> （其中a和b是复数， <img class="math" src="../../_images/math/fda8d4ed57f788a15760f0a1ec6f4d9d8618da47.png" alt="|a|^2 + |b|^2 = 1"/> ）。例如， <img class="math" src="../../_images/math/bc1c385e3ea3312c60790a3e4d5a2e071fd87d86.png" alt="\ket{\psi_0} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> 和 <img class="math" src="../../_images/math/7a38874696965458beef81b0fd6fd77563b23f4a.png" alt="\ket{\psi_1} = \frac{1}{\sqrt{2}} \ket{0} - \frac{1}{\sqrt{2}} \ket{1}"/> 都是合法的量子态。我们也可以使用向量化的语言来表示量子比特的状态。如果我们令 <img class="math" src="../../_images/math/d9f442b006c94ee9fe33ac7dafbf2327de02766c.png" alt="\ket{0} = \begin{bmatrix}1 \\ 0\end{bmatrix}"/> 、 <img class="math" src="../../_images/math/cba07e3f03a49c4ba86c24422818fc9f760d39fe.png" alt="\ket{1} = \begin{bmatrix}0 \\ 1\end{bmatrix}"/>，则 <img class="math" src="../../_images/math/79e8eeae52eee88a430880991a1ca27fda15ae20.png" alt="\ket{\psi} = \begin{bmatrix}a \\ b\end{bmatrix}"/>、<img class="math" src="../../_images/math/eeb8a3ed29efa47f00add692157497f2b12d7867.png" alt="\ket{\psi_0} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix}"/>、<img class="math" src="../../_images/math/8f9f2482a0167f20c12406c60a6446ae81bc73c5.png" alt="\ket{\psi_1} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ -\frac{1}{\sqrt{2}}\end{bmatrix}"/>。</p>
+<p>同时，我们可以用布洛赫球面（Bloch Sphere）来形象地展示单个量子比特的状态。球面的最顶端为 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> ，最底端为 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> ，而从原点到球面上任何一点的单位向量都可以是一个量子比特的状态。</p>
+<div class="figure align-center" id="id16">
 <a class="reference internal image-reference" href="../../_images/bloch_sphere.png"><img alt="../../_images/bloch_sphere.png" src="../../_images/bloch_sphere.png" style="width: 30%;" /></a>
-<p class="caption"><span class="caption-text">布洛赫球面（ <a class="reference external" href="https://en.wikipedia.org/wiki/Bloch_sphere">Bloch Sphere</a> ）。其中Z轴正负方向的量子态分别为基本态 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/8608cd3b3cc62b519ce7f4f6c1389666f01e993e.png" alt="\ket{1}"/> ，X轴正负方向的量子态分别为 <img class="math" src="../../_images/math/461143ce71f8cb66f4e290fb4f40ebabcf9daebc.png" alt="\frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> 和 <img class="math" src="../../_images/math/b111422ef4a031e380439315e2a1cfa4ffdec5f4.png" alt="\frac{1}{\sqrt{2}} \ket{0} - \frac{1}{\sqrt{2}} \ket{1}"/> ，Y轴正负方向的量子态分别为 <img class="math" src="../../_images/math/07fb592c41a97037d1f74e1c42a5ca4858ab3604.png" alt="\frac{1}{\sqrt{2}} \ket{0} + \frac{i}{\sqrt{2}} \ket{1}"/> 和 <img class="math" src="../../_images/math/06b3756d92c3411db8b9d9dfc88eceaa800602d7.png" alt="\frac{1}{\sqrt{2}} \ket{0} - \frac{i}{\sqrt{2}} \ket{1}"/> 。<a class="reference external" href="https://en.wikipedia.org/wiki/File:Bloch_sphere.svg">图示来源</a></span><a class="headerlink" href="#id15" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">布洛赫球面（ <a class="reference external" href="https://en.wikipedia.org/wiki/Bloch_sphere">Bloch Sphere</a> ）。其中Z轴正负方向的量子态分别为基本态 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> ，X轴正负方向的量子态分别为 <img class="math" src="../../_images/math/984c19e665faa644fe597e3133d6613b0e244dfc.png" alt="\frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> 和 <img class="math" src="../../_images/math/a4287cbdb7bef180904db655abff5184369a6649.png" alt="\frac{1}{\sqrt{2}} \ket{0} - \frac{1}{\sqrt{2}} \ket{1}"/> ，Y轴正负方向的量子态分别为 <img class="math" src="../../_images/math/fe079eca300639ddd5ae8355b4092956a1abeb15.png" alt="\frac{1}{\sqrt{2}} \ket{0} + \frac{i}{\sqrt{2}} \ket{1}"/> 和 <img class="math" src="../../_images/math/410a3fc002b2696af098f0c455e56bddf98a6330.png" alt="\frac{1}{\sqrt{2}} \ket{0} - \frac{i}{\sqrt{2}} \ket{1}"/> 。<a class="reference external" href="https://en.wikipedia.org/wiki/File:Bloch_sphere.svg">图示来源</a></span><a class="headerlink" href="#id16" title="永久链接至图片">¶</a></p>
 </div>
-<p>值得一提的是，尽管量子比特 <img class="math" src="../../_images/math/ba7da30812bc25406300571ecfb01d8ea26b54fd.png" alt="\ket{\psi} = a \ket{0} + b \ket{1}"/> 可能的状态相当之多，但一旦我们对其进行观测，则其状态会立即坍缩 <a class="footnote-reference brackets" href="#f1" id="id6">2</a> 到 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/8608cd3b3cc62b519ce7f4f6c1389666f01e993e.png" alt="\ket{1}"/> 这两个基本状态中的一个，其概率分别为 <img class="math" src="../../_images/math/79bb1190efa1bf87dd9c6a4338f3625cfb0c431f.png" alt="|a|^2"/> 和  <img class="math" src="../../_images/math/1e845242cecb914ce0e3c290a9fb55f85dace31f.png" alt="|b|^2"/> 。</p>
+<p>值得特别注意的是，尽管量子比特 <img class="math" src="../../_images/math/cb62f6b814018e36a06acdc07ddd8de7ce8dafff.png" alt="\ket{\psi} = a \ket{0} + b \ket{1}"/> 可能的状态相当之多，但一旦我们对其进行观测，则其状态会立即坍缩 <a class="footnote-reference brackets" href="#f1" id="id6">2</a> 到 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> 这两个基本状态中的一个，其概率分别为 <img class="math" src="../../_images/math/ac5498723d4e8d9267643ab25e38bae3e9f87881.png" alt="|a|^2"/> 和  <img class="math" src="../../_images/math/f85ee1a43dbb809cf8e29f521a63aa72b3a2f827.png" alt="|b|^2"/> 。</p>
 </div>
 <div class="section" id="id7">
 <h3>量子逻辑门<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
 <p>在二进制的经典计算机中，我们有AND（与）、OR（或）、NOT（非）等逻辑门，对输入的比特状态进行变换并输出。在量子计算机中，我们同样有量子逻辑门（Quantum Logic Gate，或简称“量子门”），对量子状态进行变换并输出。如果我们使用向量化的语言来表述量子状态，则量子逻辑门可以看作是一个对状态向量进行变换的矩阵。</p>
-<p>例如，量子非门可以表述为 <img class="math" src="../../_images/math/4580b38f43103abcb8aa7daa4fd0ffcc923c2879.png" alt="X = \begin{bmatrix}0 &amp; 1 \\ 1 &amp; 0\end{bmatrix}"/> ，于是当我们将量子非门作用于基本态 <img class="math" src="../../_images/math/3e9098cb6b6560f6c46215a4cb4bc7aeadb4f74c.png" alt="\ket{0} = \begin{bmatrix}1 \\ 0\end{bmatrix}"/> 时，我们得到 <img class="math" src="../../_images/math/6b48b054e9abcad782471c486ab668e9565129be.png" alt="X\ket{0} = \begin{bmatrix}0 &amp; 1 \\ 1 &amp; 0\end{bmatrix} \begin{bmatrix}1 \\ 0\end{bmatrix} = \begin{bmatrix}0 \\ 1\end{bmatrix} = \ket{1}"/>。量子门也可以作用在叠加态，例如 <img class="math" src="../../_images/math/aec15c841866333213624426e64e426ce7ddcde8.png" alt="X\ket{\psi_0} = \begin{bmatrix}0 &amp; 1 \\ 1 &amp; 0\end{bmatrix} \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix} = \ket{\psi_0}"/> （这说明量子非门没能改变量子态 <img class="math" src="../../_images/math/bd024c459a020c3c88e0e9616024b9fbbe3737db.png" alt="\ket{\psi_0} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> 的状态。事实上，量子非门 <img class="math" src="../../_images/math/46576b8590e8b4079f3b0f5ab065d47943b9d3d1.png" alt="X"/> 相当于在布洛赫球面上将量子态绕X轴旋转180度。而 <img class="math" src="../../_images/math/308874c43f5a7eabf5d4d639703f8f89724dd6eb.png" alt="\ket{\psi_0}"/> 就在X轴上，所以没有变化）。量子与门和或门 <a class="footnote-reference brackets" href="#f2" id="id8">3</a> 由于涉及到多个量子位而稍显复杂，但同样可以通过尺寸更大的矩阵实现。</p>
-<p>可能有些读者已经想到了，既然单个量子比特的状态不止 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/8608cd3b3cc62b519ce7f4f6c1389666f01e993e.png" alt="\ket{1}"/> 两种，那么量子逻辑门作为作为对量子比特的变换，其实也完全可以不局限于与或非。事实上，只要满足一定条件的矩阵都可以作为量子逻辑门。例如，将量子态在布洛赫球面上绕X、Y、Z轴旋转的变换 <img class="math" src="../../_images/math/8b743f9b76a6635768cfa9068954d187f12c35c7.png" alt="Rx(\theta)"/> 、<img class="math" src="../../_images/math/4cdf85508628114508b064b5d9be8ab3b34b3ceb.png" alt="Ry(\theta)"/> 、<img class="math" src="../../_images/math/a08d43570b70848dc75287351742416b8968d782.png" alt="Rz(\theta)"/> （其中 <img class="math" src="../../_images/math/d0221b527fc400ea962deb6eea7e53620bfa962e.png" alt="\theta"/> 是旋转角度，当 <img class="math" src="../../_images/math/baf2214b6578a3750ce0a5b5c94992ee73ddfc25.png" alt="\theta=180^\circ"/> 时记为 <img class="math" src="../../_images/math/46576b8590e8b4079f3b0f5ab065d47943b9d3d1.png" alt="X"/> 、<img class="math" src="../../_images/math/b3fcdebed7b07ecc43edf648aa59e68d9b306997.png" alt="Y"/> 、<img class="math" src="../../_images/math/acd9531391929f72b7fa8163df542f6d27e97e3f.png" alt="Z"/> ）都是量子逻辑门。另外，有一个量子逻辑门“阿达马门”（Hadamard Gate） <img class="math" src="../../_images/math/c6f12868abee21e5021402d7aca6d69a5eb0b17e.png" alt="H = \frac{1}{\sqrt{2}} \begin{bmatrix}1 &amp; 1 \\ 1 &amp; -1\end{bmatrix}"/> 可以将量子状态从基本态转换为叠加态，在很多量子计算的场景中占据了重要地位。</p>
+<p>例如，量子非门可以表述为 <img class="math" src="../../_images/math/3080bb728f567f066f0c7c43aa9404bafd0cd30c.png" alt="X = \begin{bmatrix}0 &amp; 1 \\ 1 &amp; 0\end{bmatrix}"/> ，于是当我们将量子非门作用于基本态 <img class="math" src="../../_images/math/d9f442b006c94ee9fe33ac7dafbf2327de02766c.png" alt="\ket{0} = \begin{bmatrix}1 \\ 0\end{bmatrix}"/> 时，我们得到 <img class="math" src="../../_images/math/18736cd13eb2f4d86467e9f9e52eca39fd2f517d.png" alt="X\ket{0} = \begin{bmatrix}0 &amp; 1 \\ 1 &amp; 0\end{bmatrix} \begin{bmatrix}1 \\ 0\end{bmatrix} = \begin{bmatrix}0 \\ 1\end{bmatrix} = \ket{1}"/>。量子门也可以作用在叠加态，例如 <img class="math" src="../../_images/math/9b1eaaa3834ce9f5ce9c52272d75c9c8fce0895b.png" alt="X\ket{\psi_0} = \begin{bmatrix}0 &amp; 1 \\ 1 &amp; 0\end{bmatrix} \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix} = \ket{\psi_0}"/> （这说明量子非门没能改变量子态 <img class="math" src="../../_images/math/bc1c385e3ea3312c60790a3e4d5a2e071fd87d86.png" alt="\ket{\psi_0} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> 的状态。事实上，量子非门 <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> 相当于在布洛赫球面上将量子态绕X轴旋转180度。而 <img class="math" src="../../_images/math/1af1b7de7f38ea0f40b9954bce778c4c8468c33a.png" alt="\ket{\psi_0}"/> 就在X轴上，所以没有变化）。量子与门和或门 <a class="footnote-reference brackets" href="#f2" id="id8">3</a> 由于涉及到多个量子位而稍显复杂，但同样可以通过尺寸更大的矩阵实现。</p>
+<p>可能有些读者已经想到了，既然单个量子比特的状态不止 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> 两种，那么量子逻辑门作为作为对量子比特的变换，其实也完全可以不局限于与或非。事实上，只要满足一定条件的矩阵 <a class="footnote-reference brackets" href="#f3" id="id9">4</a> 都可以作为量子逻辑门。例如，将量子态在布洛赫球面上绕X、Y、Z轴旋转的变换 <img class="math" src="../../_images/math/fe5f1bd15fc3108de3542ee3b011130163487106.png" alt="Rx(\theta)"/> 、<img class="math" src="../../_images/math/d07d1cc4c66a121e4da2247a4e24a1c31a7115cc.png" alt="Ry(\theta)"/> 、<img class="math" src="../../_images/math/bae48849043d944e70c7fd069ab84b295b385b6d.png" alt="Rz(\theta)"/> （其中 <img class="math" src="../../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> 是旋转角度，当 <img class="math" src="../../_images/math/788c2c7d03643cff00033641c84342eb48e978ea.png" alt="\theta=180^\circ"/> 时记为 <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> 、<img class="math" src="../../_images/math/f89383d07ea00637c4218cd6dc4eb3ae2b04fcdc.png" alt="Y"/> 、<img class="math" src="../../_images/math/1bf0276de4a07346e2f468d40a0cec0ea489a6e0.png" alt="Z"/> ）都是量子逻辑门。另外，有一个量子逻辑门“阿达马门”（Hadamard Gate） <img class="math" src="../../_images/math/fbc0ab4c252c720edfc9469add4d9828dc93abb1.png" alt="H = \frac{1}{\sqrt{2}} \begin{bmatrix}1 &amp; 1 \\ 1 &amp; -1\end{bmatrix}"/> 可以将量子状态从基本态转换为叠加态，在很多量子计算的场景中占据了重要地位。</p>
 </div>
-<div class="section" id="id9">
-<h3>量子线路<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
-<p>当我们将量子比特以及量子逻辑门按顺序标记在一条或多条平行的线条上时，就构成了量子线路（Quantum Circuit，或称量子电路）。例如，对于我们在上一节讨论的，使用量子非门 <img class="math" src="../../_images/math/46576b8590e8b4079f3b0f5ab065d47943b9d3d1.png" alt="X"/> 对基本态 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> 进行变换的过程，我们可以写出量子线路如下：</p>
-<div class="figure align-center" id="id16">
-<a class="reference internal image-reference" href="../../_images/X_circuit.png"><img alt="../../_images/X_circuit.png" src="../../_images/X_circuit.png" style="width: 30%;" /></a>
-<p class="caption"><span class="caption-text">一个简单的量子线路</span><a class="headerlink" href="#id16" title="永久链接至图片">¶</a></p>
-</div>
-<p>在量子线路中，每条横线代表一个量子比特。上图中最左边的 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> 代表量子比特的初始态。中间的X方块代表量子非门 <img class="math" src="../../_images/math/46576b8590e8b4079f3b0f5ab065d47943b9d3d1.png" alt="X"/> ，最右边的表盘符号代表测量操作。这个线路的意义是“对初始状态为 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> 的量子比特执行量子非门 <img class="math" src="../../_images/math/46576b8590e8b4079f3b0f5ab065d47943b9d3d1.png" alt="X"/> 操作，并测量变换后的量子比特状态”。根据我们在前节的讨论，变换后的量子比特状态为基本态 <img class="math" src="../../_images/math/8608cd3b3cc62b519ce7f4f6c1389666f01e993e.png" alt="\ket{1}"/> ，因此我们可以期待该量子线路最后的测量结果始终为1。</p>
-<p>接下来，我们考虑将上图中量子线路的量子非门 <img class="math" src="../../_images/math/46576b8590e8b4079f3b0f5ab065d47943b9d3d1.png" alt="X"/> 换为阿达马门 <img class="math" src="../../_images/math/3e607e9c6cb486234e0d9d052e8bbc665fa4f4cb.png" alt="H"/> ：</p>
+<div class="section" id="id10">
+<h3>量子线路<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p>当我们将量子比特以及量子逻辑门按顺序标记在一条或多条平行的线条上时，就构成了量子线路（Quantum Circuit，或称量子电路）。例如，对于我们在上一节讨论的，使用量子非门 <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> 对基本态 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 进行变换的过程，我们可以写出量子线路如下：</p>
 <div class="figure align-center" id="id17">
-<a class="reference internal image-reference" href="../../_images/H_circuit.png"><img alt="../../_images/H_circuit.png" src="../../_images/H_circuit.png" style="width: 30%;" /></a>
-<p class="caption"><span class="caption-text">将量子非门 <img class="math" src="../../_images/math/46576b8590e8b4079f3b0f5ab065d47943b9d3d1.png" alt="X"/> 换为阿达马门 <img class="math" src="../../_images/math/3e607e9c6cb486234e0d9d052e8bbc665fa4f4cb.png" alt="H"/> 后的量子线路</span><a class="headerlink" href="#id17" title="永久链接至图片">¶</a></p>
+<a class="reference internal image-reference" href="../../_images/X_circuit.png"><img alt="../../_images/X_circuit.png" src="../../_images/X_circuit.png" style="width: 30%;" /></a>
+<p class="caption"><span class="caption-text">一个简单的量子线路</span><a class="headerlink" href="#id17" title="永久链接至图片">¶</a></p>
 </div>
-<p>阿达马门对应的矩阵表示为 <img class="math" src="../../_images/math/c6f12868abee21e5021402d7aca6d69a5eb0b17e.png" alt="H = \frac{1}{\sqrt{2}} \begin{bmatrix}1 &amp; 1 \\ 1 &amp; -1\end{bmatrix}"/> ，于是我们可以计算出变换后的量子态为 <img class="math" src="../../_images/math/0dc92ddea3cd4da5d808bcfe148bf0b62af2682b.png" alt="H\ket{0} = \frac{1}{\sqrt{2}} \begin{bmatrix}1 &amp; 1 \\ 1 &amp; -1\end{bmatrix}\begin{bmatrix}1 \\ 0\end{bmatrix} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> 。这是一个 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/8608cd3b3cc62b519ce7f4f6c1389666f01e993e.png" alt="\ket{1}"/> 的叠加态，在观测后会坍缩到基本态，其概率分别为 <img class="math" src="../../_images/math/68e71fe272ba0acd299e12f0762640a2c9adc4cc.png" alt="|\frac{1}{\sqrt{2}}|^2 = \frac{1}{2}"/> 。也就是说，这个量子线路的观测结果类似于扔硬币。假若观测20次，则大约10次的结果是 <img class="math" src="../../_images/math/87c74a6d24afab2f47fad9ff88f2491638387940.png" alt="\ket{0}"/> ，10次的结果是 <img class="math" src="../../_images/math/8608cd3b3cc62b519ce7f4f6c1389666f01e993e.png" alt="\ket{1}"/> 。</p>
+<p>在量子线路中，每条横线代表一个量子比特。上图中最左边的 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 代表量子比特的初始态。中间的X方块代表量子非门 <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> ，最右边的表盘符号代表测量操作。这个线路的意义是“对初始状态为 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 的量子比特执行量子非门 <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> 操作，并测量变换后的量子比特状态”。根据我们在前节的讨论，变换后的量子比特状态为基本态 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> ，因此我们可以期待该量子线路最后的测量结果始终为1。</p>
+<p>接下来，我们考虑将上图中量子线路的量子非门 <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> 换为阿达马门 <img class="math" src="../../_images/math/aaf3132d08f6d8d7a2be379482c0f2c5f93118f5.png" alt="H"/> ：</p>
+<div class="figure align-center" id="id18">
+<a class="reference internal image-reference" href="../../_images/H_circuit.png"><img alt="../../_images/H_circuit.png" src="../../_images/H_circuit.png" style="width: 30%;" /></a>
+<p class="caption"><span class="caption-text">将量子非门 <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> 换为阿达马门 <img class="math" src="../../_images/math/aaf3132d08f6d8d7a2be379482c0f2c5f93118f5.png" alt="H"/> 后的量子线路</span><a class="headerlink" href="#id18" title="永久链接至图片">¶</a></p>
+</div>
+<p>阿达马门对应的矩阵表示为 <img class="math" src="../../_images/math/fbc0ab4c252c720edfc9469add4d9828dc93abb1.png" alt="H = \frac{1}{\sqrt{2}} \begin{bmatrix}1 &amp; 1 \\ 1 &amp; -1\end{bmatrix}"/> ，于是我们可以计算出变换后的量子态为 <img class="math" src="../../_images/math/e54197a85a7fed22dbac9b4fe02c3875dc2530cd.png" alt="H\ket{0} = \frac{1}{\sqrt{2}} \begin{bmatrix}1 &amp; 1 \\ 1 &amp; -1\end{bmatrix}\begin{bmatrix}1 \\ 0\end{bmatrix} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> 。这是一个 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> 的叠加态，在观测后会坍缩到基本态，其概率分别为 <img class="math" src="../../_images/math/991df5fe1973ab13f4ae55c33ba569fb8f378307.png" alt="|\frac{1}{\sqrt{2}}|^2 = \frac{1}{2}"/> 。也就是说，这个量子线路的观测结果类似于扔硬币。假若观测20次，则大约10次的结果是 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> ，10次的结果是 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> 。</p>
 </div>
 <div class="section" id="cirq">
 <h3>实例：使用Cirq建立简单的量子线路<a class="headerlink" href="#cirq" title="永久链接至标题">¶</a></h3>
@@ -330,26 +335,26 @@
 0=00100111001111101100
 </pre></div>
 </div>
-<p>可见第一个量子线路的测量结果始终为1，第二个量子态的20次测量结果中有9次是0，11次是1（如果你多运行几次，会发现0和1出现的概率趋近于 <img class="math" src="../../_images/math/5da8fbc0d91bea238016b0dc6ae8dac801ab6755.png" alt="\frac{1}{2}"/> ）。可见结果符合我们在上节中的分析。</p>
+<p>可见第一个量子线路的测量结果始终为1，第二个量子态的20次测量结果中有9次是0，11次是1（如果你多运行几次，会发现0和1出现的概率趋近于 <img class="math" src="../../_images/math/71c8247661268e91ff882cb0fd09811ac9e3317f.png" alt="\frac{1}{2}"/> ）。可见结果符合我们在上节中的分析。</p>
 </div>
 </div>
-<div class="section" id="id11">
-<h2>混合量子-经典机器学习<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id12">
+<h2>混合量子-经典机器学习<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
 <div class="admonition- admonition">
 <p class="admonition-title">推荐阅读</p>
 <p>Broughton, Michael, Guillaume Verdon, Trevor McCourt, Antonio J. Martinez, Jae Hyeon Yoo, Sergei V. Isakov, Philip Massey, et al. “ <a class="reference external" href="http://arxiv.org/abs/2003.02989">TensorFlow Quantum: A Software Framework for Quantum Machine Learning.</a> ” ArXiv:2003.02989 [Cond-Mat, Physics:Quant-Ph], March 5, 2020. （TensorFlow Quantum 白皮书）</p>
 </div>
-<div class="section" id="id12">
-<h3>量子数据集<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id13">
+<h3>量子数据集<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
 </div>
 <div class="section" id="pqc">
 <h3>参数化的量子线路（PQC）<a class="headerlink" href="#pqc" title="永久链接至标题">¶</a></h3>
 </div>
-<div class="section" id="id13">
-<h3>将参数化的量子线路嵌入机器学习模型<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
-</div>
 <div class="section" id="id14">
-<h3>实例：对量子数据集进行二分类<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
+<h3>将参数化的量子线路嵌入机器学习模型<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="id15">
+<h3>实例：对量子数据集进行二分类<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cirq</span>
 <span class="kn">import</span> <span class="nn">sympy</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -394,7 +399,10 @@
 <dd><p>“坍缩”一词多用于量子观测的哥本哈根诠释，除此以外还有多世界理论等。此处使用“坍缩”一词仅是方便表述。</p>
 </dd>
 <dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id8">3</a></span></dt>
-<dd><p>其实更多讨论的基础二元量子门是“量子选择非门”（CNOT）和“交换门”（SWAP）。</p>
+<dd><p>其实更常见的基础二元量子门是“量子选择非门”（CNOT）和“交换门”（SWAP）。</p>
+</dd>
+<dt class="label" id="f3"><span class="brackets"><a class="fn-backref" href="#id9">4</a></span></dt>
+<dd><p>这种矩阵被称之为“幺正矩阵”或“酉矩阵”。</p>
 </dd>
 </dl>
 <script>
@@ -419,7 +427,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="docker.html" class="btn btn-neutral float-right" title="使用Docker部署TensorFlow环境" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="rl.html" class="btn btn-neutral float-right" title="强化学习简介" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="swift.html" class="btn btn-neutral float-left" title="Swift for TensorFlow (S4TF) (Huan）" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

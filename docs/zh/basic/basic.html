@@ -131,11 +131,16 @@
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/rl.html">强化学习简介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Preface</span></p>
 <ul>
@@ -250,8 +255,8 @@
 <li><p><a class="reference external" href="http://www.runoob.com/python3/python3-tutorial.html">Python基本操作</a> （赋值、分支及循环语句、使用import导入库）；</p></li>
 <li><p><a class="reference external" href="https://www.ibm.com/developerworks/cn/opensource/os-cn-pythonwith/index.html">Python的With语句</a> ；</p></li>
 <li><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/user/quickstart.html">NumPy</a> ，Python下常用的科学计算库。TensorFlow与之结合紧密；</p></li>
-<li><p><a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%90%91%E9%87%8F">向量</a> 和 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E7%9F%A9%E9%98%B5">矩阵</a> 运算（矩阵的加减法、矩阵与向量相乘、矩阵与矩阵相乘、矩阵的转置等。测试题：<img class="math" src="../../_images/math/d6f567f25d4d5e9317660155709c43414159db62.png" alt="\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} \times \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = ?"/>）；</p></li>
-<li><p><a class="reference external" href="http://old.pep.com.cn/gzsx/jszx_1/czsxtbjxzy/qrzptgjzxjc/dzkb/dscl/">函数的导数</a> ，<a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%81%8F%E5%AF%BC%E6%95%B0">多元函数求导</a> （测试题：<img class="math" src="../../_images/math/a6a4360967aabd7803c2cbd5e5c3050c55a1d512.png" alt="f(x, y) = x^2 + xy + y^2, \frac{\partial f}{\partial x} = ?, \frac{\partial f}{\partial y} = ?"/>）；</p></li>
+<li><p><a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%90%91%E9%87%8F">向量</a> 和 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E7%9F%A9%E9%98%B5">矩阵</a> 运算（矩阵的加减法、矩阵与向量相乘、矩阵与矩阵相乘、矩阵的转置等。测试题：<img class="math" src="../../_images/math/daa6ed586253d99032cf07854b35677c48cefeb7.png" alt="\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} \times \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = ?"/>）；</p></li>
+<li><p><a class="reference external" href="http://old.pep.com.cn/gzsx/jszx_1/czsxtbjxzy/qrzptgjzxjc/dzkb/dscl/">函数的导数</a> ，<a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%81%8F%E5%AF%BC%E6%95%B0">多元函数求导</a> （测试题：<img class="math" src="../../_images/math/782dbae0a39ca7339521de07460e1b48745c2b13.png" alt="f(x, y) = x^2 + xy + y^2, \frac{\partial f}{\partial x} = ?, \frac{\partial f}{\partial y} = ?"/>）；</p></li>
 <li><p><a class="reference external" href="http://old.pep.com.cn/gzsx/jszx_1/czsxtbjxzy/qrzptgjzxjc/dzkb/dscl/">线性回归</a> ；</p></li>
 <li><p><a class="reference external" href="https://zh.wikipedia.org/wiki/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95">梯度下降方法</a> 求函数的局部最小值。</p></li>
 </ul>
@@ -305,11 +310,11 @@
  <span class="p">[</span><span class="mf">43.</span> <span class="mf">50.</span><span class="p">]],</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>可见，我们成功使用 <code class="docutils literal notranslate"><span class="pre">tf.add()</span></code> 操作计算出 <img class="math" src="../../_images/math/a8d39945adf47a7451125c08e77ee93461fcd9b6.png" alt="\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} + \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = \begin{bmatrix} 6 &amp; 8 \\ 10 &amp; 12 \end{bmatrix}"/>，使用 <code class="docutils literal notranslate"><span class="pre">tf.matmul()</span></code> 操作计算出 <img class="math" src="../../_images/math/386c0681d07176fbd64fea2abf338740dcbe16fa.png" alt="\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} \times \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = \begin{bmatrix} 19 &amp; 22 \\43 &amp; 50 \end{bmatrix}"/> 。</p>
+<p>可见，我们成功使用 <code class="docutils literal notranslate"><span class="pre">tf.add()</span></code> 操作计算出 <img class="math" src="../../_images/math/a0e8239c355d42a1c2a5bcc27e28bd5b0515c564.png" alt="\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} + \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = \begin{bmatrix} 6 &amp; 8 \\ 10 &amp; 12 \end{bmatrix}"/>，使用 <code class="docutils literal notranslate"><span class="pre">tf.matmul()</span></code> 操作计算出 <img class="math" src="../../_images/math/339ecd3d3a3e43dc6d6c69cf08cdfebba8a88643.png" alt="\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} \times \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = \begin{bmatrix} 19 &amp; 22 \\43 &amp; 50 \end{bmatrix}"/> 。</p>
 </div>
 <div class="section" id="automatic-derivation">
 <span id="id7"></span><h2>自动求导机制<a class="headerlink" href="#automatic-derivation" title="永久链接至标题">¶</a></h2>
-<p>在机器学习中，我们经常需要计算函数的导数。TensorFlow提供了强大的 <strong>自动求导机制</strong> 来计算导数。在即时执行模式下，TensorFlow引入了 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 这个“求导记录器”来实现自动求导。以下代码展示了如何使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 计算函数 <img class="math" src="../../_images/math/f641e8779cd2b77c4670f7c9ecfe24427354a57c.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/441310575c9c15bdb8a141ce07504ec371104818.png" alt="x = 3"/> 时的导数：</p>
+<p>在机器学习中，我们经常需要计算函数的导数。TensorFlow提供了强大的 <strong>自动求导机制</strong> 来计算导数。在即时执行模式下，TensorFlow引入了 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 这个“求导记录器”来实现自动求导。以下代码展示了如何使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 计算函数 <img class="math" src="../../_images/math/2261dfa63cebc11353c25f3b42ab8812925703e7.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/6242bf7ca264a34d82d13f3307438c9bd77b8e15.png" alt="x = 3"/> 时的导数：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial_value</span><span class="o">=</span><span class="mf">3.</span><span class="p">)</span>
@@ -325,7 +330,7 @@
 </div>
 <p>这里 <code class="docutils literal notranslate"><span class="pre">x</span></code> 是一个初始化为3的 <strong>变量</strong> （Variable），使用 <code class="docutils literal notranslate"><span class="pre">tf.Variable()</span></code> 声明。与普通张量一样，变量同样具有形状、类型和值三种属性。使用变量需要有一个初始化过程，可以通过在 <code class="docutils literal notranslate"><span class="pre">tf.Variable()</span></code> 中指定 <code class="docutils literal notranslate"><span class="pre">initial_value</span></code> 参数来指定初始值。这里将变量 <code class="docutils literal notranslate"><span class="pre">x</span></code> 初始化为 <code class="docutils literal notranslate"><span class="pre">3.</span></code> <a class="footnote-reference brackets" href="#f0" id="id8">1</a>。变量与普通张量的一个重要区别是其默认能够被TensorFlow的自动求导机制所求导，因此往往被用于定义机器学习模型的参数。</p>
 <p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 是一个自动求导的记录器。只要进入了 <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">tf.GradientTape()</span> <span class="pre">as</span> <span class="pre">tape</span></code> 的上下文环境，则在该环境中计算步骤都会被自动记录。比如在上面的示例中，计算步骤 <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">tf.square(x)</span></code> 即被自动记录。离开上下文环境后，记录将停止，但记录器 <code class="docutils literal notranslate"><span class="pre">tape</span></code> 依然可用，因此可以通过 <code class="docutils literal notranslate"><span class="pre">y_grad</span> <span class="pre">=</span> <span class="pre">tape.gradient(y,</span> <span class="pre">x)</span></code> 求张量 <code class="docutils literal notranslate"><span class="pre">y</span></code> 对变量 <code class="docutils literal notranslate"><span class="pre">x</span></code> 的导数。</p>
-<p>在机器学习中，更加常见的是对多元函数求偏导数，以及对向量或矩阵的求导。这些对于TensorFlow也不在话下。以下代码展示了如何使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 计算函数 <img class="math" src="../../_images/math/33a3b6491ab35c4b42eacbdd57bf4175384e0217.png" alt="L(w, b) = \|Xw + b - y\|^2"/> 在 <img class="math" src="../../_images/math/0f900f50662c0cf93c3906a2da8bda4221a5d2fe.png" alt="w = (1, 2)^T, b = 1"/> 时分别对 <img class="math" src="../../_images/math/1103f3de689c390a113c77e86df0de043d90311f.png" alt="w, b"/> 的偏导数。其中 <img class="math" src="../../_images/math/f8848dbfd6c4725d202941411985efce71342275.png" alt="X = \begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix},  y = \begin{bmatrix} 1 \\ 2\end{bmatrix}"/>。</p>
+<p>在机器学习中，更加常见的是对多元函数求偏导数，以及对向量或矩阵的求导。这些对于TensorFlow也不在话下。以下代码展示了如何使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 计算函数 <img class="math" src="../../_images/math/479f15e307e3012ebd95ddd6be5c66f360ffc3d3.png" alt="L(w, b) = \|Xw + b - y\|^2"/> 在 <img class="math" src="../../_images/math/22cb26d288c0a6b52f9882ae272afee98d3017aa.png" alt="w = (1, 2)^T, b = 1"/> 时分别对 <img class="math" src="../../_images/math/8c636669cd40f0b12ecca4a300cc3197e9e4fd4b.png" alt="w, b"/> 的偏导数。其中 <img class="math" src="../../_images/math/190428cb73985eba651bd2b7c04ff94a28f9feb3.png" alt="X = \begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix},  y = \begin{bmatrix} 1 \\ 2\end{bmatrix}"/>。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">]])</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.</span><span class="p">]])</span>
 <span class="n">w</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial_value</span><span class="o">=</span><span class="p">[[</span><span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.</span><span class="p">]])</span>
@@ -344,7 +349,7 @@
 <p>这里， <code class="docutils literal notranslate"><span class="pre">tf.square()</span></code> 操作代表对输入张量的每一个元素求平方，不改变张量形状。 <code class="docutils literal notranslate"><span class="pre">tf.reduce_sum()</span></code> 操作代表对输入张量的所有元素求和，输出一个形状为空的纯量张量（可以通过 <code class="docutils literal notranslate"><span class="pre">axis</span></code> 参数来指定求和的维度，不指定则默认对所有元素求和）。TensorFlow中有大量的张量操作API，包括数学运算、张量形状操作（如 <code class="docutils literal notranslate"><span class="pre">tf.reshape()</span></code>）、切片和连接（如 <code class="docutils literal notranslate"><span class="pre">tf.concat()</span></code>）等多种类型，可以通过查阅TensorFlow的官方API文档 <a class="footnote-reference brackets" href="#f3" id="id9">2</a> 来进一步了解。</p>
 <p>从输出可见，TensorFlow帮助我们计算出了</p>
 <div class="math">
-<p><img src="../../_images/math/6f643b2c0ba11fcd53c647a9a15e3dbc267c48df.png" alt="L((1, 2)^T, 1) &amp;= 62.5
+<p><img src="../../_images/math/af986b338fd007c177306df0d063e2ac46c1a3b2.png" alt="L((1, 2)^T, 1) &amp;= 62.5
 
 \frac{\partial L(w, b)}{\partial w} |_{w = (1, 2)^T, b = 1} &amp;= \begin{bmatrix} 35 \\ 50\end{bmatrix}
 
@@ -385,7 +390,7 @@
 </tr>
 </tbody>
 </table>
-<p>现在，我们希望通过对该数据进行线性回归，即使用线性模型 <img class="math" src="../../_images/math/6ee3a3353577adda12aea610224ed23b240df852.png" alt="y = ax + b"/> 来拟合上述数据，此处 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 是待求的参数。</p>
+<p>现在，我们希望通过对该数据进行线性回归，即使用线性模型 <img class="math" src="../../_images/math/08657936072cefe083681bc78c8c9bcda2c86e2d.png" alt="y = ax + b"/> 来拟合上述数据，此处 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 是待求的参数。</p>
 <p>首先，我们定义数据，进行基本的归一化操作。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -397,20 +402,20 @@
 </pre></div>
 </div>
 <p>接下来，我们使用梯度下降方法来求线性模型中两个参数 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的值 <a class="footnote-reference brackets" href="#f1" id="id12">3</a>。</p>
-<p>回顾机器学习的基础知识，对于多元函数 <img class="math" src="../../_images/math/009a62fb2c14082e49ebe7cfa1a888e09b68b25e.png" alt="f(x)"/> 求局部极小值，<a class="reference external" href="https://zh.wikipedia.org/wiki/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95">梯度下降</a> 的过程如下：</p>
+<p>回顾机器学习的基础知识，对于多元函数 <img class="math" src="../../_images/math/79f40f147e28ccf9e9ffc1444476982d82b10dd8.png" alt="f(x)"/> 求局部极小值，<a class="reference external" href="https://zh.wikipedia.org/wiki/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95">梯度下降</a> 的过程如下：</p>
 <ul>
-<li><p>初始化自变量为 <img class="math" src="../../_images/math/5d5153943d8887c2650bd89d1639f1ece38dd8c1.png" alt="x_0"/> ， <img class="math" src="../../_images/math/e860b2cf0ee14f62a6165c41667579e4c7eeda5c.png" alt="k=0"/></p></li>
+<li><p>初始化自变量为 <img class="math" src="../../_images/math/4c72fcabd7dee7baed0b5dd1e1cb19fcba10e393.png" alt="x_0"/> ， <img class="math" src="../../_images/math/50cfe232e3009061047c77379101c266c05aa4bd.png" alt="k=0"/></p></li>
 <li><p>迭代进行下列步骤直到满足收敛条件：</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>求函数 <img class="math" src="../../_images/math/009a62fb2c14082e49ebe7cfa1a888e09b68b25e.png" alt="f(x)"/> 关于自变量的梯度 <img class="math" src="../../_images/math/47dd35f45bf962eae66ada8519e5c67b5ee43a85.png" alt="\nabla f(x_k)"/></p></li>
-<li><p>更新自变量： <img class="math" src="../../_images/math/ba5a6ac9ad2dff2c7224cfdfc8f9b061b8253a4b.png" alt="x_{k+1} = x_{k} - \gamma \nabla f(x_k)"/> 。这里 <img class="math" src="../../_images/math/d1e87b56267828b2a5f1f47044b72309766d7bd3.png" alt="\gamma"/> 是学习率（也就是梯度下降一次迈出的“步子”大小）</p></li>
-<li><p><img class="math" src="../../_images/math/1ccc7c286cccf182394fab6bf4fdc97dee3e4f04.png" alt="k \leftarrow k+1"/></p></li>
+<li><p>求函数 <img class="math" src="../../_images/math/79f40f147e28ccf9e9ffc1444476982d82b10dd8.png" alt="f(x)"/> 关于自变量的梯度 <img class="math" src="../../_images/math/93db086a28007bb879765c0f3565949370012430.png" alt="\nabla f(x_k)"/></p></li>
+<li><p>更新自变量： <img class="math" src="../../_images/math/13a668025d3ec26103884489e7cfa885ad850897.png" alt="x_{k+1} = x_{k} - \gamma \nabla f(x_k)"/> 。这里 <img class="math" src="../../_images/math/6b4bdbbff158a9000549042619446ccde93ed095.png" alt="\gamma"/> 是学习率（也就是梯度下降一次迈出的“步子”大小）</p></li>
+<li><p><img class="math" src="../../_images/math/57bd938dc0c899c308b17bef0c14ec613dcbbcd9.png" alt="k \leftarrow k+1"/></p></li>
 </ul>
 </div></blockquote>
 </li>
 </ul>
-<p>接下来，我们考虑如何使用程序来实现梯度下降方法，求得线性回归的解 <img class="math" src="../../_images/math/65479ec5a5bb7817c80d9fe05ef50e4ae101f8f9.png" alt="\min_{a, b} L(a, b) = \sum_{i=1}^n(ax_i + b - y_i)^2"/> 。</p>
+<p>接下来，我们考虑如何使用程序来实现梯度下降方法，求得线性回归的解 <img class="math" src="../../_images/math/0d65712f1fa8f236b1ac84c404e5761364c3d877.png" alt="\min_{a, b} L(a, b) = \sum_{i=1}^n(ax_i + b - y_i)^2"/> 。</p>
 <div class="section" id="id14">
 <h3>NumPy下的线性回归<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
 <p>机器学习模型的实现并不是TensorFlow的专利。事实上，对于简单的模型，即使使用常规的科学计算库或者工具也可以求解。在这里，我们使用NumPy这一通用的科学计算库来实现梯度下降方法。NumPy提供了多维数组支持，可以表示向量、矩阵以及更高维的张量。同时，也提供了大量支持在多维数组上进行操作的函数（比如下面的 <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code> 是求内积， <code class="docutils literal notranslate"><span class="pre">np.sum()</span></code> 是求和）。在这方面，NumPy和MATLAB比较类似。在以下代码中，我们手工求损失函数关于参数 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的偏导数 <a class="footnote-reference brackets" href="#f2" id="id15">4</a>，并使用梯度下降法反复迭代，最终获得 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的值。</p>
@@ -487,7 +492,7 @@
 <dd><p>其实线性回归是有解析解的。这里使用梯度下降方法只是为了展示TensorFlow的运作方式。</p>
 </dd>
 <dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id15">4</a></span></dt>
-<dd><p>此处的损失函数为均方差 <img class="math" src="../../_images/math/3f3c7d2bbd583f940d2ca226ae58d853ca88f9c1.png" alt="L(x) = \frac{1}{2} \sum_{i=1}^5 (ax_i + b - y_i)^2"/>。其关于参数 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的偏导数为 <img class="math" src="../../_images/math/4b5b8ad9d29d8703f814c6327cb1e3df30abdfb1.png" alt="\frac{\partial L}{\partial a} = \sum_{i=1}^5 (ax_i + b - y) x_i"/>，<img class="math" src="../../_images/math/ed5c1141e7b8b944b765aeb04481ab5cfc873c3c.png" alt="\frac{\partial L}{\partial b} = \sum_{i=1}^5 (ax_i + b - y)"/></p>
+<dd><p>此处的损失函数为均方差 <img class="math" src="../../_images/math/74ed5dc082904094d28d11dad286c25a9df3dbf5.png" alt="L(x) = \frac{1}{2} \sum_{i=1}^5 (ax_i + b - y_i)^2"/>。其关于参数 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的偏导数为 <img class="math" src="../../_images/math/b1b33f75a98faa854f4941e33b21a041d0d13828.png" alt="\frac{\partial L}{\partial a} = \sum_{i=1}^5 (ax_i + b - y) x_i"/>，<img class="math" src="../../_images/math/2151731c7621dce08b6991562ae70a84bd0bc890.png" alt="\frac{\partial L}{\partial b} = \sum_{i=1}^5 (ax_i + b - y)"/></p>
 </dd>
 <dt class="label" id="f4"><span class="brackets"><a class="fn-backref" href="#id17">5</a></span></dt>
 <dd><p>与即时执行模式相对的是图执行模式（Graph Execution），即 TensorFlow 2 之前所主要使用的执行模式。本手册以面向快速迭代开发的即时执行模式为主，但会在 <span class="xref std std-doc">附录</span> 中介绍图执行模式的基本使用，供需要的读者查阅。</p>
