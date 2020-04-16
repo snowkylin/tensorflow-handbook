@@ -142,7 +142,7 @@ TensorBoard：训练过程可视化
 
     tensorboard --logdir=./tensorboard
 
-然后使用浏览器访问命令行程序所输出的网址（一般是http://计算机名称:6006），即可访问TensorBoard的可视界面，如下图所示：
+然后使用浏览器访问命令行程序所输出的网址（一般是http://name-of-your-computer:6006），即可访问TensorBoard的可视界面，如下图所示：
 
 .. figure:: /_static/image/tools/tensorboard.png
     :width: 100%
