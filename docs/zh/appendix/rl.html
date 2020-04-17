@@ -132,11 +132,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#id7">环境信息无法直接获得的情况</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id9">从直接算法到迭代算法</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#q">q值的渐进性更新</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id11">探索策略</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">探索策略</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id12">大规模问题的求解</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id13">总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">大规模问题的求解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id14">总结</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="docker.html">使用Docker部署TensorFlow环境</a></li>
@@ -264,9 +264,9 @@
 <div class="admonition- admonition">
 <p class="admonition-title">数字三角形问题</p>
 <p>给定一个形如下图的 <img class="math" src="../../_images/math/850d6d4a9d2baba27cab50a5aa6607d6d79a1b14.png" alt="N+1"/> 层数字三角形及三角形每个坐标下的数字 <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> ，智能体在三角形的顶端，每次可以选择向下（ <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> ）或者向右（ <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> ）到达三角形的下一层，请输出一个动作序列，使得智能体经过的路径上的数字之和最大。</p>
-<div class="figure align-center" id="id14">
+<div class="figure align-center" id="id15">
 <a class="reference internal image-reference" href="../../_images/triangle.png"><img alt="../../_images/triangle.png" src="../../_images/triangle.png" style="width: 50%;" /></a>
-<p class="caption"><span class="caption-text">数字三角形示例。此示例中最优动作序列为“向右-向下”，最优路径为“(0, 0) - (1, 1) - (2, 1)”，最大数字和为 <img class="math" src="../../_images/math/1689f2bae3aafd44c7373605ff4b33321041afff.png" alt="r(0, 0) + r(1, 1) + r(2, 1) = 5"/> 。</span><a class="headerlink" href="#id14" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">数字三角形示例。此示例中最优动作序列为“向右-向下”，最优路径为“(0, 0) - (1, 1) - (2, 1)”，最大数字和为 <img class="math" src="../../_images/math/1689f2bae3aafd44c7373605ff4b33321041afff.png" alt="r(0, 0) + r(1, 1) + r(2, 1) = 5"/> 。</span><a class="headerlink" href="#id15" title="永久链接至图片">¶</a></p>
 </div>
 </div>
 <p>我们先不考虑如何寻找最优动作序列的问题，而假设我们已知智能体在每个坐标(i, j)处会选择的动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> （例如 <img class="math" src="../../_images/math/23775800b0f79a5713952b4f0ed4b3c1aeffa1a8.png" alt="\pi(0, 0) = \searrow"/> 代表智能体在(0, 0)处会选择向右的动作），我们只是单纯计算智能体会经过的路径的数字之和。我们从下而上地考虑问题，设 <img class="math" src="../../_images/math/8706bd19cdb4eb441ec988af7b7de23c8ae50abb.png" alt="f(i, j)"/> 为智能体在坐标(i, j)处的“现在及未来将会获得的数字之和”，则可以递推地写出以下等式：</p>
@@ -285,9 +285,9 @@
     &amp;= \max [\underbrace{\max_\pi(1 f(i+1, j) + 0 f(i+1, j+1))}_{\pi(i, j) = \downarrow}, \underbrace{\max_\pi(0 f(i+1, j) + 1 f(i+1, j+1))}_{\pi(i, j) = \searrow}] + r(i, j) \\
     &amp;= \max [\underbrace{\max_\pi f(i+1, j)}_{\pi(i, j) = \downarrow}, \underbrace{\max_\pi f(i+1, j+1)}_{\pi(i, j) = \searrow}] + r(i, j)"/></p>
 </div><p>令 <img class="math" src="../../_images/math/fb3d38644c70f568813c084fc9a7e8bc2476cb68.png" alt="g(i, j) = \max_\pi f(i, j)"/> ，上式可写为 <img class="math" src="../../_images/math/81d9d1e63f1a6c10ba011bccc2a5b445aecdbc19.png" alt="g(i, j) = \max[g(i+1, j), g(i+1, j+1)] + r(i, j)"/> ，这即是动态规划中常见的“状态转移方程”。通过状态转移方程和边界值 <img class="math" src="../../_images/math/8d5cd5daeeef2617ace0d1f663804f7e774b4d68.png" alt="g(N, j) = r(N, j), j = 0 \cdots N"/>  ，我们即可自下而上高效地迭代计算出 <img class="math" src="../../_images/math/be873af52c5d30d83f37278da82408879849b7fa.png" alt="g(0, 0) = \max_\pi f(0, 0)"/> 。</p>
-<div class="figure align-center" id="id15">
+<div class="figure align-center" id="id16">
 <img alt="../../_images/value_iteration_case_0.png" src="../../_images/value_iteration_case_0.png" />
-<p class="caption"><span class="caption-text">通过对 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 的值进行三轮迭代计算 <img class="math" src="../../_images/math/8f9f501140c275983bc6e1f0019bb69895cd9cf0.png" alt="g(0, 0)"/> 。在每一轮迭代中，对于坐标(i, j)，分别取得当 <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> 和 <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/> 时的“未来将会获得的数字之和的最大值”（即 <img class="math" src="../../_images/math/beb3d189902a8531de1283efda4d89fdb59b40e7.png" alt="g(i+1, j)"/> 和 <img class="math" src="../../_images/math/2ca4e61d10d6384a0d96464572a77e8325d60a85.png" alt="g(i+1, j+1)"/> ），取两者中的较大者，并加上当前坐标的数字 <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> 。</span><a class="headerlink" href="#id15" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">通过对 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 的值进行三轮迭代计算 <img class="math" src="../../_images/math/8f9f501140c275983bc6e1f0019bb69895cd9cf0.png" alt="g(0, 0)"/> 。在每一轮迭代中，对于坐标(i, j)，分别取得当 <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> 和 <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/> 时的“未来将会获得的数字之和的最大值”（即 <img class="math" src="../../_images/math/beb3d189902a8531de1283efda4d89fdb59b40e7.png" alt="g(i+1, j)"/> 和 <img class="math" src="../../_images/math/2ca4e61d10d6384a0d96464572a77e8325d60a85.png" alt="g(i+1, j+1)"/> ），取两者中的较大者，并加上当前坐标的数字 <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> 。</span><a class="headerlink" href="#id16" title="永久链接至图片">¶</a></p>
 </div>
 </div>
 <div class="section" id="id5">
@@ -312,14 +312,14 @@
 <div class="math" id="equation-eq4">
 <p><span class="eqno">(4)<a class="headerlink" href="#equation-eq4" title="公式的永久链接">¶</a></span><img src="../../_images/math/acde73d4b06bbf3cff2ce244f3e3221b08c0ae47.png" alt="g(i, j) = \max[\underbrace{\frac{3}{4} g(i+1, j) + \frac{1}{4} g(i+1, j+1)}_{\pi(i, j) = \downarrow}, \underbrace{\frac{1}{4} g(i+1, j) + \frac{3}{4} g(i+1, j+1)}_{\pi(i, j) = \searrow}] + r(i, j)"/></p>
 </div><p>然后我们即可使用这一递推式由下到上计算 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 。</p>
-<div class="figure align-center" id="id16">
+<div class="figure align-center" id="id17">
 <img alt="../../_images/value_iteration_case_1.png" src="../../_images/value_iteration_case_1.png" />
-<p class="caption"><span class="caption-text">通过对 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 的值进行三轮迭代计算 <img class="math" src="../../_images/math/8f9f501140c275983bc6e1f0019bb69895cd9cf0.png" alt="g(0, 0)"/> 。在每一轮迭代中，对于坐标(i, j)，分别计算当 <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> 和 <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/> 时的“未来将会获得的数字之和的期望的最大值”（即 <img class="math" src="../../_images/math/40c45fe9dc5f26e8ee4e39f03dcf10d06fc26f0f.png" alt="\frac{3}{4} g(i+1, j) + \frac{1}{4} g(i+1, j+1)"/> 和 <img class="math" src="../../_images/math/79ab58378a2d59655da58a9bca9041242a1e607b.png" alt="\frac{1}{4} g(i+1, j) + \frac{3}{4} g(i+1, j+1)"/> ），取两者中的较大者，并加上当前坐标的数字 <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> 。</span><a class="headerlink" href="#id16" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">通过对 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 的值进行三轮迭代计算 <img class="math" src="../../_images/math/8f9f501140c275983bc6e1f0019bb69895cd9cf0.png" alt="g(0, 0)"/> 。在每一轮迭代中，对于坐标(i, j)，分别计算当 <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> 和 <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/> 时的“未来将会获得的数字之和的期望的最大值”（即 <img class="math" src="../../_images/math/40c45fe9dc5f26e8ee4e39f03dcf10d06fc26f0f.png" alt="\frac{3}{4} g(i+1, j) + \frac{1}{4} g(i+1, j+1)"/> 和 <img class="math" src="../../_images/math/79ab58378a2d59655da58a9bca9041242a1e607b.png" alt="\frac{1}{4} g(i+1, j) + \frac{3}{4} g(i+1, j+1)"/> ），取两者中的较大者，并加上当前坐标的数字 <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> 。</span><a class="headerlink" href="#id17" title="永久链接至图片">¶</a></p>
 </div>
 <p>我们也可以从智能体在每个坐标(i, j)所做的动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 出发来观察 <a class="reference internal" href="#equation-eq4">(4)</a> 式。在每一轮迭代中，先分别计算两种动作带来的未来收益期望（策略评估），然后取收益较大的动作作为 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的取值（策略改进），最后根据动作更新 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 。</p>
-<div class="figure align-center" id="id17">
+<div class="figure align-center" id="id18">
 <a class="reference internal image-reference" href="../../_images/policy_iteration_case_1.png"><img alt="../../_images/policy_iteration_case_1.png" src="../../_images/policy_iteration_case_1.png" style="width: 75%;" /></a>
-<p class="caption"><span class="caption-text">策略评估-策略改进框架：通过对 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的值进行迭代来计算 <img class="math" src="../../_images/math/8f9f501140c275983bc6e1f0019bb69895cd9cf0.png" alt="g(0, 0)"/> 。在每一轮迭代中，对于坐标(i, j)，分别计算当 <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> 和 <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/> 时的“未来将会获得的数字之和的期望”（策略评估），取较大者对应的动作作为 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的取值（策略改进）。然后根据本轮迭代确定的 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的值更新 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 。</span><a class="headerlink" href="#id17" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">策略评估-策略改进框架：通过对 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的值进行迭代来计算 <img class="math" src="../../_images/math/8f9f501140c275983bc6e1f0019bb69895cd9cf0.png" alt="g(0, 0)"/> 。在每一轮迭代中，对于坐标(i, j)，分别计算当 <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> 和 <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/> 时的“未来将会获得的数字之和的期望”（策略评估），取较大者对应的动作作为 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的取值（策略改进）。然后根据本轮迭代确定的 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的值更新 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 。</span><a class="headerlink" href="#id18" title="永久链接至图片">¶</a></p>
 </div>
 <p>我们可以将算法流程概括如下：</p>
 <ul>
@@ -346,9 +346,9 @@
 <p>回到前节的“策略评估-策略改进”框架，我们现在遇到的最大困难是无法在“策略评估”中通过前一阶段的 <img class="math" src="../../_images/math/beb3d189902a8531de1283efda4d89fdb59b40e7.png" alt="g(i+1, j)"/> 、 <img class="math" src="../../_images/math/2ca4e61d10d6384a0d96464572a77e8325d60a85.png" alt="g(i+1, j+1)"/> 和概率参数 <img class="math" src="../../_images/math/b970024d9432fd5e37b28335f1d285e4c9afd291.png" alt="p_1"/> 、 <img class="math" src="../../_images/math/c1584505754919371fad45d96afec2cdd64ff03f.png" alt="p_2"/> 直接计算每个动作的未来期望 <img class="math" src="../../_images/math/a8b01885522343d2ec658036c583d19a97bc6cc3.png" alt="p_1 g(i+1, j) + p_2 g(i+1, j+1)"/> （因为概率参数未知）。不过，期望的妙处在于：就算我们无法直接计算期望，我们也是可以通过大量试验估计出期望的。如果我们用 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 表示智能体在坐标(i, j)选择动作a时的未来期望 <a class="footnote-reference brackets" href="#f2" id="id8">3</a> ，则我们可以观察智能体在(i, j)处选择动作a后的K次试验结果，取这K次结果的平均值作为估计值。例如，当智能体在坐标(0, 1)并选择动作 <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> 时，我们进行20次试验，发现15次的结果为1，5次的结果为2，则我们可以估计 <img class="math" src="../../_images/math/ffff350813a8440f70e86e0c7475db9b90ba8755.png" alt="q(0, 1, \downarrow) \approx \frac{15}{20} \times 1 + \frac{5}{20} \times 2 = 1.25"/> 。</p>
 <p>于是，我们只需将前节“策略评估”中的未来期望计算，更换为使用试验估计 <img class="math" src="../../_images/math/74c3ff13339a952211d0e24aa8ed2e9fb2814f78.png" alt="a = \downarrow"/> 和 <img class="math" src="../../_images/math/5a2cd6ae2cbc77416889a524b0d954f7aada8e48.png" alt="a = \searrow"/> 时的未来期望 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> ，即可在环境概率参数未知的情况下进行“策略评估”步骤。值得一提的是，由于我们不需要显式计算期望 <img class="math" src="../../_images/math/a8b01885522343d2ec658036c583d19a97bc6cc3.png" alt="p_1 g(i+1, j) + p_2 g(i+1, j+1)"/> ，所以我们也无须关心 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 的值了，前节值更新的步骤也随之省略（事实上，这里 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 已经取代了前节 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 的地位）。</p>
 <p>还有一点值得注意的是，由于试验是一个从上而下的步骤，需要算法为整个路径均提供动作，那么对于那些尚未确定动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的坐标应该如何是好呢？我们可以对这些坐标使用“随机动作”，即50%的概率选择 <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> ，50%的概率选择 <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> ，以在试验过程中对两种动作均进行充分的“探索”。</p>
-<div class="figure align-center" id="id18">
+<div class="figure align-center" id="id19">
 <a class="reference internal image-reference" href="../../_images/q_iteration_case_2.png"><img alt="../../_images/q_iteration_case_2.png" src="../../_images/q_iteration_case_2.png" style="width: 75%;" /></a>
-<p class="caption"><span class="caption-text">将前节“策略评估”中的未来期望计算，更换为使用试验估计 <img class="math" src="../../_images/math/74c3ff13339a952211d0e24aa8ed2e9fb2814f78.png" alt="a = \downarrow"/> 和 <img class="math" src="../../_images/math/5a2cd6ae2cbc77416889a524b0d954f7aada8e48.png" alt="a = \searrow"/> 时的未来期望 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 。</span><a class="headerlink" href="#id18" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">将前节“策略评估”中的未来期望计算，更换为使用试验估计 <img class="math" src="../../_images/math/74c3ff13339a952211d0e24aa8ed2e9fb2814f78.png" alt="a = \downarrow"/> 和 <img class="math" src="../../_images/math/5a2cd6ae2cbc77416889a524b0d954f7aada8e48.png" alt="a = \searrow"/> 时的未来期望 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 。</span><a class="headerlink" href="#id19" title="永久链接至图片">¶</a></p>
 </div>
 <p>我们可以将算法流程概括如下：</p>
 <ul>
@@ -395,27 +395,31 @@
 <div class="section" id="q">
 <h3>q值的渐进性更新<a class="headerlink" href="#q" title="永久链接至标题">¶</a></h3>
 <p>当每轮迭代的试验次数k足够大、覆盖的情形足够广，以至于每个坐标(i, j)和动作a的组合都有足够多的数据的时候，q值的更新很简单：根据试验结果为每个(i, j, a)重新计算一个新的 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> ，并替换原有数值即可。</p>
-<p>可是现在，我们一共只有较少的k次试验结果（例如5次或10次）。尽管这k次试验是基于当前最新的动作方案 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 来实施的，可一是次数太少统计效应不明显，二是原来的q值也不见得那么不靠谱（毕竟每次迭代并不见得会把 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 更改太多）。于是，相比于根据试验结果直接计算一个新的q值 <img class="math" src="../../_images/math/bebdf41cd6fe39e57f830edd8ededd52e9362091.png" alt="\bar{q}(i, j, a) = \frac{q_1 + \cdots + q_n}{n}"/>  并覆盖原有值（我们在前面的直接算法里一直都是这样做的）：</p>
+<p>可是现在，我们一共只有较少的k次试验结果（例如5次或10次）。尽管这k次试验是基于当前最新的动作方案 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 来实施的，可一是次数太少统计效应不明显，二是原来的q值也不见得那么不靠谱（毕竟每次迭代并不见得会把 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 更改太多）。于是，相比于根据试验结果直接计算一个新的q值 <img class="math" src="../../_images/math/bebdf41cd6fe39e57f830edd8ededd52e9362091.png" alt="\bar{q}(i, j, a) = \frac{q_1 + \cdots + q_n}{n}"/>  并覆盖原有值（我们在前面的直接算法里一直都是这样做的 <a class="footnote-reference brackets" href="#f4" id="id11">5</a> ）：</p>
 <div class="math" id="equation-eq5">
 <p><span class="eqno">(5)<a class="headerlink" href="#equation-eq5" title="公式的永久链接">¶</a></span><img src="../../_images/math/ac8af050ed507ebb800d1f34a7acf8c4dc2c6a51.png" alt="q_{\text{new}}(i, j, a) \leftarrow \bar{q}(i, j, a)"/></p>
-</div><p>一个更聪明的方法是“渐进”地更新q值，也就是说，我们把旧的q值向当前试验的结果 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> 稍微“牵引”一点，作为新的q值，从而让新的q值更贴近当前试验的结果 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> ，即</p>
+</div><p>一个更聪明的方法是“渐进”地更新q值。也就是说，我们把旧的q值向当前试验的结果 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> 稍微“牵引”一点，作为新的q值，从而让新的q值更贴近当前试验的结果 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> ，即</p>
 <div class="math">
 <p><img src="../../_images/math/c067729cbf39b3a0593df57fc4f39edfdcca9116.png" alt="q_{\text{new}}(i, j, a) \leftarrow q_{\text{old}}(i, j, a) + \alpha(\bar{q}(i, j, a) - q_{\text{old}}(i, j, a))"/></p>
 </div><p>其中参数 <img class="math" src="../../_images/math/3929a173b494d403fb588bf98153e3a45dd662fd.png" alt="\alpha"/> 控制牵引的“力度”（牵引力度为1时，就退化为了使用试验结果直接覆盖q值的 <a class="reference internal" href="#equation-eq5">(5)</a> 式，不过我们一般会设一个小一点的数字，比如0.1或0.01）。通过这种方式，我们既加入了新的试验所带来的信息，又保留了部分旧的知识。其实很多迭代算法都有类似的特点。</p>
+<p>不过， <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> 的值只有当一次试验完全做完的时候才能获得。也就是说，只有走到了数字三角形的最底层，才能知道路径途中的每个坐标到路径最底端的数字之和（从而更新路径途中的所有坐标的q值）。这在有些场景会造成效率的低下，所以我们在实际更新时往往使用另一种方法，使得我们每走一步都可以更新一次q值。具体地说，假设某一次试验中我们在数字三角形的坐标(i, j)处，通过执行动作 <img class="math" src="../../_images/math/7f91f9da34a27af1b7fec19a4d352b4d0ac7bdf9.png" alt="a = \pi(i, j) + \epsilon"/> （ <img class="math" src="../../_images/math/3bbacb4d6fc6b93009fe733c5fe22be0c81b22c5.png" alt="+ \epsilon"/> 代表加上一些探索扰动）而跳到了坐标(i’,j’)（即“走一步”，可能是(i+1, j)，也可能是(i+1, j+1)），然后又在坐标(i’,j’)执行了动作 <img class="math" src="../../_images/math/3244ef22300f601a72a9f7a861e755d913877aea.png" alt="a' = \pi(i', j') + \epsilon"/> 。这时我们可以用 <img class="math" src="../../_images/math/8513661163d739885dd4b8f73d3567e23ad09b0d.png" alt="r(i', j') + q(i', j', a')"/> 来近似替代之前的 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> ，如下式所示：</p>
 <div class="math">
 <p><img src="../../_images/math/c1e6462c83e34e7157c9b224dd4087cec9775065.png" alt="q_{\text{new}}(i, j, a) \leftarrow q_{\text{old}}(i, j, a) + \alpha\big(r(i', j') + q(i', j', a') - q_{\text{old}}(i, j, a)\big)"/></p>
-</div><div class="math">
+</div><p>我们甚至可以不需要试验结果中的 <img class="math" src="../../_images/math/918247d85d6d7ed629a414cb6bc92ddaaf59995d.png" alt="a'"/> ，而使用在坐标(i’, j’)时两个动作对应的q值的较大者 <img class="math" src="../../_images/math/c2a42f4c5fdd132bb9e491f72bb751332c448310.png" alt="\max[q(i', j', \downarrow), q(i', j', \searrow)]"/> 来代替 <img class="math" src="../../_images/math/fdef2de7d360ebe8e12fe46f77ef8f15db51fc08.png" alt="q(i', j', a')"/> ，如下式：</p>
+<div class="math">
 <p><img src="../../_images/math/1ff63a9475fd75c4888cac0985b3f73c03a64bb9.png" alt="q_{\text{new}}(i, j, a) \leftarrow q_{\text{old}}(i, j, a) + \alpha\big(r(i', j') + \max[q(i', j', \downarrow), q(i', j', \searrow)] - q_{\text{old}}(i, j, a)\big)"/></p>
 </div></div>
-<div class="section" id="id11">
-<h3>探索策略<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
-</div>
-</div>
 <div class="section" id="id12">
-<h2>大规模问题的求解<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
+<h3>探索策略<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<p>对于我们前面介绍的，基于试验的算法而言，由于环境里的概率参数是未知的（类似于将环境看做黑盒），所以我们在试验时一般都需要加入一些随机的“探索策略”，以保证试验的结果能覆盖到比较多的情况。否则的话，由于智能体在每个坐标都具有固定的动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> ，所以试验的结果会受到极大的限制，导致陷入局部最优的情况。考虑最极端的情况，假若我们回到本节之初的原版数字三角形问题（环境确定、已知且不受概率影响），当动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 也固定时，无论进行多少次试验，结果都是唯一的。</p>
+<p>探索的策略有很多种，在此我们介绍一种较为简单的方法：设定一个概率比例 <img class="math" src="../../_images/math/f72a1fc0c79aacac313889d0ec9fdb7f1d3a3092.png" alt="\epsilon"/> ，以 <img class="math" src="../../_images/math/f72a1fc0c79aacac313889d0ec9fdb7f1d3a3092.png" alt="\epsilon"/> 的概率随机生成动作（ <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> 或 <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> ），以 <img class="math" src="../../_images/math/c927ed3b3be182505f1e8418a2a6d4dd00574dae.png" alt="1 - \epsilon"/> 的概率选择动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 。我们可以看到，当 <img class="math" src="../../_images/math/c45afb49be64d2a2c04324da334a5ae24af0cc1d.png" alt="\epsilon = 1"/> 时，相当于完全随机地选取动作。当 <img class="math" src="../../_images/math/c45afb49be64d2a2c04324da334a5ae24af0cc1d.png" alt="\epsilon = 1"/> 时，则相当于没有加入任何随机扰动，直接选择动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 。一般而言，在迭代初始的时候 <img class="math" src="../../_images/math/f72a1fc0c79aacac313889d0ec9fdb7f1d3a3092.png" alt="\epsilon"/> 的取值较大，以扩大探索的范围。随着迭代次数的增加， <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的值逐渐变优， <img class="math" src="../../_images/math/f72a1fc0c79aacac313889d0ec9fdb7f1d3a3092.png" alt="\epsilon"/> 的取值会逐渐减小。</p>
+</div>
 </div>
 <div class="section" id="id13">
-<h2>总结<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h2>
+<h2>大规模问题的求解<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h2>
+</div>
+<div class="section" id="id14">
+<h2>总结<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h2>
 <dl class="footnote brackets">
 <dt class="label" id="f0"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
 <dd><p>所以有时又被称为“记忆化搜索”，或者说记忆化搜索是动态规划的一种具体实现形式。</p>
@@ -428,6 +432,9 @@
 </dd>
 <dt class="label" id="f3"><span class="brackets"><a class="fn-backref" href="#id10">4</a></span></dt>
 <dd><p>这里和下文中的“精确”都是相对于迭代算法的有限次试验而言的。只要是基于试验的方法，所获得的期望都是估计值。</p>
+</dd>
+<dt class="label" id="f4"><span class="brackets"><a class="fn-backref" href="#id11">5</a></span></dt>
+<dd><p>不过在这里，如果我们在迭代第一步的试验时加入了随机扰动的“探索策略”的话，这样计算是不太对的。因为k次试验结果受到了探索策略的影响，导致我们所评估的其实是随机扰动后的动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> ，使得我们根据试验结果统计出的 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> 存在偏差。为了解决这个问题，我们有两种方法。第一种方法是把随机扰动的“探索策略”加到第三步策略改进选择最大期望的过程里，第二种则需要采用一种叫做“重要度采样”（Importance Sampling）的方法。由于我们真实采用的q值更新方法多是后面介绍的时间差分方法，所以这里省略关于重要度采样的介绍，有需要的读者可参考文末列出的强化学习相关文献进行了解。</p>
 </dd>
 </dl>
 <script>
