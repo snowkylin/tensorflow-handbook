@@ -89,7 +89,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
@@ -140,10 +144,6 @@
 <li class="toctree-l1"><a class="reference internal" href="jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="terms.html">术语中英对照表</a></li>
-</ul>
-<p class="caption"><span class="caption-text">教学活动</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Preface</span></p>
 <ul>
@@ -251,7 +251,7 @@
             
   <div class="section" id="id1">
 <h1>强化学习简介<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<p>在本章，我们将对 <a class="reference internal" href="../basic/models.html#rl"><span class="std std-ref">深度强化学习</span></a> 一节中所涉及的强化学习算法进行简要介绍。我们所熟知的有监督学习是在带标签的已知训练数据上进行学习，得到一个从数据特征到标签的映射（预测模型），进而预测新的数据实例所具有的标签。而强化学习中则出现了两个新的概念，“智能体”和“环境”。在强化学习中，智能体通过与环境的交互来学习策略，从而最大化自己在环境中所获得的奖励。例如，在下棋的过程中，你（智能体）可以通过与棋盘及对手（环境）进行交互来学习下棋的策略，从而最大化自己在下棋过程中获得的奖励（赢棋的次数）。</p>
+<p>在本章，我们将对 <a class="reference internal" href="../basic/models.html#rl"><span class="std std-ref">深度强化学习</span></a> 一节中所涉及的强化学习算法进行入门介绍。我们所熟知的有监督学习是在带标签的已知训练数据上进行学习，得到一个从数据特征到标签的映射（预测模型），进而预测新的数据实例所具有的标签。而强化学习中则出现了两个新的概念，“智能体”和“环境”。在强化学习中，智能体通过与环境的交互来学习策略，从而最大化自己在环境中所获得的奖励。例如，在下棋的过程中，你（智能体）可以通过与棋盘及对手（环境）进行交互来学习下棋的策略，从而最大化自己在下棋过程中获得的奖励（赢棋的次数）。</p>
 <p>如果说有监督学习关注的是“预测”，是与统计理论关联密切的学习类型的话，那么强化学习关注的则是“决策”，与计算机算法（尤其是动态规划和搜索）有着深入关联。笔者认为强化学习的原理入门相较于有监督学习而言具有更高的门槛，尤其是给习惯于确定性算法的程序员突然呈现一堆抽象概念的数值迭代关系，在大多数时候只能是囫囵吞枣。于是笔者希望通过一些较为具体的算例，以尽可能朴素的表达，为具有一定算法基础的读者说明强化学习的基本思想。</p>
 <div class="section" id="id2">
 <h2>从动态规划说起<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
@@ -324,7 +324,7 @@
 <p>我们可以将算法流程概括如下：</p>
 <ul>
 <li><p>初始化环境</p></li>
-<li><p>for i = N-2 downto 1 do</p>
+<li><p>for i = N-1 downto 0 do</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>（策略评估）计算第i层中每个坐标(i, j)选择 <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> 和 <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/> 的未来期望 <img class="math" src="../../_images/math/93a23d7a9f31f9d158f5b4aa8f1149aaba05cd47.png" alt="q_1"/> 和 <img class="math" src="../../_images/math/e18e1d8bd03372d42bfa119ff3a0ecb5811985f7.png" alt="q_2"/></p></li>
@@ -353,7 +353,7 @@
 <p>我们可以将算法流程概括如下：</p>
 <ul>
 <li><p>初始化q值</p></li>
-<li><p>for i = N-2 downto 1 do</p>
+<li><p>for i = N-1 downto 0 do</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>（策略评估）试验估计第i层中每个坐标(i, j)选择 <img class="math" src="../../_images/math/74c3ff13339a952211d0e24aa8ed2e9fb2814f78.png" alt="a = \downarrow"/> 和 <img class="math" src="../../_images/math/5a2cd6ae2cbc77416889a524b0d954f7aada8e48.png" alt="a = \searrow"/> 的未来期望 <img class="math" src="../../_images/math/6fe9b002b41d8ab55c33ef04d9177f6cca71c388.png" alt="q(i, j, \downarrow)"/> 和 <img class="math" src="../../_images/math/5f78bf672a909fc1c85932179a262c9b38a8ab55.png" alt="q(i, j, \searrow)"/></p></li>
@@ -365,24 +365,24 @@
 </div>
 <div class="section" id="id9">
 <h2>从直接算法到迭代算法<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
-<p>到目前为止，我们都非常严格地遵循了动态规划中“划分阶段”的思想，即按照问题的时间特征将问题分成若干个阶段并依次求解。对应到数字三角形问题中，即从下到上逐层计算和更新未来期望（或q值），每一轮迭代中更新本层的未来期望（或q值）。在这个过程中，我们很确定，经过N-2次策略评估和策略改进后，算法将停止，而我们可以获得精确的最大数字和和最优动作。我们将这种算法称之为“直接算法”，这也是我们在各种算法竞赛中常见的算法类型。</p>
+<p>到目前为止，我们都非常严格地遵循了动态规划中“划分阶段”的思想，即按照问题的时间特征将问题分成若干个阶段并依次求解。对应到数字三角形问题中，即从下到上逐层计算和更新未来期望（或q值），每一轮迭代中更新本层的未来期望（或q值）。在这个过程中，我们很确定，经过N次策略评估和策略改进后，算法将停止，而我们可以获得精确的最大数字和和最优动作。我们将这种算法称之为“直接算法”，这也是我们在各种算法竞赛中常见的算法类型。</p>
 <p>不过在实际场景中，时间和计算资源往往都是有限的，因此我们可能需要算法具有较好的“渐进特性”，即并不要求算法输出精确的理论最优解，只需能够输出近似的较优解，且解的质量随着时间消耗增加而提升。我们往往称这种算法为“迭代算法”。对于数字三角形问题，我们考虑以下变式：</p>
 <div class="admonition- admonition">
 <p class="admonition-title">数字三角形问题（变式3）</p>
-<p>智能体初始在三角形的顶端，每次可以选择向下（ <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> ）或者向右（ <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> ）的动作。环境会对处于任意坐标(i, j)的智能体的动作产生“干扰”，而且这个干扰的具体概率未知。允许在数字三角形的环境中进行 K 次试验（K可能很小也可能很大）。请设计试验方案和流程，确定智能体在每个坐标所应该选择的动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> ，使得智能体经过的路径上的数字之和的期望较优。</p>
+<p>智能体初始在三角形的顶端，每次可以选择向下（ <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> ）或者向右（ <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> ）的动作。环境会对处于任意坐标(i, j)的智能体的动作产生“干扰”，而且这个干扰的具体概率未知。允许在数字三角形的环境中进行 K 次试验（K可能很小也可能很大）。请设计试验方案和流程，确定智能体在每个坐标所应该选择的动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> ，使得智能体经过的路径上的数字之和的期望尽可能大。</p>
 </div>
 <p>为了解决这个问题，我们不妨从更高的层次来审视我们目前的算法做了什么。其实算法的主体是交替进行“策略评估”和“策略改进”两个步骤。其中，</p>
 <ul class="simple">
 <li><p>“策略评估”根据智能体在坐标(i, j)的动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> ，评估在这套动作组合下，智能体在坐标(i, j)选择动作a的未来期望 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 。</p></li>
 <li><p>“策略改进”根据上一步计算出的 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> ，选择未来期望最大的动作来更新动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 。</p></li>
 </ul>
-<p>事实上，这一“策略评估”和“策略改进”的交替步骤并不一定需要按照层的顺序自下而上进行。我们只要确保算法能根据有限的试验结果“尽量”进行策略评估和策略改进，就能让算法输出的结果“渐进”地越变越好。于是，我们考虑以下算法流程</p>
+<p>事实上，这一“策略评估”和“策略改进”的交替步骤并不一定需要按照层的顺序自下而上进行。我们只要确保算法能根据有限的试验结果“尽量”反复进行策略评估和策略改进，就能让算法输出的结果“渐进”地越变越好。于是，我们考虑以下算法流程</p>
 <ul>
 <li><p>初始化 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 和 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/></p></li>
 <li><p>repeat</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>固定智能体的动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的取值（同时加入一些随机扰动，让试验过程能“探索”更多动作组合，上节也有类似操作），进行k次试验。</p></li>
+<li><p>固定智能体的动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的取值，进行k次试验（试验时加入一些随机扰动，使得能“探索”更多动作组合，上节也有类似操作）。</p></li>
 <li><p>（策略评估）根据当前k次试验的结果，调整智能体的未来期望 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 的取值，使得 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 的取值“尽量”能够真实反映智能体在当前动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 下的未来期望（上节是精确调整 <a class="footnote-reference brackets" href="#f3" id="id10">4</a> 至等于未来期望）。</p></li>
 <li><p>（策略改进）根据当前 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 的值，选择未来期望较大的动作作为 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的取值。</p></li>
 </ul>
@@ -391,10 +391,22 @@
 <li><p>until 所有坐标的q值都不再变化，或总试验次数大于K</p></li>
 </ul>
 <p>为了理解这个算法，我们不妨考虑一种极端情况：假设每轮迭代的试验次数k的值足够大，则策略评估步骤中可以将 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 精确调整为完全等于智能体在当前动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 下的未来期望，事实上就变成了上节算法的“粗放版”（上节的算法每次只更新一层的 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 值为精确的未来期望，这里每次都更新了所有的 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 值。在结果上没有差别，只是多了一些冗余计算）。</p>
-<p>这个算法的好处在于满足了我们对“渐进特性”的要求：</p>
+<p>上面的算法只是一个大致的框架介绍。为了具体实现算法，我们接下来需要讨论两个问题：一是如何根据k次试验的结果更新智能体的未来期望 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> ，二是如何在试验时加入随机的探索机制。</p>
 <div class="section" id="q">
 <h3>q值的渐进性更新<a class="headerlink" href="#q" title="永久链接至标题">¶</a></h3>
-</div>
+<p>当每轮迭代的试验次数k足够大、覆盖的情形足够广，以至于每个坐标(i, j)和动作a的组合都有足够多的数据的时候，q值的更新很简单：根据试验结果为每个(i, j, a)重新计算一个新的 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> ，并替换原有数值即可。</p>
+<p>可是现在，我们一共只有较少的k次试验结果（例如5次或10次）。尽管这k次试验是基于当前最新的动作方案 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 来实施的，可一是次数太少统计效应不明显，二是原来的q值也不见得那么不靠谱（毕竟每次迭代并不见得会把 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 更改太多）。于是，相比于根据试验结果直接计算一个新的q值 <img class="math" src="../../_images/math/bebdf41cd6fe39e57f830edd8ededd52e9362091.png" alt="\bar{q}(i, j, a) = \frac{q_1 + \cdots + q_n}{n}"/>  并覆盖原有值（我们在前面的直接算法里一直都是这样做的）：</p>
+<div class="math" id="equation-eq5">
+<p><span class="eqno">(5)<a class="headerlink" href="#equation-eq5" title="公式的永久链接">¶</a></span><img src="../../_images/math/ac8af050ed507ebb800d1f34a7acf8c4dc2c6a51.png" alt="q_{\text{new}}(i, j, a) \leftarrow \bar{q}(i, j, a)"/></p>
+</div><p>一个更聪明的方法是“渐进”地更新q值，也就是说，我们把旧的q值向当前试验的结果 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> 稍微“牵引”一点，作为新的q值，从而让新的q值更贴近当前试验的结果 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> ，即</p>
+<div class="math">
+<p><img src="../../_images/math/c067729cbf39b3a0593df57fc4f39edfdcca9116.png" alt="q_{\text{new}}(i, j, a) \leftarrow q_{\text{old}}(i, j, a) + \alpha(\bar{q}(i, j, a) - q_{\text{old}}(i, j, a))"/></p>
+</div><p>其中参数 <img class="math" src="../../_images/math/3929a173b494d403fb588bf98153e3a45dd662fd.png" alt="\alpha"/> 控制牵引的“力度”（牵引力度为1时，就退化为了使用试验结果直接覆盖q值的 <a class="reference internal" href="#equation-eq5">(5)</a> 式，不过我们一般会设一个小一点的数字，比如0.1或0.01）。通过这种方式，我们既加入了新的试验所带来的信息，又保留了部分旧的知识。其实很多迭代算法都有类似的特点。</p>
+<div class="math">
+<p><img src="../../_images/math/c1e6462c83e34e7157c9b224dd4087cec9775065.png" alt="q_{\text{new}}(i, j, a) \leftarrow q_{\text{old}}(i, j, a) + \alpha\big(r(i', j') + q(i', j', a') - q_{\text{old}}(i, j, a)\big)"/></p>
+</div><div class="math">
+<p><img src="../../_images/math/1ff63a9475fd75c4888cac0985b3f73c03a64bb9.png" alt="q_{\text{new}}(i, j, a) \leftarrow q_{\text{old}}(i, j, a) + \alpha\big(r(i', j') + \max[q(i', j', \downarrow), q(i', j', \searrow)] - q_{\text{old}}(i, j, a)\big)"/></p>
+</div></div>
 <div class="section" id="id11">
 <h3>探索策略<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
 </div>
@@ -418,7 +430,17 @@
 <dd><p>这里和下文中的“精确”都是相对于迭代算法的有限次试验而言的。只要是基于试验的方法，所获得的期望都是估计值。</p>
 </dd>
 </dl>
-</div>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 212 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
 </div>
 
 
