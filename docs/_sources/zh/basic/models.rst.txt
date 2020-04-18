@@ -493,7 +493,7 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
 深度强化学习（DRL）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-`强化学习 <https://zh.wikipedia.org/wiki/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0>`_ （Reinforcement learning，RL）强调如何基于环境而行动，以取得最大化的预期利益。结合了深度学习技术后的强化学习更是如虎添翼。近年广为人知的 AlphaGo 即是深度强化学习的典型应用。
+`强化学习 <https://zh.wikipedia.org/wiki/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0>`_ （Reinforcement learning，RL）强调如何基于环境而行动，以取得最大化的预期利益。结合了深度学习技术后的强化学习（Deep Reinforcement learning，DRL）更是如虎添翼。近年广为人知的 AlphaGo 即是深度强化学习的典型应用。
 
 .. note:: 可参考本手册附录的 :doc:`../appendix/rl` 一章以获得强化学习的基础知识。
 
