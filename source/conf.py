@@ -50,8 +50,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = '简单粗暴 TensorFlow 2'
-copyright = '2018-2020, Xihan Li（雪麒）'
-author = 'Xihan Li（雪麒）'
+copyright = '2018-2020, Xihan Li (snowkylin)'
+author = 'Xihan Li (snowkylin)'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -143,7 +143,7 @@ latex_elements = {
 
     # Additional stuff for the LaTeX preamble.
     #
-    'preamble': r'\usepackage{ctex}',
+    'preamble': '\\usepackage{ctex}\n\\usepackage{braket}',
 
     # Latex figure (float) alignment
     #
@@ -157,7 +157,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'TensorFlow-cn.tex', '简单粗暴 TensorFlow 2',
+    ('index_latex_cn', 'tensorflow_handbook.tex', 'TensorFlow 2 简明手册',
      author, 'manual'),
 ]
 

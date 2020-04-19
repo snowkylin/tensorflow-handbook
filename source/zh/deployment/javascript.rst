@@ -15,13 +15,13 @@ TensorFlow in JavaScript（Huan）
 TensorFlow.js 简介
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. figure:: /_static/image/javascript/tensorflow-js.gif
+.. figure:: /_static/image/javascript/tensorflow-js.png
     :width: 60%
     :align: center
 
 TensorFlow.js 是 TensorFlow 的 JavaScript 版本，支持GPU硬件加速，可以运行在 Node.js 或浏览器环境中。它不但支持完全基于 JavaScript 从头开发、训练和部署模型，也可以用来运行已有的 Python 版 TensorFlow 模型，或者基于现有的模型进行继续训练。
 
-.. figure:: /_static/image/javascript/architecture.gif
+.. figure:: /_static/image/javascript/architecture.png
     :width: 60%
     :align: center
 
@@ -396,7 +396,7 @@ TensorFlow.js 在手机浏览器中运行一次推理：
 
 在浏览器中，TensorFlow.js 可以使用 WebGL 进行硬件加速，将 GPU 资源使用起来。
 
-.. figure:: /_static/image/javascript/performance-browser.gif
+.. figure:: /_static/image/javascript/performance-browser.png
     :width: 60%
     :align: center
 
