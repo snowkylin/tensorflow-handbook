@@ -746,12 +746,12 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
 
 很多时候的场景是：实验室/公司研究组里有许多学生/研究员需要共同使用一台多GPU的工作站，而默认情况下TensorFlow会使用其所能够使用的所有GPU，这时就需要合理分配显卡资源。
 
-首先，通过 ``tf.config.experimental.list_physical_devices`` ，我们可以获得当前主机上某种特定运算设备类型（如 ``GPU`` 或 ``CPU`` ）的列表，例如，在一台具有4块GPU和一个CPU的工作站上运行以下代码：
+首先，通过 ``tf.config.list_physical_devices`` ，我们可以获得当前主机上某种特定运算设备类型（如 ``GPU`` 或 ``CPU`` ）的列表，例如，在一台具有4块GPU和一个CPU的工作站上运行以下代码：
 
 .. code-block:: python
 
-    gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
-    cpus = tf.config.experimental.list_physical_devices(device_type='CPU')
+    gpus = tf.config.list_physical_devices(device_type='GPU')
+    cpus = tf.config.list_physical_devices(device_type='CPU')
     print(gpus, cpus)
 
 输出：
@@ -766,12 +766,12 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
 
 可见，该工作站具有4块GPU：``GPU:0`` 、 ``GPU:1`` 、 ``GPU:2`` 、 ``GPU:3`` ，以及一个CPU ``CPU:0`` 。
 
-然后，通过 ``tf.config.experimental.set_visible_devices`` ，可以设置当前程序可见的设备范围（当前程序只会使用自己可见的设备，不可见的设备不会被当前程序使用）。例如，如果在上述4卡的机器中我们需要限定当前程序只使用下标为0、1的两块显卡（``GPU:0`` 和 ``GPU:1``），可以使用以下代码：
+然后，通过 ``tf.config.set_visible_devices`` ，可以设置当前程序可见的设备范围（当前程序只会使用自己可见的设备，不可见的设备不会被当前程序使用）。例如，如果在上述4卡的机器中我们需要限定当前程序只使用下标为0、1的两块显卡（``GPU:0`` 和 ``GPU:1``），可以使用以下代码：
 
 .. code-block:: python
 
-    gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
-    tf.config.experimental.set_visible_devices(devices=gpus[0:2], device_type='GPU')
+    gpus = tf.config.list_physical_devices(device_type='GPU')
+    tf.config.set_visible_devices(devices=gpus[0:2], device_type='GPU')
 
 .. tip:: 使用环境变量 ``CUDA_VISIBLE_DEVICES`` 也可以控制程序所使用的GPU。假设发现四卡的机器上显卡0,1使用中，显卡2,3空闲，Linux终端输入::
 
@@ -798,18 +798,18 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
 
 .. code-block:: python
 
-    gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
+    gpus = tf.config.list_physical_devices(device_type='GPU')
     for gpu in gpus:
         tf.config.experimental.set_memory_growth(device=gpu, enable=True)
 
-以下代码通过 ``tf.config.experimental.set_virtual_device_configuration`` 选项并传入 ``tf.config.experimental.VirtualDeviceConfiguration`` 实例，设置TensorFlow固定消耗 ``GPU:0`` 的1GB显存（其实可以理解为建立了一个显存大小为1GB的“虚拟GPU”）：
+以下代码通过 ``tf.config.set_logical_device_configuration`` 选项并传入 ``tf.config.LogicalDeviceConfiguration`` 实例，设置TensorFlow固定消耗 ``GPU:0`` 的1GB显存（其实可以理解为建立了一个显存大小为1GB的“虚拟GPU”）：
 
 .. code-block:: python
 
-    gpus = tf.config.experimental.list_physical_devices(device_type='GPU')
-    tf.config.experimental.set_virtual_device_configuration(
+    gpus = tf.config.list_physical_devices(device_type='GPU')
+    tf.config.set_logical_device_configuration(
         gpus[0],
-        [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=1024)])
+        [tf.config.LogicalDeviceConfiguration(memory_limit=1024)])
 
 .. hint:: TensorFlow 1.X 的 图执行模式 下，可以在实例化新的session时传入 ``tf.compat.v1.ConfigPhoto`` 类来设置TensorFlow使用显存的策略。具体方式是实例化一个 ``tf.ConfigProto`` 类，设置参数，并在创建 ``tf.compat.v1.Session`` 时指定Config参数。以下代码通过 ``allow_growth`` 选项设置TensorFlow仅在需要时申请显存空间：
 
@@ -834,11 +834,11 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
 
 .. code-block:: python
 
-    gpus = tf.config.experimental.list_physical_devices('GPU')
-    tf.config.experimental.set_virtual_device_configuration(
+    gpus = tf.config.list_physical_devices('GPU')
+    tf.config.set_logical_device_configuration(
         gpus[0],
-        [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=2048),
-         tf.config.experimental.VirtualDeviceConfiguration(memory_limit=2048)])
+        [tf.config.LogicalDeviceConfiguration(memory_limit=2048),
+         tf.config.LogicalDeviceConfiguration(memory_limit=2048)])
 
 我们在 :ref:`单机多卡训练 <multi_gpu>` 的代码前加入以上代码，即可让原本为多GPU设计的代码在单GPU环境下运行。当输出设备数量时，程序会输出：
 

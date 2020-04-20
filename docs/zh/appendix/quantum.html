@@ -131,7 +131,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id12">混合量子-经典机器学习</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id13">量子数据集</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">量子数据集与带参数的量子门</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#pqc">参数化的量子线路（PQC）</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id14">将参数化的量子线路嵌入机器学习模型</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id15">实例：对量子数据集进行二分类</a></li>
@@ -303,7 +303,7 @@
 </div>
 <div class="section" id="cirq">
 <h3>实例：使用Cirq建立简单的量子线路<a class="headerlink" href="#cirq" title="永久链接至标题">¶</a></h3>
-<p><a class="reference external" href="https://cirq.readthedocs.io/">Cirq</a> 是谷歌主导的开源量子计算库，可以帮助我们方便地建立量子线路并模拟测量结果（我们在下一节介绍TensorFlow Quantum的时候还会用到它）。以下代码实现了上节所建立的两个简单的量子线路，并分别进行了20次的模拟测量。</p>
+<p><a class="reference external" href="https://cirq.readthedocs.io/">Cirq</a> 是谷歌主导的开源量子计算库，可以帮助我们方便地建立量子线路并模拟测量结果（我们在下一节介绍TensorFlow Quantum的时候还会用到它）。Cirq是一个Python库，可以使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">cirq</span></code> 进行安装。以下代码实现了上节所建立的两个简单的量子线路，并分别进行了20次的模拟测量。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cirq</span>
 
 <span class="n">q</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">LineQubit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>           <span class="c1"># 实例化一个量子比特</span>
@@ -340,21 +340,73 @@
 </div>
 <div class="section" id="id12">
 <h2>混合量子-经典机器学习<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
+<p>本节介绍混合量子-经典机器学习的基本概念，以及使用 TensorFlow Quantum 建立此类模型的方法。</p>
+<p>在混合量子-经典机器学习过程中，我们使用量子数据集训练混合量子-经典模型。混合量子-经典模型的前半部分是量子模型（即参数化的量子线路）。量子模型接受量子数据集作为输入，对输入使用量子门进行变换，然后通过测量转换为经典数据。测量后的经典数据输入经典模型，并使用常规的损失函数计算模型的损失值。最后，基于损失函数的值计算模型参数的梯度并更新模型参数。这一过程不仅包括经典模型的参数，也包括量子模型的参数。具体流程如下图所示。</p>
+<div class="figure align-center" id="id19">
+<a class="reference internal image-reference" href="../../_images/pipeline.png"><img alt="../../_images/pipeline.png" src="../../_images/pipeline.png" style="width: 60%;" /></a>
+<p class="caption"><span class="caption-text">经典机器学习（上图）与混合量子-经典机器学习（下图）的流程对比</span><a class="headerlink" href="#id19" title="永久链接至图片">¶</a></p>
+</div>
+<p>TensorFlow Quantum 即是一个与 TensorFlow Keras 结合紧密的，可快速建立混合量子-经典机器学习模型的开源库，可以使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">tensorflow-quantum</span></code> 进行安装。</p>
+<p>后文示例均默认使用以下代码导入 TensorFlow、TensorFlow Quantum和Cirq：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_quantum</span> <span class="kn">as</span> <span class="nn">tfq</span>
+<span class="kn">import</span> <span class="nn">cirq</span>
+</pre></div>
+</div>
 <div class="admonition- admonition">
 <p class="admonition-title">推荐阅读</p>
 <p>Broughton, Michael, Guillaume Verdon, Trevor McCourt, Antonio J. Martinez, Jae Hyeon Yoo, Sergei V. Isakov, Philip Massey, et al. “ <a class="reference external" href="http://arxiv.org/abs/2003.02989">TensorFlow Quantum: A Software Framework for Quantum Machine Learning.</a> ” ArXiv:2003.02989 [Cond-Mat, Physics:Quant-Ph], March 5, 2020. （TensorFlow Quantum 白皮书）</p>
 </div>
 <div class="section" id="id13">
-<h3>量子数据集<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
+<h3>量子数据集与带参数的量子门<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
+<p>以有监督学习为例，经典数据集由经典数据和标签组成。经典数据中的每一项是一个由不同特征组成的向量。我们可以将经典数据集写作 <img class="math" src="../../_images/math/096f91ff12dd51c06b36fc1ec37d3af7268a2f8e.png" alt="(x_1, y_1), (x_2, y_2), \cdots, (x_N, y_N)"/> ，其中 <img class="math" src="../../_images/math/251ea575b8852ce126d702e86ad5941495fe1104.png" alt="x_i = (x_{i,1}, \cdots, x_{i,K})"/> 。量子数据集同样由数据和标签组成，而数据中的每一项是一个量子态。以前节单量子比特的量子态为例，我们可以将每一项数据写作 <img class="math" src="../../_images/math/ee337198a1d125f7fd60f4006b7d3e9a6d6ef0aa.png" alt="x_i = a_i \ket{0} + b_i \ket{1}"/> 。在具体实现上，我们可以通过量子线路来生成量子数据。也就是说，每一项数据 <img class="math" src="../../_images/math/b0a60237087d130c0f2fb4d6325012dd5ae80fe1.png" alt="x_i"/> 都对应着一个量子线路。例如，我们可以通过以下代码，使用Cirq生成一组量子数据：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">GridQubit</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">q_data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">x_i</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span>
+        <span class="n">cirq</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)(</span><span class="n">q</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">q_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x_i</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在这一过程中，我们使用了一个带参数的量子门 <code class="docutils literal notranslate"><span class="pre">cirq.rx(angle)(q)</span></code> 。和之前我们使用的量子门 <code class="docutils literal notranslate"><span class="pre">cirq.X(q)</span></code> , <code class="docutils literal notranslate"><span class="pre">cirq.H(q)</span></code> 不同的是，这个量子门多了一个参数 <code class="docutils literal notranslate"><span class="pre">angle</span></code> ，表示将量子比特 <code class="docutils literal notranslate"><span class="pre">q</span></code> 绕布洛赫球面的x轴旋转 <code class="docutils literal notranslate"><span class="pre">angle</span></code> 角度（弧度制）。以上代码生成了100项量子数据，每项数据是从基本态 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 开始绕布洛赫球面的x轴随机旋转 <img class="math" src="../../_images/math/b61438f8e15d426e93bf63b6c39c296435cdacaf.png" alt="[0, \pi]"/> 弧度所变换而来的量子态。量子数据集在不少量子相关的领域（如化学、材料科学、生物学和药物发现等）都有应用。</p>
+<p>当我们要将量子数据集作为Keras的输入时，可以使用TensorFlow Quantum的 <code class="docutils literal notranslate"><span class="pre">convert_to_tensor</span></code> 方法，将量子数据集转换为张量：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">q_data</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">q_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>值得注意的是，当使用量子数据集作为Keras模型的训练数据时，Keras模型的输入类型（ <code class="docutils literal notranslate"><span class="pre">dtype</span></code> ）需要为 <code class="docutils literal notranslate"><span class="pre">tf.dtypes.string</span></code> 。</p>
 </div>
 <div class="section" id="pqc">
 <h3>参数化的量子线路（PQC）<a class="headerlink" href="#pqc" title="永久链接至标题">¶</a></h3>
+<p>当我们在建立量子线路时使用了带参数的量子门，且该参数可以自由调整时，我们就称这样的量子线路为参数化的量子线路。Cirq支持结合SymPy这一Python下的符号运算库实现参数化的量子线路，示例如下</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">)</span>
+<span class="n">q_model</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="n">cirq</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">theta</span><span class="p">)(</span><span class="n">q</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>在上面的代码中，我们建立了如下图所示的量子线路。该量子线路可以将任意输入量子态 <img class="math" src="../../_images/math/dc236aef0d575ac9f9dbaa2b8812801ee72f1b3a.png" alt="\ket{\psi}"/> 绕布洛赫球面的x轴逆时针旋转 <img class="math" src="../../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> 度，其中 <img class="math" src="../../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> 是使用 <code class="docutils literal notranslate"><span class="pre">sympy.Symbol</span></code> 声明的符号变量（即参数）。</p>
+<div class="figure align-center" id="id20">
+<a class="reference internal image-reference" href="../../_images/pqc.png"><img alt="../../_images/pqc.png" src="../../_images/pqc.png" style="width: 30%;" /></a>
+<p class="caption"><span class="caption-text">参数化的量子线路示例</span><a class="headerlink" href="#id20" title="永久链接至图片">¶</a></p>
+</div>
 </div>
 <div class="section" id="id14">
 <h3>将参数化的量子线路嵌入机器学习模型<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
+<p>通过TensorFlow Quantum，我们可以轻松地将参数化的量子线路以Keras层的方式嵌入Keras模型。例如对于前节建立的参数化的量子线路 <code class="docutils literal notranslate"><span class="pre">q_model</span></code> ，我们可以使用 <code class="docutils literal notranslate"><span class="pre">tfq.layers.PQC</span></code> 将其直接作为一个Keras层使用</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">q_layer</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">PQC</span><span class="p">(</span><span class="n">q_model</span><span class="p">,</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Z</span><span class="p">(</span><span class="n">q</span><span class="p">))</span>
+<span class="n">expectation_output</span> <span class="o">=</span> <span class="n">q_layer</span><span class="p">(</span><span class="n">q_data_input</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">tfq.layers.PQC</span></code> 的第一个参数为使用Cirq建立的参数化的量子线路，第二个参数为测量方式，此处使用 <code class="docutils literal notranslate"><span class="pre">cirq.Z(q)</span></code> 在布洛赫球面的Z轴进行测量。</p>
+<p>以上代码也可直接写作：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expectation_output</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">PQC</span><span class="p">(</span><span class="n">q_model</span><span class="p">,</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Z</span><span class="p">(</span><span class="n">q</span><span class="p">))(</span><span class="n">q_data_input</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="id15">
 <h3>实例：对量子数据集进行二分类<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h3>
+<p>在以下代码中，我们首先建立了一个量子数据集，其中一半的数据项为基本态 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 绕布洛赫球面的x轴逆时针旋转 <img class="math" src="../../_images/math/88a099a1a8abf9668c3f59d39cde820b58b82338.png" alt="\frac{\pi}{2}"/> 弧度（即 <img class="math" src="../../_images/math/410a3fc002b2696af098f0c455e56bddf98a6330.png" alt="\frac{1}{\sqrt{2}} \ket{0} - \frac{i}{\sqrt{2}} \ket{1}"/> ），另一半则为 <img class="math" src="../../_images/math/109839abe87d13d28bcb6d5fd7de624cfcd3247b.png" alt="\frac{3\pi}{2}"/> 弧度（即 <img class="math" src="../../_images/math/fe079eca300639ddd5ae8355b4092956a1abeb15.png" alt="\frac{1}{\sqrt{2}} \ket{0} + \frac{i}{\sqrt{2}} \ket{1}"/> ）。所有的数据均加入了绕x,y轴方向旋转的，标准差为 <img class="math" src="../../_images/math/98f8e5bef3cfb82a97dc0ded3acbaaf41e00191d.png" alt="\frac{\pi}{4}"/> 的高斯噪声。对于这个量子数据集，如果不加变换而直接测量，则所有数据都会和抛硬币一样等概率随机坍缩到基本态 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> ，从而无法区分。</p>
+<p>为了区分这两类数据，我们接下来建立了一个量子模型，这个模型将单比特量子态绕布洛赫球面的x轴逆时针旋转 <img class="math" src="../../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> 弧度。变换过后量子态数据的测量值送入“全连接层+softmax”的经典机器学习模型，并使用交叉熵作为损失函数。模型训练过程会自动同时调整量子模型中 <img class="math" src="../../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> 的值和全连接层的权值，使得整个混合量子-经典机器学习模型的准确度较高。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cirq</span>
 <span class="kn">import</span> <span class="nn">sympy</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -362,6 +414,8 @@
 <span class="kn">import</span> <span class="nn">tensorflow_quantum</span> <span class="k">as</span> <span class="nn">tfq</span>
 
 <span class="n">q</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">GridQubit</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 准备量子数据集(q_data, label)</span>
 <span class="n">add_noise</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
 <span class="n">q_data</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span>
     <span class="p">[</span><span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span>
@@ -375,22 +429,39 @@
 <span class="p">)</span>
 <span class="n">label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
 
+<span class="c1"># 建立参数化的量子线路（PQC）</span>
 <span class="n">theta</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">)</span>
 <span class="n">q_model</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="n">cirq</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">theta</span><span class="p">)(</span><span class="n">q</span><span class="p">))</span>
+
+<span class="c1"># 建立量子层和经典全连接层</span>
+<span class="n">q_layer</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">PQC</span><span class="p">(</span><span class="n">q_model</span><span class="p">,</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Z</span><span class="p">(</span><span class="n">q</span><span class="p">))</span>
+<span class="n">dense_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">softmax</span><span class="p">)</span>
+
+<span class="c1"># 使用Keras建立训练流程。量子数据首先通过PQC，然后通过经典的全连接模型</span>
 <span class="n">q_data_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">()</span> <span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
-<span class="n">expectation_output</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">PQC</span><span class="p">(</span><span class="n">q_model</span><span class="p">,</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Z</span><span class="p">(</span><span class="n">q</span><span class="p">))(</span><span class="n">q_data_input</span><span class="p">)</span>
-<span class="n">classifier_output</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">softmax</span><span class="p">)(</span><span class="n">expectation_output</span><span class="p">)</span>
+<span class="n">expectation_output</span> <span class="o">=</span> <span class="n">q_layer</span><span class="p">(</span><span class="n">q_data_input</span><span class="p">)</span>
+<span class="n">classifier_output</span> <span class="o">=</span> <span class="n">dense_layer</span><span class="p">(</span><span class="n">expectation_output</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">q_data_input</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">classifier_output</span><span class="p">)</span>
+
+<span class="c1"># 编译模型，指定优化器、损失函数和评估指标，并进行训练</span>
 <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
-    <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">),</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">),</span>
     <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">,</span>
     <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">sparse_categorical_accuracy</span><span class="p">]</span>
 <span class="p">)</span>
-<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">q_data</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">q_data</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">q_data</span><span class="p">))</span>
+<span class="c1"># 输出量子层参数（即theta）的训练结果</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">q_layer</span><span class="o">.</span><span class="n">get_weights</span><span class="p">())</span>
 </pre></div>
 </div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
+<span class="mi">200</span><span class="o">/</span><span class="mi">200</span> <span class="p">[</span><span class="o">==============================</span><span class="p">]</span> <span class="o">-</span> <span class="mi">0</span><span class="n">s</span> <span class="mi">165</span><span class="n">us</span><span class="o">/</span><span class="n">sample</span> <span class="o">-</span> <span class="n">loss</span><span class="p">:</span> <span class="mf">0.1586</span> <span class="o">-</span> <span class="n">sparse_categorical_accuracy</span><span class="p">:</span> <span class="mf">0.9500</span>
+<span class="p">[</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5279944</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>可见，通过训练，模型在训练集上可以达到95%的准确率， <img class="math" src="../../_images/math/703b23c524f1af12c1c12deaedc67c5a8c513052.png" alt="\theta = -1.5279944 \approx -\frac{\pi}{2} = -1.5707963..."/> 。而当 <img class="math" src="../../_images/math/1ff979e6b4f47ffa5a7589539cb7211af74b5c26.png" alt="\theta = -\frac{\pi}{2}"/> 时，恰好可以使得两种类型的数据分别接近基本态 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> ，从而达到最易区分的状态。</p>
 <dl class="footnote brackets">
 <dt class="label" id="f0"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p>此手册的行文时间为公元2020年，如果你来自未来，请理解作者的时代局限性。</p>
