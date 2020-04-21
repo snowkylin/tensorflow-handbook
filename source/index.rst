@@ -41,7 +41,7 @@
 
 .. admonition:: 线上教学活动：ML Study Jam
 
-    本手册正在与TensorFlow官方微信公众号合作开展为期三周的“ML Study Jam”线上学习活动。活动从2020年4月20日开始，可以访问 `这里 <https://tf.wiki/zh/mlstudyjam.html>`_ 或TensorFlow官方微信公众号（TensorFlow_official）以了解详情。
+    本手册正在与TensorFlow官方微信公众号合作开展为期三周的“ML Study Jam”线上学习活动。活动从2020年4月20日开始，可以访问 `这里 <https://tf.wiki/zh/mlstudyjam.html>`_ 或 `TensorFlow官方微信公众号（TensorFlow_official） <http://mp.weixin.qq.com/s?__biz=MzU1OTMyNDcxMQ==&mid=2247488326&idx=1&sn=e5507c80e3419ae30425b7dfac4ce164&chksm=fc18580ecb6fd11808c35c18ed3e61dd39f36d3fbdfcacefaff03e7a5ab6b07b788d1b87e467&mpshare=1&scene=23&srcid=&sharer_sharetime=1587465932630&sharer_shareid=b6f86ab8b392c4d4036aa6a1d3b82824#rd>`_ 以了解详情。
 
 GitHub： https://github.com/snowkylin/tensorflow-handbook
 
