@@ -79,8 +79,8 @@ TensorFlow里有大量的 **操作** （Operation），使得我们可以将已�
 
 输出::
 
-    [62.5, array([[35.],
-       [50.]], dtype=float32), array([15.], dtype=float32)]
+    [125.0, array([[ 70.],
+       [100.]], dtype=float32), 30.0]
 
 这里， ``tf.square()`` 操作代表对输入张量的每一个元素求平方，不改变张量形状。 ``tf.reduce_sum()`` 操作代表对输入张量的所有元素求和，输出一个形状为空的纯量张量（可以通过 ``axis`` 参数来指定求和的维度，不指定则默认对所有元素求和）。TensorFlow中有大量的张量操作API，包括数学运算、张量形状操作（如 ``tf.reshape()``）、切片和连接（如 ``tf.concat()``）等多种类型，可以通过查阅TensorFlow的官方API文档 [#f3]_ 来进一步了解。
 
@@ -88,11 +88,11 @@ TensorFlow里有大量的 **操作** （Operation），使得我们可以将已�
 
 .. math::
 
-    L((1, 2)^T, 1) &= 62.5
+    L((1, 2)^T, 1) &= 125
     
-    \frac{\partial L(w, b)}{\partial w} |_{w = (1, 2)^T, b = 1} &= \begin{bmatrix} 35 \\ 50\end{bmatrix}
+    \frac{\partial L(w, b)}{\partial w} |_{w = (1, 2)^T, b = 1} &= \begin{bmatrix} 70 \\ 100\end{bmatrix}
     
-    \frac{\partial L(w, b)}{\partial b} |_{w = (1, 2)^T, b = 1} &= 15
+    \frac{\partial L(w, b)}{\partial b} |_{w = (1, 2)^T, b = 1} &= 30
 
 ..
     以上的自动求导机制结合 **优化器** ，可以计算函数的极值。这里以线性回归示例（本质是求 :math:`\min_{w, b} L = (Xw + b - y)^2` ，具体原理见 :ref:`后节 <linear-regression>` ）：
@@ -179,15 +179,10 @@ TensorFlow的 **即时执行模式** [#f4]_ 与上述NumPy的运行方式十分�
 
 在实际应用中，我们编写的模型往往比这里一行就能写完的线性模型 ``y_pred = a * X + b`` （模型参数为 ``variables = [a, b]`` ）要复杂得多。所以，我们往往会编写并实例化一个模型类 ``model = Model()`` ，然后使用 ``y_pred = model(X)`` 调用模型，使用 ``model.variables`` 获取模型参数。关于模型类的编写方式可见 :doc:`"TensorFlow模型"一章 <models>`。
 
-..
-    本章小结
-    ^^^^^^^^^^^^^^^^^^^^^^^
-
-
 .. [#f0] Python中可以使用整数后加小数点表示将该整数定义为浮点数类型。例如 ``3.`` 代表浮点数 ``3.0``。
 .. [#f3] 主要可以参考 `Tensor Transformations <https://www.tensorflow.org/versions/r1.9/api_guides/python/array_ops>`_ 和 `Math <https://www.tensorflow.org/versions/r1.9/api_guides/python/math_ops>`_ 两个页面。可以注意到，TensorFlow的张量操作API在形式上和Python下流行的科学计算库NumPy非常类似，如果对后者有所了解的话可以快速上手。
 .. [#f1] 其实线性回归是有解析解的。这里使用梯度下降方法只是为了展示TensorFlow的运作方式。
-.. [#f2] 此处的损失函数为均方差 :math:`L(x) = \frac{1}{2} \sum_{i=1}^5 (ax_i + b - y_i)^2`。其关于参数 ``a`` 和 ``b`` 的偏导数为 :math:`\frac{\partial L}{\partial a} = \sum_{i=1}^5 (ax_i + b - y) x_i`，:math:`\frac{\partial L}{\partial b} = \sum_{i=1}^5 (ax_i + b - y)`
+.. [#f2] 此处的损失函数为均方误差 :math:`L(x) = \sum_{i=1}^N (ax_i + b - y_i)^2`。其关于参数 ``a`` 和 ``b`` 的偏导数为 :math:`\frac{\partial L}{\partial a} = 2 \sum_{i=1}^N (ax_i + b - y) x_i`，:math:`\frac{\partial L}{\partial b} = 2 \sum_{i=1}^N (ax_i + b - y)` 。本例中 :math:`N = 5` 。由于均方误差取均值的系数 :math:`\frac{1}{N}` 在训练过程中一般为常数（ :math:`N` 一般为批次大小），对损失函数乘以常数等价于调整学习率，因此在具体实现时通常不写在损失函数中。
 .. [#f4] 与即时执行模式相对的是图执行模式（Graph Execution），即 TensorFlow 2 之前所主要使用的执行模式。本手册以面向快速迭代开发的即时执行模式为主，但会在 :doc:`附录 <../appendix/static>` 中介绍图执行模式的基本使用，供需要的读者查阅。
 
 .. raw:: html
