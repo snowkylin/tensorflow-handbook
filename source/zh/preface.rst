@@ -47,7 +47,7 @@
 
 本手册的英文版由我的好友Zida Jin和Ming翻译，并由Ji-An Li和笔者审校（仍在进行中）。三位朋友牺牲了自己的大量宝贵时间翻译和校对本手册，同时Ji-An Li亦对本手册的教学内容和代码细节提供了诸多宝贵意见。我谨向好友们为本手册的辛勤付出致以衷心的感谢。
 
-衷心感谢 Google 中国开发者关系团队和 TensorFlow 工程团队的成员及前成员们对本手册的编写所提供的帮助。其中，开发者关系团队的 Luke Cheng 在本手册编写过程中，全程提供思路启发和鼓励，且提供本手册在线版本的域名 `tf.wiki <https://tf.wiki>`_ ；开发者关系团队的 Lily Chen、Wei Duan、Rui Li、Pryce Mu，TensorFlow 产品经理 Mike Liang 以及 TensorFlow 社群维护的小伙伴们为本手册宣传及推广提供了大力支持；TensorFlow 工程团队的 Tiezhen Wang 在本手册的工程细节方面提供了诸多建议和补充；TensorFlow 工程团队的 Shuangfeng Li 等其他工程师们为本手册提供了专业的审阅意见。
+衷心感谢 Google 中国开发者关系团队和 TensorFlow 工程团队的成员及前成员们对本手册的编写所提供的帮助。其中，开发者关系团队的 Luke Cheng 在本手册编写过程中，全程提供思路启发和鼓励，且提供本手册在线版本的域名 `tf.wiki <https://tf.wiki>`_ ；开发者关系团队的 Soonson Kwon、Lily Chen、Wei Duan、Rui Li、Pryce Mu，TensorFlow 产品经理 Mike Liang，以及 TensorFlow 社群维护的小伙伴们为本手册宣传及推广提供了大力支持；TensorFlow 工程团队的 Tiezhen Wang 在本手册的工程细节方面提供了诸多建议和补充；TensorFlow 工程团队的 Shuangfeng Li 等其他工程师们为本手册提供了专业的审阅意见。同时感谢 TensorFlow 工程总监 Rajat Monga 和 Google AI 负责人 Jeff Dean 在社交媒体上对本手册的推荐与关注。
 
 关于本手册的意见和建议，欢迎在 https://github.com/snowkylin/tensorflow-handbook/issues 提交。这是一个开源项目，您的宝贵意见将促进本手册的持续更新。
 
