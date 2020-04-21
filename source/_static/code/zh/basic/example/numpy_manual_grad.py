@@ -9,11 +9,11 @@ y = (y_raw - y_raw.min()) / (y_raw.max() - y_raw.min())
 a, b = 0, 0
 
 num_epoch = 10000
-learning_rate = 1e-3
+learning_rate = 5e-4
 for e in range(num_epoch):
     # 手动计算损失函数关于自变量（模型参数）的梯度
     y_pred = a * X + b
-    grad_a, grad_b = (y_pred - y).dot(X), (y_pred - y).sum()
+    grad_a, grad_b = 2 * (y_pred - y).dot(X), 2 * (y_pred - y).sum()
 
     # 更新参数
     a, b = a - learning_rate * grad_a, b - learning_rate * grad_b
