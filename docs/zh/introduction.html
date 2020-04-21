@@ -275,10 +275,25 @@
 <h2>TensorFlow能帮助我们做什么？<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <p>TensorFlow可以为以上的这些需求提供完整的解决方案。具体而言，TensorFlow包含以下特性：</p>
 <ul class="simple">
-<li><p><strong>模型的建立与调试：</strong> 使用动态图模式Eager Execution和著名的神经网络高层API框架Keras，结合可视化工具TensorBoard，简易、快速地建立和调试模型；</p></li>
-<li><p><strong>模型的训练：</strong> 支持CPU/单GPU/单机多卡GPU/多机集群/TPU训练模型，充分利用海量数据和计算资源进行高效训练；</p></li>
-<li><p><strong>模型的部署：</strong> 通过TensorFlow Serving、TensorFlow Lite、TensorFlow.js等组件，使TensorFlow模型能够无缝地部署到服务器、移动端、嵌入式端和网页端等多种使用场景；</p></li>
-<li><p><strong>预训练模型调用：</strong> 通过TensorFlow Hub和Tensor2Tensor，可以方便地调用预训练完毕的已有成熟模型。</p></li>
+<li><dl class="simple">
+<dt>训练流程</dt><dd><ul>
+<li><p><strong>数据的处理</strong> ：使用 tf.data 和 TFRecord 可以高效地构建和预处理数据集，构建训练数据流。同时可以使用 TensorFlow Datasets 快速载入常用的公开数据集。</p></li>
+<li><p><strong>模型的建立与调试</strong> ：使用即时执行模式和著名的神经网络高层 API 框架 Keras，结合可视化工具 TensorBoard，简易、快速地建立和调试模型。也可以通过 TensorFlow Hub 方便地载入已有的成熟模型。</p></li>
+<li><p><strong>模型的训练</strong> ：支持在 CPU、GPU、TPU 上训练模型，支持单机和多机集群并行训练模型，充分利用海量数据和计算资源进行高效训练。</p></li>
+<li><p><strong>模型的导出</strong> ：将模型打包导出为统一的 SavedModel 格式，方便迁移和部署。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>部署流程</dt><dd><ul>
+<li><p><strong>服务器部署</strong> ：使用 TensorFlow Serving 在服务器上为训练完成的模型提供高性能、支持并发、高吞吐量的API。</p></li>
+<li><p><strong>移动端和嵌入式设备部署</strong> ：使用TensorFlow Lite 将模型转换为体积小、高效率的轻量化版本，并在移动端、嵌入式端等功耗和计算能力受限的设备上运行，支持使用 GPU 代理进行硬件加速，还可以配合 Edge TPU 等外接硬件加速运算。</p></li>
+<li><p><strong>网页端部署</strong> ：使用 TensorFlow.js，在网页端等支持 JavaScript 运行的环境上也可以运行模型，支持使用 WebGL 进行硬件加速。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 <script>
     $(document).ready(function(){

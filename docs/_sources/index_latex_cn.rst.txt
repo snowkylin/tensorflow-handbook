@@ -29,7 +29,7 @@ GitHub： https://github.com/snowkylin/tensorflow-handbook
     :maxdepth: 2
     :caption: 目录
 
-    zh/preface
+    zh/preface_latex
     zh/introduction
 
 .. toctree:: 
