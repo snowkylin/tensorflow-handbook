@@ -25,4 +25,8 @@ ML Study Jam 2020
 - `TensorFlow 模型导出 <https://tf.wiki/zh/deployment/export.html>`_ 
 - `TensorFlow Serving <https://tf.wiki/zh/deployment/serving.html>`_ 
 
-在您完成所有章节的学习后，请完成这个结课小测验（ https://services.google.cn/fb/forms/studyjam ），前 500 人有机会获得礼品，谢谢。
+在您完成所有章节的学习后，请完成这个结课小测验（ https://services.google.cn/fb/forms/studyjam ），前 500 人有机会获得礼品，详情可见 `TensorFlow 公众号文章 <http://mp.weixin.qq.com/s?__biz=MzU1OTMyNDcxMQ==&mid=2247488326&idx=1&sn=e5507c80e3419ae30425b7dfac4ce164&chksm=fc18580ecb6fd11808c35c18ed3e61dd39f36d3fbdfcacefaff03e7a5ab6b07b788d1b87e467&mpshare=1&scene=23&srcid=&sharer_sharetime=1587465932630&sharer_shareid=b6f86ab8b392c4d4036aa6a1d3b82824#rd>`_ ，谢谢。
+
+|
+
+* 关于 Google 的 AI 原则请参考 ——> https://ai.google/principles/
