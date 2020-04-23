@@ -252,7 +252,7 @@
 <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>     <span class="c1"># 在 tf.GradientTape() 的上下文内，所有计算步骤都会被记录以用于求导</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="n">y_grad</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>        <span class="c1"># 计算y关于x的导数</span>
-<span class="nb">print</span><span class="p">([</span><span class="n">y</span><span class="p">,</span> <span class="n">y_grad</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_grad</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>在这里，初学者往往迷惑于此处 with 语句的用法，即“为什么离开了上下文环境， <code class="docutils literal notranslate"><span class="pre">tape</span></code> 还可以被使用？”。这样的疑惑是有一定道理的，因为在实际应用中，with 语句大多用于对资源进行访问的场合，保证资源在使用后得到恰当的清理或释放，例如我们熟悉的文件写入：</p>

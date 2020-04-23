@@ -66,7 +66,8 @@ TensorFlow里有大量的 **操作** （Operation），使得我们可以将已�
 
 输出::
     
-    [array([9.], dtype=float32), array([6.], dtype=float32)]
+    tf.Tensor(9.0, shape=(), dtype=float32)
+    tf.Tensor(6.0, shape=(), dtype=float32)
 
 这里 ``x`` 是一个初始化为3的 **变量** （Variable），使用 ``tf.Variable()`` 声明。与普通张量一样，变量同样具有形状、类型和值三种属性。使用变量需要有一个初始化过程，可以通过在 ``tf.Variable()`` 中指定 ``initial_value`` 参数来指定初始值。这里将变量 ``x`` 初始化为 ``3.`` [#f0]_。变量与普通张量的一个重要区别是其默认能够被TensorFlow的自动求导机制所求导，因此往往被用于定义机器学习模型的参数。
 
@@ -79,8 +80,11 @@ TensorFlow里有大量的 **操作** （Operation），使得我们可以将已�
 
 输出::
 
-    [125.0, array([[ 70.],
-       [100.]], dtype=float32), 30.0]
+    tf.Tensor(125.0, shape=(), dtype=float32) 
+    tf.Tensor(
+    [[ 70.]
+    [100.]], shape=(2, 1), dtype=float32) 
+    tf.Tensor(30.0, shape=(), dtype=float32)
 
 这里， ``tf.square()`` 操作代表对输入张量的每一个元素求平方，不改变张量形状。 ``tf.reduce_sum()`` 操作代表对输入张量的所有元素求和，输出一个形状为空的纯量张量（可以通过 ``axis`` 参数来指定求和的维度，不指定则默认对所有元素求和）。TensorFlow中有大量的张量操作API，包括数学运算、张量形状操作（如 ``tf.reshape()``）、切片和连接（如 ``tf.concat()``）等多种类型，可以通过查阅TensorFlow的官方API文档 [#f3]_ 来进一步了解。
 
