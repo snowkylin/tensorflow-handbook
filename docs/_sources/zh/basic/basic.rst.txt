@@ -167,7 +167,7 @@ TensorFlow的 **即时执行模式** [#f4]_ 与上述NumPy的运行方式十分�
 .. literalinclude:: /_static/code/zh/basic/example/tensorflow_eager_autograd.py
     :lines: 10-29
 
-在这里，我们使用了前文的方式计算了损失函数关于参数的偏导数。同时，使用 ``tf.keras.optimizers.SGD(learning_rate=1e-3)`` 声明了一个梯度下降 **优化器** （Optimizer），其学习率为1e-3。优化器可以帮助我们根据计算出的求导结果更新模型参数，从而最小化某个特定的损失函数，具体使用方式是调用其 ``apply_gradients()`` 方法。
+在这里，我们使用了前文的方式计算了损失函数关于参数的偏导数。同时，使用 ``tf.keras.optimizers.SGD(learning_rate=5e-4)`` 声明了一个梯度下降 **优化器** （Optimizer），其学习率为5e-4。优化器可以帮助我们根据计算出的求导结果更新模型参数，从而最小化某个特定的损失函数，具体使用方式是调用其 ``apply_gradients()`` 方法。
 
 注意到这里，更新模型参数的方法 ``optimizer.apply_gradients()`` 需要提供参数 ``grads_and_vars``，即待更新的变量（如上述代码中的 ``variables`` ）及损失函数关于这些变量的偏导数（如上述代码中的 ``grads`` ）。具体而言，这里需要传入一个Python列表（List），列表中的每个元素是一个 ``（变量的偏导数，变量）`` 对。比如上例中需要传入的参数是 ``[(grad_a, a), (grad_b, b)]`` 。我们通过 ``grads = tape.gradient(loss, variables)`` 求出tape中记录的 ``loss`` 关于 ``variables = [a, b]`` 中每个变量的偏导数，也就是 ``grads = [grad_a, grad_b]``，再使用Python的 ``zip()`` 函数将 ``grads = [grad_a, grad_b]`` 和 ``variables = [a, b]`` 拼装在一起，就可以组合出所需的参数了。
 
