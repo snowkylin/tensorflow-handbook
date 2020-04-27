@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>前言 &mdash; 简单粗暴 TensorFlow 2 0.4 alpha 文档</title>
+  <title>前言 &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
@@ -41,7 +41,7 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="TensorFlow概述" href="introduction.html" />
-    <link rel="prev" title="简单粗暴 TensorFlow 2 | A Concise Handbook of TensorFlow 2" href="../index.html" /> 
+    <link rel="prev" title="ML Study Jam 2020" href="mlstudyjam.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -89,12 +89,16 @@
               
             
             
-              <p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">前言</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">本书的适用群体</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">如何使用本书</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">致谢</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">致谢</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">TensorFlow概述</a></li>
@@ -123,10 +127,11 @@
 <li class="toctree-l1"><a class="reference internal" href="appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/julia.html">TensorFlow in Julia（Ziyang）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/rl.html">强化学习简介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
@@ -239,12 +244,12 @@
             
   <div class="section" id="id1">
 <h1>前言<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<p>2018年3月30日，Google在加州山景城举行了第二届TensorFlow Dev Summit开发者峰会，并宣布正式发布TensorFlow 1.8版本。笔者有幸获得Google的资助亲临峰会现场，见证了这一具有里程碑式意义的新版本发布。众多新功能的加入和支持展示了TensorFlow的雄心壮志，同时早在2017年秋就开始测试的Eager Execution（动态图机制）在这一版本中终于正式加入，并成为了入门TensorFlow的官方推荐模式。</p>
+<p>2018年3月30日，Google在加州山景城举行了第二届TensorFlow Dev Summit开发者峰会，并宣布正式发布TensorFlow 1.8版本。作为国内的第一批机器学习领域的 <a class="reference external" href="https://developers.google.cn/community/experts">Google Developers Expert</a> （GDE），笔者有幸获得Google的资助亲临峰会现场，见证了这一具有里程碑式意义的新版本发布。众多新功能的加入和支持展示了TensorFlow的雄心壮志，即时执行（Eager Execution）模式（或称“动态图模式”）在这一版本中终于正式加入，并成为了入门TensorFlow的官方推荐模式。</p>
 <blockquote>
 <div><p>The easiest way to get started with TensorFlow is using Eager Execution.</p>
 <p class="attribution">—— <a class="reference external" href="https://www.tensorflow.org/get_started/">https://www.tensorflow.org/get_started/</a></p>
 </div></blockquote>
-<p>在此之前，TensorFlow所基于的传统Graph Execution的弊端，如入门门槛高、调试困难、灵活性差、无法使用Python原生控制语句等早已被开发者诟病许久。一些新的基于动态图机制的深度学习框架（如PyTorch）也横空出世，并以其易用性和快速开发的特性而占据了一席之地。尤其是在学术研究等需要快速迭代模型的领域，PyTorch等新兴深度学习框架已经成为主流。笔者所在的数十人的机器学习实验室中，竟只有笔者一人“守旧”地使用TensorFlow。然而，直到目前，市面上相关的TensorFlow相关的中文技术书籍及资料仍然基于传统的Graph Execution模式，让不少初学者（尤其是刚学过机器学习课程的大学生）望而却步。由此，在TensorFlow正式支持Eager Execution之际，有必要出现一本全新的技术手册，帮助初学者及需要快速迭代模型的研究者，以一个全新的角度快速入门TensorFlow。</p>
+<p>在此之前，TensorFlow所基于的传统图执行模式与会话机制（Graph Execution and Session，或称“静态图模式”）的弊端，如入门门槛高、调试困难、灵活性差、无法使用Python原生控制语句等早已被开发者诟病许久。一些新的基于动态图机制的深度学习框架（如PyTorch）也横空出世，并以其易用性和快速开发的特性而占据了一席之地。尤其是在学术研究等需要快速迭代模型的领域，PyTorch等新兴深度学习框架已经成为主流。笔者所在的数十人的机器学习实验室中，竟只有笔者一人“守旧”地使用TensorFlow。然而，直到目前，市面上相关的TensorFlow相关的中文技术书籍及资料仍然基于传统的计算图与会话机制，让不少初学者（尤其是刚学过机器学习课程的大学生）望而却步。由此，在TensorFlow正式支持即时执行模式之际，有必要出现一本全新的技术手册，帮助初学者及需要快速迭代模型的研究者，以一个全新的角度快速入门TensorFlow。</p>
 <p>同时，本手册还有第二个任务。市面上与TensorFlow相关的中文技术书籍大部分都以深度学习为主线，而将TensorFlow作为这些深度学习模型的实现方式。这样固然有体系完整的优点，然而对于已经对机器学习或深度学习理论有所了解，希望侧重于学习TensorFlow本身的读者而言，就显得不够友好。于是，笔者希望编写一本手册，以尽量精简的篇幅展示TensorFlow作为一个计算框架的主要特性，并弥补官方手册的不足，力图能让已经有一定机器学习/深度学习知识及编程能力的读者迅速上手TensorFlow，并在实际编程过程中可以随时查阅并解决实际问题。</p>
 <p>本手册的主要特征有：</p>
 <ul class="simple">
@@ -270,20 +275,20 @@
 <h2>如何使用本书<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
 <p>对于已有一定机器学习/深度学习基础，着重于模型建立与训练的学生和研究者，建议顺序阅读本书的“基础”部分。对于希望将TensorFlow模型部署到实际环境中的开发者和工程师，则建议重点阅读本书的“部署”部分。部分章节的开头提供了“前置知识”部分，方便读者查漏补缺。部分周边补充知识以可折叠信息框的方式给出，可随时使用页面最上方的“折叠全部注释”按钮折叠所有信息框的内容。</p>
 <p>在整本手册中，带“*”的部分均为选读。</p>
-<p>本书的所有示例代码可至 <a class="reference external" href="https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code">这里</a> 获得。在使用时，建议将代码根目录加入到 <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> 环境变量，或者使用合适的IDE（如PyCharm）打开代码根目录，从而使得代码间的相互调用（形如 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">zh.XXX</span></code> 的代码）能够顺利运行。</p>
+<p>本书的所有示例代码可至 <a class="reference external" href="https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code">https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code</a> 获得。其中 <code class="docutils literal notranslate"><span class="pre">zh</span></code> 目录下是含中文注释的代码， <code class="docutils literal notranslate"><span class="pre">en</span></code> 目录下是含英文版注释的代码。在使用时，建议将代码根目录加入到 <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> 环境变量，或者使用合适的IDE（如PyCharm）打开代码根目录，从而使得代码间的相互调用（形如 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">zh.XXX</span></code> 的代码）能够顺利运行。</p>
 </div>
-<div class="section" id="id5">
-<h2>致谢<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
-<p>本手册的暂定名称《简单粗暴TensorFlow》是向我的好友兼同学Chris Wu编写的《简单粗暴 <img class="math" src="../_images/math/af8bfcf24807674aff08102b9eae26928fb2a3ea.png" alt="\text{\LaTeX}"/> 》（<a class="reference external" href="https://github.com/wklchris/Note-by-LaTeX">https://github.com/wklchris/Note-by-LaTeX</a>）致敬。该手册清晰精炼，是 <img class="math" src="../_images/math/af8bfcf24807674aff08102b9eae26928fb2a3ea.png" alt="\text{\LaTeX}"/> 领域不可多得的中文资料，也是我在编写这一技术文档时所学习的对象。本手册最初是在我的好友Ji-An Li所组织的深度学习研讨小组中，由我作为预备知识的讲义而编写和使用。好友们的才学卓著与无私分享的品格也是编写此拙作的重要助力。</p>
-<p>本手册的TensorFlow.js和TensorFlow Lite部分分别由Huan Li和Jinpeng Zhu两位在JavaScript和Android领域有丰富履历的Google Developers Expert编写，同时Huan提供了TensorFlow for Swift和TPU部分的介绍。以及来自豆瓣的Ziyang Wang提供了TensorFlow for Julia的介绍及部分示例代码和说明。相关贡献者撰写的内容均在文章中进行了标注，在此特别表示感谢。</p>
+<div class="section" id="id4">
+<h2>致谢<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>本手册的暂定名称《简单粗暴TensorFlow》是向我的好友兼同学Chris Wu编写的《简单粗暴 <img class="math" src="../_images/math/bece08e065efc400d0eccd656d260b485a29428f.png" alt="\text{\LaTeX}"/> 》（<a class="reference external" href="https://github.com/wklchris/Note-by-LaTeX">https://github.com/wklchris/Note-by-LaTeX</a>）致敬。该手册清晰精炼，是 <img class="math" src="../_images/math/bece08e065efc400d0eccd656d260b485a29428f.png" alt="\text{\LaTeX}"/> 领域不可多得的中文资料，也是我在编写这一技术文档时所学习的对象。本手册最初是在我的好友Ji-An Li所组织的深度学习研讨小组中，由我作为预备知识的讲义而编写和使用。好友们的才学卓著与无私分享的品格也是编写此拙作的重要助力。</p>
+<p>本手册的TensorFlow.js和TensorFlow Lite章节分别由Huan Li和Jinpeng Zhu两位在JavaScript和Android领域有丰富履历的GDE和前GDE撰写，同时，Huan撰写了TensorFlow for Swift和TPU部分的介绍，Jinpeng提供了TensorFlow Hub的介绍。来自豆瓣阅读的王子阳也提供了关于Node.js和阿里云的部分示例代码和说明。在此特别表示感谢。</p>
 <p>本手册的英文版由我的好友Zida Jin和Ming翻译，并由Ji-An Li和笔者审校（仍在进行中）。三位朋友牺牲了自己的大量宝贵时间翻译和校对本手册，同时Ji-An Li亦对本手册的教学内容和代码细节提供了诸多宝贵意见。我谨向好友们为本手册的辛勤付出致以衷心的感谢。</p>
-<p>衷心感谢Google中国开发者关系团队和TensorFlow工程团队的成员们对本手册编写所提供的帮助。其中包括开发者关系团队的Luke Cheng在本手册写作全程提供的思路启发和持续鼓励（以及提供本手册在线版本的域名 <code class="docutils literal notranslate"><span class="pre">tf.wiki</span></code> ），开发者关系团队的Rui Li, Pryce Mu和TensorFlow社群维护的小伙伴们在本手册宣发及推广上提供的大力支持，TensorFlow工程团队的Tiezhen Wang在本手册工程细节方面提供的诸多建议和补充，以及TensorFlow工程团队的Shuangfeng Li等其他工程师们对本手册的审阅意见。</p>
+<p>衷心感谢 Google 中国开发者关系团队和 TensorFlow 工程团队的成员及前成员们对本手册的编写所提供的帮助。其中，开发者关系团队的 Luke Cheng 在本手册编写过程中，全程提供思路启发和鼓励，且提供本手册在线版本的域名 <a class="reference external" href="https://tf.wiki">tf.wiki</a> ；开发者关系团队的 Soonson Kwon、Lily Chen、Wei Duan、Rui Li、Pryce Mu，TensorFlow 产品经理 Mike Liang，以及 TensorFlow 社群维护的小伙伴们为本手册宣传及推广提供了大力支持；TensorFlow 工程团队的 Tiezhen Wang 在本手册的工程细节方面提供了诸多建议和补充；TensorFlow 工程团队的 Shuangfeng Li 等其他工程师们为本手册提供了专业的审阅意见。同时感谢 TensorFlow 工程总监 Rajat Monga 和 Google AI 负责人 Jeff Dean 在社交媒体上对本手册的推荐与关注。</p>
 <p>关于本手册的意见和建议，欢迎在 <a class="reference external" href="https://github.com/snowkylin/tensorflow-handbook/issues">https://github.com/snowkylin/tensorflow-handbook/issues</a> 提交。这是一个开源项目，您的宝贵意见将促进本手册的持续更新。</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <p>Google Developers Expert in Machine Learning</p>
-<p>Xihan Li（雪麒）</p>
+<p>Xihan Li ( <a class="reference external" href="https://snowkylin.github.io/">snowkylin</a> )</p>
 <p>2019年8月于燕园</p>
 </div>
 </div>
@@ -299,7 +304,7 @@
         <a href="introduction.html" class="btn btn-neutral float-right" title="TensorFlow概述" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../index.html" class="btn btn-neutral float-left" title="简单粗暴 TensorFlow 2 | A Concise Handbook of TensorFlow 2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="mlstudyjam.html" class="btn btn-neutral float-left" title="ML Study Jam 2020" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -308,7 +313,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
 
     </p>
   </div>
@@ -333,6 +338,18 @@
 
   
   
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
     
    
 

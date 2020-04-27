@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TensorFlow Lite（Jinpeng） &mdash; 简单粗暴 TensorFlow 2 0.4 alpha 文档</title>
+  <title>TensorFlow Lite（Jinpeng） &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
@@ -89,7 +89,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
@@ -124,15 +128,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia（Ziyang）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/static.html">图执行模式下的 TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/rl.html">强化学习简介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/optimization.html">TensorFlow性能优化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">术语中英对照表</a></li>
 </ul>
@@ -529,6 +532,29 @@ open<span class="o">(</span><span class="s2">&quot;mnist_savedmodel_quantized.tf
 <a class="reference internal image-reference" href="../../_images/quantized.png"><img alt="../../_images/quantized.png" src="../../_images/quantized.png" style="width: 40%;" /></a>
 </div>
 <p>Float模型与 Quantized模型大小与性能对比：</p>
+<table class="docutils align-center">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>模型类别</p></th>
+<th class="head"><p>Float</p></th>
+<th class="head"><p>Quantized</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>模型大小</p></td>
+<td><p>312K</p></td>
+<td><p>82K</p></td>
+</tr>
+<tr class="row-odd"><td><p>运行性能</p></td>
+<td><p>5.858854ms</p></td>
+<td><p>1.439062ms</p></td>
+</tr>
+</tbody>
+</table>
 <p>可见， Quantized模型在模型大小和运行性能上相对Float模型都有非常大的提升。不过，在笔者试验的过程中，发现有些图片在Float模型上识别正确的，在 Quantized模型上会识别错，可见 <code class="docutils literal notranslate"><span class="pre">Quantization</span></code> 对模型的识别精度还是有影响的。在边缘设备上资源有限，需要在模型大小、运行速度与识别精度上找到一个权衡。</p>
 </div>
 <div class="section" id="id3">
@@ -545,7 +571,17 @@ open<span class="o">(</span><span class="s2">&quot;mnist_savedmodel_quantized.tf
 <p>本节Android相关代码存放路径：
 <code class="docutils literal notranslate"><span class="pre">https://github.com/snowkylin/tensorflow-handbook/tree/master/source/android</span></code></p>
 </div>
-</div>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 194 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
 </div>
 
 
@@ -568,7 +604,7 @@ open<span class="o">(</span><span class="s2">&quot;mnist_savedmodel_quantized.tf
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
 
     </p>
   </div>
@@ -593,6 +629,18 @@ open<span class="o">(</span><span class="s2">&quot;mnist_savedmodel_quantized.tf
 
   
   
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
     
    
 

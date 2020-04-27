@@ -104,3 +104,17 @@ Keras Sequential save方法（Jinpeng）
 执行过程会比较久，执行结束后，会在当前目录产生 ``mnist_cnn.h5`` 文件（HDF5格式），就是keras训练后的模型，其中已经包含了训练后的模型结构和权重等信息。
 
 在服务器端，可以直接通过 ``keras.models.load_model("mnist_cnn.h5")`` 加载，然后进行推理；在移动设备需要将HDF5模型文件转换为TensorFlow Lite的格式，然后通过相应平台的Interpreter加载，然后进行推理。
+
+.. raw:: html
+
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 192 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>

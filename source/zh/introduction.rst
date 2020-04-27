@@ -35,8 +35,28 @@ TensorFlow能帮助我们做什么？
 
 TensorFlow可以为以上的这些需求提供完整的解决方案。具体而言，TensorFlow包含以下特性：
 
-* **模型的建立与调试：** 使用动态图模式Eager Execution和著名的神经网络高层API框架Keras，结合可视化工具TensorBoard，简易、快速地建立和调试模型；
-* **模型的训练：** 支持CPU/单GPU/单机多卡GPU/多机集群/TPU训练模型，充分利用海量数据和计算资源进行高效训练；
-* **模型的部署：** 通过TensorFlow Serving、TensorFlow Lite、TensorFlow.js等组件，使TensorFlow模型能够无缝地部署到服务器、移动端、嵌入式端和网页端等多种使用场景；
-* **预训练模型调用：** 通过TensorFlow Hub和Tensor2Tensor，可以方便地调用预训练完毕的已有成熟模型。
+- 训练流程
+    - **数据的处理** ：使用 tf.data 和 TFRecord 可以高效地构建和预处理数据集，构建训练数据流。同时可以使用 TensorFlow Datasets 快速载入常用的公开数据集。
+    - **模型的建立与调试** ：使用即时执行模式和著名的神经网络高层 API 框架 Keras，结合可视化工具 TensorBoard，简易、快速地建立和调试模型。也可以通过 TensorFlow Hub 方便地载入已有的成熟模型。
+    - **模型的训练** ：支持在 CPU、GPU、TPU 上训练模型，支持单机和多机集群并行训练模型，充分利用海量数据和计算资源进行高效训练。 
+    - **模型的导出** ：将模型打包导出为统一的 SavedModel 格式，方便迁移和部署。
+- 部署流程
+    - **服务器部署** ：使用 TensorFlow Serving 在服务器上为训练完成的模型提供高性能、支持并发、高吞吐量的API。
+    - **移动端和嵌入式设备部署** ：使用TensorFlow Lite 将模型转换为体积小、高效率的轻量化版本，并在移动端、嵌入式端等功耗和计算能力受限的设备上运行，支持使用 GPU 代理进行硬件加速，还可以配合 Edge TPU 等外接硬件加速运算。
+    - **网页端部署** ：使用 TensorFlow.js，在网页端等支持 JavaScript 运行的环境上也可以运行模型，支持使用 WebGL 进行硬件加速。
+
+
+.. raw:: html
+
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 187 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>
 

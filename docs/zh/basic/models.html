@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TensorFlow 模型建立与训练 &mdash; 简单粗暴 TensorFlow 2 0.4 alpha 文档</title>
+  <title>TensorFlow 模型建立与训练 &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
@@ -89,7 +89,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
@@ -119,9 +123,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#keras-model-compile-fit-evaluate">使用 Keras Model 的 <code class="docutils literal notranslate"><span class="pre">compile</span></code> 、 <code class="docutils literal notranslate"><span class="pre">fit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> 方法训练和评估模型</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id24">自定义层、损失函数和评估指标 *</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id23">自定义层、损失函数和评估指标 *</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#custom-layer">自定义层</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id26">自定义损失函数和评估指标</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id25">自定义损失函数和评估指标</a></li>
 </ul>
 </li>
 </ul>
@@ -145,10 +149,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia（Ziyang）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/rl.html">强化学习简介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
@@ -297,9 +302,9 @@
     <span class="c1"># 还可以添加自定义的方法</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id27">
+<div class="figure align-center" id="id26">
 <a class="reference internal image-reference" href="../../_images/model.png"><img alt="../../_images/model.png" src="../../_images/model.png" style="width: 50%;" /></a>
-<p class="caption"><span class="caption-text">Keras 模型类定义示意图</span><a class="headerlink" href="#id27" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">Keras 模型类定义示意图</span><a class="headerlink" href="#id26" title="永久链接至图片">¶</a></p>
 </div>
 <p>继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 后，我们同时可以使用父类的若干方法和属性，例如在实例化类 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">Model()</span></code> 后，可以通过 <code class="docutils literal notranslate"><span class="pre">model.variables</span></code> 这一属性直接获得模型中的所有变量，免去我们一个个显式指定变量的麻烦。</p>
 <p>上一章中简单的线性模型 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> ，我们可以通过模型类的方式编写如下：</p>
@@ -339,18 +344,18 @@
 <p>这里，我们没有显式地声明 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 两个变量并写出 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> 这一线性变换，而是建立了一个继承了 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的模型类 <code class="docutils literal notranslate"><span class="pre">Linear</span></code> 。这个类在初始化部分实例化了一个 <strong>全连接层</strong> （ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），并在 call 方法中对这个层进行调用，实现了线性变换的计算。如果需要显式地声明自己的变量并使用变量进行自定义运算，或者希望了解 Keras 层的内部原理，请参考 <a class="reference internal" href="#custom-layer"><span class="std std-ref">自定义层</span></a>。</p>
 <div class="admonition-keras admonition">
 <p class="admonition-title">Keras 的全连接层：线性变换 + 激活函数</p>
-<p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense">全连接层</a> （Fully-connected Layer，<code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ）是 Keras 中最基础和常用的层之一，对输入矩阵 <img class="math" src="../../_images/math/211284f68205c3e66773eaf026f32a0acdd3dfb3.png" alt="A"/> 进行 <img class="math" src="../../_images/math/c324a7004aff2d31917fb70e1311c4f43449a14c.png" alt="f(AW + b)"/> 的线性变换 + 激活函数操作。如果不指定激活函数，即是纯粹的线性变换 <img class="math" src="../../_images/math/7195d0ad48bfa4fb60a47b82eb81b21d21ef9d9f.png" alt="AW + b"/>。具体而言，给定输入张量 <code class="docutils literal notranslate"><span class="pre">input</span> <span class="pre">=</span> <span class="pre">[batch_size,</span> <span class="pre">input_dim]</span></code> ，该层对输入张量首先进行 <code class="docutils literal notranslate"><span class="pre">tf.matmul(input,</span> <span class="pre">kernel)</span> <span class="pre">+</span> <span class="pre">bias</span></code> 的线性变换（ <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 是层中可训练的变量），然后对线性变换后张量的每个元素通过激活函数 <code class="docutils literal notranslate"><span class="pre">activation</span></code> ，从而输出形状为 <code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">units]</span></code> 的二维张量。</p>
+<p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense">全连接层</a> （Fully-connected Layer，<code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ）是 Keras 中最基础和常用的层之一，对输入矩阵 <img class="math" src="../../_images/math/b86d9659948ffa756133d580cfc95f923705c2b5.png" alt="A"/> 进行 <img class="math" src="../../_images/math/92bb903eabd575a64bd61bd559678418cda7afb2.png" alt="f(AW + b)"/> 的线性变换 + 激活函数操作。如果不指定激活函数，即是纯粹的线性变换 <img class="math" src="../../_images/math/62bbbb16ac53d3269d7aa9fc5a15a986f8f0f08c.png" alt="AW + b"/>。具体而言，给定输入张量 <code class="docutils literal notranslate"><span class="pre">input</span> <span class="pre">=</span> <span class="pre">[batch_size,</span> <span class="pre">input_dim]</span></code> ，该层对输入张量首先进行 <code class="docutils literal notranslate"><span class="pre">tf.matmul(input,</span> <span class="pre">kernel)</span> <span class="pre">+</span> <span class="pre">bias</span></code> 的线性变换（ <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 是层中可训练的变量），然后对线性变换后张量的每个元素通过激活函数 <code class="docutils literal notranslate"><span class="pre">activation</span></code> ，从而输出形状为 <code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">units]</span></code> 的二维张量。</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/dense.png"><img alt="../../_images/dense.png" src="../../_images/dense.png" style="width: 60%;" /></a>
 </div>
 <p>其包含的主要参数如下：</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">units</span></code> ：输出张量的维度；</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">activation</span></code> ：激活函数，对应于 <img class="math" src="../../_images/math/c324a7004aff2d31917fb70e1311c4f43449a14c.png" alt="f(AW + b)"/> 中的 <img class="math" src="../../_images/math/5b7752c757e0b691a80ab8227eadb8a8389dc58a.png" alt="f"/> ，默认为无激活函数（ <code class="docutils literal notranslate"><span class="pre">a(x)</span> <span class="pre">=</span> <span class="pre">x</span></code> ）。常用的激活函数包括 <code class="docutils literal notranslate"><span class="pre">tf.nn.relu</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.nn.tanh</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.nn.sigmoid</span></code> ；</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">use_bias</span></code> ：是否加入偏置向量 <code class="docutils literal notranslate"><span class="pre">bias</span></code> ，即 <img class="math" src="../../_images/math/c324a7004aff2d31917fb70e1311c4f43449a14c.png" alt="f(AW + b)"/> 中的 <img class="math" src="../../_images/math/68c7c8c65602677ab56cf7fd88002023f0edc575.png" alt="b"/>。默认为 <code class="docutils literal notranslate"><span class="pre">True</span></code> ；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">activation</span></code> ：激活函数，对应于 <img class="math" src="../../_images/math/92bb903eabd575a64bd61bd559678418cda7afb2.png" alt="f(AW + b)"/> 中的 <img class="math" src="../../_images/math/95dc71c95728695dd2fada939d146ae97def5061.png" alt="f"/> ，默认为无激活函数（ <code class="docutils literal notranslate"><span class="pre">a(x)</span> <span class="pre">=</span> <span class="pre">x</span></code> ）。常用的激活函数包括 <code class="docutils literal notranslate"><span class="pre">tf.nn.relu</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.nn.tanh</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.nn.sigmoid</span></code> ；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">use_bias</span></code> ：是否加入偏置向量 <code class="docutils literal notranslate"><span class="pre">bias</span></code> ，即 <img class="math" src="../../_images/math/92bb903eabd575a64bd61bd559678418cda7afb2.png" alt="f(AW + b)"/> 中的 <img class="math" src="../../_images/math/3de2ed824326dc0eb383a42dd6ec44d3b401047b.png" alt="b"/>。默认为 <code class="docutils literal notranslate"><span class="pre">True</span></code> ；</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">kernel_initializer</span></code> 、 <code class="docutils literal notranslate"><span class="pre">bias_initializer</span></code> ：权重矩阵 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和偏置向量 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 两个变量的初始化器。默认为 <code class="docutils literal notranslate"><span class="pre">tf.glorot_uniform_initializer</span></code> <a class="footnote-reference brackets" href="#glorot" id="id3">1</a> 。设置为 <code class="docutils literal notranslate"><span class="pre">tf.zeros_initializer</span></code> 表示将两个变量均初始化为全 0；</p></li>
 </ul>
-<p>该层包含权重矩阵 <code class="docutils literal notranslate"><span class="pre">kernel</span> <span class="pre">=</span> <span class="pre">[input_dim,</span> <span class="pre">units]</span></code> 和偏置向量 <code class="docutils literal notranslate"><span class="pre">bias</span> <span class="pre">=</span> <span class="pre">[units]</span></code> <a class="footnote-reference brackets" href="#broadcast" id="id4">2</a> 两个可训练变量，对应于 <img class="math" src="../../_images/math/c324a7004aff2d31917fb70e1311c4f43449a14c.png" alt="f(AW + b)"/> 中的 <img class="math" src="../../_images/math/1fbee781f84569077719a167b64e12064360fac1.png" alt="W"/> 和 <img class="math" src="../../_images/math/68c7c8c65602677ab56cf7fd88002023f0edc575.png" alt="b"/>。</p>
+<p>该层包含权重矩阵 <code class="docutils literal notranslate"><span class="pre">kernel</span> <span class="pre">=</span> <span class="pre">[input_dim,</span> <span class="pre">units]</span></code> 和偏置向量 <code class="docutils literal notranslate"><span class="pre">bias</span> <span class="pre">=</span> <span class="pre">[units]</span></code> <a class="footnote-reference brackets" href="#broadcast" id="id4">2</a> 两个可训练变量，对应于 <img class="math" src="../../_images/math/92bb903eabd575a64bd61bd559678418cda7afb2.png" alt="f(AW + b)"/> 中的 <img class="math" src="../../_images/math/eb33eca75f5d77363c991bf041953da54a858bfb.png" alt="W"/> 和 <img class="math" src="../../_images/math/3de2ed824326dc0eb383a42dd6ec44d3b401047b.png" alt="b"/>。</p>
 <p>这里着重从数学矩阵运算和线性变换的角度描述了全连接层。基于神经元建模的描述可参考 <a class="reference internal" href="#neuron"><span class="std std-ref">后文介绍</span></a> 。</p>
 <dl class="footnote brackets">
 <dt class="label" id="glorot"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
@@ -383,9 +388,9 @@
 </ul>
 </div>
 <p>这里，我们使用多层感知机完成 MNIST 手写体数字图片数据集 <a class="reference internal" href="#lecun1998" id="id7"><span>[LeCun1998]</span></a> 的分类任务。</p>
-<div class="figure align-center" id="id28">
+<div class="figure align-center" id="id27">
 <img alt="../../_images/mnist_0-9.png" src="../../_images/mnist_0-9.png" />
-<p class="caption"><span class="caption-text">MNIST 手写体数字图片示例</span><a class="headerlink" href="#id28" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">MNIST 手写体数字图片示例</span><a class="headerlink" href="#id27" title="永久链接至图片">¶</a></p>
 </div>
 <div class="section" id="tf-keras-datasets">
 <h3>数据获取及预处理： <code class="docutils literal notranslate"><span class="pre">tf.keras.datasets</span></code><a class="headerlink" href="#tf-keras-datasets" title="永久链接至标题">¶</a></h3>
@@ -438,14 +443,14 @@
 <p class="admonition-title">softmax 函数</p>
 <p>这里，因为我们希望输出 “输入图片分别属于 0 到 9 的概率”，也就是一个 10 维的离散概率分布，所以我们希望这个 10 维向量至少满足两个条件：</p>
 <ul class="simple">
-<li><p>该向量中的每个元素均在 <img class="math" src="../../_images/math/8027137b3073a7f5ca4e45ba2d030dcff154eca4.png" alt="[0, 1]"/> 之间；</p></li>
+<li><p>该向量中的每个元素均在 <img class="math" src="../../_images/math/1a9360a164e54bf10a49ee770650287ce1e13124.png" alt="[0, 1]"/> 之间；</p></li>
 <li><p>该向量的所有元素之和为 1。</p></li>
 </ul>
-<p>为了使得模型的输出能始终满足这两个条件，我们使用 <a class="reference external" href="https://zh.wikipedia.org/wiki/Softmax%E5%87%BD%E6%95%B0">Softmax 函数</a> （归一化指数函数， <code class="docutils literal notranslate"><span class="pre">tf.nn.softmax</span></code> ）对模型的原始输出进行归一化。其形式为 <img class="math" src="../../_images/math/7d714874b555007ada90b5315e5fa2ffa0e5e2ee.png" alt="\sigma(\mathbf{z})_j = \frac{e^{z_j}}{\sum_{k=1}^K e^{z_k}}"/> 。不仅如此，softmax 函数能够凸显原始向量中最大的值，并抑制远低于最大值的其他分量，这也是该函数被称作 softmax 函数的原因（即平滑化的 argmax 函数）。</p>
+<p>为了使得模型的输出能始终满足这两个条件，我们使用 <a class="reference external" href="https://zh.wikipedia.org/wiki/Softmax%E5%87%BD%E6%95%B0">Softmax 函数</a> （归一化指数函数， <code class="docutils literal notranslate"><span class="pre">tf.nn.softmax</span></code> ）对模型的原始输出进行归一化。其形式为 <img class="math" src="../../_images/math/775c23d38cbe9592ed4cf18946b16b1598501447.png" alt="\sigma(\mathbf{z})_j = \frac{e^{z_j}}{\sum_{k=1}^K e^{z_k}}"/> 。不仅如此，softmax 函数能够凸显原始向量中最大的值，并抑制远低于最大值的其他分量，这也是该函数被称作 softmax 函数的原因（即平滑化的 argmax 函数）。</p>
 </div>
-<div class="figure align-center" id="id29">
+<div class="figure align-center" id="id28">
 <a class="reference internal image-reference" href="../../_images/mlp.png"><img alt="../../_images/mlp.png" src="../../_images/mlp.png" style="width: 80%;" /></a>
-<p class="caption"><span class="caption-text">MLP 模型示意图</span><a class="headerlink" href="#id29" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">MLP 模型示意图</span><a class="headerlink" href="#id28" title="永久链接至图片">¶</a></p>
 </div>
 </div>
 <div class="section" id="tf-keras-losses-tf-keras-optimizer">
@@ -468,7 +473,7 @@
 <li><p>将这批数据送入模型，计算出模型的预测值；</p></li>
 <li><p>将模型预测值与真实值进行比较，计算损失函数（loss）。这里使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> 中的交叉熵函数作为损失函数；</p></li>
 <li><p>计算损失函数关于模型变量的导数；</p></li>
-<li><p>将求出的导数值传入优化器，使用优化器的 <code class="docutils literal notranslate"><span class="pre">apply_gradients</span></code> 方法更新模型参数以最小化损失函数（优化器的详细使用方法见 <a class="reference internal" href="../../en/basic/basic.html#optimizer"><span class="std std-ref">前章</span></a>  ）。</p></li>
+<li><p>将求出的导数值传入优化器，使用优化器的 <code class="docutils literal notranslate"><span class="pre">apply_gradients</span></code> 方法更新模型参数以最小化损失函数（优化器的详细使用方法见 <a class="reference internal" href="basic.html#optimizer"><span class="std std-ref">前章</span></a>  ）。</p></li>
 </ul>
 <p>具体代码实现如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">num_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">num_train_data</span> <span class="o">//</span> <span class="n">batch_size</span> <span class="o">*</span> <span class="n">num_epochs</span><span class="p">)</span>
@@ -486,7 +491,7 @@
 <div class="admonition-cross-entropy-tf-keras-losses admonition">
 <p class="admonition-title">交叉熵（cross entropy）与 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code></p>
 <p>你或许注意到了，在这里，我们没有显式地写出一个损失函数，而是使用了 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">sparse_categorical_crossentropy</span></code> （交叉熵）函数，将模型的预测值 <code class="docutils literal notranslate"><span class="pre">y_pred</span></code> 与真实的标签值 <code class="docutils literal notranslate"><span class="pre">y</span></code> 作为函数参数传入，由 Keras 帮助我们计算损失函数的值。</p>
-<p>交叉熵作为损失函数，在分类问题中被广泛应用。其离散形式为 <img class="math" src="../../_images/math/63ad0688c80b4c83b2a6e0a542b741ed8f9ff79f.png" alt="H(y, \hat{y}) = -\sum_{i=1}^{n}y_i \log(\hat{y_i})"/> ，其中 <img class="math" src="../../_images/math/1b5e577d6216dca3af7d87aa122a0b9b360d6cb3.png" alt="y"/> 为真实概率分布， <img class="math" src="../../_images/math/1257829df10bd602e03553570cadfe2328fd1d91.png" alt="\hat{y}"/> 为预测概率分布， <img class="math" src="../../_images/math/5a939c5280da7202ca4531f175a7780ad5e1f80a.png" alt="n"/> 为分类任务的类别个数。预测概率分布与真实分布越接近，则交叉熵的值越小，反之则越大。更具体的介绍及其在机器学习中的应用可参考 <a class="reference external" href="https://blog.csdn.net/tsyccnh/article/details/79163834">这篇博客文章</a> 。</p>
+<p>交叉熵作为损失函数，在分类问题中被广泛应用。其离散形式为 <img class="math" src="../../_images/math/9ccb8a0722d5b80deb3aee2ce48b479e6ec889af.png" alt="H(y, \hat{y}) = -\sum_{i=1}^{n}y_i \log(\hat{y_i})"/> ，其中 <img class="math" src="../../_images/math/841e21d7600cefc9c7d41a5a9eb0e27b01d2e98e.png" alt="y"/> 为真实概率分布， <img class="math" src="../../_images/math/a7d02c311e7fdb108e2153da67397cde3dc17965.png" alt="\hat{y}"/> 为预测概率分布， <img class="math" src="../../_images/math/1005bf222658283b2edeaaaed3761ce5d5bb3e6c.png" alt="n"/> 为分类任务的类别个数。预测概率分布与真实分布越接近，则交叉熵的值越小，反之则越大。更具体的介绍及其在机器学习中的应用可参考 <a class="reference external" href="https://blog.csdn.net/tsyccnh/article/details/79163834">这篇博客文章</a> 。</p>
 <p>在 <code class="docutils literal notranslate"><span class="pre">tf.keras</span></code> 中，有两个交叉熵相关的损失函数 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses.categorical_crossentropy</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses.sparse_categorical_crossentropy</span></code> 。其中 sparse 的含义是，真实的标签值 <code class="docutils literal notranslate"><span class="pre">y_true</span></code> 可以直接传入 int 类型的标签类别。具体而言：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">)</span>
 </pre></div>
@@ -525,11 +530,11 @@
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/neuron.png"><img alt="../../_images/neuron.png" src="../../_images/neuron.png" style="width: 80%;" /></a>
 </div>
-<p>该计算单元 <img class="math" src="../../_images/math/f9ea3fce3df86fede704cd6ad3f1d66d1a8e50da.png" alt="Q_k"/> 有 100 个权值参数 <img class="math" src="../../_images/math/2b0aab8ff93cca2b0a16db9629dde29487dfc1b7.png" alt="w_{0k}, w_{1k}, ..., w_{99k}"/> 和 1 个偏置参数 <img class="math" src="../../_images/math/a83804f0832f64289f1399e2617515baa1850ac8.png" alt="b_k"/> 。将第 1 层中所有的 100 个计算单元 <img class="math" src="../../_images/math/d7ce55802b5f2bdb503ac4f5dcb27445ae119043.png" alt="P_0, P_1, ..., P_{99}"/> 的值作为输入，分别按权值 <img class="math" src="../../_images/math/90c43dba16784b3690fc6c95be25c1fff7051b92.png" alt="w_{ik}"/> 加和（即 <img class="math" src="../../_images/math/a21ecd55aa919e4228bdd3465665ba26a251f284.png" alt="\sum_{i=0}^{99} w_{ik} P_i"/> ），并加上偏置值 <img class="math" src="../../_images/math/a83804f0832f64289f1399e2617515baa1850ac8.png" alt="b_k"/> ，然后送入激活函数 <img class="math" src="../../_images/math/5b7752c757e0b691a80ab8227eadb8a8389dc58a.png" alt="f"/> 进行计算，即得到输出结果。</p>
+<p>该计算单元 <img class="math" src="../../_images/math/85ce41d6dc4430e698ee09025e20ef92dc072c8b.png" alt="Q_k"/> 有 100 个权值参数 <img class="math" src="../../_images/math/367b9541701e95dc3ba7576de1d9f73d4b503756.png" alt="w_{0k}, w_{1k}, ..., w_{99k}"/> 和 1 个偏置参数 <img class="math" src="../../_images/math/d7045b226648b5f10f66aee02be62f28ffada7a2.png" alt="b_k"/> 。将第 1 层中所有的 100 个计算单元 <img class="math" src="../../_images/math/6d9bbcc666002052dfb6ebca8f6d27e96b922abb.png" alt="P_0, P_1, ..., P_{99}"/> 的值作为输入，分别按权值 <img class="math" src="../../_images/math/9c31ad5764fc67b721c08d9b53883c8504ec39a6.png" alt="w_{ik}"/> 加和（即 <img class="math" src="../../_images/math/ea226ce2a26a7170cdd886bcc69bbd2c2173a0a2.png" alt="\sum_{i=0}^{99} w_{ik} P_i"/> ），并加上偏置值 <img class="math" src="../../_images/math/d7045b226648b5f10f66aee02be62f28ffada7a2.png" alt="b_k"/> ，然后送入激活函数 <img class="math" src="../../_images/math/95dc71c95728695dd2fada939d146ae97def5061.png" alt="f"/> 进行计算，即得到输出结果。</p>
 <p>事实上，这种结构和真实的神经细胞（神经元）类似。神经元由树突、胞体和轴突构成。树突接受其他神经元传来的信号作为输入（一个神经元可以有数千甚至上万树突），胞体对电位信号进行整合，而产生的信号则通过轴突传到神经末梢的突触，传播到下一个（或多个）神经元。</p>
-<div class="figure align-center" id="id30">
+<div class="figure align-center" id="id29">
 <a class="reference internal image-reference" href="../../_images/real_neuron.png"><img alt="../../_images/real_neuron.png" src="../../_images/real_neuron.png" style="width: 80%;" /></a>
-<p class="caption"><span class="caption-text">神经细胞模式图（修改自 Quasar Jarosz at English Wikipedia [CC BY-SA 3.0 (<a class="reference external" href="https://creativecommons.org/licenses/by-sa/3.0">https://creativecommons.org/licenses/by-sa/3.0</a>)]）</span><a class="headerlink" href="#id30" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">神经细胞模式图（修改自 Quasar Jarosz at English Wikipedia [CC BY-SA 3.0 (<a class="reference external" href="https://creativecommons.org/licenses/by-sa/3.0">https://creativecommons.org/licenses/by-sa/3.0</a>)]）</span><a class="headerlink" href="#id29" title="永久链接至图片">¶</a></p>
 </div>
 <p>上面的计算单元，可以被视作对神经元结构的数学建模。在上面的例子里，第二层的每一个计算单元（人工神经元）有 100 个权值参数和 1 个偏置参数，而第二层计算单元的数目是 10 个，因此这一个全连接层的总参数量为 100*10 个权值参数和 10 个偏置参数。事实上，这正是该全连接层中的两个变量 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 的形状。仔细研究一下，你会发现，这里基于神经元建模的介绍与上文基于矩阵计算的介绍是等价的。</p>
 <dl class="footnote brackets">
@@ -587,9 +592,9 @@
         <span class="k">return</span> <span class="n">output</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id31">
+<div class="figure align-center" id="id30">
 <img alt="../../_images/cnn.png" src="../../_images/cnn.png" />
-<p class="caption"><span class="caption-text">示例代码中的 CNN 结构图示</span><a class="headerlink" href="#id31" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">示例代码中的 CNN 结构图示</span><a class="headerlink" href="#id30" title="永久链接至图片">¶</a></p>
 </div>
 <p>将前节的 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">MLP()</span></code> 更换成 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">CNN()</span></code> ，输出如下:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test</span> <span class="n">accuracy</span><span class="p">:</span> <span class="mf">0.988100</span>
@@ -648,14 +653,14 @@
 <div class="figure align-center">
 <img alt="../../_images/conv_field.png" src="../../_images/conv_field.png" />
 </div>
-<p>图中 3×3 的红框代表该神经元的感受野。由此，我们只需 3×3=9 个权值 <img class="math" src="../../_images/math/84297b43c0d1c36b9c4db5ecb2e31edc54a5b26c.png" alt="W = \begin{bmatrix}w_{1, 1} &amp; w_{1, 2} &amp; w_{1, 3} \\w_{2, 1} &amp; w_{2, 2} &amp; w_{2, 3} \\w_{3, 1} &amp; w_{3, 2} &amp; w_{3, 3}\end{bmatrix}"/>  ，外加1个偏置项 <img class="math" src="../../_images/math/68c7c8c65602677ab56cf7fd88002023f0edc575.png" alt="b"/>  ，即可得到一个输出信号。例如，对于红框所示的位置，输出信号即为对矩阵 <img class="math" src="../../_images/math/685e5ddcabb014b6024d8660a8bf68c2b7979551.png" alt="\begin{bmatrix}0 \times w_{1, 1} &amp; 0 \times w_{1, 2} &amp; 0 \times w_{1, 3} \\0 \times w_{2, 1} &amp; 1 \times w_{2, 2} &amp; 0 \times w_{2, 3} \\0 \times w_{3, 1} &amp; 0 \times w_{3, 2} &amp; 2 \times w_{3, 3}\end{bmatrix}"/> 的所有元素求和并加上偏置项 <img class="math" src="../../_images/math/68c7c8c65602677ab56cf7fd88002023f0edc575.png" alt="b"/>，记作 <img class="math" src="../../_images/math/5ad7f412eb11164e72b178c6d2000b3044baf147.png" alt="a_{1, 1}"/>  。</p>
-<p>不过，3×3 的范围显然不足以处理整个图像，因此我们使用滑动窗口的方法。使用相同的参数 <img class="math" src="../../_images/math/1fbee781f84569077719a167b64e12064360fac1.png" alt="W"/> ，但将红框在图像中从左到右滑动，进行逐行扫描，每滑动到一个位置就计算一个值。例如，当红框向右移动一个单位时，我们计算矩阵 <img class="math" src="../../_images/math/0a57f673d840247d5f1fa82c1780d63b528bd861.png" alt="\begin{bmatrix}0 \times w_{1, 1} &amp; 0 \times w_{1, 2} &amp; 0 \times w_{1, 3} \\1 \times w_{2, 1} &amp; 0 \times w_{2, 2} &amp; 1 \times w_{2, 3} \\0 \times w_{3, 1} &amp; 2 \times w_{3, 2} &amp; 1 \times w_{3, 3}\end{bmatrix}"/> 的所有元素的和加上偏置项 <img class="math" src="../../_images/math/68c7c8c65602677ab56cf7fd88002023f0edc575.png" alt="b"/>，记作 <img class="math" src="../../_images/math/46bc22e7751731a1511270cc01d84cfa9e06b7b7.png" alt="a_{1, 2}"/> 。由此，和一般的神经元只能输出 1 个值不同，这里的卷积层神经元可以输出一个 5×5 的矩阵 <img class="math" src="../../_images/math/8619c5827c10ffb922373c93c37acf3d8bc7ec35.png" alt="A = \begin{bmatrix}a_{1, 1} &amp; \cdots &amp; a_{1, 5} \\ \vdots &amp; &amp; \vdots \\ a_{5, 1} &amp; \cdots &amp; a_{5, 5}\end{bmatrix}"/>  。</p>
-<div class="figure align-center" id="id32">
+<p>图中 3×3 的红框代表该神经元的感受野。由此，我们只需 3×3=9 个权值 <img class="math" src="../../_images/math/bee58dc59fed173d1b6f8651b4b48d2f48cf8273.png" alt="W = \begin{bmatrix}w_{1, 1} &amp; w_{1, 2} &amp; w_{1, 3} \\w_{2, 1} &amp; w_{2, 2} &amp; w_{2, 3} \\w_{3, 1} &amp; w_{3, 2} &amp; w_{3, 3}\end{bmatrix}"/>  ，外加1个偏置项 <img class="math" src="../../_images/math/3de2ed824326dc0eb383a42dd6ec44d3b401047b.png" alt="b"/>  ，即可得到一个输出信号。例如，对于红框所示的位置，输出信号即为对矩阵 <img class="math" src="../../_images/math/a6bd64f44fe6aba75c5cf32b1122839630deeac4.png" alt="\begin{bmatrix}0 \times w_{1, 1} &amp; 0 \times w_{1, 2} &amp; 0 \times w_{1, 3} \\0 \times w_{2, 1} &amp; 1 \times w_{2, 2} &amp; 0 \times w_{2, 3} \\0 \times w_{3, 1} &amp; 0 \times w_{3, 2} &amp; 2 \times w_{3, 3}\end{bmatrix}"/> 的所有元素求和并加上偏置项 <img class="math" src="../../_images/math/3de2ed824326dc0eb383a42dd6ec44d3b401047b.png" alt="b"/>，记作 <img class="math" src="../../_images/math/da3be5884aa8c28078557f8095fb652851c1f54c.png" alt="a_{1, 1}"/>  。</p>
+<p>不过，3×3 的范围显然不足以处理整个图像，因此我们使用滑动窗口的方法。使用相同的参数 <img class="math" src="../../_images/math/eb33eca75f5d77363c991bf041953da54a858bfb.png" alt="W"/> ，但将红框在图像中从左到右滑动，进行逐行扫描，每滑动到一个位置就计算一个值。例如，当红框向右移动一个单位时，我们计算矩阵 <img class="math" src="../../_images/math/7b13de07ea927ebc0506bbad56c31fe76959bb69.png" alt="\begin{bmatrix}0 \times w_{1, 1} &amp; 0 \times w_{1, 2} &amp; 0 \times w_{1, 3} \\1 \times w_{2, 1} &amp; 0 \times w_{2, 2} &amp; 1 \times w_{2, 3} \\0 \times w_{3, 1} &amp; 2 \times w_{3, 2} &amp; 1 \times w_{3, 3}\end{bmatrix}"/> 的所有元素的和加上偏置项 <img class="math" src="../../_images/math/3de2ed824326dc0eb383a42dd6ec44d3b401047b.png" alt="b"/>，记作 <img class="math" src="../../_images/math/396ef03019e9f0bb2c3c7d1cafc1101248eef70a.png" alt="a_{1, 2}"/> 。由此，和一般的神经元只能输出 1 个值不同，这里的卷积层神经元可以输出一个 5×5 的矩阵 <img class="math" src="../../_images/math/a402f89ed5d1adab75c2ae66287ea2697ef01e0f.png" alt="A = \begin{bmatrix}a_{1, 1} &amp; \cdots &amp; a_{1, 5} \\ \vdots &amp; &amp; \vdots \\ a_{5, 1} &amp; \cdots &amp; a_{5, 5}\end{bmatrix}"/>  。</p>
+<div class="figure align-center" id="id31">
 <img alt="../../_images/conv_procedure.png" src="../../_images/conv_procedure.png" />
-<p class="caption"><span class="caption-text">卷积示意图。一个单通道的 7×7 图像在通过一个感受野为 3×3 ，参数为10个的卷积层神经元后，得到 5×5 的矩阵作为卷积结果。</span><a class="headerlink" href="#id32" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">卷积示意图。一个单通道的 7×7 图像在通过一个感受野为 3×3 ，参数为10个的卷积层神经元后，得到 5×5 的矩阵作为卷积结果。</span><a class="headerlink" href="#id31" title="永久链接至图片">¶</a></p>
 </div>
 <p>下面，我们使用TensorFlow来验证一下上图的计算结果。</p>
-<p>将上图中的输入图像、权值矩阵 <img class="math" src="../../_images/math/1fbee781f84569077719a167b64e12064360fac1.png" alt="W"/> 和偏置项 <img class="math" src="../../_images/math/68c7c8c65602677ab56cf7fd88002023f0edc575.png" alt="b"/> 表示为NumPy数组 <code class="docutils literal notranslate"><span class="pre">image</span></code> , <code class="docutils literal notranslate"><span class="pre">W</span></code> , <code class="docutils literal notranslate"><span class="pre">b</span></code> 如下：</p>
+<p>将上图中的输入图像、权值矩阵 <img class="math" src="../../_images/math/eb33eca75f5d77363c991bf041953da54a858bfb.png" alt="W"/> 和偏置项 <img class="math" src="../../_images/math/3de2ed824326dc0eb383a42dd6ec44d3b401047b.png" alt="b"/> 表示为NumPy数组 <code class="docutils literal notranslate"><span class="pre">image</span></code> , <code class="docutils literal notranslate"><span class="pre">W</span></code> , <code class="docutils literal notranslate"><span class="pre">b</span></code> 如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># TensorFlow 的图像表示为 [图像数目，长，宽，色彩通道数] 的四维张量</span>
 <span class="c1"># 这里我们的输入图像 image 的张量形状为 [1, 7, 7, 1]</span>
 <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span>
@@ -701,7 +706,7 @@
  <span class="p">[</span> <span class="mf">1.</span>  <span class="mf">1.</span>  <span class="mf">1.</span>  <span class="mf">3.</span>  <span class="mf">1.</span><span class="p">]],</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>可见与上图中矩阵 <img class="math" src="../../_images/math/211284f68205c3e66773eaf026f32a0acdd3dfb3.png" alt="A"/>  的值一致。</p>
+<p>可见与上图中矩阵 <img class="math" src="../../_images/math/b86d9659948ffa756133d580cfc95f923705c2b5.png" alt="A"/>  的值一致。</p>
 <p>还有一个问题，以上假设图片都只有一个通道（例如灰度图片），但如果图像是彩色的（例如有 RGB 三个通道）该怎么办呢？此时，我们可以为每个通道准备一个 3×3 的权值矩阵，即一共有 3×3×3=27 个权值。对于每个通道，均使用自己的权值矩阵进行处理，输出时将多个通道所输出的值进行加和即可。</p>
 <p>可能有读者会注意到，按照上述介绍的方法，每次卷积后的结果相比于原始图像而言，四周都会“少一圈”。比如上面 7×7 的图像，卷积后变成了 5×5 ，这有时会为后面的工作带来麻烦。因此，我们可以设定padding策略。在 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Conv2D</span></code> 中，当我们将 <code class="docutils literal notranslate"><span class="pre">padding</span></code> 参数设为 <code class="docutils literal notranslate"><span class="pre">same</span></code> 时，会将周围缺少的部分使用0补齐，使得输出的矩阵大小和输入一致。</p>
 <p>最后，既然我们可以使用滑动窗口的方法进行卷积，那么每次滑动的步长是不是可以设置呢？答案是肯定的。通过 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Conv2D</span></code> 的 <code class="docutils literal notranslate"><span class="pre">strides</span></code> 参数即可设置步长（默认为1）。比如，在上面的例子中，如果我们将步长设定为2，输出的卷积结果即会是一个3×3的矩阵。</p>
@@ -756,13 +761,13 @@
 </pre></div>
 </div>
 <p>接下来进行模型的实现。在 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 方法中我们实例化一个常用的 <code class="docutils literal notranslate"><span class="pre">LSTMCell</span></code> 单元，以及一个线性变换用的全连接层，我们首先对序列进行“One Hot”操作，即将序列中的每个字符的编码 i 均变换为一个 <code class="docutils literal notranslate"><span class="pre">num_char</span></code> 维向量，其第 i 位为 1，其余均为 0。变换后的序列张量形状为 <code class="docutils literal notranslate"><span class="pre">[seq_length,</span> <span class="pre">num_chars]</span></code> 。然后，我们初始化 RNN 单元的状态，存入变量 <code class="docutils literal notranslate"><span class="pre">state</span></code> 中。接下来，将序列从头到尾依次送入 RNN 单元，即在 t 时刻，将上一个时刻 t-1 的 RNN 单元状态 <code class="docutils literal notranslate"><span class="pre">state</span></code> 和序列的第 t 个元素 <code class="docutils literal notranslate"><span class="pre">inputs[t,</span> <span class="pre">:]</span></code> 送入 RNN 单元，得到当前时刻的输出 <code class="docutils literal notranslate"><span class="pre">output</span></code> 和 RNN 单元状态。取 RNN 单元最后一次的输出，通过全连接层变换到 <code class="docutils literal notranslate"><span class="pre">num_chars</span></code> 维，即作为模型的输出。</p>
-<div class="figure align-center" id="id33">
+<div class="figure align-center" id="id32">
 <a class="reference internal image-reference" href="../../_images/rnn_single.jpg"><img alt="../../_images/rnn_single.jpg" src="../../_images/rnn_single.jpg" style="width: 50%;" /></a>
-<p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">output,</span> <span class="pre">state</span> <span class="pre">=</span> <span class="pre">self.cell(inputs[:,</span> <span class="pre">t,</span> <span class="pre">:],</span> <span class="pre">state)</span></code> 图示</span><a class="headerlink" href="#id33" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">output,</span> <span class="pre">state</span> <span class="pre">=</span> <span class="pre">self.cell(inputs[:,</span> <span class="pre">t,</span> <span class="pre">:],</span> <span class="pre">state)</span></code> 图示</span><a class="headerlink" href="#id32" title="永久链接至图片">¶</a></p>
 </div>
-<div class="figure align-center" id="id34">
+<div class="figure align-center" id="id33">
 <a class="reference internal image-reference" href="../../_images/rnn.jpg"><img alt="../../_images/rnn.jpg" src="../../_images/rnn.jpg" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">RNN 流程图示</span><a class="headerlink" href="#id34" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">RNN 流程图示</span><a class="headerlink" href="#id33" title="永久链接至图片">¶</a></p>
 </div>
 <p>具体实现如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RNN</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
@@ -867,36 +872,33 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </dl>
 <div class="admonition- admonition">
 <p class="admonition-title">循环神经网络的工作过程</p>
-<p>循环神经网络是一个处理时间序列数据的神经网络结构，也就是说，我们需要在脑海里有一根时间轴，循环神经网络具有初始状态 <img class="math" src="../../_images/math/8fb1fc12384d9c1b73b81b87315f7654511a2c0e.png" alt="s_0"/> ，在每个时间点 <img class="math" src="../../_images/math/907a4add6d5db5b7f197f7924f1371b8ac404fe6.png" alt="t"/> 迭代对当前时间的输入 <img class="math" src="../../_images/math/8f3c6b529aaa515fdbc6c51b4fc4f73293dbfc09.png" alt="x_t"/> 进行处理，修改自身的状态 <img class="math" src="../../_images/math/404fc81822c15a8414d9ef19d67cb77fd384933a.png" alt="s_t"/> ，并进行输出 <img class="math" src="../../_images/math/e72f71794d593249aa183cbdf3e7a47fb8298c77.png" alt="o_t"/> 。</p>
-<p>循环神经网络的核心是状态 <img class="math" src="../../_images/math/106b04b320e75010b1d8029e59244f234f75e6f9.png" alt="s"/> ，是一个特定维数的向量，类似于神经网络的 “记忆”。在 <img class="math" src="../../_images/math/34656d3b192f255d26caf50b0ed5476d5d789d11.png" alt="t=0"/> 的初始时刻，<img class="math" src="../../_images/math/8fb1fc12384d9c1b73b81b87315f7654511a2c0e.png" alt="s_0"/> 被赋予一个初始值（常用的为全 0 向量）。然后，我们用类似于递归的方法来描述循环神经网络的工作过程。即在 <img class="math" src="../../_images/math/907a4add6d5db5b7f197f7924f1371b8ac404fe6.png" alt="t"/> 时刻，我们假设 <img class="math" src="../../_images/math/65234c4fc82b15225070da49382724a50341f391.png" alt="s_{t-1}"/> 已经求出，关注如何在此基础上求出 <img class="math" src="../../_images/math/17d06ad8ecaf200e3cd78014a0e1cd0c8bd37cfb.png" alt="s_{t}"/> ：</p>
+<p>循环神经网络是一个处理时间序列数据的神经网络结构，也就是说，我们需要在脑海里有一根时间轴，循环神经网络具有初始状态 <img class="math" src="../../_images/math/5792932d14af4ccbd3739af3d66e5ee35e05dffc.png" alt="s_0"/> ，在每个时间点 <img class="math" src="../../_images/math/657fd8f3c80e7a724ba99cda423f58cff075f07b.png" alt="t"/> 迭代对当前时间的输入 <img class="math" src="../../_images/math/80e7212143003eaa2efb31fc9c7aa8f016c3a3dd.png" alt="x_t"/> 进行处理，修改自身的状态 <img class="math" src="../../_images/math/aef454ab9a36bb7c18fa5c3ba6a5b1523c56ddd5.png" alt="s_t"/> ，并进行输出 <img class="math" src="../../_images/math/1dcf8af77e86ef764397a8f107aa550c617351c4.png" alt="o_t"/> 。</p>
+<p>循环神经网络的核心是状态 <img class="math" src="../../_images/math/bafbf63de17508c8c25cd882e0178342c193ae0c.png" alt="s"/> ，是一个特定维数的向量，类似于神经网络的 “记忆”。在 <img class="math" src="../../_images/math/f7158208ef875a964aba3a1e6c8b28c59f39682d.png" alt="t=0"/> 的初始时刻，<img class="math" src="../../_images/math/5792932d14af4ccbd3739af3d66e5ee35e05dffc.png" alt="s_0"/> 被赋予一个初始值（常用的为全 0 向量）。然后，我们用类似于递归的方法来描述循环神经网络的工作过程。即在 <img class="math" src="../../_images/math/657fd8f3c80e7a724ba99cda423f58cff075f07b.png" alt="t"/> 时刻，我们假设 <img class="math" src="../../_images/math/2613231964fb187e75df4c2700ce50c0af85b9c7.png" alt="s_{t-1}"/> 已经求出，关注如何在此基础上求出 <img class="math" src="../../_images/math/fc20b335e1d86d0a4ea29849968644207c7661c1.png" alt="s_{t}"/> ：</p>
 <ul class="simple">
-<li><p>对输入向量 <img class="math" src="../../_images/math/8f3c6b529aaa515fdbc6c51b4fc4f73293dbfc09.png" alt="x_t"/> 通过矩阵 <img class="math" src="../../_images/math/9098c1c4618d7a0f321cee441aabee7f1b57a19b.png" alt="U"/> 进行线性变换，<img class="math" src="../../_images/math/8cf53022387a78a35fd98dd2417fa96e9d662686.png" alt="U x_t"/> 与状态 s 具有相同的维度；</p></li>
-<li><p>对 <img class="math" src="../../_images/math/65234c4fc82b15225070da49382724a50341f391.png" alt="s_{t-1}"/> 通过矩阵 <img class="math" src="../../_images/math/1fbee781f84569077719a167b64e12064360fac1.png" alt="W"/> 进行线性变换，<img class="math" src="../../_images/math/fff61cfbca41485d935bf9002954dd8abd6213d7.png" alt="W s_{t-1}"/> 与状态 s 具有相同的维度；</p></li>
-<li><p>将上述得到的两个向量相加并通过激活函数，作为当前状态 <img class="math" src="../../_images/math/404fc81822c15a8414d9ef19d67cb77fd384933a.png" alt="s_t"/> 的值，即 <img class="math" src="../../_images/math/31ea7f1bf622efb5637ce60f412d0ca48dd8d2e1.png" alt="s_t = f(U x_t + W s_{t-1})"/>。也就是说，当前状态的值是上一个状态的值和当前输入进行某种信息整合而产生的；</p></li>
-<li><p>对当前状态 <img class="math" src="../../_images/math/404fc81822c15a8414d9ef19d67cb77fd384933a.png" alt="s_t"/> 通过矩阵 <img class="math" src="../../_images/math/e4762cec46619bf7781cae62216214f909395368.png" alt="V"/> 进行线性变换，得到当前时刻的输出 <img class="math" src="../../_images/math/e72f71794d593249aa183cbdf3e7a47fb8298c77.png" alt="o_t"/>。</p></li>
+<li><p>对输入向量 <img class="math" src="../../_images/math/80e7212143003eaa2efb31fc9c7aa8f016c3a3dd.png" alt="x_t"/> 通过矩阵 <img class="math" src="../../_images/math/0212136c77d0621b4e7c4525952b855f06e6afe8.png" alt="U"/> 进行线性变换，<img class="math" src="../../_images/math/bc5f463af6d8c26b7244d21b9659675e3e564556.png" alt="U x_t"/> 与状态 s 具有相同的维度；</p></li>
+<li><p>对 <img class="math" src="../../_images/math/2613231964fb187e75df4c2700ce50c0af85b9c7.png" alt="s_{t-1}"/> 通过矩阵 <img class="math" src="../../_images/math/eb33eca75f5d77363c991bf041953da54a858bfb.png" alt="W"/> 进行线性变换，<img class="math" src="../../_images/math/a5a5c143362f2787bebacc7d4956a94140a868d9.png" alt="W s_{t-1}"/> 与状态 s 具有相同的维度；</p></li>
+<li><p>将上述得到的两个向量相加并通过激活函数，作为当前状态 <img class="math" src="../../_images/math/aef454ab9a36bb7c18fa5c3ba6a5b1523c56ddd5.png" alt="s_t"/> 的值，即 <img class="math" src="../../_images/math/0c01ef2b58de660764f869ab39361569ccd789eb.png" alt="s_t = f(U x_t + W s_{t-1})"/>。也就是说，当前状态的值是上一个状态的值和当前输入进行某种信息整合而产生的；</p></li>
+<li><p>对当前状态 <img class="math" src="../../_images/math/aef454ab9a36bb7c18fa5c3ba6a5b1523c56ddd5.png" alt="s_t"/> 通过矩阵 <img class="math" src="../../_images/math/48d9710a8a12a6209e54e4d872252e9403e78683.png" alt="V"/> 进行线性变换，得到当前时刻的输出 <img class="math" src="../../_images/math/1dcf8af77e86ef764397a8f107aa550c617351c4.png" alt="o_t"/>。</p></li>
 </ul>
-<div class="figure align-center" id="id35">
+<div class="figure align-center" id="id34">
 <img alt="../../_images/rnn_cell.jpg" src="../../_images/rnn_cell.jpg" />
-<p class="caption"><span class="caption-text">RNN 工作过程图示（来自 <a class="reference external" href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/</a>）</span><a class="headerlink" href="#id35" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">RNN 工作过程图示（来自 <a class="reference external" href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/</a>）</span><a class="headerlink" href="#id34" title="永久链接至图片">¶</a></p>
 </div>
-<p>我们假设输入向量 <img class="math" src="../../_images/math/8f3c6b529aaa515fdbc6c51b4fc4f73293dbfc09.png" alt="x_t"/> 、状态 <img class="math" src="../../_images/math/106b04b320e75010b1d8029e59244f234f75e6f9.png" alt="s"/> 和输出向量 <img class="math" src="../../_images/math/e72f71794d593249aa183cbdf3e7a47fb8298c77.png" alt="o_t"/> 的维度分别为 <img class="math" src="../../_images/math/e9bc7da808d33a16a8347f27a519bd067186aa66.png" alt="m"/>、<img class="math" src="../../_images/math/5a939c5280da7202ca4531f175a7780ad5e1f80a.png" alt="n"/>、<img class="math" src="../../_images/math/141bbefb74014fc5e43499901bf78607ae335583.png" alt="p"/>，则 <img class="math" src="../../_images/math/ce8d4630a08ce664ae3ce5ccbddccbb5da5650a4.png" alt="U \in \mathbb{R}^{m \times n}"/>、<img class="math" src="../../_images/math/8c66dfafa15c93af5d1643b27844d797d14f227a.png" alt="W \in \mathbb{R}^{n \times n}"/>、<img class="math" src="../../_images/math/caa18126a1e12d161c3280070ad0c884b514ad06.png" alt="V \in \mathbb{R}^{n \times p}"/>。</p>
+<p>我们假设输入向量 <img class="math" src="../../_images/math/80e7212143003eaa2efb31fc9c7aa8f016c3a3dd.png" alt="x_t"/> 、状态 <img class="math" src="../../_images/math/bafbf63de17508c8c25cd882e0178342c193ae0c.png" alt="s"/> 和输出向量 <img class="math" src="../../_images/math/1dcf8af77e86ef764397a8f107aa550c617351c4.png" alt="o_t"/> 的维度分别为 <img class="math" src="../../_images/math/4b59fb8246fb77698911d761c596ef6066458b4c.png" alt="m"/>、<img class="math" src="../../_images/math/1005bf222658283b2edeaaaed3761ce5d5bb3e6c.png" alt="n"/>、<img class="math" src="../../_images/math/8f788889a02d716315011e6c07d3b81cc1cfc419.png" alt="p"/>，则 <img class="math" src="../../_images/math/190195050cecc54ea0ac8083ae0aa6df0b02cf51.png" alt="U \in \mathbb{R}^{m \times n}"/>、<img class="math" src="../../_images/math/c71f85f8dbe403bd5b3d62f4b6f5d5f4544eb8f3.png" alt="W \in \mathbb{R}^{n \times n}"/>、<img class="math" src="../../_images/math/1c78f0e6e369155ac8d9d7f2092f6617dee6c494.png" alt="V \in \mathbb{R}^{n \times p}"/>。</p>
 <p>上述为最基础的 RNN 原理介绍。在实际使用时往往使用一些常见的改进型，如LSTM（长短期记忆神经网络，解决了长序列的梯度消失问题，适用于较长的序列）、GRU等。</p>
 </div>
 </div>
 <div class="section" id="drl">
-<h2>深度强化学习（DRL）<a class="headerlink" href="#drl" title="永久链接至标题">¶</a></h2>
-<p><a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0">强化学习</a> （Reinforcement learning，RL）强调如何基于环境而行动，以取得最大化的预期利益。结合了深度学习技术后的强化学习更是如虎添翼。这两年广为人知的 AlphaGo 即是深度强化学习的典型应用。</p>
-<div class="admonition- admonition">
-<p class="admonition-title">基础知识和原理</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://ai.intel.com/demystifying-deep-reinforcement-learning/">Demystifying Deep Reinforcement Learning</a> （<a class="reference external" href="https://snowkylin.github.io/rl/2017/01/04/Reinforcement-Learning.html">中文编译</a>）</p></li>
-<li><p><a class="reference internal" href="#mnih2013" id="id21"><span>[Mnih2013]</span></a></p></li>
-</ul>
+<span id="rl"></span><h2>深度强化学习（DRL）<a class="headerlink" href="#drl" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0">强化学习</a> （Reinforcement learning，RL）强调如何基于环境而行动，以取得最大化的预期利益。结合了深度学习技术后的强化学习（Deep Reinforcement learning，DRL）更是如虎添翼。近年广为人知的 AlphaGo 即是深度强化学习的典型应用。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>可参考本手册附录的 <a class="reference internal" href="../appendix/rl.html"><span class="doc">强化学习简介</span></a> 一章以获得强化学习的基础知识。</p>
 </div>
 <p>这里，我们使用深度强化学习玩 CartPole（倒立摆）游戏。倒立摆是控制论中的经典问题，在这个游戏中，一根杆的底部与一个小车通过轴相连，而杆的重心在轴之上，因此是一个不稳定的系统。在重力的作用下，杆很容易倒下。而我们则需要控制小车在水平的轨道上进行左右运动，以使得杆一直保持竖直平衡状态。</p>
-<div class="figure align-center" id="id36">
+<div class="figure align-center" id="id35">
 <a class="reference internal image-reference" href="../../_images/cartpole.gif"><img alt="../../_images/cartpole.gif" src="../../_images/cartpole.gif" style="width: 500px;" /></a>
-<p class="caption"><span class="caption-text">CartPole 游戏</span><a class="headerlink" href="#id36" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">CartPole 游戏</span><a class="headerlink" href="#id35" title="永久链接至图片">¶</a></p>
 </div>
 <p>我们使用 <a class="reference external" href="https://gym.openai.com/">OpenAI 推出的 Gym 环境库</a> 中的 CartPole 游戏环境，可使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">gym</span></code> 进行安装，具体安装步骤和教程可参考 <a class="reference external" href="https://gym.openai.com/docs/">官方文档</a> 和 <a class="reference external" href="https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-4-gym/">这里</a> 。和Gym的交互过程很像是一个回合制游戏，我们首先获得游戏的初始状态（比如杆的初始角度和小车位置），然后在每个回合t，我们都需要在当前可行的动作中选择一个并交由Gym执行（比如向左或者向右推动小车，每个回合中二者只能择一），Gym在执行动作后，会返回动作执行后的下一个状态和当前回合所获得的奖励值（比如我们选择向左推动小车并执行后，小车位置更加偏左，而杆的角度更加偏右，Gym将新的角度和位置返回给我们。而如果杆在这一回合仍没有倒下，Gym同时返回给我们一个小的正奖励）。这个过程可以一直迭代下去，直到游戏终止（比如杆倒下了）。在 Python 中，Gym 的基本调用方法如下：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gym</span>
@@ -912,7 +914,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </pre></div>
 </div>
 <p>那么，我们的任务就是训练出一个模型，能够根据当前的状态预测出应该进行的一个好的动作。粗略地说，一个好的动作应当能够最大化整个游戏过程中获得的奖励之和，这也是强化学习的目标。以CartPole游戏为例，我们的目标是希望做出合适的动作使得杆一直不倒，即游戏交互的回合数尽可能地多。而回合每进行一次，我们都会获得一个小的正奖励，回合数越多则累积的奖励值也越高。因此，我们最大化游戏过程中的奖励之和与我们的最终目标是一致的。</p>
-<p>以下代码展示了如何使用深度强化学习中的 Deep Q-Learning 方法来训练模型。首先，我们引入TensorFlow、Gym和一些常用库，并定义一些模型超参数：</p>
+<p>以下代码展示了如何使用深度强化学习中的 Deep Q-Learning 方法 <a class="reference internal" href="#mnih2013" id="id22"><span>[Mnih2013]</span></a> 来训练模型。首先，我们引入TensorFlow、Gym和一些常用库，并定义一些模型超参数：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">gym</span>
@@ -1007,11 +1009,6 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <li><p>每帧的分辨率不需要特别高，只要能大致表征方块、小球和挡板的位置以做出决策即可，因此对于每帧的长宽可做适当压缩。</p></li>
 </ul>
 <p>而考虑到我们需要从图像信息中提取特征，使用 CNN 作为拟合 Q 函数的网络将更为适合。由此，将上面的 <code class="docutils literal notranslate"><span class="pre">QNetwork</span></code> 更换为 CNN 网络，并对状态做一些修改，即可用于玩一些简单的视频游戏。</p>
-<div class="admonition- admonition">
-<p class="admonition-title">深度强化学习原理初探</p>
-<p>与前面所介绍的卷积神经网络和循环神经网络不同，强化学习（Reinforcement Learning）是一种学习算法的类型。</p>
-<p>TODO</p>
-</div>
 </div>
 <div class="section" id="keras-pipeline">
 <h2>Keras Pipeline *<a class="headerlink" href="#keras-pipeline" title="永久链接至标题">¶</a></h2>
@@ -1076,11 +1073,11 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </div>
 </div>
 </div>
-<div class="section" id="id24">
-<h2>自定义层、损失函数和评估指标 *<a class="headerlink" href="#id24" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id23">
+<h2>自定义层、损失函数和评估指标 *<a class="headerlink" href="#id23" title="永久链接至标题">¶</a></h2>
 <p>可能你还会问，如果现有的这些层无法满足我的要求，我需要定义自己的层怎么办？事实上，我们不仅可以继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 编写自己的模型类，也可以继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 编写自己的层。</p>
 <div class="section" id="custom-layer">
-<span id="id25"></span><h3>自定义层<a class="headerlink" href="#custom-layer" title="永久链接至标题">¶</a></h3>
+<span id="id24"></span><h3>自定义层<a class="headerlink" href="#custom-layer" title="永久链接至标题">¶</a></h3>
 <p>自定义层需要继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 类，并重写 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 、 <code class="docutils literal notranslate"><span class="pre">build</span></code> 和 <code class="docutils literal notranslate"><span class="pre">call</span></code> 三个方法，如下所示：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyLayer</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1128,8 +1125,8 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </pre></div>
 </div>
 </div>
-<div class="section" id="id26">
-<h3>自定义损失函数和评估指标<a class="headerlink" href="#id26" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id25">
+<h3>自定义损失函数和评估指标<a class="headerlink" href="#id25" title="永久链接至标题">¶</a></h3>
 <p>自定义损失函数需要继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses.Loss</span></code> 类，重写 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法即可，输入真实值 <code class="docutils literal notranslate"><span class="pre">y_true</span></code> 和模型预测值 <code class="docutils literal notranslate"><span class="pre">y_pred</span></code> ，输出模型预测值和真实值之间通过自定义的损失函数计算出的损失值。下面的示例为均方差损失函数：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MeanSquaredError</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">Loss</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
@@ -1161,11 +1158,21 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <dt class="label" id="graves2013"><span class="brackets"><a class="fn-backref" href="#id17">Graves2013</a></span></dt>
 <dd><p>Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.</p>
 </dd>
-<dt class="label" id="mnih2013"><span class="brackets"><a class="fn-backref" href="#id21">Mnih2013</a></span></dt>
+<dt class="label" id="mnih2013"><span class="brackets"><a class="fn-backref" href="#id22">Mnih2013</a></span></dt>
 <dd><p>Mnih, Volodymyr, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. “Playing Atari with Deep Reinforcement Learning.” ArXiv:1312.5602 [Cs], December 19, 2013. http://arxiv.org/abs/1312.5602.</p>
 </dd>
 </dl>
-</div>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 190 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
 </div>
 </div>
 
@@ -1189,7 +1196,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
 
     </p>
   </div>
@@ -1214,6 +1221,18 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 
   
   
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
     
    
 

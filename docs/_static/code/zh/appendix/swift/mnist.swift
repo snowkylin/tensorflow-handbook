@@ -16,8 +16,10 @@ struct MLP: Layer {
     
     @differentiable
     public func callAsFunction(_ input: Input) -> Output {
-        // 模型运行时，将 input 顺序传递给：flatten 和 dense 层，将结果返回作为模型输出。
-        return input.sequenced(through: flatten, dense)
+        var x = input
+        x = flatten(x)
+        x = dense(x)
+        return x
     }  
 }
 
@@ -31,13 +33,13 @@ let imageBatch = Dataset(elements: trainImages).batched(32)
 let labelBatch = Dataset(elements: trainLabels).batched(32)
 
 for (X, y) in zip(imageBatch, labelBatch) {
-    // Caculate the gradient
+    // 计算梯度
     let grads = gradient(at: model) { model -> Tensor<Float> in
         let logits = model(X)
         return softmaxCrossEntropy(logits: logits, labels: y)
     }
 
-    // Update parameters by optimizer
+    // 优化器根据梯度更新模型参数
     optimizer.update(&model.self, along: grads)
 }
 

@@ -69,3 +69,17 @@ TensorFlow Datasets 当前支持的数据集可在 `官方文档 <https://www.te
         # 对images和labels进行操作
 
 详细操作说明可见 :ref:`本手册的 tf.data 一节 <tfdata>` 。同时，本手册的 :doc:`分布式训练 <../appendix/distributed>` 一章也使用了 TensorFlow Datasets 载入数据集。可以参考这些章节的示例代码以进一步了解 TensorFlow Datasets 的使用方法。
+
+.. raw:: html
+
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 199 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>

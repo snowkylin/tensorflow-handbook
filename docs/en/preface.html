@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Preface &mdash; 简单粗暴 TensorFlow 2 0.4 alpha 文档</title>
+  <title>Preface &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
@@ -89,7 +89,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../zh/preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../zh/introduction.html">TensorFlow概述</a></li>
@@ -118,10 +122,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../zh/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../zh/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../zh/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../zh/appendix/julia.html">TensorFlow in Julia（Ziyang）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh/appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh/appendix/rl.html">强化学习简介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../zh/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../zh/appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../zh/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
@@ -244,8 +249,8 @@
 <div><p>The easiest way to get started with TensorFlow is using Eager Execution.</p>
 <p class="attribution">—— <a class="reference external" href="https://www.tensorflow.org/get_started/">https://www.tensorflow.org/get_started/</a></p>
 </div></blockquote>
-<p>Before then, the disadvantages of the conventional Graph Execution mode on which TensorFlow was based, such as high entry barrier, difficult debugging, poor flexibility and inability to use Python’s native control statements, have long been criticized by developers. Some new deep learning frameworks based on dynamic computational graph mechanism (e.g., PyTorch) have also emerged and have won their places with their usability and rapid development features. These dynamic deep learning frameworks have become mainstream, especially in areas such as academic research that requires rapid iterative development models. In fact, I was the only person who used the “old-fashioned” TensorFlow in my machine learning laboratory where I worked with dozens of colleagues. However, until now, most of the Chinese technical books and materials about TensorFlow are still based on Graph Execution mode, which really dissuades beginners (especially those undergraduates who have just finished their machine learning courses) from learning. Therefore, as TensorFlow officially supports Eager Execution, it is necessary to publish a brand new handbook to help beginners and researchers who need to iterate models rapidly and get started quickly from a new perspective.</p>
-<p>Meanwhile, this handbook also has another task. Most Chinese technical books on the market related to TensorFlow are mainly based on deep learning and regard TensorFlow as a mere means to implement these models. Although this kind of arrangement has the advantage of a complete system, it is not friendly enough for readers who already have an understanding of machine learning or deep learning theories, hoping to focus on learning TensorFlow itself. Hence I hope to write a handbook to reveal the main features of TensorFlow as a computing framework in a concise manner and make up for the shortcomings of the official manual, trying to make readers who already possess certain knowledge of machine learning / deep learning and programming skills get started with TensorFlow very quickly as well as view it to solve practical problems at any time in real programming.</p>
+<p>Before then, the disadvantages of the conventional Graph Execution mode on which TensorFlow was based, such as high entry barrier, difficult debugging, poor flexibility and inability to use Python’s native control statements, have long been criticized by developers. Some new DL frameworks based on dynamic computational graph mechanism (e.g., PyTorch) have also emerged and have won their places with their usability and rapid development features. These dynamic DL frameworks have become mainstream, especially in areas such as academic research that requires rapid iterative development models. In fact, I was the only person who used the “old-fashioned” TensorFlow in my ML laboratory where I worked with dozens of colleagues. However, until now, most of the Chinese technical books and materials about TensorFlow are still based on Graph Execution mode, which really dissuades beginners (especially those undergraduates who have just finished their ML courses) from learning. Therefore, as TensorFlow officially supports Eager Execution, it is necessary to publish a brand new handbook to help beginners and researchers who need to iterate models rapidly and get started quickly from a new perspective.</p>
+<p>Meanwhile, this handbook also has another task. Most Chinese technical books on the market related to TensorFlow are mainly based on DL and regard TensorFlow as a mere means to implement these models. Although this kind of arrangement has the advantage of a complete system, it is not friendly enough for readers who already have an understanding of ML or DL theories, hoping to focus on learning TensorFlow itself. Hence I hope to write a handbook to reveal the main features of TensorFlow as a computing framework in a concise manner and make up for the shortcomings of the official manual, trying to make readers who already possess certain knowledge of ML / DL and programming skills get started with TensorFlow very quickly as well as view it to solve practical problems at any time in real programming.</p>
 <p>The main features of this handbook consist of:</p>
 <ul class="simple">
 <li><p>Mainly based on the TensorFlow’s latest Eager Execution mode to facilitate rapid iterative development of models, although the conventional Graph Execution mode is still included. Codes are as compatible as possible with both;</p></li>
@@ -257,26 +262,25 @@
 <h2>Target readers<a class="headerlink" href="#target-readers" title="永久链接至标题">¶</a></h2>
 <p>This book is intended for the following type of readers:</p>
 <ul class="simple">
-<li><p>Students and researchers who already have a certain foundation of machine learning / deep learning and want to use TensorFlow to practice their theories;</p></li>
-<li><p>Developers who have used or are using TensorFlow version 1.X or other deep learning frameworks (e.g., PyTorch) and want to know about the new features of TensorFlow 2.0;</p></li>
+<li><p>Students and researchers who already have a certain foundation of ML / DL and want to use TensorFlow to practice their theories.</p></li>
+<li><p>Developers who have used or are using TensorFlow version 1.X or other DL frameworks (e.g., PyTorch) and want to know about the new features of TensorFlow 2.0.</p></li>
 <li><p>Developers or engineers who wish to apply existing TensorFlow models to the industry.</p></li>
 </ul>
 <div class="admonition-hint admonition">
 <p class="admonition-title">Hint</p>
-<p>This book is not a tutorial of machine learning / deep learning. Please refer to the <a class="reference internal" href="appendix/recommended_books.html"><span class="doc">appendix</span></a> for some introductory materials if you want to get started with those theories.</p>
+<p>This book is not a tutorial of ML / DL. Please refer to the <a class="reference internal" href="appendix/recommended_books.html"><span class="doc">appendix</span></a> for some introductory materials if you want to get started with those theories.</p>
 </div>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="永久链接至标题">¶</a></h2>
-<p>For students and researchers who already possess certain knowledge of machine learning / deep learning, it is advised to view the “basic” part sequentially. For developers and engineers who wish to deploy TensorFlow models to the real environments, we suggest you pay attention on the “deployment” part. The beginning of each chapter provides “prerequisites” for readers to fill in the gaps. Some supplementary comments are displayed in collapsible boxes which can be all collapsed by clicking the “Fold all admonitions” button at the top of the page anytime.</p>
+<p>For students and researchers who already possess certain knowledge of ML / DL, it is advised to view the “basic” part sequentially. For developers and engineers who wish to deploy TensorFlow models to the real environments, we suggest you pay attention on the “deployment” part. The beginning of each chapter provides “prerequisites” for readers to fill in the gaps. Some supplementary comments are displayed in collapsible boxes which can be all collapsed by clicking the “Fold all admonitions” button at the top of the page anytime.</p>
 <p>The parts marked with an “*” are optional in this handbook.</p>
 </div>
 <div class="section" id="acknowledgement">
 <h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="永久链接至标题">¶</a></h2>
-<p>This handbook was tentatively named as “A Concise Handbook of TensorFlow” in order to pay a tribute to the book “A Concise Handbook of <img class="math" src="../_images/math/af8bfcf24807674aff08102b9eae26928fb2a3ea.png" alt="\text{\LaTeX}"/>” (<a class="reference external" href="https://github.com/wklchris/Note-by-LaTeX">https://github.com/wklchris/Note-by-LaTeX</a>) written by my friend and colleague Chris Wu. The latter is a rare Chinese material about <img class="math" src="../_images/math/af8bfcf24807674aff08102b9eae26928fb2a3ea.png" alt="\text{\LaTeX}"/>. I also learned from it while I was writing this handbook. This handbook was initially written and used by meself as a prerequisite handout in a deep learning seminar organized by my friend Ji-An Li. My friends’ wisdom and selflessness also prompted me to accomplish this project.</p>
+<p>This handbook was tentatively named as “A Concise Handbook of TensorFlow” in order to pay a tribute to the book “A Concise Handbook of <img class="math" src="../_images/math/bece08e065efc400d0eccd656d260b485a29428f.png" alt="\text{\LaTeX}"/>” (<a class="reference external" href="https://github.com/wklchris/Note-by-LaTeX">https://github.com/wklchris/Note-by-LaTeX</a>) written by my friend and colleague Chris Wu. The latter is a rare Chinese material about <img class="math" src="../_images/math/bece08e065efc400d0eccd656d260b485a29428f.png" alt="\text{\LaTeX}"/>. I also learned from it while I was writing this handbook. This handbook was initially written and used by meself as a prerequisite handout in a DL seminar organized by my friend Ji-An Li. My friends’ wisdom and selflessness also prompted me to accomplish this project.</p>
 <p>The TensorFlow.js and TensorFlow Lite sections of this handbook were respectively written by Huan Li and Jinpeng Zhu, two Google Developers Expert with rich experience in JavaScript and Android. Meanwhile, Huan provided an introduction to TensorFlow for Swift and TPU part. In addition, Ziyang Wang from Douban provided an introduction to TensorFlow for Julia as well as some sample codes with instructions. Contents written by relevant contributors are marked in the articles and special thanks are given hereby.</p>
-<p>Sincere thanks to the members of the Google China Developer Relations team and the TensorFlow engineering team for their assistance in writing this handbook. which includes the insipiration and continuous encouragement from Luke Cheng of the Developer Relations team throughout the writing of this manual (and the domain name <code class="docutils literal notranslate"><span class="pre">tf.wiki</span></code> of the online version), the strong support on the publication and promotion of this manual from Rui Li, Pryce Mu of the Developer Relations team and friends who maintain the TensorFlow community, many suggestions and supplements on the engineering details from Tiezhen Wang of TensorFlow engineering team, and reviews from other engineers such as Shuangfeng Li of the TensorFlow engineering team.</p>
-<p>The English version of this handbook is translated by my friend Zida Jin and Ming, and revised by Ji-An Li and me (still in progress). My three friends sacrificed a lot of valuable time to translate and proofread this handbook. Ji-An Li also provided valuable comments on the teaching content and code details of this manual. I would like to express my heartfelt thanks to my friends for their hard work.</p>
+<p>Sincere thanks to the members of the Google China Developer Relations team and the TensorFlow engineering team for their assistance in writing this handbook, which includes the insipiration and continuous encouragement from Luke Cheng of the Developer Relations team throughout the writing of this manual (and the domain name <code class="docutils literal notranslate"><span class="pre">tf.wiki</span></code> of the online version); the strong support on the publication and promotion of this manual from Rui Li, Pryce Mu of the Developer Relations team and friends who maintain the TensorFlow community; many suggestions and supplements on the engineering details from Tiezhen Wang of TensorFlow engineering team; and reviews from other engineers such as Shuangfeng Li of the TensorFlow engineering team.</p>
 <p>Please feel free to submit any comment and suggestion about this handbook at <a class="reference external" href="https://github.com/snowkylin/tensorflow-handbook/issues">https://github.com/snowkylin/tensorflow-handbook/issues</a>. This is an open source project and your valuable feedback will facilitate the continuous updating of this handbook.</p>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -307,7 +311,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
 
     </p>
   </div>
@@ -332,6 +336,18 @@
 
   
   
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
     
    
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>部署自己的交互式Python开发环境JupyterLab &mdash; 简单粗暴 TensorFlow 2 0.4 alpha 文档</title>
+  <title>部署自己的交互式Python开发环境JupyterLab &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
@@ -40,7 +40,7 @@
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
-    <link rel="next" title="TensorFlow性能优化" href="optimization.html" />
+    <link rel="next" title="参考资料与推荐阅读" href="recommended_books.html" />
     <link rel="prev" title="在云端使用TensorFlow" href="cloud.html" /> 
 </head>
 
@@ -89,7 +89,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
@@ -118,15 +122,14 @@
 <li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets 数据集载入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="julia.html">TensorFlow in Julia（Ziyang）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="static.html">图执行模式下的 TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rl.html">强化学习简介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">部署自己的交互式Python开发环境JupyterLab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="optimization.html">TensorFlow性能优化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="terms.html">术语中英对照表</a></li>
 </ul>
@@ -279,7 +282,17 @@ ipython kernel install --name 环境名 --user
 <a class="reference internal image-reference" href="../../_images/kernel.png"><img alt="../../_images/kernel.png" src="../../_images/kernel.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">可以在Kernel中选择“tf2.0-beta-gpu”</span><a class="headerlink" href="#id2" title="永久链接至图片">¶</a></p>
 </div>
-</div>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 204 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
 
 
            </div>
@@ -289,7 +302,7 @@ ipython kernel install --name 环境名 --user
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="optimization.html" class="btn btn-neutral float-right" title="TensorFlow性能优化" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="recommended_books.html" class="btn btn-neutral float-right" title="参考资料与推荐阅读" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="cloud.html" class="btn btn-neutral float-left" title="在云端使用TensorFlow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -301,7 +314,7 @@ ipython kernel install --name 环境名 --user
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
 
     </p>
   </div>
@@ -326,6 +339,18 @@ ipython kernel install --name 环境名 --user
 
   
   
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
     
    
 

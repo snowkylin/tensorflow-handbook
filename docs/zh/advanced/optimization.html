@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TensorFlow 性能优化 &mdash; 简单粗暴 TensorFlow 2 0.4 alpha 文档</title>
+  <title>TensorFlow 性能优化 &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
@@ -87,7 +87,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
@@ -116,10 +120,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/julia.html">TensorFlow in Julia（Ziyang）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/rl.html">强化学习简介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
@@ -235,11 +240,11 @@
 <p>本节主要介绍 TensorFlow 模型开发和训练中的一些原则和经验，使得读者能够编写出更加高效的 TensorFlow 程序。</p>
 <div class="section" id="id1">
 <h2>关于计算性能的若干重要事实<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
-<p>在算法课程中，我们往往使用时间复杂度（大O符号）表示一个算法的性能。这种表示方法对于算法理论性能分析非常有效，但也可能给我们带来一种误解，即常数项的时间复杂度变化对实际的数值计算效率影响不大。事实上，在实际的数值计算中，有以下关于计算性能的重要事实。尽管它们带来的都是常数级的时间复杂度变化，但对计算性能的影响却相当显著。</p>
+<p>在算法课程中，我们往往使用时间复杂度（大O符号）作为衡量算法性能的重要指标。这种表示方法对于算法理论性能分析非常有效，但也可能给我们带来一种误解，即常数项的时间复杂度变化对实际的数值计算效率影响不大。事实上，在实际的数值计算中，有以下关于计算性能的重要事实。尽管它们带来的都是常数级的时间复杂度变化，但对计算性能的影响却相当显著。</p>
 <ul class="simple">
-<li><p>不同的程序设计语言由于设计机制和理念，以及编译器/解释器的实现方式不同，在数值计算的效率上有着巨大的区别。例如，Python 语言为了增强语言的动态性，而牺牲了大量计算效率。而C/C++语言虽然复杂，但具有出色的计算效率。简而言之，对程序员友好的语言往往对计算机不友好，反之亦然。不同程序设计语言带来的性能差距可达 <img class="math" src="../../_images/math/0d6bef56aa78ae902609aff9a59a50b0f31c7ab7.png" alt="10^2"/> 数量级以上。TensorFlow 等各种数值计算库的底层就是使用 C++ 开发的；</p></li>
-<li><p>对于矩阵运算，由于有内置的并行加速和硬件优化过程，数值计算库的内置方法（底层调用BLAS）往往要远快于直接使用 For 循环，大规模计算下的性能差距可达 <img class="math" src="../../_images/math/0d6bef56aa78ae902609aff9a59a50b0f31c7ab7.png" alt="10^2"/> 数量级以上；</p></li>
-<li><p>对于矩阵/张量运算，GPU 的并行架构（大量小的计算单元并行运算）使其相较于 CPU 具有明显优势，具体视 CPU 和 GPU 的性能而定。在 CPU 和 GPU 级别相当时，大规模张量计算的性能差距一般可达 <img class="math" src="../../_images/math/64c1d928553b526c0267dd4ca2ac22129d55e994.png" alt="10^1"/> 以上。</p></li>
+<li><p>不同的程序设计语言由于设计机制和理念，以及编译器/解释器的实现方式不同，在数值计算的效率上有着巨大的区别。例如，Python 语言为了增强语言的动态性，而牺牲了大量计算效率。而C/C++语言虽然复杂，但具有出色的计算效率。简而言之，对程序员友好的语言往往对计算机不友好，反之亦然。不同程序设计语言带来的性能差距可达 <img class="math" src="../../_images/math/9a60a9694103bb1213836bb5cd7e568290f03a02.png" alt="10^2"/> 数量级以上。TensorFlow 等各种数值计算库的底层就是使用 C++ 开发的；</p></li>
+<li><p>对于矩阵运算，由于有内置的并行加速和硬件优化过程，数值计算库的内置方法（底层调用BLAS）往往要远快于直接使用 For 循环，大规模矩阵运算的性能差距可达 <img class="math" src="../../_images/math/9a60a9694103bb1213836bb5cd7e568290f03a02.png" alt="10^2"/> 数量级以上；</p></li>
+<li><p>对于矩阵/张量运算，GPU 的并行架构（大量小的计算单元并行运算）使其相较于 CPU 具有明显优势，具体视 CPU 和 GPU 的性能而定。在 CPU 和 GPU 级别相当时，大规模张量计算的性能差距一般可达 <img class="math" src="../../_images/math/19b81b50ac97f10f1a7e180f462713350c16dade.png" alt="10^1"/> 以上。</p></li>
 </ul>
 <p>以下示例程序使用了 Python 的三重 For 循环、Cython 的三重 For 循环、NumPy 的 <code class="docutils literal notranslate"><span class="pre">dot</span></code> 函数和 TensorFlow 的 <code class="docutils literal notranslate"><span class="pre">matmul</span></code> 函数，分别计算了两个 10000×10000 的随机矩阵 <code class="docutils literal notranslate"><span class="pre">A</span></code> 和 <code class="docutils literal notranslate"><span class="pre">B</span></code> 的乘积。程序运行平台为一台具备Intel i9-9900K处理器、NVIDIA GeForce RTX 2060 SUPER显卡与64GB内存的个人电脑（后文亦同）。运行所需时间分别标注在了程序的注释中。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
@@ -274,7 +279,7 @@
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;time consumed by tf.matmul:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>  <span class="c1"># 0.77s</span>
 </pre></div>
 </div>
-<p>可见，同样是 <img class="math" src="../../_images/math/174aef04544e022a085aab16ddeae821c5667e2b.png" alt="O(n^3)"/> 时间复杂度的矩阵乘法（具体而言， <img class="math" src="../../_images/math/edee3f94f49bfe573eaaf3a3bcc0cb779d8baf59.png" alt="10^{12}"/> 次浮点数乘法的计算量），使用 GPU 加速的 TensorFlow 竟然比直接使用原生 Python 循环快了近 100 万倍！这种极大幅度的优化来源于两个方面，一是使用更为高效的底层计算操作，避免了原生 Python 语言解释器的各种冗余检查等所带来的性能损失（例如，Python中每从数组中取一次数都需要检查一次是否下标越界）。二是利用了矩阵相乘运算具有的充分的可并行性。在矩阵相乘 <img class="math" src="../../_images/math/54c063f1e59f5541c418091c3a7a9b8961fc796b.png" alt="A \times B"/> 的计算中，矩阵 <img class="math" src="../../_images/math/211284f68205c3e66773eaf026f32a0acdd3dfb3.png" alt="A"/> 的每一行与矩阵 <img class="math" src="../../_images/math/4bc3e94a67870b41b7c20179693e889251e2c136.png" alt="B"/> 的每一列所进行的相乘操作都是可以同时进行的，而没有任何的依赖关系。</p>
+<p>可见，同样是 <img class="math" src="../../_images/math/e5d8ffc9b6263af8fd2cc81b2cab7c5dd8127064.png" alt="O(n^3)"/> 时间复杂度的矩阵乘法（具体而言， <img class="math" src="../../_images/math/dff698c2be7601e7f48d51adf5e5da050def2055.png" alt="10^{12}"/> 次浮点数乘法的计算量），使用 GPU 加速的 TensorFlow 竟然比直接使用原生 Python 循环快了近 100 万倍！这种极大幅度的优化来源于两个方面，一是使用更为高效的底层计算操作，避免了原生 Python 语言解释器的各种冗余检查等所带来的性能损失（例如，Python中每从数组中取一次数都需要检查一次是否下标越界）。二是利用了矩阵相乘运算具有的充分的可并行性。在矩阵相乘 <img class="math" src="../../_images/math/6ac016738b9de46f761a1002e4a28a8d638e0c90.png" alt="A \times B"/> 的计算中，矩阵 <img class="math" src="../../_images/math/b86d9659948ffa756133d580cfc95f923705c2b5.png" alt="A"/> 的每一行与矩阵 <img class="math" src="../../_images/math/ff36a9fef6093afdd14268504dfba83850bdcede.png" alt="B"/> 的每一列所进行的相乘操作都是可以同时进行的，而没有任何的依赖关系。</p>
 </div>
 <div class="section" id="id2">
 <h2>模型开发：拥抱张量运算<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
@@ -286,7 +291,7 @@
 <span class="n">C</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>这段代码耗时约0.40s，进行了1000次 <code class="docutils literal notranslate"><span class="pre">tf.matmul</span></code> 操作。然而，我们注意到，以上的操作其实是一个批次操作。与机器学习中批次（Batch）的概念类似，批次中的所有元素形状相同，且都执行了相同的运算。那么，是否有一个单一的操作能够帮助我们一次性计算这1000个矩阵构成的张量 <code class="docutils literal notranslate"><span class="pre">A</span></code> 与矩阵 <code class="docutils literal notranslate"><span class="pre">B</span></code> 的乘积呢？答案是肯定的。TensorFlow 中的函数 <code class="docutils literal notranslate"><span class="pre">tf.einsum</span></code> 即可以帮我们实现这一运算。考虑到矩阵乘法的计算过程是 <img class="math" src="../../_images/math/64420b84259211fb879453a103e4784e0f414115.png" alt="C_{ik} = \sum_{j} A_{ij} B_{jk}"/> ，我们可以将这一计算过程的描述抽象为 <code class="docutils literal notranslate"><span class="pre">ij,jk-&gt;ik</span></code> 。于是，对于这一三维张量乘以二维矩阵的“批次乘法”，其计算过程为 <img class="math" src="../../_images/math/12d58158d91343a2d0495803daf3aaea9d2e9125.png" alt="C_{ijl} = \sum_{k} A_{ijk} B_{kl}"/> ，我们可以将其抽象为 <code class="docutils literal notranslate"><span class="pre">ijk,kl-&gt;ijl</span></code> 。于是，调用 <code class="docutils literal notranslate"><span class="pre">tf.einsum</span></code> ，我们有以下写法：</p>
+<p>这段代码耗时约0.40s，进行了1000次 <code class="docutils literal notranslate"><span class="pre">tf.matmul</span></code> 操作。然而，我们注意到，以上的操作其实是一个批次操作。与机器学习中批次（Batch）的概念类似，批次中的所有元素形状相同，且都执行了相同的运算。那么，是否有一个单一的操作能够帮助我们一次性计算这1000个矩阵构成的张量 <code class="docutils literal notranslate"><span class="pre">A</span></code> 与矩阵 <code class="docutils literal notranslate"><span class="pre">B</span></code> 的乘积呢？答案是肯定的。TensorFlow 中的函数 <code class="docutils literal notranslate"><span class="pre">tf.einsum</span></code> 即可以帮我们实现这一运算。考虑到矩阵乘法的计算过程是 <img class="math" src="../../_images/math/bc4af20e34633185451b982127caa7cdf4db7970.png" alt="C_{ik} = \sum_{j} A_{ij} B_{jk}"/> ，我们可以将这一计算过程的描述抽象为 <code class="docutils literal notranslate"><span class="pre">ij,jk-&gt;ik</span></code> 。于是，对于这一三维张量乘以二维矩阵的“批次乘法”，其计算过程为 <img class="math" src="../../_images/math/faba9bd8a2de13460745f245d77a566baf3315ea.png" alt="C_{ijl} = \sum_{k} A_{ijk} B_{kl}"/> ，我们可以将其抽象为 <code class="docutils literal notranslate"><span class="pre">ijk,kl-&gt;ijl</span></code> 。于是，调用 <code class="docutils literal notranslate"><span class="pre">tf.einsum</span></code> ，我们有以下写法：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ijk,kl-&gt;ijl&#39;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -312,7 +317,7 @@
 <div class="section" id="id5">
 <h2>性能优化策略<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
 <p>从以上介绍可以看出，模型运行效率低，不一定是硬件性能不够好的缘故。在购买高性能硬件的时候，有必要多思考一下现有硬件的性能是否通过优化而得到了充分应用。如果不能确定，可以借或租一台高性能硬件（如云服务）并在上面运行模型，观察性能提升的程度。相对而言，借或租的成本远低于升级或购买新硬件，对于个人开发者而言是更为具有性价比的选择。</p>
-<p>同时，性能优化也存在一个度的问题。一方面，我们有必要在机器学习模型开发的初期就考虑良好的设计和架构，使得模型在高可复用性的基础上达到较优的运行性能。另一方面，代码的可读性在机器学习中尤为重要。正如软件工程中的名言，“premature optimization is the root of all evil” <a class="reference internal" href="#knuth1974" id="id6"><span>[Knuth1974]</span></a> 。直白来说，不要浪费时间做一些收益不大、而且还会严重牺牲代码可读性的性能优化。</p>
+<p>同时，性能优化也存在一个度的问题。一方面，我们有必要在机器学习模型开发的初期就考虑良好的设计和架构，使得模型在高可复用性的基础上达到较优的运行性能。另一方面，代码的可读性在机器学习中尤为重要。正如软件工程中的名言，“premature optimization is the root of all evil” <a class="reference internal" href="#knuth1974" id="id6"><span>[Knuth1974]</span></a> 。直白来说，不要浪费时间做一些提速不大、而且还会严重牺牲代码可读性的性能优化。</p>
 <dl class="citation">
 <dt class="label" id="knuth1974"><span class="brackets"><a class="fn-backref" href="#id6">Knuth1974</a></span></dt>
 <dd><p>Knuth D E. Structured programming with go to statements[J]. ACM Computing Surveys (CSUR), 1974, 6(4): 261-301.</p>
@@ -332,7 +337,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
 
     </p>
   </div>
@@ -357,6 +362,18 @@
 
   
   
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
     
    
 

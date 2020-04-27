@@ -1,24 +1,6 @@
 TensorFlow基础
 ======================
 
-.. 
-    https://www.datacamp.com/community/tutorials/tensorflow-tutorial
-
-    TensorFlow，顾名思义，就是Tensor（张量）进行Flow（流动）的过程。所谓张量，即对向量（一维）和矩阵（二维）的一种推广，类似于多维数组。而张量的流动则是基于数据流图（Dataflow Graph，也称计算图Computational Graph）。一个典型的TensorFlow程序由以下几个部分组成：
-
-    1. 定义一个数据流图（在深度学习中往往称之为“模型”），其中往往包含大量的变量（深度学习中“模型的待训练参数”）；
-    2. 反复进行以下步骤：
-
-    1. 将训练数据转换为张量，并送入数据流图进行计算（前向传播）；
-    #. 计算损失函数的值，并对各变量求偏导数（反向传播）；
-    #. 使用梯度下降或其他优化器（Optimizer）对变量进行更新以减小损失函数的值（即“对参数进行训练”）。
-
-    在步骤2重复足够多的次数（训练足够长的时间）后，损失函数达到较小的值并保持稳定，即完成了模型的训练。
-
-    在对TensorFlow的具体概念，如张量（Tensor）、数据流图（Dataflow Graph）、变量（Variable）、优化器（Optimizer）等进行具体介绍之前，本手册先举一个具体的例子，以让读者能对TensorFlow的基本运作方式有一个直观的理解。
-
-    https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html
-
 本章介绍TensorFlow的基本操作。
 
 .. admonition:: 前置知识
@@ -84,7 +66,8 @@ TensorFlow里有大量的 **操作** （Operation），使得我们可以将已�
 
 输出::
     
-    [array([9.], dtype=float32), array([6.], dtype=float32)]
+    tf.Tensor(9.0, shape=(), dtype=float32)
+    tf.Tensor(6.0, shape=(), dtype=float32)
 
 这里 ``x`` 是一个初始化为3的 **变量** （Variable），使用 ``tf.Variable()`` 声明。与普通张量一样，变量同样具有形状、类型和值三种属性。使用变量需要有一个初始化过程，可以通过在 ``tf.Variable()`` 中指定 ``initial_value`` 参数来指定初始值。这里将变量 ``x`` 初始化为 ``3.`` [#f0]_。变量与普通张量的一个重要区别是其默认能够被TensorFlow的自动求导机制所求导，因此往往被用于定义机器学习模型的参数。
 
@@ -97,8 +80,11 @@ TensorFlow里有大量的 **操作** （Operation），使得我们可以将已�
 
 输出::
 
-    [62.5, array([[35.],
-       [50.]], dtype=float32), array([15.], dtype=float32)]
+    tf.Tensor(125.0, shape=(), dtype=float32) 
+    tf.Tensor(
+    [[ 70.]
+    [100.]], shape=(2, 1), dtype=float32) 
+    tf.Tensor(30.0, shape=(), dtype=float32)
 
 这里， ``tf.square()`` 操作代表对输入张量的每一个元素求平方，不改变张量形状。 ``tf.reduce_sum()`` 操作代表对输入张量的所有元素求和，输出一个形状为空的纯量张量（可以通过 ``axis`` 参数来指定求和的维度，不指定则默认对所有元素求和）。TensorFlow中有大量的张量操作API，包括数学运算、张量形状操作（如 ``tf.reshape()``）、切片和连接（如 ``tf.concat()``）等多种类型，可以通过查阅TensorFlow的官方API文档 [#f3]_ 来进一步了解。
 
@@ -106,11 +92,11 @@ TensorFlow里有大量的 **操作** （Operation），使得我们可以将已�
 
 .. math::
 
-    L((1, 2)^T, 1) &= 62.5
+    L((1, 2)^T, 1) &= 125
     
-    \frac{\partial L(w, b)}{\partial w} |_{w = (1, 2)^T, b = 1} &= \begin{bmatrix} 35 \\ 50\end{bmatrix}
+    \frac{\partial L(w, b)}{\partial w} |_{w = (1, 2)^T, b = 1} &= \begin{bmatrix} 70 \\ 100\end{bmatrix}
     
-    \frac{\partial L(w, b)}{\partial b} |_{w = (1, 2)^T, b = 1} &= 15
+    \frac{\partial L(w, b)}{\partial b} |_{w = (1, 2)^T, b = 1} &= 30
 
 ..
     以上的自动求导机制结合 **优化器** ，可以计算函数的极值。这里以线性回归示例（本质是求 :math:`\min_{w, b} L = (Xw + b - y)^2` ，具体原理见 :ref:`后节 <linear-regression>` ）：
@@ -181,7 +167,7 @@ TensorFlow的 **即时执行模式** [#f4]_ 与上述NumPy的运行方式十分�
 .. literalinclude:: /_static/code/zh/basic/example/tensorflow_eager_autograd.py
     :lines: 10-29
 
-在这里，我们使用了前文的方式计算了损失函数关于参数的偏导数。同时，使用 ``tf.keras.optimizers.SGD(learning_rate=1e-3)`` 声明了一个梯度下降 **优化器** （Optimizer），其学习率为1e-3。优化器可以帮助我们根据计算出的求导结果更新模型参数，从而最小化某个特定的损失函数，具体使用方式是调用其 ``apply_gradients()`` 方法。
+在这里，我们使用了前文的方式计算了损失函数关于参数的偏导数。同时，使用 ``tf.keras.optimizers.SGD(learning_rate=5e-4)`` 声明了一个梯度下降 **优化器** （Optimizer），其学习率为5e-4。优化器可以帮助我们根据计算出的求导结果更新模型参数，从而最小化某个特定的损失函数，具体使用方式是调用其 ``apply_gradients()`` 方法。
 
 注意到这里，更新模型参数的方法 ``optimizer.apply_gradients()`` 需要提供参数 ``grads_and_vars``，即待更新的变量（如上述代码中的 ``variables`` ）及损失函数关于这些变量的偏导数（如上述代码中的 ``grads`` ）。具体而言，这里需要传入一个Python列表（List），列表中的每个元素是一个 ``（变量的偏导数，变量）`` 对。比如上例中需要传入的参数是 ``[(grad_a, a), (grad_b, b)]`` 。我们通过 ``grads = tape.gradient(loss, variables)`` 求出tape中记录的 ``loss`` 关于 ``variables = [a, b]`` 中每个变量的偏导数，也就是 ``grads = [grad_a, grad_b]``，再使用Python的 ``zip()`` 函数将 ``grads = [grad_a, grad_b]`` 和 ``variables = [a, b]`` 拼装在一起，就可以组合出所需的参数了。
 
@@ -197,30 +183,22 @@ TensorFlow的 **即时执行模式** [#f4]_ 与上述NumPy的运行方式十分�
 
 在实际应用中，我们编写的模型往往比这里一行就能写完的线性模型 ``y_pred = a * X + b`` （模型参数为 ``variables = [a, b]`` ）要复杂得多。所以，我们往往会编写并实例化一个模型类 ``model = Model()`` ，然后使用 ``y_pred = model(X)`` 调用模型，使用 ``model.variables`` 获取模型参数。关于模型类的编写方式可见 :doc:`"TensorFlow模型"一章 <models>`。
 
-..
-    本章小结
-    ^^^^^^^^^^^^^^^^^^^^^^^
-
-
 .. [#f0] Python中可以使用整数后加小数点表示将该整数定义为浮点数类型。例如 ``3.`` 代表浮点数 ``3.0``。
 .. [#f3] 主要可以参考 `Tensor Transformations <https://www.tensorflow.org/versions/r1.9/api_guides/python/array_ops>`_ 和 `Math <https://www.tensorflow.org/versions/r1.9/api_guides/python/math_ops>`_ 两个页面。可以注意到，TensorFlow的张量操作API在形式上和Python下流行的科学计算库NumPy非常类似，如果对后者有所了解的话可以快速上手。
 .. [#f1] 其实线性回归是有解析解的。这里使用梯度下降方法只是为了展示TensorFlow的运作方式。
-.. [#f2] 此处的损失函数为均方差 :math:`L(x) = \frac{1}{2} \sum_{i=1}^5 (ax_i + b - y_i)^2`。其关于参数 ``a`` 和 ``b`` 的偏导数为 :math:`\frac{\partial L}{\partial a} = \sum_{i=1}^5 (ax_i + b - y) x_i`，:math:`\frac{\partial L}{\partial b} = \sum_{i=1}^5 (ax_i + b - y)`
+.. [#f2] 此处的损失函数为均方误差 :math:`L(x) = \sum_{i=1}^N (ax_i + b - y_i)^2`。其关于参数 ``a`` 和 ``b`` 的偏导数为 :math:`\frac{\partial L}{\partial a} = 2 \sum_{i=1}^N (ax_i + b - y) x_i`，:math:`\frac{\partial L}{\partial b} = 2 \sum_{i=1}^N (ax_i + b - y)` 。本例中 :math:`N = 5` 。由于均方误差取均值的系数 :math:`\frac{1}{N}` 在训练过程中一般为常数（ :math:`N` 一般为批次大小），对损失函数乘以常数等价于调整学习率，因此在具体实现时通常不写在损失函数中。
 .. [#f4] 与即时执行模式相对的是图执行模式（Graph Execution），即 TensorFlow 2 之前所主要使用的执行模式。本手册以面向快速迭代开发的即时执行模式为主，但会在 :doc:`附录 <../appendix/static>` 中介绍图执行模式的基本使用，供需要的读者查阅。
 
-..  
-    张量（变量、常量与占位符）
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. raw:: html
 
-    会话与计算图
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-    自动求导与优化器
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-    变量的范围（Scope）
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ..  https://tensorflow.google.cn/versions/master/api_docs/python/tf/variable_scope
-
-    保存、恢复和持久化
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 189 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>

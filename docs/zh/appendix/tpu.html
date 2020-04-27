@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>使用TPU训练TensorFlow模型（Huan） &mdash; 简单粗暴 TensorFlow 2 0.4 alpha 文档</title>
+  <title>使用TPU训练TensorFlow模型（Huan） &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
@@ -89,7 +89,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
@@ -132,15 +136,14 @@
 <li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets 数据集载入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="julia.html">TensorFlow in Julia（Ziyang）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="static.html">图执行模式下的 TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rl.html">强化学习简介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="optimization.html">TensorFlow性能优化</a></li>
 <li class="toctree-l1"><a class="reference internal" href="recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="terms.html">术语中英对照表</a></li>
 </ul>
@@ -401,31 +404,13 @@
 <span class="k">else</span><span class="p">:</span>
     <span class="n">tpu_address</span> <span class="o">=</span> <span class="s1">&#39;grpc://&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;COLAB_TPU_ADDR&#39;</span><span class="p">]</span>
     <span class="k">print</span> <span class="p">(</span><span class="s1">&#39;TPU address is&#39;</span><span class="p">,</span> <span class="n">tpu_address</span><span class="p">)</span>
-
-    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span><span class="n">tpu_address</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
-      <span class="n">devices</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">list_devices</span><span class="p">()</span>
-
-    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;TPU devices:&#39;</span><span class="p">)</span>
-    <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">devices</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>输出信息：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TPU</span> <span class="n">address</span> <span class="ow">is</span> <span class="n">grpc</span><span class="p">:</span><span class="o">//</span><span class="mf">10.49</span><span class="o">.</span><span class="mf">237.2</span><span class="p">:</span><span class="mi">8470</span>
-<span class="n">TPU</span> <span class="n">devices</span><span class="p">:</span>
-<span class="p">[</span><span class="n">_DeviceAttributes</span><span class="p">(</span><span class="o">/</span><span class="n">job</span><span class="p">:</span><span class="n">tpu_worker</span><span class="o">/.../</span><span class="n">device</span><span class="p">:</span><span class="n">CPU</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">CPU</span><span class="p">,</span> <span class="o">...</span><span class="p">),</span>
- <span class="n">_DeviceAttributes</span><span class="p">(</span><span class="o">/</span><span class="n">job</span><span class="p">:</span><span class="n">tpu_worker</span><span class="o">/.../</span><span class="n">device</span><span class="p">:</span><span class="n">XLA_CPU</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">XLA_CPU</span><span class="p">,</span> <span class="o">...</span><span class="p">),</span>
- <span class="n">_DeviceAttributes</span><span class="p">(</span><span class="o">/</span><span class="n">job</span><span class="p">:</span><span class="n">tpu_worker</span><span class="o">/.../</span><span class="n">device</span><span class="p">:</span><span class="n">TPU</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">TPU</span><span class="p">,</span> <span class="o">...</span><span class="p">),</span>
- <span class="n">_DeviceAttributes</span><span class="p">(</span><span class="o">/</span><span class="n">job</span><span class="p">:</span><span class="n">tpu_worker</span><span class="o">/.../</span><span class="n">device</span><span class="p">:</span><span class="n">TPU</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="n">TPU</span><span class="p">,</span> <span class="o">...</span><span class="p">),</span>
- <span class="n">_DeviceAttributes</span><span class="p">(</span><span class="o">/</span><span class="n">job</span><span class="p">:</span><span class="n">tpu_worker</span><span class="o">/.../</span><span class="n">device</span><span class="p">:</span><span class="n">TPU</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="n">TPU</span><span class="p">,</span> <span class="o">...</span><span class="p">),</span>
- <span class="n">_DeviceAttributes</span><span class="p">(</span><span class="o">/</span><span class="n">job</span><span class="p">:</span><span class="n">tpu_worker</span><span class="o">/.../</span><span class="n">device</span><span class="p">:</span><span class="n">TPU</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="n">TPU</span><span class="p">,</span> <span class="o">...</span><span class="p">),</span>
- <span class="n">_DeviceAttributes</span><span class="p">(</span><span class="o">/</span><span class="n">job</span><span class="p">:</span><span class="n">tpu_worker</span><span class="o">/.../</span><span class="n">device</span><span class="p">:</span><span class="n">TPU</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="n">TPU</span><span class="p">,</span> <span class="o">...</span><span class="p">),</span>
- <span class="n">_DeviceAttributes</span><span class="p">(</span><span class="o">/</span><span class="n">job</span><span class="p">:</span><span class="n">tpu_worker</span><span class="o">/.../</span><span class="n">device</span><span class="p">:</span><span class="n">TPU</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="n">TPU</span><span class="p">,</span> <span class="o">...</span><span class="p">),</span>
- <span class="n">_DeviceAttributes</span><span class="p">(</span><span class="o">/</span><span class="n">job</span><span class="p">:</span><span class="n">tpu_worker</span><span class="o">/.../</span><span class="n">device</span><span class="p">:</span><span class="n">TPU</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="n">TPU</span><span class="p">,</span> <span class="o">...</span><span class="p">),</span>
- <span class="n">_DeviceAttributes</span><span class="p">(</span><span class="o">/</span><span class="n">job</span><span class="p">:</span><span class="n">tpu_worker</span><span class="o">/.../</span><span class="n">device</span><span class="p">:</span><span class="n">TPU</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span> <span class="n">TPU</span><span class="p">,</span> <span class="o">...</span><span class="p">),</span>
- <span class="n">_DeviceAttributes</span><span class="p">(</span><span class="o">/</span><span class="n">job</span><span class="p">:</span><span class="n">tpu_worker</span><span class="o">/.../</span><span class="n">device</span><span class="p">:</span><span class="n">TPU_SYSTEM</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="n">TPU_SYSTEM</span><span class="p">,</span> <span class="o">...</span><span class="p">)]</span>
 </pre></div>
 </div>
-<p>看到以上信息（一个CPU worker，8个TPU workers），既可以确认 Colab 的 TPU 环境设置正常。</p>
+<p>看到以上信息（TPU grpc address），既可以确认 Colab 的 TPU 环境设置正常。</p>
 </div>
 <div class="section" id="cloud-tpu">
 <h3>Cloud TPU<a class="headerlink" href="#cloud-tpu" title="永久链接至标题">¶</a></h3>
@@ -440,14 +425,13 @@
 <div class="section" id="id5">
 <h2>TPU 基础使用<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
 <p>在 TPU 上进行 TensorFlow 分布式训练的核心API是 <code class="docutils literal notranslate"><span class="pre">tf.distribute.TPUStrategy</span></code> ，可以简单几行代码就实现在 TPU 上的分布式训练，同时也可以很容易的迁移到 GPU单机多卡、多机多卡的环境。以下是如何实例化 <code class="docutils literal notranslate"><span class="pre">TPUStrategy</span></code> ：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">resolver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">resolver</span><span class="o">.</span><span class="n">TPUClusterResolver</span><span class="p">(</span>
-    <span class="n">tpu</span><span class="o">=</span><span class="s1">&#39;grpc://&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;COLAB_TPU_ADDR&#39;</span><span class="p">])</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental_connect_to_host</span><span class="p">(</span><span class="n">resolver</span><span class="o">.</span><span class="n">master</span><span class="p">())</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">tpu</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">initialize_tpu_system</span><span class="p">(</span><span class="n">resolver</span><span class="p">)</span>
-<span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">TPUStrategy</span><span class="p">(</span><span class="n">resolver</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tpu</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">cluster_resolver</span><span class="o">.</span><span class="n">TPUClusterResolver</span><span class="p">()</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental_connect_to_cluster</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">tpu</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">initialize_tpu_system</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+<span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">TPUStrategy</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>在上面的代码中，首先我们通过 TPU 的 IP 和端口实例化 <cite>TPUClusterResolver</cite>；然后，我们通过 <cite>resolver</cite> 连接到 TPU 上，并对其进行初始化；最后，完成实例化 <cite>TPUStrategy</cite>。</p>
+<p>在上面的代码中，首先我们实例化 <cite>TPUClusterResolver</cite>；然后，我们连接 TPU Cluster，并对其进行初始化；最后，完成实例化 <cite>TPUStrategy</cite>。</p>
 <p>以下使用 Fashion MNIST 分类任务展示 TPU 的使用方式。本小节的源代码可以在 <a class="reference external" href="https://github.com/huan/tensorflow-handbook-tpu">https://github.com/huan/tensorflow-handbook-tpu</a> 找到。</p>
 <p>更方便的是在 Google Colab 上直接打开本例子的 Jupyter 直接运行，地址：<a class="reference external" href="https://colab.research.google.com/github/huan/tensorflow-handbook-tpu/blob/master/tensorflow-handbook-tpu-example.ipynb">https://colab.research.google.com/github/huan/tensorflow-handbook-tpu/blob/master/tensorflow-handbook-tpu-example.ipynb</a> （推荐）</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
@@ -473,11 +457,10 @@
 
     <span class="k">return</span> <span class="n">model</span>
 
-<span class="n">resolver</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">resolver</span><span class="o">.</span><span class="n">TPUClusterResolver</span><span class="p">(</span>
-    <span class="n">tpu</span><span class="o">=</span><span class="s1">&#39;grpc://&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;COLAB_TPU_ADDR&#39;</span><span class="p">])</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental_connect_to_host</span><span class="p">(</span><span class="n">resolver</span><span class="o">.</span><span class="n">master</span><span class="p">())</span>
-<span class="n">tf</span><span class="o">.</span><span class="n">tpu</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">initialize_tpu_system</span><span class="p">(</span><span class="n">resolver</span><span class="p">)</span>
-<span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">TPUStrategy</span><span class="p">(</span><span class="n">resolver</span><span class="p">)</span>
+<span class="n">tpu</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">cluster_resolver</span><span class="o">.</span><span class="n">TPUClusterResolver</span><span class="p">()</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental_connect_to_cluster</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">tpu</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">initialize_tpu_system</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+<span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">TPUStrategy</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
 
 <span class="k">with</span> <span class="n">strategy</span><span class="o">.</span><span class="n">scope</span><span class="p">():</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">()</span>
@@ -511,7 +494,17 @@
 <span class="n">val_loss</span><span class="p">:</span> <span class="mf">0.3893</span> <span class="o">-</span> <span class="n">val_sparse_categorical_accuracy</span><span class="p">:</span> <span class="mf">0.8848</span>
 </pre></div>
 </div>
-</div>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 197 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
 </div>
 
 
@@ -534,7 +527,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
 
     </p>
   </div>
@@ -559,6 +552,18 @@
 
   
   
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
     
    
 

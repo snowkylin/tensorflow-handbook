@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>简单粗暴 TensorFlow 2 | A Concise Handbook of TensorFlow 2 &mdash; 简单粗暴 TensorFlow 2 0.4 alpha 文档</title>
+  <title>简单粗暴 TensorFlow 2 | A Concise Handbook of TensorFlow 2 &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
@@ -40,7 +40,7 @@
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="搜索" href="search.html" />
-    <link rel="next" title="前言" href="zh/preface.html" /> 
+    <link rel="next" title="ML Study Jam 2020" href="zh/mlstudyjam.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,7 +88,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="zh/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="zh/preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/introduction.html">TensorFlow概述</a></li>
@@ -117,10 +121,11 @@
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/appendix/julia.html">TensorFlow in Julia（Ziyang）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
 </ul>
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="zh/appendix/rl.html">强化学习简介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/cloud.html">在云端使用TensorFlow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
@@ -246,17 +251,29 @@
     </tbody>
 </table><div class="section" id="id1">
 <h2>中文版<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
-<p>这是一本简明的 TensorFlow 2 入门指导手册，基于 Keras 和即时执行模式（Eager Execution），力图让具备一定机器学习及Python基础的开发者们快速上手TensorFlow 2。</p>
+<p>这是一本简明的 TensorFlow 2 入门指导手册，基于 Keras 和即时执行模式（Eager Execution），力图让具备一定机器学习及 Python 基础的开发者们快速上手 TensorFlow 2。</p>
 <p>本手册的所有代码基于 TensorFlow 2.1 和 2.0 正式版。文中的所有示例代码可至 <a class="reference external" href="https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/en">这里</a> 获得。</p>
-<p>本手册正于TensorFlow官方微信公众号（TensorFlow_official）连载，可点此查看 <a class="reference external" href="https://mp.weixin.qq.com/s/cvZHUWS3MiGHq3UDynucxw">连载文章目录</a> 。本手册的英文版仍在翻译中。请访问 <a class="reference external" href="https://v1.tf.wiki">https://v1.tf.wiki</a> 以查看本手册上一版的英文版。本手册是  <a class="reference external" href="https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/">Google Summer of Code 2019</a>  项目之一。</p>
+<p>本手册正于TensorFlow官方微信公众号（TensorFlow_official）连载，可点此查看 <a class="reference external" href="https://mp.weixin.qq.com/s/cvZHUWS3MiGHq3UDynucxw">连载文章目录</a> 。本手册的原始语言为中文，其英文版仍在翻译中。请访问 <a class="reference external" href="https://v1.tf.wiki">https://v1.tf.wiki</a> 以查看本手册上一版的英文版。本手册是  <a class="reference external" href="https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/">Google Summer of Code 2019</a>  项目之一。</p>
+<p>自2020年4月起，在每章文末加入了留言区，欢迎有需要的读者在文末讨论交流。</p>
+<div class="admonition-ml-study-jam admonition">
+<p class="admonition-title">线上教学活动：ML Study Jam</p>
+<p>本手册正在与TensorFlow官方微信公众号合作开展为期三周的“ML Study Jam”线上学习活动。活动从2020年4月20日开始，可以访问 <a class="reference external" href="https://tf.wiki/zh/mlstudyjam.html">这里</a> 或 <a class="reference external" href="http://mp.weixin.qq.com/s?__biz=MzU1OTMyNDcxMQ==&amp;mid=2247488326&amp;idx=1&amp;sn=e5507c80e3419ae30425b7dfac4ce164&amp;chksm=fc18580ecb6fd11808c35c18ed3e61dd39f36d3fbdfcacefaff03e7a5ab6b07b788d1b87e467&amp;mpshare=1&amp;scene=23&amp;srcid=&amp;sharer_sharetime=1587465932630&amp;sharer_shareid=b6f86ab8b392c4d4036aa6a1d3b82824#rd">TensorFlow官方微信公众号（TensorFlow_official）</a> 以了解详情。</p>
+</div>
 <p>GitHub： <a class="reference external" href="https://github.com/snowkylin/tensorflow-handbook">https://github.com/snowkylin/tensorflow-handbook</a></p>
+<p>答疑区： <a class="reference external" href="https://discuss.tf.wiki">https://discuss.tf.wiki</a></p>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="zh/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+</div>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="zh/preface.html">前言</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zh/preface.html#id2">本书的适用群体</a></li>
 <li class="toctree-l2"><a class="reference internal" href="zh/preface.html#id3">如何使用本书</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh/preface.html#id5">致谢</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/preface.html#id4">致谢</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zh/introduction.html">TensorFlow概述</a><ul>
@@ -314,9 +331,9 @@
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/models.html#keras-model-compile-fit-evaluate">使用 Keras Model 的 <code class="docutils literal notranslate"><span class="pre">compile</span></code> 、 <code class="docutils literal notranslate"><span class="pre">fit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> 方法训练和评估模型</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="zh/basic/models.html#id24">自定义层、损失函数和评估指标 *</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zh/basic/models.html#id23">自定义层、损失函数和评估指标 *</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="zh/basic/models.html#custom-layer">自定义层</a></li>
-<li class="toctree-l3"><a class="reference internal" href="zh/basic/models.html#id26">自定义损失函数和评估指标</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/basic/models.html#id25">自定义损失函数和评估指标</a></li>
 </ul>
 </li>
 </ul>
@@ -401,7 +418,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="zh/deployment/javascript.html#id7">TensorFlow.js 模型部署</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="zh/deployment/javascript.html#tensorflow-js-python">通过 TensorFlow.js 加载 Python 模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/deployment/javascript.html#python">在浏览器中加载 Python 模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/deployment/javascript.html#node-js-savedmodel">在 Node.js 中执行原生 SavedModel 模型</a></li>
 <li class="toctree-l3"><a class="reference internal" href="zh/deployment/javascript.html#id8">使用 TensorFlow.js 模型库</a></li>
 <li class="toctree-l3"><a class="reference internal" href="zh/deployment/javascript.html#mobilenet">在浏览器中使用 MobileNet 进行摄像头物体识别</a></li>
 </ul>
@@ -470,18 +488,19 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="zh/appendix/julia.html">TensorFlow in Julia（Ziyang）</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/julia.html#tensorflow-jl">TensorFlow.jl 简介</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="zh/appendix/julia.html#julia">为什么要使用 Julia ？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zh/appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/quantum.html#id2">量子计算基本概念</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/quantum.html#id4">量子比特</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/quantum.html#id7">量子逻辑门</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/quantum.html#id10">量子线路</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/quantum.html#cirq">实例：使用Cirq建立简单的量子线路</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/julia.html#id3">TensorFlow.jl 环境配置</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="zh/appendix/julia.html#docker-tensorflow-jl">在 docker 中快速体验 TensorFlow.jl</a></li>
-<li class="toctree-l3"><a class="reference internal" href="zh/appendix/julia.html#julia-tensorflow-jl">在 julia 包管理器中安装 TensorFlow.jl</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="zh/appendix/julia.html#id4">TensorFlow.jl 基础使用</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="zh/appendix/julia.html#mnist">MNIST数字分类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/quantum.html#id12">混合量子-经典机器学习</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/quantum.html#id13">量子数据集与带参数的量子门</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/quantum.html#pqc">参数化的量子线路（PQC）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/quantum.html#id14">将参数化的量子线路嵌入机器学习模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/quantum.html#id15">实例：对量子数据集进行二分类</a></li>
 </ul>
 </li>
 </ul>
@@ -491,6 +510,19 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">附录</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="zh/appendix/rl.html">强化学习简介</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/rl.html#id2">从动态规划说起</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/rl.html#id5">加入随机性和概率的动态规划</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/rl.html#id7">环境信息无法直接获得的情况</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/rl.html#id9">从直接算法到迭代算法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/rl.html#q">q值的渐进性更新</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/appendix/rl.html#id12">探索策略</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/rl.html#id13">大规模问题的求解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/appendix/rl.html#id14">总结</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/cloud.html">在云端使用TensorFlow</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zh/appendix/cloud.html#colabtensorflow">在Colab中使用TensorFlow</a></li>
@@ -507,11 +539,6 @@
 <li class="toctree-l1"><a class="reference internal" href="zh/appendix/terms.html">术语中英对照表</a></li>
 </ul>
 </div>
-<p>答疑区</p>
-<ul class="simple">
-<li><p>（中文）TensorFlow中文社区“简单粗暴TensorFlow”版面： <a class="reference external" href="https://www.tensorflowers.cn/b/48">https://www.tensorflowers.cn/b/48</a> （中文的疑问和建议请来此处，将以中文回答和讨论。欢迎使用中文的开发者们前来TensorFlow中文社区交流讨论）</p></li>
-<li><p>（英文）https://github.com/snowkylin/tensorflow-handbook/releases （英文的疑问或建议可在GitHub issue中提出，会以英文回答）</p></li>
-</ul>
 </div>
 <div class="section" id="english-version-in-progress">
 <h2>English Version (in progress)<a class="headerlink" href="#english-version-in-progress" title="永久链接至标题">¶</a></h2>
@@ -519,6 +546,7 @@
 <p>The code of this handbook is based on TensorFlow 2.0 stable version and beta1 version. All sample code in this handbook can be viewed <a class="reference external" href="https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/">here</a> .</p>
 <p>The English version of this handbook is still in progress (section title with a ✔️ means that the translation of this section is finished). Please refer to <a class="reference external" href="https://v1.tf.wiki">https://v1.tf.wiki</a> for the eariler version. This handbook is a project of <a class="reference external" href="https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/">Google Summer of Code 2019</a> .</p>
 <p>GitHub： <a class="reference external" href="https://github.com/snowkylin/tensorflow-handbook">https://github.com/snowkylin/tensorflow-handbook</a></p>
+<p>Q&amp;A: <a class="reference external" href="https://discuss.tf.wiki">https://discuss.tf.wiki</a></p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Preface</span></p>
 <ul>
@@ -530,7 +558,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="en/introduction.html">TensorFlow Overview</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="en/introduction.html#for-students-and-researchers-to-build-and-train-models">For students and researchers: To build and train models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="en/introduction.html#for-developers-and-engineers-to-invoke-and-deploy-models">For developers and engineers: To invoke and deploy models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/introduction.html#for-developers-and-engineers-to-call-and-deploy-models">For developers and engineers: To call and deploy models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="en/introduction.html#what-can-tensorflow-do-for-us">What can TensorFlow do for us?</a></li>
 </ul>
 </li>
@@ -754,11 +782,6 @@
 <li class="toctree-l1"><a class="reference internal" href="en/appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
 </ul>
 </div>
-<p>Q&amp;A area</p>
-<ul class="simple">
-<li><p>(Chinese) TensorFlow Chinese community “A Concise Handbook of TensorFlow” forum: <a class="reference external" href="https://www.tensorflowers.cn/b/48">https://www.tensorflowers.cn/b/48</a></p></li>
-<li><p>(English) <a class="reference external" href="https://github.com/snowkylin/tensorflow-handbook/issues">https://github.com/snowkylin/tensorflow-handbook/issues</a></p></li>
-</ul>
 </div>
 <div class="section" id="indices-and-tables">
 <h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="永久链接至标题">¶</a></h2>
@@ -778,7 +801,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="zh/preface.html" class="btn btn-neutral float-right" title="前言" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="zh/mlstudyjam.html" class="btn btn-neutral float-right" title="ML Study Jam 2020" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>
@@ -788,7 +811,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, Xihan Li（雪麒）
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
 
     </p>
   </div>
@@ -813,6 +836,18 @@
 
   
   
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
     
    
 

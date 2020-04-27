@@ -23,4 +23,4 @@ for batch_index in range(num_batches):
     grads = tape.gradient(loss, model.dense1.variables)    # 单独求第一层参数的梯度
     optimizer_1.apply_gradients(grads_and_vars=zip(grads, model.dense1.variables)) # 单独对第一层参数更新，学习率0.001
     grads = tape.gradient(loss, model.dense2.variables)    # 单独求第二层参数的梯度
-    optimizer_1.apply_gradients(grads_and_vars=zip(grads, model.dense2.variables)) # 单独对第二层参数更新，学习率0.01
+    optimizer_2.apply_gradients(grads_and_vars=zip(grads, model.dense2.variables)) # 单独对第二层参数更新，学习率0.01

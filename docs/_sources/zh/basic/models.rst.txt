@@ -488,15 +488,14 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
 
     上述为最基础的 RNN 原理介绍。在实际使用时往往使用一些常见的改进型，如LSTM（长短期记忆神经网络，解决了长序列的梯度消失问题，适用于较长的序列）、GRU等。
 
+.. _rl:
+
 深度强化学习（DRL）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-`强化学习 <https://zh.wikipedia.org/wiki/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0>`_ （Reinforcement learning，RL）强调如何基于环境而行动，以取得最大化的预期利益。结合了深度学习技术后的强化学习更是如虎添翼。这两年广为人知的 AlphaGo 即是深度强化学习的典型应用。
+`强化学习 <https://zh.wikipedia.org/wiki/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0>`_ （Reinforcement learning，RL）强调如何基于环境而行动，以取得最大化的预期利益。结合了深度学习技术后的强化学习（Deep Reinforcement learning，DRL）更是如虎添翼。近年广为人知的 AlphaGo 即是深度强化学习的典型应用。
 
-.. admonition:: 基础知识和原理
-
-    - `Demystifying Deep Reinforcement Learning <https://ai.intel.com/demystifying-deep-reinforcement-learning/>`_ （`中文编译 <https://snowkylin.github.io/rl/2017/01/04/Reinforcement-Learning.html>`_）
-    - [Mnih2013]_
+.. note:: 可参考本手册附录的 :doc:`../appendix/rl` 一章以获得强化学习的基础知识。
 
 这里，我们使用深度强化学习玩 CartPole（倒立摆）游戏。倒立摆是控制论中的经典问题，在这个游戏中，一根杆的底部与一个小车通过轴相连，而杆的重心在轴之上，因此是一个不稳定的系统。在重力的作用下，杆很容易倒下。而我们则需要控制小车在水平的轨道上进行左右运动，以使得杆一直保持竖直平衡状态。
 
@@ -533,7 +532,7 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
 
 那么，我们的任务就是训练出一个模型，能够根据当前的状态预测出应该进行的一个好的动作。粗略地说，一个好的动作应当能够最大化整个游戏过程中获得的奖励之和，这也是强化学习的目标。以CartPole游戏为例，我们的目标是希望做出合适的动作使得杆一直不倒，即游戏交互的回合数尽可能地多。而回合每进行一次，我们都会获得一个小的正奖励，回合数越多则累积的奖励值也越高。因此，我们最大化游戏过程中的奖励之和与我们的最终目标是一致的。
 
-以下代码展示了如何使用深度强化学习中的 Deep Q-Learning 方法来训练模型。首先，我们引入TensorFlow、Gym和一些常用库，并定义一些模型超参数：
+以下代码展示了如何使用深度强化学习中的 Deep Q-Learning 方法 [Mnih2013]_ 来训练模型。首先，我们引入TensorFlow、Gym和一些常用库，并定义一些模型超参数：
 
 .. literalinclude:: /_static/code/zh/model/rl/rl.py
     :lines: 1-14
@@ -556,11 +555,12 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
 
 而考虑到我们需要从图像信息中提取特征，使用 CNN 作为拟合 Q 函数的网络将更为适合。由此，将上面的 ``QNetwork`` 更换为 CNN 网络，并对状态做一些修改，即可用于玩一些简单的视频游戏。
 
-.. admonition:: 深度强化学习原理初探
+..
+    .. admonition:: 深度强化学习原理初探
 
-    与前面所介绍的卷积神经网络和循环神经网络不同，强化学习（Reinforcement Learning）是一种学习算法的类型。
+        与前面所介绍的卷积神经网络和循环神经网络不同，强化学习（Reinforcement Learning）是一种学习算法的类型。
 
-    TODO
+        TODO
 
 Keras Pipeline *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -692,5 +692,17 @@ Keras 支持使用 ``tf.data.Dataset`` 进行训练，详见 :ref:`tf.data <tfda
 .. [Graves2013] Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.
 .. [Mnih2013] Mnih, Volodymyr, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. “Playing Atari with Deep Reinforcement Learning.” ArXiv:1312.5602 [Cs], December 19, 2013. http://arxiv.org/abs/1312.5602.
 
+.. raw:: html
 
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 190 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>
 

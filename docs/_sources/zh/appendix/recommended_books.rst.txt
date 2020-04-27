@@ -38,6 +38,20 @@
 
 .. important:: **不推荐以上书籍，并不是说这些作品不够优秀！** 事实上，正是因为这些书籍太优秀，影响力太大，才以至于不得不拿出来特意提醒一下，这些书可能并不适合于绝大多数初学者。就像应该很少有学校用《计算机程序设计艺术》（TAOCP）作为计算机的入门教材一样。对于已经入门或者有志于深层次研究的学者，当可从这些书籍中受益匪浅。
 
+.. raw:: html
+
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 205 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>
+
 
 
 
