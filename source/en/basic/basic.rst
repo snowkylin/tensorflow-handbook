@@ -10,8 +10,8 @@ Prerequisites:
 * `NumPy <https://docs.scipy.org/doc/numpy/user/quickstart.html>`_ , a commonly used Python library for scientific computing. TensorFlow 2.X is integrated closely with NumPy.
 * `Vectors <https://en.wikipedia.org/wiki/Euclidean_vector>`_ & `Matrices <https://en.wikipedia.org/wiki/Matrix_(mathematics)>`_ operations (matrix addition & subtraction, matrix multiplication with vectors & matrices, matrix transpose, etc., Quiz: :math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \times \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = ?`)
 * `Derivatives of functions <https://en.wikipedia.org/wiki/Derivative>`_ , `derivatives of multivariable functions <https://en.wikipedia.org/wiki/Partial_derivative>`_ (Quiz: :math:`f(x, y) = x^2 + xy + y^2, \frac{\partial f}{\partial x} = ?, \frac{\partial f}{\partial y} = ?`)
-* `Linear regression <https://en.wikipedia.org/wiki/Linear_regression>`_;
-* `Gradient descent <https://en.wikipedia.org/wiki/Gradient_descent>`_ that searches local minima of a function.
+* `Linear regression <https://en.wikipedia.org/wiki/Linear_regression>`_
+* `Gradient descent <https://en.wikipedia.org/wiki/Gradient_descent>`_ that searches local minima of a function
 
 TensorFlow 1+1
 ^^^^^^^^^^^^^^

@@ -1,9 +1,11 @@
 Installation and Environment Configuration
 ==========================================
 
-TensorFlow的最新安装步骤可参考官方网站上的说明（https://tensorflow.google.cn/install）。TensorFlow支持Python、Java、Go、C等多种编程语言以及Windows、OSX、Linux等多种操作系统，此处及后文均以Python 3.7为准。
+For the latest installation steps of TensorFlow please refer to the instructions on the official website (https://tensorflow.google.cn/install). TensorFlow supports multiple programming languages such as Python, Java, Go, and C; as well as multiple operating systems such as Windows, OSX, and Linux. Python 3.7 will be used as sstandard hereafter.
 
-.. hint:: 本章介绍在一般的个人电脑或服务器上直接安装TensorFlow 2.0的方法。关于在容器环境（Docker）、云平台中部署TensorFlow或在线上环境中使用TensorFlow的方法，见附录 :doc:`使用Docker部署TensorFlow环境 <../appendix/docker>` 和 :doc:`在云端使用TensorFlow <../appendix/cloud>` 。软件的安装方法往往具有时效性，本节的更新日期为2019年10月。
+.. admonition:: Hint 
+
+    本章介绍在一般的个人电脑或服务器上直接安装TensorFlow 2.0的方法。关于在容器环境（Docker）、云平台中部署TensorFlow或在线上环境中使用TensorFlow的方法，见附录 :doc:`使用Docker部署TensorFlow环境 <../appendix/docker>` 和 :doc:`在云端使用TensorFlow <../appendix/cloud>` 。软件的安装方法往往具有时效性，本节的更新日期为2019年10月。
 
 General steps for installation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
