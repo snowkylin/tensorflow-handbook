@@ -1,9 +1,9 @@
 TensorFlow安裝與環境配置
 ======================================
 
-TensorFlow的最新安裝步驟可參考官方網站上的說明（https://tensorflow.google.cn/install）。TensorFlow支持Python、Java、Go、C等多種編程語言以及Windows、OSX、Linux等多種操作系統，此處及後文均以Python 3.7為準。
+TensorFlow的最新安裝步驟可參考官方網站上的說明（https://tensorflow.google.cn/install）。TensorFlow支持Python、Java、Go、C等多種程式語言以及Windows、OSX、Linux等多種作業系統，此處及後文均以Python 3.7為準。
 
-.. hint:: 本章介紹在一般的個人電腦或服務器上直接安裝TensorFlow 2的方法。關於在容器環境（Docker）、雲平台中部署TensorFlow或在線上環境中使用TensorFlow的方法，見附錄 :doc:`使用Docker部署TensorFlow環境 <../appendix/docker>` 和 :doc:`在雲端使用TensorFlow <../appendix/cloud>` 。軟件的安裝方法往往具有時效性，本節的更新日期爲2019年10月。
+.. hint:: 本章介紹在一般的個人電腦或伺服器上直接安裝TensorFlow 2的方法。關於在容器環境（Docker）、雲平台中部署TensorFlow或在線上環境中使用TensorFlow的方法，見附錄 :doc:`使用Docker部署TensorFlow環境 <../appendix/docker>` 和 :doc:`在雲端使用TensorFlow <../appendix/cloud>` 。軟體的安裝方法往往具有時效性，本節的更新日期爲2019年10月。
 
 一般安裝步驟
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -34,7 +34,7 @@ TensorFlow的最新安裝步驟可參考官方網站上的說明（https://tenso
         
         - 北京清華大學的pypi鏡像：https://mirrors.tuna.tsinghua.edu.cn/help/pypi/
         - 北京清華大學的Anaconda鏡像：https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/
-    5. 如果對磁盤空間要求嚴格（比如服務器環境），可以安裝 `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ ，僅包含Python和Conda，其他的包可自己按需安裝。Miniconda的安裝包可在 `這裡 <https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/>`_ 獲得。
+    5. 如果對磁碟空間要求嚴格（比如伺服器環境），可以安裝 `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ ，僅包含Python和Conda，其他的包可自己按需安裝。Miniconda的安裝包可在 `這裡 <https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/>`_ 獲得。
 
 .. admonition:: pip和conda包管理器
 
@@ -44,7 +44,7 @@ TensorFlow的最新安裝步驟可參考官方網站上的說明（https://tenso
 
         pip install [package-name]              # 安裝名爲[package-name]的包
         pip install [package-name]==X.X         # 安裝名爲[package-name]的包並指定版本X.X
-        pip install [package-name] --proxy=代理服務器IP:端口號         # 使用代理服務器安裝
+        pip install [package-name] --proxy=代理伺服器IP:埠號         # 使用代理伺服器安裝
         pip install [package-name] --upgrade    # 更新名爲[package-name]的包
         pip uninstall [package-name]            # 刪除名爲[package-name]的包
         pip list                                # 列出當前環境下已安裝的所有包
@@ -65,7 +65,7 @@ TensorFlow的最新安裝步驟可參考官方網站上的說明（https://tenso
     ::
 
         proxy_servers:
-            http: http://代理服務器IP:端口號
+            http: http://代理伺服器IP:埠號
 
 .. admonition:: Conda虛擬環境
 
@@ -88,7 +88,7 @@ GPU版本的TensorFlow可以利用NVIDIA GPU強大的計算加速能力，使Ten
 
 在安裝GPU版本的TensorFlow前，你需要具有一塊不太舊的NVIDIA顯卡，以及正確安裝NVIDIA顯卡驅動程序、CUDA Toolkit和cuDNN。
 
-GPU硬件的準備
+GPU硬體的準備
 -------------------------------------------
 
 TensorFlow對NVIDIA顯卡的支持較爲完備。對於NVIDIA顯卡，要求其CUDA Compute Capability須不低於3.5，可以到 `NVIDIA的官方網站 <https://developer.nvidia.com/cuda-gpus/>`_ 查詢自己所用顯卡的CUDA Compute Capability。目前，AMD的顯卡也開始對TensorFlow提供支持，可訪問  `這篇博客文章 <https://medium.com/tensorflow/amd-rocm-gpu-support-for-tensorflow-33c78cc6a6cf>`_  查看詳情。
@@ -102,7 +102,7 @@ Windows環境中，如果系統具有NVIDIA顯卡，則往往已經自動安裝�
 
 **Linux** 
 
-在服務器版Linux系統下，同樣訪問 `NVIDIA官方網站 <https://www.nvidia.com/Download/index.aspx?lang=en-us>`_ 下載驅動程序（爲 ``.run`` 文件），並使用 ``sudo bash DRIVER_FILE_NAME.run`` 命令安裝驅動即可。在安裝之前，可能需要使用 ``sudo apt-get install build-essential`` 安裝合適的編譯環境。
+在伺服器版Linux系統下，同樣訪問 `NVIDIA官方網站 <https://www.nvidia.com/Download/index.aspx?lang=en-us>`_ 下載驅動程序（爲 ``.run`` 文件），並使用 ``sudo bash DRIVER_FILE_NAME.run`` 命令安裝驅動即可。在安裝之前，可能需要使用 ``sudo apt-get install build-essential`` 安裝合適的編譯環境。
 
 在具有圖形界面的桌面版Linux系統上，NVIDIA顯卡驅動程序需要一些額外的配置，否則會出現無法登錄等各種錯誤。如果需要在Linux下手動安裝NVIDIA驅動，注意在安裝前進行以下步驟（以Ubuntu爲例）：
 
@@ -111,9 +111,9 @@ Windows環境中，如果系統具有NVIDIA顯卡，則往往已經自動安裝�
 - 停用桌面環境（如 ``sudo service lightdm stop``）
 - 刪除原有NVIDIA驅動程序（如 ``sudo apt-get purge nvidia*``）
 
-.. tip:: 對於桌面版Ubuntu系統，有一個很簡易的NVIDIA驅動安裝方法：在系統設置（System Setting）裡面選軟件與更新（Software & Updates），然後點選Additional Drivers裡面的「Using NVIDIA binary driver」選項並點選右下角的「Apply Changes」即可，系統即會自動安裝NVIDIA驅動，但是通過這種安裝方式安裝的NVIDIA驅動往往版本較舊。
+.. tip:: 對於桌面版Ubuntu系統，有一個很簡易的NVIDIA驅動安裝方法：在系統設置（System Setting）裡面選軟體與更新（Software & Updates），然後點選Additional Drivers裡面的「Using NVIDIA binary driver」選項並點選右下角的「Apply Changes」即可，系統即會自動安裝NVIDIA驅動，但是通過這種安裝方式安裝的NVIDIA驅動往往版本較舊。
 
-NVIDIA驅動程序安裝完成後，可在命令行下使用 ``nvidia-smi`` 命令檢查是否安裝成功，若成功則會打印出當前系統安裝的NVIDIA驅動信息，形式如下：
+NVIDIA驅動程序安裝完成後，可在命令行下使用 ``nvidia-smi`` 命令檢查是否安裝成功，若成功則會列印出當前系統安裝的NVIDIA驅動信息，形式如下：
 
 ::
     
@@ -208,27 +208,27 @@ IDE設置
 
 .. [#nohup] 關於  ``nohup`` 命令可參考 https://www.ibm.com/developerworks/cn/linux/l-cn-nohup/
 
-TensorFlow所需的硬件配置 *
+TensorFlow所需的硬體配置 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. hint:: 對於學習而言，TensorFlow的硬件門檻並不高。甚至，藉助 :ref:`免費 <colab>` 或 :ref:`靈活 <gcp>` 的雲端計算資源，只要你有一台能上網的電腦，就能夠熟練掌握TensorFlow！
+.. hint:: 對於學習而言，TensorFlow的硬體門檻並不高。甚至，藉助 :ref:`免費 <colab>` 或 :ref:`靈活 <gcp>` 的雲端計算資源，只要你有一台能上網的電腦，就能夠熟練掌握TensorFlow！
 
-在很多人的刻板印象中，TensorFlow乃至深度學習是一件非常「吃硬件」的事情，以至於一接觸TensorFlow，第一件事情可能就是想如何升級自己的電腦硬件。不過，TensorFlow所需的硬件配置很大程度是視任務和使用環境而定的：
+在很多人的刻板印象中，TensorFlow乃至深度學習是一件非常「吃硬體」的事情，以至於一接觸TensorFlow，第一件事情可能就是想如何升級自己的電腦硬體。不過，TensorFlow所需的硬體配置很大程度是視任務和使用環境而定的：
 
-- 對於TensorFlow初學者，無需硬件升級也可以很好地學習和掌握TensorFlow。本手冊中的大部分教學示例，大部分當前主流的個人電腦（即使沒有GPU）均可勝任，無需添置其他硬件設備。對於本手冊中部分計算量較大的示例（例如 :ref:`在cats_vs_dogs數據集上訓練CNN圖像分類 <cats_vs_dogs>` ），一塊主流的NVIDIA GPU會大幅加速訓練。如果自己的個人電腦難以勝任，可以考慮在雲端（例如 :ref:`免費的 Colab <colab>` ）進行模型訓練。
+- 對於TensorFlow初學者，無需硬體升級也可以很好地學習和掌握TensorFlow。本手冊中的大部分教學示例，大部分當前主流的個人電腦（即使沒有GPU）均可勝任，無需添置其他硬體設備。對於本手冊中部分計算量較大的示例（例如 :ref:`在cats_vs_dogs數據集上訓練CNN圖像分類 <cats_vs_dogs>` ），一塊主流的NVIDIA GPU會大幅加速訓練。如果自己的個人電腦難以勝任，可以考慮在雲端（例如 :ref:`免費的 Colab <colab>` ）進行模型訓練。
 - 對於參加數據科學競賽（比如Kaggle）或者經常在本機進行訓練的個人愛好者或開發者，一塊高性能的NVIDIA GPU往往是必要的。CUDA核心數和顯存大小是決定顯卡機器學習性能的兩個關鍵參數，前者決定訓練速度，後者決定可以訓練多大的模型以及訓練時的最大Batch Size，對於較大規模的訓練而言尤其敏感。
-- 對於前沿的機器學習研究（尤其是計算機視覺和自然語言處理領域），多GPU並行訓練是標準配置。爲了快速迭代實驗結果以及訓練更大規模的模型以提升性能，4卡、8卡或更高的GPU數量是常態。
+- 對於前沿的機器學習研究（尤其是計算機視覺和自然語言處理領域），多GPU並行訓練是標準配置。爲了快速疊代實驗結果以及訓練更大規模的模型以提升性能，4卡、8卡或更高的GPU數量是常態。
 
-作爲參考，筆者給出截至本手冊撰寫時，自己所在工作環境的一些硬件配置：
+作爲參考，筆者給出截至本手冊撰寫時，自己所在工作環境的一些硬體配置：
 
 - 筆者寫作本書的示例代碼時，除了分布式和雲端訓練相關章節，其他部分均使用一台Intel i5處理器，16GB DDR3內存的普通台式機（未使用GPU）在本地開發測試，部分計算量較大的模型使用了一塊淘寶上180元購買的 NVIDIA P106-90 （單卡3GB顯存）礦卡進行訓練；
 - 在筆者的研究工作中，長年使用一塊 NVIDIA GTX 1060 （單卡6GB顯存）在本地環境進行模型的基礎開發和調試；
-- 筆者所在的實驗室使用一台4塊 NVIDIA GTX 1080 Ti （單卡11GB顯存）並行的工作站和一台10塊 NVIDIA GTX 1080 Ti （單卡11GB顯存）並行的服務器進行前沿計算機視覺模型的訓練；
-- 筆者合作過的公司使用8塊 NVIDIA Tesla V100 （單卡32GB顯存）並行的服務器進行前沿自然語言處理（如大規模機器翻譯）模型的訓練。
+- 筆者所在的實驗室使用一台4塊 NVIDIA GTX 1080 Ti （單卡11GB顯存）並行的工作站和一台10塊 NVIDIA GTX 1080 Ti （單卡11GB顯存）並行的伺服器進行前沿計算機視覺模型的訓練；
+- 筆者合作過的公司使用8塊 NVIDIA Tesla V100 （單卡32GB顯存）並行的伺服器進行前沿自然語言處理（如大規模機器翻譯）模型的訓練。
 
-儘管科研機構或公司使用的計算硬件配置堪稱豪華，不過與其他前沿科研領域（例如生物）動輒幾十上百萬的儀器試劑費用相比，依然不算太貴（畢竟一台六七萬至二三十萬的深度學習服務器就可以供數位研究者使用很長時間）。因此，機器學習相對而言還是十分平易近人的。
+儘管科研機構或公司使用的計算硬體配置堪稱豪華，不過與其他前沿科研領域（例如生物）動輒幾十上百萬的儀器試劑費用相比，依然不算太貴（畢竟一台六七萬至二三十萬的深度學習伺服器就可以供數位研究者使用很長時間）。因此，機器學習相對而言還是十分平易近人的。
 
-關於深度學習工作站的具體配置，由於硬件行情更新較快，故不在此列出具體配置，推薦關注 `知乎問題 - 如何配置一台適用於深度學習的工作站？ <https://www.zhihu.com/question/33996159>`_ ，並結合最新市場情況進行配置。
+關於深度學習工作站的具體配置，由於硬體行情更新較快，故不在此列出具體配置，推薦關注 `知乎問題 - 如何配置一台適用於深度學習的工作站？ <https://www.zhihu.com/question/33996159>`_ ，並結合最新市場情況進行配置。
 
 .. raw:: html
 

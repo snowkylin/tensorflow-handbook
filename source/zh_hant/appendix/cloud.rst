@@ -19,7 +19,7 @@ Google Colab是谷歌的免費在線交互式Python運行環境，且提供GPU�
     :width: 100%
     :align: center
 
-如果需要使用GPU，則點擊菜單「代碼執行程序-更改運行時類型」，在「硬件加速器」一項中選擇「GPU」，如下圖所示：
+如果需要使用GPU，則點擊菜單「代碼執行程序-更改運行時類型」，在「硬體加速器」一項中選擇「GPU」，如下圖所示：
 
 .. figure:: /_static/image/colab/select_env.png
     :width: 40%
@@ -35,7 +35,7 @@ Google Colab是谷歌的免費在線交互式Python運行環境，且提供GPU�
 
 .. tip:: Colab支持代碼提示，可以在輸入 ``tf.`` 後按下 ``tab`` 鍵，即會彈出代碼提示的下拉菜單。
 
-可見，截至本文寫作時，Colab中的TensorFlow默認版本是1.14.0。在Colab中，可以使用 ``!pip install`` 或者 ``!apt-get install`` 來安裝Colab中尚未安裝的Python庫或Linux軟件包。比如在這裡，我們希望使用TensorFlow 2.0 beta1版本，即點擊左上角的「+代碼」，輸入::
+可見，截至本文寫作時，Colab中的TensorFlow默認版本是1.14.0。在Colab中，可以使用 ``!pip install`` 或者 ``!apt-get install`` 來安裝Colab中尚未安裝的Python庫或Linux軟體包。比如在這裡，我們希望使用TensorFlow 2.0 beta1版本，即點擊左上角的「+代碼」，輸入::
 
     !pip install tensorflow-gpu==2.0.0-beta1
 
@@ -75,7 +75,7 @@ Google Colab是谷歌的免費在線交互式Python運行環境，且提供GPU�
 ..
     https://medium.com/@kstseng/%E5%9C%A8-google-cloud-platform-%E4%B8%8A%E4%BD%BF%E7%94%A8-gpu-%E5%92%8C%E5%AE%89%E8%A3%9D%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E7%9B%B8%E9%97%9C%E5%A5%97%E4%BB%B6-1b118e291015
     
-`Google Cloud Platform（GCP） <https://cloud.google.com/>`_ 是Google的雲計算服務。GCP收費靈活，默認按時長計費。也就是說，你可以迅速建立一個帶GPU的實例，訓練一個模型，然後立即關閉（關機或刪除實例）。GCP只收取在實例開啓時所產生的費用，關機時只收取磁盤存儲的費用，刪除後即不再繼續收費。
+`Google Cloud Platform（GCP） <https://cloud.google.com/>`_ 是Google的雲計算服務。GCP收費靈活，默認按時長計費。也就是說，你可以迅速建立一個帶GPU的實例，訓練一個模型，然後立即關閉（關機或刪除實例）。GCP只收取在實例開啓時所產生的費用，關機時只收取磁碟存儲的費用，刪除後即不再繼續收費。
 
 我們可以通過兩種方式在GCP中使用TensorFlow：使用Compute Engine建立帶GPU的實例，或使用AI Platform中的Notebook建立帶GPU的在線JupyterLab環境。
 
@@ -91,7 +91,7 @@ GCP的Compute Engine類似於AWS、阿里雲等，允許用戶快速建立自己
 需要注意兩點：
 
 1. 只有特定區域的機房具有GPU，且不同類型的GPU地區範圍也不同，可參考 `GCP官方文檔 <https://cloud.google.com/compute/docs/gpus>`_ 並選擇適合的地區建立實例；
-#. 默認情況下GCP賬號的GPU配額非常有限（可能是怕你付不起錢？）。你很可能需要在使用前申請提升自己賬號在特定地區的特定型號GPU的配額，可參考 `GCP官方文檔：申請提升配額 <https://cloud.google.com/compute/quotas?hl=zh-cn#requesting_additional_quota>`_ ，GCP會有工作人員手動處理申請，並給你的郵箱發送郵件通知，大約需要數小時至兩個工作日不等。
+#. 默認情況下GCP帳號的GPU配額非常有限（可能是怕你付不起錢？）。你很可能需要在使用前申請提升自己帳號在特定地區的特定型號GPU的配額，可參考 `GCP官方文檔：申請提升配額 <https://cloud.google.com/compute/quotas?hl=zh-cn#requesting_additional_quota>`_ ，GCP會有工作人員手動處理申請，並給你的郵箱發送郵件通知，大約需要數小時至兩個工作日不等。
 
 當建立好具有GPU的GCP虛擬機實例後，配置工作與在本地基本相同。系統中默認並沒有NVIDIA顯卡驅動，依然需要自己安裝。
 
@@ -149,7 +149,7 @@ GCP的Compute Engine類似於AWS、阿里雲等，允許用戶快速建立自己
 
 也可以點擊「自定義」來進一步配置實例，例如選擇區域、GPU類型和個數，與創建Compute Engine實例類似。
 
-.. hint:: 和Compute Engine實例一樣，你很可能需要在這裡選擇自己適合的區域，以及申請提升自己賬號在特定地區的特定型號GPU的配額。
+.. hint:: 和Compute Engine實例一樣，你很可能需要在這裡選擇自己適合的區域，以及申請提升自己帳號在特定地區的特定型號GPU的配額。
 
 建立完成後，點擊「打開JUPYTERLAB」，即可進入以下界面：
 
@@ -198,7 +198,7 @@ GCP的Compute Engine類似於AWS、阿里雲等，允許用戶快速建立自己
 
     在「鏡像市場」中，官方也提供了適合深度學習的定製鏡像。在本示例中我們選擇預裝了 NVIDIA RAPIDS 的 Ubuntu 16.04 鏡像。 
 
-然後，通過 ssh 連接上我們選購的服務器，並使用 ``nvidia-smi`` 查看 GPU 信息：
+然後，通過 ssh 連接上我們選購的伺服器，並使用 ``nvidia-smi`` 查看 GPU 信息：
 
 .. code-block:: bash
 
@@ -223,7 +223,7 @@ GCP的Compute Engine類似於AWS、阿里雲等，允許用戶快速建立自己
 
 確認了驅動無誤之後，其他操作就可以照常執行了。
 
-.. hint:: 阿里雲等雲服務提供商一般對於 VPS 的端口進行了安全策略限制，請關注所使用的端口是否在安全策略的放行列表中，以免影響Tensorflow Serving和Tensorboard的使用。
+.. hint:: 阿里雲等雲服務提供商一般對於 VPS 的埠進行了安全策略限制，請關注所使用的埠是否在安全策略的放行列表中，以免影響Tensorflow Serving和Tensorboard的使用。
 
 .. raw:: html
 

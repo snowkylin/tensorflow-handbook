@@ -67,7 +67,7 @@ TensorFlow 的圖執行模式是一個符號式的（基於計算圖的）計算
 變量的聲明
 +++++++++++++++++++++++++++++
 
-**變量** （Variable）是一種特殊類型的張量，在 TensorFlow 1.X 的圖執行模式 API 中使用 ``tf.get_variable()`` 建立。與編程語言中的變量很相似。使用變量前需要先初始化，變量內存儲的值可以在計算圖的計算過程中被修改。以下示例代碼展示了如何建立一個變量，將其值初始化爲0，並逐次累加1。
+**變量** （Variable）是一種特殊類型的張量，在 TensorFlow 1.X 的圖執行模式 API 中使用 ``tf.get_variable()`` 建立。與程式語言中的變量很相似。使用變量前需要先初始化，變量內存儲的值可以在計算圖的計算過程中被修改。以下示例代碼展示了如何建立一個變量，將其值初始化爲0，並逐次累加1。
 
 .. literalinclude:: /_static/code/zh/basic/graph/variable.py
 
@@ -165,7 +165,7 @@ TensorFlow 的圖執行模式是一個符號式的（基於計算圖的）計算
 優化器
 -------------------------------------
 
-由於機器學習中的求導往往伴隨着優化，所以 TensorFlow 中更常用的是優化器（Optimizer）。在 TensorFlow 1.X 的圖執行模式 API 中，我們往往使用 ``tf.train`` 中的各種優化器，將求導和調整變量值的步驟合二爲一。例如，以下代碼片段在計算圖構建過程中，使用 ``tf.train.GradientDescentOptimizer`` 這一梯度下降優化器優化損失函數 ``loss`` ：
+由於機器學習中的求導往往伴隨著優化，所以 TensorFlow 中更常用的是優化器（Optimizer）。在 TensorFlow 1.X 的圖執行模式 API 中，我們往往使用 ``tf.train`` 中的各種優化器，將求導和調整變量值的步驟合二爲一。例如，以下代碼片段在計算圖構建過程中，使用 ``tf.train.GradientDescentOptimizer`` 這一梯度下降優化器優化損失函數 ``loss`` ：
 
 .. code-block:: python
 
@@ -250,9 +250,9 @@ TensorFlow 的圖執行模式是一個符號式的（基於計算圖的）計算
 
 在本節，我們爲 :ref:`第一章的線性回歸示例 <linear-regression>` 提供一個基於 TensorFlow 1.X 的圖執行模式 API 的版本，供有需要的讀者對比參考。
 
-與第一章的NumPy和即時執行模式不同，TensorFlow的圖執行模式使用 **符號式編程** 來進行數值運算。首先，我們需要將待計算的過程抽象爲計算圖，將輸入、運算和輸出都用符號化的節點來表達。然後，我們將數據不斷地送入輸入節點，讓數據沿着計算圖進行計算和流動，最終到達我們需要的特定輸出節點。
+與第一章的NumPy和即時執行模式不同，TensorFlow的圖執行模式使用 **符號式編程** 來進行數值運算。首先，我們需要將待計算的過程抽象爲計算圖，將輸入、運算和輸出都用符號化的節點來表達。然後，我們將數據不斷地送入輸入節點，讓數據沿著計算圖進行計算和流動，最終到達我們需要的特定輸出節點。
 
-以下代碼展示了如何基於TensorFlow的符號式編程方法完成與前節相同的任務。其中， ``tf.placeholder()`` 即可以視爲一種「符號化的輸入節點」，使用 ``tf.get_variable()`` 定義模型的參數（Variable類型的張量可以使用 ``tf.assign()`` 操作進行賦值），而 ``sess.run(output_node, feed_dict={input_node: data})`` 可以視作將數據送入輸入節點，沿着計算圖計算併到達輸出節點並返回值的過程。
+以下代碼展示了如何基於TensorFlow的符號式編程方法完成與前節相同的任務。其中， ``tf.placeholder()`` 即可以視爲一種「符號化的輸入節點」，使用 ``tf.get_variable()`` 定義模型的參數（Variable類型的張量可以使用 ``tf.assign()`` 操作進行賦值），而 ``sess.run(output_node, feed_dict={input_node: data})`` 可以視作將數據送入輸入節點，沿著計算圖計算併到達輸出節點並返回值的過程。
 
 .. literalinclude:: /_static/code/zh/basic/example/tensorflow_manual_grad.py
     :lines: 9-

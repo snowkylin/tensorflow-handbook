@@ -21,7 +21,7 @@ Linux下通過以下命令啓動Docker服務：
 
     sudo service docker start
 
-2. 拉取TensorFlow映像。Docker將應用程序及其依賴打包在映像文件中，通過映像文件生成容器。使用 ``docker image pull`` 命令拉取適合自己需求的TensorFlow映像，例如：
+2. 拉取TensorFlow映像。Docker將應用程式及其依賴打包在映像文件中，通過映像文件生成容器。使用 ``docker image pull`` 命令拉取適合自己需求的TensorFlow映像，例如：
 
 ::
 

@@ -9,7 +9,7 @@ TensorFlow模型導出
 ..
     https://www.tensorflow.org/beta/guide/saved_model
 
-在部署模型時，我們的第一步往往是將訓練好的整個模型完整導出爲一系列標準格式的文件，然後即可在不同的平台上部署模型文件。這時，TensorFlow爲我們提供了SavedModel這一格式。與前面介紹的Checkpoint不同，SavedModel包含了一個TensorFlow程序的完整信息： **不僅包含參數的權值，還包含計算的流程（即計算圖）** 。當模型導出爲SavedModel文件時，無需建立模型的源代碼即可再次運行模型，這使得SavedModel尤其適用於模型的分享和部署。後文的TensorFlow Serving（服務器端部署模型）、TensorFlow Lite（移動端部署模型）以及TensorFlow.js都會用到這一格式。
+在部署模型時，我們的第一步往往是將訓練好的整個模型完整導出爲一系列標準格式的文件，然後即可在不同的平台上部署模型文件。這時，TensorFlow爲我們提供了SavedModel這一格式。與前面介紹的Checkpoint不同，SavedModel包含了一個TensorFlow程序的完整信息： **不僅包含參數的權值，還包含計算的流程（即計算圖）** 。當模型導出爲SavedModel文件時，無需建立模型的原始碼即可再次運行模型，這使得SavedModel尤其適用於模型的分享和部署。後文的TensorFlow Serving（伺服器端部署模型）、TensorFlow Lite（移動端部署模型）以及TensorFlow.js都會用到這一格式。
 
 Keras模型均可方便地導出爲SavedModel格式。不過需要注意的是，因爲SavedModel基於計算圖，所以對於使用繼承 ``tf.keras.Model`` 類建立的Keras模型，其需要導出到SavedModel格式的方法（比如 ``call`` ）都需要使用 ``@tf.function`` 修飾（ ``@tf.function`` 的使用方式見 :ref:`前文 <tffunction>` ）。然後，假設我們有一個名爲 ``model`` 的Keras模型，使用下面的代碼即可將模型導出爲SavedModel：
 
@@ -103,7 +103,7 @@ Keras Sequential save方法（Jinpeng）
 
 執行過程會比較久，執行結束後，會在當前目錄產生 ``mnist_cnn.h5`` 文件（HDF5格式），就是keras訓練後的模型，其中已經包含了訓練後的模型結構和權重等信息。
 
-在服務器端，可以直接通過 ``keras.models.load_model("mnist_cnn.h5")`` 加載，然後進行推理；在移動設備需要將HDF5模型文件轉換爲TensorFlow Lite的格式，然後通過相應平台的Interpreter加載，然後進行推理。
+在伺服器端，可以直接通過 ``keras.models.load_model("mnist_cnn.h5")`` 加載，然後進行推理；在行動裝置需要將HDF5模型文件轉換爲TensorFlow Lite的格式，然後通過相應平台的Interpreter加載，然後進行推理。
 
 .. raw:: html
 

@@ -11,7 +11,7 @@ for path, dir_list, file_list in os.walk('zh'):
         os.makedirs(dst_dir, exist_ok=True)
         dst_path = os.path.join(dst_dir, file_name)
         f_ = open(dst_path, 'w', encoding='utf8')
-        f_.write(zhconv.convert_for_mw(content, 'zh-hant'))
+        f_.write(zhconv.convert_for_mw(content, 'zh-tw'))
         print(src_path + ' -> ' + dst_path)
 
         dst_dir = path.replace('zh', 'zh_hans')
