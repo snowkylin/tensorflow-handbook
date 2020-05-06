@@ -12,6 +12,7 @@
 
 * Aurélien Géron. `机器学习实战：基于Scikit-Learn和TensorFlow <https://book.douban.com/subject/30317874/>`_ . 机械工业出版社, 2018.
 * 郑泽宇, 梁博文, and 顾思宇. `TensorFlow：实战Google深度学习框架（第2版） <https://book.douban.com/subject/30137062/>`_ . 电子工业出版社, 2018.
+* 阿斯顿·张（Aston Zhang）, 李沐（Mu Li）, 扎卡里·C. 立顿 等. `动手学深度学习 <https://zh.d2l.ai/index.html>`_ . 人民邮电出版社, 2019. （有在线版本可阅读）
 
 如果你对大学的知识已经生疏，或者还是高中生，推荐首先阅读以下教材：
 

@@ -248,6 +248,7 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
     * 台湾大学李宏毅教授的《机器学习》课程的 `Convolutional Neural Network <https://www.bilibili.com/video/av10590361/?p=21>`_ 一章；
     * UFLDL 教程 `Convolutional Neural Network <http://ufldl.stanford.edu/tutorial/supervised/ConvolutionalNeuralNetwork/>`_ 一节；
     * 斯坦福课程 `CS231n: Convolutional Neural Networks for Visual Recognition <http://cs231n.github.io/>`_ 中的 “Module 2: Convolutional Neural Networks” 部分。
+    * 《动手学深度学习》 的 `“卷积神经网络”一章 <https://zh.d2l.ai/chapter_convolutional-neural-networks/index.html>`_ 。
 
 使用Keras实现卷积神经网络
 -------------------------------------------------------
@@ -382,6 +383,7 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
     - `Recurrent Neural Networks Tutorial, Part 1 – Introduction to RNNs <http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/>`_
     - 台湾大学李宏毅教授的《机器学习》课程的 `Recurrent Neural Network (part 1) <https://www.bilibili.com/video/av10590361/?p=36>`_ `Recurrent Neural Network (part 2) <https://www.bilibili.com/video/av10590361/?p=37>`_ 两部分。
     - LSTM 原理：`Understanding LSTM Networks <https://colah.github.io/posts/2015-08-Understanding-LSTMs/>`_
+    - * 《动手学深度学习》 的 `“循环神经网络”一章 <https://zh.d2l.ai/chapter_recurrent-neural-networks/index.html>`_ 。
     - RNN 序列生成：[Graves2013]_
 
 这里，我们使用 RNN 来进行尼采风格文本的自动生成。 [#rnn_reference]_

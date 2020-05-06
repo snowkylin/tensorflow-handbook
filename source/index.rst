@@ -181,60 +181,18 @@ Q&A: https://discuss.tf.wiki
     en/appendix/tfhub
     en/appendix/tfds  
     en/appendix/swift
-    en/appendix/julia
-
-..
-    .. toctree:: 
-        :maxdepth: 2
-        :caption: 应用
-
-        en/application/rl
-        en/application/chatbot
+    en/appendix/quantum
 
 .. toctree:: 
     :maxdepth: 3
     :caption: Appendix
 
-    en/appendix/static 
+    en/appendix/rl
     en/appendix/docker
     en/appendix/cloud
     en/appendix/jupyterlab
-    en/appendix/optimization
     en/appendix/recommended_books
     en/appendix/terms
-
-..
-    .. toctree:: 
-        en/preface
-        en/installation
-        en/basic
-        en/models
-        en/extended 
-        en/static
-
-..
-    PDF download (old version): 
-
-    - Chinese version: https://discuss.tf.wiki/t/topic/23
-    - English version: https://github.com/snowkylin/tensorflow-handbook/releases
-
-    GitHub: https://github.com/snowkylin/tensorflow-handbook
-
-..  
-   preface
-   introduction
-   installation
-   basic
-   ops
-   models
-    --
-   visualization
-   debugging   
-    --
-   distributed
-   dynamic   
-   code
-   appendix
 
 .. only:: html
 

@@ -537,7 +537,7 @@ Deep reinforcement learning (DRL)
 
 以下代码展示了如何使用深度强化学习中的 Deep Q-Learning 方法来训练模型。
 
-.. literalinclude:: /_static/code/zh/model/rl/rl.py
+.. literalinclude:: /_static/code/zh/model/rl/qlearning.py
 
 对于不同的任务（或者说环境），我们需要根据任务的特点，设计不同的状态以及采取合适的网络来拟合 Q 函数。例如，如果我们考虑经典的打砖块游戏（Gym 环境库中的  `Breakout-v0 <https://gym.openai.com/envs/Breakout-v0/>`_ ），每一次执行动作（挡板向左、向右或不动），都会返回一个 ``210 * 160 * 3`` 的 RGB 图片，表示当前屏幕画面。为了给打砖块游戏这个任务设计合适的状态表示，我们有以下分析：
 
