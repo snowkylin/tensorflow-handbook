@@ -20,7 +20,7 @@ TPU 代表 Tensor Processing Unit (張量處理單元) ，是由谷歌在2016年
 
 早在2015年，谷歌大腦團隊就成立了第一個TPU中心，爲 Google Translation，Photos 和 Gmail等產品提供支持。 爲了使所有數據科學家和開發人員能夠訪問此技術，不久之後就發布了易於使用，可擴展且功能強大的基於雲的TPU，以便在 Google Cloud 上運行 TensorFlow 模型。
 
-TPU 由多個計算核心（Tensor Core）組成，其中包括標量，矢量和矩陣單元（MXU）。TPU（張量處理單元）與CPU（中央處理單元）和GPU（圖形處理單元）最重要的區別是：TPU的硬件專爲線性代數而設計，線性代數是深度學習的基石。在過去幾年中，Google TPU 已經發布了 v1，v2，v3, v2 Pod, v3 Pod, Edge 等多個版本：
+TPU 由多個計算核心（Tensor Core）組成，其中包括標量，矢量和矩陣單元（MXU）。TPU（張量處理單元）與CPU（中央處理單元）和GPU（圖形處理單元）最重要的區別是：TPU的硬體專爲線性代數而設計，線性代數是深度學習的基石。在過去幾年中，Google TPU 已經發布了 v1，v2，v3, v2 Pod, v3 Pod, Edge 等多個版本：
 
 .. list-table::
     :header-rows: 1
@@ -95,7 +95,7 @@ Source: Google
 TPU 性能
 --------------------------------------------
 
-根據研究顯示，TPU 比現代 GPU 和 CPU 快 15 到 30 倍。同時，TPU 還實現了比傳統芯片更好的能耗效率，算力能耗比值提高了30倍至80倍。
+根據研究顯示，TPU 比現代 GPU 和 CPU 快 15 到 30 倍。同時，TPU 還實現了比傳統晶片更好的能耗效率，算力能耗比值提高了30倍至80倍。
 
 .. list-table:: 每個周期的操作次數
    :header-rows: 0
@@ -172,7 +172,7 @@ Cloud TPU
 
 > Source: `TPUs for Developers <https://docs.google.com/presentation/d/1iodAZkOX0YMnUwohgQqNsbEkhR0zAnO-jncK9SkJ69o/edit#slide=id.g4461849552_8_3664>`_
 
-在使用 Cloud TPU 時，爲了免除繁瑣的驅動安裝，我們可以通過直接使用 Google Cloud 提供的 VM 操作系統鏡像。
+在使用 Cloud TPU 時，爲了免除繁瑣的驅動安裝，我們可以通過直接使用 Google Cloud 提供的 VM 作業系統鏡像。
 
 TPU 基礎使用
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -188,7 +188,7 @@ TPU 基礎使用
 
 在上面的代碼中，首先我們實例化 `TPUClusterResolver`；然後，我們連接 TPU Cluster，並對其進行初始化；最後，完成實例化 `TPUStrategy`。
 
-以下使用 Fashion MNIST 分類任務展示 TPU 的使用方式。本小節的源代碼可以在 https://github.com/huan/tensorflow-handbook-tpu 找到。
+以下使用 Fashion MNIST 分類任務展示 TPU 的使用方式。本小節的原始碼可以在 https://github.com/huan/tensorflow-handbook-tpu 找到。
 
 更方便的是在 Google Colab 上直接打開本例子的 Jupyter 直接運行，地址：https://colab.research.google.com/github/huan/tensorflow-handbook-tpu/blob/master/tensorflow-handbook-tpu-example.ipynb （推薦）
 

@@ -325,7 +325,7 @@
 <ol class="arabic simple">
 <li><p>開發效率高：強類型語言，能夠靜態檢查變量類型</p></li>
 <li><p>遷移成本低：與 Python，C，C++ 能夠無縫結合</p></li>
-<li><p>執行性能高：能夠直接編譯爲底層硬件代碼</p></li>
+<li><p>執行性能高：能夠直接編譯爲底層硬體代碼</p></li>
 <li><p>專門爲機器學習打造：語言原生支持自動微分系統</p></li>
 </ol>
 <p>與其他語言相比，S4TF 還有更多優勢。谷歌正在大力投資，使 Swift 成爲其 TensorFlow ML 基礎設施的一個關鍵組件，而且很有可能 Swift 將成爲深度學習的專屬語言。</p>
@@ -339,7 +339,7 @@
 <h2>S4TF 環境配置<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <div class="section" id="id2">
 <h3>本地安裝 Swift for TensorFlow<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
-<p>目前 S4TF 支持 Mac 和 Linux 兩個運行環境。安裝需要下載預先編譯好的軟件包，同時按照對應的操作系統的說明進行操作。安裝後，即可以使用全套 Swift 工具，包括 Swift（Swift REPL / Interpreter）和 Swiftc（Swift編譯器）。官方文檔（含下載地址）可見 <a class="reference external" href="https://github.com/tensorflow/swift/blob/master/Installation.md">這裡</a> 。</p>
+<p>目前 S4TF 支持 Mac 和 Linux 兩個運行環境。安裝需要下載預先編譯好的軟體包，同時按照對應的作業系統的說明進行操作。安裝後，即可以使用全套 Swift 工具，包括 Swift（Swift REPL / Interpreter）和 Swiftc（Swift編譯器）。官方文檔（含下載地址）可見 <a class="reference external" href="https://github.com/tensorflow/swift/blob/master/Installation.md">這裡</a> 。</p>
 </div>
 <div class="section" id="colaboratory-swift-for-tensorflow">
 <h3>在 Colaboratory 中快速體驗 Swift for TensorFlow<a class="headerlink" href="#colaboratory-swift-for-tensorflow" title="永久链接至标题">¶</a></h3>
@@ -433,7 +433,7 @@
 </div>
 <div class="section" id="swift-python">
 <h3>在 Swift 中直接加載 Python 語言庫<a class="headerlink" href="#swift-python" title="永久链接至标题">¶</a></h3>
-<p>Swift 語言支持直接加載 Python 函數庫（比如 NumPy），也支持直接加載系統動態鏈接庫，很方便的做到即導入即用。</p>
+<p>Swift 語言支持直接加載 Python 函數庫（比如 NumPy），也支持直接加載系統動態連結庫，很方便的做到即導入即用。</p>
 <p>藉助 S4TF 強大的集成能力，從 Python 遷移到 Swift 非常簡單。您可以逐步遷移 Python 代碼（或繼續使用 Python 代碼庫），因爲 S4TF 支持直接在代碼中加載 Python 原生代碼庫，使得開發者可以繼續使用熟悉的語法在 Swift 中調用 Python 中已經完成的功能。</p>
 <p>下面我們以 NumPy 爲例，看一下如何在 Swift 語言中，直接加載 Python 的 NumPy 代碼庫，並且直接進行調用：</p>
 <div class="highlight-swift notranslate"><div class="highlight"><pre><span></span><span class="kd">import</span> <span class="nc">Python</span>
@@ -569,7 +569,7 @@
 </div>
 <div class="admonition-swift-in-out-parameters admonition">
 <p class="admonition-title">Swift 輸入輸出參數 (In-Out Parameters)</p>
-<p>在 Swift 語言中，函數缺省是不可以修改參數的值的。爲了讓函數能夠修改傳入的參數變量，需要將傳入的參數作爲輸入輸出參數（In-Out Parmeters）。具體表現爲需要在參數前加 <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> 符號，表示這個值可以被函數修改。</p>
+<p>在 Swift 語言中，函數預設是不可以修改參數的值的。爲了讓函數能夠修改傳入的參數變量，需要將傳入的參數作爲輸入輸出參數（In-Out Parmeters）。具體表現爲需要在參數前加 <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> 符號，表示這個值可以被函數修改。</p>
 </div>
 <div class="admonition- admonition">
 <p class="admonition-title">優化器的參數</p>
@@ -592,7 +592,7 @@
 <span class="n">Test</span> <span class="n">Accuracy</span><span class="p">:</span> <span class="mf">0.9116667</span>
 </pre></div>
 </div>
-<p>本小節的源代碼可以在 <a class="reference external" href="https://github.com/huan/tensorflow-handbook-swift">https://github.com/huan/tensorflow-handbook-swift</a> 找到。加載 <cite>MNIST</cite> 數據集使用了作者封裝的 Swift Module： <a class="reference external" href="https://github.com/huan/swift-MNIST">swift-MNIST</a>。更方便的是在 Google Colab 上直接打開 <a class="reference external" href="https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb">本例子的 Jupyter Notebook</a> 直接運行。</p>
+<p>本小節的原始碼可以在 <a class="reference external" href="https://github.com/huan/tensorflow-handbook-swift">https://github.com/huan/tensorflow-handbook-swift</a> 找到。加載 <cite>MNIST</cite> 數據集使用了作者封裝的 Swift Module： <a class="reference external" href="https://github.com/huan/swift-MNIST">swift-MNIST</a>。更方便的是在 Google Colab 上直接打開 <a class="reference external" href="https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb">本例子的 Jupyter Notebook</a> 直接運行。</p>
 <script>
     $(document).ready(function(){
         $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");

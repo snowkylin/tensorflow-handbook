@@ -314,7 +314,7 @@ Dataset mnist downloaded and prepared to C:\Users\snowkylin\tensorflow_datasets\
 <div class="admonition hint">
 <p class="admonition-title">提示</p>
 <p>在使用 TensorFlow Datasets 時，可能需要設置代理。較爲簡易的方式是設置 <code class="docutils literal notranslate"><span class="pre">TFDS_HTTPS_PROXY</span></code> 環境變量，即</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">TFDS_HTTPS_PROXY</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理服務器IP</span><span class="p">:</span><span class="n">端口</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">TFDS_HTTPS_PROXY</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理伺服器IP</span><span class="p">:</span><span class="n">埠</span>
 </pre></div>
 </div>
 </div>
@@ -331,7 +331,7 @@ Dataset mnist downloaded and prepared to C:\Users\snowkylin\tensorflow_datasets\
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">img</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="p">[</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">])</span> <span class="o">/</span> <span class="mf">255.0</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span> \
     <span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span> \
     <span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
-<span class="c1"># 迭代數據</span>
+<span class="c1"># 疊代數據</span>
 <span class="k">for</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
     <span class="c1"># 對images和labels進行操作</span>
 </pre></div>

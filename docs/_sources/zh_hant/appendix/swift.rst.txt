@@ -29,7 +29,7 @@ Google 推出的 Swift for TensorFlow （簡稱S4TF）是專門針對 TensorFlow
 
 #. 開發效率高：強類型語言，能夠靜態檢查變量類型
 #. 遷移成本低：與 Python，C，C++ 能夠無縫結合
-#. 執行性能高：能夠直接編譯爲底層硬件代碼
+#. 執行性能高：能夠直接編譯爲底層硬體代碼
 #. 專門爲機器學習打造：語言原生支持自動微分系統
 
 與其他語言相比，S4TF 還有更多優勢。谷歌正在大力投資，使 Swift 成爲其 TensorFlow ML 基礎設施的一個關鍵組件，而且很有可能 Swift 將成爲深度學習的專屬語言。
@@ -44,7 +44,7 @@ S4TF 環境配置
 本地安裝 Swift for TensorFlow
 ---------------------------------------------------------------
 
-目前 S4TF 支持 Mac 和 Linux 兩個運行環境。安裝需要下載預先編譯好的軟件包，同時按照對應的操作系統的說明進行操作。安裝後，即可以使用全套 Swift 工具，包括 Swift（Swift REPL / Interpreter）和 Swiftc（Swift編譯器）。官方文檔（含下載地址）可見 `這裡 <https://github.com/tensorflow/swift/blob/master/Installation.md>`_ 。
+目前 S4TF 支持 Mac 和 Linux 兩個運行環境。安裝需要下載預先編譯好的軟體包，同時按照對應的作業系統的說明進行操作。安裝後，即可以使用全套 Swift 工具，包括 Swift（Swift REPL / Interpreter）和 Swiftc（Swift編譯器）。官方文檔（含下載地址）可見 `這裡 <https://github.com/tensorflow/swift/blob/master/Installation.md>`_ 。
 
 在 Colaboratory 中快速體驗 Swift for TensorFlow
 ---------------------------------------------------------------
@@ -146,7 +146,7 @@ Swift 是動態強類型語言，也就是說 Swift 支持通過編譯器自動�
 在 Swift 中直接加載 Python 語言庫
 ---------------------------------------------
 
-Swift 語言支持直接加載 Python 函數庫（比如 NumPy），也支持直接加載系統動態鏈接庫，很方便的做到即導入即用。
+Swift 語言支持直接加載 Python 函數庫（比如 NumPy），也支持直接加載系統動態連結庫，很方便的做到即導入即用。
 
 藉助 S4TF 強大的集成能力，從 Python 遷移到 Swift 非常簡單。您可以逐步遷移 Python 代碼（或繼續使用 Python 代碼庫），因爲 S4TF 支持直接在代碼中加載 Python 原生代碼庫，使得開發者可以繼續使用熟悉的語法在 Swift 中調用 Python 中已經完成的功能。
 
@@ -261,7 +261,7 @@ MNIST數字分類
 
 .. admonition:: Swift 輸入輸出參數 (In-Out Parameters)
 
-    在 Swift 語言中，函數缺省是不可以修改參數的值的。爲了讓函數能夠修改傳入的參數變量，需要將傳入的參數作爲輸入輸出參數（In-Out Parmeters）。具體表現爲需要在參數前加 ``&`` 符號，表示這個值可以被函數修改。
+    在 Swift 語言中，函數預設是不可以修改參數的值的。爲了讓函數能夠修改傳入的參數變量，需要將傳入的參數作爲輸入輸出參數（In-Out Parmeters）。具體表現爲需要在參數前加 ``&`` 符號，表示這個值可以被函數修改。
 
 .. admonition:: 優化器的參數
 
@@ -282,7 +282,7 @@ MNIST數字分類
     Constructing data tensors.
     Test Accuracy: 0.9116667
 
-本小節的源代碼可以在 https://github.com/huan/tensorflow-handbook-swift 找到。加載 `MNIST` 數據集使用了作者封裝的 Swift Module： `swift-MNIST <https://github.com/huan/swift-MNIST>`_。更方便的是在 Google Colab 上直接打開 `本例子的 Jupyter Notebook <https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb>`_ 直接運行。
+本小節的原始碼可以在 https://github.com/huan/tensorflow-handbook-swift 找到。加載 `MNIST` 數據集使用了作者封裝的 Swift Module： `swift-MNIST <https://github.com/huan/swift-MNIST>`_。更方便的是在 Google Colab 上直接打開 `本例子的 Jupyter Notebook <https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb>`_ 直接運行。
 
 .. raw:: html
 

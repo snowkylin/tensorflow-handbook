@@ -285,8 +285,8 @@
 <h2>關於計算性能的若干重要事實<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <p>在算法課程中，我們往往使用時間複雜度（大O符號）作爲衡量算法性能的重要指標。這種表示方法對於算法理論性能分析非常有效，但也可能給我們帶來一種誤解，即常數項的時間複雜度變化對實際的數值計算效率影響不大。事實上，在實際的數值計算中，有以下關於計算性能的重要事實。儘管它們帶來的都是常數級的時間複雜度變化，但對計算性能的影響卻相當顯著。</p>
 <ul class="simple">
-<li><p>不同的程序設計語言由於設計機制和理念，以及編譯器/解釋器的實現方式不同，在數值計算的效率上有着巨大的區別。例如，Python 語言爲了增強語言的動態性，而犧牲了大量計算效率。而C/C++語言雖然複雜，但具有出色的計算效率。簡而言之，對程序員友好的語言往往對計算機不友好，反之亦然。不同程序設計語言帶來的性能差距可達 <img class="math" src="../../_images/math/9a60a9694103bb1213836bb5cd7e568290f03a02.png" alt="10^2"/> 數量級以上。TensorFlow 等各種數值計算庫的底層就是使用 C++ 開發的；</p></li>
-<li><p>對於矩陣運算，由於有內置的並行加速和硬件優化過程，數值計算庫的內置方法（底層調用BLAS）往往要遠快於直接使用 For 循環，大規模矩陣運算的性能差距可達 <img class="math" src="../../_images/math/9a60a9694103bb1213836bb5cd7e568290f03a02.png" alt="10^2"/> 數量級以上；</p></li>
+<li><p>不同的程序設計語言由於設計機制和理念，以及編譯器/解釋器的實現方式不同，在數值計算的效率上有著巨大的區別。例如，Python 語言爲了增強語言的動態性，而犧牲了大量計算效率。而C/C++語言雖然複雜，但具有出色的計算效率。簡而言之，對程式設計師友好的語言往往對計算機不友好，反之亦然。不同程序設計語言帶來的性能差距可達 <img class="math" src="../../_images/math/9a60a9694103bb1213836bb5cd7e568290f03a02.png" alt="10^2"/> 數量級以上。TensorFlow 等各種數值計算庫的底層就是使用 C++ 開發的；</p></li>
+<li><p>對於矩陣運算，由於有內置的並行加速和硬體優化過程，數值計算庫的內置方法（底層調用BLAS）往往要遠快於直接使用 For 循環，大規模矩陣運算的性能差距可達 <img class="math" src="../../_images/math/9a60a9694103bb1213836bb5cd7e568290f03a02.png" alt="10^2"/> 數量級以上；</p></li>
 <li><p>對於矩陣/張量運算，GPU 的並行架構（大量小的計算單元並行運算）使其相較於 CPU 具有明顯優勢，具體視 CPU 和 GPU 的性能而定。在 CPU 和 GPU 級別相當時，大規模張量計算的性能差距一般可達 <img class="math" src="../../_images/math/19b81b50ac97f10f1a7e180f462713350c16dade.png" alt="10^1"/> 以上。</p></li>
 </ul>
 <p>以下示例程序使用了 Python 的三重 For 循環、Cython 的三重 For 循環、NumPy 的 <code class="docutils literal notranslate"><span class="pre">dot</span></code> 函數和 TensorFlow 的 <code class="docutils literal notranslate"><span class="pre">matmul</span></code> 函數，分別計算了兩個 10000×10000 的隨機矩陣 <code class="docutils literal notranslate"><span class="pre">A</span></code> 和 <code class="docutils literal notranslate"><span class="pre">B</span></code> 的乘積。程序運行平台爲一台具備Intel i9-9900K處理器、NVIDIA GeForce RTX 2060 SUPER顯卡與64GB內存的個人電腦（後文亦同）。運行所需時間分別標註在了程序的注釋中。</p>
@@ -359,8 +359,8 @@
 </div>
 <div class="section" id="id5">
 <h2>性能優化策略<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
-<p>從以上介紹可以看出，模型運行效率低，不一定是硬件性能不夠好的緣故。在購買高性能硬件的時候，有必要多思考一下現有硬件的性能是否通過優化而得到了充分應用。如果不能確定，可以借或租一台高性能硬件（如雲服務）並在上面運行模型，觀察性能提升的程度。相對而言，借或租的成本遠低於升級或購買新硬件，對於個人開發者而言是更爲具有性價比的選擇。</p>
-<p>同時，性能優化也存在一個度的問題。一方面，我們有必要在機器學習模型開發的初期就考慮良好的設計和架構，使得模型在高可復用性的基礎上達到較優的運行性能。另一方面，代碼的可讀性在機器學習中尤爲重要。正如軟件工程中的名言，「premature optimization is the root of all evil」 <a class="reference internal" href="#knuth1974" id="id6"><span>[Knuth1974]</span></a> 。直白來說，不要浪費時間做一些提速不大、而且還會嚴重犧牲代碼可讀性的性能優化。</p>
+<p>從以上介紹可以看出，模型運行效率低，不一定是硬體性能不夠好的緣故。在購買高性能硬體的時候，有必要多思考一下現有硬體的性能是否通過優化而得到了充分應用。如果不能確定，可以借或租一台高性能硬體（如雲服務）並在上面運行模型，觀察性能提升的程度。相對而言，借或租的成本遠低於升級或購買新硬體，對於個人開發者而言是更爲具有性價比的選擇。</p>
+<p>同時，性能優化也存在一個度的問題。一方面，我們有必要在機器學習模型開發的初期就考慮良好的設計和架構，使得模型在高可復用性的基礎上達到較優的運行性能。另一方面，代碼的可讀性在機器學習中尤爲重要。正如軟體工程中的名言，「premature optimization is the root of all evil」 <a class="reference internal" href="#knuth1974" id="id6"><span>[Knuth1974]</span></a> 。直白來說，不要浪費時間做一些提速不大、而且還會嚴重犧牲代碼可讀性的性能優化。</p>
 <dl class="citation">
 <dt class="label" id="knuth1974"><span class="brackets"><a class="fn-backref" href="#id6">Knuth1974</a></span></dt>
 <dd><p>Knuth D E. Structured programming with go to statements[J]. ACM Computing Surveys (CSUR), 1974, 6(4): 261-301.</p>

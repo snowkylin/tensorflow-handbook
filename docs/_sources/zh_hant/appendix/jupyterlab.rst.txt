@@ -1,7 +1,7 @@
 部署自己的交互式Python開發環境JupyterLab
 ============================================
 
-如果你既希望獲得本地或雲端強大的計算能力，又希望獲得Jupyter Notebook或Colab中方便的在線Python交互式運行環境，可以自己爲的本地服務器或雲服務器安裝JupyterLab。JupyterLab可以理解成升級版的Jupyter Notebook/Colab，提供多標籤頁支持，在線終端和文件管理等一系列方便的功能，接近於一個在線的Python IDE。
+如果你既希望獲得本地或雲端強大的計算能力，又希望獲得Jupyter Notebook或Colab中方便的在線Python交互式運行環境，可以自己爲的本地伺服器或雲伺服器安裝JupyterLab。JupyterLab可以理解成升級版的Jupyter Notebook/Colab，提供多標籤頁支持，在線終端和文件管理等一系列方便的功能，接近於一個在線的Python IDE。
 
 .. tip:: 部分雲服務提供了開箱即用的JupyterLab環境，例如前章介紹的 :ref:`GCP中AI Platform的Notebook <notebook>` ，以及 `FloydHub <https://www.floydhub.com/>`_ 。
 
@@ -18,7 +18,7 @@
 
     jupyter lab --ip=0.0.0.0
 
-然後根據輸出的提示，使用瀏覽器訪問 ``http://服務器地址:8888`` ，並使用輸出中提供的token直接登錄（或設置密碼後登錄）即可。
+然後根據輸出的提示，使用瀏覽器訪問 ``http://伺服器地址:8888`` ，並使用輸出中提供的token直接登錄（或設置密碼後登錄）即可。
 
 JupyterLab界面如下所示：
 
@@ -26,9 +26,9 @@ JupyterLab界面如下所示：
     :width: 100%
     :align: center
 
-.. hint:: 可以使用 ``--port`` 參數指定端口號。
+.. hint:: 可以使用 ``--port`` 參數指定埠號。
 
-    部分雲服務（如GCP）的實例默認不開放大多數網絡端口。如果使用默認端口號，需要在防火牆設置中打開端口（例如GCP需要在「虛擬機實例詳情-網絡接口-查看詳情」中新建防火牆規則，開放對應端口並應用到當前實例）。
+    部分雲服務（如GCP）的實例默認不開放大多數網絡埠。如果使用默認埠號，需要在防火牆設置中打開埠（例如GCP需要在「虛擬機實例詳情-網絡接口-查看詳情」中新建防火牆規則，開放對應埠並應用到當前實例）。
 
     如果需要在終端退出後仍然持續運行JupyterLab，可以使用 ``nohup`` 命令及 ``&`` 放入後台運行，即：
 

@@ -19,13 +19,13 @@ TensorFlow.js 簡介
     :width: 60%
     :align: center
 
-TensorFlow.js 是 TensorFlow 的 JavaScript 版本，支持GPU硬件加速，可以運行在 Node.js 或瀏覽器環境中。它不但支持完全基於 JavaScript 從頭開發、訓練和部署模型，也可以用來運行已有的 Python 版 TensorFlow 模型，或者基於現有的模型進行繼續訓練。
+TensorFlow.js 是 TensorFlow 的 JavaScript 版本，支持GPU硬體加速，可以運行在 Node.js 或瀏覽器環境中。它不但支持完全基於 JavaScript 從頭開發、訓練和部署模型，也可以用來運行已有的 Python 版 TensorFlow 模型，或者基於現有的模型進行繼續訓練。
 
 .. figure:: /_static/image/javascript/architecture.png
     :width: 60%
     :align: center
 
-TensorFlow.js 支持 GPU 硬件加速。在 Node.js 環境中，如果有 CUDA 環境支持，或者在瀏覽器環境中，有 WebGL 環境支持，那麼 TensorFlow.js 可以使用硬件進行加速。
+TensorFlow.js 支持 GPU 硬體加速。在 Node.js 環境中，如果有 CUDA 環境支持，或者在瀏覽器環境中，有 WebGL 環境支持，那麼 TensorFlow.js 可以使用硬體進行加速。
 
 .. admonition:: 微信小程序
 
@@ -46,14 +46,14 @@ TensorFlow.js 支持 GPU 硬件加速。在 Node.js 環境中，如果有 CUDA �
 
 TensorFlow.js 可以讓我們直接在瀏覽器中加載 TensorFlow，讓用戶立即通過本地的CPU/GPU資源進行我們所需要的機器學習運算，更靈活地進行AI應用的開發。
 
-瀏覽器中進行機器學習，相對比與服務器端來講，將擁有以下四大優勢：
+瀏覽器中進行機器學習，相對比與伺服器端來講，將擁有以下四大優勢：
 
-* 不需要安裝軟件或驅動（打開瀏覽器即可使用）；
-* 可以通過瀏覽器進行更加方便的人機交互；
-* 可以通過手機瀏覽器，調用手機硬件的各種傳感器（如：GPS、電子羅盤、加速度傳感器、攝像頭等）；
-* 用戶的數據可以無需上傳到服務器，在本地即可完成所需操作。
+* 不需要安裝軟體或驅動（打開瀏覽器即可使用）；
+* 可以通過瀏覽器進行更加方便的人機互動；
+* 可以通過手機瀏覽器，調用手機硬體的各種傳感器（如：GPS、電子羅盤、加速度傳感器、攝像頭等）；
+* 用戶的數據可以無需上傳到伺服器，在本地即可完成所需操作。
 
-通過這些優勢，TensorFlow.js 將給開發者帶來極高的靈活性。比如在 Google Creative Lab 在2018年7月發布的 Move Mirror 里，我們可以在手機上打開瀏覽器，通過手機攝像頭檢測視頻中用戶的身體動作姿勢，然後通過對圖片數據庫中類似身體動作姿勢的檢索，給用戶顯示一個最能夠和他當前動作相似的照片。在Move Mirror的運行過程中，數據沒有上傳到服務器，所有的運算都是在手機本地，基於手機的CPU/GPU完成的，而這項技術，將使Servreless與AI應用結合起來成爲可能。
+通過這些優勢，TensorFlow.js 將給開發者帶來極高的靈活性。比如在 Google Creative Lab 在2018年7月發布的 Move Mirror 里，我們可以在手機上打開瀏覽器，通過手機攝像頭檢測視頻中用戶的身體動作姿勢，然後通過對圖片資料庫中類似身體動作姿勢的檢索，給用戶顯示一個最能夠和他當前動作相似的照片。在Move Mirror的運行過程中，數據沒有上傳到伺服器，所有的運算都是在手機本地，基於手機的CPU/GPU完成的，而這項技術，將使Servreless與AI應用結合起來成爲可能。
 
 .. figure:: /_static/image/javascript/move-mirror.jpg
     :width: 60%
@@ -77,7 +77,7 @@ TensorFlow.js 環境配置
 在 Node.js 中使用 TensorFlow.js
 --------------------------------------------
 
-服務器端使用 JavaScript ，首先需要按照 `NodeJS.org <https://nodejs.org>`_ 官網的說明，完成安裝最新版本的 Node.js 。
+伺服器端使用 JavaScript ，首先需要按照 `NodeJS.org <https://nodejs.org>`_ 官網的說明，完成安裝最新版本的 Node.js 。
 
 然後，完成以下四個步驟即可完成配置：
 
@@ -149,7 +149,7 @@ TensorFlow.js 微信小程序插件封裝了 TensorFlow.js 庫，用於提供給
 
 .. admonition:: TensorFlow.js 微信小程序教程
 
-    爲了推動微信小程序中人工智能應用的發展，Google 專門爲微信小程序打造了最新 TensorFlow.js 插件，並聯合 Google 認證機器學習專家、微信、騰訊課堂 NEXT 學院，聯合推出了「NEXT學院：TensorFlow.js遇到小程序」課程，幫助小程序開發者帶來更加易於上手和流暢的 TensorFlow.js 開發體驗。
+    爲了推動微信小程序中人工智慧應用的發展，Google 專門爲微信小程序打造了最新 TensorFlow.js 插件，並聯合 Google 認證機器學習專家、微信、騰訊課堂 NEXT 學院，聯合推出了「NEXT學院：TensorFlow.js遇到小程序」課程，幫助小程序開發者帶來更加易於上手和流暢的 TensorFlow.js 開發體驗。
 
     上述課程主要介紹了如何將 TensorFlow.js 插件嵌入到微信小程序中，並基於其進行開發。課程中以一個姿態檢測的模型 PoseNet 作爲案例，介紹了 TensorFlow.js 插件導入到微信小程序開發工具中後，在項目開發中的配置，功能調用，加載模型等方法應用；此外，還介紹了在 Python 環境下訓練好的模型如何轉換並載入到小程序中。
 
@@ -249,16 +249,16 @@ TensorFlow.js 模型部署
     const model2 = await tf.node.loadSavedModel(path2, [tag], signatureKey)
     const outputMap = model2.predict({input1: inputTensor1, input2:inputTensor2})
 
-此功能需要 ``@tensorflow/tfjs-node`` 版本爲 1.3.2 或更高，同時支持 CPU 和 GPU。它支持在 TensorFlow Python 1.x 和 2.0 版本中訓練和導出的 TensorFlow SavedModel。由此帶來的好處除了無需進行任何轉換，原生執行 TensorFlow SavedModel 意味着您可以在模型中使用 TensorFlow.js 尚未支持的算子。這要通過將 SavedModel 作爲 TensorFlow 會話加載到 C++ 中進行綁定予以實現。
+此功能需要 ``@tensorflow/tfjs-node`` 版本爲 1.3.2 或更高，同時支持 CPU 和 GPU。它支持在 TensorFlow Python 1.x 和 2.0 版本中訓練和導出的 TensorFlow SavedModel。由此帶來的好處除了無需進行任何轉換，原生執行 TensorFlow SavedModel 意味著您可以在模型中使用 TensorFlow.js 尚未支持的算子。這要通過將 SavedModel 作爲 TensorFlow 會話加載到 C++ 中進行綁定予以實現。
 
 使用 TensorFlow.js 模型庫
 --------------------------------------------
 
-TensorFlow.js 提供了一系列預訓練好的模型，方便大家快速地給自己的程序引入人工智能能力。
+TensorFlow.js 提供了一系列預訓練好的模型，方便大家快速地給自己的程序引入人工智慧能力。
 
 模型庫 GitHub 地址：https://github.com/tensorflow/tfjs-models，其中模型分類包括圖像識別、語音識別、人體姿態識別、物體識別、文字分類等。
 
-由於這些API默認模型文件都存儲在谷歌雲上，直接使用會導致中國用戶無法直接讀取。在程序內使用模型API時要提供 modelUrl 的參數，可以指向谷歌中國的鏡像服務器。
+由於這些API默認模型文件都存儲在谷歌雲上，直接使用會導致中國用戶無法直接讀取。在程序內使用模型API時要提供 modelUrl 的參數，可以指向谷歌中國的鏡像伺服器。
 
 谷歌雲的base url是 https://storage.googleapis.com， 中國鏡像的base url是 https://www.gstaticcnapps.cn 模型的url path是一致的。以 posenet模型爲例：
 
@@ -394,7 +394,7 @@ TensorFlow.js 在手機瀏覽器中運行一次推理：
 
 台式機瀏覽器性能：（單位：毫秒ms）
 
-在瀏覽器中，TensorFlow.js 可以使用 WebGL 進行硬件加速，將 GPU 資源使用起來。
+在瀏覽器中，TensorFlow.js 可以使用 WebGL 進行硬體加速，將 GPU 資源使用起來。
 
 .. figure:: /_static/image/javascript/performance-browser.png
     :width: 60%

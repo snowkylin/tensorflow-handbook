@@ -289,7 +289,7 @@
   <div class="section" id="tensorflow-lite-jinpeng">
 <h1>TensorFlow Lite（Jinpeng）<a class="headerlink" href="#tensorflow-lite-jinpeng" title="永久链接至标题">¶</a></h1>
 <p>TensorFlow Lite是TensorFlow在移動和IoT等邊緣設備端的解決方案，提供了Java、Python和C++ API庫，可以運行在Android、iOS和Raspberry Pi等設備上。2019年是5G元年，萬物互聯的時代已經來臨，作爲TensorFlow在邊緣設備上的基礎設施，TFLite將會是愈發重要的角色。</p>
-<p>目前TFLite只提供了推理功能，在服務器端進行訓練後，經過如下簡單處理即可部署到邊緣設備上。</p>
+<p>目前TFLite只提供了推理功能，在伺服器端進行訓練後，經過如下簡單處理即可部署到邊緣設備上。</p>
 <ul class="simple">
 <li><p>模型轉換：由於邊緣設備計算等資源有限，使用TensorFlow訓練好的模型，模型太大、運行效率比較低，不能直接在移動端部署，需要通過相應工具進行轉換成適合邊緣設備的格式。</p></li>
 <li><p>邊緣設備部署：本節以android爲例，簡單介紹如何在android應用中部署轉化後的模型，完成Mnist圖片的識別。</p></li>
@@ -371,7 +371,7 @@ dependencies {
 <p>設置好後，sync和build整個工程，如果build成功說明，配置成功。</p>
 <p><strong>添加tflite文件到assets文件夾</strong></p>
 <p>在app目錄先新建assets目錄，並將 <code class="docutils literal notranslate"><span class="pre">mnist_savedmodel.tflite</span></code> 文件保存到assets目錄。重新編譯apk，檢查新編譯出來的apk的assets文件夾是否有 <code class="docutils literal notranslate"><span class="pre">mnist_cnn.tflite</span></code> 文件。</p>
-<p>點擊菜單Build-&gt;Build APK(s)觸發apk編譯，apk編譯成功點擊右下角的EventLog。點擊最後一條信息中的 <code class="docutils literal notranslate"><span class="pre">analyze</span></code> 鏈接，會觸發apk analyzer查看新編譯出來的apk，若在assets目錄下存在 <code class="docutils literal notranslate"><span class="pre">mnist_savedmodel.tflite</span></code> ，則編譯打包成功，如下：</p>
+<p>點擊菜單Build-&gt;Build APK(s)觸發apk編譯，apk編譯成功點擊右下角的EventLog。點擊最後一條信息中的 <code class="docutils literal notranslate"><span class="pre">analyze</span></code> 連結，會觸發apk analyzer查看新編譯出來的apk，若在assets目錄下存在 <code class="docutils literal notranslate"><span class="pre">mnist_savedmodel.tflite</span></code> ，則編譯打包成功，如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">assets</span>
      <span class="o">|</span><span class="n">__mnist_savedmodel</span><span class="o">.</span><span class="n">tflite</span>
 </pre></div>

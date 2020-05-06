@@ -392,7 +392,7 @@
 <h3>計算圖中的變量<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
 <div class="section" id="id4">
 <h4>變量的聲明<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h4>
-<p><strong>變量</strong> （Variable）是一種特殊類型的張量，在 TensorFlow 1.X 的圖執行模式 API 中使用 <code class="docutils literal notranslate"><span class="pre">tf.get_variable()</span></code> 建立。與編程語言中的變量很相似。使用變量前需要先初始化，變量內存儲的值可以在計算圖的計算過程中被修改。以下示例代碼展示了如何建立一個變量，將其值初始化爲0，並逐次累加1。</p>
+<p><strong>變量</strong> （Variable）是一種特殊類型的張量，在 TensorFlow 1.X 的圖執行模式 API 中使用 <code class="docutils literal notranslate"><span class="pre">tf.get_variable()</span></code> 建立。與程式語言中的變量很相似。使用變量前需要先初始化，變量內存儲的值可以在計算圖的計算過程中被修改。以下示例代碼展示了如何建立一個變量，將其值初始化爲0，並逐次累加1。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow.compat.v1</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="n">tf</span><span class="o">.</span><span class="n">disable_eager_execution</span><span class="p">()</span>
 
@@ -575,7 +575,7 @@
 </div>
 <div class="section" id="id8">
 <h3>優化器<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
-<p>由於機器學習中的求導往往伴隨着優化，所以 TensorFlow 中更常用的是優化器（Optimizer）。在 TensorFlow 1.X 的圖執行模式 API 中，我們往往使用 <code class="docutils literal notranslate"><span class="pre">tf.train</span></code> 中的各種優化器，將求導和調整變量值的步驟合二爲一。例如，以下代碼片段在計算圖構建過程中，使用 <code class="docutils literal notranslate"><span class="pre">tf.train.GradientDescentOptimizer</span></code> 這一梯度下降優化器優化損失函數 <code class="docutils literal notranslate"><span class="pre">loss</span></code> ：</p>
+<p>由於機器學習中的求導往往伴隨著優化，所以 TensorFlow 中更常用的是優化器（Optimizer）。在 TensorFlow 1.X 的圖執行模式 API 中，我們往往使用 <code class="docutils literal notranslate"><span class="pre">tf.train</span></code> 中的各種優化器，將求導和調整變量值的步驟合二爲一。例如，以下代碼片段在計算圖構建過程中，使用 <code class="docutils literal notranslate"><span class="pre">tf.train.GradientDescentOptimizer</span></code> 這一梯度下降優化器優化損失函數 <code class="docutils literal notranslate"><span class="pre">loss</span></code> ：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data_placeholder</span><span class="p">)</span>    <span class="c1"># 模型構建</span>
 <span class="n">loss</span> <span class="o">=</span> <span class="o">...</span>                          <span class="c1"># 計算模型的損失函數 loss</span>
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">GradientDescentOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
@@ -642,8 +642,8 @@
 <div class="section" id="id10">
 <h2>基礎示例：線性回歸<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
 <p>在本節，我們爲 <a class="reference internal" href="../basic/basic.html#linear-regression"><span class="std std-ref">第一章的線性回歸示例</span></a> 提供一個基於 TensorFlow 1.X 的圖執行模式 API 的版本，供有需要的讀者對比參考。</p>
-<p>與第一章的NumPy和即時執行模式不同，TensorFlow的圖執行模式使用 <strong>符號式編程</strong> 來進行數值運算。首先，我們需要將待計算的過程抽象爲計算圖，將輸入、運算和輸出都用符號化的節點來表達。然後，我們將數據不斷地送入輸入節點，讓數據沿着計算圖進行計算和流動，最終到達我們需要的特定輸出節點。</p>
-<p>以下代碼展示了如何基於TensorFlow的符號式編程方法完成與前節相同的任務。其中， <code class="docutils literal notranslate"><span class="pre">tf.placeholder()</span></code> 即可以視爲一種「符號化的輸入節點」，使用 <code class="docutils literal notranslate"><span class="pre">tf.get_variable()</span></code> 定義模型的參數（Variable類型的張量可以使用 <code class="docutils literal notranslate"><span class="pre">tf.assign()</span></code> 操作進行賦值），而 <code class="docutils literal notranslate"><span class="pre">sess.run(output_node,</span> <span class="pre">feed_dict={input_node:</span> <span class="pre">data})</span></code> 可以視作將數據送入輸入節點，沿着計算圖計算併到達輸出節點並返回值的過程。</p>
+<p>與第一章的NumPy和即時執行模式不同，TensorFlow的圖執行模式使用 <strong>符號式編程</strong> 來進行數值運算。首先，我們需要將待計算的過程抽象爲計算圖，將輸入、運算和輸出都用符號化的節點來表達。然後，我們將數據不斷地送入輸入節點，讓數據沿著計算圖進行計算和流動，最終到達我們需要的特定輸出節點。</p>
+<p>以下代碼展示了如何基於TensorFlow的符號式編程方法完成與前節相同的任務。其中， <code class="docutils literal notranslate"><span class="pre">tf.placeholder()</span></code> 即可以視爲一種「符號化的輸入節點」，使用 <code class="docutils literal notranslate"><span class="pre">tf.get_variable()</span></code> 定義模型的參數（Variable類型的張量可以使用 <code class="docutils literal notranslate"><span class="pre">tf.assign()</span></code> 操作進行賦值），而 <code class="docutils literal notranslate"><span class="pre">sess.run(output_node,</span> <span class="pre">feed_dict={input_node:</span> <span class="pre">data})</span></code> 可以視作將數據送入輸入節點，沿著計算圖計算併到達輸出節點並返回值的過程。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="c1"># 定义数据流图</span>

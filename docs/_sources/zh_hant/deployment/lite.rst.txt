@@ -3,7 +3,7 @@ TensorFlow Lite（Jinpeng）
 
 TensorFlow Lite是TensorFlow在移動和IoT等邊緣設備端的解決方案，提供了Java、Python和C++ API庫，可以運行在Android、iOS和Raspberry Pi等設備上。2019年是5G元年，萬物互聯的時代已經來臨，作爲TensorFlow在邊緣設備上的基礎設施，TFLite將會是愈發重要的角色。
 
-目前TFLite只提供了推理功能，在服務器端進行訓練後，經過如下簡單處理即可部署到邊緣設備上。
+目前TFLite只提供了推理功能，在伺服器端進行訓練後，經過如下簡單處理即可部署到邊緣設備上。
 
 * 模型轉換：由於邊緣設備計算等資源有限，使用TensorFlow訓練好的模型，模型太大、運行效率比較低，不能直接在移動端部署，需要通過相應工具進行轉換成適合邊緣設備的格式。
 
@@ -110,7 +110,7 @@ Android部署
 
 在app目錄先新建assets目錄，並將 ``mnist_savedmodel.tflite`` 文件保存到assets目錄。重新編譯apk，檢查新編譯出來的apk的assets文件夾是否有 ``mnist_cnn.tflite`` 文件。
 
-點擊菜單Build->Build APK(s)觸發apk編譯，apk編譯成功點擊右下角的EventLog。點擊最後一條信息中的 ``analyze`` 鏈接，會觸發apk analyzer查看新編譯出來的apk，若在assets目錄下存在 ``mnist_savedmodel.tflite`` ，則編譯打包成功，如下：
+點擊菜單Build->Build APK(s)觸發apk編譯，apk編譯成功點擊右下角的EventLog。點擊最後一條信息中的 ``analyze`` 連結，會觸發apk analyzer查看新編譯出來的apk，若在assets目錄下存在 ``mnist_savedmodel.tflite`` ，則編譯打包成功，如下：
 
 .. code-block::
 

@@ -293,10 +293,10 @@
 <p>如果你是一個初學機器學習/深度學習的學生，你可能已經啃完了Andrew Ng的機器學習公開課或者斯坦福的 <a class="reference external" href="http://ufldl.stanford.edu/wiki/index.php/UFLDL_Tutorial">UFIDL Tutorial</a> ，亦或是正在上學校里的深度學習課程。你可能也已經了解了鏈式求導法則和梯度下降法，知道了若干種損失函數，並且對卷積神經網絡（CNN）、循環神經網絡（RNN）和強化學習的理論也有了一些大致的認識。然而——你依然不知道這些模型在計算機中具體要如何實現。這時，你希望能有一個程序庫，幫助你把書本上的公式和算法運用於實踐。</p>
 <p>具體而言，以最常見的有監督學習（supervised learning）爲例。假設你已經掌握了一個模型 <img class="math" src="../_images/math/d6c0b6370b17506b5b095926b31ea8d8e45b336e.png" alt="\hat{y} = f(x, \theta)"/> （x、y爲輸入和輸出， <img class="math" src="../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> 爲模型參數），確定了一個損失函數 <img class="math" src="../_images/math/e3935be137c28b9efb58d892b3fee6ae7b11cec9.png" alt="L(y, \hat{y})"/> ，並獲得了一批數據 <img class="math" src="../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/>  和相對應的標籤 <img class="math" src="../_images/math/f89383d07ea00637c4218cd6dc4eb3ae2b04fcdc.png" alt="Y"/> 。這時，你會希望有一個程序庫，幫助你實現下列事情：</p>
 <ul class="simple">
-<li><p>用計算機程序表示出向量、矩陣和張量等數學概念，並方便地進行運算；</p></li>
-<li><p>方便地建立模型 <img class="math" src="../_images/math/dc5fd2a1c98a88c9aa8c2ff2717597b68f5881ae.png" alt="f(x, \theta)"/> 和損失函數 <img class="math" src="../_images/math/61ba744183b1a02c5ad12f1bac5f1b43a783a309.png" alt="L(y, \hat{y}) = L(y, f(x, \theta))"/> 。給定輸入 <img class="math" src="../_images/math/b57e344d806a27b36dcd7d1d9b48be070dc12c70.png" alt="x_0 \in X"/> ，對應的標籤 <img class="math" src="../_images/math/3dca79bb1ecb4152a3a478491af6dc2558999480.png" alt="y_0 \in Y"/> 和當前迭代輪的參數值 <img class="math" src="../_images/math/91471f5ec73a58e2c7ae293144557a4ae6bab08d.png" alt="\theta_0"/> ，能夠方便地計算出模型預測值 <img class="math" src="../_images/math/7bbdb433636d544b13d5272dbc4dbd3f377a8675.png" alt="\hat{y_0} = f(x_0, \theta_0)"/> ，並計算損失函數的值 <img class="math" src="../_images/math/f496903b2df08e992e68723af02a34263bdc8672.png" alt="L_0 = L(y_0, \hat{y_0}) = L(y_0, f(x_0, \theta_0))"/> ；</p></li>
-<li><p>自動將損失函數 <img class="math" src="../_images/math/483c80571f5621ffaaa8f96f9dadc557b811f409.png" alt="L"/> 求已知 <img class="math" src="../_images/math/4c72fcabd7dee7baed0b5dd1e1cb19fcba10e393.png" alt="x_0"/>、<img class="math" src="../_images/math/07b411122d25e69619d2d8301bcda67a8dec9a94.png" alt="y_0"/>、<img class="math" src="../_images/math/91471f5ec73a58e2c7ae293144557a4ae6bab08d.png" alt="\theta_0"/> 時對模型參數 <img class="math" src="../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> 的偏導數值，即計算 <img class="math" src="../_images/math/4e6dcfd87f530d69caaf676b674ad6232582058f.png" alt="\theta_0' = \frac{\partial L}{\partial \theta} |_{x = x_0, y = y_0, \theta = \theta_0}"/> ，無需人工推導求導結果（這意味着，這個程序庫需要支持某種意義上的「符號計算」，表現在能夠記錄下運算的全過程，這樣才能根據鏈式法則進行反向求導）；</p></li>
-<li><p>根據所求出的偏導數 <img class="math" src="../_images/math/27cb01734bb959411767a3f8fca21b2103ff7a65.png" alt="\theta_0'"/> 的值，方便地調用一些優化方法更新當前迭代輪的模型參數 <img class="math" src="../_images/math/91471f5ec73a58e2c7ae293144557a4ae6bab08d.png" alt="\theta_0"/> ，得到下一迭代輪的模型參數 <img class="math" src="../_images/math/a9a472f17c20c12af317c7e7cd5002f563f0ad4c.png" alt="\theta_1"/> （比如梯度下降法， <img class="math" src="../_images/math/8ece05f44f482591b59bddba51b474dcc6b49643.png" alt="\theta_1 = \theta_0 - \alpha \theta_0'"/> ， <img class="math" src="../_images/math/3929a173b494d403fb588bf98153e3a45dd662fd.png" alt="\alpha"/> 爲學習率）。</p></li>
+<li><p>用電腦程式表示出向量、矩陣和張量等數學概念，並方便地進行運算；</p></li>
+<li><p>方便地建立模型 <img class="math" src="../_images/math/dc5fd2a1c98a88c9aa8c2ff2717597b68f5881ae.png" alt="f(x, \theta)"/> 和損失函數 <img class="math" src="../_images/math/61ba744183b1a02c5ad12f1bac5f1b43a783a309.png" alt="L(y, \hat{y}) = L(y, f(x, \theta))"/> 。給定輸入 <img class="math" src="../_images/math/b57e344d806a27b36dcd7d1d9b48be070dc12c70.png" alt="x_0 \in X"/> ，對應的標籤 <img class="math" src="../_images/math/3dca79bb1ecb4152a3a478491af6dc2558999480.png" alt="y_0 \in Y"/> 和當前疊代輪的參數值 <img class="math" src="../_images/math/91471f5ec73a58e2c7ae293144557a4ae6bab08d.png" alt="\theta_0"/> ，能夠方便地計算出模型預測值 <img class="math" src="../_images/math/7bbdb433636d544b13d5272dbc4dbd3f377a8675.png" alt="\hat{y_0} = f(x_0, \theta_0)"/> ，並計算損失函數的值 <img class="math" src="../_images/math/f496903b2df08e992e68723af02a34263bdc8672.png" alt="L_0 = L(y_0, \hat{y_0}) = L(y_0, f(x_0, \theta_0))"/> ；</p></li>
+<li><p>自動將損失函數 <img class="math" src="../_images/math/483c80571f5621ffaaa8f96f9dadc557b811f409.png" alt="L"/> 求已知 <img class="math" src="../_images/math/4c72fcabd7dee7baed0b5dd1e1cb19fcba10e393.png" alt="x_0"/>、<img class="math" src="../_images/math/07b411122d25e69619d2d8301bcda67a8dec9a94.png" alt="y_0"/>、<img class="math" src="../_images/math/91471f5ec73a58e2c7ae293144557a4ae6bab08d.png" alt="\theta_0"/> 時對模型參數 <img class="math" src="../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> 的偏導數值，即計算 <img class="math" src="../_images/math/4e6dcfd87f530d69caaf676b674ad6232582058f.png" alt="\theta_0' = \frac{\partial L}{\partial \theta} |_{x = x_0, y = y_0, \theta = \theta_0}"/> ，無需人工推導求導結果（這意味著，這個程序庫需要支持某種意義上的「符號計算」，表現在能夠記錄下運算的全過程，這樣才能根據鏈式法則進行反向求導）；</p></li>
+<li><p>根據所求出的偏導數 <img class="math" src="../_images/math/27cb01734bb959411767a3f8fca21b2103ff7a65.png" alt="\theta_0'"/> 的值，方便地調用一些優化方法更新當前疊代輪的模型參數 <img class="math" src="../_images/math/91471f5ec73a58e2c7ae293144557a4ae6bab08d.png" alt="\theta_0"/> ，得到下一疊代輪的模型參數 <img class="math" src="../_images/math/a9a472f17c20c12af317c7e7cd5002f563f0ad4c.png" alt="\theta_1"/> （比如梯度下降法， <img class="math" src="../_images/math/8ece05f44f482591b59bddba51b474dcc6b49643.png" alt="\theta_1 = \theta_0 - \alpha \theta_0'"/> ， <img class="math" src="../_images/math/3929a173b494d403fb588bf98153e3a45dd662fd.png" alt="\alpha"/> 爲學習率）。</p></li>
 </ul>
 <p>更抽象一些地說，這個你所希望的程序庫需要能做到：</p>
 <ul class="simple">
@@ -306,11 +306,11 @@
 </div>
 <div class="section" id="id2">
 <h2>開發者和工程師：模型的調用與部署<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<p>如果你是一位在IT行業沉澱多年的開發者或者工程師，你可能已經對大學期間學到的數學知識不再熟悉（「多元函數……求偏微分？那是什麼東西？」）。然而，你可能希望在你的產品中加入一些與人工智能相關的功能，抑或需要將已有的深度學習模型部署到各種場景中。具體而言，包括：</p>
+<p>如果你是一位在IT行業沉澱多年的開發者或者工程師，你可能已經對大學期間學到的數學知識不再熟悉（「多元函數……求偏微分？那是什麼東西？」）。然而，你可能希望在你的產品中加入一些與人工智慧相關的功能，抑或需要將已有的深度學習模型部署到各種場景中。具體而言，包括：</p>
 <ul class="simple">
 <li><p>如何導出訓練好的模型？</p></li>
 <li><p>如何在本機使用已有的預訓練模型？</p></li>
-<li><p>如何在服務器、移動端、嵌入式設備甚至網頁上高效運行模型？</p></li>
+<li><p>如何在伺服器、移動端、嵌入式設備甚至網頁上高效運行模型？</p></li>
 <li><p>……</p></li>
 </ul>
 </div>
@@ -330,9 +330,9 @@
 </li>
 <li><dl class="simple">
 <dt>部署流程</dt><dd><ul>
-<li><p><strong>服務器部署</strong> ：使用 TensorFlow Serving 在服務器上爲訓練完成的模型提供高性能、支持並發、高吞吐量的API。</p></li>
-<li><p><strong>移動端和嵌入式設備部署</strong> ：使用TensorFlow Lite 將模型轉換爲體積小、高效率的輕量化版本，並在移動端、嵌入式端等功耗和計算能力受限的設備上運行，支持使用 GPU 代理進行硬件加速，還可以配合 Edge TPU 等外接硬件加速運算。</p></li>
-<li><p><strong>網頁端部署</strong> ：使用 TensorFlow.js，在網頁端等支持 JavaScript 運行的環境上也可以運行模型，支持使用 WebGL 進行硬件加速。</p></li>
+<li><p><strong>伺服器部署</strong> ：使用 TensorFlow Serving 在伺服器上爲訓練完成的模型提供高性能、支持並發、高吞吐量的API。</p></li>
+<li><p><strong>移動端和嵌入式設備部署</strong> ：使用TensorFlow Lite 將模型轉換爲體積小、高效率的輕量化版本，並在移動端、嵌入式端等功耗和計算能力受限的設備上運行，支持使用 GPU 代理進行硬體加速，還可以配合 Edge TPU 等外接硬體加速運算。</p></li>
+<li><p><strong>網頁端部署</strong> ：使用 TensorFlow.js，在網頁端等支持 JavaScript 運行的環境上也可以運行模型，支持使用 WebGL 進行硬體加速。</p></li>
 </ul>
 </dd>
 </dl>

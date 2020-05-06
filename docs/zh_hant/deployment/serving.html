@@ -295,13 +295,13 @@
             
   <div class="section" id="tensorflow-serving">
 <h1>TensorFlow Serving<a class="headerlink" href="#tensorflow-serving" title="永久链接至标题">¶</a></h1>
-<p>當我們將模型訓練完畢後，往往需要將模型在生產環境中部署。最常見的方式，是在服務器上提供一個API，即客戶機向服務器的某個API發送特定格式的請求，服務器收到請求數據後通過模型進行計算，並返回結果。如果僅僅是做一個Demo，不考慮高並發和性能問題，其實配合 <a class="reference external" href="https://palletsprojects.com/p/flask/">Flask</a> 等Python下的Web框架就能非常輕鬆地實現服務器API。不過，如果是在真的實際生產環境中部署，這樣的方式就顯得力不從心了。這時，TensorFlow爲我們提供了TensorFlow Serving這一組件，能夠幫助我們在實際生產環境中靈活且高性能地部署機器學習模型。</p>
+<p>當我們將模型訓練完畢後，往往需要將模型在生產環境中部署。最常見的方式，是在伺服器上提供一個API，即客戶機向伺服器的某個API發送特定格式的請求，伺服器收到請求數據後通過模型進行計算，並返回結果。如果僅僅是做一個Demo，不考慮高並發和性能問題，其實配合 <a class="reference external" href="https://palletsprojects.com/p/flask/">Flask</a> 等Python下的Web框架就能非常輕鬆地實現伺服器API。不過，如果是在真的實際生產環境中部署，這樣的方式就顯得力不從心了。這時，TensorFlow爲我們提供了TensorFlow Serving這一組件，能夠幫助我們在實際生產環境中靈活且高性能地部署機器學習模型。</p>
 <div class="section" id="id1">
 <h2>TensorFlow Serving安裝<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <p>TensorFlow Serving可以使用apt-get或Docker安裝。在生產環境中，推薦 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/docker">使用Docker部署TensorFlow Serving</a> 。不過此處出於教學目的，介紹依賴環境較少的 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup#installing_using_apt">apt-get安裝</a> 。</p>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>
-<p>軟件的安裝方法往往具有時效性，本節的更新日期爲2019年8月。若遇到問題，建議參考 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup">TensorFlow網站上的最新安裝說明</a> 進行操作。</p>
+<p>軟體的安裝方法往往具有時效性，本節的更新日期爲2019年8月。若遇到問題，建議參考 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup">TensorFlow網站上的最新安裝說明</a> 進行操作。</p>
 </div>
 <p>首先設置安裝源：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 添加Google的TensorFlow Serving源</span>
@@ -319,15 +319,15 @@
 <p class="admonition-title">提示</p>
 <p>在運行curl和apt-get命令時，可能需要設置代理。</p>
 <p>curl設置代理的方式爲 <code class="docutils literal notranslate"><span class="pre">-x</span></code> 選項或設置 <code class="docutils literal notranslate"><span class="pre">http_proxy</span></code> 環境變量，即</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">http_proxy</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理服務器IP</span><span class="p">:</span><span class="n">端口</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">http_proxy</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理伺服器IP</span><span class="p">:</span><span class="n">埠</span>
 </pre></div>
 </div>
 <p>或</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">x</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理服務器IP</span><span class="p">:</span><span class="n">端口</span> <span class="n">URL</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">x</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理伺服器IP</span><span class="p">:</span><span class="n">埠</span> <span class="n">URL</span>
 </pre></div>
 </div>
 <p>apt-get設置代理的方式爲 <code class="docutils literal notranslate"><span class="pre">-o</span></code> 選項，即</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">o</span> <span class="n">Acquire</span><span class="p">::</span><span class="n">http</span><span class="p">::</span><span class="n">proxy</span><span class="o">=</span><span class="s2">&quot;http://代理服務器IP:端口&quot;</span> <span class="o">...</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">o</span> <span class="n">Acquire</span><span class="p">::</span><span class="n">http</span><span class="p">::</span><span class="n">proxy</span><span class="o">=</span><span class="s2">&quot;http://代理伺服器IP:埠&quot;</span> <span class="o">...</span>
 </pre></div>
 </div>
 <p>Windows 10下，可以在 <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Linux子系統（WSL）</a> 內使用相同的方式安裝TensorFlow Serving。</p>
@@ -337,7 +337,7 @@
 <h2>TensorFlow Serving模型部署<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <p>TensorFlow Serving可以直接讀取SavedModel格式的模型進行部署（導出模型到SavedModel文件的方法見 <a class="reference internal" href="export.html#savedmodel"><span class="std std-ref">前文</span></a> ）。使用以下命令即可：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>tensorflow_model_server \
-    --rest_api_port=端口號（如8501） \
+    --rest_api_port=埠號（如8501） \
     --model_name=模型名 \
     --model_base_path=&quot;SavedModel格式模型的文件夾絕對地址（不含版本號）&quot;
 </pre></div>
@@ -361,7 +361,7 @@
 </div>
 <div class="section" id="keras-sequential">
 <h3>Keras Sequential模式模型的部署<a class="headerlink" href="#keras-sequential" title="永久链接至标题">¶</a></h3>
-<p>由於Sequential模式的輸入和輸出都很固定，因此這種類型的模型很容易部署，無需其他額外操作。例如，要將 <a class="reference internal" href="export.html#savedmodel"><span class="std std-ref">前文使用SavedModel導出的MNIST手寫體識別模型</span></a> （使用Keras Sequential模式建立）以 <code class="docutils literal notranslate"><span class="pre">MLP</span></code> 的模型名在 <code class="docutils literal notranslate"><span class="pre">8501</span></code> 端口進行部署，可以直接使用以下命令：</p>
+<p>由於Sequential模式的輸入和輸出都很固定，因此這種類型的模型很容易部署，無需其他額外操作。例如，要將 <a class="reference internal" href="export.html#savedmodel"><span class="std std-ref">前文使用SavedModel導出的MNIST手寫體識別模型</span></a> （使用Keras Sequential模式建立）以 <code class="docutils literal notranslate"><span class="pre">MLP</span></code> 的模型名在 <code class="docutils literal notranslate"><span class="pre">8501</span></code> 埠進行部署，可以直接使用以下命令：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tensorflow_model_server</span> \
     <span class="o">--</span><span class="n">rest_api_port</span><span class="o">=</span><span class="mi">8501</span> \
     <span class="o">--</span><span class="n">model_name</span><span class="o">=</span><span class="n">MLP</span> \
@@ -404,8 +404,8 @@
 <div class="section" id="call-serving-api">
 <span id="id3"></span><h2>在客戶端調用以TensorFlow Serving部署的模型<a class="headerlink" href="#call-serving-api" title="永久链接至标题">¶</a></h2>
 <p>TensorFlow Serving支持以gRPC和RESTful API調用以TensorFlow Serving部署的模型。本手冊主要介紹較爲通用的RESTful API方法。</p>
-<p>RESTful API以標準的HTTP POST方法進行交互，請求和回復均爲JSON對象。爲了調用服務器端的模型，我們在客戶端向服務器發送以下格式的請求：</p>
-<p>服務器URI： <code class="docutils literal notranslate"><span class="pre">http://服務器地址:端口號/v1/models/模型名:predict</span></code></p>
+<p>RESTful API以標準的HTTP POST方法進行交互，請求和回復均爲JSON對象。爲了調用伺服器端的模型，我們在客戶端向伺服器發送以下格式的請求：</p>
+<p>伺服器URI： <code class="docutils literal notranslate"><span class="pre">http://伺服器地址:埠號/v1/models/模型名:predict</span></code></p>
 <p>請求內容：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="s2">&quot;signature_name&quot;</span><span class="p">:</span> <span class="s2">&quot;需要調用的函數簽名（Sequential模式不需要）&quot;</span><span class="p">,</span>
@@ -421,7 +421,7 @@
 </div>
 <div class="section" id="python">
 <h3>Python客戶端示例<a class="headerlink" href="#python" title="永久链接至标题">¶</a></h3>
-<p>以下示例使用 <a class="reference external" href="https://2.python-requests.org//zh_CN/latest/user/quickstart.html">Python的Requests庫</a> （你可能需要使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">requests</span></code> 安裝該庫）向本機的TensorFlow Serving服務器發送MNIST測試集的前10幅圖像並返回預測結果，同時與測試集的真實標籤進行比較。</p>
+<p>以下示例使用 <a class="reference external" href="https://2.python-requests.org//zh_CN/latest/user/quickstart.html">Python的Requests庫</a> （你可能需要使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">requests</span></code> 安裝該庫）向本機的TensorFlow Serving伺服器發送MNIST測試集的前10幅圖像並返回預測結果，同時與測試集的真實標籤進行比較。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">requests</span>
@@ -457,7 +457,7 @@
 </div>
 <div class="section" id="node-js-ziyang">
 <h3>Node.js客戶端示例（Ziyang）<a class="headerlink" href="#node-js-ziyang" title="永久链接至标题">¶</a></h3>
-<p>以下示例使用 <a class="reference external" href="https://nodejs.org/zh-cn/">Node.js</a> 將下圖轉換爲28*28的灰度圖，發送給本機的TensorFlow Serving服務器，並輸出返回的預測值和概率。（其中使用了 <a class="reference external" href="https://github.com/oliver-moran/jimp">圖像處理庫jimp</a> 和 <a class="reference external" href="https://visionmedia.github.io/superagent/">HTTP庫superagent</a> ，可使用 <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">jimp</span></code> 和 <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">superagent</span></code> 安裝）</p>
+<p>以下示例使用 <a class="reference external" href="https://nodejs.org/zh-cn/">Node.js</a> 將下圖轉換爲28*28的灰度圖，發送給本機的TensorFlow Serving伺服器，並輸出返回的預測值和概率。（其中使用了 <a class="reference external" href="https://github.com/oliver-moran/jimp">圖像處理庫jimp</a> 和 <a class="reference external" href="https://visionmedia.github.io/superagent/">HTTP庫superagent</a> ，可使用 <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">jimp</span></code> 和 <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">superagent</span></code> 安裝）</p>
 <div class="figure align-center" id="id7">
 <img alt="../../_images/test_pic_tag_5.png" src="../../_images/test_pic_tag_5.png" />
 <p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">test_pic_tag_5.png</span></code> ：一個由作者手寫的數字5。（運行下面的代碼時可下載該圖片並放在與代碼同一目錄下）</span><a class="headerlink" href="#id7" title="永久链接至图片">¶</a></p>
@@ -540,7 +540,7 @@
 <p>可見輸出結果符合預期。</p>
 <div class="admonition note">
 <p class="admonition-title">注解</p>
-<p>如果你不熟悉HTTP POST，可以參考 <a class="reference external" href="https://www.runoob.com/tags/html-httpmethods.html">這裡</a> 。事實上，當你在用瀏覽器填寫表單（比方說性格測試）並點擊「提交」按鈕，然後獲得返回結果（比如說「你的性格是ISTJ」）時，就很有可能是在向服務器發送一個HTTP POST請求並獲得了服務器的回覆。</p>
+<p>如果你不熟悉HTTP POST，可以參考 <a class="reference external" href="https://www.runoob.com/tags/html-httpmethods.html">這裡</a> 。事實上，當你在用瀏覽器填寫表單（比方說性格測試）並點擊「提交」按鈕，然後獲得返回結果（比如說「你的性格是ISTJ」）時，就很有可能是在向伺服器發送一個HTTP POST請求並獲得了伺服器的回覆。</p>
 <p>RESTful API是一個流行的API設計理論，可以參考 <a class="reference external" href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html">這裡</a> 獲得簡要介紹。</p>
 <p>關於TensorFlow Serving的RESTful API的完整使用方式可參考 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/api_rest">文檔</a> 。</p>
 </div>

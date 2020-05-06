@@ -1,14 +1,14 @@
 TensorFlow Serving
 ==========================
 
-當我們將模型訓練完畢後，往往需要將模型在生產環境中部署。最常見的方式，是在服務器上提供一個API，即客戶機向服務器的某個API發送特定格式的請求，服務器收到請求數據後通過模型進行計算，並返回結果。如果僅僅是做一個Demo，不考慮高並發和性能問題，其實配合 `Flask <https://palletsprojects.com/p/flask/>`_ 等Python下的Web框架就能非常輕鬆地實現服務器API。不過，如果是在真的實際生產環境中部署，這樣的方式就顯得力不從心了。這時，TensorFlow爲我們提供了TensorFlow Serving這一組件，能夠幫助我們在實際生產環境中靈活且高性能地部署機器學習模型。
+當我們將模型訓練完畢後，往往需要將模型在生產環境中部署。最常見的方式，是在伺服器上提供一個API，即客戶機向伺服器的某個API發送特定格式的請求，伺服器收到請求數據後通過模型進行計算，並返回結果。如果僅僅是做一個Demo，不考慮高並發和性能問題，其實配合 `Flask <https://palletsprojects.com/p/flask/>`_ 等Python下的Web框架就能非常輕鬆地實現伺服器API。不過，如果是在真的實際生產環境中部署，這樣的方式就顯得力不從心了。這時，TensorFlow爲我們提供了TensorFlow Serving這一組件，能夠幫助我們在實際生產環境中靈活且高性能地部署機器學習模型。
 
 TensorFlow Serving安裝
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 TensorFlow Serving可以使用apt-get或Docker安裝。在生產環境中，推薦 `使用Docker部署TensorFlow Serving <https://www.tensorflow.org/tfx/serving/docker>`_ 。不過此處出於教學目的，介紹依賴環境較少的 `apt-get安裝 <https://www.tensorflow.org/tfx/serving/setup#installing_using_apt>`_ 。
 
-.. warning:: 軟件的安裝方法往往具有時效性，本節的更新日期爲2019年8月。若遇到問題，建議參考 `TensorFlow網站上的最新安裝說明 <https://www.tensorflow.org/tfx/serving/setup>`_ 進行操作。
+.. warning:: 軟體的安裝方法往往具有時效性，本節的更新日期爲2019年8月。若遇到問題，建議參考 `TensorFlow網站上的最新安裝說明 <https://www.tensorflow.org/tfx/serving/setup>`_ 進行操作。
 
 首先設置安裝源：
 
@@ -32,19 +32,19 @@ TensorFlow Serving可以使用apt-get或Docker安裝。在生產環境中，推�
 
     ::
 
-        export http_proxy=http://代理服務器IP:端口
+        export http_proxy=http://代理伺服器IP:埠
 
     或
 
     ::
 
-        curl -x http://代理服務器IP:端口 URL
+        curl -x http://代理伺服器IP:埠 URL
 
     apt-get設置代理的方式爲 ``-o`` 選項，即
 
     ::
 
-        sudo apt-get -o Acquire::http::proxy="http://代理服務器IP:端口" ...
+        sudo apt-get -o Acquire::http::proxy="http://代理伺服器IP:埠" ...
 
     Windows 10下，可以在 `Linux子系統（WSL） <https://docs.microsoft.com/en-us/windows/wsl/install-win10>`_ 內使用相同的方式安裝TensorFlow Serving。
 
@@ -56,7 +56,7 @@ TensorFlow Serving可以直接讀取SavedModel格式的模型進行部署（導�
 ::
 
     tensorflow_model_server \
-        --rest_api_port=端口號（如8501） \
+        --rest_api_port=埠號（如8501） \
         --model_name=模型名 \
         --model_base_path="SavedModel格式模型的文件夾絕對地址（不含版本號）"
 
@@ -81,7 +81,7 @@ TensorFlow Serving可以直接讀取SavedModel格式的模型進行部署（導�
 Keras Sequential模式模型的部署
 ---------------------------------------------------
 
-由於Sequential模式的輸入和輸出都很固定，因此這種類型的模型很容易部署，無需其他額外操作。例如，要將 :ref:`前文使用SavedModel導出的MNIST手寫體識別模型 <savedmodel>` （使用Keras Sequential模式建立）以 ``MLP`` 的模型名在 ``8501`` 端口進行部署，可以直接使用以下命令：
+由於Sequential模式的輸入和輸出都很固定，因此這種類型的模型很容易部署，無需其他額外操作。例如，要將 :ref:`前文使用SavedModel導出的MNIST手寫體識別模型 <savedmodel>` （使用Keras Sequential模式建立）以 ``MLP`` 的模型名在 ``8501`` 埠進行部署，可以直接使用以下命令：
 
 ::
 
@@ -138,9 +138,9 @@ Keras Sequential模式模型的部署
 
 TensorFlow Serving支持以gRPC和RESTful API調用以TensorFlow Serving部署的模型。本手冊主要介紹較爲通用的RESTful API方法。
 
-RESTful API以標準的HTTP POST方法進行交互，請求和回復均爲JSON對象。爲了調用服務器端的模型，我們在客戶端向服務器發送以下格式的請求：
+RESTful API以標準的HTTP POST方法進行交互，請求和回復均爲JSON對象。爲了調用伺服器端的模型，我們在客戶端向伺服器發送以下格式的請求：
 
-服務器URI： ``http://服務器地址:端口號/v1/models/模型名:predict`` 
+伺服器URI： ``http://伺服器地址:埠號/v1/models/模型名:predict`` 
 
 請求內容：
 
@@ -162,7 +162,7 @@ RESTful API以標準的HTTP POST方法進行交互，請求和回復均爲JSON�
 Python客戶端示例
 ------------------------------------------------------
 
-以下示例使用 `Python的Requests庫 <https://2.python-requests.org//zh_CN/latest/user/quickstart.html>`_ （你可能需要使用 ``pip install requests`` 安裝該庫）向本機的TensorFlow Serving服務器發送MNIST測試集的前10幅圖像並返回預測結果，同時與測試集的真實標籤進行比較。
+以下示例使用 `Python的Requests庫 <https://2.python-requests.org//zh_CN/latest/user/quickstart.html>`_ （你可能需要使用 ``pip install requests`` 安裝該庫）向本機的TensorFlow Serving伺服器發送MNIST測試集的前10幅圖像並返回預測結果，同時與測試集的真實標籤進行比較。
 
 .. literalinclude:: /_static/code/zh/savedmodel/keras/client.py
 
@@ -183,7 +183,7 @@ Python客戶端示例
 Node.js客戶端示例（Ziyang）
 ------------------------------------------------------
 
-以下示例使用 `Node.js <https://nodejs.org/zh-cn/>`_ 將下圖轉換爲28*28的灰度圖，發送給本機的TensorFlow Serving服務器，並輸出返回的預測值和概率。（其中使用了 `圖像處理庫jimp <https://github.com/oliver-moran/jimp>`_ 和 `HTTP庫superagent <https://visionmedia.github.io/superagent/>`_ ，可使用 ``npm install jimp`` 和 ``npm install superagent`` 安裝）
+以下示例使用 `Node.js <https://nodejs.org/zh-cn/>`_ 將下圖轉換爲28*28的灰度圖，發送給本機的TensorFlow Serving伺服器，並輸出返回的預測值和概率。（其中使用了 `圖像處理庫jimp <https://github.com/oliver-moran/jimp>`_ 和 `HTTP庫superagent <https://visionmedia.github.io/superagent/>`_ ，可使用 ``npm install jimp`` 和 ``npm install superagent`` 安裝）
 
 .. figure:: /_static/image/serving/test_pic_tag_5.png
     :align: center
@@ -229,7 +229,7 @@ Node.js客戶端示例（Ziyang）
 
 可見輸出結果符合預期。
 
-.. note:: 如果你不熟悉HTTP POST，可以參考 `這裡 <https://www.runoob.com/tags/html-httpmethods.html>`_ 。事實上，當你在用瀏覽器填寫表單（比方說性格測試）並點擊「提交」按鈕，然後獲得返回結果（比如說「你的性格是ISTJ」）時，就很有可能是在向服務器發送一個HTTP POST請求並獲得了服務器的回覆。
+.. note:: 如果你不熟悉HTTP POST，可以參考 `這裡 <https://www.runoob.com/tags/html-httpmethods.html>`_ 。事實上，當你在用瀏覽器填寫表單（比方說性格測試）並點擊「提交」按鈕，然後獲得返回結果（比如說「你的性格是ISTJ」）時，就很有可能是在向伺服器發送一個HTTP POST請求並獲得了伺服器的回覆。
 
     RESTful API是一個流行的API設計理論，可以參考 `這裡 <http://www.ruanyifeng.com/blog/2014/05/restful_api.html>`_ 獲得簡要介紹。
 

@@ -399,7 +399,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">kernel_initializer</span></code> 、 <code class="docutils literal notranslate"><span class="pre">bias_initializer</span></code> ：權重矩陣 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和偏置向量 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 兩個變量的初始化器。默認爲 <code class="docutils literal notranslate"><span class="pre">tf.glorot_uniform_initializer</span></code> <a class="footnote-reference brackets" href="#glorot" id="id3">1</a> 。設置爲 <code class="docutils literal notranslate"><span class="pre">tf.zeros_initializer</span></code> 表示將兩個變量均初始化爲全 0；</p></li>
 </ul>
 <p>該層包含權重矩陣 <code class="docutils literal notranslate"><span class="pre">kernel</span> <span class="pre">=</span> <span class="pre">[input_dim,</span> <span class="pre">units]</span></code> 和偏置向量 <code class="docutils literal notranslate"><span class="pre">bias</span> <span class="pre">=</span> <span class="pre">[units]</span></code> <a class="footnote-reference brackets" href="#broadcast" id="id4">2</a> 兩個可訓練變量，對應於 <img class="math" src="../../_images/math/92bb903eabd575a64bd61bd559678418cda7afb2.png" alt="f(AW + b)"/> 中的 <img class="math" src="../../_images/math/eb33eca75f5d77363c991bf041953da54a858bfb.png" alt="W"/> 和 <img class="math" src="../../_images/math/3de2ed824326dc0eb383a42dd6ec44d3b401047b.png" alt="b"/>。</p>
-<p>這裡着重從數學矩陣運算和線性變換的角度描述了全連接層。基於神經元建模的描述可參考 <a class="reference internal" href="#neuron"><span class="std std-ref">後文介紹</span></a> 。</p>
+<p>這裡著重從數學矩陣運算和線性變換的角度描述了全連接層。基於神經元建模的描述可參考 <a class="reference internal" href="#neuron"><span class="std std-ref">後文介紹</span></a> 。</p>
 <dl class="footnote brackets">
 <dt class="label" id="glorot"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
 <dd><p>Keras 中的很多層都默認使用 <code class="docutils literal notranslate"><span class="pre">tf.glorot_uniform_initializer</span></code> 初始化變量，關於該初始化器可參考 <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/glorot_uniform_initializer">https://www.tensorflow.org/api_docs/python/tf/glorot_uniform_initializer</a> 。</p>
@@ -510,7 +510,7 @@
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>然後迭代進行以下步驟：</p>
+<p>然後疊代進行以下步驟：</p>
 <ul class="simple">
 <li><p>從 DataLoader 中隨機取一批訓練數據；</p></li>
 <li><p>將這批數據送入模型，計算出模型的預測值；</p></li>
@@ -551,8 +551,8 @@
 </div>
 <div class="section" id="tf-keras-metrics">
 <h3>模型的評估： <code class="docutils literal notranslate"><span class="pre">tf.keras.metrics</span></code><a class="headerlink" href="#tf-keras-metrics" title="永久链接至标题">¶</a></h3>
-<p>最後，我們使用測試集評估模型的性能。這裡，我們使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.metrics</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">SparseCategoricalAccuracy</span></code> 評估器來評估模型在測試集上的性能，該評估器能夠對模型預測的結果與真實結果進行比較，並輸出預測正確的樣本數占總樣本數的比例。我們迭代測試數據集，每次通過 <code class="docutils literal notranslate"><span class="pre">update_state()</span></code> 方法向評估器輸入兩個參數： <code class="docutils literal notranslate"><span class="pre">y_pred</span></code> 和 <code class="docutils literal notranslate"><span class="pre">y_true</span></code> ，即模型預測出的結果和真實結果。評估器具有內部變量來保存當前評估指標相關的參數數值（例如當前已傳入的累計樣本數和當前預測正確的樣本數）。迭代結束後，我們使用 <code class="docutils literal notranslate"><span class="pre">result()</span></code> 方法輸出最終的評估指標值（預測正確的樣本數占總樣本數的比例）。</p>
-<p>在以下代碼中，我們實例化了一個 <code class="docutils literal notranslate"><span class="pre">tf.keras.metrics.SparseCategoricalAccuracy</span></code> 評估器，並使用 For 循環迭代分批次傳入了測試集數據的預測結果與真實結果，並輸出訓練後的模型在測試數據集上的準確率。</p>
+<p>最後，我們使用測試集評估模型的性能。這裡，我們使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.metrics</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">SparseCategoricalAccuracy</span></code> 評估器來評估模型在測試集上的性能，該評估器能夠對模型預測的結果與真實結果進行比較，並輸出預測正確的樣本數占總樣本數的比例。我們疊代測試數據集，每次通過 <code class="docutils literal notranslate"><span class="pre">update_state()</span></code> 方法向評估器輸入兩個參數： <code class="docutils literal notranslate"><span class="pre">y_pred</span></code> 和 <code class="docutils literal notranslate"><span class="pre">y_true</span></code> ，即模型預測出的結果和真實結果。評估器具有內部變量來保存當前評估指標相關的參數數值（例如當前已傳入的累計樣本數和當前預測正確的樣本數）。疊代結束後，我們使用 <code class="docutils literal notranslate"><span class="pre">result()</span></code> 方法輸出最終的評估指標值（預測正確的樣本數占總樣本數的比例）。</p>
+<p>在以下代碼中，我們實例化了一個 <code class="docutils literal notranslate"><span class="pre">tf.keras.metrics.SparseCategoricalAccuracy</span></code> 評估器，並使用 For 循環疊代分批次傳入了測試集數據的預測結果與真實結果，並輸出訓練後的模型在測試數據集上的準確率。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">sparse_categorical_accuracy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">SparseCategoricalAccuracy</span><span class="p">()</span>
     <span class="n">num_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">num_test_data</span> <span class="o">//</span> <span class="n">batch_size</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">batch_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_batches</span><span class="p">):</span>
@@ -582,7 +582,7 @@
 <p>上面的計算單元，可以被視作對神經元結構的數學建模。在上面的例子裡，第二層的每一個計算單元（人工神經元）有 100 個權值參數和 1 個偏置參數，而第二層計算單元的數目是 10 個，因此這一個全連接層的總參數量爲 100*10 個權值參數和 10 個偏置參數。事實上，這正是該全連接層中的兩個變量 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 的形狀。仔細研究一下，你會發現，這裡基於神經元建模的介紹與上文基於矩陣計算的介紹是等價的。</p>
 <dl class="footnote brackets">
 <dt class="label" id="order"><span class="brackets"><a class="fn-backref" href="#id9">3</a></span></dt>
-<dd><p>事實上，應當是先有神經元建模的概念，再有基於人工神經元和層結構的人工神經網絡。但由於本手冊着重介紹 TensorFlow 的使用方法，所以調換了介紹順序。</p>
+<dd><p>事實上，應當是先有神經元建模的概念，再有基於人工神經元和層結構的人工神經網絡。但由於本手冊著重介紹 TensorFlow 的使用方法，所以調換了介紹順序。</p>
 </dd>
 </dl>
 </div>
@@ -736,7 +736,7 @@
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>最後將圖像數據 <code class="docutils literal notranslate"><span class="pre">image</span></code> 輸入模型，打印輸出：</p>
+<p>最後將圖像數據 <code class="docutils literal notranslate"><span class="pre">image</span></code> 輸入模型，列印輸出：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">output</span><span class="p">))</span>
 </pre></div>
@@ -920,7 +920,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </dl>
 <div class="admonition- admonition">
 <p class="admonition-title">循環神經網絡的工作過程</p>
-<p>循環神經網絡是一個處理時間序列數據的神經網絡結構，也就是說，我們需要在腦海里有一根時間軸，循環神經網絡具有初始狀態 <img class="math" src="../../_images/math/5792932d14af4ccbd3739af3d66e5ee35e05dffc.png" alt="s_0"/> ，在每個時間點 <img class="math" src="../../_images/math/657fd8f3c80e7a724ba99cda423f58cff075f07b.png" alt="t"/> 迭代對當前時間的輸入 <img class="math" src="../../_images/math/80e7212143003eaa2efb31fc9c7aa8f016c3a3dd.png" alt="x_t"/> 進行處理，修改自身的狀態 <img class="math" src="../../_images/math/aef454ab9a36bb7c18fa5c3ba6a5b1523c56ddd5.png" alt="s_t"/> ，並進行輸出 <img class="math" src="../../_images/math/1dcf8af77e86ef764397a8f107aa550c617351c4.png" alt="o_t"/> 。</p>
+<p>循環神經網絡是一個處理時間序列數據的神經網絡結構，也就是說，我們需要在腦海里有一根時間軸，循環神經網絡具有初始狀態 <img class="math" src="../../_images/math/5792932d14af4ccbd3739af3d66e5ee35e05dffc.png" alt="s_0"/> ，在每個時間點 <img class="math" src="../../_images/math/657fd8f3c80e7a724ba99cda423f58cff075f07b.png" alt="t"/> 疊代對當前時間的輸入 <img class="math" src="../../_images/math/80e7212143003eaa2efb31fc9c7aa8f016c3a3dd.png" alt="x_t"/> 進行處理，修改自身的狀態 <img class="math" src="../../_images/math/aef454ab9a36bb7c18fa5c3ba6a5b1523c56ddd5.png" alt="s_t"/> ，並進行輸出 <img class="math" src="../../_images/math/1dcf8af77e86ef764397a8f107aa550c617351c4.png" alt="o_t"/> 。</p>
 <p>循環神經網絡的核心是狀態 <img class="math" src="../../_images/math/bafbf63de17508c8c25cd882e0178342c193ae0c.png" alt="s"/> ，是一個特定維數的向量，類似於神經網絡的 「記憶」。在 <img class="math" src="../../_images/math/f7158208ef875a964aba3a1e6c8b28c59f39682d.png" alt="t=0"/> 的初始時刻，<img class="math" src="../../_images/math/5792932d14af4ccbd3739af3d66e5ee35e05dffc.png" alt="s_0"/> 被賦予一個初始值（常用的爲全 0 向量）。然後，我們用類似於遞歸的方法來描述循環神經網絡的工作過程。即在 <img class="math" src="../../_images/math/657fd8f3c80e7a724ba99cda423f58cff075f07b.png" alt="t"/> 時刻，我們假設 <img class="math" src="../../_images/math/2613231964fb187e75df4c2700ce50c0af85b9c7.png" alt="s_{t-1}"/> 已經求出，關注如何在此基礎上求出 <img class="math" src="../../_images/math/fc20b335e1d86d0a4ea29849968644207c7661c1.png" alt="s_{t}"/> ：</p>
 <ul class="simple">
 <li><p>對輸入向量 <img class="math" src="../../_images/math/80e7212143003eaa2efb31fc9c7aa8f016c3a3dd.png" alt="x_t"/> 通過矩陣 <img class="math" src="../../_images/math/0212136c77d0621b4e7c4525952b855f06e6afe8.png" alt="U"/> 進行線性變換，<img class="math" src="../../_images/math/bc5f463af6d8c26b7244d21b9659675e3e564556.png" alt="U x_t"/> 與狀態 s 具有相同的維度；</p></li>
@@ -948,7 +948,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <a class="reference internal image-reference" href="../../_images/cartpole.gif"><img alt="../../_images/cartpole.gif" src="../../_images/cartpole.gif" style="width: 500px;" /></a>
 <p class="caption"><span class="caption-text">CartPole 遊戲</span><a class="headerlink" href="#id37" title="永久链接至图片">¶</a></p>
 </div>
-<p>我們使用 <a class="reference external" href="https://gym.openai.com/">OpenAI 推出的 Gym 環境庫</a> 中的 CartPole 遊戲環境，可使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">gym</span></code> 進行安裝，具體安裝步驟和教程可參考 <a class="reference external" href="https://gym.openai.com/docs/">官方文檔</a> 和 <a class="reference external" href="https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-4-gym/">這裡</a> 。和Gym的交互過程很像是一個回合制遊戲，我們首先獲得遊戲的初始狀態（比如杆的初始角度和小車位置），然後在每個回合t，我們都需要在當前可行的動作中選擇一個並交由Gym執行（比如向左或者向右推動小車，每個回合中二者只能擇一），Gym在執行動作後，會返回動作執行後的下一個狀態和當前回合所獲得的獎勵值（比如我們選擇向左推動小車並執行後，小車位置更加偏左，而杆的角度更加偏右，Gym將新的角度和位置返回給我們。而如果杆在這一回合仍沒有倒下，Gym同時返回給我們一個小的正獎勵）。這個過程可以一直迭代下去，直到遊戲終止（比如杆倒下了）。在 Python 中，Gym 的基本調用方法如下：</p>
+<p>我們使用 <a class="reference external" href="https://gym.openai.com/">OpenAI 推出的 Gym 環境庫</a> 中的 CartPole 遊戲環境，可使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">gym</span></code> 進行安裝，具體安裝步驟和教程可參考 <a class="reference external" href="https://gym.openai.com/docs/">官方文檔</a> 和 <a class="reference external" href="https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-4-gym/">這裡</a> 。和Gym的交互過程很像是一個回合制遊戲，我們首先獲得遊戲的初始狀態（比如杆的初始角度和小車位置），然後在每個回合t，我們都需要在當前可行的動作中選擇一個並交由Gym執行（比如向左或者向右推動小車，每個回合中二者只能擇一），Gym在執行動作後，會返回動作執行後的下一個狀態和當前回合所獲得的獎勵值（比如我們選擇向左推動小車並執行後，小車位置更加偏左，而杆的角度更加偏右，Gym將新的角度和位置返回給我們。而如果杆在這一回合仍沒有倒下，Gym同時返回給我們一個小的正獎勵）。這個過程可以一直疊代下去，直到遊戲終止（比如杆倒下了）。在 Python 中，Gym 的基本調用方法如下：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gym</span>
 
 <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;CartPole-v1&#39;</span><span class="p">)</span>       <span class="c1"># 實例化一個遊戲環境，參數爲遊戲名稱</span>
@@ -969,7 +969,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <ul class="simple">
 <li><p>磚塊的顏色信息並不是很重要，畫面轉換成灰度也不影響操作，因此可以去除狀態中的顏色信息（即將圖片轉爲灰度表示）；</p></li>
 <li><p>小球移動的信息很重要，如果只知道單幀畫面而不知道小球往哪邊運動，即使是人也很難判斷擋板應當移動的方向。因此，必須在狀態中加入表徵小球運動方向的信息。一個簡單的方式是將當前幀與前面幾幀的畫面進行疊加，得到一個 <code class="docutils literal notranslate"><span class="pre">210</span> <span class="pre">*</span> <span class="pre">160</span> <span class="pre">*</span> <span class="pre">X</span></code> （X 爲疊加幀數）的狀態表示；</p></li>
-<li><p>每幀的分辨率不需要特別高，只要能大致表徵方塊、小球和擋板的位置以做出決策即可，因此對於每幀的長寬可做適當壓縮。</p></li>
+<li><p>每幀的解析度不需要特別高，只要能大致表徵方塊、小球和擋板的位置以做出決策即可，因此對於每幀的長寬可做適當壓縮。</p></li>
 </ul>
 <p>而考慮到我們需要從圖像信息中提取特徵，使用 CNN 作爲擬合 Q 函數的網絡將更爲適合。由此，將上面的 <code class="docutils literal notranslate"><span class="pre">QNetwork</span></code> 更換爲 CNN 網絡，並對狀態做一些修改，即可用於玩一些簡單的視頻遊戲。</p>
 </div>
@@ -1024,7 +1024,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <div><ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> ：訓練數據；</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">y</span></code> ：目標數據（數據標籤）；</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">epochs</span></code> ：將訓練數據迭代多少遍；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">epochs</span></code> ：將訓練數據疊代多少遍；</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">batch_size</span></code> ：批次的大小；</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">validation_data</span></code> ：驗證數據，可用於在訓練過程中監控模型的性能。</p></li>
 </ul>

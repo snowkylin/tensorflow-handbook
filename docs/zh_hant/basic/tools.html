@@ -323,14 +323,14 @@
 <ul class="simple">
 <li><p><a class="reference external" href="http://www.runoob.com/python3/python3-inputoutput.html">Python的序列化模塊Pickle</a> （非必須）</p></li>
 <li><p><a class="reference external" href="https://eastlakeside.gitbooks.io/interpy-zh/content/args_kwargs/Usage_kwargs.html">Python的特殊函數參數**kwargs</a> （非必須）</p></li>
-<li><p><a class="reference external" href="https://www.runoob.com/python3/python3-iterator-generator.html">Python的迭代器</a></p></li>
+<li><p><a class="reference external" href="https://www.runoob.com/python3/python3-iterator-generator.html">Python的疊代器</a></p></li>
 </ul>
 </div>
 <div class="section" id="tf-train-checkpoint">
 <h2><code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code> ：變量的保存與恢復<a class="headerlink" href="#tf-train-checkpoint" title="永久链接至标题">¶</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>
-<p>Checkpoint只保存模型的參數，不保存模型的計算過程，因此一般用於在具有模型源代碼的時候恢復之前訓練好的模型參數。如果需要導出模型（無需源代碼也能運行模型），請參考 <a class="reference internal" href="../deployment/export.html#savedmodel"><span class="std std-ref">「部署」章節中的SavedModel</span></a> 。</p>
+<p>Checkpoint只保存模型的參數，不保存模型的計算過程，因此一般用於在具有模型原始碼的時候恢復之前訓練好的模型參數。如果需要導出模型（無需原始碼也能運行模型），請參考 <a class="reference internal" href="../deployment/export.html#savedmodel"><span class="std std-ref">「部署」章節中的SavedModel</span></a> 。</p>
 </div>
 <p>很多時候，我們希望在模型訓練完成後能將訓練好的參數（變量）保存起來。在需要使用模型的其他地方載入模型和參數，就能直接得到訓練好的模型。可能你第一個想到的是用Python的序列化模塊 <code class="docutils literal notranslate"><span class="pre">pickle</span></code> 存儲 <code class="docutils literal notranslate"><span class="pre">model.variables</span></code>。但不幸的是，TensorFlow的變量類型 <code class="docutils literal notranslate"><span class="pre">ResourceVariable</span></code> 並不能被序列化。</p>
 <p>好在TensorFlow提供了 <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code> 這一強大的變量保存與恢復類，可以使用其 <code class="docutils literal notranslate"><span class="pre">save()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">restore()</span></code> 方法將TensorFlow中所有包含Checkpointable State的對象進行保存和恢復。具體而言，<code class="docutils literal notranslate"><span class="pre">tf.keras.optimizer</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.keras.Layer</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 實例都可以被保存。其使用方法非常簡單，我們首先聲明一個Checkpoint：</p>
@@ -349,7 +349,7 @@
 <p>就可以。 <code class="docutils literal notranslate"><span class="pre">save_path_with_prefix</span></code> 是保存文件的目錄+前綴。</p>
 <div class="admonition note">
 <p class="admonition-title">注解</p>
-<p>例如，在源代碼目錄建立一個名爲save的文件夾並調用一次 <code class="docutils literal notranslate"><span class="pre">checkpoint.save('./save/model.ckpt')</span></code> ，我們就可以在可以在save目錄下發現名爲 <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> 、  <code class="docutils literal notranslate"><span class="pre">model.ckpt-1.index</span></code> 、 <code class="docutils literal notranslate"><span class="pre">model.ckpt-1.data-00000-of-00001</span></code> 的三個文件，這些文件就記錄了變量信息。<code class="docutils literal notranslate"><span class="pre">checkpoint.save()</span></code> 方法可以運行多次，每運行一次都會得到一個.index文件和.data文件，序號依次累加。</p>
+<p>例如，在原始碼目錄建立一個名爲save的文件夾並調用一次 <code class="docutils literal notranslate"><span class="pre">checkpoint.save('./save/model.ckpt')</span></code> ，我們就可以在可以在save目錄下發現名爲 <code class="docutils literal notranslate"><span class="pre">checkpoint</span></code> 、  <code class="docutils literal notranslate"><span class="pre">model.ckpt-1.index</span></code> 、 <code class="docutils literal notranslate"><span class="pre">model.ckpt-1.data-00000-of-00001</span></code> 的三個文件，這些文件就記錄了變量信息。<code class="docutils literal notranslate"><span class="pre">checkpoint.save()</span></code> 方法可以運行多次，每運行一次都會得到一個.index文件和.data文件，序號依次累加。</p>
 </div>
 <p>當在其他地方需要爲模型重新載入之前保存的參數時，需要再次實例化一個checkpoint，同時保持鍵名的一致。再調用checkpoint的restore方法。就像下面這樣：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model_to_be_restored</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">()</span>                                        <span class="c1"># 待恢復參數的同一模型</span>
@@ -380,7 +380,7 @@
 </div>
 <div class="admonition note">
 <p class="admonition-title">注解</p>
-<p><code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code> 與以前版本常用的 <code class="docutils literal notranslate"><span class="pre">tf.train.Saver</span></code> 相比，強大之處在於其支持在即時執行模式下「延遲」恢復變量。具體而言，當調用了 <code class="docutils literal notranslate"><span class="pre">checkpoint.restore()</span></code> ，但模型中的變量還沒有被建立的時候，Checkpoint可以等到變量被建立的時候再進行數值的恢復。即時執行模式下，模型中各個層的初始化和變量的建立是在模型第一次被調用的時候才進行的（好處在於可以根據輸入的張量形狀而自動確定變量形狀，無需手動指定）。這意味着當模型剛剛被實例化的時候，其實裡面還一個變量都沒有，這時候使用以往的方式去恢復變量數值是一定會報錯的。比如，你可以試試在train.py調用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的 <code class="docutils literal notranslate"><span class="pre">save_weight()</span></code> 方法保存model的參數，並在test.py中實例化model後立即調用 <code class="docutils literal notranslate"><span class="pre">load_weight()</span></code> 方法，就會出錯，只有當調用了一遍model之後再運行 <code class="docutils literal notranslate"><span class="pre">load_weight()</span></code> 方法才能得到正確的結果。可見， <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code> 在這種情況下可以給我們帶來相當大的便利。另外， <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code> 同時也支持圖執行模式。</p>
+<p><code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code> 與以前版本常用的 <code class="docutils literal notranslate"><span class="pre">tf.train.Saver</span></code> 相比，強大之處在於其支持在即時執行模式下「延遲」恢復變量。具體而言，當調用了 <code class="docutils literal notranslate"><span class="pre">checkpoint.restore()</span></code> ，但模型中的變量還沒有被建立的時候，Checkpoint可以等到變量被建立的時候再進行數值的恢復。即時執行模式下，模型中各個層的初始化和變量的建立是在模型第一次被調用的時候才進行的（好處在於可以根據輸入的張量形狀而自動確定變量形狀，無需手動指定）。這意味著當模型剛剛被實例化的時候，其實裡面還一個變量都沒有，這時候使用以往的方式去恢復變量數值是一定會報錯的。比如，你可以試試在train.py調用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的 <code class="docutils literal notranslate"><span class="pre">save_weight()</span></code> 方法保存model的參數，並在test.py中實例化model後立即調用 <code class="docutils literal notranslate"><span class="pre">load_weight()</span></code> 方法，就會出錯，只有當調用了一遍model之後再運行 <code class="docutils literal notranslate"><span class="pre">load_weight()</span></code> 方法才能得到正確的結果。可見， <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code> 在這種情況下可以給我們帶來相當大的便利。另外， <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code> 同時也支持圖執行模式。</p>
 </div>
 <p>最後提供一個實例，以前章的 <a class="reference internal" href="models.html#mlp"><span class="std std-ref">多層感知機模型</span></a> 爲例展示模型變量的保存和載入：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
@@ -441,7 +441,7 @@
 <li><p>在長時間的訓練後，程序會保存大量的Checkpoint，但我們只想保留最後的幾個Checkpoint；</p></li>
 <li><p>Checkpoint默認從1開始編號，每次累加1，但我們可能希望使用別的編號方式（例如使用當前Batch的編號作爲文件編號）。</p></li>
 </ul>
-<p>這時，我們可以使用TensorFlow的 <code class="docutils literal notranslate"><span class="pre">tf.train.CheckpointManager</span></code> 來實現以上需求。具體而言，在定義Checkpoint後接着定義一個CheckpointManager：</p>
+<p>這時，我們可以使用TensorFlow的 <code class="docutils literal notranslate"><span class="pre">tf.train.CheckpointManager</span></code> 來實現以上需求。具體而言，在定義Checkpoint後接著定義一個CheckpointManager：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">checkpoint</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">Checkpoint</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
 <span class="n">manager</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">CheckpointManager</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="s1">&#39;./save&#39;</span><span class="p">,</span> <span class="n">checkpoint_name</span><span class="o">=</span><span class="s1">&#39;model.ckpt&#39;</span><span class="p">,</span> <span class="n">max_to_keep</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
 </pre></div>
@@ -593,7 +593,7 @@
 <p>很多時候，我們希望使用自己的數據集來訓練模型。然而，面對一堆格式不一的原始數據文件，將其預處理並讀入程序的過程往往十分繁瑣，甚至比模型的設計還要耗費精力。比如，爲了讀入一批圖像文件，我們可能需要糾結於python的各種圖像處理包（比如 <code class="docutils literal notranslate"><span class="pre">pillow</span></code> ），自己設計Batch的生成方式，最後還可能在運行的效率上不盡如人意。爲此，TensorFlow提供了 <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 這一模塊，包括了一套靈活的數據集構建API，能夠幫助我們快速、高效地構建數據輸入的流水線，尤其適用於數據量巨大的場景。</p>
 <div class="section" id="id4">
 <h3>數據集對象的建立<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 的核心是 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 類，提供了對數據集的高層封裝。<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 由一系列的可迭代訪問的元素（element）組成，每個元素包含一個或多個張量。比如說，對於一個由圖像組成的數據集，每個元素可以是一個形狀爲 <code class="docutils literal notranslate"><span class="pre">長×寬×通道數</span></code> 的圖片張量，也可以是由圖片張量和圖片標籤張量組成的元組（Tuple）。</p>
+<p><code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 的核心是 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 類，提供了對數據集的高層封裝。<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 由一系列的可疊代訪問的元素（element）組成，每個元素包含一個或多個張量。比如說，對於一個由圖像組成的數據集，每個元素可以是一個形狀爲 <code class="docutils literal notranslate"><span class="pre">長×寬×通道數</span></code> 的圖片張量，也可以是由圖片張量和圖片標籤張量組成的元組（Tuple）。</p>
 <p>最基礎的建立 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 的方法是使用 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset.from_tensor_slices()</span></code> ，適用於數據量較小（能夠整個裝進內存）的情況。具體而言，如果我們的數據集中的所有元素通過張量的第0維，拼接成一個大的張量（例如，前節的MNIST數據集的訓練集即爲一個 <code class="docutils literal notranslate"><span class="pre">[60000,</span> <span class="pre">28,</span> <span class="pre">28,</span> <span class="pre">1]</span></code> 的張量，表示了60000張28*28的單通道灰度圖像），那麼我們提供一個這樣的張量或者第0維大小相同的多個張量作爲輸入，即可按張量的第0維展開來構建數據集，數據集的元素數量爲張量第0位的大小。具體示例如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -717,7 +717,7 @@
 <p>可見每次的數據都會被隨機打散。</p>
 <div class="admonition-dataset-shuffle-buffer-size admonition">
 <p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">Dataset.shuffle()</span></code> 時緩衝區大小 <code class="docutils literal notranslate"><span class="pre">buffer_size</span></code> 的設置</p>
-<p><code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 作爲一個針對大規模數據設計的迭代器，本身無法方便地獲得自身元素的數量或隨機訪問元素。因此，爲了高效且較爲充分地打散數據集，需要一些特定的方法。<code class="docutils literal notranslate"><span class="pre">Dataset.shuffle()</span></code> 採取了以下方法：</p>
+<p><code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 作爲一個針對大規模數據設計的疊代器，本身無法方便地獲得自身元素的數量或隨機訪問元素。因此，爲了高效且較爲充分地打散數據集，需要一些特定的方法。<code class="docutils literal notranslate"><span class="pre">Dataset.shuffle()</span></code> 採取了以下方法：</p>
 <ul class="simple">
 <li><p>設定一個固定大小爲 <code class="docutils literal notranslate"><span class="pre">buffer_size</span></code> 的緩衝區（Buffer）；</p></li>
 <li><p>初始化時，取出數據集中的前 <code class="docutils literal notranslate"><span class="pre">buffer_size</span></code> 個元素放入緩衝區；</p></li>
@@ -761,13 +761,13 @@
 </div>
 <div class="section" id="id11">
 <h3>數據集元素的獲取與使用<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
-<p>構建好數據並預處理後，我們需要從其中迭代獲取數據以用於訓練。<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 是一個Python的可迭代對象，因此可以使用For循環迭代獲取數據，即：</p>
+<p>構建好數據並預處理後，我們需要從其中疊代獲取數據以用於訓練。<code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 是一個Python的可疊代對象，因此可以使用For循環疊代獲取數據，即：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="o">...</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="o">...</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
     <span class="c1"># 對張量a, b, c等進行操作，例如送入模型進行訓練</span>
 </pre></div>
 </div>
-<p>也可以使用 <code class="docutils literal notranslate"><span class="pre">iter()</span></code> 顯式創建一個Python迭代器並使用 <code class="docutils literal notranslate"><span class="pre">next()</span></code> 獲取下一個元素，即：</p>
+<p>也可以使用 <code class="docutils literal notranslate"><span class="pre">iter()</span></code> 顯式創建一個Python疊代器並使用 <code class="docutils literal notranslate"><span class="pre">next()</span></code> 獲取下一個元素，即：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="o">...</span><span class="p">))</span>
 <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
 <span class="n">a_0</span><span class="p">,</span> <span class="n">b_0</span><span class="p">,</span> <span class="n">c_0</span><span class="p">,</span> <span class="o">...</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
@@ -917,7 +917,7 @@
 <span class="n">train_labels</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_cat_filenames</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_dog_filenames</span><span class="p">)</span>  <span class="c1"># 将 cat 类的标签设为0，dog 类的标签设为1</span>
 </pre></div>
 </div>
-<p>然後，通過以下代碼，迭代讀取每張圖片，建立 <code class="docutils literal notranslate"><span class="pre">tf.train.Feature</span></code> 字典和 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 對象，序列化並寫入TFRecord文件。</p>
+<p>然後，通過以下代碼，疊代讀取每張圖片，建立 <code class="docutils literal notranslate"><span class="pre">tf.train.Feature</span></code> 字典和 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 對象，序列化並寫入TFRecord文件。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">TFRecordWriter</span><span class="p">(</span><span class="n">tfrecord_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">filename</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">train_filenames</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">):</span>
         <span class="n">image</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>     <span class="c1"># 读取数据集图片到内存，image 为一个 Byte 类型的字符串</span>
@@ -1307,7 +1307,7 @@
 <h3>設置顯存使用策略<a class="headerlink" href="#id21" title="永久链接至标题">¶</a></h3>
 <p>默認情況下，TensorFlow將使用幾乎所有可用的顯存，以避免內存碎片化所帶來的性能損失。不過，TensorFlow提供兩種顯存使用策略，讓我們能夠更靈活地控制程序的顯存使用方式：</p>
 <ul class="simple">
-<li><p>僅在需要時申請顯存空間（程序初始運行時消耗很少的顯存，隨着程序的運行而動態申請顯存）；</p></li>
+<li><p>僅在需要時申請顯存空間（程序初始運行時消耗很少的顯存，隨著程序的運行而動態申請顯存）；</p></li>
 <li><p>限制消耗固定大小的顯存（程序不會超出限定的顯存大小，若超出的報錯）。</p></li>
 </ul>
 <p>可以通過 <code class="docutils literal notranslate"><span class="pre">tf.config.experimental.set_memory_growth</span></code> 將GPU的顯存使用策略設置爲「僅在需要時申請顯存空間」。以下代碼將所有GPU設置爲僅在需要時申請顯存空間：</p>

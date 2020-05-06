@@ -5,7 +5,7 @@ TensorFlow常用模塊
 
     * `Python的序列化模塊Pickle <http://www.runoob.com/python3/python3-inputoutput.html>`_ （非必須）
     * `Python的特殊函數參數**kwargs <https://eastlakeside.gitbooks.io/interpy-zh/content/args_kwargs/Usage_kwargs.html>`_ （非必須）
-    * `Python的迭代器 <https://www.runoob.com/python3/python3-iterator-generator.html>`_ 
+    * `Python的疊代器 <https://www.runoob.com/python3/python3-iterator-generator.html>`_ 
 
 ``tf.train.Checkpoint`` ：變量的保存與恢復
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -13,7 +13,7 @@ TensorFlow常用模塊
 ..
     https://www.tensorflow.org/beta/guide/checkpoints
 
-.. warning:: Checkpoint只保存模型的參數，不保存模型的計算過程，因此一般用於在具有模型源代碼的時候恢復之前訓練好的模型參數。如果需要導出模型（無需源代碼也能運行模型），請參考 :ref:`「部署」章節中的SavedModel <savedmodel>` 。
+.. warning:: Checkpoint只保存模型的參數，不保存模型的計算過程，因此一般用於在具有模型原始碼的時候恢復之前訓練好的模型參數。如果需要導出模型（無需原始碼也能運行模型），請參考 :ref:`「部署」章節中的SavedModel <savedmodel>` 。
 
 很多時候，我們希望在模型訓練完成後能將訓練好的參數（變量）保存起來。在需要使用模型的其他地方載入模型和參數，就能直接得到訓練好的模型。可能你第一個想到的是用Python的序列化模塊 ``pickle`` 存儲 ``model.variables``。但不幸的是，TensorFlow的變量類型 ``ResourceVariable`` 並不能被序列化。
 
@@ -39,7 +39,7 @@ TensorFlow常用模塊
 
 就可以。 ``save_path_with_prefix`` 是保存文件的目錄+前綴。
 
-.. note:: 例如，在源代碼目錄建立一個名爲save的文件夾並調用一次 ``checkpoint.save('./save/model.ckpt')`` ，我們就可以在可以在save目錄下發現名爲 ``checkpoint`` 、  ``model.ckpt-1.index`` 、 ``model.ckpt-1.data-00000-of-00001`` 的三個文件，這些文件就記錄了變量信息。``checkpoint.save()`` 方法可以運行多次，每運行一次都會得到一個.index文件和.data文件，序號依次累加。
+.. note:: 例如，在原始碼目錄建立一個名爲save的文件夾並調用一次 ``checkpoint.save('./save/model.ckpt')`` ，我們就可以在可以在save目錄下發現名爲 ``checkpoint`` 、  ``model.ckpt-1.index`` 、 ``model.ckpt-1.data-00000-of-00001`` 的三個文件，這些文件就記錄了變量信息。``checkpoint.save()`` 方法可以運行多次，每運行一次都會得到一個.index文件和.data文件，序號依次累加。
 
 當在其他地方需要爲模型重新載入之前保存的參數時，需要再次實例化一個checkpoint，同時保持鍵名的一致。再調用checkpoint的restore方法。就像下面這樣：
 
@@ -75,7 +75,7 @@ TensorFlow常用模塊
     checkpoint.restore(tf.train.latest_checkpoint('./save'))    # 從文件恢復模型參數
     # 模型使用代碼
 
-.. note:: ``tf.train.Checkpoint`` 與以前版本常用的 ``tf.train.Saver`` 相比，強大之處在於其支持在即時執行模式下「延遲」恢復變量。具體而言，當調用了 ``checkpoint.restore()`` ，但模型中的變量還沒有被建立的時候，Checkpoint可以等到變量被建立的時候再進行數值的恢復。即時執行模式下，模型中各個層的初始化和變量的建立是在模型第一次被調用的時候才進行的（好處在於可以根據輸入的張量形狀而自動確定變量形狀，無需手動指定）。這意味着當模型剛剛被實例化的時候，其實裡面還一個變量都沒有，這時候使用以往的方式去恢復變量數值是一定會報錯的。比如，你可以試試在train.py調用 ``tf.keras.Model`` 的 ``save_weight()`` 方法保存model的參數，並在test.py中實例化model後立即調用 ``load_weight()`` 方法，就會出錯，只有當調用了一遍model之後再運行 ``load_weight()`` 方法才能得到正確的結果。可見， ``tf.train.Checkpoint`` 在這種情況下可以給我們帶來相當大的便利。另外， ``tf.train.Checkpoint`` 同時也支持圖執行模式。
+.. note:: ``tf.train.Checkpoint`` 與以前版本常用的 ``tf.train.Saver`` 相比，強大之處在於其支持在即時執行模式下「延遲」恢復變量。具體而言，當調用了 ``checkpoint.restore()`` ，但模型中的變量還沒有被建立的時候，Checkpoint可以等到變量被建立的時候再進行數值的恢復。即時執行模式下，模型中各個層的初始化和變量的建立是在模型第一次被調用的時候才進行的（好處在於可以根據輸入的張量形狀而自動確定變量形狀，無需手動指定）。這意味著當模型剛剛被實例化的時候，其實裡面還一個變量都沒有，這時候使用以往的方式去恢復變量數值是一定會報錯的。比如，你可以試試在train.py調用 ``tf.keras.Model`` 的 ``save_weight()`` 方法保存model的參數，並在test.py中實例化model後立即調用 ``load_weight()`` 方法，就會出錯，只有當調用了一遍model之後再運行 ``load_weight()`` 方法才能得到正確的結果。可見， ``tf.train.Checkpoint`` 在這種情況下可以給我們帶來相當大的便利。另外， ``tf.train.Checkpoint`` 同時也支持圖執行模式。
 
 最後提供一個實例，以前章的 :ref:`多層感知機模型 <mlp>` 爲例展示模型變量的保存和載入：
 
@@ -91,7 +91,7 @@ TensorFlow常用模塊
     - 在長時間的訓練後，程序會保存大量的Checkpoint，但我們只想保留最後的幾個Checkpoint；
     - Checkpoint默認從1開始編號，每次累加1，但我們可能希望使用別的編號方式（例如使用當前Batch的編號作爲文件編號）。
 
-    這時，我們可以使用TensorFlow的 ``tf.train.CheckpointManager`` 來實現以上需求。具體而言，在定義Checkpoint後接着定義一個CheckpointManager：
+    這時，我們可以使用TensorFlow的 ``tf.train.CheckpointManager`` 來實現以上需求。具體而言，在定義Checkpoint後接著定義一個CheckpointManager：
 
     .. code-block:: python
 
@@ -200,7 +200,7 @@ TensorBoard的使用有以下注意事項：
 數據集對象的建立
 -------------------------------------------
 
-``tf.data`` 的核心是 ``tf.data.Dataset`` 類，提供了對數據集的高層封裝。``tf.data.Dataset`` 由一系列的可迭代訪問的元素（element）組成，每個元素包含一個或多個張量。比如說，對於一個由圖像組成的數據集，每個元素可以是一個形狀爲 ``長×寬×通道數`` 的圖片張量，也可以是由圖片張量和圖片標籤張量組成的元組（Tuple）。
+``tf.data`` 的核心是 ``tf.data.Dataset`` 類，提供了對數據集的高層封裝。``tf.data.Dataset`` 由一系列的可疊代訪問的元素（element）組成，每個元素包含一個或多個張量。比如說，對於一個由圖像組成的數據集，每個元素可以是一個形狀爲 ``長×寬×通道數`` 的圖片張量，也可以是由圖片張量和圖片標籤張量組成的元組（Tuple）。
 
 最基礎的建立 ``tf.data.Dataset`` 的方法是使用 ``tf.data.Dataset.from_tensor_slices()`` ，適用於數據量較小（能夠整個裝進內存）的情況。具體而言，如果我們的數據集中的所有元素通過張量的第0維，拼接成一個大的張量（例如，前節的MNIST數據集的訓練集即爲一個 ``[60000, 28, 28, 1]`` 的張量，表示了60000張28*28的單通道灰度圖像），那麼我們提供一個這樣的張量或者第0維大小相同的多個張量作爲輸入，即可按張量的第0維展開來構建數據集，數據集的元素數量爲張量第0位的大小。具體示例如下：
 
@@ -302,7 +302,7 @@ TensorBoard的使用有以下注意事項：
 
 .. admonition:: ``Dataset.shuffle()`` 時緩衝區大小 ``buffer_size`` 的設置
 
-    ``tf.data.Dataset`` 作爲一個針對大規模數據設計的迭代器，本身無法方便地獲得自身元素的數量或隨機訪問元素。因此，爲了高效且較爲充分地打散數據集，需要一些特定的方法。``Dataset.shuffle()`` 採取了以下方法：
+    ``tf.data.Dataset`` 作爲一個針對大規模數據設計的疊代器，本身無法方便地獲得自身元素的數量或隨機訪問元素。因此，爲了高效且較爲充分地打散數據集，需要一些特定的方法。``Dataset.shuffle()`` 採取了以下方法：
 
     - 設定一個固定大小爲 ``buffer_size`` 的緩衝區（Buffer）；
     - 初始化時，取出數據集中的前 ``buffer_size`` 個元素放入緩衝區；
@@ -365,7 +365,7 @@ TensorBoard的使用有以下注意事項：
 
 數據集元素的獲取與使用
 -------------------------------------------
-構建好數據並預處理後，我們需要從其中迭代獲取數據以用於訓練。``tf.data.Dataset`` 是一個Python的可迭代對象，因此可以使用For循環迭代獲取數據，即：
+構建好數據並預處理後，我們需要從其中疊代獲取數據以用於訓練。``tf.data.Dataset`` 是一個Python的可疊代對象，因此可以使用For循環疊代獲取數據，即：
 
 .. code-block:: python
 
@@ -373,7 +373,7 @@ TensorBoard的使用有以下注意事項：
     for a, b, c, ... in dataset:
         # 對張量a, b, c等進行操作，例如送入模型進行訓練
 
-也可以使用 ``iter()`` 顯式創建一個Python迭代器並使用 ``next()`` 獲取下一個元素，即：
+也可以使用 ``iter()`` 顯式創建一個Python疊代器並使用 ``next()`` 獲取下一個元素，即：
 
 .. code-block:: python
 
@@ -473,7 +473,7 @@ TFRecord可以理解爲一系列序列化的 ``tf.train.Example`` 元素所組�
 .. literalinclude:: /_static/code/zh/tools/tfrecord/cats_vs_dogs.py
     :lines: 1-12
 
-然後，通過以下代碼，迭代讀取每張圖片，建立 ``tf.train.Feature`` 字典和 ``tf.train.Example`` 對象，序列化並寫入TFRecord文件。
+然後，通過以下代碼，疊代讀取每張圖片，建立 ``tf.train.Feature`` 字典和 ``tf.train.Example`` 對象，序列化並寫入TFRecord文件。
 
 .. literalinclude:: /_static/code/zh/tools/tfrecord/cats_vs_dogs.py
     :lines: 14-22
@@ -791,7 +791,7 @@ AutoGraph：將Python控制流轉換爲TensorFlow計算圖
 
 默認情況下，TensorFlow將使用幾乎所有可用的顯存，以避免內存碎片化所帶來的性能損失。不過，TensorFlow提供兩種顯存使用策略，讓我們能夠更靈活地控制程序的顯存使用方式：
 
-- 僅在需要時申請顯存空間（程序初始運行時消耗很少的顯存，隨着程序的運行而動態申請顯存）；
+- 僅在需要時申請顯存空間（程序初始運行時消耗很少的顯存，隨著程序的運行而動態申請顯存）；
 - 限制消耗固定大小的顯存（程序不會超出限定的顯存大小，若超出的報錯）。
 
 可以通過 ``tf.config.experimental.set_memory_growth`` 將GPU的顯存使用策略設置爲「僅在需要時申請顯存空間」。以下代碼將所有GPU設置爲僅在需要時申請顯存空間：

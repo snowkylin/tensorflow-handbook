@@ -42,7 +42,7 @@ TensorFlow Datasets 數據集載入
 
     ::
 
-        export TFDS_HTTPS_PROXY=http://代理服務器IP:端口
+        export TFDS_HTTPS_PROXY=http://代理伺服器IP:埠
 
 ``tfds.load`` 方法返回一個 ``tf.data.Dataset`` 對象。部分重要的參數如下：
 
@@ -64,7 +64,7 @@ TensorFlow Datasets 當前支持的數據集可在 `官方文檔 <https://www.te
     dataset = dataset.map(lambda img, label: (tf.image.resize(img, [224, 224]) / 255.0, label)) \
         .shuffle(1024) \
         .batch(32)
-    # 迭代數據
+    # 疊代數據
     for images, labels in dataset:
         # 對images和labels進行操作
 

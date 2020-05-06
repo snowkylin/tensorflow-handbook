@@ -305,7 +305,7 @@
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/new.png"><img alt="../../_images/new.png" src="../../_images/new.png" style="width: 100%;" /></a>
 </div>
-<p>如果需要使用GPU，則點擊菜單「代碼執行程序-更改運行時類型」，在「硬件加速器」一項中選擇「GPU」，如下圖所示：</p>
+<p>如果需要使用GPU，則點擊菜單「代碼執行程序-更改運行時類型」，在「硬體加速器」一項中選擇「GPU」，如下圖所示：</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/select_env.png"><img alt="../../_images/select_env.png" src="../../_images/select_env.png" style="width: 40%;" /></a>
 </div>
@@ -318,7 +318,7 @@
 <p class="admonition-title">小技巧</p>
 <p>Colab支持代碼提示，可以在輸入 <code class="docutils literal notranslate"><span class="pre">tf.</span></code> 後按下 <code class="docutils literal notranslate"><span class="pre">tab</span></code> 鍵，即會彈出代碼提示的下拉菜單。</p>
 </div>
-<p>可見，截至本文寫作時，Colab中的TensorFlow默認版本是1.14.0。在Colab中，可以使用 <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">!apt-get</span> <span class="pre">install</span></code> 來安裝Colab中尚未安裝的Python庫或Linux軟件包。比如在這裡，我們希望使用TensorFlow 2.0 beta1版本，即點擊左上角的「+代碼」，輸入:</p>
+<p>可見，截至本文寫作時，Colab中的TensorFlow默認版本是1.14.0。在Colab中，可以使用 <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">!apt-get</span> <span class="pre">install</span></code> 來安裝Colab中尚未安裝的Python庫或Linux軟體包。比如在這裡，我們希望使用TensorFlow 2.0 beta1版本，即點擊左上角的「+代碼」，輸入:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!pip install tensorflow-gpu==2.0.0-beta1
 </pre></div>
 </div>
@@ -343,7 +343,7 @@
 </div>
 <div class="section" id="google-cloud-platform-gcp-tensorflow">
 <span id="gcp"></span><h2>在Google Cloud Platform（GCP）中使用TensorFlow<a class="headerlink" href="#google-cloud-platform-gcp-tensorflow" title="永久链接至标题">¶</a></h2>
-<p><a class="reference external" href="https://cloud.google.com/">Google Cloud Platform（GCP）</a> 是Google的雲計算服務。GCP收費靈活，默認按時長計費。也就是說，你可以迅速建立一個帶GPU的實例，訓練一個模型，然後立即關閉（關機或刪除實例）。GCP只收取在實例開啓時所產生的費用，關機時只收取磁盤存儲的費用，刪除後即不再繼續收費。</p>
+<p><a class="reference external" href="https://cloud.google.com/">Google Cloud Platform（GCP）</a> 是Google的雲計算服務。GCP收費靈活，默認按時長計費。也就是說，你可以迅速建立一個帶GPU的實例，訓練一個模型，然後立即關閉（關機或刪除實例）。GCP只收取在實例開啓時所產生的費用，關機時只收取磁碟存儲的費用，刪除後即不再繼續收費。</p>
 <p>我們可以通過兩種方式在GCP中使用TensorFlow：使用Compute Engine建立帶GPU的實例，或使用AI Platform中的Notebook建立帶GPU的在線JupyterLab環境。</p>
 <div class="section" id="compute-enginegputensorflow">
 <h3>在Compute Engine建立帶GPU的實例並部署TensorFlow<a class="headerlink" href="#compute-enginegputensorflow" title="永久链接至标题">¶</a></h3>
@@ -354,7 +354,7 @@
 <p>需要注意兩點：</p>
 <ol class="arabic simple">
 <li><p>只有特定區域的機房具有GPU，且不同類型的GPU地區範圍也不同，可參考 <a class="reference external" href="https://cloud.google.com/compute/docs/gpus">GCP官方文檔</a> 並選擇適合的地區建立實例；</p></li>
-<li><p>默認情況下GCP賬號的GPU配額非常有限（可能是怕你付不起錢？）。你很可能需要在使用前申請提升自己賬號在特定地區的特定型號GPU的配額，可參考 <a class="reference external" href="https://cloud.google.com/compute/quotas?hl=zh-cn#requesting_additional_quota">GCP官方文檔：申請提升配額</a> ，GCP會有工作人員手動處理申請，並給你的郵箱發送郵件通知，大約需要數小時至兩個工作日不等。</p></li>
+<li><p>默認情況下GCP帳號的GPU配額非常有限（可能是怕你付不起錢？）。你很可能需要在使用前申請提升自己帳號在特定地區的特定型號GPU的配額，可參考 <a class="reference external" href="https://cloud.google.com/compute/quotas?hl=zh-cn#requesting_additional_quota">GCP官方文檔：申請提升配額</a> ，GCP會有工作人員手動處理申請，並給你的郵箱發送郵件通知，大約需要數小時至兩個工作日不等。</p></li>
 </ol>
 <p>當建立好具有GPU的GCP虛擬機實例後，配置工作與在本地基本相同。系統中默認並沒有NVIDIA顯卡驅動，依然需要自己安裝。</p>
 <p>以下命令示例了在Tesla K80，Ubuntu 18.04 LTS的GCP虛擬機實例中配置NVIDIA 410驅動、CUDA 10.0、cuDNN 7.6.0以及TensorFlow 2.0 beta環境的過程：</p>
@@ -403,7 +403,7 @@ Fri Jul <span class="m">12</span> <span class="m">10</span>:30:37 <span class="m
 <p>也可以點擊「自定義」來進一步配置實例，例如選擇區域、GPU類型和個數，與創建Compute Engine實例類似。</p>
 <div class="admonition hint">
 <p class="admonition-title">提示</p>
-<p>和Compute Engine實例一樣，你很可能需要在這裡選擇自己適合的區域，以及申請提升自己賬號在特定地區的特定型號GPU的配額。</p>
+<p>和Compute Engine實例一樣，你很可能需要在這裡選擇自己適合的區域，以及申請提升自己帳號在特定地區的特定型號GPU的配額。</p>
 </div>
 <p>建立完成後，點擊「打開JUPYTERLAB」，即可進入以下界面：</p>
 <div class="figure align-center">
@@ -440,7 +440,7 @@ Fri Jul <span class="m">12</span> <span class="m">10</span>:30:37 <span class="m
 <a class="reference internal image-reference" href="../../_images/os_image_with_RAPIDS.png"><img alt="../../_images/os_image_with_RAPIDS.png" src="../../_images/os_image_with_RAPIDS.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">在「鏡像市場」中，官方也提供了適合深度學習的定製鏡像。在本示例中我們選擇預裝了 NVIDIA RAPIDS 的 Ubuntu 16.04 鏡像。</span><a class="headerlink" href="#id8" title="永久链接至图片">¶</a></p>
 </div>
-<p>然後，通過 ssh 連接上我們選購的服務器，並使用 <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> 查看 GPU 信息：</p>
+<p>然後，通過 ssh 連接上我們選購的伺服器，並使用 <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> 查看 GPU 信息：</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rapids<span class="o">)</span> root@iZ8vb2567465uc1ty3f4ovZ:~# nvidia-smi
 Sun Aug <span class="m">11</span> <span class="m">23</span>:53:52 <span class="m">2019</span>
 +-----------------------------------------------------------------------------+
@@ -464,7 +464,7 @@ Sun Aug <span class="m">11</span> <span class="m">23</span>:53:52 <span class="m
 <p>確認了驅動無誤之後，其他操作就可以照常執行了。</p>
 <div class="admonition hint">
 <p class="admonition-title">提示</p>
-<p>阿里雲等雲服務提供商一般對於 VPS 的端口進行了安全策略限制，請關注所使用的端口是否在安全策略的放行列表中，以免影響Tensorflow Serving和Tensorboard的使用。</p>
+<p>阿里雲等雲服務提供商一般對於 VPS 的埠進行了安全策略限制，請關注所使用的埠是否在安全策略的放行列表中，以免影響Tensorflow Serving和Tensorboard的使用。</p>
 </div>
 <script>
     $(document).ready(function(){
