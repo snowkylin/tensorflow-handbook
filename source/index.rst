@@ -11,14 +11,18 @@
 
 .. raw:: html
 
-    <table style="width: 100%; margin: 20px 0">
+    <table style="width: 100%; margin: 20px 20px">
         <tbody witth=100%>
         <tr>
-            <td width=50% style="text-align: center">
-                <b><a href="#id1">中文版</a></b>
-                <small>（點擊頁面上方按鈕切換繁簡）</small>           
+            <td width=33% style="text-align: center">
+                <b><a href="/zh_hans">简体中文版</a></b>           
             </td>
-            <td width=50% style="text-align: center"><b><a href="#english-version-in-progress">English Version (in progress)</a></b></td>
+            <td width=33% style="text-align: center">
+                <b><a href="/zh_hant">繁體中文版</a></b>           
+            </td>
+            <td width=33% style="text-align: center">
+                <b><a href="/en">English Version<br />(in progress)</a></b>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -28,7 +32,7 @@
 
     This document is unfinished, content will be updated rapidly. Please keep it internal at this time.
 
-中文版
+简体中文版
 ==========================
 
 这是一本简明的 TensorFlow 2 入门指导手册，基于 Keras 和即时执行模式（Eager Execution），力图让具备一定机器学习及 Python 基础的开发者们快速上手 TensorFlow 2。
@@ -41,7 +45,7 @@
 
 .. admonition:: 线上教学活动：ML Study Jam
 
-    本手册正在与TensorFlow官方微信公众号合作开展为期三周的“ML Study Jam”线上学习活动。活动从2020年4月20日开始，可以访问 `这里 <https://tf.wiki/zh/mlstudyjam.html>`_ 或 `TensorFlow官方微信公众号（TensorFlow_official） <http://mp.weixin.qq.com/s?__biz=MzU1OTMyNDcxMQ==&mid=2247488326&idx=1&sn=e5507c80e3419ae30425b7dfac4ce164&chksm=fc18580ecb6fd11808c35c18ed3e61dd39f36d3fbdfcacefaff03e7a5ab6b07b788d1b87e467&mpshare=1&scene=23&srcid=&sharer_sharetime=1587465932630&sharer_shareid=b6f86ab8b392c4d4036aa6a1d3b82824#rd>`_ 以了解详情。
+    本手册正在与TensorFlow官方微信公众号合作开展为期三周的“ML Study Jam”线上学习活动。活动从2020年4月20日开始，可以访问 `这里 <https://tf.wiki/zh_hans/mlstudyjam.html>`_ 或 `TensorFlow官方微信公众号（TensorFlow_official） <http://mp.weixin.qq.com/s?__biz=MzU1OTMyNDcxMQ==&mid=2247488326&idx=1&sn=e5507c80e3419ae30425b7dfac4ce164&chksm=fc18580ecb6fd11808c35c18ed3e61dd39f36d3fbdfcacefaff03e7a5ab6b07b788d1b87e467&mpshare=1&scene=23&srcid=&sharer_sharetime=1587465932630&sharer_shareid=b6f86ab8b392c4d4036aa6a1d3b82824#rd>`_ 以了解详情。
 
 GitHub： https://github.com/snowkylin/tensorflow-handbook
 
@@ -51,83 +55,138 @@ GitHub： https://github.com/snowkylin/tensorflow-handbook
     :maxdepth: 3
     :caption: 教学活动
     
-    zh/mlstudyjam
+    zh_hans/mlstudyjam
 
 .. toctree:: 
     :maxdepth: 2
     :caption: 目录
 
-    zh/preface
-    zh/introduction
+    zh_hans/preface
+    zh_hans/introduction
 
 .. toctree:: 
     :maxdepth: 3
     :caption: 基础
 
-    zh/basic/installation
-    zh/basic/basic
-    zh/basic/models
-    zh/basic/tools
+    zh_hans/basic/installation
+    zh_hans/basic/basic
+    zh_hans/basic/models
+    zh_hans/basic/tools
 
 .. toctree:: 
     :maxdepth: 3
     :caption: 部署
 
-    zh/deployment/export
-    zh/deployment/serving
-    zh/deployment/lite
-    zh/deployment/javascript
+    zh_hans/deployment/export
+    zh_hans/deployment/serving
+    zh_hans/deployment/lite
+    zh_hans/deployment/javascript
 
 .. toctree:: 
     :maxdepth: 3
     :caption: 大规模训练与加速
 
-    zh/appendix/distributed
-    zh/appendix/tpu
+    zh_hans/appendix/distributed
+    zh_hans/appendix/tpu
 
 .. toctree:: 
     :maxdepth: 3
     :caption: 扩展
 
-    zh/appendix/tfhub
-    zh/appendix/tfds  
-    zh/appendix/swift
-    zh/appendix/quantum
+    zh_hans/appendix/tfhub
+    zh_hans/appendix/tfds  
+    zh_hans/appendix/swift
+    zh_hans/appendix/quantum
 
-..
-    .. toctree:: 
-        :maxdepth: 2
-        :caption: 应用
-
-        zh/application/rl
-        zh/application/chatbot
 ..
     .. toctree:: 
         :maxdepth: 3
         :caption: 高级
 
-        zh/advanced/static 
-        zh/advanced/tape
-        zh/advanced/optimization
+        zh_hans/advanced/static 
+        zh_hans/advanced/tape
+        zh_hans/advanced/optimization
 
 .. toctree:: 
     :maxdepth: 3
     :caption: 附录
     
-    zh/appendix/rl
-    zh/appendix/docker
-    zh/appendix/cloud
-    zh/appendix/jupyterlab    
-    zh/appendix/recommended_books
-    zh/appendix/terms
+    zh_hans/appendix/rl
+    zh_hans/appendix/docker
+    zh_hans/appendix/cloud
+    zh_hans/appendix/jupyterlab    
+    zh_hans/appendix/recommended_books
+    zh_hans/appendix/terms
+
+繁体中文版
+==========================
+
+.. toctree:: 
+    :maxdepth: 3
+    :caption: 教學活動
+    
+    zh_hant/mlstudyjam
+
+.. toctree:: 
+    :maxdepth: 2
+    :caption: 目錄
+
+    zh_hant/preface
+    zh_hant/introduction
+
+.. toctree:: 
+    :maxdepth: 3
+    :caption: 基礎
+
+    zh_hant/basic/installation
+    zh_hant/basic/basic
+    zh_hant/basic/models
+    zh_hant/basic/tools
+
+.. toctree:: 
+    :maxdepth: 3
+    :caption: 部署
+
+    zh_hant/deployment/export
+    zh_hant/deployment/serving
+    zh_hant/deployment/lite
+    zh_hant/deployment/javascript
+
+.. toctree:: 
+    :maxdepth: 3
+    :caption: 大規模訓練與加速
+
+    zh_hant/appendix/distributed
+    zh_hant/appendix/tpu
+
+.. toctree:: 
+    :maxdepth: 3
+    :caption: 擴展
+
+    zh_hant/appendix/tfhub
+    zh_hant/appendix/tfds  
+    zh_hant/appendix/swift
+    zh_hant/appendix/quantum
 
 ..
-    PDF下载（旧版）：
+    .. toctree:: 
+        :maxdepth: 3
+        :caption: 高級
 
-    - 中文版：https://discuss.tf.wiki/t/topic/23 （同时也有英文版下载）
-    - 英文版：https://github.com/snowkylin/tensorflow-handbook/releases
+        zh_hant/advanced/static 
+        zh_hant/advanced/tape
+        zh_hant/advanced/optimization
 
-    GitHub: https://github.com/snowkylin/tensorflow-handbook
+.. toctree:: 
+    :maxdepth: 3
+    :caption: 附錄
+    
+    zh_hant/appendix/rl
+    zh_hant/appendix/docker
+    zh_hant/appendix/cloud
+    zh_hant/appendix/jupyterlab    
+    zh_hant/appendix/recommended_books
+    zh_hant/appendix/terms
 
 English Version (in progress)
 ==============================================

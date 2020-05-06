@@ -12,7 +12,7 @@ TensorFlow 模型建立与训练
 
 .. admonition:: 前置知识
 
-    * `Python -{zh-hant:物件導向;zh-hans:面向對象;}-编程 <http://www.runoob.com/python3/python3-class.html>`_ （在 Python 内定义类和方法、类的继承、构造和析构函数，`使用 super() 函数调用父类方法 <http://www.runoob.com/python/python-func-super.html>`_ ，`使用__call__() 方法对实例进行调用 <https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319098638265527beb24f7840aa97de564ccc7f20f6000>`_ 等）；
+    * `Python 面向对象编程 <http://www.runoob.com/python3/python3-class.html>`_ （在 Python 内定义类和方法、类的继承、构造和析构函数，`使用 super() 函数调用父类方法 <http://www.runoob.com/python/python-func-super.html>`_ ，`使用__call__() 方法对实例进行调用 <https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319098638265527beb24f7840aa97de564ccc7f20f6000>`_ 等）；
     * 多层感知机、卷积神经网络、循环神经网络和强化学习（每节之前给出参考资料）。
     *  `Python 的函数装饰器 <https://www.runoob.com/w3cnote/python-func-decorators.html>`_ （非必须）
 

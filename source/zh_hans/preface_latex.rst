@@ -1,7 +1,7 @@
 前言
 ======
 
-2018年3月30日，Google在加州山景城举行了第二届TensorFlow Dev Summit开发者峰会，并宣布正式发布TensorFlow 1.8版本。作为-{zh-hant:大中華地區;zh-hans:国内;}-首批机器学习领域的谷歌开发者专家（ `Google Developers Expert <https://developers.google.cn/community/experts>`_ , GDE），我有幸获得Google的资助亲临峰会现场，见证了这一具有里程碑式意义的新版本发布。众多新功能的加入和支持展示了TensorFlow的雄心壮志，已经酝酿许久的即时执行模式（Eager Execution，或称“动态图模式”）在这一版本中也终于正式得到支持。
+2018年3月30日，Google在加州山景城举行了第二届TensorFlow Dev Summit开发者峰会，并宣布正式发布TensorFlow 1.8版本。作为国内首批机器学习领域的谷歌开发者专家（ `Google Developers Expert <https://developers.google.cn/community/experts>`_ , GDE），我有幸获得Google的资助亲临峰会现场，见证了这一具有里程碑式意义的新版本发布。众多新功能的加入和支持展示了TensorFlow的雄心壮志，已经酝酿许久的即时执行模式（Eager Execution，或称“动态图模式”）在这一版本中也终于正式得到支持。
 
 在此之前，TensorFlow 所基于的传统的图执行模式与会话机制（Graph Execution and Session，或称“静态图模式”）的弊端，如入门门槛高、调试困难、灵活性差、无法使用 Python 原生控制语句等，已被开发者诟病许久。一些新的基于即时执行模式的深度学习框架（如 PyTorch）也横空出世，并以其易用性和快速开发的特性而占据了一席之地。尤其是在学术研究等需要快速迭代模型的领域，PyTorch 等新兴深度学习框架已成为主流。我所在的数十人的机器学习实验室中，竟只有我一人“守旧”地使用 TensorFlow。而市面上 TensorFlow 相关的中文技术书以及资料也仍然基于传统的计算图与会话机制，这让不少初学者，尤其是刚学过机器学习课程的大学生望而却步。
 
@@ -12,6 +12,8 @@
 2019年10月1日，TensorFlow 2.0 正式版发布，同时本手册也开始了在 TensorFlow 官方公众微信号（TensorFlow_official）上的长篇连载。在连载过程中，我收到了大量的读者提问和意见反馈。为读者答疑的同时，我也修订了手册中的较多细节。受到新冠疫情的影响，2020年3月的第四届 TensorFlow Dev Summit 开发者峰会在线上直播举行。我根据峰会的内容为手册增添了部分内容，特别是介绍了 TensorFlow Quantum 这一混合量子-经典机器学习库的基本使用方式。我在研究生期间旁听过量子力学，还做过量子计算和机器学习结合的专题报告。TensorFlow Quantum 的推出着实让我感到兴奋，并迫不及待地希望介绍给广大读者。2020年4月，为了适应新冠疫情期间的线上教学需求，我接受 TensorFlow Usergroup （TFUG）和谷歌开发者社群的邀请，依托本手册在 TensorFlow 官方公众微信号上开展了“机器学习Study Jam”线上教学活动，并启用了手册留言版 https://discuss.tf.wiki 进行教学互动答疑。此次教学也同样有不少学习者为本手册提供了重要的改进意见。
 
 由于我的研究方向是强化学习，所以在本手册的附录中加入了“强化学习简介”一章，对强化学习进行了更细致的介绍。和绝大多数强化学习教程一开始就介绍马尔可夫决策过程和各种概念不同，我从纯动态规划出发，结合具体算例来介绍强化学习，试图让强化学习和动态规划的关系更清晰，以及对程序员更友好。这个视角相对比较特立独行，如果您发现了谬误之处，也请多加指正。
+
+本手册在2018年秋就已开始筹划出版事宜，但由于 TensorFlow 版本迭代速度快，本手册多次进行增订的缘故，导致本手册的出版时间一再推迟。在此手册最终付梓时，TensorFlow 2.1 正式版已经发布，修正了 2.0 版本在使用中的诸多问题，使得 TensorFlow 2 的可用性和成熟度大为加强，适合进行大规模的推广普及。而本手册经过多次修订后，大部分内容也趋于稳定。因此，我认为现在（2020年夏）是一个出版本手册的成熟时机。尽管如此，本手册依然可能存在着诸多缺陷、错误和过时之处。欢迎您在 https://discuss.tf.wiki 或图灵社区反馈您在阅读中遇到的问题。
 
 本手册的主要特征有：
 
@@ -55,14 +57,14 @@
 
 衷心感谢 Google 中国开发者关系团队和 TensorFlow 工程团队的成员及前成员们对本手册的编写所提供的帮助。其中，开发者关系团队的 Luke Cheng 在本手册初版编写过程中提供重要的思路启发和鼓励，且提供本手册在线版本的域名 `tf.wiki <https://tf.wiki>`_ 和留言版 https://discuss.tf.wiki ；开发者关系团队的 Soonson Kwon、Lily Chen、Wei Duan、Tracy Wang、Rui Li、Pryce Mu，TensorFlow 产品经理 Mike Liang 和谷歌开发者大使 Paige Bailey 为本手册宣传及推广提供了大力支持；TensorFlow 工程团队的 Tiezhen Wang 在本手册的工程细节方面提供了诸多建议和补充；TensorFlow 中国研发负责人 Shuangfeng Li 和 TensorFlow 工程团队的其他工程师们为本手册提供了专业的审阅意见。同时感谢 TensorFlow 工程总监 Rajat Monga 和 Google AI 负责人 Jeff Dean 在社交媒体上对本手册的推荐与关注。感谢 Google Summer of Code 2019 对本项目的资助。
 
-最后，感谢我的父母、导师、同学和好友对本手册的支持。
+最后，感谢人民邮电出版社的的王军花、武芮欣编辑对本手册的细致校对工作和出版流程跟进。感谢我的父母、导师、同学和好友对本手册的支持。
 
-关于本手册的意见和建议，欢迎在 https://discuss.tf.wiki 提交。您的宝贵意见将促进本手册的持续更新。
+关于本手册的意见和建议，欢迎在 https://discuss.tf.wiki 或图灵社区提交。您的宝贵意见将促进本手册的持续更新。
 
 |
 
-Google Developers Expert in Machine Learning
+谷歌开发者专家，机器学习领域
 
-Xihan Li ( `snowkylin <https://snowkylin.github.io/>`_ )
+李锡涵
 
 2020 年 5 月于深圳

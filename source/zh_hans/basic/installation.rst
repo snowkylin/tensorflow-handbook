@@ -32,8 +32,8 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
     3. 在Windows下，需要打开开始菜单中的“Anaconda Prompt”进入Anaconda的命令行环境；
     4. 如果默认的pip和conda网络连接速度慢，可以尝试使用镜像，将显著提升pip和conda的下载速度（具体效果视您所在的网络环境而定）；
         
-        - -{zh-hant:北京清華大學;zh-hans:清华大学;}-的pypi镜像：https://mirrors.tuna.tsinghua.edu.cn/help/pypi/
-        - -{zh-hant:北京清華大學;zh-hans:清华大学;}-的Anaconda镜像：https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/
+        - 清华大学的pypi镜像：https://mirrors.tuna.tsinghua.edu.cn/help/pypi/
+        - 清华大学的Anaconda镜像：https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/
     5. 如果对磁盘空间要求严格（比如服务器环境），可以安装 `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ ，仅包含Python和Conda，其他的包可自己按需安装。Miniconda的安装包可在 `这里 <https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/>`_ 获得。
 
 .. admonition:: pip和conda包管理器
