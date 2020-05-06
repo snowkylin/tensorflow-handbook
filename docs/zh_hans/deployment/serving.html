@@ -1,0 +1,622 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TensorFlow Serving &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
+        <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200506.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="TensorFlow Lite（Jinpeng）" href="lite.html" />
+    <link rel="prev" title="TensorFlow模型导出" href="export.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴 TensorFlow 2
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Serving</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">TensorFlow Serving安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">TensorFlow Serving模型部署</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#keras-sequential">Keras Sequential模式模型的部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keras">自定义Keras模型的部署</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#call-serving-api">在客户端调用以TensorFlow Serving部署的模型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python">Python客户端示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#node-js-ziyang">Node.js客户端示例（Ziyang）</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/rl.html">强化学习简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教學活動</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基礎</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/installation.html">TensorFlow安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/models.html">TensorFlow 模型建立與訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/tools.html">TensorFlow常用模塊</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大規模訓練與加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/distributed.html">TensorFlow分布式訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/tpu.html">使用TPU訓練TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">擴展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/rl.html">強化學習簡介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/docker.html">使用Docker部署TensorFlow環境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/cloud.html">在雲端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/recommended_books.html">參考資料與推薦閱讀</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/terms.html">術語中英對照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Preface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/introduction.html">TensorFlow Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/installation.html">Installation and Environment Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/basic.html">TensorFlow Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/models.html">Model Construction and Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/tools.html">Common Modules in TensorFlow</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/lite.html">TensorFlow Lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/javascript.html">TensorFlow in JavaScript</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Large-scale Training</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/distributed.html">Distributed Training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/rl.html">Introduction to Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/docker.html">Using Docker to deploy TensorFlow environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/cloud.html">Using TensorFlow on cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/recommended_books.html">References and Recommendations for Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴 TensorFlow 2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>TensorFlow Serving</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/zh_hans/deployment/serving.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorflow-serving">
+<h1>TensorFlow Serving<a class="headerlink" href="#tensorflow-serving" title="永久链接至标题">¶</a></h1>
+<p>当我们将模型训练完毕后，往往需要将模型在生产环境中部署。最常见的方式，是在服务器上提供一个API，即客户机向服务器的某个API发送特定格式的请求，服务器收到请求数据后通过模型进行计算，并返回结果。如果仅仅是做一个Demo，不考虑高并发和性能问题，其实配合 <a class="reference external" href="https://palletsprojects.com/p/flask/">Flask</a> 等Python下的Web框架就能非常轻松地实现服务器API。不过，如果是在真的实际生产环境中部署，这样的方式就显得力不从心了。这时，TensorFlow为我们提供了TensorFlow Serving这一组件，能够帮助我们在实际生产环境中灵活且高性能地部署机器学习模型。</p>
+<div class="section" id="id1">
+<h2>TensorFlow Serving安装<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>TensorFlow Serving可以使用apt-get或Docker安装。在生产环境中，推荐 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/docker">使用Docker部署TensorFlow Serving</a> 。不过此处出于教学目的，介绍依赖环境较少的 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup#installing_using_apt">apt-get安装</a> 。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>软件的安装方法往往具有时效性，本节的更新日期为2019年8月。若遇到问题，建议参考 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup">TensorFlow网站上的最新安装说明</a> 进行操作。</p>
+</div>
+<p>首先设置安装源：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 添加Google的TensorFlow Serving源</span>
+<span class="n">echo</span> <span class="s2">&quot;deb [arch=amd64] http://storage.googleapis.com/tensorflow-serving-apt stable tensorflow-model-server tensorflow-model-server-universal&quot;</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">tee</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">-</span><span class="n">serving</span><span class="o">.</span><span class="n">list</span>
+<span class="c1"># 添加gpg key</span>
+<span class="n">curl</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">storage</span><span class="o">.</span><span class="n">googleapis</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">-</span><span class="n">serving</span><span class="o">-</span><span class="n">apt</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">-</span><span class="n">serving</span><span class="o">.</span><span class="n">release</span><span class="o">.</span><span class="n">pub</span><span class="o">.</span><span class="n">gpg</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">key</span> <span class="n">add</span> <span class="o">-</span>
+</pre></div>
+</div>
+<p>更新源后，即可使用apt-get安装TensorFlow Serving</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="n">server</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>在运行curl和apt-get命令时，可能需要设置代理。</p>
+<p>curl设置代理的方式为 <code class="docutils literal notranslate"><span class="pre">-x</span></code> 选项或设置 <code class="docutils literal notranslate"><span class="pre">http_proxy</span></code> 环境变量，即</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">http_proxy</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理服务器IP</span><span class="p">:</span><span class="n">端口</span>
+</pre></div>
+</div>
+<p>或</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">x</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理服务器IP</span><span class="p">:</span><span class="n">端口</span> <span class="n">URL</span>
+</pre></div>
+</div>
+<p>apt-get设置代理的方式为 <code class="docutils literal notranslate"><span class="pre">-o</span></code> 选项，即</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">o</span> <span class="n">Acquire</span><span class="p">::</span><span class="n">http</span><span class="p">::</span><span class="n">proxy</span><span class="o">=</span><span class="s2">&quot;http://代理服务器IP:端口&quot;</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>Windows 10下，可以在 <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Linux子系统（WSL）</a> 内使用相同的方式安装TensorFlow Serving。</p>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>TensorFlow Serving模型部署<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>TensorFlow Serving可以直接读取SavedModel格式的模型进行部署（导出模型到SavedModel文件的方法见 <a class="reference internal" href="../../zh_hant/deployment/export.html#savedmodel"><span class="std std-ref">前文</span></a> ）。使用以下命令即可：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>tensorflow_model_server \
+    --rest_api_port=端口号（如8501） \
+    --model_name=模型名 \
+    --model_base_path=&quot;SavedModel格式模型的文件夹绝对地址（不含版本号）&quot;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>TensorFlow Serving支持热更新模型，其典型的模型文件夹结构如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">saved_model_files</span>
+    <span class="o">/</span><span class="mi">1</span>      <span class="c1"># 版本号为1的模型文件</span>
+        <span class="o">/</span><span class="n">assets</span>
+        <span class="o">/</span><span class="n">variables</span>
+        <span class="n">saved_model</span><span class="o">.</span><span class="n">pb</span>
+    <span class="o">...</span>
+    <span class="o">/</span><span class="n">N</span>      <span class="c1"># 版本号为N的模型文件</span>
+        <span class="o">/</span><span class="n">assets</span>
+        <span class="o">/</span><span class="n">variables</span>
+        <span class="n">saved_model</span><span class="o">.</span><span class="n">pb</span>
+</pre></div>
+</div>
+<p>上面1~N的子文件夹代表不同版本号的模型。当指定 <code class="docutils literal notranslate"><span class="pre">--model_base_path</span></code> 时，只需要指定根目录的 <strong>绝对地址</strong> （不是相对地址）即可。例如，如果上述文件夹结构存放在 <code class="docutils literal notranslate"><span class="pre">home/snowkylin</span></code> 文件夹内，则 <code class="docutils literal notranslate"><span class="pre">--model_base_path</span></code> 应当设置为 <code class="docutils literal notranslate"><span class="pre">home/snowkylin/saved_model_files</span></code> （不附带模型版本号）。TensorFlow Serving会自动选择版本号最大的模型进行载入。</p>
+</div>
+<div class="section" id="keras-sequential">
+<h3>Keras Sequential模式模型的部署<a class="headerlink" href="#keras-sequential" title="永久链接至标题">¶</a></h3>
+<p>由于Sequential模式的输入和输出都很固定，因此这种类型的模型很容易部署，无需其他额外操作。例如，要将 <a class="reference internal" href="../../zh_hant/deployment/export.html#savedmodel"><span class="std std-ref">前文使用SavedModel导出的MNIST手写体识别模型</span></a> （使用Keras Sequential模式建立）以 <code class="docutils literal notranslate"><span class="pre">MLP</span></code> 的模型名在 <code class="docutils literal notranslate"><span class="pre">8501</span></code> 端口进行部署，可以直接使用以下命令：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tensorflow_model_server</span> \
+    <span class="o">--</span><span class="n">rest_api_port</span><span class="o">=</span><span class="mi">8501</span> \
+    <span class="o">--</span><span class="n">model_name</span><span class="o">=</span><span class="n">MLP</span> \
+    <span class="o">--</span><span class="n">model_base_path</span><span class="o">=</span><span class="s2">&quot;/home/.../.../saved&quot;</span>  <span class="c1"># 文件夹绝对地址根据自身情况填写，无需加入版本号</span>
+</pre></div>
+</div>
+<p>然后就可以按照 <a class="reference internal" href="../../zh_hant/deployment/serving.html#call-serving-api"><span class="std std-ref">后文的介绍</span></a> ，使用gRPC或者RESTful API在客户端调用模型了。</p>
+</div>
+<div class="section" id="keras">
+<h3>自定义Keras模型的部署<a class="headerlink" href="#keras" title="永久链接至标题">¶</a></h3>
+<p>使用继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 类建立的自定义Keras模型的自由度相对更高。因此当使用TensorFlow Serving部署模型时，对导出的SavedModel文件也有更多的要求：</p>
+<ul class="simple">
+<li><p>需要导出到SavedModel格式的方法（比如 <code class="docutils literal notranslate"><span class="pre">call</span></code> ）不仅需要使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰，还要在修饰时指定 <code class="docutils literal notranslate"><span class="pre">input_signature</span></code> 参数，以显式说明输入的形状。该参数传入一个由 <code class="docutils literal notranslate"><span class="pre">tf.TensorSpec</span></code> 组成的列表，指定每个输入张量的形状和类型。例如，对于MNIST手写体数字识别，我们的输入是一个 <code class="docutils literal notranslate"><span class="pre">[None,</span> <span class="pre">28,</span> <span class="pre">28,</span> <span class="pre">1]</span></code> 的四维张量（ <code class="docutils literal notranslate"><span class="pre">None</span></code> 表示第一维即Batch Size的大小不固定），此时我们可以将模型的 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法做以下修饰：</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="o">...</span>
+
+<span class="hll">    <span class="nd">@tf.function</span><span class="p">(</span><span class="n">input_signature</span><span class="o">=</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">TensorSpec</span><span class="p">([</span><span class="bp">None</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)])</span>
+</span>    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>在将模型使用 <code class="docutils literal notranslate"><span class="pre">tf.saved_model.save</span></code> 导出时，需要通过 <code class="docutils literal notranslate"><span class="pre">signature</span></code> 参数提供待导出的函数的签名（Signature）。简单说来，由于自定义的模型类里可能有多个方法都需要导出，因此，需要告诉TensorFlow Serving每个方法在被客户端调用时分别叫做什么名字。例如，如果我们希望客户端在调用模型时使用 <code class="docutils literal notranslate"><span class="pre">call</span></code> 这一签名来调用 <code class="docutils literal notranslate"><span class="pre">model.call</span></code> 方法时，我们可以在导出时传入 <code class="docutils literal notranslate"><span class="pre">signature</span></code> 参数，以 <code class="docutils literal notranslate"><span class="pre">dict</span></code> 的键值对形式告知导出的方法对应的签名，代码如下：</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">MLP</span><span class="p">()</span>
+<span class="o">...</span>
+<span class="hll"><span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;saved_with_signature/1&quot;</span><span class="p">,</span> <span class="n">signatures</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;call&quot;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">call</span><span class="p">})</span>
+</span></pre></div>
+</div>
+<p>以上两步均完成后，即可使用以下命令部署：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tensorflow_model_server</span> \
+    <span class="o">--</span><span class="n">rest_api_port</span><span class="o">=</span><span class="mi">8501</span> \
+    <span class="o">--</span><span class="n">model_name</span><span class="o">=</span><span class="n">MLP</span> \
+    <span class="o">--</span><span class="n">model_base_path</span><span class="o">=</span><span class="s2">&quot;/home/.../.../saved_with_signature&quot;</span>  <span class="c1"># 修改为自己模型的绝对地址</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="call-serving-api">
+<span id="id3"></span><h2>在客户端调用以TensorFlow Serving部署的模型<a class="headerlink" href="#call-serving-api" title="永久链接至标题">¶</a></h2>
+<p>TensorFlow Serving支持以gRPC和RESTful API调用以TensorFlow Serving部署的模型。本手册主要介绍较为通用的RESTful API方法。</p>
+<p>RESTful API以标准的HTTP POST方法进行交互，请求和回复均为JSON对象。为了调用服务器端的模型，我们在客户端向服务器发送以下格式的请求：</p>
+<p>服务器URI： <code class="docutils literal notranslate"><span class="pre">http://服务器地址:端口号/v1/models/模型名:predict</span></code></p>
+<p>请求内容：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;signature_name&quot;</span><span class="p">:</span> <span class="s2">&quot;需要调用的函数签名（Sequential模式不需要）&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;instances&quot;</span><span class="p">:</span> <span class="n">输入数据</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>回复为：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;predictions&quot;</span><span class="p">:</span> <span class="n">返回值</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="python">
+<h3>Python客户端示例<a class="headerlink" href="#python" title="永久链接至标题">¶</a></h3>
+<p>以下示例使用 <a class="reference external" href="https://2.python-requests.org//zh_CN/latest/user/quickstart.html">Python的Requests库</a> （你可能需要使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">requests</span></code> 安装该库）向本机的TensorFlow Serving服务器发送MNIST测试集的前10幅图像并返回预测结果，同时与测试集的真实标签进行比较。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="k">import</span> <span class="n">MNISTLoader</span>
+
+
+<span class="n">data_loader</span> <span class="o">=</span> <span class="n">MNISTLoader</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+    <span class="s2">&quot;instances&quot;</span><span class="p">:</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="p">})</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;content-type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
+<span class="n">json_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
+    <span class="s1">&#39;http://localhost:8501/v1/models/MLP:predict&#39;</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_response</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="s1">&#39;predictions&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_label</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">7</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">4</span> <span class="mi">1</span> <span class="mi">4</span> <span class="mi">9</span> <span class="mi">6</span> <span class="mi">9</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">7</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">4</span> <span class="mi">1</span> <span class="mi">4</span> <span class="mi">9</span> <span class="mi">5</span> <span class="mi">9</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>可见预测结果与真实标签值非常接近。</p>
+<p>对于自定义的Keras模型，在发送的数据中加入 <code class="docutils literal notranslate"><span class="pre">signature_name</span></code> 键值即可，即将上面代码的 <code class="docutils literal notranslate"><span class="pre">data</span></code> 建立过程改为</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+    <span class="s2">&quot;signature_name&quot;</span><span class="p">:</span> <span class="s2">&quot;call&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;instances&quot;</span><span class="p">:</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="node-js-ziyang">
+<h3>Node.js客户端示例（Ziyang）<a class="headerlink" href="#node-js-ziyang" title="永久链接至标题">¶</a></h3>
+<p>以下示例使用 <a class="reference external" href="https://nodejs.org/zh-cn/">Node.js</a> 将下图转换为28*28的灰度图，发送给本机的TensorFlow Serving服务器，并输出返回的预测值和概率。（其中使用了 <a class="reference external" href="https://github.com/oliver-moran/jimp">图像处理库jimp</a> 和 <a class="reference external" href="https://visionmedia.github.io/superagent/">HTTP库superagent</a> ，可使用 <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">jimp</span></code> 和 <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">superagent</span></code> 安装）</p>
+<div class="figure align-center" id="id7">
+<img alt="../../_images/test_pic_tag_5.png" src="../../_images/test_pic_tag_5.png" />
+<p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">test_pic_tag_5.png</span></code> ：一个由作者手写的数字5。（运行下面的代码时可下载该图片并放在与代码同一目录下）</span><a class="headerlink" href="#id7" title="永久链接至图片">¶</a></p>
+</div>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">Jimp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jimp&#39;</span><span class="p">)</span>
+<span class="kr">const</span> <span class="nx">superagent</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;superagent&#39;</span><span class="p">)</span>
+
+<span class="kr">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s1">&#39;http://localhost:8501/v1/models/MLP:predict&#39;</span>
+
+<span class="kr">const</span> <span class="nx">getPixelGrey</span> <span class="o">=</span> <span class="p">(</span><span class="nx">pic</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">pointColor</span> <span class="o">=</span> <span class="nx">pic</span><span class="p">.</span><span class="nx">getPixelColor</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="p">{</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">g</span><span class="p">,</span> <span class="nx">b</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">Jimp</span><span class="p">.</span><span class="nx">intToRGBA</span><span class="p">(</span><span class="nx">pointColor</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">gray</span> <span class="o">=</span>  <span class="o">+</span><span class="p">(</span><span class="nx">r</span> <span class="o">*</span> <span class="mf">0.299</span> <span class="o">+</span> <span class="nx">g</span> <span class="o">*</span> <span class="mf">0.587</span> <span class="o">+</span> <span class="nx">b</span> <span class="o">*</span> <span class="mf">0.114</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">[</span> <span class="nx">gray</span> <span class="o">/</span> <span class="mi">255</span> <span class="p">]</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">getPicGreyArray</span> <span class="o">=</span> <span class="nx">async</span> <span class="p">(</span><span class="nx">fileName</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">pic</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">Jimp</span><span class="p">.</span><span class="nx">read</span><span class="p">(</span><span class="nx">fileName</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">resizedPic</span> <span class="o">=</span> <span class="nx">pic</span><span class="p">.</span><span class="nx">resize</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">greyArray</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="p">(</span> <span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span> <span class="mi">28</span><span class="p">;</span> <span class="nx">i</span> <span class="o">++</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">line</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="mi">28</span><span class="p">;</span> <span class="nx">j</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">line</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">getPixelGrey</span><span class="p">(</span><span class="nx">resizedPic</span><span class="p">,</span> <span class="nx">j</span><span class="p">,</span> <span class="nx">i</span><span class="p">))</span>
+    <span class="p">}</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">line</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">_</span> <span class="p">=&gt;</span> <span class="nx">_</span> <span class="o">&gt;</span> <span class="mf">0.3</span> <span class="o">?</span> <span class="s1">&#39; &#39;</span> <span class="o">:</span> <span class="s1">&#39;1&#39;</span><span class="p">).</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span>
+    <span class="nx">greyArray</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">line</span><span class="p">)</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">greyArray</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">evaluatePic</span> <span class="o">=</span> <span class="nx">async</span> <span class="p">(</span><span class="nx">fileName</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">arr</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">getPicGreyArray</span><span class="p">(</span><span class="nx">fileName</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">superagent</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">send</span><span class="p">({</span>
+      <span class="nx">instances</span><span class="o">:</span> <span class="p">[</span><span class="nx">arr</span><span class="p">]</span>
+    <span class="p">})</span>
+  <span class="nx">result</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">predictions</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">sortedRes</span> <span class="o">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">_</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">[</span><span class="nx">_</span><span class="p">,</span> <span class="nx">i</span><span class="p">])</span>
+    <span class="p">.</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="nx">a</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`我们猜这个数字是</span><span class="si">${</span><span class="nx">sortedRes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="sb">，概率是</span><span class="si">${</span><span class="nx">sortedRes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+  <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="nx">evaluatePic</span><span class="p">(</span><span class="s1">&#39;test_pic_tag_5.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>运行结果为：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1               1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1                 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1       1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1       1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1     1                 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1                         1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1         1 1 1 1 1 1     1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1       1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1         1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1         1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1     1 1 1         1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1                 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1         1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+我们猜这个数字是5，概率是0.846008837
+</pre></div>
+</div>
+<p>可见输出结果符合预期。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>如果你不熟悉HTTP POST，可以参考 <a class="reference external" href="https://www.runoob.com/tags/html-httpmethods.html">这里</a> 。事实上，当你在用浏览器填写表单（比方说性格测试）并点击“提交”按钮，然后获得返回结果（比如说“你的性格是ISTJ”）时，就很有可能是在向服务器发送一个HTTP POST请求并获得了服务器的回复。</p>
+<p>RESTful API是一个流行的API设计理论，可以参考 <a class="reference external" href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html">这里</a> 获得简要介绍。</p>
+<p>关于TensorFlow Serving的RESTful API的完整使用方式可参考 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/api_rest">文档</a> 。</p>
+</div>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 193 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="lite.html" class="btn btn-neutral float-right" title="TensorFlow Lite（Jinpeng）" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="export.html" class="btn btn-neutral float-left" title="TensorFlow模型导出" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

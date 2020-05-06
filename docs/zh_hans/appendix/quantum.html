@@ -1,0 +1,597 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TensorFlow Quantum: 混合量子-经典机器学习 * &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
+        <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200506.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="强化学习简介" href="rl.html" />
+    <link rel="prev" title="Swift for TensorFlow (S4TF) (Huan）" href="swift.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴 TensorFlow 2
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Quantum: 混合量子-经典机器学习 *</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">量子计算基本概念</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">量子比特</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">量子逻辑门</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">量子线路</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cirq">实例：使用Cirq建立简单的量子线路</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">混合量子-经典机器学习</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id13">量子数据集与带参数的量子门</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pqc">参数化的量子线路（PQC）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">将参数化的量子线路嵌入机器学习模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">实例：对量子数据集进行二分类</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rl.html">强化学习简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教學活動</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基礎</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/installation.html">TensorFlow安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/models.html">TensorFlow 模型建立與訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/tools.html">TensorFlow常用模塊</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大規模訓練與加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/distributed.html">TensorFlow分布式訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/tpu.html">使用TPU訓練TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">擴展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/rl.html">強化學習簡介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/docker.html">使用Docker部署TensorFlow環境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/cloud.html">在雲端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/recommended_books.html">參考資料與推薦閱讀</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/terms.html">術語中英對照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Preface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/introduction.html">TensorFlow Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/installation.html">Installation and Environment Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/basic.html">TensorFlow Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/models.html">Model Construction and Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/tools.html">Common Modules in TensorFlow</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/lite.html">TensorFlow Lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/javascript.html">TensorFlow in JavaScript</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Large-scale Training</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/distributed.html">Distributed Training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/rl.html">Introduction to Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/docker.html">Using Docker to deploy TensorFlow environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/cloud.html">Using TensorFlow on cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/recommended_books.html">References and Recommendations for Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴 TensorFlow 2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>TensorFlow Quantum: 混合量子-经典机器学习 *</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/zh_hans/appendix/quantum.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorflow-quantum">
+<h1>TensorFlow Quantum: 混合量子-经典机器学习 *<a class="headerlink" href="#tensorflow-quantum" title="永久链接至标题">¶</a></h1>
+<p>我们身边的经典计算机利用比特位和逻辑门进行二进制运算。在物理硬件上，这种运算主要是通过半导体的特殊导电性质实现的。经过几十年的发展，我们已经可以在一片小小的半导体芯片上集成上亿个晶体管，从而实现高性能的经典计算。</p>
+<p>而量子计算（Quantum Computing）旨在利用具有量子特性（例如量子态叠加和量子纠缠）的“量子比特位”和“量子逻辑门”进行计算。这种新的计算模式可以在搜索和大数分解等重要领域达成指数级的加速，让当前无法实现的一些超大规模运算成为可能，从而可能在未来深远地改变世界。在物理硬件上，这类量子运算也可以通过一些具有量子特性的结构（例如超导约瑟夫森结）实现。</p>
+<p>不幸的是，尽管量子计算的理论已经有了比较深入的发展，可在物理硬件上，我们目前仍然造不出一台超越经典计算机的通用量子计算机 <a class="footnote-reference brackets" href="#f0" id="id1">1</a> 。IBM和谷歌等业界巨头在通用量子计算机的物理构建上已经取得了一些成绩，但无论是量子比特的个数还是在退相干问题的解决上，都还远无法达到实用的层级。</p>
+<p>以上是量子计算的基本背景，接下来我们讨论量子机器学习。量子机器学习的一种最直接的思路是使用量子计算加速传统的机器学习任务，例如量子版本的PCA、SVM和K-Means算法，然而这些算法目前都尚未达到可实用的程度。我们在本章讨论的量子机器学习则采用另一种思路，即构建参数化的量子线路（Parameterized Quantum Circuits, PQCs）。PQC可以作为深度学习模型中的层而被使用，如果我们在普通深度学习模型的基础上加入PQC，即称为混合量子-经典机器学习（Hybrid Quantum-Classical Machine Learning）。这种混合模型尤其适合于量子数据集（Quantum Data）上的任务。而TensorFlow Quantum正是帮助我们构建这种混合量子-经典机器学习模型的利器。接下来，我们会对量子计算的若干基本概念进行简介，然后介绍使用TensorFlow Quantum和谷歌的量子计算库Cirq构建PQC、将PQC嵌入Keras模型、并在量子数据集上训练混合模型的流程。</p>
+<div class="section" id="id2">
+<h2>量子计算基本概念<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>本节将简述量子计算的一些基本概念，包括量子比特、量子门、量子线路等。</p>
+<div class="admonition- admonition">
+<p class="admonition-title">推荐阅读</p>
+<p>如果你希望更深入地了解量子力学以及量子计算的基本原理，建议可以从以下两本书入手：</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://www.phy.pku.edu.cn/~wubiao/">吴飚</a> ，简明量子力学（简洁明快的量子力学入门教程，即将由北京大学出版社出版，可先行阅读在线版本 <a class="reference external" href="http://www.phy.pku.edu.cn/~wubiao/pop_qm_pkupress.pdf">http://www.phy.pku.edu.cn/~wubiao/pop_qm_pkupress.pdf</a> ）</p></li>
+<li><p>Hidary, Jack D. <a class="reference external" href="http://link.springer.com/10.1007/978-3-030-23922-0">Quantum Computing: An Applied Approach</a> . Cham: Springer International Publishing, 2019. <a class="reference external" href="https://doi.org/10.1007/978-3-030-23922-0">https://doi.org/10.1007/978-3-030-23922-0</a>. （注重代码实操的量子计算教程，GitHub上有配套源码： <a class="reference external" href="https://github.com/JackHidary/quantumcomputingbook">https://github.com/JackHidary/quantumcomputingbook</a> ）</p></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>量子比特<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>在二进制的经典计算机中，我们用比特（Bit，也称“位”）作为信息存储的基本单位，一个比特只有0或者1两种状态。而在量子计算机中，我们使用量子比特（Quantum Bit, Qubit，也称“量子位”）进行信息的表示。量子比特也有两种基本状态 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> 。不过量子比特除了可以处于这两种基本状态以外，还可以处于两者之间的叠加态（Superposition State），即 <img class="math" src="../../_images/math/cb62f6b814018e36a06acdc07ddd8de7ce8dafff.png" alt="\ket{\psi} = a \ket{0} + b \ket{1}"/> （其中a和b是复数， <img class="math" src="../../_images/math/fda8d4ed57f788a15760f0a1ec6f4d9d8618da47.png" alt="|a|^2 + |b|^2 = 1"/> ）。例如， <img class="math" src="../../_images/math/bc1c385e3ea3312c60790a3e4d5a2e071fd87d86.png" alt="\ket{\psi_0} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> 和 <img class="math" src="../../_images/math/7a38874696965458beef81b0fd6fd77563b23f4a.png" alt="\ket{\psi_1} = \frac{1}{\sqrt{2}} \ket{0} - \frac{1}{\sqrt{2}} \ket{1}"/> 都是合法的量子态。我们也可以使用向量化的语言来表示量子比特的状态。如果我们令 <img class="math" src="../../_images/math/d9f442b006c94ee9fe33ac7dafbf2327de02766c.png" alt="\ket{0} = \begin{bmatrix}1 \\ 0\end{bmatrix}"/> 、 <img class="math" src="../../_images/math/cba07e3f03a49c4ba86c24422818fc9f760d39fe.png" alt="\ket{1} = \begin{bmatrix}0 \\ 1\end{bmatrix}"/>，则 <img class="math" src="../../_images/math/79e8eeae52eee88a430880991a1ca27fda15ae20.png" alt="\ket{\psi} = \begin{bmatrix}a \\ b\end{bmatrix}"/>、<img class="math" src="../../_images/math/eeb8a3ed29efa47f00add692157497f2b12d7867.png" alt="\ket{\psi_0} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix}"/>、<img class="math" src="../../_images/math/8f9f2482a0167f20c12406c60a6446ae81bc73c5.png" alt="\ket{\psi_1} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ -\frac{1}{\sqrt{2}}\end{bmatrix}"/>。</p>
+<p>同时，我们可以用布洛赫球面（Bloch Sphere）来形象地展示单个量子比特的状态。球面的最顶端为 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> ，最底端为 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> ，而从原点到球面上任何一点的单位向量都可以是一个量子比特的状态。</p>
+<div class="figure align-center" id="id16">
+<a class="reference internal image-reference" href="../../_images/bloch_sphere.png"><img alt="../../_images/bloch_sphere.png" src="../../_images/bloch_sphere.png" style="width: 30%;" /></a>
+<p class="caption"><span class="caption-text">布洛赫球面（ <a class="reference external" href="https://en.wikipedia.org/wiki/Bloch_sphere">Bloch Sphere</a> ）。其中Z轴正负方向的量子态分别为基本态 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> ，X轴正负方向的量子态分别为 <img class="math" src="../../_images/math/984c19e665faa644fe597e3133d6613b0e244dfc.png" alt="\frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> 和 <img class="math" src="../../_images/math/a4287cbdb7bef180904db655abff5184369a6649.png" alt="\frac{1}{\sqrt{2}} \ket{0} - \frac{1}{\sqrt{2}} \ket{1}"/> ，Y轴正负方向的量子态分别为 <img class="math" src="../../_images/math/fe079eca300639ddd5ae8355b4092956a1abeb15.png" alt="\frac{1}{\sqrt{2}} \ket{0} + \frac{i}{\sqrt{2}} \ket{1}"/> 和 <img class="math" src="../../_images/math/410a3fc002b2696af098f0c455e56bddf98a6330.png" alt="\frac{1}{\sqrt{2}} \ket{0} - \frac{i}{\sqrt{2}} \ket{1}"/> 。<a class="reference external" href="https://en.wikipedia.org/wiki/File:Bloch_sphere.svg">图示来源</a></span><a class="headerlink" href="#id16" title="永久链接至图片">¶</a></p>
+</div>
+<p>值得特别注意的是，尽管量子比特 <img class="math" src="../../_images/math/cb62f6b814018e36a06acdc07ddd8de7ce8dafff.png" alt="\ket{\psi} = a \ket{0} + b \ket{1}"/> 可能的状态相当之多，但一旦我们对其进行观测，则其状态会立即坍缩 <a class="footnote-reference brackets" href="#f1" id="id6">2</a> 到 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> 这两个基本状态中的一个，其概率分别为 <img class="math" src="../../_images/math/ac5498723d4e8d9267643ab25e38bae3e9f87881.png" alt="|a|^2"/> 和  <img class="math" src="../../_images/math/f85ee1a43dbb809cf8e29f521a63aa72b3a2f827.png" alt="|b|^2"/> 。</p>
+</div>
+<div class="section" id="id7">
+<h3>量子逻辑门<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>在二进制的经典计算机中，我们有AND（与）、OR（或）、NOT（非）等逻辑门，对输入的比特状态进行变换并输出。在量子计算机中，我们同样有量子逻辑门（Quantum Logic Gate，或简称“量子门”），对量子状态进行变换并输出。如果我们使用向量化的语言来表述量子状态，则量子逻辑门可以看作是一个对状态向量进行变换的矩阵。</p>
+<p>例如，量子非门可以表述为 <img class="math" src="../../_images/math/3080bb728f567f066f0c7c43aa9404bafd0cd30c.png" alt="X = \begin{bmatrix}0 &amp; 1 \\ 1 &amp; 0\end{bmatrix}"/> ，于是当我们将量子非门作用于基本态 <img class="math" src="../../_images/math/d9f442b006c94ee9fe33ac7dafbf2327de02766c.png" alt="\ket{0} = \begin{bmatrix}1 \\ 0\end{bmatrix}"/> 时，我们得到 <img class="math" src="../../_images/math/18736cd13eb2f4d86467e9f9e52eca39fd2f517d.png" alt="X\ket{0} = \begin{bmatrix}0 &amp; 1 \\ 1 &amp; 0\end{bmatrix} \begin{bmatrix}1 \\ 0\end{bmatrix} = \begin{bmatrix}0 \\ 1\end{bmatrix} = \ket{1}"/>。量子门也可以作用在叠加态，例如 <img class="math" src="../../_images/math/9b1eaaa3834ce9f5ce9c52272d75c9c8fce0895b.png" alt="X\ket{\psi_0} = \begin{bmatrix}0 &amp; 1 \\ 1 &amp; 0\end{bmatrix} \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix} = \ket{\psi_0}"/> （这说明量子非门没能改变量子态 <img class="math" src="../../_images/math/bc1c385e3ea3312c60790a3e4d5a2e071fd87d86.png" alt="\ket{\psi_0} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> 的状态。事实上，量子非门 <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> 相当于在布洛赫球面上将量子态绕X轴旋转180度。而 <img class="math" src="../../_images/math/1af1b7de7f38ea0f40b9954bce778c4c8468c33a.png" alt="\ket{\psi_0}"/> 就在X轴上，所以没有变化）。量子与门和或门 <a class="footnote-reference brackets" href="#f2" id="id8">3</a> 由于涉及到多个量子位而稍显复杂，但同样可以通过尺寸更大的矩阵实现。</p>
+<p>可能有些读者已经想到了，既然单个量子比特的状态不止 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> 两种，那么量子逻辑门作为作为对量子比特的变换，其实也完全可以不局限于与或非。事实上，只要满足一定条件的矩阵 <a class="footnote-reference brackets" href="#f3" id="id9">4</a> 都可以作为量子逻辑门。例如，将量子态在布洛赫球面上绕X、Y、Z轴旋转的变换 <img class="math" src="../../_images/math/fe5f1bd15fc3108de3542ee3b011130163487106.png" alt="Rx(\theta)"/> 、<img class="math" src="../../_images/math/d07d1cc4c66a121e4da2247a4e24a1c31a7115cc.png" alt="Ry(\theta)"/> 、<img class="math" src="../../_images/math/bae48849043d944e70c7fd069ab84b295b385b6d.png" alt="Rz(\theta)"/> （其中 <img class="math" src="../../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> 是旋转角度，当 <img class="math" src="../../_images/math/788c2c7d03643cff00033641c84342eb48e978ea.png" alt="\theta=180^\circ"/> 时记为 <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> 、<img class="math" src="../../_images/math/f89383d07ea00637c4218cd6dc4eb3ae2b04fcdc.png" alt="Y"/> 、<img class="math" src="../../_images/math/1bf0276de4a07346e2f468d40a0cec0ea489a6e0.png" alt="Z"/> ）都是量子逻辑门。另外，有一个量子逻辑门“阿达马门”（Hadamard Gate） <img class="math" src="../../_images/math/fbc0ab4c252c720edfc9469add4d9828dc93abb1.png" alt="H = \frac{1}{\sqrt{2}} \begin{bmatrix}1 &amp; 1 \\ 1 &amp; -1\end{bmatrix}"/> 可以将量子状态从基本态转换为叠加态，在很多量子计算的场景中占据了重要地位。</p>
+</div>
+<div class="section" id="id10">
+<h3>量子线路<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<p>当我们将量子比特以及量子逻辑门按顺序标记在一条或多条平行的线条上时，就构成了量子线路（Quantum Circuit，或称量子电路）。例如，对于我们在上一节讨论的，使用量子非门 <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> 对基本态 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 进行变换的过程，我们可以写出量子线路如下：</p>
+<div class="figure align-center" id="id17">
+<a class="reference internal image-reference" href="../../_images/X_circuit.png"><img alt="../../_images/X_circuit.png" src="../../_images/X_circuit.png" style="width: 30%;" /></a>
+<p class="caption"><span class="caption-text">一个简单的量子线路</span><a class="headerlink" href="#id17" title="永久链接至图片">¶</a></p>
+</div>
+<p>在量子线路中，每条横线代表一个量子比特。上图中最左边的 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 代表量子比特的初始态。中间的X方块代表量子非门 <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> ，最右边的表盘符号代表测量操作。这个线路的意义是“对初始状态为 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 的量子比特执行量子非门 <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> 操作，并测量变换后的量子比特状态”。根据我们在前节的讨论，变换后的量子比特状态为基本态 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> ，因此我们可以期待该量子线路最后的测量结果始终为1。</p>
+<p>接下来，我们考虑将上图中量子线路的量子非门 <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> 换为阿达马门 <img class="math" src="../../_images/math/aaf3132d08f6d8d7a2be379482c0f2c5f93118f5.png" alt="H"/> ：</p>
+<div class="figure align-center" id="id18">
+<a class="reference internal image-reference" href="../../_images/H_circuit.png"><img alt="../../_images/H_circuit.png" src="../../_images/H_circuit.png" style="width: 30%;" /></a>
+<p class="caption"><span class="caption-text">将量子非门 <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> 换为阿达马门 <img class="math" src="../../_images/math/aaf3132d08f6d8d7a2be379482c0f2c5f93118f5.png" alt="H"/> 后的量子线路</span><a class="headerlink" href="#id18" title="永久链接至图片">¶</a></p>
+</div>
+<p>阿达马门对应的矩阵表示为 <img class="math" src="../../_images/math/fbc0ab4c252c720edfc9469add4d9828dc93abb1.png" alt="H = \frac{1}{\sqrt{2}} \begin{bmatrix}1 &amp; 1 \\ 1 &amp; -1\end{bmatrix}"/> ，于是我们可以计算出变换后的量子态为 <img class="math" src="../../_images/math/e54197a85a7fed22dbac9b4fe02c3875dc2530cd.png" alt="H\ket{0} = \frac{1}{\sqrt{2}} \begin{bmatrix}1 &amp; 1 \\ 1 &amp; -1\end{bmatrix}\begin{bmatrix}1 \\ 0\end{bmatrix} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> 。这是一个 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> 的叠加态，在观测后会坍缩到基本态，其概率分别为 <img class="math" src="../../_images/math/991df5fe1973ab13f4ae55c33ba569fb8f378307.png" alt="|\frac{1}{\sqrt{2}}|^2 = \frac{1}{2}"/> 。也就是说，这个量子线路的观测结果类似于扔硬币。假若观测20次，则大约10次的结果是 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> ，10次的结果是 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> 。</p>
+</div>
+<div class="section" id="cirq">
+<h3>实例：使用Cirq建立简单的量子线路<a class="headerlink" href="#cirq" title="永久链接至标题">¶</a></h3>
+<p><a class="reference external" href="https://cirq.readthedocs.io/">Cirq</a> 是谷歌主导的开源量子计算库，可以帮助我们方便地建立量子线路并模拟测量结果（我们在下一节介绍TensorFlow Quantum的时候还会用到它）。Cirq是一个Python库，可以使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">cirq</span></code> 进行安装。以下代码实现了上节所建立的两个简单的量子线路，并分别进行了20次的模拟测量。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cirq</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">LineQubit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>           <span class="c1"># 实例化一个量子比特</span>
+<span class="n">simulator</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Simulator</span><span class="p">()</span>    <span class="c1"># 实例化一个模拟器</span>
+
+<span class="n">X_circuit</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span>       <span class="c1"># 建立一个包含量子非门和测量的量子线路</span>
+    <span class="n">cirq</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="n">q</span><span class="p">),</span>
+    <span class="n">cirq</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_circuit</span><span class="p">)</span>                <span class="c1"># 在终端可视化输出量子线路</span>
+
+<span class="c1"># 使用模拟器对该量子线路进行20次的模拟测量</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">X_circuit</span><span class="p">,</span> <span class="n">repetitions</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>                   <span class="c1"># 输出模拟测量结果</span>
+
+<span class="n">H_circuit</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span>       <span class="c1"># 建立一个包含阿达马门和测量的量子线路</span>
+    <span class="n">cirq</span><span class="o">.</span><span class="n">H</span><span class="p">(</span><span class="n">q</span><span class="p">),</span>
+    <span class="n">cirq</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">H_circuit</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">H_circuit</span><span class="p">,</span> <span class="n">repetitions</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>结果如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>0: ───X───M───
+0=11111111111111111111
+0: ───H───M───
+0=00100111001111101100
+</pre></div>
+</div>
+<p>可见第一个量子线路的测量结果始终为1，第二个量子态的20次测量结果中有9次是0，11次是1（如果你多运行几次，会发现0和1出现的概率趋近于 <img class="math" src="../../_images/math/71c8247661268e91ff882cb0fd09811ac9e3317f.png" alt="\frac{1}{2}"/> ）。可见结果符合我们在上节中的分析。</p>
+</div>
+</div>
+<div class="section" id="id12">
+<h2>混合量子-经典机器学习<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
+<p>本节介绍混合量子-经典机器学习的基本概念，以及使用 TensorFlow Quantum 建立此类模型的方法。</p>
+<p>在混合量子-经典机器学习过程中，我们使用量子数据集训练混合量子-经典模型。混合量子-经典模型的前半部分是量子模型（即参数化的量子线路）。量子模型接受量子数据集作为输入，对输入使用量子门进行变换，然后通过测量转换为经典数据。测量后的经典数据输入经典模型，并使用常规的损失函数计算模型的损失值。最后，基于损失函数的值计算模型参数的梯度并更新模型参数。这一过程不仅包括经典模型的参数，也包括量子模型的参数。具体流程如下图所示。</p>
+<div class="figure align-center" id="id19">
+<a class="reference internal image-reference" href="../../_images/pipeline.png"><img alt="../../_images/pipeline.png" src="../../_images/pipeline.png" style="width: 60%;" /></a>
+<p class="caption"><span class="caption-text">经典机器学习（上图）与混合量子-经典机器学习（下图）的流程对比</span><a class="headerlink" href="#id19" title="永久链接至图片">¶</a></p>
+</div>
+<p>TensorFlow Quantum 即是一个与 TensorFlow Keras 结合紧密的，可快速建立混合量子-经典机器学习模型的开源库，可以使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">tensorflow-quantum</span></code> 进行安装。</p>
+<p>后文示例均默认使用以下代码导入 TensorFlow、TensorFlow Quantum和Cirq：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_quantum</span> <span class="kn">as</span> <span class="nn">tfq</span>
+<span class="kn">import</span> <span class="nn">cirq</span>
+</pre></div>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">推荐阅读</p>
+<p>Broughton, Michael, Guillaume Verdon, Trevor McCourt, Antonio J. Martinez, Jae Hyeon Yoo, Sergei V. Isakov, Philip Massey, et al. “ <a class="reference external" href="http://arxiv.org/abs/2003.02989">TensorFlow Quantum: A Software Framework for Quantum Machine Learning.</a> ” ArXiv:2003.02989 [Cond-Mat, Physics:Quant-Ph], March 5, 2020. （TensorFlow Quantum 白皮书）</p>
+</div>
+<div class="section" id="id13">
+<h3>量子数据集与带参数的量子门<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
+<p>以有监督学习为例，经典数据集由经典数据和标签组成。经典数据中的每一项是一个由不同特征组成的向量。我们可以将经典数据集写作 <img class="math" src="../../_images/math/096f91ff12dd51c06b36fc1ec37d3af7268a2f8e.png" alt="(x_1, y_1), (x_2, y_2), \cdots, (x_N, y_N)"/> ，其中 <img class="math" src="../../_images/math/251ea575b8852ce126d702e86ad5941495fe1104.png" alt="x_i = (x_{i,1}, \cdots, x_{i,K})"/> 。量子数据集同样由数据和标签组成，而数据中的每一项是一个量子态。以前节单量子比特的量子态为例，我们可以将每一项数据写作 <img class="math" src="../../_images/math/ee337198a1d125f7fd60f4006b7d3e9a6d6ef0aa.png" alt="x_i = a_i \ket{0} + b_i \ket{1}"/> 。在具体实现上，我们可以通过量子线路来生成量子数据。也就是说，每一项数据 <img class="math" src="../../_images/math/b0a60237087d130c0f2fb4d6325012dd5ae80fe1.png" alt="x_i"/> 都对应着一个量子线路。例如，我们可以通过以下代码，使用Cirq生成一组量子数据：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">GridQubit</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">q_data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">x_i</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span>
+        <span class="n">cirq</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)(</span><span class="n">q</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">q_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x_i</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在这一过程中，我们使用了一个带参数的量子门 <code class="docutils literal notranslate"><span class="pre">cirq.rx(angle)(q)</span></code> 。和之前我们使用的量子门 <code class="docutils literal notranslate"><span class="pre">cirq.X(q)</span></code> , <code class="docutils literal notranslate"><span class="pre">cirq.H(q)</span></code> 不同的是，这个量子门多了一个参数 <code class="docutils literal notranslate"><span class="pre">angle</span></code> ，表示将量子比特 <code class="docutils literal notranslate"><span class="pre">q</span></code> 绕布洛赫球面的x轴旋转 <code class="docutils literal notranslate"><span class="pre">angle</span></code> 角度（弧度制）。以上代码生成了100项量子数据，每项数据是从基本态 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 开始绕布洛赫球面的x轴随机旋转 <img class="math" src="../../_images/math/b61438f8e15d426e93bf63b6c39c296435cdacaf.png" alt="[0, \pi]"/> 弧度所变换而来的量子态。量子数据集在不少量子相关的领域（如化学、材料科学、生物学和药物发现等）都有应用。</p>
+<p>当我们要将量子数据集作为Keras的输入时，可以使用TensorFlow Quantum的 <code class="docutils literal notranslate"><span class="pre">convert_to_tensor</span></code> 方法，将量子数据集转换为张量：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">q_data</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">q_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>值得注意的是，当使用量子数据集作为Keras模型的训练数据时，Keras模型的输入类型（ <code class="docutils literal notranslate"><span class="pre">dtype</span></code> ）需要为 <code class="docutils literal notranslate"><span class="pre">tf.dtypes.string</span></code> 。</p>
+</div>
+<div class="section" id="pqc">
+<h3>参数化的量子线路（PQC）<a class="headerlink" href="#pqc" title="永久链接至标题">¶</a></h3>
+<p>当我们在建立量子线路时使用了带参数的量子门，且该参数可以自由调整时，我们就称这样的量子线路为参数化的量子线路。Cirq支持结合SymPy这一Python下的符号运算库实现参数化的量子线路，示例如下</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">)</span>
+<span class="n">q_model</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="n">cirq</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">theta</span><span class="p">)(</span><span class="n">q</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>在上面的代码中，我们建立了如下图所示的量子线路。该量子线路可以将任意输入量子态 <img class="math" src="../../_images/math/dc236aef0d575ac9f9dbaa2b8812801ee72f1b3a.png" alt="\ket{\psi}"/> 绕布洛赫球面的x轴逆时针旋转 <img class="math" src="../../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> 度，其中 <img class="math" src="../../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> 是使用 <code class="docutils literal notranslate"><span class="pre">sympy.Symbol</span></code> 声明的符号变量（即参数）。</p>
+<div class="figure align-center" id="id20">
+<a class="reference internal image-reference" href="../../_images/pqc.png"><img alt="../../_images/pqc.png" src="../../_images/pqc.png" style="width: 30%;" /></a>
+<p class="caption"><span class="caption-text">参数化的量子线路示例</span><a class="headerlink" href="#id20" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="id14">
+<h3>将参数化的量子线路嵌入机器学习模型<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
+<p>通过TensorFlow Quantum，我们可以轻松地将参数化的量子线路以Keras层的方式嵌入Keras模型。例如对于前节建立的参数化的量子线路 <code class="docutils literal notranslate"><span class="pre">q_model</span></code> ，我们可以使用 <code class="docutils literal notranslate"><span class="pre">tfq.layers.PQC</span></code> 将其直接作为一个Keras层使用</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">q_layer</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">PQC</span><span class="p">(</span><span class="n">q_model</span><span class="p">,</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Z</span><span class="p">(</span><span class="n">q</span><span class="p">))</span>
+<span class="n">expectation_output</span> <span class="o">=</span> <span class="n">q_layer</span><span class="p">(</span><span class="n">q_data_input</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">tfq.layers.PQC</span></code> 的第一个参数为使用Cirq建立的参数化的量子线路，第二个参数为测量方式，此处使用 <code class="docutils literal notranslate"><span class="pre">cirq.Z(q)</span></code> 在布洛赫球面的Z轴进行测量。</p>
+<p>以上代码也可直接写作：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expectation_output</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">PQC</span><span class="p">(</span><span class="n">q_model</span><span class="p">,</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Z</span><span class="p">(</span><span class="n">q</span><span class="p">))(</span><span class="n">q_data_input</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id15">
+<h3>实例：对量子数据集进行二分类<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h3>
+<p>在以下代码中，我们首先建立了一个量子数据集，其中一半的数据项为基本态 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 绕布洛赫球面的x轴逆时针旋转 <img class="math" src="../../_images/math/88a099a1a8abf9668c3f59d39cde820b58b82338.png" alt="\frac{\pi}{2}"/> 弧度（即 <img class="math" src="../../_images/math/410a3fc002b2696af098f0c455e56bddf98a6330.png" alt="\frac{1}{\sqrt{2}} \ket{0} - \frac{i}{\sqrt{2}} \ket{1}"/> ），另一半则为 <img class="math" src="../../_images/math/109839abe87d13d28bcb6d5fd7de624cfcd3247b.png" alt="\frac{3\pi}{2}"/> 弧度（即 <img class="math" src="../../_images/math/fe079eca300639ddd5ae8355b4092956a1abeb15.png" alt="\frac{1}{\sqrt{2}} \ket{0} + \frac{i}{\sqrt{2}} \ket{1}"/> ）。所有的数据均加入了绕x,y轴方向旋转的，标准差为 <img class="math" src="../../_images/math/98f8e5bef3cfb82a97dc0ded3acbaaf41e00191d.png" alt="\frac{\pi}{4}"/> 的高斯噪声。对于这个量子数据集，如果不加变换而直接测量，则所有数据都会和抛硬币一样等概率随机坍缩到基本态 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> ，从而无法区分。</p>
+<p>为了区分这两类数据，我们接下来建立了一个量子模型，这个模型将单比特量子态绕布洛赫球面的x轴逆时针旋转 <img class="math" src="../../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> 弧度。变换过后量子态数据的测量值送入“全连接层+softmax”的经典机器学习模型，并使用交叉熵作为损失函数。模型训练过程会自动同时调整量子模型中 <img class="math" src="../../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> 的值和全连接层的权值，使得整个混合量子-经典机器学习模型的准确度较高。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cirq</span>
+<span class="kn">import</span> <span class="nn">sympy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_quantum</span> <span class="k">as</span> <span class="nn">tfq</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">GridQubit</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 准备量子数据集(q_data, label)</span>
+<span class="n">add_noise</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">q_data</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span>
+        <span class="n">cirq</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">add_noise</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))(</span><span class="n">q</span><span class="p">),</span> 
+        <span class="n">cirq</span><span class="o">.</span><span class="n">ry</span><span class="p">(</span><span class="n">add_noise</span><span class="p">(</span><span class="mi">0</span><span class="p">))(</span><span class="n">q</span><span class="p">)</span>
+        <span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span> <span class="o">+</span> 
+    <span class="p">[</span><span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span>
+        <span class="n">cirq</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">add_noise</span><span class="p">(</span><span class="mf">1.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))(</span><span class="n">q</span><span class="p">),</span> 
+        <span class="n">cirq</span><span class="o">.</span><span class="n">ry</span><span class="p">(</span><span class="n">add_noise</span><span class="p">(</span><span class="mi">0</span><span class="p">))(</span><span class="n">q</span><span class="p">)</span>
+        <span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span>
+<span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># 建立参数化的量子线路（PQC）</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">)</span>
+<span class="n">q_model</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="n">cirq</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">theta</span><span class="p">)(</span><span class="n">q</span><span class="p">))</span>
+
+<span class="c1"># 建立量子层和经典全连接层</span>
+<span class="n">q_layer</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">PQC</span><span class="p">(</span><span class="n">q_model</span><span class="p">,</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Z</span><span class="p">(</span><span class="n">q</span><span class="p">))</span>
+<span class="n">dense_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">softmax</span><span class="p">)</span>
+
+<span class="c1"># 使用Keras建立训练流程。量子数据首先通过PQC，然后通过经典的全连接模型</span>
+<span class="n">q_data_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">()</span> <span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
+<span class="n">expectation_output</span> <span class="o">=</span> <span class="n">q_layer</span><span class="p">(</span><span class="n">q_data_input</span><span class="p">)</span>
+<span class="n">classifier_output</span> <span class="o">=</span> <span class="n">dense_layer</span><span class="p">(</span><span class="n">expectation_output</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">q_data_input</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">classifier_output</span><span class="p">)</span>
+
+<span class="c1"># 编译模型，指定优化器、损失函数和评估指标，并进行训练</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">),</span>
+    <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">,</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">sparse_categorical_accuracy</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">q_data</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="c1"># 输出量子层参数（即theta）的训练结果</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">q_layer</span><span class="o">.</span><span class="n">get_weights</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>输出：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
+<span class="mi">200</span><span class="o">/</span><span class="mi">200</span> <span class="p">[</span><span class="o">==============================</span><span class="p">]</span> <span class="o">-</span> <span class="mi">0</span><span class="n">s</span> <span class="mi">165</span><span class="n">us</span><span class="o">/</span><span class="n">sample</span> <span class="o">-</span> <span class="n">loss</span><span class="p">:</span> <span class="mf">0.1586</span> <span class="o">-</span> <span class="n">sparse_categorical_accuracy</span><span class="p">:</span> <span class="mf">0.9500</span>
+<span class="p">[</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5279944</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>可见，通过训练，模型在训练集上可以达到95%的准确率， <img class="math" src="../../_images/math/703b23c524f1af12c1c12deaedc67c5a8c513052.png" alt="\theta = -1.5279944 \approx -\frac{\pi}{2} = -1.5707963..."/> 。而当 <img class="math" src="../../_images/math/1ff979e6b4f47ffa5a7589539cb7211af74b5c26.png" alt="\theta = -\frac{\pi}{2}"/> 时，恰好可以使得两种类型的数据分别接近基本态 <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> 和 <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> ，从而达到最易区分的状态。</p>
+<dl class="footnote brackets">
+<dt class="label" id="f0"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>此手册的行文时间为公元2020年，如果你来自未来，请理解作者的时代局限性。</p>
+</dd>
+<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id6">2</a></span></dt>
+<dd><p>“坍缩”一词多用于量子观测的哥本哈根诠释，除此以外还有多世界理论等。此处使用“坍缩”一词仅是方便表述。</p>
+</dd>
+<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id8">3</a></span></dt>
+<dd><p>其实更常见的基础二元量子门是“量子选择非门”（CNOT）和“交换门”（SWAP）。</p>
+</dd>
+<dt class="label" id="f3"><span class="brackets"><a class="fn-backref" href="#id9">4</a></span></dt>
+<dd><p>这种矩阵被称之为“幺正矩阵”或“酉矩阵”。</p>
+</dd>
+</dl>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 201 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="rl.html" class="btn btn-neutral float-right" title="强化学习简介" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="swift.html" class="btn btn-neutral float-left" title="Swift for TensorFlow (S4TF) (Huan）" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

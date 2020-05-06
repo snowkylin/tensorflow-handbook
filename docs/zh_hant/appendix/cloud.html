@@ -1,0 +1,543 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>在雲端使用TensorFlow &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
+        <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200506.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="部署自己的交互式Python開發環境JupyterLab" href="jupyterlab.html" />
+    <link rel="prev" title="使用Docker部署TensorFlow環境" href="docker.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴 TensorFlow 2
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/rl.html">强化学习简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教學活動</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基礎</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立與訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模塊</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大規模訓練與加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="distributed.html">TensorFlow分布式訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tpu.html">使用TPU訓練TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">擴展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附錄</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="rl.html">強化學習簡介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">使用Docker部署TensorFlow環境</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">在雲端使用TensorFlow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#colabtensorflow">在Colab中使用TensorFlow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#google-cloud-platform-gcp-tensorflow">在Google Cloud Platform（GCP）中使用TensorFlow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#compute-enginegputensorflow">在Compute Engine建立帶GPU的實例並部署TensorFlow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ai-platformnotebookgpujupyterlab">使用AI Platform中的Notebook建立帶GPU的在線JupyterLab環境</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#gpu-tensorflow-ziyang">在阿里雲上使用 GPU 實例運行 Tensorflow（Ziyang）</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recommended_books.html">參考資料與推薦閱讀</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms.html">術語中英對照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Preface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/introduction.html">TensorFlow Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/installation.html">Installation and Environment Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/basic.html">TensorFlow Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/models.html">Model Construction and Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/tools.html">Common Modules in TensorFlow</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/lite.html">TensorFlow Lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/javascript.html">TensorFlow in JavaScript</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Large-scale Training</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/distributed.html">Distributed Training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/rl.html">Introduction to Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/docker.html">Using Docker to deploy TensorFlow environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/cloud.html">Using TensorFlow on cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/recommended_books.html">References and Recommendations for Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴 TensorFlow 2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>在雲端使用TensorFlow</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/zh_hant/appendix/cloud.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorflow">
+<h1>在雲端使用TensorFlow<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
+<div class="section" id="colabtensorflow">
+<span id="colab"></span><h2>在Colab中使用TensorFlow<a class="headerlink" href="#colabtensorflow" title="永久链接至标题">¶</a></h2>
+<p>Google Colab是谷歌的免費在線交互式Python運行環境，且提供GPU支持，使得機器學習開發者們無需在自己的電腦上安裝環境，就能隨時隨地從雲端訪問和運行自己的機器學習代碼。</p>
+<div class="admonition- admonition">
+<p class="admonition-title">學習資源</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://colab.research.google.com/notebooks/welcome.ipynb">Colab官方教程</a></p></li>
+<li><p><a class="reference external" href="https://medium.com/deep-learning-turkey/google-colab-free-gpu-tutorial-e113627b9f5d">Google Colab Free GPU Tutorial</a> （<a class="reference external" href="https://juejin.im/post/5c05e1bc518825689f1b4948">中文翻譯</a>）</p></li>
+</ul>
+</div>
+<p>進入Colab（<a class="reference external" href="https://colab.research.google.com">https://colab.research.google.com</a>），新建一個Python3筆記本，界面如下：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/new.png"><img alt="../../_images/new.png" src="../../_images/new.png" style="width: 100%;" /></a>
+</div>
+<p>如果需要使用GPU，則點擊菜單「代碼執行程序-更改運行時類型」，在「硬件加速器」一項中選擇「GPU」，如下圖所示：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/select_env.png"><img alt="../../_images/select_env.png" src="../../_images/select_env.png" style="width: 40%;" /></a>
+</div>
+<p>我們在主界面輸入一行代碼，例如 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">tensorflow</span> <span class="pre">as</span> <span class="pre">tf</span></code> ，然後按 <code class="docutils literal notranslate"><span class="pre">ctrl</span> <span class="pre">+</span> <span class="pre">enter</span></code> 執行代碼（如果直接按下 <code class="docutils literal notranslate"><span class="pre">enter</span></code> 是換行，可以一次輸入多行代碼並運行）。此時Colab會自動連接到雲端的運行環境，並將狀態顯示在右上角。</p>
+<p>運行完後，點擊界面左上角的「+代碼」，此時界面上會新增一個輸入框，我們輸入 <code class="docutils literal notranslate"><span class="pre">tf.__version__</span></code> ，再次按下 <code class="docutils literal notranslate"><span class="pre">ctrl</span> <span class="pre">+</span> <span class="pre">enter</span></code> 執行代碼，以查看Colab默認的TensorFlow版本，執行情況如下：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/tf_version.png"><img alt="../../_images/tf_version.png" src="../../_images/tf_version.png" style="width: 100%;" /></a>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>Colab支持代碼提示，可以在輸入 <code class="docutils literal notranslate"><span class="pre">tf.</span></code> 後按下 <code class="docutils literal notranslate"><span class="pre">tab</span></code> 鍵，即會彈出代碼提示的下拉菜單。</p>
+</div>
+<p>可見，截至本文寫作時，Colab中的TensorFlow默認版本是1.14.0。在Colab中，可以使用 <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">!apt-get</span> <span class="pre">install</span></code> 來安裝Colab中尚未安裝的Python庫或Linux軟件包。比如在這裡，我們希望使用TensorFlow 2.0 beta1版本，即點擊左上角的「+代碼」，輸入:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!pip install tensorflow-gpu==2.0.0-beta1
+</pre></div>
+</div>
+<p>按下 <code class="docutils literal notranslate"><span class="pre">ctrl</span> <span class="pre">+</span> <span class="pre">enter</span></code> 執行，結果如下：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/install_tf.png"><img alt="../../_images/install_tf.png" src="../../_images/install_tf.png" style="width: 100%;" /></a>
+</div>
+<p>可見，Colab提示我們重啓運行環境以使用新安裝的TensorFlow版本。於是我們點擊運行框最下方的Restart Runtime（或者菜單「代碼執行程序-重新啓動代碼執行程序」），然後再次導入TensorFlow並查看版本，結果如下：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/view_tf_version.png"><img alt="../../_images/view_tf_version.png" src="../../_images/view_tf_version.png" style="width: 100%;" /></a>
+</div>
+<p>我們可以使用 <code class="docutils literal notranslate"><span class="pre">tf.test.is_gpu_available</span></code> 函數來查看當前環境的GPU是否可用：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/view_gpu.png"><img alt="../../_images/view_gpu.png" src="../../_images/view_gpu.png" style="width: 100%;" /></a>
+</div>
+<p>可見，我們成功在Colab中配置了TensorFlow 2.0環境並啓用了GPU支持。</p>
+<p>你甚至可以通過 <code class="docutils literal notranslate"><span class="pre">!nvidia-smi</span></code> 查看當前的GPU信息：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/nvidia_smi.png"><img alt="../../_images/nvidia_smi.png" src="../../_images/nvidia_smi.png" style="width: 100%;" /></a>
+</div>
+<p>可見GPU的型號爲Tesla T4。</p>
+</div>
+<div class="section" id="google-cloud-platform-gcp-tensorflow">
+<span id="gcp"></span><h2>在Google Cloud Platform（GCP）中使用TensorFlow<a class="headerlink" href="#google-cloud-platform-gcp-tensorflow" title="永久链接至标题">¶</a></h2>
+<p><a class="reference external" href="https://cloud.google.com/">Google Cloud Platform（GCP）</a> 是Google的雲計算服務。GCP收費靈活，默認按時長計費。也就是說，你可以迅速建立一個帶GPU的實例，訓練一個模型，然後立即關閉（關機或刪除實例）。GCP只收取在實例開啓時所產生的費用，關機時只收取磁盤存儲的費用，刪除後即不再繼續收費。</p>
+<p>我們可以通過兩種方式在GCP中使用TensorFlow：使用Compute Engine建立帶GPU的實例，或使用AI Platform中的Notebook建立帶GPU的在線JupyterLab環境。</p>
+<div class="section" id="compute-enginegputensorflow">
+<h3>在Compute Engine建立帶GPU的實例並部署TensorFlow<a class="headerlink" href="#compute-enginegputensorflow" title="永久链接至标题">¶</a></h3>
+<p>GCP的Compute Engine類似於AWS、阿里雲等，允許用戶快速建立自己的虛擬機實例。在Compute Engine中，可以很方便地建立具有GPU的虛擬機實例，只需要進入Compute Engine的VM實例（<a class="reference external" href="https://console.cloud.google.com/compute/instances">https://console.cloud.google.com/compute/instances</a>），並在創建實例的時候選擇GPU類型和數量即可。</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/create_instance.png"><img alt="../../_images/create_instance.png" src="../../_images/create_instance.png" style="width: 100%;" /></a>
+</div>
+<p>需要注意兩點：</p>
+<ol class="arabic simple">
+<li><p>只有特定區域的機房具有GPU，且不同類型的GPU地區範圍也不同，可參考 <a class="reference external" href="https://cloud.google.com/compute/docs/gpus">GCP官方文檔</a> 並選擇適合的地區建立實例；</p></li>
+<li><p>默認情況下GCP賬號的GPU配額非常有限（可能是怕你付不起錢？）。你很可能需要在使用前申請提升自己賬號在特定地區的特定型號GPU的配額，可參考 <a class="reference external" href="https://cloud.google.com/compute/quotas?hl=zh-cn#requesting_additional_quota">GCP官方文檔：申請提升配額</a> ，GCP會有工作人員手動處理申請，並給你的郵箱發送郵件通知，大約需要數小時至兩個工作日不等。</p></li>
+</ol>
+<p>當建立好具有GPU的GCP虛擬機實例後，配置工作與在本地基本相同。系統中默認並沒有NVIDIA顯卡驅動，依然需要自己安裝。</p>
+<p>以下命令示例了在Tesla K80，Ubuntu 18.04 LTS的GCP虛擬機實例中配置NVIDIA 410驅動、CUDA 10.0、cuDNN 7.6.0以及TensorFlow 2.0 beta環境的過程：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install build-essential    <span class="c1"># 安裝編譯環境</span>
+wget http://us.download.nvidia.com/tesla/410.104/NVIDIA-Linux-x86_64-410.104.run    <span class="c1"># 下載NVIDIA驅動</span>
+sudo bash NVIDIA-Linux-x86_64-410.104.run   <span class="c1"># 安裝驅動（一路Next）</span>
+<span class="c1"># nvidia-smi  # 查看虛擬機中的GPU型號</span>
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh  <span class="c1"># 下載Miniconda</span>
+bash Miniconda3-latest-Linux-x86_64.sh      <span class="c1"># 安裝Miniconda（安裝完需要重啓終端）</span>
+conda create -n tf2.0-beta-gpu <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.6
+conda activate tf2.0-beta-gpu
+conda install <span class="nv">cudatoolkit</span><span class="o">=</span><span class="m">10</span>.0
+conda install <span class="nv">cudnn</span><span class="o">=</span><span class="m">7</span>.6.0
+pip install tensorflow-gpu<span class="o">==</span><span class="m">2</span>.0.0-beta1
+</pre></div>
+</div>
+<p>輸入 <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> 會顯示：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~$ nvidia-smi
+Fri Jul <span class="m">12</span> <span class="m">10</span>:30:37 <span class="m">2019</span>
++-----------------------------------------------------------------------------+
+<span class="p">|</span> NVIDIA-SMI <span class="m">410</span>.104      Driver Version: <span class="m">410</span>.104      CUDA Version: <span class="m">10</span>.0     <span class="p">|</span>
+<span class="p">|</span>-------------------------------+----------------------+----------------------+
+<span class="p">|</span> GPU  Name        Persistence-M<span class="p">|</span> Bus-Id        Disp.A <span class="p">|</span> Volatile Uncorr. ECC <span class="p">|</span>
+<span class="p">|</span> Fan  Temp  Perf  Pwr:Usage/Cap<span class="p">|</span>         Memory-Usage <span class="p">|</span> GPU-Util  Compute M. <span class="p">|</span>
+<span class="p">|</span><span class="o">===============================</span>+<span class="o">======================</span>+<span class="o">======================</span><span class="p">|</span>
+<span class="p">|</span>   <span class="m">0</span>  Tesla K80           Off  <span class="p">|</span> <span class="m">00000000</span>:00:04.0 Off <span class="p">|</span>                    <span class="m">0</span> <span class="p">|</span>
+<span class="p">|</span> N/A   63C    P0    88W / 149W <span class="p">|</span>      0MiB / 11441MiB <span class="p">|</span>    <span class="m">100</span>%      Default <span class="p">|</span>
++-------------------------------+----------------------+----------------------+
+
++-----------------------------------------------------------------------------+
+<span class="p">|</span> Processes:                                                       GPU Memory <span class="p">|</span>
+<span class="p">|</span>  GPU       PID   Type   Process name                             Usage      <span class="p">|</span>
+<span class="p">|</span><span class="o">=============================================================================</span><span class="p">|</span>
+<span class="p">|</span>  No running processes found                                                 <span class="p">|</span>
++-----------------------------------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="ai-platformnotebookgpujupyterlab">
+<span id="notebook"></span><h3>使用AI Platform中的Notebook建立帶GPU的在線JupyterLab環境<a class="headerlink" href="#ai-platformnotebookgpujupyterlab" title="永久链接至标题">¶</a></h3>
+<p>如果你不希望繁雜的配置，希望迅速獲得一個開箱即用的在線交互式Python環境，可以使用GCP的AI Platform中的Notebook。其預安裝了JupyterLab，可以理解爲Colab的付費升級版，具備更多功能且限制較少。</p>
+<p>進入 <a class="reference external" href="https://console.cloud.google.com/mlengine/notebooks">https://console.cloud.google.com/mlengine/notebooks</a> ，點擊「新建實例-TensorFlow 2.0-With 1 NVIDIA Tesla K80」，界面如下：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/create_notebook.png"><img alt="../../_images/create_notebook.png" src="../../_images/create_notebook.png" style="width: 100%;" /></a>
+</div>
+<p>也可以點擊「自定義」來進一步配置實例，例如選擇區域、GPU類型和個數，與創建Compute Engine實例類似。</p>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>和Compute Engine實例一樣，你很可能需要在這裡選擇自己適合的區域，以及申請提升自己賬號在特定地區的特定型號GPU的配額。</p>
+</div>
+<p>建立完成後，點擊「打開JUPYTERLAB」，即可進入以下界面：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/notebook_index.png"><img alt="../../_images/notebook_index.png" src="../../_images/notebook_index.png" style="width: 100%;" /></a>
+</div>
+<p>建立一個Python 3筆記本，測試TensorFlow環境：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/notebook_test.png"><img alt="../../_images/notebook_test.png" src="../../_images/notebook_test.png" style="width: 100%;" /></a>
+</div>
+<p>我們還可以點擊左上角的「+」號，新建一個終端：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/notebook_terminal.png"><img alt="../../_images/notebook_terminal.png" src="../../_images/notebook_terminal.png" style="width: 100%;" /></a>
+</div>
+</div>
+</div>
+<div class="section" id="gpu-tensorflow-ziyang">
+<h2>在阿里雲上使用 GPU 實例運行 Tensorflow（Ziyang）<a class="headerlink" href="#gpu-tensorflow-ziyang" title="永久链接至标题">¶</a></h2>
+<p>國內也有部分雲服務商（如 <a class="reference external" href="https://cn.aliyun.com/product/ecs/gpu">阿里雲</a> 和 <a class="reference external" href="https://cloud.tencent.com/product/gpu">騰訊雲</a> ）提供了 GPU 實例，且可按量計費。至本手冊撰寫時，具備單個GPU的實例價格在數元（Tesla P4）至二十多元（Tesla V100）每小時不等。以下我們簡要介紹在阿里雲使用 GPU 實例。</p>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>根據不同的地區、配置和付費方式，實例的價格也是多樣化的，請根據需要合理選擇。如果是臨時需要的計算任務，可以考慮按量付費以及使用搶占式VPS，以節約資金。</p>
+</div>
+<p>訪問 <a class="reference external" href="https://cn.aliyun.com/product/ecs/gpu">https://cn.aliyun.com/product/ecs/gpu</a> ，點擊購買，界面如下：</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/vps_select.png"><img alt="../../_images/vps_select.png" src="../../_images/vps_select.png" style="width: 100%;" /></a>
+</div>
+<p>此處，我們選擇一個帶有 Tesla P4 計算卡的實例。</p>
+<p>在系統鏡像中，阿里雲提供多種選擇，可以根據需要選擇合適的鏡像。</p>
+<div class="figure align-center" id="id7">
+<a class="reference internal image-reference" href="../../_images/os_image_config_with_driver.png"><img alt="../../_images/os_image_config_with_driver.png" src="../../_images/os_image_config_with_driver.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-text">如果選擇「公共鏡像」，可以根據提示選擇提前預裝GPU驅動，可以避免後續安裝驅動的麻煩。</span><a class="headerlink" href="#id7" title="永久链接至图片">¶</a></p>
+</div>
+<div class="figure align-center" id="id8">
+<a class="reference internal image-reference" href="../../_images/os_image_with_RAPIDS.png"><img alt="../../_images/os_image_with_RAPIDS.png" src="../../_images/os_image_with_RAPIDS.png" style="width: 100%;" /></a>
+<p class="caption"><span class="caption-text">在「鏡像市場」中，官方也提供了適合深度學習的定製鏡像。在本示例中我們選擇預裝了 NVIDIA RAPIDS 的 Ubuntu 16.04 鏡像。</span><a class="headerlink" href="#id8" title="永久链接至图片">¶</a></p>
+</div>
+<p>然後，通過 ssh 連接上我們選購的服務器，並使用 <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> 查看 GPU 信息：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rapids<span class="o">)</span> root@iZ8vb2567465uc1ty3f4ovZ:~# nvidia-smi
+Sun Aug <span class="m">11</span> <span class="m">23</span>:53:52 <span class="m">2019</span>
++-----------------------------------------------------------------------------+
+<span class="p">|</span> NVIDIA-SMI <span class="m">418</span>.67       Driver Version: <span class="m">418</span>.67       CUDA Version: <span class="m">10</span>.1     <span class="p">|</span>
+<span class="p">|</span>-------------------------------+----------------------+----------------------+
+<span class="p">|</span> GPU  Name        Persistence-M<span class="p">|</span> Bus-Id        Disp.A <span class="p">|</span> Volatile Uncorr. ECC <span class="p">|</span>
+<span class="p">|</span> Fan  Temp  Perf  Pwr:Usage/Cap<span class="p">|</span>         Memory-Usage <span class="p">|</span> GPU-Util  Compute M. <span class="p">|</span>
+<span class="p">|</span><span class="o">===============================</span>+<span class="o">======================</span>+<span class="o">======================</span><span class="p">|</span>
+<span class="p">|</span>   <span class="m">0</span>  Tesla P4            On   <span class="p">|</span> <span class="m">00000000</span>:00:07.0 Off <span class="p">|</span>                    <span class="m">0</span> <span class="p">|</span>
+<span class="p">|</span> N/A   29C    P8     6W /  75W <span class="p">|</span>      0MiB /  7611MiB <span class="p">|</span>      <span class="m">0</span>%      Default <span class="p">|</span>
++-------------------------------+----------------------+----------------------+
+
++-----------------------------------------------------------------------------+
+<span class="p">|</span> Processes:                                                       GPU Memory <span class="p">|</span>
+<span class="p">|</span>  GPU       PID   Type   Process name                             Usage      <span class="p">|</span>
+<span class="p">|</span><span class="o">=============================================================================</span><span class="p">|</span>
+<span class="p">|</span>  No running processes found                                                 <span class="p">|</span>
++-----------------------------------------------------------------------------+
+</pre></div>
+</div>
+<p>確認了驅動無誤之後，其他操作就可以照常執行了。</p>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>阿里雲等雲服務提供商一般對於 VPS 的端口進行了安全策略限制，請關注所使用的端口是否在安全策略的放行列表中，以免影響Tensorflow Serving和Tensorboard的使用。</p>
+</div>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 203 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="jupyterlab.html" class="btn btn-neutral float-right" title="部署自己的交互式Python開發環境JupyterLab" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="docker.html" class="btn btn-neutral float-left" title="使用Docker部署TensorFlow環境" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

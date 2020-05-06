@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TensorFlow 性能優化 &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
+        <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200506.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴 TensorFlow 2
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/rl.html">强化学习简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教學活動</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基礎</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立與訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模塊</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大規模訓練與加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">TensorFlow分布式訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">使用TPU訓練TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">擴展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/rl.html">強化學習簡介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow環境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在雲端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">參考資料與推薦閱讀</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">術語中英對照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Preface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/introduction.html">TensorFlow Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/installation.html">Installation and Environment Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/basic.html">TensorFlow Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/models.html">Model Construction and Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/tools.html">Common Modules in TensorFlow</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/lite.html">TensorFlow Lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/javascript.html">TensorFlow in JavaScript</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Large-scale Training</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/distributed.html">Distributed Training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/rl.html">Introduction to Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/docker.html">Using Docker to deploy TensorFlow environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/cloud.html">Using TensorFlow on cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/recommended_books.html">References and Recommendations for Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴 TensorFlow 2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>TensorFlow 性能優化</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/zh_hant/advanced/optimization.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorflow">
+<h1>TensorFlow 性能優化<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
+<p>本節主要介紹 TensorFlow 模型開發和訓練中的一些原則和經驗，使得讀者能夠編寫出更加高效的 TensorFlow 程序。</p>
+<div class="section" id="id1">
+<h2>關於計算性能的若干重要事實<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>在算法課程中，我們往往使用時間複雜度（大O符號）作爲衡量算法性能的重要指標。這種表示方法對於算法理論性能分析非常有效，但也可能給我們帶來一種誤解，即常數項的時間複雜度變化對實際的數值計算效率影響不大。事實上，在實際的數值計算中，有以下關於計算性能的重要事實。儘管它們帶來的都是常數級的時間複雜度變化，但對計算性能的影響卻相當顯著。</p>
+<ul class="simple">
+<li><p>不同的程序設計語言由於設計機制和理念，以及編譯器/解釋器的實現方式不同，在數值計算的效率上有着巨大的區別。例如，Python 語言爲了增強語言的動態性，而犧牲了大量計算效率。而C/C++語言雖然複雜，但具有出色的計算效率。簡而言之，對程序員友好的語言往往對計算機不友好，反之亦然。不同程序設計語言帶來的性能差距可達 <img class="math" src="../../_images/math/9a60a9694103bb1213836bb5cd7e568290f03a02.png" alt="10^2"/> 數量級以上。TensorFlow 等各種數值計算庫的底層就是使用 C++ 開發的；</p></li>
+<li><p>對於矩陣運算，由於有內置的並行加速和硬件優化過程，數值計算庫的內置方法（底層調用BLAS）往往要遠快於直接使用 For 循環，大規模矩陣運算的性能差距可達 <img class="math" src="../../_images/math/9a60a9694103bb1213836bb5cd7e568290f03a02.png" alt="10^2"/> 數量級以上；</p></li>
+<li><p>對於矩陣/張量運算，GPU 的並行架構（大量小的計算單元並行運算）使其相較於 CPU 具有明顯優勢，具體視 CPU 和 GPU 的性能而定。在 CPU 和 GPU 級別相當時，大規模張量計算的性能差距一般可達 <img class="math" src="../../_images/math/19b81b50ac97f10f1a7e180f462713350c16dade.png" alt="10^1"/> 以上。</p></li>
+</ul>
+<p>以下示例程序使用了 Python 的三重 For 循環、Cython 的三重 For 循環、NumPy 的 <code class="docutils literal notranslate"><span class="pre">dot</span></code> 函數和 TensorFlow 的 <code class="docutils literal notranslate"><span class="pre">matmul</span></code> 函數，分別計算了兩個 10000×10000 的隨機矩陣 <code class="docutils literal notranslate"><span class="pre">A</span></code> 和 <code class="docutils literal notranslate"><span class="pre">B</span></code> 的乘積。程序運行平台爲一台具備Intel i9-9900K處理器、NVIDIA GeForce RTX 2060 SUPER顯卡與64GB內存的個人電腦（後文亦同）。運行所需時間分別標註在了程序的注釋中。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pyximport</span><span class="p">;</span> <span class="n">pyximport</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">matrix_cython</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">))</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">))</span>
+
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
+            <span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;time consumed by Python for loop:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>    <span class="c1"># ~700000s</span>
+
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">matrix_cython</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>      <span class="c1"># Cython 代码为上述 Python 代码的 C 语言版本，此处省略</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;time consumed by Cython for loop:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>    <span class="c1"># ~8400s</span>
+
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;time consumed by np.dot:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>     <span class="c1"># 5.61s</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;time consumed by tf.matmul:&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>  <span class="c1"># 0.77s</span>
+</pre></div>
+</div>
+<p>可見，同樣是 <img class="math" src="../../_images/math/e5d8ffc9b6263af8fd2cc81b2cab7c5dd8127064.png" alt="O(n^3)"/> 時間複雜度的矩陣乘法（具體而言， <img class="math" src="../../_images/math/dff698c2be7601e7f48d51adf5e5da050def2055.png" alt="10^{12}"/> 次浮點數乘法的計算量），使用 GPU 加速的 TensorFlow 竟然比直接使用原生 Python 循環快了近 100 萬倍！這種極大幅度的優化來源於兩個方面，一是使用更爲高效的底層計算操作，避免了原生 Python 語言解釋器的各種冗餘檢查等所帶來的性能損失（例如，Python中每從數組中取一次數都需要檢查一次是否下標越界）。二是利用了矩陣相乘運算具有的充分的可並行性。在矩陣相乘 <img class="math" src="../../_images/math/6ac016738b9de46f761a1002e4a28a8d638e0c90.png" alt="A \times B"/> 的計算中，矩陣 <img class="math" src="../../_images/math/b86d9659948ffa756133d580cfc95f923705c2b5.png" alt="A"/> 的每一行與矩陣 <img class="math" src="../../_images/math/ff36a9fef6093afdd14268504dfba83850bdcede.png" alt="B"/> 的每一列所進行的相乘操作都是可以同時進行的，而沒有任何的依賴關係。</p>
+</div>
+<div class="section" id="id2">
+<h2>模型開發：擁抱張量運算<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>在 TensorFlow 的模型開發中，應當儘量減少 For 循環的使用，而多使用基於矩陣或者張量的運算。這樣一方面是利用計算機對矩陣運算的充分優化，另一方面也是減少計算圖中的操作個數，避免讓 TensorFlow 的計算圖變得臃腫。</p>
+<p>舉一個例子，假設有 1000 個尺寸爲 100×1000 的矩陣，構成一個形狀爲 <code class="docutils literal notranslate"><span class="pre">[1000,</span> <span class="pre">100,</span> <span class="pre">1000]</span></code> 的三維張量 <code class="docutils literal notranslate"><span class="pre">A</span></code> ，而現在希望將這個三維張量里的每一個矩陣與一個尺寸爲 1000×1000 的矩陣 <code class="docutils literal notranslate"><span class="pre">B</span></code> 相乘，再將得到的1000個矩陣在第0維堆疊起來，得到形狀爲 <code class="docutils literal notranslate"><span class="pre">[1000,</span> <span class="pre">100,</span> <span class="pre">1000]</span></code> 的張量 <code class="docutils literal notranslate"><span class="pre">C</span></code> 。爲了實現以上內容，我們可以自然地寫出以下代碼：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">C</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">B</span><span class="p">))</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>這段代碼耗時約0.40s，進行了1000次 <code class="docutils literal notranslate"><span class="pre">tf.matmul</span></code> 操作。然而，我們注意到，以上的操作其實是一個批次操作。與機器學習中批次（Batch）的概念類似，批次中的所有元素形狀相同，且都執行了相同的運算。那麼，是否有一個單一的操作能夠幫助我們一次性計算這1000個矩陣構成的張量 <code class="docutils literal notranslate"><span class="pre">A</span></code> 與矩陣 <code class="docutils literal notranslate"><span class="pre">B</span></code> 的乘積呢？答案是肯定的。TensorFlow 中的函數 <code class="docutils literal notranslate"><span class="pre">tf.einsum</span></code> 即可以幫我們實現這一運算。考慮到矩陣乘法的計算過程是 <img class="math" src="../../_images/math/bc4af20e34633185451b982127caa7cdf4db7970.png" alt="C_{ik} = \sum_{j} A_{ij} B_{jk}"/> ，我們可以將這一計算過程的描述抽象爲 <code class="docutils literal notranslate"><span class="pre">ij,jk-&gt;ik</span></code> 。於是，對於這一三維張量乘以二維矩陣的「批次乘法」，其計算過程爲 <img class="math" src="../../_images/math/faba9bd8a2de13460745f245d77a566baf3315ea.png" alt="C_{ijl} = \sum_{k} A_{ijk} B_{kl}"/> ，我們可以將其抽象爲 <code class="docutils literal notranslate"><span class="pre">ijk,kl-&gt;ijl</span></code> 。於是，調用 <code class="docutils literal notranslate"><span class="pre">tf.einsum</span></code> ，我們有以下寫法：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ijk,kl-&gt;ijl&#39;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>這段代碼與之前基於 For 循環的代碼計算結果相同，耗時約0.28s，且在計算圖中只需建立一個計算節點。</p>
+</div>
+<div class="section" id="id3">
+<h2>模型訓練：數據預處理和預載入<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>相對於模型的訓練而言，有時候數據的預處理和載入反而是一件更爲耗時的工作。爲了優化模型的訓練流程，有必要對訓練的全流程做一個時間上的評測（Profiling），以弄清每一步所耗費的時間，並發現性能上的瓶頸。這一步可以使用 TensorBoard 的評測工具（參考前文的 <a class="reference internal" href="../basic/tools.html#graph-profile"><span class="std std-ref">查看Graph和Profile信息</span></a> ），也可以簡單地使用Python的 <code class="docutils literal notranslate"><span class="pre">time</span></code> 庫在終端輸出每一步所需時間。評測完成後，如果發現瓶頸在數據端（例如每一步訓練只花費1秒，而處理數據就花了5秒），我們即需要思考數據端的優化方式。一般而言，可以通過事先預處理好需要傳入模型訓練的數據來提高性能，也可以在模型訓練的時候並行進行數據的讀取和處理。可以參考前文的 <a class="reference internal" href="../basic/tools.html#prefetch"><span class="std std-ref">使用 tf.data 的並行化策略提高訓練流程效率</span></a> 以了解詳情。</p>
+</div>
+<div class="section" id="id4">
+<h2>模型類型與加速潛力的關係<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>模型本身的類型也會對模型加速的潛力有影響，一個非常不嚴謹的大致印象是：加速潛力上卷積神經網絡（CNN）&gt;循環神經網絡（RNN）&gt;強化學習（RL）。CNN由於每一層的卷積核（神經元）都可以並行計算，相對比較容易利用 GPU 的並行計算能力來加速，可以達到非常明顯的加速效果。RNN因爲存在時間依賴的序列結構，很多運算必須順序進行，因此 GPU 並行計算帶來的性能提升相對較少。RL不僅存在時間依賴的序列結構，還要頻繁和環境交互（環境往往是基於 CPU 的模擬器），GPU帶來的提升就更爲有限。由於CPU和GPU之間的切換本身需要耗費資源，有些時候使用 GPU 進行強化學習反而在性能上明顯不如 CPU，尤其是一些模型本身較小而交互又特別頻繁的場景（比如多智能體強化學習）。</p>
+</div>
+<div class="section" id="cpu-tensorflow">
+<h2>使用針對特定 CPU 指令集優化的 TensorFlow<a class="headerlink" href="#cpu-tensorflow" title="永久链接至标题">¶</a></h2>
+<p>現代 CPU 往往支持特定的擴展指令集（例如 SSE 和 AVX）來提升 CPU 性能。默認情況下，TensorFlow 爲了支持更多 CPU 而在編譯時並未加入這些擴展指令集的支持。這也是你經常在 TensorFlow 運行時看到類似以下提示的原因:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">I</span> <span class="n">tensorflow</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">platform</span><span class="o">/</span><span class="n">cpu_feature_guard</span><span class="o">.</span><span class="n">cc</span><span class="p">:</span><span class="mi">142</span><span class="p">]</span> <span class="n">Your</span> <span class="n">CPU</span> <span class="n">supports</span> <span class="n">instructions</span> <span class="n">that</span> <span class="n">this</span> <span class="n">TensorFlow</span> <span class="n">binary</span> <span class="n">was</span> <span class="ow">not</span> <span class="n">compiled</span> <span class="n">to</span> <span class="n">use</span><span class="p">:</span> <span class="n">AVX2</span>
+</pre></div>
+</div>
+<p>以上提示告訴你，你的 CPU 支持 AVX2 指令集，但當前安裝的 TensorFlow 版本並未針對這一指令集進行優化。</p>
+<p>不過，如果你的機器學習任務恰好在 CPU 上訓練更加有效，或者因爲某些原因而必須在 CPU 上訓練，那麼你可以通過開啓這些擴展指令集，來榨乾最後一點 TensorFlow 本體的性能提升空間。一般而言，開啓這些擴展指令集支持必須重新編譯 TensorFlow （這一過程漫長而痛苦，並不推薦一般人嘗試），不過好在有一些第三方編譯的，開啓了擴展指令集的 TensorFlow 版本（例如 GitHub 上的 <a class="reference external" href="https://github.com/fo40225/tensorflow-windows-wheel">fo40225/tensorflow-windows-wheel</a> ）。你可以根據自己的 CPU 支持的擴展指令集，下載並安裝第三方提供的預編譯的 <code class="docutils literal notranslate"><span class="pre">.whl</span></code> 文件來使用開啓了擴展指令集支持的 TensorFlow。此處性能的提升也視應用而定，筆者使用一顆支持 AVX2 指令集的 AMD Ryzen 5 3500U 處理器，使用 <a class="reference internal" href="../basic/tools.html#tffunction"><span class="std std-ref">tf.function ：圖執行模式 *</span></a> 中的 MNIST 分類任務進行測試。針對 AVX2 優化後的 TensorFlow 速度提升約爲5~10%。</p>
+</div>
+<div class="section" id="id5">
+<h2>性能優化策略<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>從以上介紹可以看出，模型運行效率低，不一定是硬件性能不夠好的緣故。在購買高性能硬件的時候，有必要多思考一下現有硬件的性能是否通過優化而得到了充分應用。如果不能確定，可以借或租一台高性能硬件（如雲服務）並在上面運行模型，觀察性能提升的程度。相對而言，借或租的成本遠低於升級或購買新硬件，對於個人開發者而言是更爲具有性價比的選擇。</p>
+<p>同時，性能優化也存在一個度的問題。一方面，我們有必要在機器學習模型開發的初期就考慮良好的設計和架構，使得模型在高可復用性的基礎上達到較優的運行性能。另一方面，代碼的可讀性在機器學習中尤爲重要。正如軟件工程中的名言，「premature optimization is the root of all evil」 <a class="reference internal" href="#knuth1974" id="id6"><span>[Knuth1974]</span></a> 。直白來說，不要浪費時間做一些提速不大、而且還會嚴重犧牲代碼可讀性的性能優化。</p>
+<dl class="citation">
+<dt class="label" id="knuth1974"><span class="brackets"><a class="fn-backref" href="#id6">Knuth1974</a></span></dt>
+<dd><p>Knuth D E. Structured programming with go to statements[J]. ACM Computing Surveys (CSUR), 1974, 6(4): 261-301.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

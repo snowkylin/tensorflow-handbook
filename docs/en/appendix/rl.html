@@ -1,0 +1,589 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction to Reinforcement Learning &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
+        <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200506.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Using Docker to deploy TensorFlow environment" href="docker.html" />
+    <link rel="prev" title="TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *" href="quantum.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴 TensorFlow 2
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/rl.html">强化学习简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教學活動</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基礎</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/installation.html">TensorFlow安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/models.html">TensorFlow 模型建立與訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/tools.html">TensorFlow常用模塊</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大規模訓練與加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/distributed.html">TensorFlow分布式訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/tpu.html">使用TPU訓練TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">擴展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/rl.html">強化學習簡介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/docker.html">使用Docker部署TensorFlow環境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/cloud.html">在雲端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/recommended_books.html">參考資料與推薦閱讀</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/terms.html">術語中英對照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Preface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">Installation and Environment Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">Model Construction and Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">Common Modules in TensorFlow</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Large-scale Training</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="distributed.html">Distributed Training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tpu.html">Training TensorFlow models with TPU</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction to Reinforcement Learning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#let-s-start-with-dynamic-programming">Let’s start with dynamic programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#incorporating-dynamic-programming-for-randomness-and-probability">Incorporating dynamic programming for randomness and probability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#from-direct-to-iterative-algorithms">From direct to iterative algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#progressive-update-of-the-q-value">Progressive update of the Q value</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exploration-strategy">Exploration Strategy</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#solving-problems-on-a-large-scale">Solving problems on a large scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sum-up">sum up</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Using Docker to deploy TensorFlow environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud.html">Using TensorFlow on cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recommended_books.html">References and Recommendations for Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms.html">Terminology comparison table between Chinese and English</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴 TensorFlow 2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Introduction to Reinforcement Learning</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/en/appendix/rl.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction-to-reinforcement-learning">
+<h1>Introduction to Reinforcement Learning<a class="headerlink" href="#introduction-to-reinforcement-learning" title="永久链接至标题">¶</a></h1>
+<p>In this chapter, we will provide an introduction to the reinforcement learning algorithms covered in the Deep Reinforcement Learning section. What we know as supervised learning is learning on known training data with labels, obtaining a mapping (predictive model) from data features to labels, which in turn predict the labels that new data instances will have. And two new concepts have emerged in reinforcement learning, the “intelligent body” and the “environment”. In reinforcement learning, the intelligent body learns strategies by interacting with the environment to maximize the rewards it receives in the environment. For example, in the process of playing chess, you (the intelligent body) can maximize the rewards (number of wins) you receive in the process of playing chess by interacting with the board and your opponent (the environment) to learn the strategy of playing chess.</p>
+<p>If supervised learning is concerned with “prediction”, the type of learning that is closely related to statistical theory, reinforcement learning is concerned with “decision making”, which is deeply related to computer algorithms (especially dynamic programming and search). The author believes that the introduction to the principles of reinforcement learning has a higher threshold than supervised learning, especially for programmers accustomed to deterministic algorithms to suddenly present a bunch of abstract concepts of numerical iterative relationships, most of the time can only gulp. Therefore, the author hopes to illustrate the basic idea of reinforcement learning for readers with a certain algorithmic basis through some more specific examples, in order to express as plainly as possible.</p>
+<div class="section" id="let-s-start-with-dynamic-programming">
+<h2>Let’s start with dynamic programming<a class="headerlink" href="#let-s-start-with-dynamic-programming" title="永久链接至标题">¶</a></h2>
+<p>If you have participated in algorithmic competitions such as NOIP or ACM, or prepared for machine exams for Internet companies (such as LeetCode), you will not be too familiar with Dynamic Programming (DP). The basic idea of dynamic programming is to decompose the problem to be solved into several subproblems of the same structure, and to save the answers to the solved subproblems, using <a class="footnote-reference brackets" href="#f0" id="id1">1</a> directly when needed. Problems solved using dynamic programming need to satisfy two properties.</p>
+<ul class="simple">
+<li><p>Optimal sub-structure: a sub-structure of an optimal strategy is also optimal.</p></li>
+<li><p>Non-sequitur: past steps can only influence future developments through the current state, which is a summary of history.</p></li>
+</ul>
+<p>We recall the classic introductory title of dynamic programming, <a class="reference external" href="https://leetcode.com/problems/triangle/">“The number triangle”</a>.</p>
+<div class="admonition-the-number-triangle-problem admonition">
+<p class="admonition-title">the number triangle problem</p>
+<p>Given a shape as follows <img class="math" src="../../_images/math/850d6d4a9d2baba27cab50a5aa6607d6d79a1b14.png" alt="N+1"/> layer of numbers triangle and the number <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> at each coordinate of the triangle, the intelligent body at the top of the triangle can choose to go down ( <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/>) or right ( <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/>) each time to reach the next layer of the triangle, please output a sequence of actions so that the sum of the numbers on the path the intelligent body passes is the largest.</p>
+<div class="figure align-center" id="id6">
+<a class="reference internal image-reference" href="../../_images/triangle.png"><img alt="../../_images/triangle.png" src="../../_images/triangle.png" style="width: 50%;" /></a>
+<p class="caption"><span class="caption-text">Example of a digital triangle. The optimal sequence of actions in this example is “right-down”, the optimal path is “(0, 0) - (1, 1) - (2, 1)”, and the maximum sum is <img class="math" src="../../_images/math/1689f2bae3aafd44c7373605ff4b33321041afff.png" alt="r(0, 0) + r(1, 1) + r(2, 1) = 5"/>.</span><a class="headerlink" href="#id6" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<p>Instead of considering how to find the optimal sequence of actions, and assuming that we know the actions that the intelligent body chooses at each coordinate (i, j) <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> (e.g. <img class="math" src="../../_images/math/23775800b0f79a5713952b4f0ed4b3c1aeffa1a8.png" alt="\pi(0, 0) = \searrow"/> represents the actions that the intelligent body chooses to the right at (0, 0)), we simply calculate the sum of the numbers of paths that the intelligent body takes. Let us consider the problem from the bottom up, and suppose that <img class="math" src="../../_images/math/8706bd19cdb4eb441ec988af7b7de23c8ae50abb.png" alt="f(i, j)"/> is the “sum of the numbers now and to be obtained in the future” at the coordinates (i, j) of the intelligent body, then the following equation can be written recursively.</p>
+<div class="math" id="equation-eq1">
+<p><span class="eqno">(1)<a class="headerlink" href="#equation-eq1" title="公式的永久链接">¶</a></span><img src="../../_images/math/dfd777d465c6fe6e1b372b9ab6565b5c0ed142dc.png" alt="f(i, j) = \begin{cases}f(i+1, j) + r(i, j), &amp; \pi(i, j) = \downarrow \\ f(i+1, j+1) + r(i, j), &amp; \pi(i, j) = \searrow\end{cases}"/></p>
+</div><p>Another equivalent of the above formula is written as follows.</p>
+<div class="math" id="equation-eq2">
+<p><span class="eqno">(2)<a class="headerlink" href="#equation-eq2" title="公式的永久链接">¶</a></span><img src="../../_images/math/9e4c2f6d79f84bc4cefd367c1242fe615dc4a515.png" alt="f(i, j) = [p_1 f(i+1, j) + p_2 f(i+1, j+1)] + r(i, j)"/></p>
+</div><p>among them</p>
+<div class="math">
+<p><img src="../../_images/math/9c16f94d9d892de8b4fdfef6ccb73c13b19c3a9b.png" alt="(p_1, p_2) = \begin{cases}(1, 0), \pi(i, j) = \downarrow \\ (0, 1), \pi(i, j) = \searrow\end{cases}"/></p>
+</div><p>With the above pavement, the problem to be solved becomes: make <img class="math" src="../../_images/math/22e11389902f7a0d0bf29f604c8732a375e4de76.png" alt="f(0, 0)"/> the largest value by adjusting the combination of the actions <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> that the intelligent body will choose at each coordinate (i, j). In order to solve this problem, the most brutal method is to iterate through all <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> of the combination, for example, in the example graph, we need to decide <img class="math" src="../../_images/math/35124c32ff720ff1fc1242d7a744b0b34dad67e3.png" alt="\pi(0, 0)"/>, <img class="math" src="../../_images/math/553f0c9a4802c7737b24e0c282660a1f5e960c30.png" alt="\pi(1, 0)"/>, <img class="math" src="../../_images/math/9d71ef3e09d377f2f522709c2927af83534cc090.png" alt="\pi(1, 1)"/> of the value, a total of <img class="math" src="../../_images/math/62206d9285193079dd9d16f641eb66367617027b.png" alt="2^3 = 8"/> kinds of combinations, we just need to take 8 kinds of combinations one by one and calculate <img class="math" src="../../_images/math/22e11389902f7a0d0bf29f604c8732a375e4de76.png" alt="f(0, 0)"/>, the output maximum and its corresponding combination.</p>
+<p>However, it’s clearly too inefficient. Then we consider the direct calculation of the <a class="reference internal" href="../../zh_hant/appendix/rl.html#equation-eq2">(2)</a> formula for the maximum value of the combination of all actions <img class="math" src="../../_images/math/6372d56961ade6dee4839f7dc2442932c68e9360.png" alt="\pi"/> <img class="math" src="../../_images/math/e0bee167d4f2fa929721d6a6b539ad5f3359b2c0.png" alt="\max_\pi f(i, j)"/>. In the <a class="reference internal" href="../../zh_hant/appendix/rl.html#equation-eq2">(2)</a> formula, <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> is independent of any action <img class="math" src="../../_images/math/6372d56961ade6dee4839f7dc2442932c68e9360.png" alt="\pi"/>, so we need only consider the maximum value of the expression <img class="math" src="../../_images/math/b94acb243fa7cb2da10afabcd2c8aa2e97e7e9c1.png" alt="p_1 f(i+1, j) + p_2 f(i+1, j+1)"/>. We then calculate the maximum value of the expression for any action <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> and <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/>, respectively, and take the greater of the two maximum values, as follows.</p>
+<div class="math">
+<p><img src="../../_images/math/216c0118c700082f830d23cfcb90c8fc07dd2bf7.png" alt="\max_\pi f(i, j) &amp;= \max_\pi [p_1 f(i+1, j) + p_2 f(i+1, j+1)] + r(i, j) \\
+    &amp;= \max [\underbrace{\max_\pi(1 f(i+1, j) + 0 f(i+1, j+1))}_{\pi(i, j) = \downarrow}, \underbrace{\max_\pi(0 f(i+1, j) + 1 f(i+1, j+1))}_{\pi(i, j) = \searrow}] + r(i, j) \\
+    &amp;= \max [\underbrace{\max_\pi f(i+1, j)}_{\pi(i, j) = \downarrow}, \underbrace{\max_\pi f(i+1, j+1)}_{\pi(i, j) = \searrow}] + r(i, j)"/></p>
+</div><p>Make <img class="math" src="../../_images/math/fb3d38644c70f568813c084fc9a7e8bc2476cb68.png" alt="g(i, j) = \max_\pi f(i, j)"/> and the upper equation can be written as <img class="math" src="../../_images/math/81d9d1e63f1a6c10ba011bccc2a5b445aecdbc19.png" alt="g(i, j) = \max[g(i+1, j), g(i+1, j+1)] + r(i, j)"/>, which is a common “state transfer equation” in dynamic programming. Using the state transfer equation and the boundary value <img class="math" src="../../_images/math/8d5cd5daeeef2617ace0d1f663804f7e774b4d68.png" alt="g(N, j) = r(N, j), j = 0 \cdots N"/>, we can iterate efficiently from the bottom up to <img class="math" src="../../_images/math/be873af52c5d30d83f37278da82408879849b7fa.png" alt="g(0, 0) = \max_\pi f(0, 0)"/>.</p>
+<div class="figure align-center" id="id7">
+<img alt="../../_images/value_iteration_case_0.png" src="../../_images/value_iteration_case_0.png" />
+<p class="caption"><span class="caption-text">The value of <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> is calculated by three iterations of <img class="math" src="../../_images/math/8f9f501140c275983bc6e1f0019bb69895cd9cf0.png" alt="g(0, 0)"/> . In each iteration, for coordinates (i, j), take the “maximum of the sum of the numbers to be obtained in the future” when <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> and <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/>, respectively (i.e. <img class="math" src="../../_images/math/beb3d189902a8531de1283efda4d89fdb59b40e7.png" alt="g(i+1, j)"/> and <img class="math" src="../../_images/math/2ca4e61d10d6384a0d96464572a77e8325d60a85.png" alt="g(i+1, j+1)"/>), take the greater of the two, and add the number <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> for the current coordinates.</span><a class="headerlink" href="#id7" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="incorporating-dynamic-programming-for-randomness-and-probability">
+<h2>Incorporating dynamic programming for randomness and probability<a class="headerlink" href="#incorporating-dynamic-programming-for-randomness-and-probability" title="永久链接至标题">¶</a></h2>
+<p>In real life, the decisions we make often do not point to a certain outcome with complete certainty, but are simultaneously influenced by environmental factors. Choosing to hone one’s game, for example, while making one’s odds of winning higher, does not mean winning every battle. As the saying goes, “it is both a personal struggle and a historical journey that must be taken into account”. Corresponding to the number triangle problem we discussed in the previous section, we consider the following variants.</p>
+<div class="admonition-the-number-triangle-problem-variant-1 admonition">
+<p class="admonition-title">the number triangle problem (variant 1)</p>
+<p>The smart body starts at the top of the triangle and can choose to move down ( :math:downarrow’) or right ( :math:searrow’) at a time. However, the environment can “interfere” with the actions of intelligent bodies at arbitrary coordinates (i, j), resulting in the following.</p>
+<ul class="simple">
+<li><p>If downward ( <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/>) is chosen, the probability that the intelligence will eventually reach the lower right coordinate (i+1, j) is <img class="math" src="../../_images/math/115f182e3fd76aa746f242950dda40488863238c.png" alt="\frac{3}{4}"/> and the probability that it will reach the lower right coordinate (i+1, j+1) is <img class="math" src="../../_images/math/f162376f26a078bcf0cc142e27cb1eab136069c1.png" alt="\frac{1}{4}"/>.</p></li>
+<li><p>If the choice is to the right ( <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/>), the probability that the intelligent body will eventually reach the lower right coordinate (i+1, j) is :math:frac{1}{4}` and the probability that it will reach the lower right coordinate (i+1, j+1) is :math:frac{3}{4}`.</p></li>
+</ul>
+<p>Give the action that the intelligent body should choose at each coordinate <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> so that the expectation (Expectation) <a class="footnote-reference brackets" href="#f1" id="id2">2</a> of the sum of the numbers on the path that the intelligent body passes is maximum.</p>
+</div>
+<p>At this point, if you want to write the state transfer equation of the problem directly, I’m afraid it won’t be so easy (action selection and transfer results don’t correspond one to the other! . But if we analogize the framework of the problem described in the previous section <code class="xref eq docutils literal notranslate"><span class="pre">EQ2</span></code> style, we will find the problem easier. In this problem, we follow the symbol <img class="math" src="../../_images/math/8706bd19cdb4eb441ec988af7b7de23c8ae50abb.png" alt="f(i, j)"/> to represent the “expectation of the sum of the present and future numbers to be obtained by the intelligent body at the coordinates (i, j)”, and then there is the “expectation of the present (i, j) coordinates = the expectation of the sum of the numbers to be obtained after the ‘selection action <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> + the numbers at the present coordinates”, as follows</p>
+<div class="math" id="equation-eq3">
+<p><span class="eqno">(3)<a class="headerlink" href="#equation-eq3" title="公式的永久链接">¶</a></span><img src="../../_images/math/9e4c2f6d79f84bc4cefd367c1242fe615dc4a515.png" alt="f(i, j) = [p_1 f(i+1, j) + p_2 f(i+1, j+1)] + r(i, j)"/></p>
+</div><p>among them</p>
+<div class="math">
+<p><img src="../../_images/math/ff0a8619bdb38a7254eec82c280aa634efe099ee.png" alt="(p_1, p_2) = \begin{cases}(\frac{3}{4}, \frac{1}{4}), \pi(i, j) = \downarrow \\ (\frac{1}{4}, \frac{3}{4}), \pi(i, j) = \searrow\end{cases}"/></p>
+</div><p>The derivation process of the previous section of the analogy, such that <img class="math" src="../../_images/math/fb3d38644c70f568813c084fc9a7e8bc2476cb68.png" alt="g(i, j) = \max_\pi f(i, j)"/> , we get</p>
+<div class="math" id="equation-eq4">
+<p><span class="eqno">(4)<a class="headerlink" href="#equation-eq4" title="公式的永久链接">¶</a></span><img src="../../_images/math/acde73d4b06bbf3cff2ce244f3e3221b08c0ae47.png" alt="g(i, j) = \max[\underbrace{\frac{3}{4} g(i+1, j) + \frac{1}{4} g(i+1, j+1)}_{\pi(i, j) = \downarrow}, \underbrace{\frac{1}{4} g(i+1, j) + \frac{3}{4} g(i+1, j+1)}_{\pi(i, j) = \searrow}] + r(i, j)"/></p>
+</div><p>We can then use this recursive formula to calculate from bottom to top <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> .</p>
+<div class="figure align-center" id="id8">
+<img alt="../../_images/value_iteration_case_1.png" src="../../_images/value_iteration_case_1.png" />
+<p class="caption"><span class="caption-text">The value of <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> is calculated by three iterations of <img class="math" src="../../_images/math/8f9f501140c275983bc6e1f0019bb69895cd9cf0.png" alt="g(0, 0)"/> . In each iteration, for coordinates (i, j), calculate the “expected maximum value of the sum of the numbers to be obtained in the future” when <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> and <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/> (i.e., <img class="math" src="../../_images/math/40c45fe9dc5f26e8ee4e39f03dcf10d06fc26f0f.png" alt="\frac{3}{4} g(i+1, j) + \frac{1}{4} g(i+1, j+1)"/> and <img class="math" src="../../_images/math/79ab58378a2d59655da58a9bca9041242a1e607b.png" alt="\frac{1}{4} g(i+1, j) + \frac{3}{4} g(i+1, j+1)"/>), taking the greater of the two, and adding the number <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> for the current coordinates.</span><a class="headerlink" href="#id8" title="永久链接至图片">¶</a></p>
+</div>
+<p>We can also observe the <a class="reference internal" href="../../zh_hant/appendix/rl.html#equation-eq4">(4)</a> pattern from the actions made by the intelligent body at each coordinate (i, j) <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> departure. In each iteration, the future benefit expectation (strategy evaluation) from the two actions is first calculated separately, then the action with the larger benefit is taken as the take of <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> (strategy improvement), and finally <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> is updated based on the action.</p>
+<div class="figure align-center" id="id9">
+<a class="reference internal image-reference" href="../../_images/policy_iteration_case_1.png"><img alt="../../_images/policy_iteration_case_1.png" src="../../_images/policy_iteration_case_1.png" style="width: 75%;" /></a>
+<p class="caption"><span class="caption-text">Strategy Assessment - Strategy Improvement Framework: calculate <img class="math" src="../../_images/math/8f9f501140c275983bc6e1f0019bb69895cd9cf0.png" alt="g(0, 0)"/> by iterating the value of <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> . In each iteration, for coordinates (i, j), the “expectation of the sum of the numbers to be obtained in the future” (strategy evaluation) is calculated when <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> and <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/>, respectively, taking the action corresponding to the larger one as the value of <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> (strategy improvement). Then update <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> based on the value of <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> determined in this iteration.</span><a class="headerlink" href="#id9" title="永久链接至图片">¶</a></p>
+</div>
+<p>We can summarize the algorithm flow as follows.</p>
+<ul>
+<li><p>initialization environment</p></li>
+<li><p>for i = N-1 downto 0 do</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(Strategy assessment) Calculate future expectations for each coordinate (i, j) choice in layer i <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> and <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/>. <img class="math" src="../../_images/math/93a23d7a9f31f9d158f5b4aa8f1149aaba05cd47.png" alt="q_1"/> and <img class="math" src="../../_images/math/e18e1d8bd03372d42bfa119ff3a0ecb5811985f7.png" alt="q_2"/></p></li>
+<li><p>(strategy improvement) For each coordinate (i, j) in layer i, take the expected future action as the value of <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/></p></li>
+<li><p>(Value update) Value update of <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> determined from this iteration <img class="math" src="../../_images/math/897259426292b90abf0616971dbf38f9df0c74b4.png" alt="g(i, j) = max(q_1, q_2) + r(i, j)"/></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>Cases where environmental information is not directly available</p>
+<p>Let’s be more realistic: in many real-life situations, we don’t even know the specific probability values involved in environmental impacts, but have to explore summaries by constantly experimenting in the environment. For example, when learning a new Go move, there is no direct way to get the probability of a win rate increase, and the only way to know if the move is good or bad is to play multiple games with your opponent using the new move. Corresponding to the number triangle problem, we consider the following variant.</p>
+<div class="admonition-the-number-triangle-problem-variant-2 admonition">
+<p class="admonition-title">the number triangle problem (variant 2)</p>
+<p>The smart body starts at the top of the triangle and can choose to move down ( <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/>) or right ( <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/>) at a time. The environment “interferes” with the actions of intelligent bodies at arbitrary coordinates (i, j), and the specific probability of this interference (i.e., <img class="math" src="../../_images/math/b970024d9432fd5e37b28335f1d285e4c9afd291.png" alt="p_1"/> and <img class="math" src="../../_images/math/c1584505754919371fad45d96afec2cdd64ff03f.png" alt="p_2"/> in the previous section) is unknown. However, multiple trials are allowed in a numbered triangle environment. When the intelligent body is at the coordinates (i, j), the action command <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> or <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> can be sent to the numeric triangle environment, which will return the coordinates (directly below (i+1, j) or right below (i+1, j+1)) where the intelligent body will end up. Please design experimental schemes and processes to determine the action that the intelligent body should select at each coordinate <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> so that the expectation of the sum of the numbers on the path that the intelligent body travels is maximum.</p>
+</div>
+<p>We can estimate the values of probability <img class="math" src="../../_images/math/b970024d9432fd5e37b28335f1d285e4c9afd291.png" alt="p_1"/> and <img class="math" src="../../_images/math/c1584505754919371fad45d96afec2cdd64ff03f.png" alt="p_2"/> when the action is <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> or <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> by a large number of experiments, although this is difficult in many real-world problems. In fact, we have another set of methods that allows us to get the optimal action strategy without explicitly estimating the probabilistic parameters of the environment.</p>
+<p>Returning to the “Strategy Assessment - Strategy Improvement” framework in the previous section, the greatest difficulty we now encounter is the inability to directly calculate the future expectations for each action in the “Strategy Assessment” with the previous stages of <img class="math" src="../../_images/math/beb3d189902a8531de1283efda4d89fdb59b40e7.png" alt="g(i+1, j)"/> , <img class="math" src="../../_images/math/2ca4e61d10d6384a0d96464572a77e8325d60a85.png" alt="g(i+1, j+1)"/> and the probability parameters <img class="math" src="../../_images/math/b970024d9432fd5e37b28335f1d285e4c9afd291.png" alt="p_1"/> , <img class="math" src="../../_images/math/c1584505754919371fad45d96afec2cdd64ff03f.png" alt="p_2"/> (because the probability parameters are unknown). The beauty of expectations, however, is that even if we can’t calculate them directly, we can still estimate them through a large number of experiments. If we denote the future expectation <a class="footnote-reference brackets" href="#f2" id="id3">3</a> of the intelligent body when it chooses action a at coordinates (i, j) by <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/>, then we can observe the results of K trials after the intelligent body chooses action a at (i, j) and take the average of these K trials as an estimate. For example, when the intelligent body is at the coordinates (0, 1) and chooses the action <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/>, we perform 20 trials and find that 15 results are 1 and 5 results are 2, then we can estimate that <img class="math" src="../../_images/math/1d644d77c720b499ac1f019994251627175493d3.png" alt="q(0, 1, \downarrow)\approx \frac{15}{20} \times 1 + \frac{5}{20} \times 2 = 1.25"/>.</p>
+<p>Thus, we can simply replace the calculation of future expectations in the previous section, “Strategy assessment”, with the future expectations of <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> using the experimental estimates <img class="math" src="../../_images/math/74c3ff13339a952211d0e24aa8ed2e9fb2814f78.png" alt="a = \downarrow"/> and <img class="math" src="../../_images/math/5a2cd6ae2cbc77416889a524b0d954f7aada8e48.png" alt="a = \searrow"/> and proceed to the “Strategy assessment” step with the environmental probability parameters unknown. It is worth noting that since we do not need to explicitly compute the expectation <img class="math" src="../../_images/math/a8b01885522343d2ec658036c583d19a97bc6cc3.png" alt="p_1 g(i+1, j) + p_2 g(i+1, j+1)"/>, we do not need to care about the value of <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/>, and the step of updating the previous section’s value is omitted (in fact, here <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> has taken the place of the previous section <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/>).</p>
+<p>It is also worth noting that since the experiment is a top-down step that requires an algorithm to provide action for the entire path, what should be good for those who have not yet determined the coordinates of the action <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/>? We can use “random action” for these coordinates, i.e. 50% probability of selecting <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> and 50% probability of selecting <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> in order to fully “explore” both actions during the experiment.</p>
+<div class="figure align-center" id="id10">
+<a class="reference internal image-reference" href="../../_images/q_iteration_case_2.png"><img alt="../../_images/q_iteration_case_2.png" src="../../_images/q_iteration_case_2.png" style="width: 75%;" /></a>
+<p class="caption"><span class="caption-text">Replace the calculation of future expectations in the previous section, “Strategy assessment”, with future expectations using experimental estimates of <img class="math" src="../../_images/math/74c3ff13339a952211d0e24aa8ed2e9fb2814f78.png" alt="a = \downarrow"/> and <img class="math" src="../../_images/math/5a2cd6ae2cbc77416889a524b0d954f7aada8e48.png" alt="a = \searrow"/> <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/>.</span><a class="headerlink" href="#id10" title="永久链接至图片">¶</a></p>
+</div>
+<p>We can summarize the algorithm flow as follows.</p>
+<ul>
+<li><p>Initialize q-value</p></li>
+<li><p>for i = N-1 downto 0 do</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>(Strategy assessment) Experiment estimates future expectations for each coordinate (i, j) choice <img class="math" src="../../_images/math/74c3ff13339a952211d0e24aa8ed2e9fb2814f78.png" alt="a = \downarrow"/> and <img class="math" src="../../_images/math/5a2cd6ae2cbc77416889a524b0d954f7aada8e48.png" alt="a = \searrow"/> in layer i <img class="math" src="../../_images/math/6fe9b002b41d8ab55c33ef04d9177f6cca71c388.png" alt="q(i, j, \downarrow)"/> and <img class="math" src="../../_images/math/5f78bf672a909fc1c85932179a262c9b38a8ab55.png" alt="q(i, j, \searrow)"/></p></li>
+<li><p>(strategy improvement) For each coordinate (i, j) in layer i, take the expected future action as the value of <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="from-direct-to-iterative-algorithms">
+<h2>From direct to iterative algorithms<a class="headerlink" href="#from-direct-to-iterative-algorithms" title="永久链接至标题">¶</a></h2>
+<p>So far, we have followed very closely the idea of the “division of stages” in dynamic programming, i.e., dividing the problem into stages according to its temporal characteristics and solving it sequentially. Corresponding to the number triangle problem, i.e., calculate and update future expectations (or q-values) layer by layer from bottom to top, updating future expectations (or q-values) for this layer in each iteration. During this process, we are pretty sure that after N strategy evaluations and strategy refinements, the algorithm will stop and we can get accurate maximum numbers and optimal actions. We call this type of algorithm a “direct algorithm”, which is also a common type of algorithm we use in various algorithmic competitions.</p>
+<p>However, in real scenarios, the computation time of the algorithm is often limited, so we may need the algorithm to have good “asymptotic properties”, i.e., it is not required to output an exact theoretical optimal solution, but only to be able to output an approximate better solution, and the quality of the solution increases with the number of iterations. We tend to call such algorithms “iterative algorithms”. For the number triangle problem, we consider the following variant.</p>
+<div class="admonition-the-number-triangle-problem-variation-3 admonition">
+<p class="admonition-title">the number triangle problem (variation 3)</p>
+<p>The smart body starts at the top of the triangle and can choose to move down ( <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/>) or right ( <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/>) at a time. The environment “interferes” with the actions of intelligent bodies at arbitrary coordinates (i, j), and the exact probability of this interference is unknown. K trials are allowed in a number triangle environment (K may be small or large). Please design experimental schemes and processes to determine the action that the intelligent body should select at each coordinate <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> so that the expectation of the sum of the numbers on the path that the intelligent body travels is as large as possible.</p>
+</div>
+<p>To address this issue, we might want to look at what our current algorithms do at a higher level. In fact, the main body of the algorithm is to alternate between “strategy evaluation” and “strategy improvement” steps. Among them.</p>
+<ul class="simple">
+<li><p>“Strategy evaluation” evaluates the future expectations of the intelligent body under this set of actions based on the action of the intelligent body at coordinates (i, j) <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> and the intelligent body’s choice of action a at coordinates (i, j) <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/>.</p></li>
+<li><p>“Strategy improvement” updates the action <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> by selecting the action with the greatest future expectation based on the <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> calculated in the previous step.</p></li>
+</ul>
+<p>In fact, this alternating step of “strategy assessment” and “strategy improvement” does not necessarily need to be done in a bottom-up hierarchical order. By ensuring that the algorithm can be “iterated” for strategy evaluation and strategy refinement based on a limited number of experimental results, we can make the results of the algorithm output “incrementally” better. So, we consider the following algorithmic process</p>
+<ul>
+<li><p>Initialize <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> and <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/></p></li>
+<li><p>repeat</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Fix the value of the intelligent body’s action <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> for k trials (with some random perturbations to allow “exploring” more action combinations, as in the previous section).</p></li>
+<li><p>(Strategy evaluation) Adjust the value of the intelligent body’s future expectations of <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> based on the results of the current k trials so that the value of <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> is “as true” as possible to the intelligent body’s future expectations under the current action <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> (the previous section is an exact adjustment <a class="footnote-reference brackets" href="#f3" id="id4">4</a> to equal future expectations).</p></li>
+<li><p>(Strategy improvement) Select the action with a larger future expectation as the take of <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> based on the current value of <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/>.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>until the q value of all coordinates no longer changes or the total number of trials is greater than K</p></li>
+</ul>
+<p>To understand this algorithm, we may consider an extreme case: assuming that the number of trials per iteration, k, is large enough, then the strategy evaluation step can adjust <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> to exactly equal the future expectation of the intelligent body under the current action <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/>, which in fact becomes a “rough version” of the algorithm in the previous section (the algorithm in the previous section updates only one layer of <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> to the exact future expectation, here all <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> values are updated each time. (There is no difference in the results, just a few more redundant calculations).</p>
+<p>The algorithm above is only a rough introduction to the framework. In order to implement the algorithm concretely, we next need to discuss two questions: first, how to update the future expectations of the intelligent body based on the results of k trials <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> and second, how to include a random exploration mechanism during the trial.</p>
+<div class="section" id="progressive-update-of-the-q-value">
+<h3>Progressive update of the Q value<a class="headerlink" href="#progressive-update-of-the-q-value" title="永久链接至标题">¶</a></h3>
+<p>When the number of trials per iteration, k, is large enough and covers a wide enough range of situations that there is enough data for each combination of coordinates (i, j) and action a, the update of the q value is simple: recalculate a new <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> for each (i, j, a) based on the results of the trials and replace the original value.</p>
+<p>But now, we have fewer k-test results in total (say 5 or 10). Although the k experiments are based on the latest current action scheme <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/>, the statistical effect is too small and the original q value is not so unreliable (after all, each iteration does not necessarily change <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> too much). Thus, as opposed to calculating a new q-value directly from the experiment <img class="math" src="../../_images/math/bebdf41cd6fe39e57f830edd8ededd52e9362091.png" alt="\bar{q}(i, j, a) = \frac{q_1 + \cdots + q_n}{n}"/> and overriding the original value (which we have always done in the previous direct algorithm <a class="footnote-reference brackets" href="#f4" id="id5">5</a>).</p>
+<div class="math" id="equation-eq5">
+<p><span class="eqno">(5)<a class="headerlink" href="#equation-eq5" title="公式的永久链接">¶</a></span><img src="../../_images/math/1a6408962ff5b3eb785156f4b2efbea85b8b88ab.png" alt="q_{\text{new}}(i, j, a) \leftarrow \underbrace{\bar{q}(i, j, a)}_{\text{target}}"/></p>
+</div><p>A smarter way to do this is to update the q value “gradually”. That is, we “tug” the old q-value slightly toward the results of the current experiment <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> as the new q-value, thus making the new q-value more similar to the results of the current experiment <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/>, that is</p>
+<div class="math" id="equation-eq6">
+<p><span class="eqno">(6)<a class="headerlink" href="#equation-eq6" title="公式的永久链接">¶</a></span><img src="../../_images/math/6713d37848de029074a2e3081fb72a68131e6d02.png" alt="q_{\text{new}}(i, j, a) \leftarrow q_{\text{old}}(i, j, a) + \alpha(\underbrace{\bar{q}(i, j, a)}_{\text{target}} - q_{\text{old}}(i, j, a))"/></p>
+</div><p>The parameter <img class="math" src="../../_images/math/3929a173b494d403fb588bf98153e3a45dd662fd.png" alt="\alpha"/> controls the “strength” of the traction (at a traction strength of 1, the <a class="reference internal" href="../../zh_hant/appendix/rl.html#equation-eq5">(5)</a> formula is degraded to directly override the q value using the test results, but we generally set a smaller number, such as 0.1 or 0.01). In this way, we have both added the information brought by the new experiment and retained some of the old knowledge. In fact, many iterative algorithms have similar characteristics.</p>
+<p>However, the value of <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> is only available when a trial is fully done. That is, it is only by going to the bottom of the number triangle that the sum of the numbers from each coordinate on the path to the bottom of the path is known (thus updating the q-value of all coordinates on the path). This creates inefficiencies in some scenarios, so we tend to use another method when actually updating, making it possible to update the Q value every time we take a step. Specifically, suppose that in one experiment we jump to the coordinates (i’,j’) of a number triangle by performing the action <img class="math" src="../../_images/math/7f91f9da34a27af1b7fec19a4d352b4d0ac7bdf9.png" alt="a = \pi(i, j) + \epsilon"/> ( <img class="math" src="../../_images/math/3bbacb4d6fc6b93009fe733c5fe22be0c81b22c5.png" alt="+ \epsilon"/> stands for adding some exploratory perturbations) and then perform the action <img class="math" src="../../_images/math/3244ef22300f601a72a9f7a861e755d913877aea.png" alt="a' = \pi(i', j') + \epsilon"/> at the coordinates (i’,j’). We can then approximate the replacement of the previous <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> with <img class="math" src="../../_images/math/8513661163d739885dd4b8f73d3567e23ad09b0d.png" alt="r(i', j') + q(i', j', a')"/>, as follows.</p>
+<div class="math" id="equation-eq7">
+<p><span class="eqno">(7)<a class="headerlink" href="#equation-eq7" title="公式的永久链接">¶</a></span><img src="../../_images/math/eda8f480ab4716adfec039807eb8db4756726714.png" alt="q_{\text{new}}(i, j, a) \leftarrow q_{\text{old}}(i, j, a) + \alpha\big(\underbrace{r(i', j') + q(i', j', a')}_{\text{target}} - q_{\text{old}}(i, j, a)\big)"/></p>
+</div><p>We can even dispense with the <img class="math" src="../../_images/math/918247d85d6d7ed629a414cb6bc92ddaaf59995d.png" alt="a'"/> in the test results and use the larger of the q values corresponding to the two actions at the coordinates (i’, j’) <img class="math" src="../../_images/math/c2a42f4c5fdd132bb9e491f72bb751332c448310.png" alt="\max[q(i', j', \downarrow), q(i', j', \searrow)]"/> instead of <img class="math" src="../../_images/math/fdef2de7d360ebe8e12fe46f77ef8f15db51fc08.png" alt="q(i', j', a')"/>, as follows.</p>
+<div class="math" id="equation-eq8">
+<p><span class="eqno">(8)<a class="headerlink" href="#equation-eq8" title="公式的永久链接">¶</a></span><img src="../../_images/math/baf7c525dd74dc28da7bca242c2645153e564685.png" alt="q_{\text{new}}(i, j, a) \leftarrow q_{\text{old}}(i, j, a) + \alpha\big(\underbrace{r(i', j') + \max[q(i', j', \downarrow), q(i', j', \searrow)]}_{\text{target}} - q_{\text{old}}(i, j, a)\big)"/></p>
+</div></div>
+<div class="section" id="exploration-strategy">
+<h3>Exploration Strategy<a class="headerlink" href="#exploration-strategy" title="永久链接至标题">¶</a></h3>
+<p>For the experiment-based algorithms we described earlier, since the probability parameters in the environment are unknown (similar to thinking of the environment as a black box), we generally need to include some random “exploration strategies” during the experiment to ensure that the results of the experiment will cover a larger number of situations. Otherwise, since the intelligent body has a fixed action at each coordinate <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/>, the results of the experiment would be greatly limited, leading to a fall into a local optimum. Consider the most extreme case, if we go back to the original number triangle problem at the beginning of this section (environment determined, known and independent of probability), when the action <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> is also fixed, the result is completely fixed and unique no matter how many trials are performed, leaving us no room for improvement or optimization.</p>
+<p>There are many strategies to explore, and here we introduce a simpler one: set a probability ratio <img class="math" src="../../_images/math/f72a1fc0c79aacac313889d0ec9fdb7f1d3a3092.png" alt="\epsilon"/>, generate random actions ( <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> or <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/>) with the probability of <img class="math" src="../../_images/math/c927ed3b3be182505f1e8418a2a6d4dd00574dae.png" alt="1 - \epsilon"/>, and select actions <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> with the probability of <img class="math" src="../../_images/math/f72a1fc0c79aacac313889d0ec9fdb7f1d3a3092.png" alt="\epsilon"/>. We can see that when <img class="math" src="../../_images/math/c45afb49be64d2a2c04324da334a5ae24af0cc1d.png" alt="\epsilon = 1"/>, it is equivalent to a completely random selection of actions. When <img class="math" src="../../_images/math/d5324c17ef8b189148f2a7af52f5119fb598ba58.png" alt="\epsilon = 0"/>, it is equivalent to selecting the action <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> directly without adding any random perturbations. Generally, at the beginning of the iteration <img class="math" src="../../_images/math/f72a1fc0c79aacac313889d0ec9fdb7f1d3a3092.png" alt="\epsilon"/> takes a larger value to expand the scope of exploration. As the number of iterations increases, the value of <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> becomes progressively better and the value of <img class="math" src="../../_images/math/f72a1fc0c79aacac313889d0ec9fdb7f1d3a3092.png" alt="\epsilon"/> decreases.</p>
+</div>
+</div>
+<div class="section" id="solving-problems-on-a-large-scale">
+<h2>Solving problems on a large scale<a class="headerlink" href="#solving-problems-on-a-large-scale" title="永久链接至标题">¶</a></h2>
+<p>There are two eternal metrics for algorithmic design: time and space. By transforming the direct algorithm into an iterative algorithm, we have tentatively solved the problem of time consumption of the algorithm. So our next challenge is space consumption, which is mainly reflected in the storage of Q values. In the previous description, we iteratively update the value of <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> over and over again. This defaults to the fact that we have created a <img class="math" src="../../_images/math/e0df28ad4b35bf890699346d22ab516ffb64fc18.png" alt="N \times N \times 2"/> 3D array in memory that can be recorded and continuously updated with q values. However, what do we do if N is large and the computer has limited memory space?</p>
+<p>Let’s consider that when we implement <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> in concrete, we need it to be able to do two things.</p>
+<ul class="simple">
+<li><p>q-value mapping: Given coordinates (i, j) and action a ( <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> or <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/>), a value of <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> can be output.</p></li>
+<li><p>Q-value update: Given coordinates (i, j), action a and target, the q-value mapping can be updated so that the updated output <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> is closer to the target.</p></li>
+</ul>
+<p>In fact, we have quite a few approximations that allow us to implement a <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> that satisfies both of these functions without using much memory. One of the most popular approaches is presented here, which uses a deep neural network approximation to implement <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> :</p>
+<ul class="simple">
+<li><p>Q-value mapping: the coordinates (i, j) are entered into the depth neural network and the network outputs the q-values of all actions under the coordinates (i, j) (i.e. <img class="math" src="../../_images/math/6fe9b002b41d8ab55c33ef04d9177f6cca71c388.png" alt="q(i, j, \downarrow)"/> and <img class="math" src="../../_images/math/5f78bf672a909fc1c85932179a262c9b38a8ab55.png" alt="q(i, j, \searrow)"/>).</p></li>
+<li><p>Q-value update: given coordinates (i, j), action a and target value target, input coordinates (i, j) into the depth neural network and the network outputs the q-value of all actions under coordinates (i, j), take the q-value of action a as <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> and define the loss function <img class="math" src="../../_images/math/dee51293e42412e1211dcc05ddef0fec65445a26.png" alt="\text{loss} = (\text{target} - q(i, j, a))^2"/> and use an optimizer (e.g. gradient descent) to optimize this loss function in one step. The step length of the optimizer here is similar to that of the “traction parameter” <img class="math" src="../../_images/math/3929a173b494d403fb588bf98153e3a45dd662fd.png" alt="\alpha"/> in the text above.</p></li>
+</ul>
+<div class="figure align-center" id="id11">
+<a class="reference internal image-reference" href="../../_images/q_network.png"><img alt="../../_images/q_network.png" src="../../_images/q_network.png" style="width: 75%;" /></a>
+<p class="caption"><span class="caption-text">For the number triangle problem, the left figure shows an implementation using a three-dimensional array <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> and the right figure shows an approximate implementation using a depth neural network <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/></span><a class="headerlink" href="#id11" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="sum-up">
+<h2>sum up<a class="headerlink" href="#sum-up" title="永久链接至标题">¶</a></h2>
+<p>Although we have not mentioned the term “reinforcement learning” in the previous article, we have already covered many of the basic concepts and algorithms of reinforcement learning in our discussion of the various variations of the number triangle problem, to list them here.</p>
+<ul class="simple">
+<li><p>In the second section, we discuss Model-based Reinforcement Learning, which includes both Value Iteration and Policy Iteration approaches.</p></li>
+<li><p>In Section 3, we discuss Model-free Reinforcement Learning (MFL).</p></li>
+<li><p>In Section 4, we discussed the Monte-Carlo Method and the Temporal-Difference Method, as well as the two learning methods SARSA and Q-learning.</p></li>
+<li><p>In Section 5, we discuss Deep Reinforcement Learning (DRL) using Q-Network (Q-Network) approximations to implement Q functions.</p></li>
+</ul>
+<p>Some of these terms correspond to the following.</p>
+<ul class="simple">
+<li><p>The coordinates (i, j) of a numeric triangle are called states (states) and are represented by <img class="math" src="../../_images/math/bafbf63de17508c8c25cd882e0178342c193ae0c.png" alt="s"/>. The set of states is represented by <img class="math" src="../../_images/math/dc4671774f97206720985aae0780005668995cb2.png" alt="S"/>.</p></li>
+<li><p>The two actions of the intelligent body, :math:downarrow’ and :math:searrow’, are called actions and are represented by :math:a’. The set of actions is represented by <img class="math" src="../../_images/math/b86d9659948ffa756133d580cfc95f923705c2b5.png" alt="A"/>.</p></li>
+<li><p>The number triangle at each coordinate of <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> is called Reward and is expressed as <img class="math" src="../../_images/math/69410eb98471b61f2cd0d24a6dd7cbf32f3999a0.png" alt="r(s)"/> (related to state only) or <img class="math" src="../../_images/math/d6301483a10c86fdfe51d0f65611d4405f09a70d.png" alt="r(s, a)"/> (related to both state and action). The set of awards is represented by <img class="math" src="../../_images/math/cd3b7803bb32c208c4824757495644927ed2bae1.png" alt="R"/>.</p></li>
+<li><p>The probability parameters <img class="math" src="../../_images/math/b970024d9432fd5e37b28335f1d285e4c9afd291.png" alt="p_1"/> and <img class="math" src="../../_images/math/c1584505754919371fad45d96afec2cdd64ff03f.png" alt="p_2"/> in the numerical triangle environment are called State Transition Probabilities and are represented by a three-parameter function <img class="math" src="../../_images/math/94bbede17987b33649cd945a1e6378ef4e18cd1b.png" alt="p(s, a, s')"/> that represents the probability of performing action a in state s to reach state s’.</p></li>
+<li><p>The quintiles of state, action, reward, state transfer probability, plus a time discount factor :math:gamma in [0, 1]` constitute a Markov Decision Process (MDP). In the number triangle problem <img class="math" src="../../_images/math/fafaeec5c7be8cf44ef1bf79d43040ce68f1f6cd.png" alt="\gamma = 1"/>.</p></li>
+<li><p>The reinforcement learning known to MDP in the second section is called model-based reinforcement learning, and the reinforcement learning known to MDP with unknown probability of state transfer in the third section is called model-free reinforcement learning.</p></li>
+<li><p>The action that the intelligent body selects at each coordinate (i, j) <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> is called a policy and is represented by :math:pi(s)`. The optimal strategy of the intelligent body is represented by <img class="math" src="../../_images/math/e0f33310741d626a97a2b4e3eccffa4a4bdaf359.png" alt="\pi^*(s)"/>.</p></li>
+<li><p>In the second section, when the strategy <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> is certain, the intelligent body at the coordinates (i, j) “expects the sum of the numbers that will be obtained now and in the future” <img class="math" src="../../_images/math/8706bd19cdb4eb441ec988af7b7de23c8ae50abb.png" alt="f(i, j)"/> is called the State-Value Function and is denoted by <img class="math" src="../../_images/math/b2e6496d499b73820585b8806e33c026cefdb2f0.png" alt="V^\pi(s)"/>. The intelligent body at coordinates (i, j) is “the desired maximum value of the sum of the numbers to be obtained in the future” <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> called the state-value function under the optimal strategy and expressed as <img class="math" src="../../_images/math/b85a2f6015b8b31fee4362c6c3b62c5c94e2f4e7.png" alt="V^*(s)"/>.</p></li>
+<li><p>In Section 3, when the strategy <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> is certain, the intelligent body selects action a at coordinates (i, j) with “the expectation of the sum of the numbers that will be obtained now and in the future” <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> is called the Action-Value Function and is denoted by <img class="math" src="../../_images/math/6ac6aedc7dbfb0b0a202ca18afaa92601f720663.png" alt="Q^\pi(s, a)"/>. The state-value function under the optimal strategy is represented by <img class="math" src="../../_images/math/fa7bb286bf0d0d63ee1bc6c1378764e1eee2f314.png" alt="Q^*(s, a)"/>.</p></li>
+<li><p>In sections III and IV, the method of estimating the mean value of <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> directly using the test results is called the Monte Carlo method. The method in <a class="reference internal" href="../../zh_hant/appendix/rl.html#equation-eq7">(7)</a> that uses <img class="math" src="../../_images/math/8513661163d739885dd4b8f73d3567e23ad09b0d.png" alt="r(i', j') + q(i', j', a')"/> to approximate the replacement of <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> is called the time difference method, and the method of updating the q value in <a class="reference internal" href="../../zh_hant/appendix/rl.html#equation-eq7">(7)</a> is itself called the SARSA method. <a class="reference internal" href="../../zh_hant/appendix/rl.html#equation-eq8">(8)</a> Call it the Q-learning method.</p></li>
+</ul>
+<div class="admonition-recommended-reading admonition">
+<p class="admonition-title">recommended reading</p>
+<p>If readers wish to further their understanding of intensive learning, they can refer to</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://wnzhang.net/tutorials/marl2018/index.html">SJTU Multi-Agent Reinforcement Learning Tutorial</a> (Concise introductory slides for reinforcement learning)</p></li>
+<li><p><a class="reference external" href="https://zhuanlan.zhihu.com/sharerl">Intensive Learning Lectureship</a> (Extensive Chinese language intensive learning column)</p></li>
+<li><p>Guo Xian, Fang Y.C.. In-depth intensive learning: a primer on principles. Electronic Industry Press, 2018. (A more accessible introduction to intensive learning in Chinese)</p></li>
+<li><p>Richard S. Sutton, Andrew G. Barto. Reinforcement Learning (2nd ed.). Electronic Industries Press, 2019. (A classic reinforcement learning textbook for more systems theory)</p></li>
+</ul>
+</div>
+<dl class="footnote brackets">
+<dt class="label" id="f0"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>So it is sometimes called “memoryized search”, or memoryized search is a concrete implementation of dynamic programming.</p>
+</dd>
+<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>expectation is the sum of the probabilities of each possible outcome in an experiment multiplied by its outcome, reflecting the magnitude of the average taken value of the random variable. For example, if you have <img class="math" src="../../_images/math/f162376f26a078bcf0cc142e27cb1eab136069c1.png" alt="\frac{1}{4}"/> probability of earning $100 in an investment and <img class="math" src="../../_images/math/115f182e3fd76aa746f242950dda40488863238c.png" alt="\frac{3}{4}"/> probability of earning $200, your expectation of earning the amount in this investment is <img class="math" src="../../_images/math/02a70e69ff5696b81cb0e1e4c72af443f7bc2ac1.png" alt="\frac{1}{4} \times 100 + \frac{3}{4} \times 200 = 175"/>. That is, if you repeat this investment many times, the average of the returns you get tends to be $175.</p>
+</dd>
+<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p>for reference, in the previous section, <img class="math" src="../../_images/math/0a7479524b81ed2fb24ab23d9c8ee328761a1d86.png" alt="q(i, j, a) = \begin{cases}\frac{3}{4} f(i+1, j) + \frac{1}{4} f(i+1, j+1), a = \downarrow \frac{1}{4} f(i+1, j) + \frac{3}{4} f(i+1, j+1), a = \searrow\end{cases}"/></p>
+</dd>
+<dt class="label" id="f3"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
+<dd><p>The “exact” here and below is relative to the finite number of iterative algorithms. As long as the method is based on experimentation, the expectations obtained are estimates.</p>
+</dd>
+<dt class="label" id="f4"><span class="brackets"><a class="fn-backref" href="#id5">5</a></span></dt>
+<dd><p>Here, however, if we add a randomly perturbed “exploration strategy” to the first iteration of the experiment, this calculation is not quite right. Because the results of the k trials were influenced by the exploration strategy, resulting in the fact that what we evaluated was actually the action after random perturbation <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/>, making the <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> biased by our statistics based on the trial results. To solve this problem, we have two approaches. The first approach is to add a randomly perturbed “exploration strategy” to the process of selecting the maximum expectation for strategy improvement in the third step, while the second requires a method called “Importance Sampling”. Since most of the q-value update methods we actually use are the time-difference methods introduced later, the introduction of importance sampling is omitted here, and readers who need it can refer to the literature on intensive learning listed at the end of the paper.</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="docker.html" class="btn btn-neutral float-right" title="Using Docker to deploy TensorFlow environment" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="quantum.html" class="btn btn-neutral float-left" title="TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

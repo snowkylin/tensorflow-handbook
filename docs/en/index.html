@@ -1,0 +1,612 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>A Concise Handbook of TensorFlow 2 &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/js/tw_cn.js"></script>
+        <script type="text/javascript" src="../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../_static/js/custom_20200506.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 简单粗暴 TensorFlow 2
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/rl.html">强化学习简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教學活動</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基礎</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/basic/installation.html">TensorFlow安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/basic/models.html">TensorFlow 模型建立與訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/basic/tools.html">TensorFlow常用模塊</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大規模訓練與加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/appendix/distributed.html">TensorFlow分布式訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/appendix/tpu.html">使用TPU訓練TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">擴展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/appendix/tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/appendix/tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/appendix/quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/appendix/rl.html">強化學習簡介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/appendix/docker.html">使用Docker部署TensorFlow環境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/appendix/cloud.html">在雲端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/appendix/jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/appendix/recommended_books.html">參考資料與推薦閱讀</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hant/appendix/terms.html">術語中英對照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Preface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">TensorFlow Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basic/installation.html">Installation and Environment Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic/basic.html">TensorFlow Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic/models.html">Model Construction and Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic/tools.html">Common Modules in TensorFlow</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment/lite.html">TensorFlow Lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment/javascript.html">TensorFlow in JavaScript</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Large-scale Training</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/distributed.html">Distributed Training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/rl.html">Introduction to Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/docker.html">Using Docker to deploy TensorFlow environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/cloud.html">Using TensorFlow on cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/recommended_books.html">References and Recommendations for Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">简单粗暴 TensorFlow 2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>A Concise Handbook of TensorFlow 2</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/en/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="a-concise-handbook-of-tensorflow-2">
+<h1>A Concise Handbook of TensorFlow 2<a class="headerlink" href="#a-concise-handbook-of-tensorflow-2" title="永久链接至标题">¶</a></h1>
+<table style="width: 100%; margin: 20px 20px">
+    <tbody witth=100%>
+    <tr>
+        <td width=33% style="text-align: center">
+            <b><a href="/zh_hans">简体中文版</a></b>
+        </td>
+        <td width=33% style="text-align: center">
+            <b><a href="/zh_hant">繁體中文版</a></b>
+        </td>
+        <td width=33% style="text-align: center">
+            <b><a href="/en">English Version<br />(in progress)</a></b>
+        </td>
+    </tr>
+    </tbody>
+</table><p>This is a concise handbook of TensorFlow 2.0 based on Keras and Eager Execution mode, aiming to help developers with some basic machine learning and Python knowledge to get started with TensorFlow 2.0 quickly.</p>
+<p>The code of this handbook is based on TensorFlow 2.0 stable version and beta1 version. All sample code in this handbook can be viewed <a class="reference external" href="https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/">here</a> .</p>
+<p>The English version of this handbook is still in progress (section title with a ✔️ means that the translation of this section is finished). Please refer to <a class="reference external" href="https://v1.tf.wiki">https://v1.tf.wiki</a> for the eariler version. This handbook is a project of <a class="reference external" href="https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/">Google Summer of Code 2019</a> .</p>
+<p>GitHub： <a class="reference external" href="https://github.com/snowkylin/tensorflow-handbook">https://github.com/snowkylin/tensorflow-handbook</a></p>
+<p>Q&amp;A: <a class="reference external" href="https://discuss.tf.wiki">https://discuss.tf.wiki</a></p>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Preface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="preface.html">Preface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preface.html#target-readers">Target readers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preface.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preface.html#acknowledgement">Acknowledgement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">TensorFlow Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#for-students-and-researchers-to-build-and-train-models">For students and researchers: To build and train models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#for-developers-and-engineers-to-call-and-deploy-models">For developers and engineers: To call and deploy models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#what-can-tensorflow-do-for-us">What can TensorFlow do for us?</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Basic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basic/installation.html">Installation and Environment Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basic/installation.html#general-steps-for-installation">General steps for installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic/installation.html#guide-for-tensorflow-gpuversion-installation">Guide for TensorFlow GPUversion installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic/installation.html#preperations-for-gpu-hardwares">Preperations for GPU hardwares</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/installation.html#installation-of-nvidia-drivers">Installation of NVIDIA drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/installation.html#installation-of-cuda-toolkit-and-cudnn">Installation of CUDA Toolkit and cuDNN</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basic/installation.html#your-first-program">Your first program</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic/installation.html#ide-configuration">IDE configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic/installation.html#the-hardware-configuration-for-tensorflow">The hardware configuration for TensorFlow *</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="basic/basic.html">TensorFlow Basic</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basic/basic.html#tensorflow-1-1">TensorFlow 1+1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic/basic.html#automatic-differentiation-mechanism">Automatic differentiation mechanism</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic/basic.html#a-basic-example-linear-regression">A basic example: Linear regression</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic/basic.html#linear-regression-under-numpy">Linear regression under numPy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/basic.html#linear-regression-under-tensorflow">Linear regression under TensorFlow</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="basic/models.html">Model Construction and Training</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basic/models.html#models-and-layers">Models and layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic/models.html#a-basic-example-multilayer-perceptron-mlp">A basic example: Multilayer Perceptron (MLP)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic/models.html#data-collection-and-preprocessing-tf-keras-datasets">Data collection and preprocessing: <code class="docutils literal notranslate"><span class="pre">tf.keras.datasets</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/models.html#model-construction-tf-keras-model-and-tf-keras-layers">Model construction: <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> and <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/models.html#model-training-tf-keras-losses-and-tf-keras-optimizer">Model training: <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> and <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/models.html#model-evaluation-tf-keras-metrics">Model evaluation: <code class="docutils literal notranslate"><span class="pre">tf.keras.metrics</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basic/models.html#convolutional-neural-network-cnn">Convolutional neural network (CNN)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic/models.html#implementing-cnn-with-keras">Implementing CNN with Keras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/models.html#using-predefined-classic-cnn-structure-in-keras">Using predefined classic CNN structure in Keras</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basic/models.html#recurrent-neural-network-rnn">Recurrent neural network (RNN)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic/models.html#deep-reinforcement-learning-drl">Deep reinforcement learning (DRL)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic/models.html#keras-pipeline">Keras Pipeline *</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic/models.html#using-keras-sequential-functional-api-mode-to-construct-models">Using Keras Sequential/Functional API mode to construct models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/models.html#using-compile-fit-and-evaluate-method-in-keras-model-to-train-and-evaluate-models">Using <code class="docutils literal notranslate"><span class="pre">compile</span></code>, <code class="docutils literal notranslate"><span class="pre">fit</span></code> and <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> method in Keras Model to train and evaluate models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basic/models.html#custom-layers-losses-and-evaluations">Custom layers, losses and evaluations*</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic/models.html#custom-layers">Custom layers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/models.html#custom-loss-functions-and-evaluation-criteria">Custom loss functions and evaluation criteria</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="basic/tools.html">Common Modules in TensorFlow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basic/tools.html#variables-saving-and-restore-tf-train-checkpoint">Variables saving and restore: <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic/tools.html#visualization-of-training-process-tensorboard">Visualization of training process: TensorBoard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic/tools.html#dataset-construction-and-preprocessing-tf-data">Dataset construction and preprocessing: <code class="docutils literal notranslate"><span class="pre">tf.data</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic/tools.html#dataset-construction">Dataset construction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/tools.html#dataset-preprocessing">Dataset preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/tools.html#fetching-element-from-datasets">Fetching element from datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/tools.html#example-cats-vs-dogs-image-classification">Example: cats_vs_dogs image classification</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basic/tools.html#graph-execution-mode-tf-function">Graph Execution mode: <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> *</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic/tools.html#basic-usage-of-tf-function">Basic usage of <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/tools.html#internal-mechanism-of-tf-function">Internal mechanism of <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/tools.html#autograph-converting-python-control-flows-into-tensorflow-graphs">Autograph: Converting Python control flows into TensorFlow graphs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/tools.html#using-traditional-tf-session">Using traditional <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basic/tools.html#tensorflow-dynamic-array-tf-tensorarray">TensorFlow Dynamic Array: <code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic/tools.html#using-and-dispatching-gpus-tf-config">Using and dispatching GPUs: <code class="docutils literal notranslate"><span class="pre">tf.config</span></code> *</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic/tools.html#indicating-gpus-for-current-program">Indicating GPUs for current program</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/tools.html#setting-gpu-memory-usage-policy">Setting GPU memory usage policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic/tools.html#simulating-a-multi-gpu-environment-with-a-single-gpu">Simulating a multi-GPU environment with a single GPU</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="deployment/export.html">TensorFlow Model Saving</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deployment/export.html#using-savedmodel-to-export-a-model">Using SavedModel to export a model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment/export.html#keras-sequential-save-jinpeng">Keras Sequential save (Jinpeng)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="deployment/serving.html">TensorFlow Serving</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deployment/serving.html#installation-of-tensorflow-serving">Installation of TensorFlow Serving</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment/serving.html#tensorflow-serving-models-deployment">TensorFlow Serving models deployment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deployment/serving.html#keras-sequential-mode-models-deployment">Keras Sequential mode models deployment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deployment/serving.html#custom-keras-models-deployment">Custom Keras models deployment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deployment/serving.html#calling-models-deployed-by-tensorflow-serving-on-client">Calling models deployed by TensorFlow Serving on client</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deployment/serving.html#an-example-of-python-client">An example of Python client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deployment/serving.html#an-example-of-node-js-client">An example of Node.js client</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="deployment/lite.html">TensorFlow Lite</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deployment/lite.html#converting-models">Converting models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment/lite.html#converting-models-with-quantization">Converting models with Quantization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="deployment/lite.html#deployment-on-android">Deployment on Android</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="deployment/javascript.html">TensorFlow in JavaScript</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="deployment/javascript.html#introduction-to-tensorflow-js">Introduction to Tensorflow.js</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deployment/javascript.html#advantages-of-using-tensorflow-js-on-browser">Advantages of using Tensorflow.js on browser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deployment/javascript.html#tensorflow-js-performance-comparison">TensorFlow.js performance comparison</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deployment/javascript.html#tensorflow-js-environment-configuration">TensorFlow.js environment configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deployment/javascript.html#using-tensorflow-js-on-browser">Using TensorFlow.js on browser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deployment/javascript.html#using-tensorflow-js-in-node-js">Using TensorFlow.js in Node.js</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deployment/javascript.html#using-tensorflow-js-in-wechat-mini-programs">Using TensorFlow.js in WeChat Mini Programs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deployment/javascript.html#tensorflow-js-model-deployment">TensorFlow.js model deployment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="deployment/javascript.html#loading-python-models-by-tensorflow-js">Loading Python models by TensorFlow.js</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deployment/javascript.html#using-tensorflow-js-model-library">Using TensorFlow.js model library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="deployment/javascript.html#tensorflow-js-model-training">TensorFlow.js model training</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Large-scale Training</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/distributed.html">Distributed Training with TensorFlow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix/distributed.html#training-on-a-single-machine-with-multiple-gpus-mirroredstrategy">Training on a single machine with multiple GPUs: <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/distributed.html#training-on-multiple-machines-multiworkermirroredstrategy">Training on multiple machines: <code class="docutils literal notranslate"><span class="pre">MultiWorkerMirroredStrategy</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/tpu.html">Training TensorFlow models with TPU</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix/tpu.html#introduction-to-tpu">Introduction to TPU</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix/tpu.html#what-is-tpu">What is TPU?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/tpu.html#why-using-tpu">Why using TPU?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/tpu.html#tpu-performance">TPU performance</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/tpu.html#tpu-environment-configuration">TPU environment configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix/tpu.html#free-tpu-google-colab">Free TPU：Google Colab</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/tpu.html#cloud-tpu">Cloud TPU</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/tpu.html#basic-usage-of-tpu">Basic usage of TPU</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/swift.html">Swift for TensorFlow (S4TF)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix/swift.html#introduction-to-s4tf">Introduction to S4TF</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix/swift.html#why-using-swift-for-tensorflow-development">Why using Swift for TensorFlow Development</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/swift.html#s4tf-environment-configuration">S4TF environment configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix/swift.html#express-experience-of-swift-for-tensorflow-in-colaboratory">Express experience of Swift for TensorFlow in Colaboratory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/swift.html#express-experience-of-swift-for-tensorflow-in-docker">Express experience of Swift for TensorFlow in Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/swift.html#basic-usage-of-s4tf">Basic usage of S4TF</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix/swift.html#using-standard-tensorflow-api-in-swift">Using standard TensorFlow API in Swift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/swift.html#loading-python-libraries-directly-in-swift">Loading Python libraries directly in Swift</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/swift.html#native-support-of-automatic-differentiation">Native support of automatic differentiation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/swift.html#mnist-digit-catagorization">MNIST digit catagorization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix/quantum.html#basic-concepts-of-quantum-computing">Basic concepts of quantum computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix/quantum.html#quantum-bit">quantum bit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/quantum.html#quantum-logic-gate">quantum logic gate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/quantum.html#quantum-circuit">Quantum Circuit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/quantum.html#example-create-a-simple-circuit-line-using-cirq">Example: Create a simple circuit line using Cirq</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/quantum.html#hybrid-quantum-classic-machine-learning">Hybrid Quantum - Classic Machine Learning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix/quantum.html#quantum-data-sets-and-quantum-gates-with-parameters">Quantum data sets and quantum gates with parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/quantum.html#parametric-quantum-lines-pqc">Parametric Quantum Lines (PQC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/quantum.html#embedding-parametric-quantum-circuits-into-machine-learning-models">Embedding parametric quantum circuits into machine learning models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/quantum.html#example-biclassification-of-quantum-data-sets">Example: biclassification of quantum data sets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/rl.html">Introduction to Reinforcement Learning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix/rl.html#let-s-start-with-dynamic-programming">Let’s start with dynamic programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/rl.html#incorporating-dynamic-programming-for-randomness-and-probability">Incorporating dynamic programming for randomness and probability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/rl.html#from-direct-to-iterative-algorithms">From direct to iterative algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix/rl.html#progressive-update-of-the-q-value">Progressive update of the Q value</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/rl.html#exploration-strategy">Exploration Strategy</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/rl.html#solving-problems-on-a-large-scale">Solving problems on a large scale</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/rl.html#sum-up">sum up</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/docker.html">Using Docker to deploy TensorFlow environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/cloud.html">Using TensorFlow on cloud</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix/cloud.html#using-tensorflow-in-colab">Using TensorFlow in Colab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/cloud.html#using-tensorflow-on-google-cloud-platform-gcp">Using TensorFlow on Google Cloud Platform (GCP)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix/cloud.html#instantiating-on-compute-engine-with-gpu-and-deploying-tensorflow">Instantiating on Compute Engine with GPU and deploying TensorFlow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix/cloud.html#using-notebook-in-ai-platform-to-establish-online-jupyterlab-environment-with-gpu">Using Notebook in AI Platform to establish online JupyterLab environment with GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix/cloud.html#running-tensorflow-on-aliyun-instance-with-gpu">Running TensorFlow on Aliyun instance with GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/recommended_books.html">References and Recommendations for Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
+</ul>
+</div>
+<div class="section" id="indices-and-tables">
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../genindex.html"><span class="std std-ref">索引</span></a></p></li>
+<li><p><a class="reference internal" href="../py-modindex.html"><span class="std std-ref">模块索引</span></a></p></li>
+<li><p><a class="reference internal" href="../search.html"><span class="std std-ref">搜索页面</span></a></p></li>
+</ul>
+<img src="https://s05.flagcounter.com/count2/Hyjs/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_16/viewers_0/labels_1/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

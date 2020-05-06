@@ -1,0 +1,713 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tensorflow JavaScript 闲聊对话模型 &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
+        <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200506.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴 TensorFlow 2
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/rl.html">强化学习简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教學活動</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基礎</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/installation.html">TensorFlow安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/models.html">TensorFlow 模型建立與訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/tools.html">TensorFlow常用模塊</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大規模訓練與加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/distributed.html">TensorFlow分布式訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/tpu.html">使用TPU訓練TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">擴展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/rl.html">強化學習簡介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/docker.html">使用Docker部署TensorFlow環境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/cloud.html">在雲端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/recommended_books.html">參考資料與推薦閱讀</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/terms.html">術語中英對照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Preface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/introduction.html">TensorFlow Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/installation.html">Installation and Environment Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/basic.html">TensorFlow Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/models.html">Model Construction and Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/tools.html">Common Modules in TensorFlow</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/lite.html">TensorFlow Lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/javascript.html">TensorFlow in JavaScript</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Large-scale Training</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/distributed.html">Distributed Training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/rl.html">Introduction to Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/docker.html">Using Docker to deploy TensorFlow environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/cloud.html">Using TensorFlow on cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/recommended_books.html">References and Recommendations for Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴 TensorFlow 2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Tensorflow JavaScript 闲聊对话模型</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/zh_hans/application/seq2seq-javascript.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorflow-javascript">
+<h1>Tensorflow JavaScript 闲聊对话模型<a class="headerlink" href="#tensorflow-javascript" title="永久链接至标题">¶</a></h1>
+<p>本章我们将根据前述章节的 Python 版闲聊对话模型，实现一个基于 JavaScript 版的序列到序列模型（Sequence to Sequence, Seq2Seq）。它同样是基于 RNN 的 Encoder-Decoder 结构，具体基本介绍，请读者参考 Python 版闲聊对话模型的相关章节。</p>
+<p>这里的Encoder-Decoder结构，简单的来说就是算法包含两部分，一个负责对输入的信息进行Encoding，将输入转换为向量形式；然后由Decoder对这个向量进行解码，还原为输出序列。</p>
+<p>这个任务预测的是通过一个序列，来预测另外一个对应的序列。举例来说，常见的打招呼就是一个序列到序列的过程:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>输入：How are you ?
+输出：Fine, thank you .
+</pre></div>
+</div>
+<p>这个过程的输入序列有4个 token： <code class="docutils literal notranslate"><span class="pre">['how',</span> <span class="pre">'are',</span> <span class="pre">'you',</span> <span class="pre">'?']</span></code> ，输出序列有5个 token： <code class="docutils literal notranslate"><span class="pre">['fine',</span> <span class="pre">',',</span> <span class="pre">'thank',</span> <span class="pre">'you',</span> <span class="pre">'.']</span></code> 。我们希望建立这样的模型，输入长为 <code class="docutils literal notranslate"><span class="pre">maxLength</span></code> 的序列，输入张量形状为 <code class="docutils literal notranslate"><span class="pre">[null,</span> <span class="pre">max_length]</span></code> ，输出与这个序列对应的序列中 token 的概率分布，概率分布的维度为词汇表大小 <code class="docutils literal notranslate"><span class="pre">vocSize</span></code> ，输出张量形状为 <code class="docutils literal notranslate"><span class="pre">[null,</span> <span class="pre">maxLength,</span> <span class="pre">vocSize]</span></code> 。</p>
+<p>首先，我们下载预先准备好数据集，将其存为 <code class="docutils literal notranslate"><span class="pre">dataset.txt</span></code> 。数据集的格式为每行为一对序列，分别为输入序列和输出序列，之间用 <code class="docutils literal notranslate"><span class="pre">'\t'</span></code> 制表符隔开。序列中的每一个 token 之间，都通过 <code class="docutils literal notranslate"><span class="pre">'</span> <span class="pre">'</span></code> 空格符号进行分割。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ wget https://github.com/huan/python-concise-chitchat/releases/download/v0.0.1/dataset.txt.gz
+dataset.txt.gz 100% [======================&gt;] 986.60K   282KB/s    in 3.5s
+
+2019-03-15 22:59:00 (282 KB/s) - ‘dataset.txt.gz’ saved [1010276/1010276]
+
+$ gzip -d dataset.txt.gz
+
+$ ls -l dataset.txt
+l-rw-r--r--  1 zixia  wheel  3516695 Mar 14 13:15 dataset.txt
+
+$ head -3 dataset.txt
+did you change your hair ?  no .
+no .        you might wanna think about it
+you the new guy ?   so they tell me ...
+</pre></div>
+</div>
+<p>我们需要将它转换为 Tensorflow Dataset 格式：</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">tf</span> <span class="nx">from</span> <span class="s1">&#39;@tensorflow/tfjs&#39;</span>
+
+<span class="nx">type</span> <span class="nx">Seq2seqData</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">input</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
+  <span class="nx">output</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s1">&#39;dataset.txt&#39;</span><span class="p">,</span> <span class="p">{</span>
+    <span class="nx">hasHeader</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+    <span class="nx">columnNames</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="s1">&#39;output&#39;</span><span class="p">],</span>
+    <span class="nx">delimiter</span><span class="o">:</span> <span class="s1">&#39;\t&#39;</span><span class="p">,</span>
+<span class="p">})</span> <span class="nx">as</span> <span class="nx">any</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">Dataset</span><span class="o">&lt;</span><span class="nx">Seq2seqData</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>其次，我们还需要基于 <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> 中输入序列和输出序列中的文本数据，建立对应的词汇表 <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code> 来负责管理以下5项任务：</p>
+<ol class="arabic simple">
+<li><p>将所有单词和标点符号进行编码；</p></li>
+<li><p>记录词汇表大小；</p></li>
+<li><p>建立单词到编码数字，以及编码数字到单词的映射字典；</p></li>
+</ol>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">Vocabulary</span> <span class="p">{</span>
+  <span class="kr">private</span> <span class="nx">readonly</span> <span class="nx">tokenIndice</span><span class="o">:</span> <span class="nx">Map</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">,</span> <span class="nx">number</span><span class="o">&gt;</span>
+  <span class="kr">private</span> <span class="nx">readonly</span> <span class="nx">indiceToken</span><span class="o">:</span> <span class="nx">Map</span><span class="o">&lt;</span><span class="nx">number</span><span class="p">,</span> <span class="nx">string</span><span class="o">&gt;</span>
+
+  <span class="kr">public</span> <span class="nx">maxSeqLength</span><span class="o">:</span> <span class="nx">number</span>
+  <span class="kr">public</span> <span class="nx">size</span><span class="o">:</span> <span class="nx">number</span>
+
+  <span class="nx">constructor</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">tokenIndice</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">,</span> <span class="nx">number</span><span class="o">&gt;</span><span class="p">()</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">indiceToken</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="o">&lt;</span><span class="nx">number</span><span class="p">,</span> <span class="nx">string</span><span class="o">&gt;</span><span class="p">()</span>
+
+    <span class="k">this</span><span class="p">.</span><span class="nx">size</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">// Including the reserved 0</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">maxSeqLength</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="p">}</span>
+
+  <span class="kr">public</span> <span class="nx">fitToken</span><span class="p">(</span><span class="nx">token</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">tokenIndice</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">token</span><span class="p">))</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">tokenIndice</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">size</span><span class="p">)</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">indiceToken</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">size</span><span class="p">,</span> <span class="nx">token</span><span class="p">)</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">size</span><span class="o">++</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kr">public</span> <span class="nx">fitText</span><span class="p">(</span><span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">tokenList</span> <span class="o">=</span> <span class="p">[...</span><span class="nx">text</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="sr">/\s+/</span><span class="p">)]</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">tokenList</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">maxSeqLength</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">maxSeqLength</span> <span class="o">=</span> <span class="nx">tokenList</span><span class="p">.</span><span class="nx">length</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="nx">token</span> <span class="k">of</span> <span class="nx">tokenList</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">fitToken</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kr">public</span> <span class="nx">token</span><span class="p">(</span><span class="nx">indice</span><span class="o">:</span> <span class="nx">number</span><span class="p">)</span><span class="o">:</span> <span class="nx">string</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">indiceToken</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">indice</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">string</span>
+  <span class="p">}</span>
+
+  <span class="kr">public</span> <span class="nx">indice</span> <span class="p">(</span><span class="nx">token</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">number</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">tokenIndice</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">number</span>
+  <span class="p">}</span>
+
+  <span class="kr">public</span> <span class="nx">sequenize</span> <span class="p">(</span>
+    <span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
+    <span class="nx">length</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="p">)</span><span class="o">:</span> <span class="nx">number</span><span class="p">[]</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">tokenList</span> <span class="o">=</span> <span class="p">[...</span><span class="nx">text</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="sr">/\s+/</span><span class="p">)]</span>
+    <span class="kr">const</span> <span class="nx">indiceList</span> <span class="o">=</span> <span class="nx">tokenList</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">token</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">indice</span><span class="p">(</span><span class="nx">token</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">length</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">indiceList</span><span class="p">.</span><span class="nx">length</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">maxSeqLength</span>
+      <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">maxSeqLength</span> <span class="o">&gt;</span> <span class="nx">tokenList</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">indiceList</span><span class="p">.</span><span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">tokenList</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">indiceList</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>接下来，我们将数据集和 <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code> 结合起来，并对数据集进行数据向量化。</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">START_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;\t&#39;</span>
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">END_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;\n&#39;</span>
+
+<span class="kr">const</span> <span class="nx">voc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vocabulary</span><span class="p">()</span>
+
+<span class="nx">voc</span><span class="p">.</span><span class="nx">fitToken</span><span class="p">(</span><span class="nx">START_TOKEN</span><span class="p">)</span>
+<span class="nx">voc</span><span class="p">.</span><span class="nx">fitToken</span><span class="p">(</span><span class="nx">END_TOKEN</span><span class="p">)</span>
+
+<span class="nx">await</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">forEachAsync</span><span class="p">(</span><span class="nx">value</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="nx">voc</span><span class="p">.</span><span class="nx">fitText</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">input</span><span class="p">)</span>
+  <span class="nx">voc</span><span class="p">.</span><span class="nx">fitText</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">output</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="c1">// 额外的 START_TOKEN 和 END_TOKEN</span>
+<span class="nx">voc</span><span class="p">.</span><span class="nx">maxSeqLength</span> <span class="o">+=</span> <span class="mi">2</span>
+
+<span class="kr">const</span> <span class="nx">seq2seqDataset</span> <span class="o">=</span> <span class="nx">dataset</span>
+<span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">value</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">input</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">tensor</span><span class="p">(</span><span class="nx">voc</span><span class="p">.</span><span class="nx">sequenize</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">input</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+
+  <span class="kr">const</span> <span class="nx">decoderInputBuf</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">buffer</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R1</span><span class="o">&gt;</span><span class="p">([</span>
+    <span class="nx">voc</span><span class="p">.</span><span class="nx">maxSeqLength</span><span class="p">,</span>
+  <span class="p">])</span>
+  <span class="kr">const</span> <span class="nx">decoderTargetBuf</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">buffer</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R2</span><span class="o">&gt;</span><span class="p">([</span>
+    <span class="nx">voc</span><span class="p">.</span><span class="nx">maxSeqLength</span><span class="p">,</span>
+    <span class="nx">voc</span><span class="p">.</span><span class="nx">size</span><span class="p">,</span>
+  <span class="p">])</span>
+
+  <span class="kr">const</span> <span class="nx">outputIndiceList</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="nx">voc</span><span class="p">.</span><span class="nx">indice</span><span class="p">(</span><span class="nx">START_TOKEN</span><span class="p">),</span>
+    <span class="p">...</span><span class="nx">voc</span><span class="p">.</span><span class="nx">sequenize</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">output</span><span class="p">),</span>
+    <span class="nx">voc</span><span class="p">.</span><span class="nx">indice</span><span class="p">(</span><span class="nx">END_TOKEN</span><span class="p">),</span>
+  <span class="p">]</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="p">[</span><span class="nx">t</span><span class="p">,</span> <span class="nx">indice</span><span class="p">]</span> <span class="k">of</span> <span class="nx">outputIndiceList</span><span class="p">.</span><span class="nx">entries</span><span class="p">())</span> <span class="p">{</span>
+    <span class="nx">decoeerInputBuf</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">indice</span><span class="p">,</span> <span class="nx">t</span><span class="p">)</span>
+
+    <span class="c1">// shift left for target: not including START_OF_SEQ</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">t</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">decoderTargetBuf</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">t</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">indice</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kr">const</span> <span class="nx">decoderInput</span> <span class="o">=</span> <span class="nx">decoderInputBuf</span><span class="p">.</span><span class="nx">toTensor</span><span class="p">()</span>
+  <span class="kr">const</span> <span class="nx">decoderTarget</span> <span class="o">=</span> <span class="nx">decoderTargetBuf</span><span class="p">.</span><span class="nx">toTensor</span><span class="p">()</span>
+
+  <span class="kr">const</span> <span class="nx">xs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">seq2seqInputs</span><span class="o">:</span> <span class="nx">inputTensor</span><span class="p">,</span>
+    <span class="nx">seq2seqDecoderInputs</span><span class="o">:</span> <span class="nx">decoderInput</span><span class="p">,</span>
+  <span class="p">}</span>
+  <span class="kr">const</span> <span class="nx">ys</span> <span class="o">=</span> <span class="nx">decoderTarget</span>
+
+  <span class="k">return</span> <span class="p">{</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">ys</span><span class="p">}</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<p>接下来进行模型的实现。我们先建立 Seq2Seq 模型所需的所有 Layers，具体实现如下：</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm"> * Encoder Layers</span>
+<span class="cm"> */</span>
+<span class="kr">const</span> <span class="nx">encoderEmbeddingLayer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">embedding</span><span class="p">({</span>
+  <span class="nx">inputDim</span><span class="o">:</span> <span class="nx">voc</span><span class="p">.</span><span class="nx">size</span><span class="p">,</span>
+  <span class="nx">outputDim</span><span class="o">:</span> <span class="nx">latentDim</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="kr">const</span> <span class="nx">encoderRnnLayer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">gru</span><span class="p">({</span>
+  <span class="nx">units</span><span class="o">:</span> <span class="nx">latentDim</span><span class="p">,</span>
+  <span class="nx">returnState</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="cm">/**</span>
+<span class="cm"> * Decoder Layers</span>
+<span class="cm"> */</span>
+<span class="kr">const</span> <span class="nx">decoderEmbeddingLayer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">embedding</span><span class="p">({</span>
+  <span class="nx">inputDim</span><span class="o">:</span> <span class="nx">voc</span><span class="p">.</span><span class="nx">size</span><span class="p">,</span>
+  <span class="nx">outputDim</span><span class="o">:</span> <span class="nx">latentDim</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="kr">const</span> <span class="nx">decoderRnnLayer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">gru</span><span class="p">({</span>
+  <span class="nx">units</span><span class="o">:</span> <span class="nx">latentDim</span><span class="p">,</span>
+  <span class="nx">returnSequences</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="nx">returnState</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="kr">const</span> <span class="nx">decoderDenseLayer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">dense</span><span class="p">({</span>
+    <span class="nx">units</span><span class="o">:</span> <span class="nx">voc</span><span class="p">.</span><span class="nx">size</span><span class="p">,</span>
+    <span class="nx">activation</span><span class="o">:</span> <span class="s1">&#39;softmax&#39;</span><span class="p">,</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<p>然后，由这些 Layers ，来组建我们的 Seq2Seq 模型。需要注意的是我们需要共享这些 Layers 建立三个不同的模型，分别是：</p>
+<ul class="simple">
+<li><p>用来训练的完整 Seq2Seq 模型： <code class="docutils literal notranslate"><span class="pre">seq2seqModel</span></code></p></li>
+<li><p>用来对序列进行编码的 Encoder 模型： <code class="docutils literal notranslate"><span class="pre">encoderModel</span></code></p></li>
+<li><p>用来对序列进行解码的 Decoder 模型： <code class="docutils literal notranslate"><span class="pre">decoderModel</span></code></p></li>
+</ul>
+<p>请注意这三个模型中，只有第一个模型  <code class="docutils literal notranslate"><span class="pre">seq2seqModel</span></code>  是用来训练参数所需要的，所以训练的的时候使用这个模型。而另外的两个模型 <code class="docutils literal notranslate"><span class="pre">encoderModel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">decoderModel</span></code> ，使我们用来预测的时候需要使用的。这三个模型共享所有的 Layers 参数。</p>
+<p><code class="docutils literal notranslate"><span class="pre">seq2seqModel</span></code> 模型的输入包含两个，一个是 Encoder 的输入，另外一个是 Decoder 的输入。模型的输出是我们数据集的输出。</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">inputs</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
+  <span class="nx">shape</span><span class="o">:</span> <span class="p">[</span><span class="kc">null</span><span class="p">],</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;seq2seqInputs&#39;</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="kr">const</span> <span class="nx">encoderEmbedding</span> <span class="o">=</span> <span class="nx">encoderEmbeddingLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">inputs</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R3</span><span class="o">&gt;</span>
+
+<span class="kr">const</span> <span class="p">[,</span> <span class="nx">encoderState</span><span class="p">]</span> <span class="o">=</span> <span class="nx">encoderRnnLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">encoderEmbedding</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span><span class="p">[]</span>
+
+<span class="kr">const</span> <span class="nx">decoderInputs</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
+  <span class="nx">shape</span><span class="o">:</span> <span class="p">[</span><span class="nx">voc</span><span class="p">.</span><span class="nx">maxSeqLength</span><span class="p">],</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;seq2seqDecoderInputs&#39;</span><span class="p">,</span>
+<span class="p">})</span>
+
+<span class="kr">const</span> <span class="nx">decoderEmbedding</span> <span class="o">=</span> <span class="nx">decoderEmbeddingLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">decoderInputs</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span>
+
+<span class="kr">const</span> <span class="p">[</span><span class="nx">decoderOutputs</span><span class="p">,]</span> <span class="o">=</span> <span class="nx">decoderRnnLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span>
+  <span class="p">[</span><span class="nx">decoderEmbedding</span><span class="p">,</span> <span class="nx">encoderState</span><span class="p">],</span>
+  <span class="p">{</span>
+    <span class="nx">returnSequences</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nx">returnState</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="p">},</span>
+<span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span><span class="p">[]</span>
+
+<span class="kr">const</span> <span class="nx">decoderTargets</span> <span class="o">=</span> <span class="nx">decoderDenseLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">decoderOutputs</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span>
+
+<span class="kr">const</span> <span class="nx">seq2seqModel</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">model</span><span class="p">({</span>
+  <span class="nx">inputs</span><span class="o">:</span> <span class="p">[</span><span class="nx">inputs</span><span class="p">,</span> <span class="nx">decoderInputs</span><span class="p">],</span>
+  <span class="nx">outputs</span><span class="o">:</span> <span class="nx">decoderTargets</span><span class="p">,</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;seq2seqModel&#39;</span><span class="p">,</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<p>用来训练的 <code class="docutils literal notranslate"><span class="pre">seq2seqModel</span></code> 模型建立完毕后，即可基于模型的 <code class="docutils literal notranslate"><span class="pre">fitDataset</span></code> 函数进行训练：</p>
+<p>训练大约需要几个小时的时间，才能达到比较好的效果。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Epoch</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">20</span>
+<span class="n">eta</span><span class="o">=</span><span class="mf">0.0</span> <span class="o">&gt;</span>
+<span class="mi">90436</span><span class="n">ms</span> <span class="mi">576025</span><span class="n">us</span><span class="o">/</span><span class="n">step</span> <span class="o">-</span> <span class="n">loss</span><span class="o">=</span><span class="mf">4.82</span>
+<span class="n">Epoch</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">20</span>
+<span class="n">eta</span><span class="o">=</span><span class="mf">0.0</span> <span class="o">&gt;</span>
+<span class="mi">85229</span><span class="n">ms</span> <span class="mi">542858</span><span class="n">us</span><span class="o">/</span><span class="n">step</span> <span class="o">-</span> <span class="n">loss</span><span class="o">=</span><span class="mf">4.07</span>
+<span class="n">Epoch</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">20</span>
+<span class="n">eta</span><span class="o">=</span><span class="mf">0.0</span> <span class="o">&gt;</span>
+<span class="mi">81913</span><span class="n">ms</span> <span class="mi">521742</span><span class="n">us</span><span class="o">/</span><span class="n">step</span> <span class="o">-</span> <span class="n">loss</span><span class="o">=</span><span class="mf">3.77</span>
+<span class="n">Epoch</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">20</span>
+<span class="n">eta</span><span class="o">=</span><span class="mf">0.0</span> <span class="o">-</span> <span class="n">loss</span><span class="o">=</span><span class="mf">3.52</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>然后，为了能够让我们使用训练好的模型，我们还需要基于已经训练好的模型 Layer 参数，构建独立的 <code class="docutils literal notranslate"><span class="pre">encoderModel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">decoderModel</span></code> 。</p>
+<p>Encoder子模型输入 <code class="docutils literal notranslate"><span class="pre">numBatch</span></code> 个由编码后单词和字符组成的，长为 <code class="docutils literal notranslate"><span class="pre">maxLength</span></code> 的序列，输入张量形状为 <code class="docutils literal notranslate"><span class="pre">[numBatch,</span> <span class="pre">maxLength]</span></code> ，输出与这个序列对应的上下文状态张量。</p>
+<p><code class="docutils literal notranslate"><span class="pre">encoderModel</span></code> 的代码实现如下：</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">encoderInputs</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
+  <span class="nx">shape</span><span class="o">:</span> <span class="p">[</span><span class="kc">null</span><span class="p">],</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;encoderInputs&#39;</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="kr">const</span> <span class="nx">encoderEmbedding</span> <span class="o">=</span> <span class="nx">encoderEmbeddingLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">encoderInputs</span><span class="p">)</span>
+<span class="kr">const</span> <span class="p">[,</span> <span class="nx">encoderState</span><span class="p">]</span> <span class="o">=</span> <span class="nx">encoderRnnLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">encoderEmbedding</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span><span class="p">[]</span>
+
+<span class="kr">const</span> <span class="nx">encoderModel</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">model</span><span class="p">({</span>
+  <span class="nx">inputs</span><span class="o">:</span> <span class="nx">encoderInputs</span><span class="p">,</span>
+  <span class="nx">outputs</span><span class="o">:</span> <span class="nx">encoderState</span><span class="p">,</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">deocoderModel</span></code> 的输入有两个，分别是 t 时刻的 token indice，和对应的解码器 <code class="docutils literal notranslate"><span class="pre">state</span></code>；输出也有两个，分别是 t+1 时刻的 token 的 voc 分布概率，和对应的解码器 <code class="docutils literal notranslate"><span class="pre">state</span></code> ：</p>
+<p><code class="docutils literal notranslate"><span class="pre">decoderModel</span></code> 子模型具体实现如下：</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">decoderInput</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
+  <span class="nx">shape</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;decoderInputs&#39;</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="kr">const</span> <span class="nx">decoderStateInput</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
+  <span class="nx">shape</span><span class="o">:</span> <span class="p">[</span><span class="nx">latentDim</span><span class="p">],</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;decoderState&#39;</span><span class="p">,</span>
+<span class="p">})</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span>
+
+<span class="kr">const</span> <span class="nx">decoderEmbedding</span> <span class="o">=</span> <span class="nx">decoderEmbeddingLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">decoderInput</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span>
+
+<span class="kr">const</span> <span class="p">[</span><span class="nx">decoderOutputs</span><span class="p">,</span> <span class="nx">decoderStateOutput</span><span class="p">]</span> <span class="o">=</span> <span class="nx">decoderRnnLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span>
+  <span class="p">[</span><span class="nx">decoderEmbedding</span><span class="p">,</span> <span class="nx">decoderStateInput</span><span class="p">],</span>
+  <span class="p">{</span>
+    <span class="nx">returnState</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="p">},</span>
+<span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span><span class="p">[]</span>
+<span class="kr">const</span> <span class="nx">decoderDenseOutputs</span> <span class="o">=</span> <span class="nx">decoderDenseLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">decoderOutputs</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span>
+
+<span class="kr">const</span> <span class="nx">decoderModel</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">model</span><span class="p">({</span>
+  <span class="nx">inputs</span><span class="o">:</span> <span class="p">[</span><span class="nx">decoderInput</span><span class="p">,</span> <span class="nx">decoderStateInput</span><span class="p">],</span>
+  <span class="nx">outputs</span><span class="o">:</span> <span class="p">[</span><span class="nx">decoderDenseOutputs</span><span class="p">,</span> <span class="nx">decoderStateOutput</span><span class="p">],</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<p>最后，我们需要一个用来对话的程序。我们建立一个专门用来接收一句话输入，然后通过我们的模型预测，得到序列输出的函数 <code class="docutils literal notranslate"><span class="pre">seq2seqDecoder()</span></code> ：</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">export</span> <span class="nx">async</span> <span class="kd">function</span> <span class="nx">seq2seqDecoder</span> <span class="p">(</span>
+  <span class="nx">input</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
+  <span class="nx">encoderModel</span><span class="o">:</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">LayersModel</span><span class="p">,</span>
+  <span class="nx">decoderModel</span><span class="o">:</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">LayersModel</span><span class="p">,</span>
+  <span class="nx">voc</span><span class="o">:</span> <span class="nx">Vocabulary</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">string</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">inputSeq</span> <span class="o">=</span> <span class="nx">voc</span><span class="p">.</span><span class="nx">sequenize</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span>
+  <span class="kr">const</span> <span class="nx">inputTensor</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">tensor</span><span class="p">(</span><span class="nx">inputSeq</span><span class="p">)</span>
+
+  <span class="kr">const</span> <span class="nx">batchedInput</span> <span class="o">=</span> <span class="nx">inputTensor</span><span class="p">.</span><span class="nx">expandDims</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+  <span class="kd">let</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">encoderModel</span><span class="p">.</span><span class="nx">predict</span><span class="p">(</span><span class="nx">batchedInput</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R2</span><span class="o">&gt;</span>
+
+  <span class="kd">let</span> <span class="nx">tokenIndice</span> <span class="o">=</span> <span class="nx">voc</span><span class="p">.</span><span class="nx">indice</span><span class="p">(</span><span class="nx">START_TOKEN</span><span class="p">)</span>
+
+  <span class="kd">let</span> <span class="nx">decoderOutputs</span><span class="o">:</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R3</span><span class="o">&gt;</span>
+  <span class="kd">let</span> <span class="nx">decodedToken</span><span class="o">:</span> <span class="nx">string</span>
+  <span class="kd">let</span> <span class="nx">decodedTokenList</span> <span class="o">=</span> <span class="p">[]</span>
+
+  <span class="k">do</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">decoderInputs</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">tensor</span><span class="p">(</span><span class="nx">tokenIndice</span><span class="p">).</span><span class="nx">reshape</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R2</span><span class="o">&gt;</span>
+
+    <span class="p">;[</span><span class="nx">decoderOutputs</span><span class="p">,</span> <span class="nx">state</span><span class="p">]</span> <span class="o">=</span> <span class="nx">decoderModel</span><span class="p">.</span><span class="nx">predict</span><span class="p">([</span>
+      <span class="nx">decoderInputs</span><span class="p">,</span>
+      <span class="nx">state</span><span class="p">,</span>
+    <span class="p">])</span> <span class="nx">as</span> <span class="p">[</span>
+      <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R3</span><span class="o">&gt;</span><span class="p">,</span>
+      <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R2</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="kd">let</span> <span class="nx">decodedIndice</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">decoderOutputs</span>
+                                <span class="p">.</span><span class="nx">squeeze</span><span class="p">()</span>
+                                <span class="p">.</span><span class="nx">argMax</span><span class="p">()</span>
+                                <span class="p">.</span><span class="nx">array</span><span class="p">()</span> <span class="nx">as</span> <span class="nx">number</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">decodedIndice</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// 0 for padding, should be treated as END</span>
+      <span class="nx">decodedToken</span> <span class="o">=</span> <span class="nx">END_TOKEN</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">decodedToken</span> <span class="o">=</span> <span class="nx">voc</span><span class="p">.</span><span class="nx">token</span><span class="p">(</span><span class="nx">decodedIndice</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">decodedToken</span> <span class="o">===</span> <span class="nx">END_TOKEN</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">break</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nx">decodedTokenList</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">decodedToken</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c1">// save decoded data for next time step</span>
+    <span class="nx">tokenIndice</span> <span class="o">=</span> <span class="nx">decodedIndice</span>
+
+  <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="nx">decodedTokenList</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="nx">voc</span><span class="p">.</span><span class="nx">maxSeqLength</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="nx">decodedTokenList</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>最后，我们就可以用我们训练好的Seq2Seq模型，实现我们的 ChitChat 聊天功能了：</p>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">input</span> <span class="o">=</span> <span class="s1">&#39;how are you ?&#39;</span>
+
+<span class="kr">const</span> <span class="nx">decodedOutput</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">seq2seqDecoder</span><span class="p">(</span>
+  <span class="nx">input</span><span class="p">,</span>
+  <span class="nx">encoderModel</span><span class="p">,</span>
+  <span class="nx">decoderModel</span><span class="p">,</span>
+  <span class="nx">inputVoc</span><span class="p">,</span>
+  <span class="nx">outputVoc</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Input sentence: &quot;</span><span class="si">${</span><span class="nx">input</span><span class="si">}</span><span class="sb">&quot;`</span><span class="p">)</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Decoded sentence: &quot;</span><span class="si">${</span><span class="nx">decodedOutput</span><span class="si">}</span><span class="sb">&quot;`</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>模型每次的训练，得到的结果都会不尽相同。作者的某一次输出的内容是下面这样的：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Input sentence： &quot;how are you ?&quot;
+Decoded setence: &quot;good .&quot;
+</pre></div>
+</div>
+<p>注：本章节中的 JavaScript 版 ChitChat 完整代码，使用说明，和训练好的模型文件及参数，都可以在作者的 GitHub 上找到。地址： <a class="reference external" href="https://github.com/huan/tensorflow-handbook-javascript">https://github.com/huan/tensorflow-handbook-javascript</a></p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

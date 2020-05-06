@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TensorFlow概述 &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/js/tw_cn.js"></script>
+        <script type="text/javascript" src="../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../_static/js/custom_20200506.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="TensorFlow安裝與環境配置" href="basic/installation.html" />
+    <link rel="prev" title="前言" href="preface.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 简单粗暴 TensorFlow 2
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/rl.html">强化学习简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教學活動</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目錄</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="preface.html">前言</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow概述</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">學生和研究者：模型的建立與訓練</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">開發者和工程師：模型的調用與部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">TensorFlow能幫助我們做什麼？</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">基礎</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basic/installation.html">TensorFlow安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic/models.html">TensorFlow 模型建立與訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic/tools.html">TensorFlow常用模塊</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大規模訓練與加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/distributed.html">TensorFlow分布式訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/tpu.html">使用TPU訓練TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">擴展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/rl.html">強化學習簡介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/docker.html">使用Docker部署TensorFlow環境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/cloud.html">在雲端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/recommended_books.html">參考資料與推薦閱讀</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/terms.html">術語中英對照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Preface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../en/preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/introduction.html">TensorFlow Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../en/basic/installation.html">Installation and Environment Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/basic/basic.html">TensorFlow Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/basic/models.html">Model Construction and Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/basic/tools.html">Common Modules in TensorFlow</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../en/deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/deployment/lite.html">TensorFlow Lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/deployment/javascript.html">TensorFlow in JavaScript</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Large-scale Training</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/distributed.html">Distributed Training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/rl.html">Introduction to Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/docker.html">Using Docker to deploy TensorFlow environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/cloud.html">Using TensorFlow on cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/recommended_books.html">References and Recommendations for Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">简单粗暴 TensorFlow 2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>TensorFlow概述</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/zh_hant/introduction.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorflow">
+<h1>TensorFlow概述<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
+<p>當我們在說「我想要學習一個深度學習框架」，或者「我想學習TensorFlow」、「我想學習TensorFlow 2.0」的時候，我們究竟想要學到什麼？事實上，對於不同羣體，可能會有相當不同的預期。</p>
+<div class="section" id="id1">
+<h2>學生和研究者：模型的建立與訓練<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>如果你是一個初學機器學習/深度學習的學生，你可能已經啃完了Andrew Ng的機器學習公開課或者斯坦福的 <a class="reference external" href="http://ufldl.stanford.edu/wiki/index.php/UFLDL_Tutorial">UFIDL Tutorial</a> ，亦或是正在上學校里的深度學習課程。你可能也已經了解了鏈式求導法則和梯度下降法，知道了若干種損失函數，並且對卷積神經網絡（CNN）、循環神經網絡（RNN）和強化學習的理論也有了一些大致的認識。然而——你依然不知道這些模型在計算機中具體要如何實現。這時，你希望能有一個程序庫，幫助你把書本上的公式和算法運用於實踐。</p>
+<p>具體而言，以最常見的有監督學習（supervised learning）爲例。假設你已經掌握了一個模型 <img class="math" src="../_images/math/d6c0b6370b17506b5b095926b31ea8d8e45b336e.png" alt="\hat{y} = f(x, \theta)"/> （x、y爲輸入和輸出， <img class="math" src="../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> 爲模型參數），確定了一個損失函數 <img class="math" src="../_images/math/e3935be137c28b9efb58d892b3fee6ae7b11cec9.png" alt="L(y, \hat{y})"/> ，並獲得了一批數據 <img class="math" src="../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/>  和相對應的標籤 <img class="math" src="../_images/math/f89383d07ea00637c4218cd6dc4eb3ae2b04fcdc.png" alt="Y"/> 。這時，你會希望有一個程序庫，幫助你實現下列事情：</p>
+<ul class="simple">
+<li><p>用計算機程序表示出向量、矩陣和張量等數學概念，並方便地進行運算；</p></li>
+<li><p>方便地建立模型 <img class="math" src="../_images/math/dc5fd2a1c98a88c9aa8c2ff2717597b68f5881ae.png" alt="f(x, \theta)"/> 和損失函數 <img class="math" src="../_images/math/61ba744183b1a02c5ad12f1bac5f1b43a783a309.png" alt="L(y, \hat{y}) = L(y, f(x, \theta))"/> 。給定輸入 <img class="math" src="../_images/math/b57e344d806a27b36dcd7d1d9b48be070dc12c70.png" alt="x_0 \in X"/> ，對應的標籤 <img class="math" src="../_images/math/3dca79bb1ecb4152a3a478491af6dc2558999480.png" alt="y_0 \in Y"/> 和當前迭代輪的參數值 <img class="math" src="../_images/math/91471f5ec73a58e2c7ae293144557a4ae6bab08d.png" alt="\theta_0"/> ，能夠方便地計算出模型預測值 <img class="math" src="../_images/math/7bbdb433636d544b13d5272dbc4dbd3f377a8675.png" alt="\hat{y_0} = f(x_0, \theta_0)"/> ，並計算損失函數的值 <img class="math" src="../_images/math/f496903b2df08e992e68723af02a34263bdc8672.png" alt="L_0 = L(y_0, \hat{y_0}) = L(y_0, f(x_0, \theta_0))"/> ；</p></li>
+<li><p>自動將損失函數 <img class="math" src="../_images/math/483c80571f5621ffaaa8f96f9dadc557b811f409.png" alt="L"/> 求已知 <img class="math" src="../_images/math/4c72fcabd7dee7baed0b5dd1e1cb19fcba10e393.png" alt="x_0"/>、<img class="math" src="../_images/math/07b411122d25e69619d2d8301bcda67a8dec9a94.png" alt="y_0"/>、<img class="math" src="../_images/math/91471f5ec73a58e2c7ae293144557a4ae6bab08d.png" alt="\theta_0"/> 時對模型參數 <img class="math" src="../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> 的偏導數值，即計算 <img class="math" src="../_images/math/4e6dcfd87f530d69caaf676b674ad6232582058f.png" alt="\theta_0' = \frac{\partial L}{\partial \theta} |_{x = x_0, y = y_0, \theta = \theta_0}"/> ，無需人工推導求導結果（這意味着，這個程序庫需要支持某種意義上的「符號計算」，表現在能夠記錄下運算的全過程，這樣才能根據鏈式法則進行反向求導）；</p></li>
+<li><p>根據所求出的偏導數 <img class="math" src="../_images/math/27cb01734bb959411767a3f8fca21b2103ff7a65.png" alt="\theta_0'"/> 的值，方便地調用一些優化方法更新當前迭代輪的模型參數 <img class="math" src="../_images/math/91471f5ec73a58e2c7ae293144557a4ae6bab08d.png" alt="\theta_0"/> ，得到下一迭代輪的模型參數 <img class="math" src="../_images/math/a9a472f17c20c12af317c7e7cd5002f563f0ad4c.png" alt="\theta_1"/> （比如梯度下降法， <img class="math" src="../_images/math/8ece05f44f482591b59bddba51b474dcc6b49643.png" alt="\theta_1 = \theta_0 - \alpha \theta_0'"/> ， <img class="math" src="../_images/math/3929a173b494d403fb588bf98153e3a45dd662fd.png" alt="\alpha"/> 爲學習率）。</p></li>
+</ul>
+<p>更抽象一些地說，這個你所希望的程序庫需要能做到：</p>
+<ul class="simple">
+<li><p>數學概念和運算的程序化表達；</p></li>
+<li><p>對任意可導函數 <img class="math" src="../_images/math/79f40f147e28ccf9e9ffc1444476982d82b10dd8.png" alt="f(x)"/> ，求在自變量 <img class="math" src="../_images/math/82de7e0eb517b4022d75d7ed5599449b835fd920.png" alt="x = x_0"/> 給定時的梯度 <img class="math" src="../_images/math/3912180f8df387aeb074032f163380476ab22303.png" alt="\nabla f | _{x = x_0}"/> （「符號計算」的能力）。</p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>開發者和工程師：模型的調用與部署<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>如果你是一位在IT行業沉澱多年的開發者或者工程師，你可能已經對大學期間學到的數學知識不再熟悉（「多元函數……求偏微分？那是什麼東西？」）。然而，你可能希望在你的產品中加入一些與人工智能相關的功能，抑或需要將已有的深度學習模型部署到各種場景中。具體而言，包括：</p>
+<ul class="simple">
+<li><p>如何導出訓練好的模型？</p></li>
+<li><p>如何在本機使用已有的預訓練模型？</p></li>
+<li><p>如何在服務器、移動端、嵌入式設備甚至網頁上高效運行模型？</p></li>
+<li><p>……</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>TensorFlow能幫助我們做什麼？<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>TensorFlow可以爲以上的這些需求提供完整的解決方案。具體而言，TensorFlow包含以下特性：</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>訓練流程</dt><dd><ul>
+<li><p><strong>數據的處理</strong> ：使用 tf.data 和 TFRecord 可以高效地構建和預處理數據集，構建訓練數據流。同時可以使用 TensorFlow Datasets 快速載入常用的公開數據集。</p></li>
+<li><p><strong>模型的建立與調試</strong> ：使用即時執行模式和著名的神經網絡高層 API 框架 Keras，結合可視化工具 TensorBoard，簡易、快速地建立和調試模型。也可以通過 TensorFlow Hub 方便地載入已有的成熟模型。</p></li>
+<li><p><strong>模型的訓練</strong> ：支持在 CPU、GPU、TPU 上訓練模型，支持單機和多機集羣並行訓練模型，充分利用海量數據和計算資源進行高效訓練。</p></li>
+<li><p><strong>模型的導出</strong> ：將模型打包導出爲統一的 SavedModel 格式，方便遷移和部署。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>部署流程</dt><dd><ul>
+<li><p><strong>服務器部署</strong> ：使用 TensorFlow Serving 在服務器上爲訓練完成的模型提供高性能、支持並發、高吞吐量的API。</p></li>
+<li><p><strong>移動端和嵌入式設備部署</strong> ：使用TensorFlow Lite 將模型轉換爲體積小、高效率的輕量化版本，並在移動端、嵌入式端等功耗和計算能力受限的設備上運行，支持使用 GPU 代理進行硬件加速，還可以配合 Edge TPU 等外接硬件加速運算。</p></li>
+<li><p><strong>網頁端部署</strong> ：使用 TensorFlow.js，在網頁端等支持 JavaScript 運行的環境上也可以運行模型，支持使用 WebGL 進行硬件加速。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 187 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="basic/installation.html" class="btn btn-neutral float-right" title="TensorFlow安裝與環境配置" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="preface.html" class="btn btn-neutral float-left" title="前言" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

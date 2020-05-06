@@ -1,0 +1,602 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>強化學習簡介 &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
+        <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200506.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="使用Docker部署TensorFlow環境" href="docker.html" />
+    <link rel="prev" title="TensorFlow Quantum: 混合量子-經典機器學習 *" href="quantum.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴 TensorFlow 2
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/rl.html">强化学习简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教學活動</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基礎</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立與訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模塊</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大規模訓練與加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="distributed.html">TensorFlow分布式訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tpu.html">使用TPU訓練TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">擴展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附錄</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">強化學習簡介</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">從動態規劃說起</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">加入隨機性和概率的動態規劃</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">環境信息無法直接獲得的情況</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">從直接算法到迭代算法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#q">q值的漸進性更新</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">探索策略</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id13">大規模問題的求解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id14">總結</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">使用Docker部署TensorFlow環境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud.html">在雲端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recommended_books.html">參考資料與推薦閱讀</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms.html">術語中英對照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Preface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/introduction.html">TensorFlow Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/installation.html">Installation and Environment Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/basic.html">TensorFlow Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/models.html">Model Construction and Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/tools.html">Common Modules in TensorFlow</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/lite.html">TensorFlow Lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/javascript.html">TensorFlow in JavaScript</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Large-scale Training</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/distributed.html">Distributed Training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/rl.html">Introduction to Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/docker.html">Using Docker to deploy TensorFlow environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/cloud.html">Using TensorFlow on cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/recommended_books.html">References and Recommendations for Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴 TensorFlow 2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>強化學習簡介</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/zh_hant/appendix/rl.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>強化學習簡介<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>在本章，我們將對 <a class="reference internal" href="../basic/models.html#rl"><span class="std std-ref">深度強化學習</span></a> 一節中所涉及的強化學習算法進行入門介紹。我們所熟知的有監督學習是在帶標籤的已知訓練數據上進行學習，得到一個從數據特徵到標籤的映射（預測模型），進而預測新的數據實例所具有的標籤。而強化學習中則出現了兩個新的概念，「智能體」和「環境」。在強化學習中，智能體通過與環境的交互來學習策略，從而最大化自己在環境中所獲得的獎勵。例如，在下棋的過程中，你（智能體）可以通過與棋盤及對手（環境）進行交互來學習下棋的策略，從而最大化自己在下棋過程中獲得的獎勵（贏棋的次數）。</p>
+<p>如果說有監督學習關注的是「預測」，是與統計理論關聯密切的學習類型的話，那麼強化學習關注的則是「決策」，與計算機算法（尤其是動態規劃和搜索）有着深入關聯。筆者認爲強化學習的原理入門相較於有監督學習而言具有更高的門檻，尤其是給習慣於確定性算法的程序員突然呈現一堆抽象概念的數值迭代關係，在大多數時候只能是囫圇吞棗。於是筆者希望通過一些較爲具體的算例，以儘可能樸素的表達，爲具有一定算法基礎的讀者說明強化學習的基本思想。</p>
+<div class="section" id="id2">
+<h2>從動態規劃說起<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>如果你曾經參加過NOIP或ACM之類的算法競賽，或者爲互聯網公司的機考做過準備（如LeetCode），想必對動態規劃（Dynamic Programming，簡稱DP）不會太陌生。動態規劃的基本思想是將待求解的問題分解成若干個結構相同的子問題，並保存已解決的子問題的答案，在需要的時候直接利用 <a class="footnote-reference brackets" href="#f0" id="id3">1</a> 。使用動態規劃求解的問題需要滿足兩個性質：</p>
+<ul class="simple">
+<li><p>最優子結構：一個最優策略的子策略也是最優的。</p></li>
+<li><p>無後效性：過去的步驟只能通過當前的狀態影響未來的發展，當前狀態是歷史的總結。</p></li>
+</ul>
+<p>我們回顧動態規劃的經典入門題目 <a class="reference external" href="https://leetcode.com/problems/triangle/">「數字三角形」</a> ：</p>
+<div class="admonition- admonition">
+<p class="admonition-title">數字三角形問題</p>
+<p>給定一個形如下圖的 <img class="math" src="../../_images/math/850d6d4a9d2baba27cab50a5aa6607d6d79a1b14.png" alt="N+1"/> 層數字三角形及三角形每個坐標下的數字 <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> ，智能體在三角形的頂端，每次可以選擇向下（ <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> ）或者向右（ <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> ）到達三角形的下一層，請輸出一個動作序列，使得智能體經過的路徑上的數字之和最大。</p>
+<div class="figure align-center" id="id16">
+<a class="reference internal image-reference" href="../../_images/triangle.png"><img alt="../../_images/triangle.png" src="../../_images/triangle.png" style="width: 50%;" /></a>
+<p class="caption"><span class="caption-text">數字三角形示例。此示例中最優動作序列爲「向右-向下」，最優路徑爲「(0, 0) - (1, 1) - (2, 1)」，最大數字和爲 <img class="math" src="../../_images/math/1689f2bae3aafd44c7373605ff4b33321041afff.png" alt="r(0, 0) + r(1, 1) + r(2, 1) = 5"/> 。</span><a class="headerlink" href="#id16" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<p>我們先不考慮如何尋找最優動作序列的問題，而假設我們已知智能體在每個坐標(i, j)處會選擇的動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> （例如 <img class="math" src="../../_images/math/23775800b0f79a5713952b4f0ed4b3c1aeffa1a8.png" alt="\pi(0, 0) = \searrow"/> 代表智能體在(0, 0)處會選擇向右的動作），我們只是單純計算智能體會經過的路徑的數字之和。我們從下而上地考慮問題，設 <img class="math" src="../../_images/math/8706bd19cdb4eb441ec988af7b7de23c8ae50abb.png" alt="f(i, j)"/> 爲智能體在坐標(i, j)處的「現在及未來將會獲得的數字之和」，則可以遞推地寫出以下等式：</p>
+<div class="math" id="equation-eq1">
+<p><span class="eqno">(1)<a class="headerlink" href="#equation-eq1" title="公式的永久链接">¶</a></span><img src="../../_images/math/dfd777d465c6fe6e1b372b9ab6565b5c0ed142dc.png" alt="f(i, j) = \begin{cases}f(i+1, j) + r(i, j), &amp; \pi(i, j) = \downarrow \\ f(i+1, j+1) + r(i, j), &amp; \pi(i, j) = \searrow\end{cases}"/></p>
+</div><p>上式的另一個等價寫法如下：</p>
+<div class="math" id="equation-eq2">
+<p><span class="eqno">(2)<a class="headerlink" href="#equation-eq2" title="公式的永久链接">¶</a></span><img src="../../_images/math/9e4c2f6d79f84bc4cefd367c1242fe615dc4a515.png" alt="f(i, j) = [p_1 f(i+1, j) + p_2 f(i+1, j+1)] + r(i, j)"/></p>
+</div><p>其中</p>
+<div class="math">
+<p><img src="../../_images/math/9c16f94d9d892de8b4fdfef6ccb73c13b19c3a9b.png" alt="(p_1, p_2) = \begin{cases}(1, 0), \pi(i, j) = \downarrow \\ (0, 1), \pi(i, j) = \searrow\end{cases}"/></p>
+</div><p>有了上面的鋪墊之後，我們要解決的問題就變爲了：通過調整智能體在每個坐標(i, j)會選擇的動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的組合，使得 <img class="math" src="../../_images/math/22e11389902f7a0d0bf29f604c8732a375e4de76.png" alt="f(0, 0)"/> 的值最大。爲了解決這個問題，最粗暴的方法是遍歷所有 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的組合，例如在示例圖中，我們需要決策 <img class="math" src="../../_images/math/35124c32ff720ff1fc1242d7a744b0b34dad67e3.png" alt="\pi(0, 0)"/> 、 <img class="math" src="../../_images/math/553f0c9a4802c7737b24e0c282660a1f5e960c30.png" alt="\pi(1, 0)"/> 、 <img class="math" src="../../_images/math/9d71ef3e09d377f2f522709c2927af83534cc090.png" alt="\pi(1, 1)"/> 的值，一共有 <img class="math" src="../../_images/math/62206d9285193079dd9d16f641eb66367617027b.png" alt="2^3 = 8"/> 種組合，我們只需要將8種組合逐個代入並計算 <img class="math" src="../../_images/math/22e11389902f7a0d0bf29f604c8732a375e4de76.png" alt="f(0, 0)"/> ，輸出最大值及其對應組合即可。</p>
+<p>不過，這樣顯然效率太低了。於是我們考慮直接計算 <a class="reference internal" href="#equation-eq2">(2)</a> 式關於所有動作 <img class="math" src="../../_images/math/6372d56961ade6dee4839f7dc2442932c68e9360.png" alt="\pi"/> 組合的最大值 <img class="math" src="../../_images/math/e0bee167d4f2fa929721d6a6b539ad5f3359b2c0.png" alt="\max_\pi f(i, j)"/> 。在 <a class="reference internal" href="#equation-eq2">(2)</a> 式中， <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> 與任何動作 <img class="math" src="../../_images/math/6372d56961ade6dee4839f7dc2442932c68e9360.png" alt="\pi"/> 都無關，所以我們只需考慮 <img class="math" src="../../_images/math/b94acb243fa7cb2da10afabcd2c8aa2e97e7e9c1.png" alt="p_1 f(i+1, j) + p_2 f(i+1, j+1)"/> 這個表達式的最大值。於是，我們分別計算 <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> 和 <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/> 時該表達式關於任何動作 <img class="math" src="../../_images/math/6372d56961ade6dee4839f7dc2442932c68e9360.png" alt="\pi"/> 的最大值，並取兩個最大值中的較大者，如下所示：</p>
+<div class="math">
+<p><img src="../../_images/math/216c0118c700082f830d23cfcb90c8fc07dd2bf7.png" alt="\max_\pi f(i, j) &amp;= \max_\pi [p_1 f(i+1, j) + p_2 f(i+1, j+1)] + r(i, j) \\
+    &amp;= \max [\underbrace{\max_\pi(1 f(i+1, j) + 0 f(i+1, j+1))}_{\pi(i, j) = \downarrow}, \underbrace{\max_\pi(0 f(i+1, j) + 1 f(i+1, j+1))}_{\pi(i, j) = \searrow}] + r(i, j) \\
+    &amp;= \max [\underbrace{\max_\pi f(i+1, j)}_{\pi(i, j) = \downarrow}, \underbrace{\max_\pi f(i+1, j+1)}_{\pi(i, j) = \searrow}] + r(i, j)"/></p>
+</div><p>令 <img class="math" src="../../_images/math/fb3d38644c70f568813c084fc9a7e8bc2476cb68.png" alt="g(i, j) = \max_\pi f(i, j)"/> ，上式可寫爲 <img class="math" src="../../_images/math/81d9d1e63f1a6c10ba011bccc2a5b445aecdbc19.png" alt="g(i, j) = \max[g(i+1, j), g(i+1, j+1)] + r(i, j)"/> ，這即是動態規劃中常見的「狀態轉移方程」。通過狀態轉移方程和邊界值 <img class="math" src="../../_images/math/8d5cd5daeeef2617ace0d1f663804f7e774b4d68.png" alt="g(N, j) = r(N, j), j = 0 \cdots N"/>  ，我們即可自下而上高效地迭代計算出 <img class="math" src="../../_images/math/be873af52c5d30d83f37278da82408879849b7fa.png" alt="g(0, 0) = \max_\pi f(0, 0)"/> 。</p>
+<div class="figure align-center" id="id17">
+<img alt="../../_images/value_iteration_case_0.png" src="../../_images/value_iteration_case_0.png" />
+<p class="caption"><span class="caption-text">通過對 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 的值進行三輪迭代計算 <img class="math" src="../../_images/math/8f9f501140c275983bc6e1f0019bb69895cd9cf0.png" alt="g(0, 0)"/> 。在每一輪迭代中，對於坐標(i, j)，分別取得當 <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> 和 <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/> 時的「未來將會獲得的數字之和的最大值」（即 <img class="math" src="../../_images/math/beb3d189902a8531de1283efda4d89fdb59b40e7.png" alt="g(i+1, j)"/> 和 <img class="math" src="../../_images/math/2ca4e61d10d6384a0d96464572a77e8325d60a85.png" alt="g(i+1, j+1)"/> ），取兩者中的較大者，並加上當前坐標的數字 <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> 。</span><a class="headerlink" href="#id17" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>加入隨機性和概率的動態規劃<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>在實際生活中，我們做出的決策往往並非完全確定地指向某個結果，而是同時受到環境因素的影響。例如選擇磨練棋藝固然能讓一個人贏棋的概率變高，但也並非指向百戰百勝。正所謂「既要靠個人的奮鬥，也要考慮到歷史的行程」。對應於我們在前節討論的數字三角形問題，我們考慮以下變種：</p>
+<div class="admonition- admonition">
+<p class="admonition-title">數字三角形問題（變式1）</p>
+<p>智能體初始在三角形的頂端，每次可以選擇向下（ <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> ）或者向右（ <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> ）的動作。不過環境會對處於任意坐標(i, j)的智能體的動作產生「干擾」，導致以下的結果：</p>
+<ul class="simple">
+<li><p>如果選擇向下（ <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> ），則該智能體最終到達正下方坐標(i+1, j)的概率爲 <img class="math" src="../../_images/math/115f182e3fd76aa746f242950dda40488863238c.png" alt="\frac{3}{4}"/> ，到達右下方坐標(i+1, j+1)的概率爲 <img class="math" src="../../_images/math/f162376f26a078bcf0cc142e27cb1eab136069c1.png" alt="\frac{1}{4}"/> 。</p></li>
+<li><p>如果選擇向右（ <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> ），則該智能體最終到達正下方坐標(i+1, j)的概率爲 <img class="math" src="../../_images/math/f162376f26a078bcf0cc142e27cb1eab136069c1.png" alt="\frac{1}{4}"/> ，到達右下方坐標(i+1, j+1)的概率爲 <img class="math" src="../../_images/math/115f182e3fd76aa746f242950dda40488863238c.png" alt="\frac{3}{4}"/> 。</p></li>
+</ul>
+<p>請給出智能體在每個坐標所應該選擇的動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> ，使得智能體經過的路徑上的數字之和的期望（Expectation） <a class="footnote-reference brackets" href="#f1" id="id6">2</a> 最大。</p>
+</div>
+<p>此時，如果你想直接寫出問題的狀態轉移方程，恐怕就不那麼容易了（動作選擇和轉移結果不是一一對應的！）。但如果類比前節 <a class="reference internal" href="#equation-eq2">(2)</a> 式描述問題的框架，我們會發現問題容易了一些。在這個問題中，我們沿用符號 <img class="math" src="../../_images/math/8706bd19cdb4eb441ec988af7b7de23c8ae50abb.png" alt="f(i, j)"/> 來表示智能體在坐標(i, j)處的「現在及未來將會獲得的數字之和的期望」，則有「當前(i, j)坐標的期望 = 『選擇動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 後可獲得的數字之和』的期望 + 當前坐標的數字」，如下式</p>
+<div class="math" id="equation-eq3">
+<p><span class="eqno">(3)<a class="headerlink" href="#equation-eq3" title="公式的永久链接">¶</a></span><img src="../../_images/math/9e4c2f6d79f84bc4cefd367c1242fe615dc4a515.png" alt="f(i, j) = [p_1 f(i+1, j) + p_2 f(i+1, j+1)] + r(i, j)"/></p>
+</div><p>其中</p>
+<div class="math">
+<p><img src="../../_images/math/ff0a8619bdb38a7254eec82c280aa634efe099ee.png" alt="(p_1, p_2) = \begin{cases}(\frac{3}{4}, \frac{1}{4}), \pi(i, j) = \downarrow \\ (\frac{1}{4}, \frac{3}{4}), \pi(i, j) = \searrow\end{cases}"/></p>
+</div><p>類比前節的推導過程，令 <img class="math" src="../../_images/math/fb3d38644c70f568813c084fc9a7e8bc2476cb68.png" alt="g(i, j) = \max_\pi f(i, j)"/> ，我們可以得到</p>
+<div class="math" id="equation-eq4">
+<p><span class="eqno">(4)<a class="headerlink" href="#equation-eq4" title="公式的永久链接">¶</a></span><img src="../../_images/math/acde73d4b06bbf3cff2ce244f3e3221b08c0ae47.png" alt="g(i, j) = \max[\underbrace{\frac{3}{4} g(i+1, j) + \frac{1}{4} g(i+1, j+1)}_{\pi(i, j) = \downarrow}, \underbrace{\frac{1}{4} g(i+1, j) + \frac{3}{4} g(i+1, j+1)}_{\pi(i, j) = \searrow}] + r(i, j)"/></p>
+</div><p>然後我們即可使用這一遞推式由下到上計算 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 。</p>
+<div class="figure align-center" id="id18">
+<img alt="../../_images/value_iteration_case_1.png" src="../../_images/value_iteration_case_1.png" />
+<p class="caption"><span class="caption-text">通過對 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 的值進行三輪迭代計算 <img class="math" src="../../_images/math/8f9f501140c275983bc6e1f0019bb69895cd9cf0.png" alt="g(0, 0)"/> 。在每一輪迭代中，對於坐標(i, j)，分別計算當 <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> 和 <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/> 時的「未來將會獲得的數字之和的期望的最大值」（即 <img class="math" src="../../_images/math/40c45fe9dc5f26e8ee4e39f03dcf10d06fc26f0f.png" alt="\frac{3}{4} g(i+1, j) + \frac{1}{4} g(i+1, j+1)"/> 和 <img class="math" src="../../_images/math/79ab58378a2d59655da58a9bca9041242a1e607b.png" alt="\frac{1}{4} g(i+1, j) + \frac{3}{4} g(i+1, j+1)"/> ），取兩者中的較大者，並加上當前坐標的數字 <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> 。</span><a class="headerlink" href="#id18" title="永久链接至图片">¶</a></p>
+</div>
+<p>我們也可以從智能體在每個坐標(i, j)所做的動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 出發來觀察 <a class="reference internal" href="#equation-eq4">(4)</a> 式。在每一輪迭代中，先分別計算兩種動作帶來的未來收益期望（策略評估），然後取收益較大的動作作爲 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的取值（策略改進），最後根據動作更新 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 。</p>
+<div class="figure align-center" id="id19">
+<a class="reference internal image-reference" href="../../_images/policy_iteration_case_1.png"><img alt="../../_images/policy_iteration_case_1.png" src="../../_images/policy_iteration_case_1.png" style="width: 75%;" /></a>
+<p class="caption"><span class="caption-text">策略評估-策略改進框架：通過對 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的值進行迭代來計算 <img class="math" src="../../_images/math/8f9f501140c275983bc6e1f0019bb69895cd9cf0.png" alt="g(0, 0)"/> 。在每一輪迭代中，對於坐標(i, j)，分別計算當 <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> 和 <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/> 時的「未來將會獲得的數字之和的期望」（策略評估），取較大者對應的動作作爲 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的取值（策略改進）。然後根據本輪迭代確定的 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的值更新 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 。</span><a class="headerlink" href="#id19" title="永久链接至图片">¶</a></p>
+</div>
+<p>我們可以將算法流程概括如下：</p>
+<ul>
+<li><p>初始化環境</p></li>
+<li><p>for i = N-1 downto 0 do</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>（策略評估）計算第i層中每個坐標(i, j)選擇 <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> 和 <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/> 的未來期望 <img class="math" src="../../_images/math/93a23d7a9f31f9d158f5b4aa8f1149aaba05cd47.png" alt="q_1"/> 和 <img class="math" src="../../_images/math/e18e1d8bd03372d42bfa119ff3a0ecb5811985f7.png" alt="q_2"/></p></li>
+<li><p>（策略改進）對第i層中每個坐標(i, j)，取未來期望較大的動作作爲 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的取值</p></li>
+<li><p>（值更新）根據本輪迭代確定的 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的值更新 <img class="math" src="../../_images/math/897259426292b90abf0616971dbf38f9df0c74b4.png" alt="g(i, j) = max(q_1, q_2) + r(i, j)"/></p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h2>環境信息無法直接獲得的情況<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>讓我們更現實一點：在很多現實情況中，我們甚至連環境影響所涉及的具體概率值都不知道，而只能通過在環境中不斷試驗去探索總結。例如，當學習了一種新的圍棋定式時候，我們並無法直接獲得勝率提升的概率，只有與對手使用新定式實戰多盤才能知道這個定式是好是壞。對應於數字三角形問題，我們再考慮以下變式：</p>
+<div class="admonition- admonition">
+<p class="admonition-title">數字三角形問題（變式2）</p>
+<p>智能體初始在三角形的頂端，每次可以選擇向下（ <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> ）或者向右（ <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> ）的動作。環境會對處於任意坐標(i, j)的智能體的動作產生「干擾」，而且這個干擾的具體概率（即上節中的 <img class="math" src="../../_images/math/b970024d9432fd5e37b28335f1d285e4c9afd291.png" alt="p_1"/> 和 <img class="math" src="../../_images/math/c1584505754919371fad45d96afec2cdd64ff03f.png" alt="p_2"/> ）未知。不過，允許在數字三角形的環境中進行多次試驗。當智能體在坐標(i, j)時，可以向數字三角形環境發送動作指令 <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> 或 <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> ，數字三角形環境將返回智能體最終所在的坐標（正下方(i+1, j)或右下方(i+1, j+1)）。請設計試驗方案和流程，確定智能體在每個坐標所應該選擇的動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> ，使得智能體經過的路徑上的數字之和的期望最大。</p>
+</div>
+<p>我們可以通過大量試驗來估計動作爲 <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> 或 <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> 時概率 <img class="math" src="../../_images/math/b970024d9432fd5e37b28335f1d285e4c9afd291.png" alt="p_1"/> 和 <img class="math" src="../../_images/math/c1584505754919371fad45d96afec2cdd64ff03f.png" alt="p_2"/> 的值，不過這在很多現實問題中是困難的。事實上，我們有另一套方法，使得我們不必顯式估計環境中的概率參數，也能得到最優的動作策略。</p>
+<p>回到前節的「策略評估-策略改進」框架，我們現在遇到的最大困難是無法在「策略評估」中通過前一階段的 <img class="math" src="../../_images/math/beb3d189902a8531de1283efda4d89fdb59b40e7.png" alt="g(i+1, j)"/> 、 <img class="math" src="../../_images/math/2ca4e61d10d6384a0d96464572a77e8325d60a85.png" alt="g(i+1, j+1)"/> 和概率參數 <img class="math" src="../../_images/math/b970024d9432fd5e37b28335f1d285e4c9afd291.png" alt="p_1"/> 、 <img class="math" src="../../_images/math/c1584505754919371fad45d96afec2cdd64ff03f.png" alt="p_2"/> 直接計算每個動作的未來期望 <img class="math" src="../../_images/math/a8b01885522343d2ec658036c583d19a97bc6cc3.png" alt="p_1 g(i+1, j) + p_2 g(i+1, j+1)"/> （因爲概率參數未知）。不過，期望的妙處在於：就算我們無法直接計算期望，我們也是可以通過大量試驗估計出期望的。如果我們用 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 表示智能體在坐標(i, j)選擇動作a時的未來期望 <a class="footnote-reference brackets" href="#f2" id="id8">3</a> ，則我們可以觀察智能體在(i, j)處選擇動作a後的K次試驗結果，取這K次結果的平均值作爲估計值。例如，當智能體在坐標(0, 1)並選擇動作 <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> 時，我們進行20次試驗，發現15次的結果爲1，5次的結果爲2，則我們可以估計 <img class="math" src="../../_images/math/ffff350813a8440f70e86e0c7475db9b90ba8755.png" alt="q(0, 1, \downarrow) \approx \frac{15}{20} \times 1 + \frac{5}{20} \times 2 = 1.25"/> 。</p>
+<p>於是，我們只需將前節「策略評估」中的未來期望計算，更換爲使用試驗估計 <img class="math" src="../../_images/math/74c3ff13339a952211d0e24aa8ed2e9fb2814f78.png" alt="a = \downarrow"/> 和 <img class="math" src="../../_images/math/5a2cd6ae2cbc77416889a524b0d954f7aada8e48.png" alt="a = \searrow"/> 時的未來期望 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> ，即可在環境概率參數未知的情況下進行「策略評估」步驟。值得一提的是，由於我們不需要顯式計算期望 <img class="math" src="../../_images/math/a8b01885522343d2ec658036c583d19a97bc6cc3.png" alt="p_1 g(i+1, j) + p_2 g(i+1, j+1)"/> ，所以我們也無須關心 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 的值了，前節值更新的步驟也隨之省略（事實上，這裡 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 已經取代了前節 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 的地位）。</p>
+<p>還有一點值得注意的是，由於試驗是一個從上而下的步驟，需要算法爲整個路徑均提供動作，那麼對於那些尚未確定動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的坐標應該如何是好呢？我們可以對這些坐標使用「隨機動作」，即50%的概率選擇 <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> ，50%的概率選擇 <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> ，以在試驗過程中對兩種動作均進行充分的「探索」。</p>
+<div class="figure align-center" id="id20">
+<a class="reference internal image-reference" href="../../_images/q_iteration_case_2.png"><img alt="../../_images/q_iteration_case_2.png" src="../../_images/q_iteration_case_2.png" style="width: 75%;" /></a>
+<p class="caption"><span class="caption-text">將前節「策略評估」中的未來期望計算，更換爲使用試驗估計 <img class="math" src="../../_images/math/74c3ff13339a952211d0e24aa8ed2e9fb2814f78.png" alt="a = \downarrow"/> 和 <img class="math" src="../../_images/math/5a2cd6ae2cbc77416889a524b0d954f7aada8e48.png" alt="a = \searrow"/> 時的未來期望 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 。</span><a class="headerlink" href="#id20" title="永久链接至图片">¶</a></p>
+</div>
+<p>我們可以將算法流程概括如下：</p>
+<ul>
+<li><p>初始化q值</p></li>
+<li><p>for i = N-1 downto 0 do</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>（策略評估）試驗估計第i層中每個坐標(i, j)選擇 <img class="math" src="../../_images/math/74c3ff13339a952211d0e24aa8ed2e9fb2814f78.png" alt="a = \downarrow"/> 和 <img class="math" src="../../_images/math/5a2cd6ae2cbc77416889a524b0d954f7aada8e48.png" alt="a = \searrow"/> 的未來期望 <img class="math" src="../../_images/math/6fe9b002b41d8ab55c33ef04d9177f6cca71c388.png" alt="q(i, j, \downarrow)"/> 和 <img class="math" src="../../_images/math/5f78bf672a909fc1c85932179a262c9b38a8ab55.png" alt="q(i, j, \searrow)"/></p></li>
+<li><p>（策略改進）對第i層中每個坐標(i, j)，取未來期望較大的動作作爲 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的取值</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h2>從直接算法到迭代算法<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<p>到目前爲止，我們都非常嚴格地遵循了動態規劃中「劃分階段」的思想，即按照問題的時間特徵將問題分成若干個階段並依次求解。對應到數字三角形問題中，即從下到上逐層計算和更新未來期望（或q值），每一輪迭代中更新本層的未來期望（或q值）。在這個過程中，我們很確定，經過N次策略評估和策略改進後，算法將停止，而我們可以獲得精確的最大數字和和最優動作。我們將這種算法稱爲「直接算法」，這也是我們在各種算法競賽中常見的算法類型。</p>
+<p>不過在實際場景中，算法的計算時間往往是有限的，因此我們可能需要算法具有較好的「漸進特性」，即並不要求算法輸出精確的理論最優解，只需能夠輸出近似的較優解，且解的質量隨着迭代次數的增加而提升。我們往往稱這種算法爲「迭代算法」。對於數字三角形問題，我們考慮以下變式：</p>
+<div class="admonition- admonition">
+<p class="admonition-title">數字三角形問題（變式3）</p>
+<p>智能體初始在三角形的頂端，每次可以選擇向下（ <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> ）或者向右（ <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> ）的動作。環境會對處於任意坐標(i, j)的智能體的動作產生「干擾」，而且這個干擾的具體概率未知。允許在數字三角形的環境中進行 K 次試驗（K可能很小也可能很大）。請設計試驗方案和流程，確定智能體在每個坐標所應該選擇的動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> ，使得智能體經過的路徑上的數字之和的期望儘可能大。</p>
+</div>
+<p>爲了解決這個問題，我們不妨從更高的層次來審視我們目前的算法做了什麼。其實算法的主體是交替進行「策略評估」和「策略改進」兩個步驟。其中，</p>
+<ul class="simple">
+<li><p>「策略評估」根據智能體在坐標(i, j)的動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> ，評估在這套動作組合下，智能體在坐標(i, j)選擇動作a的未來期望 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 。</p></li>
+<li><p>「策略改進」根據上一步計算出的 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> ，選擇未來期望最大的動作來更新動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 。</p></li>
+</ul>
+<p>事實上，這一「策略評估」和「策略改進」的交替步驟並不一定需要按照層的順序自下而上進行。我們只要確保算法能根據有限的試驗結果「儘量」反覆進行策略評估和策略改進，就能讓算法輸出的結果「漸進」地越變越好。於是，我們考慮以下算法流程</p>
+<ul>
+<li><p>初始化 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 和 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/></p></li>
+<li><p>repeat</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>固定智能體的動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的取值，進行k次試驗（試驗時加入一些隨機擾動，使得能「探索」更多動作組合，上節也有類似操作）。</p></li>
+<li><p>（策略評估）根據當前k次試驗的結果，調整智能體的未來期望 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 的取值，使得 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 的取值「儘量」能夠真實反映智能體在當前動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 下的未來期望（上節是精確調整 <a class="footnote-reference brackets" href="#f3" id="id10">4</a> 至等於未來期望）。</p></li>
+<li><p>（策略改進）根據當前 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 的值，選擇未來期望較大的動作作爲 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的取值。</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>until 所有坐標的q值都不再變化，或總試驗次數大於K</p></li>
+</ul>
+<p>爲了理解這個算法，我們不妨考慮一種極端情況：假設每輪迭代的試驗次數k的值足夠大，則策略評估步驟中可以將 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 精確調整爲完全等於智能體在當前動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 下的未來期望，事實上就變成了上節算法的「粗放版」（上節的算法每次只更新一層的 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 值爲精確的未來期望，這裡每次都更新了所有的 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 值。在結果上沒有差別，只是多了一些冗餘計算）。</p>
+<p>上面的算法只是一個大致的框架介紹。爲了具體實現算法，我們接下來需要討論兩個問題：一是如何根據k次試驗的結果更新智能體的未來期望 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> ，二是如何在試驗時加入隨機的探索機制。</p>
+<div class="section" id="q">
+<h3>q值的漸進性更新<a class="headerlink" href="#q" title="永久链接至标题">¶</a></h3>
+<p>當每輪迭代的試驗次數k足夠大、覆蓋的情形足夠廣，以至於每個坐標(i, j)和動作a的組合都有足夠多的數據的時候，q值的更新很簡單：根據試驗結果爲每個(i, j, a)重新計算一個新的 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> ，並替換原有數值即可。</p>
+<p>可是現在，我們一共只有較少的k次試驗結果（例如5次或10次）。儘管這k次試驗是基於當前最新的動作方案 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 來實施的，可一是次數太少統計效應不明顯，二是原來的q值也不見得那麼不靠譜（畢竟每次迭代並不見得會把 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 更改太多）。於是，相比於根據試驗結果直接計算一個新的q值 <img class="math" src="../../_images/math/bebdf41cd6fe39e57f830edd8ededd52e9362091.png" alt="\bar{q}(i, j, a) = \frac{q_1 + \cdots + q_n}{n}"/>  並覆蓋原有值（我們在前面的直接算法里一直都是這樣做的 <a class="footnote-reference brackets" href="#f4" id="id11">5</a> ）：</p>
+<div class="math" id="equation-eq5">
+<p><span class="eqno">(5)<a class="headerlink" href="#equation-eq5" title="公式的永久链接">¶</a></span><img src="../../_images/math/1a6408962ff5b3eb785156f4b2efbea85b8b88ab.png" alt="q_{\text{new}}(i, j, a) \leftarrow \underbrace{\bar{q}(i, j, a)}_{\text{target}}"/></p>
+</div><p>一個更聰明的方法是「漸進」地更新q值。也就是說，我們把舊的q值向當前試驗的結果 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> 稍微「牽引」一點，作爲新的q值，從而讓新的q值更貼近當前試驗的結果 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> ，即</p>
+<div class="math" id="equation-eq6">
+<p><span class="eqno">(6)<a class="headerlink" href="#equation-eq6" title="公式的永久链接">¶</a></span><img src="../../_images/math/6713d37848de029074a2e3081fb72a68131e6d02.png" alt="q_{\text{new}}(i, j, a) \leftarrow q_{\text{old}}(i, j, a) + \alpha(\underbrace{\bar{q}(i, j, a)}_{\text{target}} - q_{\text{old}}(i, j, a))"/></p>
+</div><p>其中參數 <img class="math" src="../../_images/math/3929a173b494d403fb588bf98153e3a45dd662fd.png" alt="\alpha"/> 控制牽引的「力度」（牽引力度爲1時，就退化爲了使用試驗結果直接覆蓋q值的 <a class="reference internal" href="#equation-eq5">(5)</a> 式，不過我們一般會設一個小一點的數字，比如0.1或0.01）。通過這種方式，我們既加入了新的試驗所帶來的信息，又保留了部分舊的知識。其實很多迭代算法都有類似的特點。</p>
+<p>不過， <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> 的值只有當一次試驗完全做完的時候才能獲得。也就是說，只有走到了數字三角形的最底層，才能知道路徑途中的每個坐標到路徑最底端的數字之和（從而更新路徑途中的所有坐標的q值）。這在有些場景會造成效率的低下，所以我們在實際更新時往往使用另一種方法，使得我們每走一步都可以更新一次q值。具體地說，假設某一次試驗中我們在數字三角形的坐標(i, j)處，通過執行動作 <img class="math" src="../../_images/math/7f91f9da34a27af1b7fec19a4d352b4d0ac7bdf9.png" alt="a = \pi(i, j) + \epsilon"/> （ <img class="math" src="../../_images/math/3bbacb4d6fc6b93009fe733c5fe22be0c81b22c5.png" alt="+ \epsilon"/> 代表加上一些探索擾動）而跳到了坐標(i’,j’)（即「走一步」，可能是(i+1, j)，也可能是(i+1, j+1)），然後又在坐標(i’,j’)執行了動作 <img class="math" src="../../_images/math/3244ef22300f601a72a9f7a861e755d913877aea.png" alt="a' = \pi(i', j') + \epsilon"/> 。這時我們可以用 <img class="math" src="../../_images/math/8513661163d739885dd4b8f73d3567e23ad09b0d.png" alt="r(i', j') + q(i', j', a')"/> 來近似替代之前的 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> ，如下式所示：</p>
+<div class="math" id="equation-eq7">
+<p><span class="eqno">(7)<a class="headerlink" href="#equation-eq7" title="公式的永久链接">¶</a></span><img src="../../_images/math/eda8f480ab4716adfec039807eb8db4756726714.png" alt="q_{\text{new}}(i, j, a) \leftarrow q_{\text{old}}(i, j, a) + \alpha\big(\underbrace{r(i', j') + q(i', j', a')}_{\text{target}} - q_{\text{old}}(i, j, a)\big)"/></p>
+</div><p>我們甚至可以不需要試驗結果中的 <img class="math" src="../../_images/math/918247d85d6d7ed629a414cb6bc92ddaaf59995d.png" alt="a'"/> ，而使用在坐標(i’, j’)時兩個動作對應的q值的較大者 <img class="math" src="../../_images/math/c2a42f4c5fdd132bb9e491f72bb751332c448310.png" alt="\max[q(i', j', \downarrow), q(i', j', \searrow)]"/> 來代替 <img class="math" src="../../_images/math/fdef2de7d360ebe8e12fe46f77ef8f15db51fc08.png" alt="q(i', j', a')"/> ，如下式：</p>
+<div class="math" id="equation-eq8">
+<p><span class="eqno">(8)<a class="headerlink" href="#equation-eq8" title="公式的永久链接">¶</a></span><img src="../../_images/math/baf7c525dd74dc28da7bca242c2645153e564685.png" alt="q_{\text{new}}(i, j, a) \leftarrow q_{\text{old}}(i, j, a) + \alpha\big(\underbrace{r(i', j') + \max[q(i', j', \downarrow), q(i', j', \searrow)]}_{\text{target}} - q_{\text{old}}(i, j, a)\big)"/></p>
+</div></div>
+<div class="section" id="id12">
+<h3>探索策略<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h3>
+<p>對於我們前面介紹的，基於試驗的算法而言，由於環境裡的概率參數是未知的（類似於將環境看做黑盒），所以我們在試驗時一般都需要加入一些隨機的「探索策略」，以保證試驗的結果能覆蓋到比較多的情況。否則的話，由於智能體在每個坐標都具有固定的動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> ，所以試驗的結果會受到極大的限制，導致陷入局部最優的情況。考慮最極端的情況，假若我們回到本節之初的原版數字三角形問題（環境確定、已知且不受概率影響），當動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 也固定時，無論進行多少次試驗，結果都是完全固定且唯一的，使得我們沒有任何改進和優化的空間。</p>
+<p>探索的策略有很多種，在此我們介紹一種較爲簡單的方法：設定一個概率比例 <img class="math" src="../../_images/math/f72a1fc0c79aacac313889d0ec9fdb7f1d3a3092.png" alt="\epsilon"/> ，以 <img class="math" src="../../_images/math/f72a1fc0c79aacac313889d0ec9fdb7f1d3a3092.png" alt="\epsilon"/> 的概率隨機生成動作（ <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> 或 <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> ），以 <img class="math" src="../../_images/math/c927ed3b3be182505f1e8418a2a6d4dd00574dae.png" alt="1 - \epsilon"/> 的概率選擇動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 。我們可以看到，當 <img class="math" src="../../_images/math/c45afb49be64d2a2c04324da334a5ae24af0cc1d.png" alt="\epsilon = 1"/> 時，相當於完全隨機地選取動作。當 <img class="math" src="../../_images/math/d5324c17ef8b189148f2a7af52f5119fb598ba58.png" alt="\epsilon = 0"/> 時，則相當於沒有加入任何隨機擾動，直接選擇動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 。一般而言，在迭代初始的時候 <img class="math" src="../../_images/math/f72a1fc0c79aacac313889d0ec9fdb7f1d3a3092.png" alt="\epsilon"/> 的取值較大，以擴大探索的範圍。隨着迭代次數的增加， <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的值逐漸變優， <img class="math" src="../../_images/math/f72a1fc0c79aacac313889d0ec9fdb7f1d3a3092.png" alt="\epsilon"/> 的取值會逐漸減小。</p>
+</div>
+</div>
+<div class="section" id="id13">
+<h2>大規模問題的求解<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h2>
+<p>算法設計有兩個永恆的指標：時間和空間。通過將直接算法改造爲迭代算法，我們初步解決了算法在時間消耗上的問題。於是我們的下一個挑戰就是空間消耗，這主要體現在q值的存儲上。在前面的描述中，我們不斷迭代更新 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 的值。這默認了我們在內存中建立了一個 <img class="math" src="../../_images/math/e0df28ad4b35bf890699346d22ab516ffb64fc18.png" alt="N \times N \times 2"/>  的三維數組，可以記錄並不斷更新q值。然而，假若N很大，而計算機的內存空間又很有限，那我們該怎麼辦呢？</p>
+<p>我們來思考一下，當我們具體實現 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 時，我們需要其能夠實現的功能有二：</p>
+<ul class="simple">
+<li><p>q值映射：給定坐標(i, j)和動作a（ <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> 或 <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> ），可以輸出一個 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 值。</p></li>
+<li><p>q值更新：給定坐標(i, j)、動作a和目標值target，可以更新q值映射，使得更新後輸出的 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 距離目標值target更近。</p></li>
+</ul>
+<p>事實上，我們有不少近似方法，可以讓我們在不使用太多內存的情況下實現一個滿足以上兩個功能的 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 。這裡介紹一種最流行的方法，即使用深度神經網絡近似實現 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> ：</p>
+<ul class="simple">
+<li><p>q值映射：將坐標(i, j)輸入深度神經網絡，網絡輸出在坐標(i, j)下的所有動作的q值（即 <img class="math" src="../../_images/math/6fe9b002b41d8ab55c33ef04d9177f6cca71c388.png" alt="q(i, j, \downarrow)"/> 和 <img class="math" src="../../_images/math/5f78bf672a909fc1c85932179a262c9b38a8ab55.png" alt="q(i, j, \searrow)"/> ）。</p></li>
+<li><p>q值更新：給定坐標(i, j)、動作a和目標值target，將坐標(i, j)輸入深度神經網絡，網絡輸出在坐標(i, j)下的所有動作的q值，取其中動作爲a的q值爲 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> ，並定義損失函數 <img class="math" src="../../_images/math/dee51293e42412e1211dcc05ddef0fec65445a26.png" alt="\text{loss} = (\text{target} - q(i, j, a))^2"/> ，使用優化器（例如梯度下降）對該損失函數進行一步優化。此處優化器的步長和上文中的「牽引參數」 <img class="math" src="../../_images/math/3929a173b494d403fb588bf98153e3a45dd662fd.png" alt="\alpha"/> 作用類似。</p></li>
+</ul>
+<div class="figure align-center" id="id21">
+<a class="reference internal image-reference" href="../../_images/q_network.png"><img alt="../../_images/q_network.png" src="../../_images/q_network.png" style="width: 75%;" /></a>
+<p class="caption"><span class="caption-text">對於數字三角形問題，左圖爲使用三維數組實現 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> ，右圖爲使用深度神經網絡近似實現 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/></span><a class="headerlink" href="#id21" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="id14">
+<h2>總結<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h2>
+<p>儘管我們在前文中並未提及「強化學習」一詞，但其實我們在對數字三角形問題各種變式的討論中，已經涉及了很多強化學習的基本概念及算法，在此列舉：</p>
+<ul class="simple">
+<li><p>在第二節中，我們討論了基於模型的強化學習（Model-based Reinforcement Learning），包括值迭代（Value Iteration）和策略迭代（Policy Iteration）兩種方法。</p></li>
+<li><p>在第三節中，我們討論了無模型的強化學習（Model-free Reinforcement Learning）。</p></li>
+<li><p>在第四節中，我們討論了蒙特卡羅方法（Monte-Carlo Method）和時間差分法（Temporial-Difference Method），以及SARSA和Q-learning兩種學習方法。</p></li>
+<li><p>在第五節中，我們討論了使用Q網絡（Q-Network）近似實現Q函數來進行深度強化學習（Deep Reinforcement Learning）。</p></li>
+</ul>
+<p>其中部分術語對應關係如下：</p>
+<ul class="simple">
+<li><p>數字三角形的坐標(i, j)被稱爲狀態（State），用 <img class="math" src="../../_images/math/bafbf63de17508c8c25cd882e0178342c193ae0c.png" alt="s"/> 表示。狀態的集合用 <img class="math" src="../../_images/math/dc4671774f97206720985aae0780005668995cb2.png" alt="S"/> 表示。</p></li>
+<li><p>智能體的兩種動作 <img class="math" src="../../_images/math/b4d6d7e4087693b0987a73cb4c561da1a1a2c2e8.png" alt="\downarrow"/> 和 <img class="math" src="../../_images/math/82b201722cf8d9f1fffdc72f0cd0346fb89764a7.png" alt="\searrow"/> 被稱爲動作（Action），用 <img class="math" src="../../_images/math/c13eacc8d78956859939555ea65552aa2f4f15a5.png" alt="a"/> 表示。動作的集合用 <img class="math" src="../../_images/math/b86d9659948ffa756133d580cfc95f923705c2b5.png" alt="A"/> 表示。</p></li>
+<li><p>數字三角形在每個坐標的數字 <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> 被稱爲獎勵（Reward），用 <img class="math" src="../../_images/math/69410eb98471b61f2cd0d24a6dd7cbf32f3999a0.png" alt="r(s)"/> （只與狀態有關）或 <img class="math" src="../../_images/math/d6301483a10c86fdfe51d0f65611d4405f09a70d.png" alt="r(s, a)"/> （與狀態和動作均有關）表示。獎勵的集合用 <img class="math" src="../../_images/math/cd3b7803bb32c208c4824757495644927ed2bae1.png" alt="R"/> 表示。</p></li>
+<li><p>數字三角形環境中的概率參數 <img class="math" src="../../_images/math/b970024d9432fd5e37b28335f1d285e4c9afd291.png" alt="p_1"/> 和 <img class="math" src="../../_images/math/c1584505754919371fad45d96afec2cdd64ff03f.png" alt="p_2"/> 被稱爲狀態轉移概率（State Transition Probabilities），用一個三參數函數 <img class="math" src="../../_images/math/94bbede17987b33649cd945a1e6378ef4e18cd1b.png" alt="p(s, a, s')"/> 表示，代表在狀態s進行動作a到達狀態s’的概率。</p></li>
+<li><p>狀態、動作、獎勵、狀態轉移概率，外加一個時間折扣係數 <img class="math" src="../../_images/math/8f5323e15333106b53044416326c30071818c4ab.png" alt="\gamma \in [0, 1]"/> 的五元組構成一個馬爾可夫決策過程（Markov Decision Process，簡稱MDP）。數字三角形問題中 <img class="math" src="../../_images/math/fafaeec5c7be8cf44ef1bf79d43040ce68f1f6cd.png" alt="\gamma = 1"/> 。</p></li>
+<li><p>第二節中MDP已知的強化學習稱爲基於模型的強化學習，第三節MDP的狀態轉移概率未知的強化學習稱爲無模型的強化學習。</p></li>
+<li><p>智能體在每個坐標 (i, j) 處會選擇的動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 被稱爲策略（Policy），用 <img class="math" src="../../_images/math/13c8755d0351dd7e71503b580fe06497e6e1f5d2.png" alt="\pi(s)"/> 表示。智能體的最優策略用 <img class="math" src="../../_images/math/e0f33310741d626a97a2b4e3eccffa4a4bdaf359.png" alt="\pi^*(s)"/> 表示。</p></li>
+<li><p>第二節中，當策略 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 一定時，智能體在坐標(i, j)處 「現在及未來將會獲得的數字之和的期望」 <img class="math" src="../../_images/math/8706bd19cdb4eb441ec988af7b7de23c8ae50abb.png" alt="f(i, j)"/> 被稱爲狀態-價值函數（State-Value Function），用 <img class="math" src="../../_images/math/b2e6496d499b73820585b8806e33c026cefdb2f0.png" alt="V^\pi(s)"/> 表示。智能體在坐標(i, j)處「未來將會獲得的數字之和的期望的最大值」 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 被稱爲最優策略下的狀態-價值函數，用 <img class="math" src="../../_images/math/b85a2f6015b8b31fee4362c6c3b62c5c94e2f4e7.png" alt="V^*(s)"/> 表示。</p></li>
+<li><p>第三節中，當策略 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 一定時，智能體在坐標(i, j)處選擇動作a時 「現在及未來將會獲得的數字之和的期望」 <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 被稱爲動作-價值函數（Action-Value Function），用 <img class="math" src="../../_images/math/6ac6aedc7dbfb0b0a202ca18afaa92601f720663.png" alt="Q^\pi(s, a)"/> 表示。最優策略下的狀態-價值函數用 <img class="math" src="../../_images/math/fa7bb286bf0d0d63ee1bc6c1378764e1eee2f314.png" alt="Q^*(s, a)"/> 表示。</p></li>
+<li><p>在第三節和第四節中，使用試驗結果直接取均值估計 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> 的方法，稱爲蒙特卡羅方法。 <a class="reference internal" href="#equation-eq7">(7)</a> 中用 <img class="math" src="../../_images/math/8513661163d739885dd4b8f73d3567e23ad09b0d.png" alt="r(i', j') + q(i', j', a')"/> 來近似替代的 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> 的方法稱爲時間差分法， <a class="reference internal" href="#equation-eq7">(7)</a> 的q值更新方法本身稱爲SARSA方法。 <a class="reference internal" href="#equation-eq8">(8)</a> 稱之爲Q-learning方法。</p></li>
+</ul>
+<div class="admonition- admonition">
+<p class="admonition-title">推薦閱讀</p>
+<p>如果讀者希望進一步理解強化學習相關知識，可以參考</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://wnzhang.net/tutorials/marl2018/index.html">SJTU Multi-Agent Reinforcement Learning Tutorial</a> （簡明的強化學習入門幻燈片）</p></li>
+<li><p><a class="reference external" href="https://zhuanlan.zhihu.com/sharerl">強化學習知識大講堂</a> （內容廣泛的中文強化學習專欄）</p></li>
+<li><p>郭憲, 方勇純. 深入淺出強化學習：原理入門. 電子工業出版社, 2018. （較爲通俗易懂的中文強化學習入門教程）</p></li>
+<li><p>Richard S. Sutton, Andrew G. Barto. 強化學習（第二版）. 電子工業出版社, 2019. （較爲系統理論的經典強化學習教材）</p></li>
+</ul>
+</div>
+<dl class="footnote brackets">
+<dt class="label" id="f0"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
+<dd><p>所以有時又被稱爲「記憶化搜索」，或者說記憶化搜索是動態規劃的一種具體實現形式。</p>
+</dd>
+<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id6">2</a></span></dt>
+<dd><p>期望是試驗中每次可能結果的概率乘以其結果的總和，反映了隨機變量平均取值的大小。例如，你在一次投資中有 <img class="math" src="../../_images/math/f162376f26a078bcf0cc142e27cb1eab136069c1.png" alt="\frac{1}{4}"/> 的概率賺100元，有 <img class="math" src="../../_images/math/115f182e3fd76aa746f242950dda40488863238c.png" alt="\frac{3}{4}"/> 的概率賺200元，則你本次投資賺取金額的期望爲 <img class="math" src="../../_images/math/02a70e69ff5696b81cb0e1e4c72af443f7bc2ac1.png" alt="\frac{1}{4} \times 100 + \frac{3}{4} \times 200 = 175"/> 元。也就是說，如果你重複這項投資多次，則所獲收益的平均值趨近於175元。</p>
+</dd>
+<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id8">3</a></span></dt>
+<dd><p>作爲參考，在前節中， <img class="math" src="../../_images/math/1278e35db12b4d4b32bf2f487dc1a21fba04bdc3.png" alt="q(i, j, a) = \begin{cases}\frac{3}{4} f(i+1, j) + \frac{1}{4} f(i+1, j+1), a = \downarrow \\ \frac{1}{4} f(i+1, j) + \frac{3}{4} f(i+1, j+1), a = \searrow\end{cases}"/></p>
+</dd>
+<dt class="label" id="f3"><span class="brackets"><a class="fn-backref" href="#id10">4</a></span></dt>
+<dd><p>這裡和下文中的「精確」都是相對於迭代算法的有限次試驗而言的。只要是基於試驗的方法，所獲得的期望都是估計值。</p>
+</dd>
+<dt class="label" id="f4"><span class="brackets"><a class="fn-backref" href="#id11">5</a></span></dt>
+<dd><p>不過在這裡，如果我們在迭代第一步的試驗時加入了隨機擾動的「探索策略」的話，這樣計算是不太對的。因爲k次試驗結果受到了探索策略的影響，導致我們所評估的其實是隨機擾動後的動作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> ，使得我們根據試驗結果統計出的 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> 存在偏差。爲了解決這個問題，我們有兩種方法。第一種方法是把隨機擾動的「探索策略」加到第三步策略改進選擇最大期望的過程里，第二種則需要採用一種叫做「重要度採樣」（Importance Sampling）的方法。由於我們真實採用的q值更新方法多是後面介紹的時間差分方法，所以這裡省略關於重要度採樣的介紹，有需要的讀者可參考文末列出的強化學習相關文獻進行了解。</p>
+</dd>
+</dl>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 212 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="docker.html" class="btn btn-neutral float-right" title="使用Docker部署TensorFlow環境" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="quantum.html" class="btn btn-neutral float-left" title="TensorFlow Quantum: 混合量子-經典機器學習 *" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

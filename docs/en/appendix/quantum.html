@@ -1,0 +1,597 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TensorFlow Quantum: Hybrid Quantum-classical Machine Learning * &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
+        <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200506.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="Introduction to Reinforcement Learning" href="rl.html" />
+    <link rel="prev" title="Swift for TensorFlow (S4TF)" href="swift.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴 TensorFlow 2
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/rl.html">强化学习简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教學活動</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基礎</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/installation.html">TensorFlow安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/models.html">TensorFlow 模型建立與訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/basic/tools.html">TensorFlow常用模塊</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大規模訓練與加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/distributed.html">TensorFlow分布式訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/tpu.html">使用TPU訓練TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">擴展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/rl.html">強化學習簡介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/docker.html">使用Docker部署TensorFlow環境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/cloud.html">在雲端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/recommended_books.html">參考資料與推薦閱讀</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/appendix/terms.html">術語中英對照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Preface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">Installation and Environment Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">Model Construction and Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">Common Modules in TensorFlow</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Large-scale Training</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="distributed.html">Distributed Training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tpu.html">Training TensorFlow models with TPU</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extensions</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-concepts-of-quantum-computing">Basic concepts of quantum computing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quantum-bit">quantum bit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quantum-logic-gate">quantum logic gate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quantum-circuit">Quantum Circuit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-create-a-simple-circuit-line-using-cirq">Example: Create a simple circuit line using Cirq</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#hybrid-quantum-classic-machine-learning">Hybrid Quantum - Classic Machine Learning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quantum-data-sets-and-quantum-gates-with-parameters">Quantum data sets and quantum gates with parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parametric-quantum-lines-pqc">Parametric Quantum Lines (PQC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embedding-parametric-quantum-circuits-into-machine-learning-models">Embedding parametric quantum circuits into machine learning models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-biclassification-of-quantum-data-sets">Example: biclassification of quantum data sets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rl.html">Introduction to Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">Using Docker to deploy TensorFlow environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud.html">Using TensorFlow on cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recommended_books.html">References and Recommendations for Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms.html">Terminology comparison table between Chinese and English</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴 TensorFlow 2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/en/appendix/quantum.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tensorflow-quantum-hybrid-quantum-classical-machine-learning">
+<h1>TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *<a class="headerlink" href="#tensorflow-quantum-hybrid-quantum-classical-machine-learning" title="永久链接至标题">¶</a></h1>
+<p>The classic computer around us uses bits and logic gates for binary operations. In physical hardware, such arithmetic is primarily achieved by the special conductive properties of semiconductors. After decades of development, we have been able to integrate hundreds of millions of transistors on a tiny semiconductor chip, enabling high-performance classical computing.</p>
+<p>Quantum Computing, on the other hand, aims to use “quantum bits” and “quantum logic gates” with quantum properties such as quantum state superposition and quantum entanglement to perform calculations. This new computing paradigm could achieve exponential acceleration in important areas such as search and large number decomposition, making possible some of the hyperscale computing that is not currently possible, potentially changing the world profoundly in the future. On physical hardware, such quantum computing can also be implemented by some structures with quantum properties (e.g., superconducting Josephson junctions).</p>
+<p>Unfortunately, although the theory of quantum computing has been developed in depth, in terms of physical hardware, we are still unable to build a general quantum computer <a class="footnote-reference brackets" href="#f0" id="id1">1</a> that surpasses the classical computer. IBM and Google have made some achievements in the physical construction of general quantum computers, but neither the number of quantum bits nor the solution of decoherence problems are yet to reach the practical level.</p>
+<p>The above is the basic background of quantum computing, and next we discuss quantum machine learning. One of the most straightforward ways of thinking about quantum machine learning is to use quantum computing to accelerate traditional machine learning tasks, such as quantum versions of PCA, SVM, and K-Means algorithms, yet none of these algorithms have yet reached a practical level. The quantum machine learning we discuss in this chapter takes a different line of thinking, which is to construct parameterized Quantum Circuits (PQCs).PQCs can be used as layers in a deep learning model, which is called Hybrid Quantum-Classical Machine Learning (HQC) if we add PQCs to the ordinary deep learning model. This hybrid model is particularly suitable for tasks on quantum data sets (Quantum Data). And TensorFlow Quantum is what helps us build this hybrid quantum-classical machine learning model. Next, we will provide an introduction to several basic concepts of quantum computing, and then describe the process of building a PQC using TensorFlow Quantum and Google’s quantum computing library Cirq, embedding the PQC into a Keras model, and training a hybrid model on a quantum data set.</p>
+<div class="section" id="basic-concepts-of-quantum-computing">
+<h2>Basic concepts of quantum computing<a class="headerlink" href="#basic-concepts-of-quantum-computing" title="永久链接至标题">¶</a></h2>
+<p>This section will briefly describe some basic concepts of quantum computing, including quantum bits, quantum gates, quantum circuits, etc.</p>
+<div class="admonition-recommended-reading admonition">
+<p class="admonition-title">recommended reading</p>
+<p>If you want a deeper understanding of quantum mechanics and the fundamentals of quantum computing, it is recommended to start with the following two books.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://www.phy.pku.edu.cn/~wubiao/">Wu Biao</a>, A Concise Introduction to Quantum Mechanics (A Concise and Quick Introduction to Quantum Mechanics, forthcoming from Peking University Press, read online <a class="reference external" href="http://www.phy.pku.edu.cn/~wubiao/pop_qm_pkupress.pdf">http://www.phy.pku.edu.cn/~wubiao/pop_qm_pkupress.pdf</a>)</p></li>
+<li><p>Hidary, Jack D. <a class="reference external" href="http://link.springer.com/10.1007/978-3-030-23922-0">Quantum Computing: An Applied Approach</a> . Cham: Springer International Publishing, 2019. <a class="reference external" href="https://doi.org/10.1007/978-3-030-23922-0">https://doi.org/10.1007/978-3-030-23922-0</a>. (Tutorial on Quantum Computing with a focus on code-based practice, source code available on GitHub: <a class="reference external" href="https://github.com/JackHidary/quantumcomputingbook">https://github.com/JackHidary/quantumcomputingbook</a>)</p></li>
+</ul>
+</div>
+<div class="section" id="quantum-bit">
+<h3>quantum bit<a class="headerlink" href="#quantum-bit" title="永久链接至标题">¶</a></h3>
+<p>In classical binary computers, we use bits (also called “bits”) as the basic unit of information storage, and a bit has only two states, 0 or 1. In a quantum computer, we use Quantum Bit (Qubit, also known as “quantum bits”) to represent information. Quantum bits also have two basic states <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> and <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/>. However, in addition to these two basic states, quantum bits can also be in a superposition state between them, i.e. <img class="math" src="../../_images/math/cb62f6b814018e36a06acdc07ddd8de7ce8dafff.png" alt="\ket{\psi} = a \ket{0} + b \ket{1}"/> (where a and b are plural, <img class="math" src="../../_images/math/fda8d4ed57f788a15760f0a1ec6f4d9d8618da47.png" alt="|a|^2 + |b|^2 = 1"/>). For example, <img class="math" src="../../_images/math/bc1c385e3ea3312c60790a3e4d5a2e071fd87d86.png" alt="\ket{\psi_0} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> and <img class="math" src="../../_images/math/7a38874696965458beef81b0fd6fd77563b23f4a.png" alt="\ket{\psi_1} = \frac{1}{\sqrt{2}} \ket{0} - \frac{1}{\sqrt{2}} \ket{1}"/> are both legitimate quantum states. We can also use the language of vectorization to represent the state of a quantum bit. If we make <img class="math" src="../../_images/math/e29555d1aa8eb2a3e0170a2979f9e4daab4e3959.png" alt="\ket{0} = \begin{bmatrix}1 \\0\end{bmatrix}"/>, <img class="math" src="../../_images/math/9425b8c3ba508f5481f6e755dda8fe54a0931ca7.png" alt="\ket{1} = \begin{bmatrix}0 \\1\end{bmatrix}"/>, then <img class="math" src="../../_images/math/79e8eeae52eee88a430880991a1ca27fda15ae20.png" alt="\ket{\psi} = \begin{bmatrix}a \\ b\end{bmatrix}"/>, <img class="math" src="../../_images/math/4f334a6326ee50ca644baddc697b1275fcc7c253.png" alt="\ket{\psi_0} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} \end{bmatrix}"/>, <img class="math" src="../../_images/math/8f9f2482a0167f20c12406c60a6446ae81bc73c5.png" alt="\ket{\psi_1} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ -\frac{1}{\sqrt{2}}\end{bmatrix}"/>.</p>
+<p>At the same time, we can use the Bloch Sphere to graphically demonstrate the state of a single quantum bit. The topmost part of the sphere is <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> and the bottommost part is <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> and the unit vector from the origin to any point on the sphere can be a state of quantum bits.</p>
+<div class="figure align-center" id="id7">
+<a class="reference internal image-reference" href="../../_images/bloch_sphere.png"><img alt="../../_images/bloch_sphere.png" src="../../_images/bloch_sphere.png" style="width: 30%;" /></a>
+<p class="caption"><span class="caption-text">Bloch Sphere (<a class="reference external" href="https://en.wikipedia.org/wiki/Bloch_sphere">Bloch Sphere</a>).  <a class="reference external" href="https://en.wikipedia.org/wiki/File:Bloch_sphere.svg">Source of illustration</a></span><a class="headerlink" href="#id7" title="永久链接至图片">¶</a></p>
+</div>
+<p>It is worth noting in particular that although quantum bits <img class="math" src="../../_images/math/cb62f6b814018e36a06acdc07ddd8de7ce8dafff.png" alt="\ket{\psi} = a \ket{0} + b \ket{1}"/> have quite a few possible states, once we observe them, their states immediately collapse <a class="footnote-reference brackets" href="#f1" id="id2">2</a> into one of two fundamental states of <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> and <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> with probabilities of <img class="math" src="../../_images/math/ac5498723d4e8d9267643ab25e38bae3e9f87881.png" alt="|a|^2"/> and <img class="math" src="../../_images/math/f85ee1a43dbb809cf8e29f521a63aa72b3a2f827.png" alt="|b|^2"/>, respectively.</p>
+</div>
+<div class="section" id="quantum-logic-gate">
+<h3>quantum logic gate<a class="headerlink" href="#quantum-logic-gate" title="永久链接至标题">¶</a></h3>
+<p>In binary classical computers, we have logic gates such as AND (with), OR (or), NOT (not), etc. that transform the input bit state and output it. In quantum computers, we also have Quantum Logic Gates (or “quantum gates” for short) that transform and output quantum states. If we use the language of vectorization to represent quantum states, the quantum logic gate can be seen as a matrix that transforms the state vectors.</p>
+<p>For example, the quantum non-gate can be expressed as <img class="math" src="../../_images/math/b76f883131bc5e360476d5f6a5fe27051d96595c.png" alt="X = \begin{bmatrix}0 &amp; 1 \\1 &amp; 0\end{bmatrix}"/>, so when we act the quantum non-gate on the fundamental state <img class="math" src="../../_images/math/e29555d1aa8eb2a3e0170a2979f9e4daab4e3959.png" alt="\ket{0} = \begin{bmatrix}1 \\0\end{bmatrix}"/>, we get <img class="math" src="../../_images/math/a032d41fb97c8267665035a6a71ca17b130c1a29.png" alt="X\ket{0} = \begin{bmatrix}0 &amp; 1 \\1 &amp; 0\end{bmatrix} \begin{bmatrix}1 \\0\end{bmatrix} = \begin{bmatrix}0 \\1\end{bmatrix}"/>.  In fact, quantum non-gates <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> are equivalent to rotating a quantum state 180 degrees around the X axis on a Bloch sphere. and <img class="math" src="../../_images/math/1af1b7de7f38ea0f40b9954bce778c4c8468c33a.png" alt="\ket{\psi_0}"/> is on the X-axis, so no change). Quantum and gates and or gates <a class="footnote-reference brackets" href="#f2" id="id3">3</a> are slightly more complex due to the multiple quantum bits involved, but are equally achievable with matrices of greater size.</p>
+<p>It may have occurred to some readers that since there are more states of a single quantum bit than <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> and <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/>, then quantum logic gates as transformations of quantum bits can in fact be completely unrestricted to and from. In fact, any matrix <a class="footnote-reference brackets" href="#f3" id="id4">4</a> that meets certain conditions can serve as a quantum logic gate. For example, transforms that rotate quantum states around the X, Y and Z axes on the Bloch sphere <img class="math" src="../../_images/math/fe5f1bd15fc3108de3542ee3b011130163487106.png" alt="Rx(\theta)"/>, <img class="math" src="../../_images/math/d07d1cc4c66a121e4da2247a4e24a1c31a7115cc.png" alt="Ry(\theta)"/>, <img class="math" src="../../_images/math/bae48849043d944e70c7fd069ab84b295b385b6d.png" alt="Rz(\theta)"/> (where <img class="math" src="../../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> is the angle of rotation and when <img class="math" src="../../_images/math/788c2c7d03643cff00033641c84342eb48e978ea.png" alt="\theta=180^\circ"/> is recorded as <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/>, math:<cite>Y</cite>, math:<cite>Z</cite>) are quantum logic gates. In addition, there is a quantum logic gate “Hadamard Gate” <img class="math" src="../../_images/math/18eb5ac5582f8fe16e8c9be33fd08077c54fd742.png" alt="H = \frac{1}{\sqrt{2}} \begin{bmatrix}1 &amp; 1 \\1 &amp; -1\end{bmatrix}"/> that can convert quantum states from elementary to superposition states, which occupies an important place in many scenarios of quantum computing.</p>
+</div>
+<div class="section" id="quantum-circuit">
+<h3>Quantum Circuit<a class="headerlink" href="#quantum-circuit" title="永久链接至标题">¶</a></h3>
+<p>When we mark quantum bits, as well as quantum logic gates, sequentially on one or more parallel lines, they constitute a quantum circuit, or quantum circuit. For example, for the process we discussed in the previous section, using quantum non-gates <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> to transform the fundamental state <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/>, we can write the quantum circuit as follows.</p>
+<div class="figure align-center" id="id8">
+<a class="reference internal image-reference" href="../../_images/X_circuit.png"><img alt="../../_images/X_circuit.png" src="../../_images/X_circuit.png" style="width: 30%;" /></a>
+<p class="caption"><span class="caption-text">A simple quantum circuit.</span><a class="headerlink" href="#id8" title="永久链接至图片">¶</a></p>
+</div>
+<p>In a quantum circuit, each horizontal line represents one quantum bit. The leftmost <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> in the above diagram represents the initial state of a quantum bit. The X square in the middle represents the quantum non-gate <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> and the dial symbol on the far right represents the measurement operation. The significance of this line is “to perform quantum non-gate <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> operations on quantum bits whose initial state is <img class="math" src="../../_images/math/c9e75cf4345ecc62e258f469ea6d278fbe9af79f.png" alt="ket{0}"/> and to measure the transformed quantum bit state”. According to our discussion in the previous section, the transformed quantum bit state is the fundamental state <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/>, so we can expect the final measurement of this quantum circuit to be always 1.</p>
+<p>Next, we consider replacing the quantum non-gate <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> of the quantum circuit in the above figure with the Adama gate <img class="math" src="../../_images/math/aaf3132d08f6d8d7a2be379482c0f2c5f93118f5.png" alt="H"/>.</p>
+<div class="figure align-center" id="id9">
+<a class="reference internal image-reference" href="../../_images/H_circuit.png"><img alt="../../_images/H_circuit.png" src="../../_images/H_circuit.png" style="width: 30%;" /></a>
+<p class="caption"><span class="caption-text">Quantum line after replacing quantum non-gate <img class="math" src="../../_images/math/ded54539a996e559133ad16363d76c51fc8d87e7.png" alt="X"/> with adama gate <img class="math" src="../../_images/math/aaf3132d08f6d8d7a2be379482c0f2c5f93118f5.png" alt="H"/></span><a class="headerlink" href="#id9" title="永久链接至图片">¶</a></p>
+</div>
+<p>The matrix corresponding to the Adama gate is expressed as <img class="math" src="../../_images/math/8ab21487f233c92782c9ddb641673480259017d9.png" alt="H = \frac{1}{\sqrt{2}} \begin{bmatrix}1 &amp; 1 \\1 &amp; -1 \end{bmatrix}"/>, so we can calculate the transformed quantum state as  <img class="math" src="../../_images/math/e54197a85a7fed22dbac9b4fe02c3875dc2530cd.png" alt="H\ket{0} = \frac{1}{\sqrt{2}} \begin{bmatrix}1 &amp; 1 \\ 1 &amp; -1\end{bmatrix}\begin{bmatrix}1 \\ 0\end{bmatrix} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}"/> . This is a superposition state of <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> and <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/> that collapses to a fundamental state after observation with probabilities of <img class="math" src="../../_images/math/991df5fe1973ab13f4ae55c33ba569fb8f378307.png" alt="|\frac{1}{\sqrt{2}}|^2 = \frac{1}{2}"/>. That is, the observation of this quantum circuit is similar to a coin toss. If 20 observations are made, the result for about 10 is <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> and the result for 10 is <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/>.</p>
+</div>
+<div class="section" id="example-create-a-simple-circuit-line-using-cirq">
+<h3>Example: Create a simple circuit line using Cirq<a class="headerlink" href="#example-create-a-simple-circuit-line-using-cirq" title="永久链接至标题">¶</a></h3>
+<p><a class="reference external" href="https://cirq.readthedocs.io/">Cirq</a> is a Google-led open source quantum computing library that helps us easily build quantum circuits and simulate measurements (we’ll use it again in the next section on TensorFlow Quantum). Cirq is a Python library that can be installed using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">cirq</span></code>. The following code implements the two simple quantum circuits established in the previous section, with 20 simulated measurements each.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cirq</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">LineQubit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>           <span class="c1"># 实例化一个量子比特</span>
+<span class="n">simulator</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Simulator</span><span class="p">()</span>    <span class="c1"># 实例化一个模拟器</span>
+
+<span class="n">X_circuit</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span>       <span class="c1"># 建立一个包含量子非门和测量的量子线路</span>
+    <span class="n">cirq</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="n">q</span><span class="p">),</span>
+    <span class="n">cirq</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_circuit</span><span class="p">)</span>                <span class="c1"># 在终端可视化输出量子线路</span>
+
+<span class="c1"># 使用模拟器对该量子线路进行20次的模拟测量</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">X_circuit</span><span class="p">,</span> <span class="n">repetitions</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>                   <span class="c1"># 输出模拟测量结果</span>
+
+<span class="n">H_circuit</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span>       <span class="c1"># 建立一个包含阿达马门和测量的量子线路</span>
+    <span class="n">cirq</span><span class="o">.</span><span class="n">H</span><span class="p">(</span><span class="n">q</span><span class="p">),</span>
+    <span class="n">cirq</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">H_circuit</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">H_circuit</span><span class="p">,</span> <span class="n">repetitions</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The results are as follows.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>0: -──X───M───
+0=1111111111111111
+0: ---H---M--..
+0=00100111001111101100
+</pre></div>
+</div>
+<p>It can be seen that the first measurement of the quantum circuit is always 1, and the second quantum state has 9 out of 20 measurements of 0 and 11 of 1 (if you run it a few more times, you will find that the probability of 0 and 1 appearing is close to <img class="math" src="../../_images/math/71c8247661268e91ff882cb0fd09811ac9e3317f.png" alt="\frac{1}{2}"/>). The results can be seen to be consistent with our analysis in the previous section.</p>
+</div>
+</div>
+<div class="section" id="hybrid-quantum-classic-machine-learning">
+<h2>Hybrid Quantum - Classic Machine Learning<a class="headerlink" href="#hybrid-quantum-classic-machine-learning" title="永久链接至标题">¶</a></h2>
+<p>This section introduces the basic concepts of hybrid quantum-classical machine learning and methods for building such models using TensorFlow Quantum.</p>
+<p>In hybrid quantum-classical machine learning, we train hybrid quantum-classical models using quantum data sets. The first half of the hybrid quantum-classical model is the quantum model (i.e., the parameterized quantum circuit). The quantum model accepts the quantum data set as input, transforms the input using quantum gates, and then transforms it into classical data by measurement. The measured classical data is entered into the classical model and the loss value of the model is calculated using the regular loss function. Finally, the gradient of the model parameters is calculated and updated based on the value of the loss function. This process includes not only the parameters of the classical model, but also of the quantum model. The exact process is shown in the figure below.</p>
+<div class="figure align-center" id="id10">
+<a class="reference internal image-reference" href="../../_images/pipeline.png"><img alt="../../_images/pipeline.png" src="../../_images/pipeline.png" style="width: 60%;" /></a>
+<p class="caption"><span class="caption-text">Classical machine learning (above) vs. hybrid quantum-classical machine learning (below) process</span><a class="headerlink" href="#id10" title="永久链接至图片">¶</a></p>
+</div>
+<p>TensorFlow Quantum is an open source library that is tightly integrated with TensorFlow Keras to quickly build hybrid quantum-classical machine learning models and can be installed using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">tensorflow-quantum`</span></code>.</p>
+<p>The following examples are imported into TensorFlow, TensorFlow Quantum and Cirq by default using the following code.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_quantum</span> <span class="kn">as</span> <span class="nn">tfq</span>
+<span class="kn">import</span> <span class="nn">cirq</span>
+</pre></div>
+</div>
+<div class="admonition-recommended-reading admonition">
+<p class="admonition-title">recommended reading</p>
+<p>Broughton, Michael, Guillaume Verdon, Trevor McCourt, Antonio J. Martinez, Jae Hyeon Yoo, Sergei V. Isakov, Philip Massey, et al. ” <a class="reference external" href="http://arxiv.org/abs/2003.02989">TensorFlow Quantum: A Software Framework for Quantum Machine Learning.</a> ” ArXiv:2003.02989 [Cond-Mat, Physics:Quant-Ph], March 5, 2020. (TensorFlow Quantum White Paper)</p>
+</div>
+<div class="section" id="quantum-data-sets-and-quantum-gates-with-parameters">
+<h3>Quantum data sets and quantum gates with parameters<a class="headerlink" href="#quantum-data-sets-and-quantum-gates-with-parameters" title="永久链接至标题">¶</a></h3>
+<p>Using supervised learning as an example, the classical data set consists of classical data and labels. Each item in the classical data is a vector composed of different features. We can write the classical dataset <img class="math" src="../../_images/math/096f91ff12dd51c06b36fc1ec37d3af7268a2f8e.png" alt="(x_1, y_1), (x_2, y_2), \cdots, (x_N, y_N)"/> , where <img class="math" src="../../_images/math/251ea575b8852ce126d702e86ad5941495fe1104.png" alt="x_i = (x_{i,1}, \cdots, x_{i,K})"/> . A quantum data set is also made up of data and labels, and each item in the data is a quantum state. As an example of the quantum state of a single quantum bit in the previous section, we can write each data <img class="math" src="../../_images/math/ee337198a1d125f7fd60f4006b7d3e9a6d6ef0aa.png" alt="x_i = a_i \ket{0} + b_i \ket{1}"/> . In terms of concrete implementation, we can generate quantum data through quantum circuits. That is, each data <img class="math" src="../../_images/math/b0a60237087d130c0f2fb4d6325012dd5ae80fe1.png" alt="x_i"/> corresponds to a quantum circuit. For example, we can use Cirq to generate a set of quantum data using the following code.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">GridQubit</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">q_data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">x_i</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span>
+        <span class="n">cirq</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)(</span><span class="n">q</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">q_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x_i</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this process, we use a quantum gate <code class="docutils literal notranslate"><span class="pre">cirq.rx(angle)(q)</span></code> with parameters. Unlike the quantum gate <code class="docutils literal notranslate"><span class="pre">cirq.X(q)</span></code> , <code class="docutils literal notranslate"><span class="pre">cirq.H(q)</span></code> , which we used earlier, this quantum gate has an additional parameter, <code class="docutils literal notranslate"><span class="pre">angle</span></code> , which represents the angle (radiances) of the rotation of the quantum bit <code class="docutils literal notranslate"><span class="pre">q</span></code> around the x-axis of the Bloch sphere. The above code generates 100 quantum data, each of which is randomly rotated around the x-axis of the Bloch sphere starting from the fundamental state <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> <img class="math" src="../../_images/math/b61438f8e15d426e93bf63b6c39c296435cdacaf.png" alt="[0, \pi]"/> the quantum state transformed by the radians. Quantum datasets have applications in quite a few quantum-related fields such as chemistry, materials science, biology and drug discovery.</p>
+<p>When we want to use the quantum data set as input to Keras, we can use the <code class="docutils literal notranslate"><span class="pre">convert_to_tensor</span></code> method of TensorFlow Quantum to convert the quantum data set to a tensor.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">q_data</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span><span class="n">q_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It is worth noting that when using quantum data sets as training data for the Keras model, the input type (<code class="docutils literal notranslate"><span class="pre">dtype</span></code>) for the Keras model needs to be <code class="docutils literal notranslate"><span class="pre">tf.dtypes.string</span></code>.</p>
+</div>
+<div class="section" id="parametric-quantum-lines-pqc">
+<h3>Parametric Quantum Lines (PQC)<a class="headerlink" href="#parametric-quantum-lines-pqc" title="永久链接至标题">¶</a></h3>
+<p>When we use a quantum gate with a parameter when building a quantum circuit and the parameter is freely adjustable, we call such a quantum circuit a parametric quantum circuit.Cirq supports parametric quantum circuits in combination with SymPy, a symbolic arithmetic library under Python, for example</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">)</span>
+<span class="n">q_model</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="n">cirq</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">theta</span><span class="p">)(</span><span class="n">q</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>In the code above, we built the quantum circuit shown in the following figure. The quantum circuit can rotate any input quantum state <img class="math" src="../../_images/math/dc236aef0d575ac9f9dbaa2b8812801ee72f1b3a.png" alt="\ket{\psi}"/> counterclockwise around the x-axis of the Bloch sphere :math:theta` degrees, where :math:theta` is the symbolic variable (i.e. parameter) declared using <code class="docutils literal notranslate"><span class="pre">sympy.Symbol</span></code>.</p>
+<div class="figure align-center" id="id11">
+<a class="reference internal image-reference" href="../../_images/pqc.png"><img alt="../../_images/pqc.png" src="../../_images/pqc.png" style="width: 30%;" /></a>
+<p class="caption"><span class="caption-text">Example of a parametric quantum circuit</span><a class="headerlink" href="#id11" title="永久链接至图片">¶</a></p>
+</div>
+</div>
+<div class="section" id="embedding-parametric-quantum-circuits-into-machine-learning-models">
+<h3>Embedding parametric quantum circuits into machine learning models<a class="headerlink" href="#embedding-parametric-quantum-circuits-into-machine-learning-models" title="永久链接至标题">¶</a></h3>
+<p>With TensorFlow Quantum, we can easily embed parametric quantum circuits into the Keras model as a Keras layer. For example, for the parameterized quantum circuit <code class="docutils literal notranslate"><span class="pre">q_model</span></code> created in the previous section, we can use <code class="docutils literal notranslate"><span class="pre">tfq.layers.PQC</span></code> as a Keras layer directly.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">q_layer</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">PQC</span><span class="p">(</span><span class="n">q_model</span><span class="p">,</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Z</span><span class="p">(</span><span class="n">q</span><span class="p">))</span>
+<span class="n">expectation_output</span> <span class="o">=</span> <span class="n">q_layer</span><span class="p">(</span><span class="n">q_data_input</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The first parameter of <code class="docutils literal notranslate"><span class="pre">tfq.layers.PQC</span></code> is a parameterized quantum circuit established using Cirq and the second parameter is the measurement method, which is measured here using <a href="#id5"><span class="problematic" id="id6">``</span></a>cirq.Z(q)` on the Z axis of the Bloch sphere.</p>
+<p>The above code can also be written directly.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expectation_output</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">players</span><span class="o">.</span><span class="n">PQC</span><span class="p">(</span><span class="n">q_model</span><span class="p">,</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Z</span><span class="p">(</span><span class="n">q</span><span class="p">))(</span><span class="n">q_data_input</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-biclassification-of-quantum-data-sets">
+<h3>Example: biclassification of quantum data sets<a class="headerlink" href="#example-biclassification-of-quantum-data-sets" title="永久链接至标题">¶</a></h3>
+<p>In the following code, we first build a quantum data set where half of the data items are fundamental <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> rotating counterclockwise around the x-axis of the Bloch sphere :math:frac{pi}{2}` radians (i.e. :math:frac{1}{sqrt{2}} ket{0} - frac{i}{sqrt{2}} ket{1}`) and the other half are :math:frac{3pi}{2}` radians (i.e. :math:frac{1}{sqrt{2}} ket{0} + frac{i}{sqrt{2}} ket{1}`). All data were added to the Gaussian noise rotated around the x,y axis with a standard deviation of <img class="math" src="../../_images/math/98f8e5bef3cfb82a97dc0ded3acbaaf41e00191d.png" alt="\frac{\pi}{4}"/>. For this quantum data set, if measured directly without transformation, all the data would be randomly collapsed to the fundamental states <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> and :math:ket{1}` with the same probability as a coin toss, making it indistinguishable.</p>
+<p>To distinguish between these two types of data, we next build a quantum model that rotates the single-bit quantum state counterclockwise around the x-axis of the Bloch sphere <img class="math" src="../../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> arc. The measured values of the transformed quantum data are fed into the classical machine learning model of “Full Connected Layer + Softmax”, using cross-entropy as a loss function. The model training process automatically adjusts both the value of <img class="math" src="../../_images/math/bec204813d5e9097a453e6a6dfbe0409dc177ff8.png" alt="\theta"/> in the quantum model and the weights of the full connection layer, resulting in higher accuracy of the entire hybrid quantum-classical machine learning model.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cirq</span>
+<span class="kn">import</span> <span class="nn">sympy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_quantum</span> <span class="k">as</span> <span class="nn">tfq</span>
+
+<span class="n">q</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">GridQubit</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 准备量子数据集(q_data, label)</span>
+<span class="n">add_noise</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">q_data</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">convert_to_tensor</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span>
+        <span class="n">cirq</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">add_noise</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))(</span><span class="n">q</span><span class="p">),</span> 
+        <span class="n">cirq</span><span class="o">.</span><span class="n">ry</span><span class="p">(</span><span class="n">add_noise</span><span class="p">(</span><span class="mi">0</span><span class="p">))(</span><span class="n">q</span><span class="p">)</span>
+        <span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span> <span class="o">+</span> 
+    <span class="p">[</span><span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span>
+        <span class="n">cirq</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">add_noise</span><span class="p">(</span><span class="mf">1.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))(</span><span class="n">q</span><span class="p">),</span> 
+        <span class="n">cirq</span><span class="o">.</span><span class="n">ry</span><span class="p">(</span><span class="n">add_noise</span><span class="p">(</span><span class="mi">0</span><span class="p">))(</span><span class="n">q</span><span class="p">)</span>
+        <span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span>
+<span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># 建立参数化的量子线路（PQC）</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;theta&#39;</span><span class="p">)</span>
+<span class="n">q_model</span> <span class="o">=</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Circuit</span><span class="p">(</span><span class="n">cirq</span><span class="o">.</span><span class="n">rx</span><span class="p">(</span><span class="n">theta</span><span class="p">)(</span><span class="n">q</span><span class="p">))</span>
+
+<span class="c1"># 建立量子层和经典全连接层</span>
+<span class="n">q_layer</span> <span class="o">=</span> <span class="n">tfq</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">PQC</span><span class="p">(</span><span class="n">q_model</span><span class="p">,</span> <span class="n">cirq</span><span class="o">.</span><span class="n">Z</span><span class="p">(</span><span class="n">q</span><span class="p">))</span>
+<span class="n">dense_layer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">softmax</span><span class="p">)</span>
+
+<span class="c1"># 使用Keras建立训练流程。量子数据首先通过PQC，然后通过经典的全连接模型</span>
+<span class="n">q_data_input</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">()</span> <span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
+<span class="n">expectation_output</span> <span class="o">=</span> <span class="n">q_layer</span><span class="p">(</span><span class="n">q_data_input</span><span class="p">)</span>
+<span class="n">classifier_output</span> <span class="o">=</span> <span class="n">dense_layer</span><span class="p">(</span><span class="n">expectation_output</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">q_data_input</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">classifier_output</span><span class="p">)</span>
+
+<span class="c1"># 编译模型，指定优化器、损失函数和评估指标，并进行训练</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">),</span>
+    <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">,</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">sparse_categorical_accuracy</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">q_data</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="c1"># 输出量子层参数（即theta）的训练结果</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">q_layer</span><span class="o">.</span><span class="n">get_weights</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Output:.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span>
+<span class="mi">200</span><span class="o">/</span><span class="mi">200</span> <span class="p">[</span><span class="o">==========================================</span><span class="p">]</span> <span class="o">-</span> <span class="mi">0</span><span class="n">s</span> <span class="mi">165</span><span class="n">us</span><span class="o">/</span><span class="n">sample</span> <span class="o">-</span> <span class="n">loss</span><span class="p">:</span> <span class="mf">0.1586</span> <span class="o">-</span> <span class="n">sparse_categorical_accuracy</span><span class="p">:</span> <span class="mf">0.9500</span>
+<span class="p">[</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5279944</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>It can be seen that by training, the model can achieve 95% accuracy on the training set, <img class="math" src="../../_images/math/1c286d63cf271a33a3c7fe545f48562546da0ad5.png" alt="\theta = -1.5279944 \approx -\frac{\pi}{2} = -1.5707963.."/> . When <img class="math" src="../../_images/math/1ff979e6b4f47ffa5a7589539cb7211af74b5c26.png" alt="\theta = -\frac{\pi}{2}"/> , it happens that the two types of data are close to the fundamental states <img class="math" src="../../_images/math/cf11c763ecfb6c354b67ca28eb9956b3d0197f55.png" alt="\ket{0}"/> and <img class="math" src="../../_images/math/1dc0cbd2935484e6c27e2bd6fdb89e3a2bee9a64.png" alt="\ket{1}"/>, respectively, so that the most easily distinguishable state is reached.</p>
+<dl class="footnote brackets">
+<dt class="label" id="f0"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>This manual has a line date of 2020 AD, so if you are from the future, please understand the limitations of the author’s time.</p>
+</dd>
+<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>[#f1] The term “collapse” is mostly used in the Copenhagen interpretation of quantum observations, in addition to multiverse theory, etc. The word “collapse” is used here for convenience only.</p>
+</dd>
+<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
+<dd><p>[#f2] Actually the more common fundamental binary quantum gates are the “quantum choice non-gates” (CNOT) and the “exchange gates” (SWAP).</p>
+</dd>
+<dt class="label" id="f3"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
+<dd><p>[#f3] This matrix is known as the “What-positive matrix” or the “You matrix”.</p>
+</dd>
+</dl>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 201 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="rl.html" class="btn btn-neutral float-right" title="Introduction to Reinforcement Learning" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="swift.html" class="btn btn-neutral float-left" title="Swift for TensorFlow (S4TF)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

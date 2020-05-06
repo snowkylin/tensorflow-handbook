@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>前言 &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/js/tw_cn.js"></script>
+        <script type="text/javascript" src="../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../_static/js/custom_20200506.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 简单粗暴 TensorFlow 2
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/rl.html">强化学习简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zh_hans/appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教學活動</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基礎</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basic/installation.html">TensorFlow安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic/models.html">TensorFlow 模型建立與訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic/tools.html">TensorFlow常用模塊</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大規模訓練與加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/distributed.html">TensorFlow分布式訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/tpu.html">使用TPU訓練TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">擴展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendix/rl.html">強化學習簡介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/docker.html">使用Docker部署TensorFlow環境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/cloud.html">在雲端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/recommended_books.html">參考資料與推薦閱讀</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/terms.html">術語中英對照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Preface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../en/preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/introduction.html">TensorFlow Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../en/basic/installation.html">Installation and Environment Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/basic/basic.html">TensorFlow Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/basic/models.html">Model Construction and Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/basic/tools.html">Common Modules in TensorFlow</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../en/deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/deployment/lite.html">TensorFlow Lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/deployment/javascript.html">TensorFlow in JavaScript</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Large-scale Training</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/distributed.html">Distributed Training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/rl.html">Introduction to Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/docker.html">Using Docker to deploy TensorFlow environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/cloud.html">Using TensorFlow on cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/recommended_books.html">References and Recommendations for Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">简单粗暴 TensorFlow 2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>前言</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/zh_hant/preface_latex.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>前言<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>2018年3月30日，Google在加州山景城舉行了第二屆TensorFlow Dev Summit開發者峯會，並宣布正式發布TensorFlow 1.8版本。作爲國內首批機器學習領域的谷歌開發者專家（ <a class="reference external" href="https://developers.google.cn/community/experts">Google Developers Expert</a> , GDE），我有幸獲得Google的資助親臨峯會現場，見證了這一具有里程碑式意義的新版本發布。衆多新功能的加入和支持展示了TensorFlow的雄心壯志，已經醞釀許久的即時執行模式（Eager Execution，或稱「動態圖模式」）在這一版本中也終於正式得到支持。</p>
+<p>在此之前，TensorFlow 所基於的傳統的圖執行模式與會話機制（Graph Execution and Session，或稱「靜態圖模式」）的弊端，如入門門檻高、調試困難、靈活性差、無法使用 Python 原生控制語句等，已被開發者詬病許久。一些新的基於即時執行模式的深度學習框架（如 PyTorch）也橫空出世，並以其易用性和快速開發的特性而占據了一席之地。尤其是在學術研究等需要快速迭代模型的領域，PyTorch 等新興深度學習框架已成爲主流。我所在的數十人的機器學習實驗室中，竟只有我一人「守舊」地使用 TensorFlow。而市面上 TensorFlow 相關的中文技術書以及資料也仍然基於傳統的計算圖與會話機制，這讓不少初學者，尤其是剛學過機器學習課程的大學生望而卻步。</p>
+<p>因此，在 TensorFlow 正式支持即時運行模式之際，我認爲有必要出現一本全新的入門手冊，幫助初學者及需要快速迭代模型的研究者，以「即時執行」的視角快速入門 TensorFlow。這也是我編寫本手冊的初衷。本手冊自2018年春開始編寫，並在2018年8月在 GitHub 發布了第一個中英雙語版本，很快得到了國內外不少開發者的關注。尤其是 TensorFlow 工程總監 Rajat Monga 、 Google AI 負責人 Jeff Dean 和 TensorFlow 官方在社交媒體上對本手冊給予了推薦與關注，這給了我很大的鼓舞。同時，我作爲谷歌開發者專家，多次受到谷歌開發者社羣（ <a class="reference external" href="https://developers.google.cn/community/gdg">Google Developers Group</a> , GDG）的邀請，在 GDG DevFest、TensorFlow Day 和 Women Techmakers 等活動中使用本手冊進行線下的 TensorFlow Codelab 教學，獲得了較好的反響，也得到了不少反饋和建議。這些都促進了本手冊的更新和質量改進。</p>
+<p>在2019年3月的第三屆TensorFlow Dev Summit開發者峯會上，我再次受邀來到谷歌的硅谷總部，見證了 TensorFlow 2.0 alpha 的發布。此時的 TensorFlow 已經形成了一個擁有龐大版圖的生態系統。TensorFlow Lite、TensorFlow.js、TensorFlow for Swift、TPU 等各種組件日益成熟，同時 TensorFlow 2 加入了提升易用性的諸多新特性（例如以 <code class="docutils literal notranslate"><span class="pre">tf.keras</span></code> 爲核心的統一高層API、使用 <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 構建圖模型、默認使用即時執行模式等）。這使得本手冊的大幅擴充更新提上日程。GDE 社羣的兩位 JavaScript 和 Android 領域的資深專家李卓桓和朱金鵬加入了本手冊的編寫，使得本手冊增加了諸多面向業界的 TensorFlow 模塊詳解與實例。同時，我在谷歌開發者大使（Developer Advocate） Paige Bailey 的邀請下申請並成功加入了 Google Summer of Code 2019 活動。作爲全世界 20 位由 Google TensorFlow 項目資助的學生開發者之一，我在 2019 年的暑期基於 TensorFlow 2.0 Beta 版本，對本手冊進行了大幅擴充和可讀性上的改進。這使得本手冊從 2018 年發布的小型入門指南逐漸成長爲一本內容全面的 TensorFlow 技術手冊和開發指導。</p>
+<p>2019年10月1日，TensorFlow 2.0 正式版發布，同時本手冊也開始了在 TensorFlow 官方公衆微信號（TensorFlow_official）上的長篇連載。在連載過程中，我收到了大量的讀者提問和意見反饋。爲讀者答疑的同時，我也修訂了手冊中的較多細節。受到新冠疫情的影響，2020年3月的第四屆 TensorFlow Dev Summit 開發者峯會在線上直播舉行。我根據峯會的內容爲手冊增添了部分內容，特別是介紹了 TensorFlow Quantum 這一混合量子-經典機器學習庫的基本使用方式。我在研究生期間旁聽過量子力學，還做過量子計算和機器學習結合的專題報告。TensorFlow Quantum 的推出着實讓我感到興奮，並迫不及待地希望介紹給廣大讀者。2020年4月，爲了適應新冠疫情期間的線上教學需求，我接受 TensorFlow Usergroup （TFUG）和谷歌開發者社羣的邀請，依託本手冊在 TensorFlow 官方公衆微信號上開展了「機器學習Study Jam」線上教學活動，並啓用了手冊留言版 <a class="reference external" href="https://discuss.tf.wiki">https://discuss.tf.wiki</a> 進行教學互動答疑。此次教學也同樣有不少學習者爲本手冊提供了重要的改進意見。</p>
+<p>由於我的研究方向是強化學習，所以在本手冊的附錄中加入了「強化學習簡介」一章，對強化學習進行了更細緻的介紹。和絕大多數強化學習教程一開始就介紹馬爾可夫決策過程和各種概念不同，我從純動態規劃出發，結合具體算例來介紹強化學習，試圖讓強化學習和動態規劃的關係更清晰，以及對程序員更友好。這個視角相對比較特立獨行，如果您發現了謬誤之處，也請多加指正。</p>
+<p>本手冊在2018年秋就已開始籌劃出版事宜，但由於 TensorFlow 版本迭代速度快，本手冊多次進行增訂的緣故，導致本手冊的出版時間一再推遲。在此手冊最終付梓時，TensorFlow 2.1 正式版已經發布，修正了 2.0 版本在使用中的諸多問題，使得 TensorFlow 2 的可用性和成熟度大爲加強，適合進行大規模的推廣普及。而本手冊經過多次修訂後，大部分內容也趨於穩定。因此，我認爲現在（2020年夏）是一個出版本手冊的成熟時機。儘管如此，本手冊依然可能存在着諸多缺陷、錯誤和過時之處。歡迎您在 <a class="reference external" href="https://discuss.tf.wiki">https://discuss.tf.wiki</a> 或圖靈社區反饋您在閱讀中遇到的問題。</p>
+<p>本手冊的主要特徵有：</p>
+<ul class="simple">
+<li><p>主要基於 TensorFlow 2 最新的即時執行模式，以便於模型的快速迭代開發。同時使用 <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 實現圖執行模式；</p></li>
+<li><p>定位以技術手冊爲主，編排以 TensorFlow 2 的各項概念和功能爲核心，力求能夠讓 TensorFlow 開發者快速查閱。各章相對獨立，不一定需要按順序閱讀；</p></li>
+<li><p>代碼實現均進行仔細推敲，力圖簡潔高效和表意清晰。模型實現均統一使用繼承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 的方式，保證代碼的高度可復用性。每個完整項目的代碼總行數均不超過一百行，讓讀者可以快速理解並舉一反三；</p></li>
+<li><p>注重詳略，少即是多，不追求巨細無遺和面面俱到，不在正文中進行大篇幅的細節論述。</p></li>
+</ul>
+<div class="section" id="id2">
+<h2>本書的適用羣體<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>本書適用於以下讀者：</p>
+<ul class="simple">
+<li><p>已有一定機器學習或深度學習基礎，希望將所學理論知識使用 TensorFlow 進行具體實現的學生和研究者；</p></li>
+<li><p>曾使用或正在使用 TensorFlow 1.X 版本或其他深度學習框架（比如PyTorch），希望了解和學習 TensorFlow 2 新特性的開發者；</p></li>
+<li><p>希望將已有的 TensorFlow 模型應用於業界的開發者或工程師。</p></li>
+</ul>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<p>本書不是一本機器學習或深度學習原理入門手冊。若希望進行機器學習或深度學習理論的入門學習，可參考 <a class="reference internal" href="appendix/recommended_books.html"><span class="doc">附錄「參考資料與推薦閱讀」</span></a> 中提供的一些入門資料。</p>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>如何使用本書<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>對於已有一定機器學習或深度學習基礎，着重於使用 TensorFlow 2 進行模型建立與訓練的學生和研究者，建議順序閱讀本書的「基礎」部分。爲了幫助部分新入門機器學習的讀者理解內容，本手冊在「基礎」部分的章節中使用獨立的信息框，提供了一些與行文內容相關的機器學習基礎知識。這些內容旨在幫助讀者將機器學習理論知識與具體的 TensorFlow 程序代碼進行結合，以深入了解 TensorFlow 代碼的內在機制，讓讀者在調用 TensorFlow 的 API 時能夠知其所以然。然而，這些內容對於沒有機器學習基礎的讀者而言很可能仍是完全不足夠的。若讀者發現閱讀這些內容時有很強的陌生感，則應該先行學習一些機器學習相關的基礎概念。部分章節的開頭提供了「前置知識」部分，方便讀者查漏補缺。</p>
+<p>對於希望將 TensorFlow 模型部署到實際環境中的開發者和工程師，可以重點閱讀本書的「部署」部分，尤其是需要結合代碼示例進行親手操作。不過，依然非常建議學習一些機器學習的基本知識並閱讀本手冊的「基礎」部分，以更加深入地了解 TensorFlow 2。</p>
+<p>對於已有 TensorFlow 1.X 使用經驗的開發者，可以從本手冊的「高級」部分開始閱讀，尤其是「圖執行模式下的 TensorFlow 2」和「 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 詳解」兩章。隨後，可以快速瀏覽一遍「基礎」部分以了解即時執行模式下 TensorFlow 的使用方式。</p>
+<p>在整本手冊中，帶「*」的部分均爲選讀。</p>
+<p>本書的所有示例代碼可至 <a class="reference external" href="https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code">https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code</a> 獲得。其中 <code class="docutils literal notranslate"><span class="pre">zh</span></code> 目錄下是含中文注釋的代碼（對應於本書的中文版本，即您手上的這一本）， <code class="docutils literal notranslate"><span class="pre">en</span></code> 目錄下是含英文版注釋的代碼（對應於本書的英文版本）。在使用時，建議將代碼根目錄加入到 <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> 環境變量，或者使用合適的IDE（如PyCharm）打開代碼根目錄，從而使得代碼間的相互調用（形如 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">zh.XXX</span></code> 的代碼）能夠順利運行。</p>
+</div>
+<div class="section" id="id4">
+<h2>致謝<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>首先感謝我的好友兼同學 Chris Wu 編寫的《簡單粗暴 <img class="math" src="../_images/math/bece08e065efc400d0eccd656d260b485a29428f.png" alt="\text{\LaTeX}"/> 》（<a class="reference external" href="https://github.com/wklchris/Note-by-LaTeX">https://github.com/wklchris/Note-by-LaTeX</a>，紙質版名爲《簡單高效LaTeX》）爲本手冊的初始體例編排提供了模範和指引。該手冊清晰精煉，是 <img class="math" src="../_images/math/bece08e065efc400d0eccd656d260b485a29428f.png" alt="\text{\LaTeX}"/> 領域不可多得的中文資料，本手冊的初始名稱《簡單粗暴 TensorFlow》也是在向這本手冊致敬。本手冊最初是在我的好友 Ji-An Li 所組織的深度學習研討小組中，作爲預備知識講義編寫和使用的。好友們卓著的才學與無私分享的精神是編寫此拙作的重要助力。</p>
+<p>本手冊的TensorFlow.js和TensorFlow Lite章節分別由李卓桓和朱金鵬兩位在JavaScript和Android領域有豐富履歷的GDE和前GDE撰寫，同時，卓桓撰寫了TensorFlow for Swift和TPU部分的介紹，金鵬提供了TensorFlow Hub的介紹。來自豆瓣閱讀的王子陽也提供了關於Node.js和阿里雲的部分示例代碼和說明。在此特別表示感謝。</p>
+<p>在基於本手冊初稿的多場線下、線上教學活動和TensorFlow官方微信公衆號連載中，大量活動參與者與讀者爲本手冊提供了有價值的反饋，促進了本手冊的持續更新。谷歌開發者社羣和 TensorFlow Usergroup 的多位志願者們也爲這些活動的順利舉辦做出了重要貢獻。來自中國科學技術大學的 Zida Jin 將本手冊2018年初版的大部分內容翻譯爲了英文，Ming 和 Ji-An Li 在英文版翻譯中亦有貢獻，促進了本手冊在世界範圍內的推廣。在此一併表示由衷的謝意。</p>
+<p>衷心感謝 Google 中國開發者關係團隊和 TensorFlow 工程團隊的成員及前成員們對本手冊的編寫所提供的幫助。其中，開發者關係團隊的 Luke Cheng 在本手冊初版編寫過程中提供重要的思路啓發和鼓勵，且提供本手冊在線版本的域名 <a class="reference external" href="https://tf.wiki">tf.wiki</a> 和留言版 <a class="reference external" href="https://discuss.tf.wiki">https://discuss.tf.wiki</a> ；開發者關係團隊的 Soonson Kwon、Lily Chen、Wei Duan、Tracy Wang、Rui Li、Pryce Mu，TensorFlow 產品經理 Mike Liang 和谷歌開發者大使 Paige Bailey 爲本手冊宣傳及推廣提供了大力支持；TensorFlow 工程團隊的 Tiezhen Wang 在本手冊的工程細節方面提供了諸多建議和補充；TensorFlow 中國研發負責人 Shuangfeng Li 和 TensorFlow 工程團隊的其他工程師們爲本手冊提供了專業的審閱意見。同時感謝 TensorFlow 工程總監 Rajat Monga 和 Google AI 負責人 Jeff Dean 在社交媒體上對本手冊的推薦與關注。感謝 Google Summer of Code 2019 對本項目的資助。</p>
+<p>最後，感謝人民郵電出版社的的王軍花、武芮欣編輯對本手冊的細緻校對工作和出版流程跟進。感謝我的父母、導師、同學和好友對本手冊的支持。</p>
+<p>關於本手冊的意見和建議，歡迎在 <a class="reference external" href="https://discuss.tf.wiki">https://discuss.tf.wiki</a> 或圖靈社區提交。您的寶貴意見將促進本手冊的持續更新。</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>谷歌開發者專家，機器學習領域</p>
+<p>李錫涵</p>
+<p>2020 年 5 月於深圳</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>

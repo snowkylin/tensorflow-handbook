@@ -1,0 +1,614 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>使用TPU訓練TensorFlow模型（Huan） &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
+        <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200506.js"></script>
+        <script type="text/javascript" src="../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="TensorFlow Hub 模型復用（Jinpeng）" href="tfhub.html" />
+    <link rel="prev" title="TensorFlow分布式訓練" href="distributed.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 简单粗暴 TensorFlow 2
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/installation.html">TensorFlow安装与环境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/basic.html">TensorFlow基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/models.html">TensorFlow 模型建立与训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/basic/tools.html">TensorFlow常用模块</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/export.html">TensorFlow模型导出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大规模训练与加速</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/distributed.html">TensorFlow分布式训练</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tpu.html">使用TPU训练TensorFlow模型（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">扩展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tfhub.html">TensorFlow Hub 模型复用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/tfds.html">TensorFlow Datasets 数据集载入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/quantum.html">TensorFlow Quantum: 混合量子-经典机器学习 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附录</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/rl.html">强化学习简介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/docker.html">使用Docker部署TensorFlow环境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/cloud.html">在云端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/terms.html">术语中英对照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">教學活動</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
+</ul>
+<p class="caption"><span class="caption-text">基礎</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立與訓練</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模塊</a></li>
+</ul>
+<p class="caption"><span class="caption-text">部署</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
+</ul>
+<p class="caption"><span class="caption-text">大規模訓練與加速</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="distributed.html">TensorFlow分布式訓練</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">使用TPU訓練TensorFlow模型（Huan）</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tpu">TPU 簡介</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">什麼是 TPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">爲什麼使用 TPU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">TPU 性能</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">TPU 環境配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tpu-google-colab">免費 TPU：Google Colab</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cloud-tpu">Cloud TPU</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">TPU 基礎使用</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">擴展</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">附錄</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="rl.html">強化學習簡介</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docker.html">使用Docker部署TensorFlow環境</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cloud.html">在雲端使用TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="recommended_books.html">參考資料與推薦閱讀</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms.html">術語中英對照表</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Preface</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/preface.html">Preface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/introduction.html">TensorFlow Overview</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/installation.html">Installation and Environment Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/basic.html">TensorFlow Basic</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/models.html">Model Construction and Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/basic/tools.html">Common Modules in TensorFlow</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Deployment</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/serving.html">TensorFlow Serving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/lite.html">TensorFlow Lite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/javascript.html">TensorFlow in JavaScript</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Large-scale Training</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/distributed.html">Distributed Training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extensions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Appendix</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/rl.html">Introduction to Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/docker.html">Using Docker to deploy TensorFlow environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/cloud.html">Using TensorFlow on cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/recommended_books.html">References and Recommendations for Further Reading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">简单粗暴 TensorFlow 2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>使用TPU訓練TensorFlow模型（Huan）</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/zh_hant/appendix/tpu.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tputensorflow-huan">
+<h1>使用TPU訓練TensorFlow模型（Huan）<a class="headerlink" href="#tputensorflow-huan" title="永久链接至标题">¶</a></h1>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/tensorflow-tpu.png"><img alt="Tensor Processing Unit - TPU" src="../../_images/tensorflow-tpu.png" style="width: 60%;" /></a>
+</div>
+<p>2017年5月，Alpha Go 在中國烏鎮圍棋峯會上，與世界第一棋士柯潔比試，並取得了三比零全勝戰績。之後的版本Alpha Zero可以通過自我學習21天即可以達到勝過中國頂尖棋手柯潔的Alpha Go Master的水平。</p>
+<p>Alpha Go 背後的動力全部由 TPU 提供。TPU 使其能夠更快地「思考」並在每一步之間看得更遠。</p>
+<div class="section" id="tpu">
+<h2>TPU 簡介<a class="headerlink" href="#tpu" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id1">
+<h3>什麼是 TPU<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h3>
+<p>TPU 代表 Tensor Processing Unit (張量處理單元) ，是由谷歌在2016年5月發布的爲機器學習而構建的定製集成電路（ASIC），並爲TensorFlow量身定製。</p>
+<p>早在2015年，谷歌大腦團隊就成立了第一個TPU中心，爲 Google Translation，Photos 和 Gmail等產品提供支持。 爲了使所有數據科學家和開發人員能夠訪問此技術，不久之後就發布了易於使用，可擴展且功能強大的基於雲的TPU，以便在 Google Cloud 上運行 TensorFlow 模型。</p>
+<p>TPU 由多個計算核心（Tensor Core）組成，其中包括標量，矢量和矩陣單元（MXU）。TPU（張量處理單元）與CPU（中央處理單元）和GPU（圖形處理單元）最重要的區別是：TPU的硬件專爲線性代數而設計，線性代數是深度學習的基石。在過去幾年中，Google TPU 已經發布了 v1，v2，v3, v2 Pod, v3 Pod, Edge 等多個版本：</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>版本</p></th>
+<th class="head"><p>圖片</p></th>
+<th class="head"><p>性能</p></th>
+<th class="head"><p>內存</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>TPU (v1, 2015)</p></td>
+<td><img alt="../../_images/tpu-v13.png" src="../../_images/tpu-v13.png" />
+</td>
+<td><p>92 TeraFLOPS</p></td>
+<td><p>8 GB HBM</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cloud TPU (v2, 2017)</p></td>
+<td><img alt="../../_images/tpu-v23.jpg" src="../../_images/tpu-v23.jpg" />
+</td>
+<td><p>180 TeraFLOPS</p></td>
+<td><p>64 GB HBM</p></td>
+</tr>
+<tr class="row-even"><td><p>Cloud TPU (v3, 2018)</p></td>
+<td><img alt="../../_images/tpu-v33.png" src="../../_images/tpu-v33.png" />
+</td>
+<td><p>420 TeraFLOPS</p></td>
+<td><p>128 GB HBM</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cloud TPU Pod (v2, 2017)</p></td>
+<td><img alt="../../_images/tpu-v2-pod3.png" src="../../_images/tpu-v2-pod3.png" />
+</td>
+<td><p>11,500 TeraFLOPS</p></td>
+<td><p>4,096 GB HBM</p></td>
+</tr>
+<tr class="row-even"><td><p>Cloud TPU Pod (v3, 2018)</p></td>
+<td><img alt="../../_images/tpu-v3-pod3.jpg" src="../../_images/tpu-v3-pod3.jpg" />
+</td>
+<td><p>100,000+ TeraFLOPS</p></td>
+<td><p>32,768 GB HBM</p></td>
+</tr>
+<tr class="row-odd"><td><p>Edge TPU (Coral, 2019)</p></td>
+<td><img alt="../../_images/tpu-edge-coral-usb3.png" src="../../_images/tpu-edge-coral-usb3.png" />
+</td>
+<td><p>4 TeraFLOPS</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="simple">
+<dt>註：</dt><dd><p>1. Tera: 萬億，10的12次方
+1. Peta: 千萬億，10的15次方
+1. FLOPS：每秒浮點數計算次數（FLoating-point Operations Per Second）
+1. OPS: 每秒位整數計算次數（Integer Operations Per Second）</p>
+</dd>
+</dl>
+<p>基於 Google Cloud，TPU 可以方便的進行建立和使用。同時，Google 也推出了專門爲邊緣計算環境而部署的 Edge TPU。Edge TPU 尺寸小，功耗低，性能高，可以在邊緣計算環境中廣泛部署高質量的AI。其作爲 Cloud TPU 的補充，可以大大促進AI的解決方案在IoT環境中的部署。</p>
+</div>
+<div class="section" id="id2">
+<h3>爲什麼使用 TPU<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>通過使用 Cloud TPU ，我們可以大大提升 TensorFlow 進行機器學習訓練和預測的性能，並能夠靈活的幫助研究人員，開發人員和企業 TensorFlow 計算羣集。</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/tpu-pod.jpg"><img alt="TPU Pod" src="../../_images/tpu-pod.jpg" style="width: 60%;" /></a>
+</div>
+<p>根據 Google 提供的數據顯示，在 Google Cloud TPU Pod 上可以僅用 8 分鐘就能夠完成ResNet-50 模型的訓練。</p>
+<table class="docutils align-default" id="id6">
+<caption><span class="caption-text">ResNet-50</span><a class="headerlink" href="#id6" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p>TPU</p></th>
+<th class="head"><p>TPU Pod</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>訓練速度（每秒圖像數）</p></td>
+<td><p>4000+</p></td>
+<td><p>200,000+</p></td>
+</tr>
+<tr class="row-odd"><td><p>最終精度</p></td>
+<td><p>93%</p></td>
+<td><p>93%</p></td>
+</tr>
+<tr class="row-even"><td><p>訓練時長</p></td>
+<td><p>7h 47m</p></td>
+<td><p>8m 45s</p></td>
+</tr>
+</tbody>
+</table>
+<p>Source: Google</p>
+</div>
+<div class="section" id="id3">
+<h3>TPU 性能<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>根據研究顯示，TPU 比現代 GPU 和 CPU 快 15 到 30 倍。同時，TPU 還實現了比傳統芯片更好的能耗效率，算力能耗比值提高了30倍至80倍。</p>
+<table class="docutils align-default" id="id7">
+<caption><span class="caption-text">每個周期的操作次數</span><a class="headerlink" href="#id7" title="永久链接至表格">¶</a></caption>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>CPU</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-even"><td><p>GPU</p></td>
+<td><p>10,000</p></td>
+</tr>
+<tr class="row-odd"><td><p>TPU</p></td>
+<td><p>100,000</p></td>
+</tr>
+</tbody>
+</table>
+<p>Source: <a class="reference external" href="https://cloud.google.com/blog/products/gcp/an-in-depth-look-at-googles-first-tensor-processing-unit-tpu">An in-depth look at Google’s first Tensor Processing Unit (TPU)</a></p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>TPU 環境配置<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="tpu-google-colab">
+<h3>免費 TPU：Google Colab<a class="headerlink" href="#tpu-google-colab" title="永久链接至标题">¶</a></h3>
+<p>最方便使用 TPU 的方法，就是使用 Google 的 Colab ，不但通過瀏覽器訪問直接可以用，而且還免費。</p>
+<p>在 <a class="reference external" href="https://colab.research.google.com">Google Colab</a> 的 Notebook 界面中，打開界面中，打開主菜單 <cite>Runtime</cite> ，然後選擇 <cite>Change runtime type</cite>，會彈出 <cite>Notebook settings</cite> 的窗口。選擇裡面的 <cite>Hardware accelerator</cite> 爲 <cite>TPU</cite> 就可以了。</p>
+<p>爲了確認 Colab Notebook 中的確分配了 TPU 資源，我們可以運行以下測試代碼。如果輸出 ERROR 信息，則表示目前的 Runetime 並沒有分配到 TPU；如果輸出 TPU 地址及設備列表，則表示 Colab 已經分配了 TPU。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+
+<span class="k">if</span> <span class="s1">&#39;COLAB_TPU_ADDR&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;ERROR: Not connected to a TPU runtime&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">tpu_address</span> <span class="o">=</span> <span class="s1">&#39;grpc://&#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;COLAB_TPU_ADDR&#39;</span><span class="p">]</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s1">&#39;TPU address is&#39;</span><span class="p">,</span> <span class="n">tpu_address</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>輸出信息：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TPU</span> <span class="n">address</span> <span class="ow">is</span> <span class="n">grpc</span><span class="p">:</span><span class="o">//</span><span class="mf">10.49</span><span class="o">.</span><span class="mf">237.2</span><span class="p">:</span><span class="mi">8470</span>
+</pre></div>
+</div>
+<p>看到以上信息（TPU grpc address），既可以確認 Colab 的 TPU 環境設置正常。</p>
+</div>
+<div class="section" id="cloud-tpu">
+<h3>Cloud TPU<a class="headerlink" href="#cloud-tpu" title="永久链接至标题">¶</a></h3>
+<p>在 Google Cloud 上，我們可以購買所需的 TPU 資源，用來按需進行機器學習訓練。爲了使用 Cloud TPU ，需要在 Google Cloud Engine 中啓動 VM 並爲 VM 請求 Cloud TPU 資源。請求完成後，VM 就可以直接訪問分配給它專屬的 Cloud TPU了。</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="../../_images/cloud-tpu-architecture.png"><img alt="../../_images/cloud-tpu-architecture.png" src="../../_images/cloud-tpu-architecture.png" style="width: 60%;" /></a>
+</div>
+<p>&gt; Source: <a class="reference external" href="https://docs.google.com/presentation/d/1iodAZkOX0YMnUwohgQqNsbEkhR0zAnO-jncK9SkJ69o/edit#slide=id.g4461849552_8_3664">TPUs for Developers</a></p>
+<p>在使用 Cloud TPU 時，爲了免除繁瑣的驅動安裝，我們可以通過直接使用 Google Cloud 提供的 VM 操作系統鏡像。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>TPU 基礎使用<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>在 TPU 上進行 TensorFlow 分布式訓練的核心API是 <code class="docutils literal notranslate"><span class="pre">tf.distribute.TPUStrategy</span></code> ，可以簡單幾行代碼就實現在 TPU 上的分布式訓練，同時也可以很容易的遷移到 GPU單機多卡、多機多卡的環境。以下是如何實例化 <code class="docutils literal notranslate"><span class="pre">TPUStrategy</span></code> ：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tpu</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">cluster_resolver</span><span class="o">.</span><span class="n">TPUClusterResolver</span><span class="p">()</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental_connect_to_cluster</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">tpu</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">initialize_tpu_system</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+<span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">TPUStrategy</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在上面的代碼中，首先我們實例化 <cite>TPUClusterResolver</cite>；然後，我們連接 TPU Cluster，並對其進行初始化；最後，完成實例化 <cite>TPUStrategy</cite>。</p>
+<p>以下使用 Fashion MNIST 分類任務展示 TPU 的使用方式。本小節的源代碼可以在 <a class="reference external" href="https://github.com/huan/tensorflow-handbook-tpu">https://github.com/huan/tensorflow-handbook-tpu</a> 找到。</p>
+<p>更方便的是在 Google Colab 上直接打開本例子的 Jupyter 直接運行，地址：<a class="reference external" href="https://colab.research.google.com/github/huan/tensorflow-handbook-tpu/blob/master/tensorflow-handbook-tpu-example.ipynb">https://colab.research.google.com/github/huan/tensorflow-handbook-tpu/blob/master/tensorflow-handbook-tpu-example.ipynb</a> （推薦）</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),</span> <span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fashion_mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+
+<span class="c1"># add empty color dimension</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">create_model</span><span class="p">():</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">input_shape</span><span class="o">=</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">())</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">model</span>
+
+<span class="n">tpu</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">cluster_resolver</span><span class="o">.</span><span class="n">TPUClusterResolver</span><span class="p">()</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental_connect_to_cluster</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">tpu</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">initialize_tpu_system</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+<span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">TPUStrategy</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">strategy</span><span class="o">.</span><span class="n">scope</span><span class="p">():</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">()</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+        <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">),</span>
+        <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">,</span>
+        <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">sparse_categorical_accuracy</span><span class="p">])</span>
+
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">x_train</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">y_train</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+    <span class="n">epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">steps_per_epoch</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+    <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">x_test</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">y_test</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)),</span>
+    <span class="n">validation_freq</span><span class="o">=</span><span class="mi">5</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>以上程序運行輸出爲：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Epoch</span> <span class="mi">1</span><span class="o">/</span><span class="mi">5</span>
+<span class="mi">60</span><span class="o">/</span><span class="mi">60</span> <span class="p">[</span><span class="o">==========</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="n">s</span> <span class="mi">23</span><span class="n">ms</span><span class="o">/</span><span class="n">step</span> <span class="o">-</span> <span class="n">loss</span><span class="p">:</span> <span class="mf">12.7235</span> <span class="o">-</span> <span class="n">accuracy</span><span class="p">:</span> <span class="mf">0.7156</span>
+<span class="n">Epoch</span> <span class="mi">2</span><span class="o">/</span><span class="mi">5</span>
+<span class="mi">60</span><span class="o">/</span><span class="mi">60</span> <span class="p">[</span><span class="o">==========</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="n">s</span> <span class="mi">11</span><span class="n">ms</span><span class="o">/</span><span class="n">step</span> <span class="o">-</span> <span class="n">loss</span><span class="p">:</span> <span class="mf">0.7600</span> <span class="o">-</span> <span class="n">accuracy</span><span class="p">:</span> <span class="mf">0.8598</span>
+<span class="n">Epoch</span> <span class="mi">3</span><span class="o">/</span><span class="mi">5</span>
+<span class="mi">60</span><span class="o">/</span><span class="mi">60</span> <span class="p">[</span><span class="o">==========</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="n">s</span> <span class="mi">11</span><span class="n">ms</span><span class="o">/</span><span class="n">step</span> <span class="o">-</span> <span class="n">loss</span><span class="p">:</span> <span class="mf">0.4443</span> <span class="o">-</span> <span class="n">accuracy</span><span class="p">:</span> <span class="mf">0.8830</span>
+<span class="n">Epoch</span> <span class="mi">4</span><span class="o">/</span><span class="mi">5</span>
+<span class="mi">60</span><span class="o">/</span><span class="mi">60</span> <span class="p">[</span><span class="o">==========</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="n">s</span> <span class="mi">11</span><span class="n">ms</span><span class="o">/</span><span class="n">step</span> <span class="o">-</span> <span class="n">loss</span><span class="p">:</span> <span class="mf">0.3401</span> <span class="o">-</span> <span class="n">accuracy</span><span class="p">:</span> <span class="mf">0.8972</span>
+<span class="n">Epoch</span> <span class="mi">5</span><span class="o">/</span><span class="mi">5</span>
+<span class="mi">60</span><span class="o">/</span><span class="mi">60</span> <span class="p">[</span><span class="o">==========</span><span class="p">]</span> <span class="o">-</span> <span class="mi">4</span><span class="n">s</span> <span class="mi">60</span><span class="n">ms</span><span class="o">/</span><span class="n">step</span> <span class="o">-</span> <span class="n">loss</span><span class="p">:</span> <span class="mf">0.2867</span> <span class="o">-</span> <span class="n">accuracy</span><span class="p">:</span> <span class="mf">0.9072</span>
+<span class="mi">10</span><span class="o">/</span><span class="mi">10</span> <span class="p">[</span><span class="o">==========</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span><span class="n">s</span> <span class="mi">158</span><span class="n">ms</span><span class="o">/</span><span class="n">step</span>
+<span class="mi">10</span><span class="o">/</span><span class="mi">10</span> <span class="p">[</span><span class="o">==========</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span><span class="n">s</span> <span class="mi">158</span><span class="n">ms</span><span class="o">/</span><span class="n">step</span>
+<span class="n">val_loss</span><span class="p">:</span> <span class="mf">0.3893</span> <span class="o">-</span> <span class="n">val_sparse_categorical_accuracy</span><span class="p">:</span> <span class="mf">0.8848</span>
+</pre></div>
+</div>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 197 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tfhub.html" class="btn btn-neutral float-right" title="TensorFlow Hub 模型復用（Jinpeng）" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="distributed.html" class="btn btn-neutral float-left" title="TensorFlow分布式訓練" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+    <!-- Theme Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40509304-12', 'auto');
+    ga('send', 'pageview');
+    </script>
+
+    
+   
+
+</body>
+</html>
