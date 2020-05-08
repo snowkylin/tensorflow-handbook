@@ -43,6 +43,7 @@ def load_image_local(image_path, image_size=(512, 512), preserve_aspect_ratio=Tr
     return img
 
 def show_image(image, title, save=False):
+    fig = plt.figure()
     plt.imshow(image, aspect='equal')
     plt.axis('off')
     if save:

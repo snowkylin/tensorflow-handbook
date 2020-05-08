@@ -6,9 +6,9 @@ from zh.model.utils import MNISTLoader
 
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('--mode', default='train', help='train or test')
-parser.add_argument('--num_epochs', default=1)
-parser.add_argument('--batch_size', default=50)
-parser.add_argument('--learning_rate', default=0.001)
+parser.add_argument('--num_epochs', default=1, type=int)
+parser.add_argument('--batch_size', default=50, type=int)
+parser.add_argument('--learning_rate', default=0.001, type=float)
 args = parser.parse_args()
 data_loader = MNISTLoader()
 
