@@ -692,7 +692,7 @@ AutoGraph：將Python控制流轉換爲TensorFlow計算圖
     :lines: 112-136
 
 
-關於圖執行模式的更多內容可參見 :doc:`/zh/appendix/static`。
+關於圖執行模式的更多內容可參見 :doc:`../appendix/static`。
 
 ``tf.TensorArray`` ：TensorFlow 動態數組 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
