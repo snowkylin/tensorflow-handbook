@@ -132,5 +132,5 @@ if training_loop == 'graph':
         for batch_index in range(num_batches):
             start_index, end_index = batch_index * batch_size, (batch_index + 1) * batch_size
             y_pred = model.predict(data_loader.test_data[start_index: end_index])
-            sess.run(sparse_categorical_accuracy.update(y_true=data_loader.test_label[start_index: end_index], y_pred=y_pred))
+            sess.run(sparse_categorical_accuracy.update_state(y_true=data_loader.test_label[start_index: end_index], y_pred=y_pred))
         print("test accuracy: %f" % sess.run(sparse_categorical_accuracy.result()))
