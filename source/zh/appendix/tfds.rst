@@ -20,7 +20,7 @@ TensorFlow Datasets 数据集载入
 
 .. code-block:: python
 
-    dataset = tfds.load("mnist", split=tfds.Split.TRAIN)
+    dataset = tfds.load("mnist", split=tfds.Split.TRAIN, as_supervised=True)
     dataset = tfds.load("cats_vs_dogs", split=tfds.Split.TRAIN, as_supervised=True)
     dataset = tfds.load("tf_flowers", split=tfds.Split.TRAIN, as_supervised=True)
 

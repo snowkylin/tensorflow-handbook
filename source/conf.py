@@ -157,7 +157,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ('index_latex_cn', 'tensorflow_handbook.tex', 'TensorFlow 2 简明手册',
+    ('index_latex_cn', 'tensorflow_handbook.tex', '简明的 TensorFlow 2',
      author, 'manual'),
 ]
 
