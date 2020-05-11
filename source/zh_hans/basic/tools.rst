@@ -235,7 +235,7 @@ TensorBoard的使用有以下注意事项：
     .. code-block:: python
 
         import tensorflow_datasets as tfds
-        dataset = tfds.load("mnist", split=tfds.Split.TRAIN)
+        dataset = tfds.load("mnist", split=tfds.Split.TRAIN, as_supervised=True)
 
     即可快速载入MNIST数据集。
 

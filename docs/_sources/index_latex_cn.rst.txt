@@ -17,7 +17,7 @@
 
 .. admonition:: 线上教学活动：ML Study Jam
 
-    本手册正在与TensorFlow官方微信公众号合作开展为期三周的“ML Study Jam”线上学习活动。活动从2020年4月20日开始，可以访问 `这里 <https://tf.wiki/zh/mlstudyjam.html>`_ 或TensorFlow官方微信公众号（TensorFlow_official）以了解详情。
+    本手册正在与TensorFlow官方微信公众号合作开展为期三周的“ML Study Jam”线上学习活动。活动从2020年4月20日开始，可以访问 `这里 <https://tf.wiki/zh_hans/mlstudyjam.html>`_ 或TensorFlow官方微信公众号（TensorFlow_official）以了解详情。
 
 网站：https://tf.wiki
 
@@ -29,59 +29,59 @@ GitHub： https://github.com/snowkylin/tensorflow-handbook
     :maxdepth: 2
     :caption: 目录
 
-    zh/preface_latex
-    zh/introduction
+    zh_hans/preface_latex
+    zh_hans/introduction
 
 .. toctree:: 
     :maxdepth: 3
     :caption: 基础
 
-    zh/basic/installation
-    zh/basic/basic
-    zh/basic/models
-    zh/basic/tools
+    zh_hans/basic/installation
+    zh_hans/basic/basic
+    zh_hans/basic/models
+    zh_hans/basic/tools
 
 .. toctree:: 
     :maxdepth: 3
     :caption: 部署
 
-    zh/deployment/export
-    zh/deployment/serving
-    zh/deployment/lite
-    zh/deployment/javascript
+    zh_hans/deployment/export
+    zh_hans/deployment/serving
+    zh_hans/deployment/lite
+    zh_hans/deployment/javascript
 
 .. toctree:: 
     :maxdepth: 3
     :caption: 大规模训练与加速
 
-    zh/appendix/distributed
-    zh/appendix/tpu
+    zh_hans/appendix/distributed
+    zh_hans/appendix/tpu
 
 .. toctree:: 
     :maxdepth: 3
     :caption: 扩展
 
-    zh/appendix/tfhub
-    zh/appendix/tfds  
-    zh/appendix/swift
-    zh/appendix/quantum
+    zh_hans/appendix/tfhub
+    zh_hans/appendix/tfds  
+    zh_hans/appendix/swift
+    zh_hans/appendix/quantum
 
 .. toctree:: 
     :maxdepth: 3
     :caption: 高级
 
-    zh/advanced/static 
-    zh/advanced/tape
-    zh/advanced/optimization
+    zh_hans/advanced/static 
+    zh_hans/advanced/tape
+    zh_hans/advanced/optimization
 
 .. toctree:: 
     :maxdepth: 3
     :caption: 附录
     
-    zh/appendix/rl
-    zh/appendix/docker
-    zh/appendix/cloud
-    zh/appendix/jupyterlab    
-    zh/appendix/recommended_books
-    zh/appendix/terms
+    zh_hans/appendix/rl
+    zh_hans/appendix/docker
+    zh_hans/appendix/cloud
+    zh_hans/appendix/jupyterlab    
+    zh_hans/appendix/recommended_books
+    zh_hans/appendix/terms
 
