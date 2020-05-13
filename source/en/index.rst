@@ -20,11 +20,13 @@ A Concise Handbook of TensorFlow 2
         </tbody>
     </table>
 
-This is a concise handbook of TensorFlow 2.0 based on Keras and Eager Execution mode, aiming to help developers with some basic machine learning and Python knowledge to get started with TensorFlow 2.0 quickly.
+This is a concise handbook of TensorFlow 2 based on Keras and Eager Execution mode, aiming to help developers with some basic machine learning and Python knowledge to get started with TensorFlow 2.0 quickly.
 
-The code of this handbook is based on TensorFlow 2.0 stable version and beta1 version. All sample code in this handbook can be viewed `here <https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/>`_ .
+The code of this handbook is based on TensorFlow 2.0 and 2.1 stable version. All sample code in this handbook can be found `here <https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/>`_ .
 
-The English version of this handbook is still in progress (section title with a ✔️ means that the translation of this section is finished). Please refer to https://v1.tf.wiki for the eariler version. This handbook is a project of `Google Summer of Code 2019 <https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/>`_ .
+.. warning:: The English version of this handbook is still in progress. Please refer to https://v1.tf.wiki for the eariler English version of this handbook.
+
+This handbook is a project of `Google Summer of Code 2019 <https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/>`_ .
 
 GitHub： https://github.com/snowkylin/tensorflow-handbook
 
