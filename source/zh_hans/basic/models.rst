@@ -280,7 +280,7 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
 
     model = tf.keras.applications.MobileNetV2()
 
-当执行以上代码时，TensorFlow会自动从网络上下载 ``MobileNetV2`` 网络结构，因此在第一次执行代码时需要具备网络连接。每个网络结构具有自己特定的详细参数设置，一些共通的常用参数如下：
+当执行以上代码时，TensorFlow会自动从网络上下载 ``MobileNetV2`` 网络的预训练权值，因此在第一次执行代码时需要具备网络连接。也可以通过将参数 ``weights`` 设置为 ``None`` 来随机初始化变量而不使用预训练权值。每个网络结构具有自己特定的详细参数设置，一些共通的常用参数如下：
 
 - ``input_shape`` ：输入张量的形状（不含第一维的Batch），大多默认为 ``224 × 224 × 3`` 。一般而言，模型对输入张量的大小有下限，长和宽至少为 ``32 × 32`` 或 ``75 × 75`` ；
 - ``include_top`` ：在网络的最后是否包含全连接层，默认为 ``True`` ；
@@ -289,10 +289,20 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
 
 各网络模型参数的详细介绍可参考 `Keras文档 <https://keras.io/applications/>`_ 。
 
-以下展示一个例子，使用 ``MobileNetV2`` 网络在 ``tf_flowers`` 五分类数据集上进行训练（为了代码的简短高效，在该示例中我们使用了 :doc:`TensorFlow Datasets <../appendix/tfds>` 和 :ref:`tf.data <tfdata>` 载入和预处理数据）。通过将 ``weights`` 设置为 ``None`` ，我们随机初始化变量而不使用预训练权值。同时将 ``classes`` 设置为5，对应于5分类的数据集。
+.. admonition:: 设置训练状态
+
+    对于一些预定义的经典模型，其中的某些层（例如 ``BatchNormalization`` ）在训练和测试时的行为是不同的（可以参考 `这篇文章 <https://zhuanlan.zhihu.com/p/64310188>`_ ）。因此，在训练模型时，需要手动设置训练状态，告诉模型“我现在是处于训练模型的阶段”。可以通过
+
+    .. code-block:: python
+
+        tf.keras.backend.set_learning_phase(True)
+
+    进行设置，也可以在调用模型时通过将 ``training`` 参数设为 ``True`` 来设置。
+
+以下展示一个例子，使用 ``MobileNetV2`` 网络在 ``tf_flowers`` 五分类数据集上进行训练（为了代码的简短高效，在该示例中我们使用了 :doc:`TensorFlow Datasets <../appendix/tfds>` 和 :ref:`tf.data <tfdata>` 载入和预处理数据）。同时将 ``classes`` 设置为5，对应于5分类的数据集。
 
 .. literalinclude:: /_static/code/zh/model/cnn/mobilenet.py
-    :emphasize-lines: 10    
+    :emphasize-lines: 10, 15  
 
 后文的部分章节（如 :doc:`分布式训练 <../appendix/distributed>` ）中，我们也会直接调用这些经典的网络结构来进行训练。
 

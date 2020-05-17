@@ -25,7 +25,7 @@ dataset = tfds.load("cats_vs_dogs", split=tfds.Split.TRAIN, as_supervised=True)
 dataset = dataset.map(resize).shuffle(1024).batch(batch_size)
 
 with strategy.scope():
-    model = tf.keras.applications.MobileNetV2()
+    model = tf.keras.applications.MobileNetV2(weights=None, classes=2)
     model.compile(
         optimizer=tf.keras.optimizers.Adam(learning_rate=learning_rate),
         loss=tf.keras.losses.sparse_categorical_crossentropy,

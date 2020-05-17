@@ -280,7 +280,7 @@ Keras 模型以類的形式呈現，我們可以通過繼承 ``tf.keras.Model`` 
 
     model = tf.keras.applications.MobileNetV2()
 
-當執行以上代碼時，TensorFlow會自動從網絡上下載 ``MobileNetV2`` 網絡結構，因此在第一次執行代碼時需要具備網絡連接。每個網絡結構具有自己特定的詳細參數設置，一些共通的常用參數如下：
+當執行以上代碼時，TensorFlow會自動從網絡上下載 ``MobileNetV2`` 網絡的預訓練權值，因此在第一次執行代碼時需要具備網絡連接。也可以通過將參數 ``weights`` 設置爲 ``None`` 來隨機初始化變量而不使用預訓練權值。每個網絡結構具有自己特定的詳細參數設置，一些共通的常用參數如下：
 
 - ``input_shape`` ：輸入張量的形狀（不含第一維的Batch），大多默認爲 ``224 × 224 × 3`` 。一般而言，模型對輸入張量的大小有下限，長和寬至少爲 ``32 × 32`` 或 ``75 × 75`` ；
 - ``include_top`` ：在網絡的最後是否包含全連接層，默認爲 ``True`` ；
@@ -289,10 +289,20 @@ Keras 模型以類的形式呈現，我們可以通過繼承 ``tf.keras.Model`` 
 
 各網絡模型參數的詳細介紹可參考 `Keras文檔 <https://keras.io/applications/>`_ 。
 
-以下展示一個例子，使用 ``MobileNetV2`` 網絡在 ``tf_flowers`` 五分類數據集上進行訓練（爲了代碼的簡短高效，在該示例中我們使用了 :doc:`TensorFlow Datasets <../appendix/tfds>` 和 :ref:`tf.data <tfdata>` 載入和預處理數據）。通過將 ``weights`` 設置爲 ``None`` ，我們隨機初始化變量而不使用預訓練權值。同時將 ``classes`` 設置爲5，對應於5分類的數據集。
+.. admonition:: 設置訓練狀態
+
+    對於一些預定義的經典模型，其中的某些層（例如 ``BatchNormalization`` ）在訓練和測試時的行爲是不同的（可以參考 `這篇文章 <https://zhuanlan.zhihu.com/p/64310188>`_ ）。因此，在訓練模型時，需要手動設置訓練狀態，告訴模型「我現在是處於訓練模型的階段」。可以通過
+
+    .. code-block:: python
+
+        tf.keras.backend.set_learning_phase(True)
+
+    進行設置，也可以在調用模型時通過將 ``training`` 參數設爲 ``True`` 來設置。
+
+以下展示一個例子，使用 ``MobileNetV2`` 網絡在 ``tf_flowers`` 五分類數據集上進行訓練（爲了代碼的簡短高效，在該示例中我們使用了 :doc:`TensorFlow Datasets <../appendix/tfds>` 和 :ref:`tf.data <tfdata>` 載入和預處理數據）。同時將 ``classes`` 設置爲5，對應於5分類的數據集。
 
 .. literalinclude:: /_static/code/zh/model/cnn/mobilenet.py
-    :emphasize-lines: 10    
+    :emphasize-lines: 10, 15  
 
 後文的部分章節（如 :doc:`分布式訓練 <../appendix/distributed>` ）中，我們也會直接調用這些經典的網絡結構來進行訓練。
 

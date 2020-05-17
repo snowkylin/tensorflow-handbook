@@ -44,7 +44,6 @@ $(document).ready(function(){
         $('.wy-side-nav-search > a').text('A Concise Handbook of TensorFlow 2').attr('href', '/en');
         $('.wy-nav-top > a').text('A Concise Handbook of TensorFlow 2').attr('href', '/en');
     } else if (window.location.pathname.includes('zh/')) {
-        window.location.href = window.location.href.replace('zh/', 'zh_hans/');
+        // window.location.href = window.location.href.replace('zh/', 'zh_hans/');
     }
-    //
 });

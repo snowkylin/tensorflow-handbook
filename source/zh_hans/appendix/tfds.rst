@@ -38,11 +38,11 @@ TensorFlow Datasets 数据集载入
     Dl Completed...: 100%|██████████████████████████████████████████████████████████████████████████████████████| 4/4 [00:10<00:00,  2.73s/ file] 
     Dataset mnist downloaded and prepared to C:\Users\snowkylin\tensorflow_datasets\mnist\3.0.0. Subsequent calls will reuse this data.
 
-.. hint:: 在使用 TensorFlow Datasets 时，可能需要设置代理。较为简易的方式是设置 ``TFDS_HTTPS_PROXY`` 环境变量，即
+.. hint:: 在使用 TensorFlow Datasets 时，可能需要设置代理。较为简易的方式是设置 ``HTTPS_PROXY`` 环境变量（ `参考这里 <https://github.com/tensorflow/datasets/blob/dd51a2d510bdcbf4498e9dcd2ee1ef33d44a13f3/tensorflow_datasets/core/download/downloader.py#L147>`_ ），即
 
     ::
 
-        export TFDS_HTTPS_PROXY=http://代理服务器IP:端口
+        export HTTPS_PROXY=http://代理服务器IP:端口
 
 ``tfds.load`` 方法返回一个 ``tf.data.Dataset`` 对象。部分重要的参数如下：
 

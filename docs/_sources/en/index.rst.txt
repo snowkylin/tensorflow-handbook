@@ -20,7 +20,7 @@ A Concise Handbook of TensorFlow 2
         </tbody>
     </table>
 
-This is a concise handbook of TensorFlow 2 based on Keras and Eager Execution mode, aiming to help developers with some basic machine learning and Python knowledge to get started with TensorFlow 2.0 quickly.
+This is a concise handbook of TensorFlow 2 based on Keras and Eager Execution mode, aiming to help developers with some basic machine learning and Python knowledge to get started with TensorFlow 2 quickly.
 
 The code of this handbook is based on TensorFlow 2.0 and 2.1 stable version. All sample code in this handbook can be found `here <https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/>`_ .
 
@@ -84,7 +84,7 @@ Q&A: https://discuss.tf.wiki
     appendix/recommended_books
     appendix/terms
 
-.. only:: html
+.. only:: html 
 
     Indices and tables
     ==================
