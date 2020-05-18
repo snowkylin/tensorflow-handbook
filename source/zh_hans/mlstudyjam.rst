@@ -29,7 +29,11 @@ ML Study Jam 2020
 
 |
 
-* 关于 Google 的 AI 原则请参考 ——> https://ai.google/principles/
+更多资源：
+
+* tf.wiki 交流论坛: https://discuss.tf.wiki/
+* TensorFlow codelabs 教程: https://codelabs.tf.wiki/
+* Google 的 AI 原则: https://ai.google/principles/
 
 .. raw:: html
 
