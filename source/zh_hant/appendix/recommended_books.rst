@@ -5,7 +5,7 @@
 
 如果你是一名在校大學生，具有較好的數學基礎，可以從以下教材入手，作爲學習機器學習的起點：
 
-* 李航. `統計學習方法 <https://book.douban.com/subject/10590856/>`_ . 清華大學出版社, 2012.
+* 李航. `統計學習方法 <https://book.douban.com/subject/10590856/>`_ . 清華大學出版社, 2012. （有課件可在 `清華大學出版社網站 <http://www.tup.tsinghua.edu.cn/booksCenter/book_08132901.html>`_ 下載，點擊「資源下載」-「網絡資源」即可。有書中算法的 `GitHub開原始碼實現 <https://github.com/fengdu78/lihang-code>`_ ）
 * 周志華. `機器學習 <https://book.douban.com/subject/26708119/>`_ . 清華大學出版社, 2016. 
 * 邱錫鵬. `神經網絡與深度學習 <https://nndl.github.io/>`_ . 機械工業出版社, 2020.（有在線版本可閱讀）
 
