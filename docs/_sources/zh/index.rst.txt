@@ -33,12 +33,6 @@ GitHub： https://github.com/snowkylin/tensorflow-handbook
 答疑区： https://discuss.tf.wiki
 
 .. toctree:: 
-    :maxdepth: 3
-    :caption: 教学活动
-    
-    mlstudyjam
-
-.. toctree:: 
     :maxdepth: 2
     :caption: 目录
 
