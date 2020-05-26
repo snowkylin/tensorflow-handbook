@@ -51,7 +51,7 @@ TensorFlow Serving可以使用apt-get或Docker安裝。在生產環境中，推�
 TensorFlow Serving模型部署
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-TensorFlow Serving可以直接讀取SavedModel格式的模型進行部署（導出模型到SavedModel文件的方法見 :ref:`前文 <savedmodel>` ）。使用以下命令即可：
+TensorFlow Serving可以直接讀取SavedModel格式的模型進行部署（導出模型到SavedModel文件的方法見 :ref:`前文 <zh_hant_savedmodel>` ）。使用以下命令即可：
 
 ::
 
@@ -81,7 +81,7 @@ TensorFlow Serving可以直接讀取SavedModel格式的模型進行部署（導�
 Keras Sequential模式模型的部署
 ---------------------------------------------------
 
-由於Sequential模式的輸入和輸出都很固定，因此這種類型的模型很容易部署，無需其他額外操作。例如，要將 :ref:`前文使用SavedModel導出的MNIST手寫體識別模型 <savedmodel>` （使用Keras Sequential模式建立）以 ``MLP`` 的模型名在 ``8501`` 埠進行部署，可以直接使用以下命令：
+由於Sequential模式的輸入和輸出都很固定，因此這種類型的模型很容易部署，無需其他額外操作。例如，要將 :ref:`前文使用SavedModel導出的MNIST手寫體識別模型 <zh_hant_savedmodel>` （使用Keras Sequential模式建立）以 ``MLP`` 的模型名在 ``8501`` 埠進行部署，可以直接使用以下命令：
 
 ::
 
@@ -90,7 +90,7 @@ Keras Sequential模式模型的部署
         --model_name=MLP \
         --model_base_path="/home/.../.../saved"  # 文件夾絕對地址根據自身情況填寫，無需加入版本號
 
-然後就可以按照 :ref:`後文的介紹 <call_serving_api>` ，使用gRPC或者RESTful API在客戶端調用模型了。
+然後就可以按照 :ref:`後文的介紹 <zh_hant_call_serving_api>` ，使用gRPC或者RESTful API在客戶端調用模型了。
 
 自定義Keras模型的部署
 ---------------------------------------------------
@@ -127,7 +127,7 @@ Keras Sequential模式模型的部署
         --model_name=MLP \
         --model_base_path="/home/.../.../saved_with_signature"  # 修改爲自己模型的絕對地址
 
-.. _call_serving_api:
+.. _zh_hant_call_serving_api:
 
 在客戶端調用以TensorFlow Serving部署的模型
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

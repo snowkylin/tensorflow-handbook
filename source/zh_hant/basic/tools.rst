@@ -13,7 +13,7 @@ TensorFlow常用模塊
 ..
     https://www.tensorflow.org/beta/guide/checkpoints
 
-.. warning:: Checkpoint只保存模型的參數，不保存模型的計算過程，因此一般用於在具有模型原始碼的時候恢復之前訓練好的模型參數。如果需要導出模型（無需原始碼也能運行模型），請參考 :ref:`「部署」章節中的SavedModel <savedmodel>` 。
+.. warning:: Checkpoint只保存模型的參數，不保存模型的計算過程，因此一般用於在具有模型原始碼的時候恢復之前訓練好的模型參數。如果需要導出模型（無需原始碼也能運行模型），請參考 :ref:`「部署」章節中的SavedModel <zh_hant_savedmodel>` 。
 
 很多時候，我們希望在模型訓練完成後能將訓練好的參數（變量）保存起來。在需要使用模型的其他地方載入模型和參數，就能直接得到訓練好的模型。可能你第一個想到的是用Python的序列化模塊 ``pickle`` 存儲 ``model.variables``。但不幸的是，TensorFlow的變量類型 ``ResourceVariable`` 並不能被序列化。
 
@@ -77,7 +77,7 @@ TensorFlow常用模塊
 
 .. note:: ``tf.train.Checkpoint`` 與以前版本常用的 ``tf.train.Saver`` 相比，強大之處在於其支持在即時執行模式下「延遲」恢復變量。具體而言，當調用了 ``checkpoint.restore()`` ，但模型中的變量還沒有被建立的時候，Checkpoint可以等到變量被建立的時候再進行數值的恢復。即時執行模式下，模型中各個層的初始化和變量的建立是在模型第一次被調用的時候才進行的（好處在於可以根據輸入的張量形狀而自動確定變量形狀，無需手動指定）。這意味著當模型剛剛被實例化的時候，其實裡面還一個變量都沒有，這時候使用以往的方式去恢復變量數值是一定會報錯的。比如，你可以試試在train.py調用 ``tf.keras.Model`` 的 ``save_weight()`` 方法保存model的參數，並在test.py中實例化model後立即調用 ``load_weight()`` 方法，就會出錯，只有當調用了一遍model之後再運行 ``load_weight()`` 方法才能得到正確的結果。可見， ``tf.train.Checkpoint`` 在這種情況下可以給我們帶來相當大的便利。另外， ``tf.train.Checkpoint`` 同時也支持圖執行模式。
 
-最後提供一個實例，以前章的 :ref:`多層感知機模型 <mlp>` 爲例展示模型變量的保存和載入：
+最後提供一個實例，以前章的 :ref:`多層感知機模型 <zh_hant_mlp>` 爲例展示模型變量的保存和載入：
 
 .. literalinclude:: /_static/code/zh/tools/save_and_restore/mnist.py
     :emphasize-lines: 20, 30-32, 38-39
@@ -155,7 +155,7 @@ TensorBoard的使用有以下注意事項：
 * 如果需要重新訓練，需要刪除掉記錄文件夾內的信息並重啓TensorBoard（或者建立一個新的記錄文件夾並開啓TensorBoard， ``--logdir`` 參數設置爲新建立的文件夾）；
 * 記錄文件夾目錄保持全英文。
 
-.. _graph_profile:
+.. _zh_hant_graph_profile:
 
 查看Graph和Profile信息
 -------------------------------------------
@@ -169,7 +169,7 @@ TensorBoard的使用有以下注意事項：
     with summary_writer.as_default():
         tf.summary.trace_export(name="model_trace", step=0, profiler_outdir=log_dir)    # 保存Trace信息到文件
 
-之後，我們就可以在TensorBoard中選擇「Profile」，以時間軸的方式查看各操作的耗時情況。如果使用了 :ref:`tf.function <tffunction>` 建立了計算圖，也可以點擊「Graphs」查看圖結構。
+之後，我們就可以在TensorBoard中選擇「Profile」，以時間軸的方式查看各操作的耗時情況。如果使用了 :ref:`tf.function <zh_hant_tffunction>` 建立了計算圖，也可以點擊「Graphs」查看圖結構。
 
 .. figure:: /_static/image/tools/profiling.png
     :width: 100%
@@ -182,12 +182,12 @@ TensorBoard的使用有以下注意事項：
 實例：查看多層感知機模型的訓練情況
 -------------------------------------------
 
-最後提供一個實例，以前章的 :ref:`多層感知機模型 <mlp>` 爲例展示TensorBoard的使用：
+最後提供一個實例，以前章的 :ref:`多層感知機模型 <zh_hant_mlp>` 爲例展示TensorBoard的使用：
 
 .. literalinclude:: /_static/code/zh/tools/tensorboard/mnist.py
     :emphasize-lines: 12-13, 21-22, 25-26
 
-.. _tfdata:
+.. _zh_hant_tfdata:
 
 ``tf.data`` ：數據集的構建與預處理
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -239,7 +239,7 @@ TensorBoard的使用有以下注意事項：
 
     即可快速載入MNIST數據集。
 
-對於特別巨大而無法完整載入內存的數據集，我們可以先將數據集處理爲 TFRecord 格式，然後使用 ``tf.data.TFRocrdDataset()`` 進行載入。詳情請參考 :ref:`後節 <tfrecord>`：
+對於特別巨大而無法完整載入內存的數據集，我們可以先將數據集處理爲 TFRecord 格式，然後使用 ``tf.data.TFRocrdDataset()`` 進行載入。詳情請參考 :ref:`後節 <zh_hant_tfrecord>`：
 
 數據集對象的預處理
 -------------------------------------------
@@ -313,7 +313,7 @@ TensorBoard的使用有以下注意事項：
     - 當 ``buffer_size`` 設置爲1時，其實等價於沒有進行任何打散；
     - 當數據集的標籤順序分布極爲不均勻（例如二元分類時數據集前N個的標籤爲0，後N個的標籤爲1）時，較小的緩衝區大小會使得訓練時取出的Batch數據很可能全爲同一標籤，從而影響訓練效果。一般而言，數據集的順序分布若較爲隨機，則緩衝區的大小可較小，否則則需要設置較大的緩衝區。
 
-.. _prefetch:
+.. _zh_hant_prefetch:
 
 使用 ``tf.data`` 的並行化策略提高訓練流程效率
 --------------------------------------------------------------------------------------
@@ -361,7 +361,7 @@ TensorBoard的使用有以下注意事項：
 
 當然，這裡同樣可以將 ``num_parallel_calls`` 設置爲 ``tf.data.experimental.AUTOTUNE`` 以讓TensorFlow自動選擇合適的數值。
 
-除此以外，還有很多提升數據集處理性能的方式，可參考 `TensorFlow文檔 <https://www.tensorflow.org/guide/data_performance>`_ 進一步了解。後文的實例中展示了tf.data並行化策略的強大性能，可 :ref:`點此 <tfdata_performance>` 查看。
+除此以外，還有很多提升數據集處理性能的方式，可參考 `TensorFlow文檔 <https://www.tensorflow.org/guide/data_performance>`_ 進一步了解。後文的實例中展示了tf.data並行化策略的強大性能，可 :ref:`點此 <zh_hant_tfdata_performance>` 查看。
 
 數據集元素的獲取與使用
 -------------------------------------------
@@ -396,7 +396,7 @@ Keras支持使用 ``tf.data.Dataset`` 直接作爲輸入。當調用 ``tf.keras.
 
 由於已經通過 ``Dataset.batch()`` 方法劃分了數據集的批次，所以這裡也無需提供批次的大小。
 
-.. _cats_vs_dogs:
+.. _zh_hant_cats_vs_dogs:
 
 實例：cats_vs_dogs圖像分類
 -------------------------------------------
@@ -412,7 +412,7 @@ Keras支持使用 ``tf.data.Dataset`` 直接作爲輸入。當調用 ``tf.keras.
 .. literalinclude:: /_static/code/zh/tools/tfdata/cats_vs_dogs.py
     :lines: 56-70
 
-.. _tfdata_performance:
+.. _zh_hant_tfdata_performance:
 
 通過對以上示例進行性能測試，我們可以感受到 ``tf.data`` 的強大並行化性能。通過 ``prefetch()`` 的使用和在 ``map()`` 過程中加入 ``num_parallel_calls`` 參數，模型訓練的時間可縮減至原來的一半甚至更低。測試結果如下：
 
@@ -422,7 +422,7 @@ Keras支持使用 ``tf.data.Dataset`` 直接作爲輸入。當調用 ``tf.keras.
 
     tf.data 的並行化策略性能測試（縱軸爲每epoch訓練所需時間，單位：秒）
 
-.. _tfrecord:
+.. _zh_hant_tfrecord:
 
 TFRecord ：TensorFlow數據集存儲格式
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -463,12 +463,12 @@ TFRecord可以理解爲一系列序列化的 ``tf.train.Example`` 元素所組�
 - 通過 ``tf.data.TFRecordDataset`` 讀入原始的 TFRecord 文件（此時文件中的 ``tf.train.Example`` 對象尚未被反序列化），獲得一個 ``tf.data.Dataset`` 數據集對象；
 - 通過 ``Dataset.map`` 方法，對該數據集對象中的每一個序列化的 ``tf.train.Example`` 字符串執行 ``tf.io.parse_single_example`` 函數，從而實現反序列化。
 
-以下我們通過一個實例，展示將 :ref:`上一節 <cats_vs_dogs>` 中使用的cats_vs_dogs二分類數據集的訓練集部分轉換爲TFRecord文件，並讀取該文件的過程。
+以下我們通過一個實例，展示將 :ref:`上一節 <zh_hant_cats_vs_dogs>` 中使用的cats_vs_dogs二分類數據集的訓練集部分轉換爲TFRecord文件，並讀取該文件的過程。
 
 將數據集存儲爲 TFRecord 文件
 -------------------------------------------
 
-首先，與 :ref:`上一節 <cats_vs_dogs>` 類似，我們進行一些準備工作，`下載數據集 <https://www.floydhub.com/fastai/datasets/cats-vs-dogs>`_ 並解壓到 ``data_dir`` ，初始化數據集的圖片文件名列表及標籤。
+首先，與 :ref:`上一節 <zh_hant_cats_vs_dogs>` 類似，我們進行一些準備工作，`下載數據集 <https://www.floydhub.com/fastai/datasets/cats-vs-dogs>`_ 並解壓到 ``data_dir`` ，初始化數據集的圖片文件名列表及標籤。
 
 .. literalinclude:: /_static/code/zh/tools/tfrecord/cats_vs_dogs.py
     :lines: 1-12
@@ -511,7 +511,7 @@ TFRecord可以理解爲一系列序列化的 ``tf.train.Example`` 元素所組�
 
 可見圖片和標籤都正確顯示，數據集構建成功。
 
-.. _tffunction:
+.. _zh_hant_tffunction:
 
 ``tf.function`` ：圖執行模式 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -840,7 +840,7 @@ AutoGraph：將Python控制流轉換爲TensorFlow計算圖
         [tf.config.LogicalDeviceConfiguration(memory_limit=2048),
          tf.config.LogicalDeviceConfiguration(memory_limit=2048)])
 
-我們在 :ref:`單機多卡訓練 <multi_gpu>` 的代碼前加入以上代碼，即可讓原本爲多GPU設計的代碼在單GPU環境下運行。當輸出設備數量時，程序會輸出：
+我們在 :ref:`單機多卡訓練 <zh_hant_multi_gpu>` 的代碼前加入以上代碼，即可讓原本爲多GPU設計的代碼在單GPU環境下運行。當輸出設備數量時，程序會輸出：
 
 ::
 

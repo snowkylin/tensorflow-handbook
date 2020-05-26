@@ -3,7 +3,7 @@
 
 如果你既希望獲得本地或雲端強大的計算能力，又希望獲得Jupyter Notebook或Colab中方便的在線Python交互式運行環境，可以自己爲的本地伺服器或雲伺服器安裝JupyterLab。JupyterLab可以理解成升級版的Jupyter Notebook/Colab，提供多標籤頁支持，在線終端和文件管理等一系列方便的功能，接近於一個在線的Python IDE。
 
-.. tip:: 部分雲服務提供了開箱即用的JupyterLab環境，例如前章介紹的 :ref:`GCP中AI Platform的Notebook <notebook>` ，以及 `FloydHub <https://www.floydhub.com/>`_ 。
+.. tip:: 部分雲服務提供了開箱即用的JupyterLab環境，例如前章介紹的 :ref:`GCP中AI Platform的Notebook <zh_hant_notebook>` ，以及 `FloydHub <https://www.floydhub.com/>`_ 。
 
 
 在已經部署Python環境後，使用以下命令安裝JupyterLab：

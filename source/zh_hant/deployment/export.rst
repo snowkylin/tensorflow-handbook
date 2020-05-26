@@ -1,7 +1,7 @@
 TensorFlow模型導出
 ====================================================
 
-.. _savedmodel:
+.. _zh_hant_savedmodel:
 
 使用SavedModel完整導出模型
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -11,7 +11,7 @@ TensorFlow模型導出
 
 在部署模型時，我們的第一步往往是將訓練好的整個模型完整導出爲一系列標準格式的文件，然後即可在不同的平台上部署模型文件。這時，TensorFlow爲我們提供了SavedModel這一格式。與前面介紹的Checkpoint不同，SavedModel包含了一個TensorFlow程序的完整信息： **不僅包含參數的權值，還包含計算的流程（即計算圖）** 。當模型導出爲SavedModel文件時，無需建立模型的原始碼即可再次運行模型，這使得SavedModel尤其適用於模型的分享和部署。後文的TensorFlow Serving（伺服器端部署模型）、TensorFlow Lite（移動端部署模型）以及TensorFlow.js都會用到這一格式。
 
-Keras模型均可方便地導出爲SavedModel格式。不過需要注意的是，因爲SavedModel基於計算圖，所以對於使用繼承 ``tf.keras.Model`` 類建立的Keras模型，其需要導出到SavedModel格式的方法（比如 ``call`` ）都需要使用 ``@tf.function`` 修飾（ ``@tf.function`` 的使用方式見 :ref:`前文 <tffunction>` ）。然後，假設我們有一個名爲 ``model`` 的Keras模型，使用下面的代碼即可將模型導出爲SavedModel：
+Keras模型均可方便地導出爲SavedModel格式。不過需要注意的是，因爲SavedModel基於計算圖，所以對於使用繼承 ``tf.keras.Model`` 類建立的Keras模型，其需要導出到SavedModel格式的方法（比如 ``call`` ）都需要使用 ``@tf.function`` 修飾（ ``@tf.function`` 的使用方式見 :ref:`前文 <zh_hant_tffunction>` ）。然後，假設我們有一個名爲 ``model`` 的Keras模型，使用下面的代碼即可將模型導出爲SavedModel：
 
 .. code-block:: python
 
@@ -27,7 +27,7 @@ Keras模型均可方便地導出爲SavedModel格式。不過需要注意的是�
 
 .. hint:: 對於使用繼承 ``tf.keras.Model`` 類建立的Keras模型 ``model`` ，使用SavedModel載入後將無法使用 ``model()`` 直接進行推斷，而需要使用 ``model.call()`` 。
 
-以下是一個簡單的示例，將 :ref:`前文MNIST手寫體識別的模型 <mlp>` 進行導出和導入。
+以下是一個簡單的示例，將 :ref:`前文MNIST手寫體識別的模型 <zh_hant_mlp>` 進行導出和導入。
 
 導出模型到 ``saved/1`` 文件夾：
 

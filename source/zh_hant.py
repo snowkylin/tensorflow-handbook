@@ -1,5 +1,6 @@
 import zhconv
 import os
+import re
 
 for path, dir_list, file_list in os.walk('zh'):
     for file_name in file_list:
@@ -11,12 +12,16 @@ for path, dir_list, file_list in os.walk('zh'):
         os.makedirs(dst_dir, exist_ok=True)
         dst_path = os.path.join(dst_dir, file_name)
         f_ = open(dst_path, 'w', encoding='utf8')
-        f_.write(zhconv.convert_for_mw(content, 'zh-tw'))
+        content_zh_hant = re.sub(r'\.\. _(.+?):', r'.. _zh_hant_\1:', content)
+        content_zh_hant = re.sub(r':ref:`(.+?) <(.+?)>`', r':ref:`\1 <zh_hant_\2>`', content_zh_hant)
+        f_.write(zhconv.convert_for_mw(content_zh_hant, 'zh-tw'))
         print(src_path + ' -> ' + dst_path)
 
         dst_dir = path.replace('zh', 'zh_hans')
         os.makedirs(dst_dir, exist_ok=True)
         dst_path = os.path.join(dst_dir, file_name)
         f_ = open(dst_path, 'w', encoding='utf8')
-        f_.write(zhconv.convert_for_mw(content, 'zh-hans'))
+        content_zh_hans = re.sub(r'\.\. _(.+?):', r'.. _zh_hans_\1:', content)
+        content_zh_hans = re.sub(r':ref:`(.+?) <(.+?)>`', r':ref:`\1 <zh_hans_\2>`', content_zh_hans)
+        f_.write(zhconv.convert_for_mw(content_zh_hans, 'zh-hans'))
         print(src_path + ' -> ' + dst_path)

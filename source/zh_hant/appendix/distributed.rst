@@ -6,7 +6,7 @@ TensorFlow分布式訓練
 
 當我們擁有大量計算資源時，通過使用合適的分布式策略，我們可以充分利用這些計算資源，從而大幅壓縮模型訓練的時間。針對不同的使用場景，TensorFlow在 ``tf.distribute.Strategy`` 中爲我們提供了若干種分布式策略，使得我們能夠更高效地訓練模型。
 
-.. _multi_gpu:
+.. _zh_hant_multi_gpu:
 
 單機多卡訓練： ``MirroredStrategy`` 
 -------------------------------------------
@@ -96,7 +96,7 @@ tf_flowers    22s/epoch                       7s/epoch                        5s
 .. literalinclude:: /_static/code/zh/distributed/multi_worker.py
     :emphasize-lines: 10-18, 27
 
-在以下測試中，我們在Google Cloud Platform分別建立兩台具有單張NVIDIA Tesla K80的虛擬機實例（具體建立方式參見 :ref:`後文介紹 <GCP>` ），並分別測試在使用一個GPU時的訓練時長和使用兩台虛擬機實例進行分布式訓練的訓練時長。所有測試的epoch數均爲5。使用單機單卡時，Batch Size設置爲64。使用雙機單卡時，測試總Batch Size爲64（分發到單台機器的Batch Size爲32）和總Batch Size爲128（分發到單台機器的Batch Size爲64）兩種情況。
+在以下測試中，我們在Google Cloud Platform分別建立兩台具有單張NVIDIA Tesla K80的虛擬機實例（具體建立方式參見 :ref:`後文介紹 <zh_hant_GCP>` ），並分別測試在使用一個GPU時的訓練時長和使用兩台虛擬機實例進行分布式訓練的訓練時長。所有測試的epoch數均爲5。使用單機單卡時，Batch Size設置爲64。使用雙機單卡時，測試總Batch Size爲64（分發到單台機器的Batch Size爲32）和總Batch Size爲128（分發到單台機器的Batch Size爲64）兩種情況。
 
 ============  ==========================  ==============================  =============================
 數據集        單機單卡（Batch Size爲64）   雙機單卡（總Batch Size爲64）    雙機單卡（總Batch Size爲128）

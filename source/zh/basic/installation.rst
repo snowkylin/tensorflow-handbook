@@ -8,7 +8,7 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 一般安装步骤
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1. 安装Python环境。此处建议安装 `Anaconda <https://www.anaconda.com/>`_ 的Python 3.7版本（后文均以此为准），这是一个开源的Python发行版本，提供了一个完整的科学计算环境，包括NumPy、SciPy等常用科学计算库。当然，你有权选择自己喜欢的Python环境。Anaconda的安装包可在 `这里 <https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/>`_ 获得。
+1. 安装Python环境。此处建议安装 `Anaconda <https://www.anaconda.com/>`_ 的Python 3.7 64位版本（后文均以此为准），这是一个开源的Python发行版本，提供了一个完整的科学计算环境，包括NumPy、SciPy等常用科学计算库。当然，你有权选择自己喜欢的Python环境。Anaconda的安装包可在 `这里 <https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/>`_ 获得。
 
 2. 使用Anaconda自带的conda包管理器建立一个Conda虚拟环境，并进入该虚拟环境。在命令行下输入：
 
