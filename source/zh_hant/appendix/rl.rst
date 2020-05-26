@@ -33,13 +33,13 @@
 
 .. math::   
     f(i, j) = \begin{cases}f(i+1, j) + r(i, j), & \pi(i, j) = \downarrow \\ f(i+1, j+1) + r(i, j), & \pi(i, j) = \searrow\end{cases}
-    :label: eq1
+    :label: zh_hant_eq1
 
 上式的另一個等價寫法如下：
 
 .. math::    
     f(i, j) = [p_1 f(i+1, j) + p_2 f(i+1, j+1)] + r(i, j)
-    :label: eq2
+    :label: zh_hant_eq2
 
 其中
 
@@ -48,7 +48,7 @@
 
 有了上面的鋪墊之後，我們要解決的問題就變爲了：通過調整智能體在每個坐標(i, j)會選擇的動作 :math:`\pi(i, j)` 的組合，使得 :math:`f(0, 0)` 的值最大。爲了解決這個問題，最粗暴的方法是遍歷所有 :math:`\pi(i, j)` 的組合，例如在示例圖中，我們需要決策 :math:`\pi(0, 0)` 、 :math:`\pi(1, 0)` 、 :math:`\pi(1, 1)` 的值，一共有 :math:`2^3 = 8` 種組合，我們只需要將8種組合逐個代入並計算 :math:`f(0, 0)` ，輸出最大值及其對應組合即可。
 
-不過，這樣顯然效率太低了。於是我們考慮直接計算 :eq:`eq2` 式關於所有動作 :math:`\pi` 組合的最大值 :math:`\max_\pi f(i, j)` 。在 :eq:`eq2` 式中， :math:`r(i, j)` 與任何動作 :math:`\pi` 都無關，所以我們只需考慮 :math:`p_1 f(i+1, j) + p_2 f(i+1, j+1)` 這個表達式的最大值。於是，我們分別計算 :math:`\pi(i, j) = \downarrow` 和 :math:`\pi(i, j) = \searrow` 時該表達式關於任何動作 :math:`\pi` 的最大值，並取兩個最大值中的較大者，如下所示：
+不過，這樣顯然效率太低了。於是我們考慮直接計算 :eq:`zh_hant_eq2` 式關於所有動作 :math:`\pi` 組合的最大值 :math:`\max_\pi f(i, j)` 。在 :eq:`zh_hant_eq2` 式中， :math:`r(i, j)` 與任何動作 :math:`\pi` 都無關，所以我們只需考慮 :math:`p_1 f(i+1, j) + p_2 f(i+1, j+1)` 這個表達式的最大值。於是，我們分別計算 :math:`\pi(i, j) = \downarrow` 和 :math:`\pi(i, j) = \searrow` 時該表達式關於任何動作 :math:`\pi` 的最大值，並取兩個最大值中的較大者，如下所示：
 
 .. math::
     \max_\pi f(i, j) &= \max_\pi [p_1 f(i+1, j) + p_2 f(i+1, j+1)] + r(i, j) \\
@@ -76,11 +76,11 @@
 
     請給出智能體在每個坐標所應該選擇的動作 :math:`\pi(i, j)` ，使得智能體經過的路徑上的數字之和的期望（Expectation） [#f1]_ 最大。
 
-此時，如果你想直接寫出問題的狀態轉移方程，恐怕就不那麼容易了（動作選擇和轉移結果不是一一對應的！）。但如果類比前節 :eq:`eq2` 式描述問題的框架，我們會發現問題容易了一些。在這個問題中，我們沿用符號 :math:`f(i, j)` 來表示智能體在坐標(i, j)處的「現在及未來將會獲得的數字之和的期望」，則有「當前(i, j)坐標的期望 = 『選擇動作 :math:`\pi(i, j)` 後可獲得的數字之和』的期望 + 當前坐標的數字」，如下式
+此時，如果你想直接寫出問題的狀態轉移方程，恐怕就不那麼容易了（動作選擇和轉移結果不是一一對應的！）。但如果類比前節 :eq:`zh_hant_eq2` 式描述問題的框架，我們會發現問題容易了一些。在這個問題中，我們沿用符號 :math:`f(i, j)` 來表示智能體在坐標(i, j)處的「現在及未來將會獲得的數字之和的期望」，則有「當前(i, j)坐標的期望 = 『選擇動作 :math:`\pi(i, j)` 後可獲得的數字之和』的期望 + 當前坐標的數字」，如下式
 
 .. math::    
     f(i, j) = [p_1 f(i+1, j) + p_2 f(i+1, j+1)] + r(i, j)
-    :label: eq3
+    :label: zh_hant_eq3
 
 其中
 
@@ -91,7 +91,7 @@
 
 .. math::
     g(i, j) = \max[\underbrace{\frac{3}{4} g(i+1, j) + \frac{1}{4} g(i+1, j+1)}_{\pi(i, j) = \downarrow}, \underbrace{\frac{1}{4} g(i+1, j) + \frac{3}{4} g(i+1, j+1)}_{\pi(i, j) = \searrow}] + r(i, j)
-    :label: eq4
+    :label: zh_hant_eq4
 
 然後我們即可使用這一遞推式由下到上計算 :math:`g(i, j)` 。
 
@@ -100,7 +100,7 @@
 
     通過對 :math:`g(i, j)` 的值進行三輪疊代計算 :math:`g(0, 0)` 。在每一輪疊代中，對於坐標(i, j)，分別計算當 :math:`\pi(i, j) = \downarrow` 和 :math:`\pi(i, j) = \searrow` 時的「未來將會獲得的數字之和的期望的最大值」（即 :math:`\frac{3}{4} g(i+1, j) + \frac{1}{4} g(i+1, j+1)` 和 :math:`\frac{1}{4} g(i+1, j) + \frac{3}{4} g(i+1, j+1)` ），取兩者中的較大者，並加上當前坐標的數字 :math:`r(i, j)` 。
 
-我們也可以從智能體在每個坐標(i, j)所做的動作 :math:`\pi(i, j)` 出發來觀察 :eq:`eq4` 式。在每一輪疊代中，先分別計算兩種動作帶來的未來收益期望（策略評估），然後取收益較大的動作作爲 :math:`\pi(i, j)` 的取值（策略改進），最後根據動作更新 :math:`g(i, j)` 。
+我們也可以從智能體在每個坐標(i, j)所做的動作 :math:`\pi(i, j)` 出發來觀察 :eq:`zh_hant_eq4` 式。在每一輪疊代中，先分別計算兩種動作帶來的未來收益期望（策略評估），然後取收益較大的動作作爲 :math:`\pi(i, j)` 的取值（策略改進），最後根據動作更新 :math:`g(i, j)` 。
 
 .. figure:: /_static/image/rl/policy_iteration_case_1.png
     :width: 75%
@@ -188,27 +188,27 @@ q值的漸進性更新
 
 .. math::
     q_{\text{new}}(i, j, a) \leftarrow \underbrace{\bar{q}(i, j, a)}_{\text{target}}
-    :label: eq5
+    :label: zh_hant_eq5
 
 一個更聰明的方法是「漸進」地更新q值。也就是說，我們把舊的q值向當前試驗的結果 :math:`\bar{q}(i, j, a)` 稍微「牽引」一點，作爲新的q值，從而讓新的q值更貼近當前試驗的結果 :math:`\bar{q}(i, j, a)` ，即
 
 .. math::
     q_{\text{new}}(i, j, a) \leftarrow q_{\text{old}}(i, j, a) + \alpha(\underbrace{\bar{q}(i, j, a)}_{\text{target}} - q_{\text{old}}(i, j, a))
-    :label: eq6
+    :label: zh_hant_eq6
 
-其中參數 :math:`\alpha` 控制牽引的「力度」（牽引力度爲1時，就退化爲了使用試驗結果直接覆蓋q值的 :eq:`eq5` 式，不過我們一般會設一個小一點的數字，比如0.1或0.01）。通過這種方式，我們既加入了新的試驗所帶來的信息，又保留了部分舊的知識。其實很多疊代算法都有類似的特點。
+其中參數 :math:`\alpha` 控制牽引的「力度」（牽引力度爲1時，就退化爲了使用試驗結果直接覆蓋q值的 :eq:`zh_hant_eq5` 式，不過我們一般會設一個小一點的數字，比如0.1或0.01）。通過這種方式，我們既加入了新的試驗所帶來的信息，又保留了部分舊的知識。其實很多疊代算法都有類似的特點。
 
 不過， :math:`\bar{q}(i, j, a)` 的值只有當一次試驗完全做完的時候才能獲得。也就是說，只有走到了數字三角形的最底層，才能知道路徑途中的每個坐標到路徑最底端的數字之和（從而更新路徑途中的所有坐標的q值）。這在有些場景會造成效率的低下，所以我們在實際更新時往往使用另一種方法，使得我們每走一步都可以更新一次q值。具體地說，假設某一次試驗中我們在數字三角形的坐標(i, j)處，通過執行動作 :math:`a = \pi(i, j) + \epsilon` （ :math:`+ \epsilon` 代表加上一些探索擾動）而跳到了坐標(i',j')（即「走一步」，可能是(i+1, j)，也可能是(i+1, j+1)），然後又在坐標(i',j')執行了動作 :math:`a' = \pi(i', j') + \epsilon` 。這時我們可以用 :math:`r(i', j') + q(i', j', a')` 來近似替代之前的 :math:`\bar{q}(i, j, a)` ，如下式所示：
 
 .. math::
     q_{\text{new}}(i, j, a) \leftarrow q_{\text{old}}(i, j, a) + \alpha\big(\underbrace{r(i', j') + q(i', j', a')}_{\text{target}} - q_{\text{old}}(i, j, a)\big)
-    :label: eq7
+    :label: zh_hant_eq7
 
 我們甚至可以不需要試驗結果中的 :math:`a'` ，而使用在坐標(i', j')時兩個動作對應的q值的較大者 :math:`\max[q(i', j', \downarrow), q(i', j', \searrow)]` 來代替 :math:`q(i', j', a')` ，如下式：
 
 .. math::
     q_{\text{new}}(i, j, a) \leftarrow q_{\text{old}}(i, j, a) + \alpha\big(\underbrace{r(i', j') + \max[q(i', j', \downarrow), q(i', j', \searrow)]}_{\text{target}} - q_{\text{old}}(i, j, a)\big)
-    :label: eq8
+    :label: zh_hant_eq8
 
 探索策略
 -------------------------------------------
@@ -259,7 +259,7 @@ q值的漸進性更新
 - 智能體在每個坐標 (i, j) 處會選擇的動作 :math:`\pi(i, j)` 被稱爲策略（Policy），用 :math:`\pi(s)` 表示。智能體的最優策略用 :math:`\pi^*(s)` 表示。
 - 第二節中，當策略 :math:`\pi(i, j)` 一定時，智能體在坐標(i, j)處 「現在及未來將會獲得的數字之和的期望」 :math:`f(i, j)` 被稱爲狀態-價值函數（State-Value Function），用 :math:`V^\pi(s)` 表示。智能體在坐標(i, j)處「未來將會獲得的數字之和的期望的最大值」 :math:`g(i, j)` 被稱爲最優策略下的狀態-價值函數，用 :math:`V^*(s)` 表示。
 - 第三節中，當策略 :math:`\pi(i, j)` 一定時，智能體在坐標(i, j)處選擇動作a時 「現在及未來將會獲得的數字之和的期望」 :math:`q(i, j, a)` 被稱爲動作-價值函數（Action-Value Function），用 :math:`Q^\pi(s, a)` 表示。最優策略下的狀態-價值函數用 :math:`Q^*(s, a)` 表示。
-- 在第三節和第四節中，使用試驗結果直接取均值估計 :math:`\bar{q}(i, j, a)` 的方法，稱爲蒙特卡羅方法。 :eq:`eq7` 中用 :math:`r(i', j') + q(i', j', a')` 來近似替代的 :math:`\bar{q}(i, j, a)` 的方法稱爲時間差分法， :eq:`eq7` 的q值更新方法本身稱爲SARSA方法。 :eq:`eq8` 稱之爲Q-learning方法。
+- 在第三節和第四節中，使用試驗結果直接取均值估計 :math:`\bar{q}(i, j, a)` 的方法，稱爲蒙特卡羅方法。 :eq:`zh_hant_eq7` 中用 :math:`r(i', j') + q(i', j', a')` 來近似替代的 :math:`\bar{q}(i, j, a)` 的方法稱爲時間差分法， :eq:`zh_hant_eq7` 的q值更新方法本身稱爲SARSA方法。 :eq:`zh_hant_eq8` 稱之爲Q-learning方法。
 
 .. admonition:: 推薦閱讀
 

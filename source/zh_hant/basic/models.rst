@@ -546,17 +546,17 @@ Keras 模型以類的形式呈現，我們可以通過繼承 ``tf.keras.Model`` 
 
 以下代碼展示了如何使用深度強化學習中的 Deep Q-Learning 方法 [Mnih2013]_ 來訓練模型。首先，我們引入TensorFlow、Gym和一些常用庫，並定義一些模型超參數：
 
-.. literalinclude:: /_static/code/zh/model/rl/rl.py
+.. literalinclude:: /_static/code/zh/model/rl/qlearning.py
     :lines: 1-14
 
 然後，我們使用 ``tf.keras.Model`` 建立一個Q函數網絡（Q-network），用於擬合Q Learning中的Q函數。這裡我們使用較簡單的多層全連接神經網絡進行擬合。該網絡輸入當前狀態，輸出各個動作下的Q-value（CartPole下爲2維，即向左和向右推動小車）。
 
-.. literalinclude:: /_static/code/zh/model/rl/rl.py
+.. literalinclude:: /_static/code/zh/model/rl/qlearning.py
     :lines: 16-31
 
 最後，我們在主程序中實現Q Learning算法。
 
-.. literalinclude:: /_static/code/zh/model/rl/rl.py
+.. literalinclude:: /_static/code/zh/model/rl/qlearning.py
     :lines: 34-82
 
 對於不同的任務（或者說環境），我們需要根據任務的特點，設計不同的狀態以及採取合適的網絡來擬合 Q 函數。例如，如果我們考慮經典的打磚塊遊戲（Gym 環境庫中的  `Breakout-v0 <https://gym.openai.com/envs/Breakout-v0/>`_ ），每一次執行動作（擋板向左、向右或不動），都會返回一個 ``210 * 160 * 3`` 的 RGB 圖片，表示當前屏幕畫面。爲了給打磚塊遊戲這個任務設計合適的狀態表示，我們有以下分析：

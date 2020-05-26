@@ -14,6 +14,8 @@ for path, dir_list, file_list in os.walk('zh'):
         f_ = open(dst_path, 'w', encoding='utf8')
         content_zh_hant = re.sub(r'\.\. _(.+?):', r'.. _zh_hant_\1:', content)
         content_zh_hant = re.sub(r':ref:`(.+?) <(.+?)>`', r':ref:`\1 <zh_hant_\2>`', content_zh_hant)
+        content_zh_hant = re.sub(r':label: (.+?)', r':label: zh_hant_\1', content_zh_hant)
+        content_zh_hant = re.sub(r':eq:`(.+?)`', r':eq:`zh_hant_\1`', content_zh_hant)
         f_.write(zhconv.convert_for_mw(content_zh_hant, 'zh-tw'))
         print(src_path + ' -> ' + dst_path)
 
@@ -23,5 +25,7 @@ for path, dir_list, file_list in os.walk('zh'):
         f_ = open(dst_path, 'w', encoding='utf8')
         content_zh_hans = re.sub(r'\.\. _(.+?):', r'.. _zh_hans_\1:', content)
         content_zh_hans = re.sub(r':ref:`(.+?) <(.+?)>`', r':ref:`\1 <zh_hans_\2>`', content_zh_hans)
+        content_zh_hans = re.sub(r':label: (.+?)', r':label: zh_hans_\1', content_zh_hans)
+        content_zh_hans = re.sub(r':eq:`(.+?)`', r':eq:`zh_hans_\1`', content_zh_hans)
         f_.write(zhconv.convert_for_mw(content_zh_hans, 'zh-hans'))
         print(src_path + ' -> ' + dst_path)
