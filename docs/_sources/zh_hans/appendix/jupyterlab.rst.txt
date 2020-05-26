@@ -3,7 +3,7 @@
 
 如果你既希望获得本地或云端强大的计算能力，又希望获得Jupyter Notebook或Colab中方便的在线Python交互式运行环境，可以自己为的本地服务器或云服务器安装JupyterLab。JupyterLab可以理解成升级版的Jupyter Notebook/Colab，提供多标签页支持，在线终端和文件管理等一系列方便的功能，接近于一个在线的Python IDE。
 
-.. tip:: 部分云服务提供了开箱即用的JupyterLab环境，例如前章介绍的 :ref:`GCP中AI Platform的Notebook <notebook>` ，以及 `FloydHub <https://www.floydhub.com/>`_ 。
+.. tip:: 部分云服务提供了开箱即用的JupyterLab环境，例如前章介绍的 :ref:`GCP中AI Platform的Notebook <zh_hans_notebook>` ，以及 `FloydHub <https://www.floydhub.com/>`_ 。
 
 
 在已经部署Python环境后，使用以下命令安装JupyterLab：

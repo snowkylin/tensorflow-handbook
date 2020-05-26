@@ -1,14 +1,14 @@
 图执行模式下的 TensorFlow 2
 ======================================
 
-尽管 TensorFlow 2 建议以即时执行模式（Eager Execution）作为主要执行模式，然而，图执行模式（Graph Execution）作为 TensorFlow 2 之前的主要执行模式，依旧对于我们理解 TensorFlow 具有重要意义。尤其是当我们需要使用 :ref:`tf.function <tffunction>` 时，对图执行模式的理解更是不可或缺。
+尽管 TensorFlow 2 建议以即时执行模式（Eager Execution）作为主要执行模式，然而，图执行模式（Graph Execution）作为 TensorFlow 2 之前的主要执行模式，依旧对于我们理解 TensorFlow 具有重要意义。尤其是当我们需要使用 :ref:`tf.function <zh_hans_tffunction>` 时，对图执行模式的理解更是不可或缺。
 
 图执行模式在 TensorFlow 1.X 和 2.X 版本中的 API 不同：
 
 - 在 TensorFlow 1.X 中，图执行模式主要通过“直接构建计算图 + ``tf.Session``” 进行操作；
 - 在 TensorFlow 2 中，图执行模式主要通过 ``tf.function`` 进行操作。
 
-在本章，我们将在 :ref:`tf.function：图执行模式 <tffunction>` 一节的基础上，进一步对图执行模式的这两种 API 进行对比说明，以帮助已熟悉 TensorFlow 1.X 的用户过渡到 TensorFlow 2。
+在本章，我们将在 :ref:`tf.function：图执行模式 <zh_hans_tffunction>` 一节的基础上，进一步对图执行模式的这两种 API 进行对比说明，以帮助已熟悉 TensorFlow 1.X 的用户过渡到 TensorFlow 2。
 
 .. hint:: TensorFlow 2 依然支持 TensorFlow 1.X 的 API。为了在 TensorFlow 2 中使用 TensorFlow 1.X 的 API ，我们可以使用 ``import tensorflow.compat.v1 as tf`` 导入 TensorFlow，并通过 ``tf.disable_eager_execution()`` 禁用默认的即时执行模式。
 
@@ -210,7 +210,7 @@ TensorFlow 的图执行模式是一个符号式的（基于计算图的）计算
 
     在 TensorFlow 1.X 中，我们多使用优化器的 ``minimize`` 方法，将求导和变量值更新合二为一。而在 TensorFlow 2 中，我们需要先使用 ``tf.GradientTape`` 进行求导操作，然后再使用优化器的 ``apply_gradients`` 方法应用已求得的导数，进行变量值的更新。而且在这两步中，都需要显式指定待求导和待更新的变量。
 
-.. _graph_compare:
+.. _zh_hans_graph_compare:
 
 自动求导机制的计算图对比 *
 -------------------------------------
@@ -248,7 +248,7 @@ TensorFlow 的图执行模式是一个符号式的（基于计算图的）计算
 基础示例：线性回归
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-在本节，我们为 :ref:`第一章的线性回归示例 <linear-regression>` 提供一个基于 TensorFlow 1.X 的图执行模式 API 的版本，供有需要的读者对比参考。
+在本节，我们为 :ref:`第一章的线性回归示例 <zh_hans_linear-regression>` 提供一个基于 TensorFlow 1.X 的图执行模式 API 的版本，供有需要的读者对比参考。
 
 与第一章的NumPy和即时执行模式不同，TensorFlow的图执行模式使用 **符号式编程** 来进行数值运算。首先，我们需要将待计算的过程抽象为计算图，将输入、运算和输出都用符号化的节点来表达。然后，我们将数据不断地送入输入节点，让数据沿着计算图进行计算和流动，最终到达我们需要的特定输出节点。
 

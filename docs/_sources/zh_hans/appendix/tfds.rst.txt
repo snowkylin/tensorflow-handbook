@@ -1,7 +1,7 @@
 TensorFlow Datasets 数据集载入
 ============================================
 
-`TensorFlow Datasets <https://www.tensorflow.org/datasets/>`_ 是一个开箱即用的数据集集合，包含数十种常用的机器学习数据集。通过简单的几行代码即可将数据以 ``tf.data.Dataset`` 的格式载入。关于 ``tf.data.Dataset`` 的使用可参考 :ref:`tf.data <tfdata>`。
+`TensorFlow Datasets <https://www.tensorflow.org/datasets/>`_ 是一个开箱即用的数据集集合，包含数十种常用的机器学习数据集。通过简单的几行代码即可将数据以 ``tf.data.Dataset`` 的格式载入。关于 ``tf.data.Dataset`` 的使用可参考 :ref:`tf.data <zh_hans_tfdata>`。
 
 该工具是一个独立的Python包，可以通过::
 
@@ -68,7 +68,7 @@ TensorFlow Datasets 当前支持的数据集可在 `官方文档 <https://www.te
     for images, labels in dataset:
         # 对images和labels进行操作
 
-详细操作说明可见 :ref:`本手册的 tf.data 一节 <tfdata>` 。同时，本手册的 :doc:`分布式训练 <../appendix/distributed>` 一章也使用了 TensorFlow Datasets 载入数据集。可以参考这些章节的示例代码以进一步了解 TensorFlow Datasets 的使用方法。
+详细操作说明可见 :ref:`本手册的 tf.data 一节 <zh_hans_tfdata>` 。同时，本手册的 :doc:`分布式训练 <../appendix/distributed>` 一章也使用了 TensorFlow Datasets 载入数据集。可以参考这些章节的示例代码以进一步了解 TensorFlow Datasets 的使用方法。
 
 .. raw:: html
 

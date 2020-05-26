@@ -272,13 +272,13 @@
             
   <div class="section" id="tensorflow-2">
 <h1>圖執行模式下的 TensorFlow 2<a class="headerlink" href="#tensorflow-2" title="永久链接至标题">¶</a></h1>
-<p>儘管 TensorFlow 2 建議以即時執行模式（Eager Execution）作爲主要執行模式，然而，圖執行模式（Graph Execution）作爲 TensorFlow 2 之前的主要執行模式，依舊對於我們理解 TensorFlow 具有重要意義。尤其是當我們需要使用 <a class="reference internal" href="../basic/tools.html#tffunction"><span class="std std-ref">tf.function</span></a> 時，對圖執行模式的理解更是不可或缺。</p>
+<p>儘管 TensorFlow 2 建議以即時執行模式（Eager Execution）作爲主要執行模式，然而，圖執行模式（Graph Execution）作爲 TensorFlow 2 之前的主要執行模式，依舊對於我們理解 TensorFlow 具有重要意義。尤其是當我們需要使用 <a class="reference internal" href="../basic/tools.html#zh-hant-tffunction"><span class="std std-ref">tf.function</span></a> 時，對圖執行模式的理解更是不可或缺。</p>
 <p>圖執行模式在 TensorFlow 1.X 和 2.X 版本中的 API 不同：</p>
 <ul class="simple">
 <li><p>在 TensorFlow 1.X 中，圖執行模式主要通過「直接構建計算圖 + <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code>」 進行操作；</p></li>
 <li><p>在 TensorFlow 2 中，圖執行模式主要通過 <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 進行操作。</p></li>
 </ul>
-<p>在本章，我們將在 <a class="reference internal" href="../basic/tools.html#tffunction"><span class="std std-ref">tf.function：圖執行模式</span></a> 一節的基礎上，進一步對圖執行模式的這兩種 API 進行對比說明，以幫助已熟悉 TensorFlow 1.X 的用戶過渡到 TensorFlow 2。</p>
+<p>在本章，我們將在 <a class="reference internal" href="../basic/tools.html#zh-hant-tffunction"><span class="std std-ref">tf.function：圖執行模式</span></a> 一節的基礎上，進一步對圖執行模式的這兩種 API 進行對比說明，以幫助已熟悉 TensorFlow 1.X 的用戶過渡到 TensorFlow 2。</p>
 <div class="admonition hint">
 <p class="admonition-title">提示</p>
 <p>TensorFlow 2 依然支持 TensorFlow 1.X 的 API。爲了在 TensorFlow 2 中使用 TensorFlow 1.X 的 API ，我們可以使用 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">tensorflow.compat.v1</span> <span class="pre">as</span> <span class="pre">tf</span></code> 導入 TensorFlow，並通過 <code class="docutils literal notranslate"><span class="pre">tf.disable_eager_execution()</span></code> 禁用默認的即時執行模式。</p>
@@ -605,8 +605,8 @@
 <p>在 TensorFlow 1.X 中，我們多使用優化器的 <code class="docutils literal notranslate"><span class="pre">minimize</span></code> 方法，將求導和變量值更新合二爲一。而在 TensorFlow 2 中，我們需要先使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 進行求導操作，然後再使用優化器的 <code class="docutils literal notranslate"><span class="pre">apply_gradients</span></code> 方法應用已求得的導數，進行變量值的更新。而且在這兩步中，都需要顯式指定待求導和待更新的變量。</p>
 </div>
 </div>
-<div class="section" id="graph-compare">
-<span id="id9"></span><h3>自動求導機制的計算圖對比 *<a class="headerlink" href="#graph-compare" title="永久链接至标题">¶</a></h3>
+<div class="section" id="zh-hant-graph-compare">
+<span id="id9"></span><h3>自動求導機制的計算圖對比 *<a class="headerlink" href="#zh-hant-graph-compare" title="永久链接至标题">¶</a></h3>
 <p>在本節，爲了幫助讀者更深刻地理解 TensorFlow 的自動求導機制，我們以前節的「計算 <img class="math" src="../../_images/math/310ab0ef1ada6edb2b67c308ecc0af9d5a3b36f1.png" alt="y = x^2"/> 在 <img class="math" src="../../_images/math/6242bf7ca264a34d82d13f3307438c9bd77b8e15.png" alt="x = 3"/> 時的導數」爲例，展示 TensorFlow 1.X 和 TensorFlow 2 在圖執行模式下，爲這一求導過程所建立的計算圖，並進行詳細講解。</p>
 <p>在 TensorFlow 1.X 的圖執行模式 API 中，將生成的計算圖使用 TensorBoard 進行展示：</p>
 <div class="figure align-center">
@@ -633,7 +633,7 @@
 </div>
 <div class="section" id="id10">
 <h2>基礎示例：線性回歸<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
-<p>在本節，我們爲 <a class="reference internal" href="../basic/basic.html#linear-regression"><span class="std std-ref">第一章的線性回歸示例</span></a> 提供一個基於 TensorFlow 1.X 的圖執行模式 API 的版本，供有需要的讀者對比參考。</p>
+<p>在本節，我們爲 <a class="reference internal" href="../basic/basic.html#zh-hant-linear-regression"><span class="std std-ref">第一章的線性回歸示例</span></a> 提供一個基於 TensorFlow 1.X 的圖執行模式 API 的版本，供有需要的讀者對比參考。</p>
 <p>與第一章的NumPy和即時執行模式不同，TensorFlow的圖執行模式使用 <strong>符號式編程</strong> 來進行數值運算。首先，我們需要將待計算的過程抽象爲計算圖，將輸入、運算和輸出都用符號化的節點來表達。然後，我們將數據不斷地送入輸入節點，讓數據沿著計算圖進行計算和流動，最終到達我們需要的特定輸出節點。</p>
 <p>以下代碼展示了如何基於TensorFlow的符號式編程方法完成與前節相同的任務。其中， <code class="docutils literal notranslate"><span class="pre">tf.placeholder()</span></code> 即可以視爲一種「符號化的輸入節點」，使用 <code class="docutils literal notranslate"><span class="pre">tf.get_variable()</span></code> 定義模型的參數（Variable類型的張量可以使用 <code class="docutils literal notranslate"><span class="pre">tf.assign()</span></code> 操作進行賦值），而 <code class="docutils literal notranslate"><span class="pre">sess.run(output_node,</span> <span class="pre">feed_dict={input_node:</span> <span class="pre">data})</span></code> 可以視作將數據送入輸入節點，沿著計算圖計算併到達輸出節點並返回值的過程。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>

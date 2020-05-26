@@ -27,7 +27,7 @@
         <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
-        <script type="text/javascript" src="../../_static/js/custom_20200506.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200523.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -376,7 +376,7 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>这里，我们没有显式地声明 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 两个变量并写出 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> 这一线性变换，而是建立了一个继承了 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的模型类 <code class="docutils literal notranslate"><span class="pre">Linear</span></code> 。这个类在初始化部分实例化了一个 <strong>全连接层</strong> （ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），并在 call 方法中对这个层进行调用，实现了线性变换的计算。如果需要显式地声明自己的变量并使用变量进行自定义运算，或者希望了解 Keras 层的内部原理，请参考 <a class="reference internal" href="../../zh_hant/basic/models.html#custom-layer"><span class="std std-ref">自定义层</span></a>。</p>
+<p>这里，我们没有显式地声明 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 两个变量并写出 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> 这一线性变换，而是建立了一个继承了 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的模型类 <code class="docutils literal notranslate"><span class="pre">Linear</span></code> 。这个类在初始化部分实例化了一个 <strong>全连接层</strong> （ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），并在 call 方法中对这个层进行调用，实现了线性变换的计算。如果需要显式地声明自己的变量并使用变量进行自定义运算，或者希望了解 Keras 层的内部原理，请参考 <a class="reference internal" href="../../zh/basic/models.html#custom-layer"><span class="std std-ref">自定义层</span></a>。</p>
 <div class="admonition-keras admonition">
 <p class="admonition-title">Keras 的全连接层：线性变换 + 激活函数</p>
 <p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense">全连接层</a> （Fully-connected Layer，<code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ）是 Keras 中最基础和常用的层之一，对输入矩阵 <img class="math" src="../../_images/math/b86d9659948ffa756133d580cfc95f923705c2b5.png" alt="A"/> 进行 <img class="math" src="../../_images/math/92bb903eabd575a64bd61bd559678418cda7afb2.png" alt="f(AW + b)"/> 的线性变换 + 激活函数操作。如果不指定激活函数，即是纯粹的线性变换 <img class="math" src="../../_images/math/62bbbb16ac53d3269d7aa9fc5a15a986f8f0f08c.png" alt="AW + b"/>。具体而言，给定输入张量 <code class="docutils literal notranslate"><span class="pre">input</span> <span class="pre">=</span> <span class="pre">[batch_size,</span> <span class="pre">input_dim]</span></code> ，该层对输入张量首先进行 <code class="docutils literal notranslate"><span class="pre">tf.matmul(input,</span> <span class="pre">kernel)</span> <span class="pre">+</span> <span class="pre">bias</span></code> 的线性变换（ <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 是层中可训练的变量），然后对线性变换后张量的每个元素通过激活函数 <code class="docutils literal notranslate"><span class="pre">activation</span></code> ，从而输出形状为 <code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">units]</span></code> 的二维张量。</p>
@@ -391,7 +391,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">kernel_initializer</span></code> 、 <code class="docutils literal notranslate"><span class="pre">bias_initializer</span></code> ：权重矩阵 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和偏置向量 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 两个变量的初始化器。默认为 <code class="docutils literal notranslate"><span class="pre">tf.glorot_uniform_initializer</span></code> <a class="footnote-reference brackets" href="#glorot" id="id3">1</a> 。设置为 <code class="docutils literal notranslate"><span class="pre">tf.zeros_initializer</span></code> 表示将两个变量均初始化为全 0；</p></li>
 </ul>
 <p>该层包含权重矩阵 <code class="docutils literal notranslate"><span class="pre">kernel</span> <span class="pre">=</span> <span class="pre">[input_dim,</span> <span class="pre">units]</span></code> 和偏置向量 <code class="docutils literal notranslate"><span class="pre">bias</span> <span class="pre">=</span> <span class="pre">[units]</span></code> <a class="footnote-reference brackets" href="#broadcast" id="id4">2</a> 两个可训练变量，对应于 <img class="math" src="../../_images/math/92bb903eabd575a64bd61bd559678418cda7afb2.png" alt="f(AW + b)"/> 中的 <img class="math" src="../../_images/math/eb33eca75f5d77363c991bf041953da54a858bfb.png" alt="W"/> 和 <img class="math" src="../../_images/math/3de2ed824326dc0eb383a42dd6ec44d3b401047b.png" alt="b"/>。</p>
-<p>这里着重从数学矩阵运算和线性变换的角度描述了全连接层。基于神经元建模的描述可参考 <a class="reference internal" href="../../zh_hant/basic/models.html#neuron"><span class="std std-ref">后文介绍</span></a> 。</p>
+<p>这里着重从数学矩阵运算和线性变换的角度描述了全连接层。基于神经元建模的描述可参考 <a class="reference internal" href="../../zh/basic/models.html#neuron"><span class="std std-ref">后文介绍</span></a> 。</p>
 <dl class="footnote brackets">
 <dt class="label" id="glorot"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
 <dd><p>Keras 中的很多层都默认使用 <code class="docutils literal notranslate"><span class="pre">tf.glorot_uniform_initializer</span></code> 初始化变量，关于该初始化器可参考 <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/glorot_uniform_initializer">https://www.tensorflow.org/api_docs/python/tf/glorot_uniform_initializer</a> 。</p>
@@ -508,7 +508,7 @@
 <li><p>将这批数据送入模型，计算出模型的预测值；</p></li>
 <li><p>将模型预测值与真实值进行比较，计算损失函数（loss）。这里使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> 中的交叉熵函数作为损失函数；</p></li>
 <li><p>计算损失函数关于模型变量的导数；</p></li>
-<li><p>将求出的导数值传入优化器，使用优化器的 <code class="docutils literal notranslate"><span class="pre">apply_gradients</span></code> 方法更新模型参数以最小化损失函数（优化器的详细使用方法见 <a class="reference internal" href="../../zh_hant/basic/basic.html#optimizer"><span class="std std-ref">前章</span></a>  ）。</p></li>
+<li><p>将求出的导数值传入优化器，使用优化器的 <code class="docutils literal notranslate"><span class="pre">apply_gradients</span></code> 方法更新模型参数以最小化损失函数（优化器的详细使用方法见 <a class="reference internal" href="../../zh/basic/basic.html#optimizer"><span class="std std-ref">前章</span></a>  ）。</p></li>
 </ul>
 <p>具体代码实现如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">num_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">num_train_data</span> <span class="o">//</span> <span class="n">batch_size</span> <span class="o">*</span> <span class="n">num_epochs</span><span class="p">)</span>
@@ -593,7 +593,7 @@
 </div>
 <div class="section" id="implementing-cnn-with-keras">
 <h3>Implementing CNN with Keras<a class="headerlink" href="#implementing-cnn-with-keras" title="永久链接至标题">¶</a></h3>
-<p>卷积神经网络的一个示例实现如下所示，和 <a class="reference internal" href="../../zh_hant/basic/models.html#mlp-model"><span class="std std-ref">上节中的多层感知机</span></a> 在代码结构上很类似，只是新加入了一些卷积层和池化层。这里的网络结构并不是唯一的，可以增加、删除或调整 CNN 的网络结构和参数，以达到更好的性能。</p>
+<p>卷积神经网络的一个示例实现如下所示，和 <a class="reference internal" href="../../zh/basic/models.html#mlp-model"><span class="std std-ref">上节中的多层感知机</span></a> 在代码结构上很类似，只是新加入了一些卷积层和池化层。这里的网络结构并不是唯一的，可以增加、删除或调整 CNN 的网络结构和参数，以达到更好的性能。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CNN</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -652,7 +652,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">classes</span></code> ：分类数，默认为1000。修改该参数需要 <code class="docutils literal notranslate"><span class="pre">include_top</span></code> 参数为 <code class="docutils literal notranslate"><span class="pre">True</span></code> 且 <code class="docutils literal notranslate"><span class="pre">weights</span></code> 参数为 <code class="docutils literal notranslate"><span class="pre">None</span></code> 。</p></li>
 </ul>
 <p>各网络模型参数的详细介绍可参考 <a class="reference external" href="https://keras.io/applications/">Keras文档</a> 。</p>
-<p>以下展示一个例子，使用 <code class="docutils literal notranslate"><span class="pre">MobileNetV2</span></code> 网络在 <code class="docutils literal notranslate"><span class="pre">tf_flowers</span></code> 五分类数据集上进行训练（为了代码的简短高效，在该示例中我们使用了 <a class="reference internal" href="../appendix/tfds.html"><span class="doc">TensorFlow Datasets</span></a> 和 <a class="reference internal" href="../../zh_hant/basic/tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 载入和预处理数据）。通过将 <code class="docutils literal notranslate"><span class="pre">weights</span></code> 设置为 <code class="docutils literal notranslate"><span class="pre">None</span></code> ，我们随机初始化变量而不使用预训练权值。同时将 <code class="docutils literal notranslate"><span class="pre">classes</span></code> 设置为5，对应于5分类的数据集。</p>
+<p>以下展示一个例子，使用 <code class="docutils literal notranslate"><span class="pre">MobileNetV2</span></code> 网络在 <code class="docutils literal notranslate"><span class="pre">tf_flowers</span></code> 五分类数据集上进行训练（为了代码的简短高效，在该示例中我们使用了 <a class="reference internal" href="../appendix/tfds.html"><span class="doc">TensorFlow Datasets</span></a> 和 <a class="reference internal" href="../../zh/basic/tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 载入和预处理数据）。通过将 <code class="docutils literal notranslate"><span class="pre">weights</span></code> 设置为 <code class="docutils literal notranslate"><span class="pre">None</span></code> ，我们随机初始化变量而不使用预训练权值。同时将 <code class="docutils literal notranslate"><span class="pre">classes</span></code> 设置为5，对应于5分类的数据集。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
 
@@ -680,7 +680,7 @@
 <div class="admonition- admonition">
 <p class="admonition-title">卷积层和池化层的工作原理</p>
 <p>卷积层（Convolutional Layer，以 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Conv2D</span></code> 为代表）是 CNN 的核心组件，其结构与大脑的视觉皮层有类似之处。</p>
-<p>回忆我们之前建立的 <a class="reference internal" href="../../zh_hant/basic/models.html#neuron"><span class="std std-ref">神经细胞的计算模型</span></a> 以及全连接层，我们默认每个神经元与上一层的所有神经元相连。不过，在视觉皮层的神经元中，情况并不是这样。你或许在生物课上学习过 <strong>感受野</strong> （Receptive Field）这一概念，即视觉皮层中的神经元并非与前一层的所有神经元相连，而只是感受一片区域内的视觉信号，并只对局部区域的视觉刺激进行反应。CNN 中的卷积层正体现了这一特性。</p>
+<p>回忆我们之前建立的 <a class="reference internal" href="../../zh/basic/models.html#neuron"><span class="std std-ref">神经细胞的计算模型</span></a> 以及全连接层，我们默认每个神经元与上一层的所有神经元相连。不过，在视觉皮层的神经元中，情况并不是这样。你或许在生物课上学习过 <strong>感受野</strong> （Receptive Field）这一概念，即视觉皮层中的神经元并非与前一层的所有神经元相连，而只是感受一片区域内的视觉信号，并只对局部区域的视觉刺激进行反应。CNN 中的卷积层正体现了这一特性。</p>
 <p>例如，下图是一个 7×7 的单通道图片信号输入：</p>
 <div class="figure align-center">
 <img alt="../../_images/conv_image.png" src="../../_images/conv_image.png" />
@@ -751,7 +751,7 @@
 <p>池化层（Pooling Layer）的理解则简单得多，其可以理解为对图像进行降采样的过程，对于每一次滑动窗口中的所有值，输出其中的最大值（MaxPooling）、均值或其他方法产生的值。例如，对于一个三通道的 16×16 图像（即一个 <code class="docutils literal notranslate"><span class="pre">16*16*3</span></code> 的张量），经过感受野为 2×2，滑动步长为 2 的池化层，则得到一个 <code class="docutils literal notranslate"><span class="pre">8*8*3</span></code> 的张量。</p>
 <dl class="footnote brackets">
 <dt class="label" id="sequential"><span class="brackets"><a class="fn-backref" href="#id13">4</a></span></dt>
-<dd><p>这里使用了较为简易的Sequential模式建立模型，具体介绍见 <a class="reference internal" href="../../zh_hant/basic/models.html#sequential-functional"><span class="std std-ref">后文</span></a>  。</p>
+<dd><p>这里使用了较为简易的Sequential模式建立模型，具体介绍见 <a class="reference internal" href="../../zh/basic/models.html#sequential-functional"><span class="std std-ref">后文</span></a>  。</p>
 </dd>
 </dl>
 </div>
@@ -1103,7 +1103,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <li><p><code class="docutils literal notranslate"><span class="pre">validation_data</span></code> ：验证数据，可用于在训练过程中监控模型的性能。</p></li>
 </ul>
 </div></blockquote>
-<p>Keras 支持使用 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 进行训练，详见 <a class="reference internal" href="../../zh_hant/basic/tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 。</p>
+<p>Keras 支持使用 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 进行训练，详见 <a class="reference internal" href="../../zh/basic/tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 。</p>
 <p>最后，使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model.evaluate</span></code> 评估训练效果，提供测试数据及标签即可：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">,</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">test_label</span><span class="p">))</span>
 </pre></div>
@@ -1133,7 +1133,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
         <span class="k">return</span> <span class="n">output</span>
 </pre></div>
 </div>
-<p>例如，如果我们要自己实现一个 <a class="reference internal" href="../../zh_hant/basic/models.html#linear"><span class="std std-ref">本章第一节</span></a> 中的全连接层（ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），可以按如下方式编写。此代码在 <code class="docutils literal notranslate"><span class="pre">build</span></code> 方法中创建两个变量，并在 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法中使用创建的变量进行运算：</p>
+<p>例如，如果我们要自己实现一个 <a class="reference internal" href="../../zh/basic/models.html#linear"><span class="std std-ref">本章第一节</span></a> 中的全连接层（ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），可以按如下方式编写。此代码在 <code class="docutils literal notranslate"><span class="pre">build</span></code> 方法中创建两个变量，并在 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法中使用创建的变量进行运算：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LinearLayer</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">units</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>

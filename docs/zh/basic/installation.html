@@ -27,7 +27,7 @@
         <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
-        <script type="text/javascript" src="../../_static/js/custom_20200506.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200523.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -87,11 +87,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">教学活动</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/mlstudyjam.html">ML Study Jam 2020</a></li>
-</ul>
-<p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
@@ -130,10 +126,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/terms.html">术语中英对照表</a></li>
-</ul>
-<p class="caption"><span class="caption-text">教學活動</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/mlstudyjam.html">ML Study Jam 2020</a></li>
 </ul>
 <p class="caption"><span class="caption-text">目錄</span></p>
 <ul>
@@ -288,7 +280,7 @@
 <div class="section" id="id1">
 <h2>一般安装步骤<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <ol class="arabic simple">
-<li><p>安装Python环境。此处建议安装 <a class="reference external" href="https://www.anaconda.com/">Anaconda</a> 的Python 3.7版本（后文均以此为准），这是一个开源的Python发行版本，提供了一个完整的科学计算环境，包括NumPy、SciPy等常用科学计算库。当然，你有权选择自己喜欢的Python环境。Anaconda的安装包可在 <a class="reference external" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">这里</a> 获得。</p></li>
+<li><p>安装Python环境。此处建议安装 <a class="reference external" href="https://www.anaconda.com/">Anaconda</a> 的Python 3.7 64位版本（后文均以此为准），这是一个开源的Python发行版本，提供了一个完整的科学计算环境，包括NumPy、SciPy等常用科学计算库。当然，你有权选择自己喜欢的Python环境。Anaconda的安装包可在 <a class="reference external" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">这里</a> 获得。</p></li>
 <li><p>使用Anaconda自带的conda包管理器建立一个Conda虚拟环境，并进入该虚拟环境。在命令行下输入：</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">tf2</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.7</span>      <span class="c1"># “tf2”是你建立的conda虚拟环境的名字</span>
@@ -461,7 +453,7 @@ Mon Jun 10 23:19:54 2019
 <p class="admonition-title">小技巧</p>
 <p>如果你是学生并有.edu结尾的邮箱的话，可以在 <a class="reference external" href="http://www.jetbrains.com/student/">这里</a> 申请PyCharm的免费Professional版本授权。</p>
 </div>
-<p>对于TensorFlow及深度学习的业余爱好者或者初学者， <a class="reference external" href="https://code.visualstudio.com/">Visual Studio Code</a> 或者一些在线的交互式Python环境（比如免费的 <a class="reference external" href="https://colab.research.google.com/">Google Colab</a> ）也是不错的选择。Colab的使用方式可参考 <a class="reference internal" href="../../zh_hant/appendix/cloud.html#colab"><span class="std std-ref">附录</span></a> 。</p>
+<p>对于TensorFlow及深度学习的业余爱好者或者初学者， <a class="reference external" href="https://code.visualstudio.com/">Visual Studio Code</a> 或者一些在线的交互式Python环境（比如免费的 <a class="reference external" href="https://colab.research.google.com/">Google Colab</a> ）也是不错的选择。Colab的使用方式可参考 <a class="reference internal" href="../appendix/cloud.html#colab"><span class="std std-ref">附录</span></a> 。</p>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>
 <p>如果你使用的是旧版本的 PyCharm ，可能会在安装 TensorFlow 2 后出现部分代码自动补全功能丧失的问题。升级到新版的 PyCharm （2019.3及以后版本）即可解决这一问题。</p>
@@ -476,11 +468,11 @@ Mon Jun 10 23:19:54 2019
 <h2>TensorFlow所需的硬件配置 *<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h2>
 <div class="admonition hint">
 <p class="admonition-title">提示</p>
-<p>对于学习而言，TensorFlow的硬件门槛并不高。甚至，借助 <a class="reference internal" href="../../zh_hant/appendix/cloud.html#colab"><span class="std std-ref">免费</span></a> 或 <a class="reference internal" href="../../zh_hant/appendix/cloud.html#gcp"><span class="std std-ref">灵活</span></a> 的云端计算资源，只要你有一台能上网的电脑，就能够熟练掌握TensorFlow！</p>
+<p>对于学习而言，TensorFlow的硬件门槛并不高。甚至，借助 <a class="reference internal" href="../appendix/cloud.html#colab"><span class="std std-ref">免费</span></a> 或 <a class="reference internal" href="../appendix/cloud.html#gcp"><span class="std std-ref">灵活</span></a> 的云端计算资源，只要你有一台能上网的电脑，就能够熟练掌握TensorFlow！</p>
 </div>
 <p>在很多人的刻板印象中，TensorFlow乃至深度学习是一件非常“吃硬件”的事情，以至于一接触TensorFlow，第一件事情可能就是想如何升级自己的电脑硬件。不过，TensorFlow所需的硬件配置很大程度是视任务和使用环境而定的：</p>
 <ul class="simple">
-<li><p>对于TensorFlow初学者，无需硬件升级也可以很好地学习和掌握TensorFlow。本手册中的大部分教学示例，大部分当前主流的个人电脑（即使没有GPU）均可胜任，无需添置其他硬件设备。对于本手册中部分计算量较大的示例（例如 <a class="reference internal" href="../../zh_hant/basic/tools.html#cats-vs-dogs"><span class="std std-ref">在cats_vs_dogs数据集上训练CNN图像分类</span></a> ），一块主流的NVIDIA GPU会大幅加速训练。如果自己的个人电脑难以胜任，可以考虑在云端（例如 <a class="reference internal" href="../../zh_hant/appendix/cloud.html#colab"><span class="std std-ref">免费的 Colab</span></a> ）进行模型训练。</p></li>
+<li><p>对于TensorFlow初学者，无需硬件升级也可以很好地学习和掌握TensorFlow。本手册中的大部分教学示例，大部分当前主流的个人电脑（即使没有GPU）均可胜任，无需添置其他硬件设备。对于本手册中部分计算量较大的示例（例如 <a class="reference internal" href="tools.html#cats-vs-dogs"><span class="std std-ref">在cats_vs_dogs数据集上训练CNN图像分类</span></a> ），一块主流的NVIDIA GPU会大幅加速训练。如果自己的个人电脑难以胜任，可以考虑在云端（例如 <a class="reference internal" href="../appendix/cloud.html#colab"><span class="std std-ref">免费的 Colab</span></a> ）进行模型训练。</p></li>
 <li><p>对于参加数据科学竞赛（比如Kaggle）或者经常在本机进行训练的个人爱好者或开发者，一块高性能的NVIDIA GPU往往是必要的。CUDA核心数和显存大小是决定显卡机器学习性能的两个关键参数，前者决定训练速度，后者决定可以训练多大的模型以及训练时的最大Batch Size，对于较大规模的训练而言尤其敏感。</p></li>
 <li><p>对于前沿的机器学习研究（尤其是计算机视觉和自然语言处理领域），多GPU并行训练是标准配置。为了快速迭代实验结果以及训练更大规模的模型以提升性能，4卡、8卡或更高的GPU数量是常态。</p></li>
 </ul>

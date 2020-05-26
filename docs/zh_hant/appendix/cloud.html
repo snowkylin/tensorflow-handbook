@@ -284,7 +284,7 @@
   <div class="section" id="tensorflow">
 <h1>在雲端使用TensorFlow<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
 <div class="section" id="colabtensorflow">
-<span id="colab"></span><h2>在Colab中使用TensorFlow<a class="headerlink" href="#colabtensorflow" title="永久链接至标题">¶</a></h2>
+<span id="zh-hant-colab"></span><h2>在Colab中使用TensorFlow<a class="headerlink" href="#colabtensorflow" title="永久链接至标题">¶</a></h2>
 <p>Google Colab是谷歌的免費在線交互式Python運行環境，且提供GPU支持，使得機器學習開發者們無需在自己的電腦上安裝環境，就能隨時隨地從雲端訪問和運行自己的機器學習代碼。</p>
 <div class="admonition- admonition">
 <p class="admonition-title">學習資源</p>
@@ -334,7 +334,7 @@
 <p>可見GPU的型號爲Tesla T4。</p>
 </div>
 <div class="section" id="google-cloud-platform-gcp-tensorflow">
-<span id="gcp"></span><h2>在Google Cloud Platform（GCP）中使用TensorFlow<a class="headerlink" href="#google-cloud-platform-gcp-tensorflow" title="永久链接至标题">¶</a></h2>
+<span id="zh-hant-gcp"></span><h2>在Google Cloud Platform（GCP）中使用TensorFlow<a class="headerlink" href="#google-cloud-platform-gcp-tensorflow" title="永久链接至标题">¶</a></h2>
 <p><a class="reference external" href="https://cloud.google.com/">Google Cloud Platform（GCP）</a> 是Google的雲計算服務。GCP收費靈活，默認按時長計費。也就是說，你可以迅速建立一個帶GPU的實例，訓練一個模型，然後立即關閉（關機或刪除實例）。GCP只收取在實例開啓時所產生的費用，關機時只收取磁碟存儲的費用，刪除後即不再繼續收費。</p>
 <p>我們可以通過兩種方式在GCP中使用TensorFlow：使用Compute Engine建立帶GPU的實例，或使用AI Platform中的Notebook建立帶GPU的在線JupyterLab環境。</p>
 <div class="section" id="compute-enginegputensorflow">
@@ -386,7 +386,7 @@ Fri Jul <span class="m">12</span> <span class="m">10</span>:30:37 <span class="m
 </div>
 </div>
 <div class="section" id="ai-platformnotebookgpujupyterlab">
-<span id="notebook"></span><h3>使用AI Platform中的Notebook建立帶GPU的在線JupyterLab環境<a class="headerlink" href="#ai-platformnotebookgpujupyterlab" title="永久链接至标题">¶</a></h3>
+<span id="zh-hant-notebook"></span><h3>使用AI Platform中的Notebook建立帶GPU的在線JupyterLab環境<a class="headerlink" href="#ai-platformnotebookgpujupyterlab" title="永久链接至标题">¶</a></h3>
 <p>如果你不希望繁雜的配置，希望迅速獲得一個開箱即用的在線交互式Python環境，可以使用GCP的AI Platform中的Notebook。其預安裝了JupyterLab，可以理解爲Colab的付費升級版，具備更多功能且限制較少。</p>
 <p>進入 <a class="reference external" href="https://console.cloud.google.com/mlengine/notebooks">https://console.cloud.google.com/mlengine/notebooks</a> ，點擊「新建實例-TensorFlow 2.0-With 1 NVIDIA Tesla K80」，界面如下：</p>
 <div class="figure align-center">
@@ -424,13 +424,13 @@ Fri Jul <span class="m">12</span> <span class="m">10</span>:30:37 <span class="m
 </div>
 <p>此處，我們選擇一個帶有 Tesla P4 計算卡的實例。</p>
 <p>在系統鏡像中，阿里雲提供多種選擇，可以根據需要選擇合適的鏡像。</p>
-<div class="figure align-center" id="id7">
+<div class="figure align-center" id="id5">
 <a class="reference internal image-reference" href="../../_images/os_image_config_with_driver.png"><img alt="../../_images/os_image_config_with_driver.png" src="../../_images/os_image_config_with_driver.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">如果選擇「公共鏡像」，可以根據提示選擇提前預裝GPU驅動，可以避免後續安裝驅動的麻煩。</span><a class="headerlink" href="#id7" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">如果選擇「公共鏡像」，可以根據提示選擇提前預裝GPU驅動，可以避免後續安裝驅動的麻煩。</span><a class="headerlink" href="#id5" title="永久链接至图片">¶</a></p>
 </div>
-<div class="figure align-center" id="id8">
+<div class="figure align-center" id="id6">
 <a class="reference internal image-reference" href="../../_images/os_image_with_RAPIDS.png"><img alt="../../_images/os_image_with_RAPIDS.png" src="../../_images/os_image_with_RAPIDS.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">在「鏡像市場」中，官方也提供了適合深度學習的定製鏡像。在本示例中我們選擇預裝了 NVIDIA RAPIDS 的 Ubuntu 16.04 鏡像。</span><a class="headerlink" href="#id8" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">在「鏡像市場」中，官方也提供了適合深度學習的定製鏡像。在本示例中我們選擇預裝了 NVIDIA RAPIDS 的 Ubuntu 16.04 鏡像。</span><a class="headerlink" href="#id6" title="永久链接至图片">¶</a></p>
 </div>
 <p>然後，通過 ssh 連接上我們選購的伺服器，並使用 <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> 查看 GPU 信息：</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rapids<span class="o">)</span> root@iZ8vb2567465uc1ty3f4ovZ:~# nvidia-smi

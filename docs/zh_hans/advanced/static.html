@@ -272,13 +272,13 @@
             
   <div class="section" id="tensorflow-2">
 <h1>图执行模式下的 TensorFlow 2<a class="headerlink" href="#tensorflow-2" title="永久链接至标题">¶</a></h1>
-<p>尽管 TensorFlow 2 建议以即时执行模式（Eager Execution）作为主要执行模式，然而，图执行模式（Graph Execution）作为 TensorFlow 2 之前的主要执行模式，依旧对于我们理解 TensorFlow 具有重要意义。尤其是当我们需要使用 <a class="reference internal" href="../../zh_hant/basic/tools.html#tffunction"><span class="std std-ref">tf.function</span></a> 时，对图执行模式的理解更是不可或缺。</p>
+<p>尽管 TensorFlow 2 建议以即时执行模式（Eager Execution）作为主要执行模式，然而，图执行模式（Graph Execution）作为 TensorFlow 2 之前的主要执行模式，依旧对于我们理解 TensorFlow 具有重要意义。尤其是当我们需要使用 <a class="reference internal" href="../basic/tools.html#zh-hans-tffunction"><span class="std std-ref">tf.function</span></a> 时，对图执行模式的理解更是不可或缺。</p>
 <p>图执行模式在 TensorFlow 1.X 和 2.X 版本中的 API 不同：</p>
 <ul class="simple">
 <li><p>在 TensorFlow 1.X 中，图执行模式主要通过“直接构建计算图 + <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code>” 进行操作；</p></li>
 <li><p>在 TensorFlow 2 中，图执行模式主要通过 <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 进行操作。</p></li>
 </ul>
-<p>在本章，我们将在 <a class="reference internal" href="../../zh_hant/basic/tools.html#tffunction"><span class="std std-ref">tf.function：图执行模式</span></a> 一节的基础上，进一步对图执行模式的这两种 API 进行对比说明，以帮助已熟悉 TensorFlow 1.X 的用户过渡到 TensorFlow 2。</p>
+<p>在本章，我们将在 <a class="reference internal" href="../basic/tools.html#zh-hans-tffunction"><span class="std std-ref">tf.function：图执行模式</span></a> 一节的基础上，进一步对图执行模式的这两种 API 进行对比说明，以帮助已熟悉 TensorFlow 1.X 的用户过渡到 TensorFlow 2。</p>
 <div class="admonition hint">
 <p class="admonition-title">提示</p>
 <p>TensorFlow 2 依然支持 TensorFlow 1.X 的 API。为了在 TensorFlow 2 中使用 TensorFlow 1.X 的 API ，我们可以使用 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">tensorflow.compat.v1</span> <span class="pre">as</span> <span class="pre">tf</span></code> 导入 TensorFlow，并通过 <code class="docutils literal notranslate"><span class="pre">tf.disable_eager_execution()</span></code> 禁用默认的即时执行模式。</p>
@@ -605,8 +605,8 @@
 <p>在 TensorFlow 1.X 中，我们多使用优化器的 <code class="docutils literal notranslate"><span class="pre">minimize</span></code> 方法，将求导和变量值更新合二为一。而在 TensorFlow 2 中，我们需要先使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 进行求导操作，然后再使用优化器的 <code class="docutils literal notranslate"><span class="pre">apply_gradients</span></code> 方法应用已求得的导数，进行变量值的更新。而且在这两步中，都需要显式指定待求导和待更新的变量。</p>
 </div>
 </div>
-<div class="section" id="graph-compare">
-<span id="id9"></span><h3>自动求导机制的计算图对比 *<a class="headerlink" href="#graph-compare" title="永久链接至标题">¶</a></h3>
+<div class="section" id="zh-hans-graph-compare">
+<span id="id9"></span><h3>自动求导机制的计算图对比 *<a class="headerlink" href="#zh-hans-graph-compare" title="永久链接至标题">¶</a></h3>
 <p>在本节，为了帮助读者更深刻地理解 TensorFlow 的自动求导机制，我们以前节的“计算 <img class="math" src="../../_images/math/310ab0ef1ada6edb2b67c308ecc0af9d5a3b36f1.png" alt="y = x^2"/> 在 <img class="math" src="../../_images/math/6242bf7ca264a34d82d13f3307438c9bd77b8e15.png" alt="x = 3"/> 时的导数”为例，展示 TensorFlow 1.X 和 TensorFlow 2 在图执行模式下，为这一求导过程所建立的计算图，并进行详细讲解。</p>
 <p>在 TensorFlow 1.X 的图执行模式 API 中，将生成的计算图使用 TensorBoard 进行展示：</p>
 <div class="figure align-center">
@@ -633,7 +633,7 @@
 </div>
 <div class="section" id="id10">
 <h2>基础示例：线性回归<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
-<p>在本节，我们为 <a class="reference internal" href="../../zh_hant/basic/basic.html#linear-regression"><span class="std std-ref">第一章的线性回归示例</span></a> 提供一个基于 TensorFlow 1.X 的图执行模式 API 的版本，供有需要的读者对比参考。</p>
+<p>在本节，我们为 <a class="reference internal" href="../basic/basic.html#zh-hans-linear-regression"><span class="std std-ref">第一章的线性回归示例</span></a> 提供一个基于 TensorFlow 1.X 的图执行模式 API 的版本，供有需要的读者对比参考。</p>
 <p>与第一章的NumPy和即时执行模式不同，TensorFlow的图执行模式使用 <strong>符号式编程</strong> 来进行数值运算。首先，我们需要将待计算的过程抽象为计算图，将输入、运算和输出都用符号化的节点来表达。然后，我们将数据不断地送入输入节点，让数据沿着计算图进行计算和流动，最终到达我们需要的特定输出节点。</p>
 <p>以下代码展示了如何基于TensorFlow的符号式编程方法完成与前节相同的任务。其中， <code class="docutils literal notranslate"><span class="pre">tf.placeholder()</span></code> 即可以视为一种“符号化的输入节点”，使用 <code class="docutils literal notranslate"><span class="pre">tf.get_variable()</span></code> 定义模型的参数（Variable类型的张量可以使用 <code class="docutils literal notranslate"><span class="pre">tf.assign()</span></code> 操作进行赋值），而 <code class="docutils literal notranslate"><span class="pre">sess.run(output_node,</span> <span class="pre">feed_dict={input_node:</span> <span class="pre">data})</span></code> 可以视作将数据送入输入节点，沿着计算图计算并到达输出节点并返回值的过程。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>

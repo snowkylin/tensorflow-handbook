@@ -1,7 +1,7 @@
 TensorFlow 模型建立與訓練
 ========================================
 
-.. _linear:
+.. _zh_hant_linear:
 
 本章介紹如何使用 TensorFlow 快速搭建動態模型。
 
@@ -55,7 +55,7 @@ Keras 模型以類的形式呈現，我們可以通過繼承 ``tf.keras.Model`` 
 
 .. literalinclude:: /_static/code/zh/model/linear/linear.py
 
-這裡，我們沒有顯式地聲明 ``a`` 和 ``b`` 兩個變量並寫出 ``y_pred = a * X + b`` 這一線性變換，而是建立了一個繼承了 ``tf.keras.Model`` 的模型類 ``Linear`` 。這個類在初始化部分實例化了一個 **全連接層** （ ``tf.keras.layers.Dense`` ），並在 call 方法中對這個層進行調用，實現了線性變換的計算。如果需要顯式地聲明自己的變量並使用變量進行自定義運算，或者希望了解 Keras 層的內部原理，請參考 :ref:`自定義層 <custom_layer>`。
+這裡，我們沒有顯式地聲明 ``a`` 和 ``b`` 兩個變量並寫出 ``y_pred = a * X + b`` 這一線性變換，而是建立了一個繼承了 ``tf.keras.Model`` 的模型類 ``Linear`` 。這個類在初始化部分實例化了一個 **全連接層** （ ``tf.keras.layers.Dense`` ），並在 call 方法中對這個層進行調用，實現了線性變換的計算。如果需要顯式地聲明自己的變量並使用變量進行自定義運算，或者希望了解 Keras 層的內部原理，請參考 :ref:`自定義層 <zh_hant_custom_layer>`。
 
 .. admonition:: Keras 的全連接層：線性變換 + 激活函數
 
@@ -74,7 +74,7 @@ Keras 模型以類的形式呈現，我們可以通過繼承 ``tf.keras.Model`` 
 
     該層包含權重矩陣 ``kernel = [input_dim, units]`` 和偏置向量 ``bias = [units]`` [#broadcast]_ 兩個可訓練變量，對應於 :math:`f(AW + b)` 中的 :math:`W` 和 :math:`b`。
 
-    這裡著重從數學矩陣運算和線性變換的角度描述了全連接層。基於神經元建模的描述可參考 :ref:`後文介紹 <neuron>` 。
+    這裡著重從數學矩陣運算和線性變換的角度描述了全連接層。基於神經元建模的描述可參考 :ref:`後文介紹 <zh_hant_neuron>` 。
 
     .. [#glorot] Keras 中的很多層都默認使用 ``tf.glorot_uniform_initializer`` 初始化變量，關於該初始化器可參考 https://www.tensorflow.org/api_docs/python/tf/glorot_uniform_initializer 。
     .. [#broadcast] 你可能會注意到， ``tf.matmul(input, kernel)`` 的結果是一個形狀爲 ``[batch_size, units]`` 的二維矩陣，這個二維矩陣要如何與形狀爲 ``[units]`` 的一維偏置向量 ``bias`` 相加呢？事實上，這裡是 TensorFlow 的 Broadcasting 機制在起作用，該加法運算相當於將二維矩陣的每一行加上了 ``Bias`` 。Broadcasting 機制的具體介紹可見 https://www.tensorflow.org/xla/broadcasting 。
@@ -83,7 +83,7 @@ Keras 模型以類的形式呈現，我們可以通過繼承 ``tf.keras.Model`` 
 
     在 Python 中，對類的實例 ``myClass`` 進行形如 ``myClass()`` 的調用等價於 ``myClass.__call__()`` （具體請見本章初 「前置知識」 的 ``__call__()`` 部分）。那麼看起來，爲了使用 ``y_pred = model(X)`` 的形式調用模型類，應該重寫 ``__call__()`` 方法才對呀？原因是 Keras 在模型調用的前後還需要有一些自己的內部操作，所以暴露出一個專門用於重載的 ``call()`` 方法。 ``tf.keras.Model`` 這一父類已經包含 ``__call__()`` 的定義。 ``__call__()`` 中主要調用了 ``call()`` 方法，同時還需要在進行一些 keras 的內部操作。這裡，我們通過繼承 ``tf.keras.Model`` 並重載 ``call()`` 方法，即可在保持 keras 結構的同時加入模型調用的代碼。
 
-.. _mlp:
+.. _zh_hant_mlp:
 
 基礎示例：多層感知機（MLP）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -121,7 +121,7 @@ Keras 模型以類的形式呈現，我們可以通過繼承 ``tf.keras.Model`` 
 
     在 TensorFlow 中，圖像數據集的一種典型表示是 ``[圖像數目，長，寬，色彩通道數]`` 的四維張量。在上面的 ``DataLoader`` 類中， ``self.train_data`` 和 ``self.test_data`` 分別載入了 60,000 和 10,000 張大小爲 ``28*28`` 的手寫體數字圖片。由於這裡讀入的是灰度圖片，色彩通道數爲 1（彩色 RGB 圖像色彩通道數爲 3），所以我們使用 ``np.expand_dims()`` 函數爲圖像數據手動在最後添加一維通道。
 
-.. _mlp_model:
+.. _zh_hant_mlp_model:
 
 模型的構建： ``tf.keras.Model`` 和 ``tf.keras.layers``
 -------------------------------------------------------------------------------
@@ -168,7 +168,7 @@ Keras 模型以類的形式呈現，我們可以通過繼承 ``tf.keras.Model`` 
 - 將這批數據送入模型，計算出模型的預測值；
 - 將模型預測值與真實值進行比較，計算損失函數（loss）。這裡使用 ``tf.keras.losses`` 中的交叉熵函數作爲損失函數；
 - 計算損失函數關於模型變量的導數；
-- 將求出的導數值傳入優化器，使用優化器的 ``apply_gradients`` 方法更新模型參數以最小化損失函數（優化器的詳細使用方法見 :ref:`前章 <optimizer>`  ）。
+- 將求出的導數值傳入優化器，使用優化器的 ``apply_gradients`` 方法更新模型參數以最小化損失函數（優化器的詳細使用方法見 :ref:`前章 <zh_hant_optimizer>`  ）。
 
 具體代碼實現如下：
 
@@ -214,7 +214,7 @@ Keras 模型以類的形式呈現，我們可以通過繼承 ``tf.keras.Model`` 
 
 可以注意到，使用這樣簡單的模型，已經可以達到 95% 左右的準確率。
 
-.. _neuron:
+.. _zh_hant_neuron:
 
 .. admonition:: 神經網絡的基本單位：神經元 [#order]_
 
@@ -253,7 +253,7 @@ Keras 模型以類的形式呈現，我們可以通過繼承 ``tf.keras.Model`` 
 使用Keras實現卷積神經網絡
 -------------------------------------------------------
 
-卷積神經網絡的一個示例實現如下所示，和 :ref:`上節中的多層感知機 <mlp_model>` 在代碼結構上很類似，只是新加入了一些卷積層和池化層。這裡的網絡結構並不是唯一的，可以增加、刪除或調整 CNN 的網絡結構和參數，以達到更好的性能。
+卷積神經網絡的一個示例實現如下所示，和 :ref:`上節中的多層感知機 <zh_hant_mlp_model>` 在代碼結構上很類似，只是新加入了一些卷積層和池化層。這裡的網絡結構並不是唯一的，可以增加、刪除或調整 CNN 的網絡結構和參數，以達到更好的性能。
 
 .. literalinclude:: /_static/code/zh/model/mnist/cnn.py
     :lines: 4-
@@ -299,7 +299,7 @@ Keras 模型以類的形式呈現，我們可以通過繼承 ``tf.keras.Model`` 
 
     進行設置，也可以在調用模型時通過將 ``training`` 參數設爲 ``True`` 來設置。
 
-以下展示一個例子，使用 ``MobileNetV2`` 網絡在 ``tf_flowers`` 五分類數據集上進行訓練（爲了代碼的簡短高效，在該示例中我們使用了 :doc:`TensorFlow Datasets <../appendix/tfds>` 和 :ref:`tf.data <tfdata>` 載入和預處理數據）。同時將 ``classes`` 設置爲5，對應於5分類的數據集。
+以下展示一個例子，使用 ``MobileNetV2`` 網絡在 ``tf_flowers`` 五分類數據集上進行訓練（爲了代碼的簡短高效，在該示例中我們使用了 :doc:`TensorFlow Datasets <../appendix/tfds>` 和 :ref:`tf.data <zh_hant_tfdata>` 載入和預處理數據）。同時將 ``classes`` 設置爲5，對應於5分類的數據集。
 
 .. literalinclude:: /_static/code/zh/model/cnn/mobilenet.py
     :emphasize-lines: 10, 15  
@@ -310,7 +310,7 @@ Keras 模型以類的形式呈現，我們可以通過繼承 ``tf.keras.Model`` 
 
     卷積層（Convolutional Layer，以 ``tf.keras.layers.Conv2D`` 爲代表）是 CNN 的核心組件，其結構與大腦的視覺皮層有類似之處。
 
-    回憶我們之前建立的 :ref:`神經細胞的計算模型 <neuron>` 以及全連接層，我們默認每個神經元與上一層的所有神經元相連。不過，在視覺皮層的神經元中，情況並不是這樣。你或許在生物課上學習過 **感受野** （Receptive Field）這一概念，即視覺皮層中的神經元並非與前一層的所有神經元相連，而只是感受一片區域內的視覺信號，並只對局部區域的視覺刺激進行反應。CNN 中的卷積層正體現了這一特性。
+    回憶我們之前建立的 :ref:`神經細胞的計算模型 <zh_hant_neuron>` 以及全連接層，我們默認每個神經元與上一層的所有神經元相連。不過，在視覺皮層的神經元中，情況並不是這樣。你或許在生物課上學習過 **感受野** （Receptive Field）這一概念，即視覺皮層中的神經元並非與前一層的所有神經元相連，而只是感受一片區域內的視覺信號，並只對局部區域的視覺刺激進行反應。CNN 中的卷積層正體現了這一特性。
 
     例如，下圖是一個 7×7 的單通道圖片信號輸入：
 
@@ -381,7 +381,7 @@ Keras 模型以類的形式呈現，我們可以通過繼承 ``tf.keras.Model`` 
 
     池化層（Pooling Layer）的理解則簡單得多，其可以理解爲對圖像進行降採樣的過程，對於每一次滑動窗口中的所有值，輸出其中的最大值（MaxPooling）、均值或其他方法產生的值。例如，對於一個三通道的 16×16 圖像（即一個 ``16*16*3`` 的張量），經過感受野爲 2×2，滑動步長爲 2 的池化層，則得到一個 ``8*8*3`` 的張量。
 
-    .. [#sequential] 這裡使用了較爲簡易的Sequential模式建立模型，具體介紹見 :ref:`後文 <sequential_functional>`  。
+    .. [#sequential] 這裡使用了較爲簡易的Sequential模式建立模型，具體介紹見 :ref:`後文 <zh_hant_sequential_functional>`  。
 
 循環神經網絡（RNN）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -500,7 +500,7 @@ Keras 模型以類的形式呈現，我們可以通過繼承 ``tf.keras.Model`` 
 
     上述爲最基礎的 RNN 原理介紹。在實際使用時往往使用一些常見的改進型，如LSTM（長短期記憶神經網絡，解決了長序列的梯度消失問題，適用於較長的序列）、GRU等。
 
-.. _rl:
+.. _zh_hant_rl:
 
 深度強化學習（DRL）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -546,17 +546,17 @@ Keras 模型以類的形式呈現，我們可以通過繼承 ``tf.keras.Model`` 
 
 以下代碼展示了如何使用深度強化學習中的 Deep Q-Learning 方法 [Mnih2013]_ 來訓練模型。首先，我們引入TensorFlow、Gym和一些常用庫，並定義一些模型超參數：
 
-.. literalinclude:: /_static/code/zh/model/rl/rl.py
+.. literalinclude:: /_static/code/zh/model/rl/qlearning.py
     :lines: 1-14
 
 然後，我們使用 ``tf.keras.Model`` 建立一個Q函數網絡（Q-network），用於擬合Q Learning中的Q函數。這裡我們使用較簡單的多層全連接神經網絡進行擬合。該網絡輸入當前狀態，輸出各個動作下的Q-value（CartPole下爲2維，即向左和向右推動小車）。
 
-.. literalinclude:: /_static/code/zh/model/rl/rl.py
+.. literalinclude:: /_static/code/zh/model/rl/qlearning.py
     :lines: 16-31
 
 最後，我們在主程序中實現Q Learning算法。
 
-.. literalinclude:: /_static/code/zh/model/rl/rl.py
+.. literalinclude:: /_static/code/zh/model/rl/qlearning.py
     :lines: 34-82
 
 對於不同的任務（或者說環境），我們需要根據任務的特點，設計不同的狀態以及採取合適的網絡來擬合 Q 函數。例如，如果我們考慮經典的打磚塊遊戲（Gym 環境庫中的  `Breakout-v0 <https://gym.openai.com/envs/Breakout-v0/>`_ ），每一次執行動作（擋板向左、向右或不動），都會返回一個 ``210 * 160 * 3`` 的 RGB 圖片，表示當前屏幕畫面。爲了給打磚塊遊戲這個任務設計合適的狀態表示，我們有以下分析：
@@ -584,7 +584,7 @@ Keras Pipeline *
 
 以上示例均使用了 Keras 的 Subclassing API 建立模型，即對 ``tf.keras.Model`` 類進行擴展以定義自己的新模型，同時手工編寫了訓練和評估模型的流程。這種方式靈活度高，且與其他流行的深度學習框架（如 PyTorch、Chainer）共通，是本手冊所推薦的方法。不過在很多時候，我們只需要建立一個結構相對簡單和典型的神經網絡（比如上文中的 MLP 和 CNN），並使用常規的手段進行訓練。這時，Keras 也給我們提供了另一套更爲簡單高效的內置方法來建立、訓練和評估模型。
 
-.. _sequential_functional:
+.. _zh_hant_sequential_functional:
 
 Keras Sequential/Functional API 模式建立模型
 -------------------------------------------
@@ -628,7 +628,7 @@ Keras Sequential/Functional API 模式建立模型
  - ``batch_size`` ：批次的大小；
  - ``validation_data`` ：驗證數據，可用於在訓練過程中監控模型的性能。
 
-Keras 支持使用 ``tf.data.Dataset`` 進行訓練，詳見 :ref:`tf.data <tfdata>` 。
+Keras 支持使用 ``tf.data.Dataset`` 進行訓練，詳見 :ref:`tf.data <zh_hant_tfdata>` 。
 
 最後，使用 ``tf.keras.Model.evaluate`` 評估訓練效果，提供測試數據及標籤即可：
 
@@ -643,7 +643,7 @@ Keras 支持使用 ``tf.data.Dataset`` 進行訓練，詳見 :ref:`tf.data <tfda
 
 可能你還會問，如果現有的這些層無法滿足我的要求，我需要定義自己的層怎麼辦？事實上，我們不僅可以繼承 ``tf.keras.Model`` 編寫自己的模型類，也可以繼承 ``tf.keras.layers.Layer`` 編寫自己的層。
 
-.. _custom_layer:
+.. _zh_hant_custom_layer:
 
 自定義層
 -------------------------------------------
@@ -668,7 +668,7 @@ Keras 支持使用 ``tf.data.Dataset`` 進行訓練，詳見 :ref:`tf.data <tfda
             # 模型調用的代碼（處理輸入並返回輸出）
             return output
 
-例如，如果我們要自己實現一個 :ref:`本章第一節 <linear>` 中的全連接層（ ``tf.keras.layers.Dense`` ），可以按如下方式編寫。此代碼在 ``build`` 方法中創建兩個變量，並在 ``call`` 方法中使用創建的變量進行運算：
+例如，如果我們要自己實現一個 :ref:`本章第一節 <zh_hant_linear>` 中的全連接層（ ``tf.keras.layers.Dense`` ），可以按如下方式編寫。此代碼在 ``build`` 方法中創建兩個變量，並在 ``call`` 方法中使用創建的變量進行運算：
 
 .. literalinclude:: /_static/code/zh/model/custom/linear.py
     :lines: 9-22

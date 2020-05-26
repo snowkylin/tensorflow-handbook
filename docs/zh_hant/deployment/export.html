@@ -279,9 +279,9 @@
   <div class="section" id="tensorflow">
 <h1>TensorFlow模型導出<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
 <div class="section" id="savedmodel">
-<span id="id1"></span><h2>使用SavedModel完整導出模型<a class="headerlink" href="#savedmodel" title="永久链接至标题">¶</a></h2>
+<span id="zh-hant-savedmodel"></span><h2>使用SavedModel完整導出模型<a class="headerlink" href="#savedmodel" title="永久链接至标题">¶</a></h2>
 <p>在部署模型時，我們的第一步往往是將訓練好的整個模型完整導出爲一系列標準格式的文件，然後即可在不同的平台上部署模型文件。這時，TensorFlow爲我們提供了SavedModel這一格式。與前面介紹的Checkpoint不同，SavedModel包含了一個TensorFlow程序的完整信息： <strong>不僅包含參數的權值，還包含計算的流程（即計算圖）</strong> 。當模型導出爲SavedModel文件時，無需建立模型的原始碼即可再次運行模型，這使得SavedModel尤其適用於模型的分享和部署。後文的TensorFlow Serving（伺服器端部署模型）、TensorFlow Lite（移動端部署模型）以及TensorFlow.js都會用到這一格式。</p>
-<p>Keras模型均可方便地導出爲SavedModel格式。不過需要注意的是，因爲SavedModel基於計算圖，所以對於使用繼承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 類建立的Keras模型，其需要導出到SavedModel格式的方法（比如 <code class="docutils literal notranslate"><span class="pre">call</span></code> ）都需要使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修飾（ <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 的使用方式見 <a class="reference internal" href="../basic/tools.html#tffunction"><span class="std std-ref">前文</span></a> ）。然後，假設我們有一個名爲 <code class="docutils literal notranslate"><span class="pre">model</span></code> 的Keras模型，使用下面的代碼即可將模型導出爲SavedModel：</p>
+<p>Keras模型均可方便地導出爲SavedModel格式。不過需要注意的是，因爲SavedModel基於計算圖，所以對於使用繼承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 類建立的Keras模型，其需要導出到SavedModel格式的方法（比如 <code class="docutils literal notranslate"><span class="pre">call</span></code> ）都需要使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修飾（ <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 的使用方式見 <a class="reference internal" href="../basic/tools.html#zh-hant-tffunction"><span class="std std-ref">前文</span></a> ）。然後，假設我們有一個名爲 <code class="docutils literal notranslate"><span class="pre">model</span></code> 的Keras模型，使用下面的代碼即可將模型導出爲SavedModel：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;保存的目標文件夾名稱&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -294,7 +294,7 @@
 <p class="admonition-title">提示</p>
 <p>對於使用繼承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 類建立的Keras模型 <code class="docutils literal notranslate"><span class="pre">model</span></code> ，使用SavedModel載入後將無法使用 <code class="docutils literal notranslate"><span class="pre">model()</span></code> 直接進行推斷，而需要使用 <code class="docutils literal notranslate"><span class="pre">model.call()</span></code> 。</p>
 </div>
-<p>以下是一個簡單的示例，將 <a class="reference internal" href="../basic/models.html#mlp"><span class="std std-ref">前文MNIST手寫體識別的模型</span></a> 進行導出和導入。</p>
+<p>以下是一個簡單的示例，將 <a class="reference internal" href="../basic/models.html#zh-hant-mlp"><span class="std std-ref">前文MNIST手寫體識別的模型</span></a> 進行導出和導入。</p>
 <p>導出模型到 <code class="docutils literal notranslate"><span class="pre">saved/1</span></code> 文件夾：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="k">import</span> <span class="n">MNISTLoader</span>

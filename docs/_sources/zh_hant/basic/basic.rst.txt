@@ -54,7 +54,7 @@ TensorFlow里有大量的 **操作** （Operation），使得我們可以將已�
 
 可見，我們成功使用 ``tf.add()`` 操作計算出 :math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} + \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = \begin{bmatrix} 6 & 8 \\ 10 & 12 \end{bmatrix}`，使用 ``tf.matmul()`` 操作計算出 :math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \times \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = \begin{bmatrix} 19 & 22 \\43 & 50 \end{bmatrix}` 。
 
-.. _automatic_derivation:
+.. _zh_hant_automatic_derivation:
 
 自動求導機制
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -99,11 +99,11 @@ TensorFlow里有大量的 **操作** （Operation），使得我們可以將已�
     \frac{\partial L(w, b)}{\partial b} |_{w = (1, 2)^T, b = 1} &= 30
 
 ..
-    以上的自動求導機制結合 **優化器** ，可以計算函數的極值。這裡以線性回歸示例（本質是求 :math:`\min_{w, b} L = (Xw + b - y)^2` ，具體原理見 :ref:`後節 <linear-regression>` ）：
+    以上的自動求導機制結合 **優化器** ，可以計算函數的極值。這裡以線性回歸示例（本質是求 :math:`\min_{w, b} L = (Xw + b - y)^2` ，具體原理見 :ref:`後節 <zh_hant_linear-regression>` ）：
 
     .. literalinclude:: /_static/code/zh/basic/eager/regression.py  
 
-.. _linear-regression:
+.. _zh_hant_linear-regression:
 
 基礎示例：線性回歸
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -154,7 +154,7 @@ NumPy下的線性回歸
 
 而TensorFlow等深度學習框架的出現很大程度上解決了這些痛點，爲機器學習模型的實現帶來了很大的便利。
 
-.. _optimizer:
+.. _zh_hant_optimizer:
 
 TensorFlow下的線性回歸
 -------------------------------------------

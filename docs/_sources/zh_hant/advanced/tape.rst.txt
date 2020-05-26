@@ -1,7 +1,7 @@
 ``tf.GradientTape`` 詳解
 ======================================
 
-``tf.GradientTape`` 的出現是 TensorFlow 2 最大的變化之一。其以一種簡潔優雅的方式，爲 TensorFlow 的即時執行模式和圖執行模式提供了統一的自動求導 API。不過對於從 TensorFlow 1.X 過渡到 TensorFlow 2 的開發人員而言，也增加了一定的學習門檻。本章即在 :ref:`第一章「自動求導機制」一節 <automatic_derivation>` 的基礎上，詳細介紹 ``tf.GradientTape`` 的使用方法及機制。
+``tf.GradientTape`` 的出現是 TensorFlow 2 最大的變化之一。其以一種簡潔優雅的方式，爲 TensorFlow 的即時執行模式和圖執行模式提供了統一的自動求導 API。不過對於從 TensorFlow 1.X 過渡到 TensorFlow 2 的開發人員而言，也增加了一定的學習門檻。本章即在 :ref:`第一章「自動求導機制」一節 <zh_hant_automatic_derivation>` 的基礎上，詳細介紹 ``tf.GradientTape`` 的使用方法及機制。
 
 ..
     https://github.com/tensorflow/tensorflow/blob/r2.1/tensorflow/python/eager/backprop.py#L702-L1262
@@ -15,7 +15,7 @@
 1. 使用 with 語句，將需要求導的計算步驟封裝在 ``tf.GradientTape`` 的上下文中；
 2. 使用 ``tf.GradientTape`` 的 ``gradient`` 方法計算導數。
 
-回顧 :ref:`第一章「自動求導機制」一節 <automatic_derivation>` 所舉的例子，使用 ``tf.GradientTape()`` 計算函數 :math:`y(x) = x^2` 在 :math:`x = 3` 時的導數：
+回顧 :ref:`第一章「自動求導機制」一節 <zh_hant_automatic_derivation>` 所舉的例子，使用 ``tf.GradientTape()`` 計算函數 :math:`y(x) = x^2` 在 :math:`x = 3` 時的導數：
 
 .. literalinclude:: /_static/code/zh/basic/eager/grad.py  
     :lines: 1-7

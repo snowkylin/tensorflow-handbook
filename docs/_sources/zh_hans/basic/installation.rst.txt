@@ -8,7 +8,7 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
 一般安装步骤
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1. 安装Python环境。此处建议安装 `Anaconda <https://www.anaconda.com/>`_ 的Python 3.7版本（后文均以此为准），这是一个开源的Python发行版本，提供了一个完整的科学计算环境，包括NumPy、SciPy等常用科学计算库。当然，你有权选择自己喜欢的Python环境。Anaconda的安装包可在 `这里 <https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/>`_ 获得。
+1. 安装Python环境。此处建议安装 `Anaconda <https://www.anaconda.com/>`_ 的Python 3.7 64位版本（后文均以此为准），这是一个开源的Python发行版本，提供了一个完整的科学计算环境，包括NumPy、SciPy等常用科学计算库。当然，你有权选择自己喜欢的Python环境。Anaconda的安装包可在 `这里 <https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/>`_ 获得。
 
 2. 使用Anaconda自带的conda包管理器建立一个Conda虚拟环境，并进入该虚拟环境。在命令行下输入：
 
@@ -79,7 +79,7 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
         conda env remove --name [env-name]  # 删除名为[env-name]的Conda虚拟环境
         conda env list                      # 列出所有Conda虚拟环境
 
-.. _gpu_tensorflow:
+.. _zh_hans_gpu_tensorflow:
 
 GPU版本TensorFlow安装指南
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -201,7 +201,7 @@ IDE设置
 
 .. tip:: 如果你是学生并有.edu结尾的邮箱的话，可以在 `这里 <http://www.jetbrains.com/student/>`_ 申请PyCharm的免费Professional版本授权。
 
-对于TensorFlow及深度学习的业余爱好者或者初学者， `Visual Studio Code <https://code.visualstudio.com/>`_ 或者一些在线的交互式Python环境（比如免费的 `Google Colab <https://colab.research.google.com/>`_ ）也是不错的选择。Colab的使用方式可参考 :ref:`附录 <colab>` 。
+对于TensorFlow及深度学习的业余爱好者或者初学者， `Visual Studio Code <https://code.visualstudio.com/>`_ 或者一些在线的交互式Python环境（比如免费的 `Google Colab <https://colab.research.google.com/>`_ ）也是不错的选择。Colab的使用方式可参考 :ref:`附录 <zh_hans_colab>` 。
 
 .. warning:: 如果你使用的是旧版本的 PyCharm ，可能会在安装 TensorFlow 2 后出现部分代码自动补全功能丧失的问题。升级到新版的 PyCharm （2019.3及以后版本）即可解决这一问题。
 
@@ -211,11 +211,11 @@ IDE设置
 TensorFlow所需的硬件配置 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. hint:: 对于学习而言，TensorFlow的硬件门槛并不高。甚至，借助 :ref:`免费 <colab>` 或 :ref:`灵活 <gcp>` 的云端计算资源，只要你有一台能上网的电脑，就能够熟练掌握TensorFlow！
+.. hint:: 对于学习而言，TensorFlow的硬件门槛并不高。甚至，借助 :ref:`免费 <zh_hans_colab>` 或 :ref:`灵活 <zh_hans_gcp>` 的云端计算资源，只要你有一台能上网的电脑，就能够熟练掌握TensorFlow！
 
 在很多人的刻板印象中，TensorFlow乃至深度学习是一件非常“吃硬件”的事情，以至于一接触TensorFlow，第一件事情可能就是想如何升级自己的电脑硬件。不过，TensorFlow所需的硬件配置很大程度是视任务和使用环境而定的：
 
-- 对于TensorFlow初学者，无需硬件升级也可以很好地学习和掌握TensorFlow。本手册中的大部分教学示例，大部分当前主流的个人电脑（即使没有GPU）均可胜任，无需添置其他硬件设备。对于本手册中部分计算量较大的示例（例如 :ref:`在cats_vs_dogs数据集上训练CNN图像分类 <cats_vs_dogs>` ），一块主流的NVIDIA GPU会大幅加速训练。如果自己的个人电脑难以胜任，可以考虑在云端（例如 :ref:`免费的 Colab <colab>` ）进行模型训练。
+- 对于TensorFlow初学者，无需硬件升级也可以很好地学习和掌握TensorFlow。本手册中的大部分教学示例，大部分当前主流的个人电脑（即使没有GPU）均可胜任，无需添置其他硬件设备。对于本手册中部分计算量较大的示例（例如 :ref:`在cats_vs_dogs数据集上训练CNN图像分类 <zh_hans_cats_vs_dogs>` ），一块主流的NVIDIA GPU会大幅加速训练。如果自己的个人电脑难以胜任，可以考虑在云端（例如 :ref:`免费的 Colab <zh_hans_colab>` ）进行模型训练。
 - 对于参加数据科学竞赛（比如Kaggle）或者经常在本机进行训练的个人爱好者或开发者，一块高性能的NVIDIA GPU往往是必要的。CUDA核心数和显存大小是决定显卡机器学习性能的两个关键参数，前者决定训练速度，后者决定可以训练多大的模型以及训练时的最大Batch Size，对于较大规模的训练而言尤其敏感。
 - 对于前沿的机器学习研究（尤其是计算机视觉和自然语言处理领域），多GPU并行训练是标准配置。为了快速迭代实验结果以及训练更大规模的模型以提升性能，4卡、8卡或更高的GPU数量是常态。
 

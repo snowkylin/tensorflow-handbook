@@ -149,7 +149,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#cnn">卷積神經網絡（CNN）</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#keras">使用Keras實現卷積神經網絡</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id15">使用Keras中預定義的經典卷積神經網絡結構</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">使用Keras中預定義的經典卷積神經網絡結構</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#rnn">循環神經網絡（RNN）</a></li>
@@ -159,9 +159,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#keras-model-compile-fit-evaluate">使用 Keras Model 的 <code class="docutils literal notranslate"><span class="pre">compile</span></code> 、 <code class="docutils literal notranslate"><span class="pre">fit</span></code> 和 <code class="docutils literal notranslate"><span class="pre">evaluate</span></code> 方法訓練和評估模型</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id26">自定義層、損失函數和評估指標 *</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#custom-layer">自定義層</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id28">自定義損失函數和評估指標</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id25">自定義層、損失函數和評估指標 *</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#zh-hant-custom-layer">自定義層</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id27">自定義損失函數和評估指標</a></li>
 </ul>
 </li>
 </ul>
@@ -301,7 +301,7 @@
             
   <div class="section" id="tensorflow">
 <h1>TensorFlow 模型建立與訓練<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
-<p id="linear">本章介紹如何使用 TensorFlow 快速搭建動態模型。</p>
+<p id="zh-hant-linear">本章介紹如何使用 TensorFlow 快速搭建動態模型。</p>
 <ul class="simple">
 <li><p>模型的構建： <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code></p></li>
 <li><p>模型的損失函數： <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code></p></li>
@@ -337,9 +337,9 @@
     <span class="c1"># 還可以添加自定義的方法</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id29">
+<div class="figure align-center" id="id28">
 <a class="reference internal image-reference" href="../../_images/model.png"><img alt="../../_images/model.png" src="../../_images/model.png" style="width: 50%;" /></a>
-<p class="caption"><span class="caption-text">Keras 模型類定義示意圖</span><a class="headerlink" href="#id29" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">Keras 模型類定義示意圖</span><a class="headerlink" href="#id28" title="永久链接至图片">¶</a></p>
 </div>
 <p>繼承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 後，我們同時可以使用父類的若干方法和屬性，例如在實例化類 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">Model()</span></code> 後，可以通過 <code class="docutils literal notranslate"><span class="pre">model.variables</span></code> 這一屬性直接獲得模型中的所有變量，免去我們一個個顯式指定變量的麻煩。</p>
 <p>上一章中簡單的線性模型 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> ，我們可以通過模型類的方式編寫如下：</p>
@@ -376,7 +376,7 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>這裡，我們沒有顯式地聲明 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 兩個變量並寫出 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> 這一線性變換，而是建立了一個繼承了 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的模型類 <code class="docutils literal notranslate"><span class="pre">Linear</span></code> 。這個類在初始化部分實例化了一個 <strong>全連接層</strong> （ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），並在 call 方法中對這個層進行調用，實現了線性變換的計算。如果需要顯式地聲明自己的變量並使用變量進行自定義運算，或者希望了解 Keras 層的內部原理，請參考 <a class="reference internal" href="#custom-layer"><span class="std std-ref">自定義層</span></a>。</p>
+<p>這裡，我們沒有顯式地聲明 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 兩個變量並寫出 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> 這一線性變換，而是建立了一個繼承了 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的模型類 <code class="docutils literal notranslate"><span class="pre">Linear</span></code> 。這個類在初始化部分實例化了一個 <strong>全連接層</strong> （ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），並在 call 方法中對這個層進行調用，實現了線性變換的計算。如果需要顯式地聲明自己的變量並使用變量進行自定義運算，或者希望了解 Keras 層的內部原理，請參考 <a class="reference internal" href="#zh-hant-custom-layer"><span class="std std-ref">自定義層</span></a>。</p>
 <div class="admonition-keras admonition">
 <p class="admonition-title">Keras 的全連接層：線性變換 + 激活函數</p>
 <p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense">全連接層</a> （Fully-connected Layer，<code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ）是 Keras 中最基礎和常用的層之一，對輸入矩陣 <img class="math" src="../../_images/math/b86d9659948ffa756133d580cfc95f923705c2b5.png" alt="A"/> 進行 <img class="math" src="../../_images/math/92bb903eabd575a64bd61bd559678418cda7afb2.png" alt="f(AW + b)"/> 的線性變換 + 激活函數操作。如果不指定激活函數，即是純粹的線性變換 <img class="math" src="../../_images/math/62bbbb16ac53d3269d7aa9fc5a15a986f8f0f08c.png" alt="AW + b"/>。具體而言，給定輸入張量 <code class="docutils literal notranslate"><span class="pre">input</span> <span class="pre">=</span> <span class="pre">[batch_size,</span> <span class="pre">input_dim]</span></code> ，該層對輸入張量首先進行 <code class="docutils literal notranslate"><span class="pre">tf.matmul(input,</span> <span class="pre">kernel)</span> <span class="pre">+</span> <span class="pre">bias</span></code> 的線性變換（ <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 是層中可訓練的變量），然後對線性變換後張量的每個元素通過激活函數 <code class="docutils literal notranslate"><span class="pre">activation</span></code> ，從而輸出形狀爲 <code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">units]</span></code> 的二維張量。</p>
@@ -391,7 +391,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">kernel_initializer</span></code> 、 <code class="docutils literal notranslate"><span class="pre">bias_initializer</span></code> ：權重矩陣 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和偏置向量 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 兩個變量的初始化器。默認爲 <code class="docutils literal notranslate"><span class="pre">tf.glorot_uniform_initializer</span></code> <a class="footnote-reference brackets" href="#glorot" id="id3">1</a> 。設置爲 <code class="docutils literal notranslate"><span class="pre">tf.zeros_initializer</span></code> 表示將兩個變量均初始化爲全 0；</p></li>
 </ul>
 <p>該層包含權重矩陣 <code class="docutils literal notranslate"><span class="pre">kernel</span> <span class="pre">=</span> <span class="pre">[input_dim,</span> <span class="pre">units]</span></code> 和偏置向量 <code class="docutils literal notranslate"><span class="pre">bias</span> <span class="pre">=</span> <span class="pre">[units]</span></code> <a class="footnote-reference brackets" href="#broadcast" id="id4">2</a> 兩個可訓練變量，對應於 <img class="math" src="../../_images/math/92bb903eabd575a64bd61bd559678418cda7afb2.png" alt="f(AW + b)"/> 中的 <img class="math" src="../../_images/math/eb33eca75f5d77363c991bf041953da54a858bfb.png" alt="W"/> 和 <img class="math" src="../../_images/math/3de2ed824326dc0eb383a42dd6ec44d3b401047b.png" alt="b"/>。</p>
-<p>這裡著重從數學矩陣運算和線性變換的角度描述了全連接層。基於神經元建模的描述可參考 <a class="reference internal" href="#neuron"><span class="std std-ref">後文介紹</span></a> 。</p>
+<p>這裡著重從數學矩陣運算和線性變換的角度描述了全連接層。基於神經元建模的描述可參考 <a class="reference internal" href="#zh-hant-neuron"><span class="std std-ref">後文介紹</span></a> 。</p>
 <dl class="footnote brackets">
 <dt class="label" id="glorot"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
 <dd><p>Keras 中的很多層都默認使用 <code class="docutils literal notranslate"><span class="pre">tf.glorot_uniform_initializer</span></code> 初始化變量，關於該初始化器可參考 <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/glorot_uniform_initializer">https://www.tensorflow.org/api_docs/python/tf/glorot_uniform_initializer</a> 。</p>
@@ -407,7 +407,7 @@
 </div>
 </div>
 <div class="section" id="mlp">
-<span id="id5"></span><h2>基礎示例：多層感知機（MLP）<a class="headerlink" href="#mlp" title="永久链接至标题">¶</a></h2>
+<span id="zh-hant-mlp"></span><h2>基礎示例：多層感知機（MLP）<a class="headerlink" href="#mlp" title="永久链接至标题">¶</a></h2>
 <p>我們從編寫一個最簡單的 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8">多層感知機</a> （Multilayer Perceptron, MLP），或者說 「多層全連接神經網絡」 開始，介紹 TensorFlow 的模型編寫方式。在這一部分，我們依次進行以下步驟：</p>
 <ul class="simple">
 <li><p>使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.datasets</span></code> 獲得數據集並預處理</p></li>
@@ -422,10 +422,10 @@
 <li><p>斯坦福課程 <a class="reference external" href="http://cs231n.github.io/">CS231n: Convolutional Neural Networks for Visual Recognition</a> 中的 「Neural Networks Part 1 ~ 3」 部分。</p></li>
 </ul>
 </div>
-<p>這裡，我們使用多層感知機完成 MNIST 手寫體數字圖片數據集 <a class="reference internal" href="#lecun1998" id="id7"><span>[LeCun1998]</span></a> 的分類任務。</p>
-<div class="figure align-center" id="id30">
+<p>這裡，我們使用多層感知機完成 MNIST 手寫體數字圖片數據集 <a class="reference internal" href="#lecun1998" id="id6"><span>[LeCun1998]</span></a> 的分類任務。</p>
+<div class="figure align-center" id="id29">
 <img alt="../../_images/mnist_0-9.png" src="../../_images/mnist_0-9.png" />
-<p class="caption"><span class="caption-text">MNIST 手寫體數字圖片示例</span><a class="headerlink" href="#id30" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">MNIST 手寫體數字圖片示例</span><a class="headerlink" href="#id29" title="永久链接至图片">¶</a></p>
 </div>
 <div class="section" id="tf-keras-datasets">
 <h3>數據獲取及預處理： <code class="docutils literal notranslate"><span class="pre">tf.keras.datasets</span></code><a class="headerlink" href="#tf-keras-datasets" title="永久链接至标题">¶</a></h3>
@@ -457,7 +457,7 @@
 </div>
 </div>
 <div class="section" id="tf-keras-model-tf-keras-layers">
-<span id="mlp-model"></span><h3>模型的構建： <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code><a class="headerlink" href="#tf-keras-model-tf-keras-layers" title="永久链接至标题">¶</a></h3>
+<span id="zh-hant-mlp-model"></span><h3>模型的構建： <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code><a class="headerlink" href="#tf-keras-model-tf-keras-layers" title="永久链接至标题">¶</a></h3>
 <p>多層感知機的模型類實現與上面的線性模型類似，使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code> 構建，所不同的地方在於層數增加了（顧名思義，「多層」 感知機），以及引入了非線性激活函數（這裡使用了 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0">ReLU 函數</a> ， 即下方的 <code class="docutils literal notranslate"><span class="pre">activation=tf.nn.relu</span></code> ）。該模型輸入一個向量（比如這裡是拉直的 <code class="docutils literal notranslate"><span class="pre">1×784</span></code> 手寫體數字圖片），輸出 10 維的向量，分別代表這張圖片屬於 0 到 9 的概率。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -483,9 +483,9 @@
 </ul>
 <p>爲了使得模型的輸出能始終滿足這兩個條件，我們使用 <a class="reference external" href="https://zh.wikipedia.org/wiki/Softmax%E5%87%BD%E6%95%B0">Softmax 函數</a> （歸一化指數函數， <code class="docutils literal notranslate"><span class="pre">tf.nn.softmax</span></code> ）對模型的原始輸出進行歸一化。其形式爲 <img class="math" src="../../_images/math/775c23d38cbe9592ed4cf18946b16b1598501447.png" alt="\sigma(\mathbf{z})_j = \frac{e^{z_j}}{\sum_{k=1}^K e^{z_k}}"/> 。不僅如此，softmax 函數能夠凸顯原始向量中最大的值，並抑制遠低於最大值的其他分量，這也是該函數被稱作 softmax 函數的原因（即平滑化的 argmax 函數）。</p>
 </div>
-<div class="figure align-center" id="id31">
+<div class="figure align-center" id="id30">
 <a class="reference internal image-reference" href="../../_images/mlp.png"><img alt="../../_images/mlp.png" src="../../_images/mlp.png" style="width: 80%;" /></a>
-<p class="caption"><span class="caption-text">MLP 模型示意圖</span><a class="headerlink" href="#id31" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">MLP 模型示意圖</span><a class="headerlink" href="#id30" title="永久链接至图片">¶</a></p>
 </div>
 </div>
 <div class="section" id="tf-keras-losses-tf-keras-optimizer">
@@ -508,7 +508,7 @@
 <li><p>將這批數據送入模型，計算出模型的預測值；</p></li>
 <li><p>將模型預測值與真實值進行比較，計算損失函數（loss）。這裡使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> 中的交叉熵函數作爲損失函數；</p></li>
 <li><p>計算損失函數關於模型變量的導數；</p></li>
-<li><p>將求出的導數值傳入優化器，使用優化器的 <code class="docutils literal notranslate"><span class="pre">apply_gradients</span></code> 方法更新模型參數以最小化損失函數（優化器的詳細使用方法見 <a class="reference internal" href="basic.html#optimizer"><span class="std std-ref">前章</span></a>  ）。</p></li>
+<li><p>將求出的導數值傳入優化器，使用優化器的 <code class="docutils literal notranslate"><span class="pre">apply_gradients</span></code> 方法更新模型參數以最小化損失函數（優化器的詳細使用方法見 <a class="reference internal" href="basic.html#zh-hant-optimizer"><span class="std std-ref">前章</span></a>  ）。</p></li>
 </ul>
 <p>具體代碼實現如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">num_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">num_train_data</span> <span class="o">//</span> <span class="n">batch_size</span> <span class="o">*</span> <span class="n">num_epochs</span><span class="p">)</span>
@@ -559,21 +559,21 @@
 </pre></div>
 </div>
 <p>可以注意到，使用這樣簡單的模型，已經可以達到 95% 左右的準確率。</p>
-<div class="admonition-order admonition" id="neuron">
-<p class="admonition-title">神經網絡的基本單位：神經元 <a class="footnote-reference brackets" href="#order" id="id9">3</a></p>
+<div class="admonition-order admonition" id="zh-hant-neuron">
+<p class="admonition-title">神經網絡的基本單位：神經元 <a class="footnote-reference brackets" href="#order" id="id8">3</a></p>
 <p>如果我們將上面的神經網絡放大來看，詳細研究計算過程，比如取第二層的第 k 個計算單元，可以得到示意圖如下：</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/neuron.png"><img alt="../../_images/neuron.png" src="../../_images/neuron.png" style="width: 80%;" /></a>
 </div>
 <p>該計算單元 <img class="math" src="../../_images/math/85ce41d6dc4430e698ee09025e20ef92dc072c8b.png" alt="Q_k"/> 有 100 個權值參數 <img class="math" src="../../_images/math/367b9541701e95dc3ba7576de1d9f73d4b503756.png" alt="w_{0k}, w_{1k}, ..., w_{99k}"/> 和 1 個偏置參數 <img class="math" src="../../_images/math/d7045b226648b5f10f66aee02be62f28ffada7a2.png" alt="b_k"/> 。將第 1 層中所有的 100 個計算單元 <img class="math" src="../../_images/math/6d9bbcc666002052dfb6ebca8f6d27e96b922abb.png" alt="P_0, P_1, ..., P_{99}"/> 的值作爲輸入，分別按權值 <img class="math" src="../../_images/math/9c31ad5764fc67b721c08d9b53883c8504ec39a6.png" alt="w_{ik}"/> 加和（即 <img class="math" src="../../_images/math/ea226ce2a26a7170cdd886bcc69bbd2c2173a0a2.png" alt="\sum_{i=0}^{99} w_{ik} P_i"/> ），並加上偏置值 <img class="math" src="../../_images/math/d7045b226648b5f10f66aee02be62f28ffada7a2.png" alt="b_k"/> ，然後送入激活函數 <img class="math" src="../../_images/math/95dc71c95728695dd2fada939d146ae97def5061.png" alt="f"/> 進行計算，即得到輸出結果。</p>
 <p>事實上，這種結構和真實的神經細胞（神經元）類似。神經元由樹突、胞體和軸突構成。樹突接受其他神經元傳來的信號作爲輸入（一個神經元可以有數千甚至上萬樹突），胞體對電位信號進行整合，而產生的信號則通過軸突傳到神經末梢的突觸，傳播到下一個（或多個）神經元。</p>
-<div class="figure align-center" id="id32">
+<div class="figure align-center" id="id31">
 <a class="reference internal image-reference" href="../../_images/real_neuron.png"><img alt="../../_images/real_neuron.png" src="../../_images/real_neuron.png" style="width: 80%;" /></a>
-<p class="caption"><span class="caption-text">神經細胞模式圖（修改自 Quasar Jarosz at English Wikipedia [CC BY-SA 3.0 (<a class="reference external" href="https://creativecommons.org/licenses/by-sa/3.0">https://creativecommons.org/licenses/by-sa/3.0</a>)]）</span><a class="headerlink" href="#id32" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">神經細胞模式圖（修改自 Quasar Jarosz at English Wikipedia [CC BY-SA 3.0 (<a class="reference external" href="https://creativecommons.org/licenses/by-sa/3.0">https://creativecommons.org/licenses/by-sa/3.0</a>)]）</span><a class="headerlink" href="#id31" title="永久链接至图片">¶</a></p>
 </div>
 <p>上面的計算單元，可以被視作對神經元結構的數學建模。在上面的例子裡，第二層的每一個計算單元（人工神經元）有 100 個權值參數和 1 個偏置參數，而第二層計算單元的數目是 10 個，因此這一個全連接層的總參數量爲 100*10 個權值參數和 10 個偏置參數。事實上，這正是該全連接層中的兩個變量 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 的形狀。仔細研究一下，你會發現，這裡基於神經元建模的介紹與上文基於矩陣計算的介紹是等價的。</p>
 <dl class="footnote brackets">
-<dt class="label" id="order"><span class="brackets"><a class="fn-backref" href="#id9">3</a></span></dt>
+<dt class="label" id="order"><span class="brackets"><a class="fn-backref" href="#id8">3</a></span></dt>
 <dd><p>事實上，應當是先有神經元建模的概念，再有基於人工神經元和層結構的人工神經網絡。但由於本手冊著重介紹 TensorFlow 的使用方法，所以調換了介紹順序。</p>
 </dd>
 </dl>
@@ -594,7 +594,7 @@
 </div>
 <div class="section" id="keras">
 <h3>使用Keras實現卷積神經網絡<a class="headerlink" href="#keras" title="永久链接至标题">¶</a></h3>
-<p>卷積神經網絡的一個示例實現如下所示，和 <a class="reference internal" href="#mlp-model"><span class="std std-ref">上節中的多層感知機</span></a> 在代碼結構上很類似，只是新加入了一些卷積層和池化層。這裡的網絡結構並不是唯一的，可以增加、刪除或調整 CNN 的網絡結構和參數，以達到更好的性能。</p>
+<p>卷積神經網絡的一個示例實現如下所示，和 <a class="reference internal" href="#zh-hant-mlp-model"><span class="std std-ref">上節中的多層感知機</span></a> 在代碼結構上很類似，只是新加入了一些卷積層和池化層。這裡的網絡結構並不是唯一的，可以增加、刪除或調整 CNN 的網絡結構和參數，以達到更好的性能。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CNN</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -628,9 +628,9 @@
         <span class="k">return</span> <span class="n">output</span>
 </pre></div>
 </div>
-<div class="figure align-center" id="id33">
+<div class="figure align-center" id="id32">
 <img alt="../../_images/cnn.png" src="../../_images/cnn.png" />
-<p class="caption"><span class="caption-text">示例代碼中的 CNN 結構圖示</span><a class="headerlink" href="#id33" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">示例代碼中的 CNN 結構圖示</span><a class="headerlink" href="#id32" title="永久链接至图片">¶</a></p>
 </div>
 <p>將前節的 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">MLP()</span></code> 更換成 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">CNN()</span></code> ，輸出如下:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test</span> <span class="n">accuracy</span><span class="p">:</span> <span class="mf">0.988100</span>
@@ -638,8 +638,8 @@
 </div>
 <p>可以發現準確率相較於前節的多層感知機有非常顯著的提高。事實上，通過改變模型的網絡結構（比如加入 Dropout 層防止過擬合），準確率還有進一步提升的空間。</p>
 </div>
-<div class="section" id="id15">
-<h3>使用Keras中預定義的經典卷積神經網絡結構<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id14">
+<h3>使用Keras中預定義的經典卷積神經網絡結構<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">tf.keras.applications</span></code> 中有一些預定義好的經典卷積神經網絡結構，如 <code class="docutils literal notranslate"><span class="pre">VGG16</span></code> 、 <code class="docutils literal notranslate"><span class="pre">VGG19</span></code> 、 <code class="docutils literal notranslate"><span class="pre">ResNet</span></code> 、 <code class="docutils literal notranslate"><span class="pre">MobileNet</span></code> 等。我們可以直接調用這些經典的卷積神經網絡結構（甚至載入預訓練的參數），而無需手動定義網絡結構。</p>
 <p>例如，我們可以使用以下代碼來實例化一個 <code class="docutils literal notranslate"><span class="pre">MobileNetV2</span></code> 網絡結構：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">MobileNetV2</span><span class="p">()</span>
@@ -661,7 +661,7 @@
 </div>
 <p>進行設置，也可以在調用模型時通過將 <code class="docutils literal notranslate"><span class="pre">training</span></code> 參數設爲 <code class="docutils literal notranslate"><span class="pre">True</span></code> 來設置。</p>
 </div>
-<p>以下展示一個例子，使用 <code class="docutils literal notranslate"><span class="pre">MobileNetV2</span></code> 網絡在 <code class="docutils literal notranslate"><span class="pre">tf_flowers</span></code> 五分類數據集上進行訓練（爲了代碼的簡短高效，在該示例中我們使用了 <a class="reference internal" href="../appendix/tfds.html"><span class="doc">TensorFlow Datasets</span></a> 和 <a class="reference internal" href="tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 載入和預處理數據）。同時將 <code class="docutils literal notranslate"><span class="pre">classes</span></code> 設置爲5，對應於5分類的數據集。</p>
+<p>以下展示一個例子，使用 <code class="docutils literal notranslate"><span class="pre">MobileNetV2</span></code> 網絡在 <code class="docutils literal notranslate"><span class="pre">tf_flowers</span></code> 五分類數據集上進行訓練（爲了代碼的簡短高效，在該示例中我們使用了 <a class="reference internal" href="../appendix/tfds.html"><span class="doc">TensorFlow Datasets</span></a> 和 <a class="reference internal" href="tools.html#zh-hant-tfdata"><span class="std std-ref">tf.data</span></a> 載入和預處理數據）。同時將 <code class="docutils literal notranslate"><span class="pre">classes</span></code> 設置爲5，對應於5分類的數據集。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
 
@@ -689,7 +689,7 @@
 <div class="admonition- admonition">
 <p class="admonition-title">卷積層和池化層的工作原理</p>
 <p>卷積層（Convolutional Layer，以 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Conv2D</span></code> 爲代表）是 CNN 的核心組件，其結構與大腦的視覺皮層有類似之處。</p>
-<p>回憶我們之前建立的 <a class="reference internal" href="#neuron"><span class="std std-ref">神經細胞的計算模型</span></a> 以及全連接層，我們默認每個神經元與上一層的所有神經元相連。不過，在視覺皮層的神經元中，情況並不是這樣。你或許在生物課上學習過 <strong>感受野</strong> （Receptive Field）這一概念，即視覺皮層中的神經元並非與前一層的所有神經元相連，而只是感受一片區域內的視覺信號，並只對局部區域的視覺刺激進行反應。CNN 中的卷積層正體現了這一特性。</p>
+<p>回憶我們之前建立的 <a class="reference internal" href="#zh-hant-neuron"><span class="std std-ref">神經細胞的計算模型</span></a> 以及全連接層，我們默認每個神經元與上一層的所有神經元相連。不過，在視覺皮層的神經元中，情況並不是這樣。你或許在生物課上學習過 <strong>感受野</strong> （Receptive Field）這一概念，即視覺皮層中的神經元並非與前一層的所有神經元相連，而只是感受一片區域內的視覺信號，並只對局部區域的視覺刺激進行反應。CNN 中的卷積層正體現了這一特性。</p>
 <p>例如，下圖是一個 7×7 的單通道圖片信號輸入：</p>
 <div class="figure align-center">
 <img alt="../../_images/conv_image.png" src="../../_images/conv_image.png" />
@@ -701,9 +701,9 @@
 </div>
 <p>圖中 3×3 的紅框代表該神經元的感受野。由此，我們只需 3×3=9 個權值 <img class="math" src="../../_images/math/bee58dc59fed173d1b6f8651b4b48d2f48cf8273.png" alt="W = \begin{bmatrix}w_{1, 1} &amp; w_{1, 2} &amp; w_{1, 3} \\w_{2, 1} &amp; w_{2, 2} &amp; w_{2, 3} \\w_{3, 1} &amp; w_{3, 2} &amp; w_{3, 3}\end{bmatrix}"/>  ，外加1個偏置項 <img class="math" src="../../_images/math/3de2ed824326dc0eb383a42dd6ec44d3b401047b.png" alt="b"/>  ，即可得到一個輸出信號。例如，對於紅框所示的位置，輸出信號即爲對矩陣 <img class="math" src="../../_images/math/a6bd64f44fe6aba75c5cf32b1122839630deeac4.png" alt="\begin{bmatrix}0 \times w_{1, 1} &amp; 0 \times w_{1, 2} &amp; 0 \times w_{1, 3} \\0 \times w_{2, 1} &amp; 1 \times w_{2, 2} &amp; 0 \times w_{2, 3} \\0 \times w_{3, 1} &amp; 0 \times w_{3, 2} &amp; 2 \times w_{3, 3}\end{bmatrix}"/> 的所有元素求和並加上偏置項 <img class="math" src="../../_images/math/3de2ed824326dc0eb383a42dd6ec44d3b401047b.png" alt="b"/>，記作 <img class="math" src="../../_images/math/da3be5884aa8c28078557f8095fb652851c1f54c.png" alt="a_{1, 1}"/>  。</p>
 <p>不過，3×3 的範圍顯然不足以處理整個圖像，因此我們使用滑動窗口的方法。使用相同的參數 <img class="math" src="../../_images/math/eb33eca75f5d77363c991bf041953da54a858bfb.png" alt="W"/> ，但將紅框在圖像中從左到右滑動，進行逐行掃描，每滑動到一個位置就計算一個值。例如，當紅框向右移動一個單位時，我們計算矩陣 <img class="math" src="../../_images/math/7b13de07ea927ebc0506bbad56c31fe76959bb69.png" alt="\begin{bmatrix}0 \times w_{1, 1} &amp; 0 \times w_{1, 2} &amp; 0 \times w_{1, 3} \\1 \times w_{2, 1} &amp; 0 \times w_{2, 2} &amp; 1 \times w_{2, 3} \\0 \times w_{3, 1} &amp; 2 \times w_{3, 2} &amp; 1 \times w_{3, 3}\end{bmatrix}"/> 的所有元素的和加上偏置項 <img class="math" src="../../_images/math/3de2ed824326dc0eb383a42dd6ec44d3b401047b.png" alt="b"/>，記作 <img class="math" src="../../_images/math/396ef03019e9f0bb2c3c7d1cafc1101248eef70a.png" alt="a_{1, 2}"/> 。由此，和一般的神經元只能輸出 1 個值不同，這裡的卷積層神經元可以輸出一個 5×5 的矩陣 <img class="math" src="../../_images/math/a402f89ed5d1adab75c2ae66287ea2697ef01e0f.png" alt="A = \begin{bmatrix}a_{1, 1} &amp; \cdots &amp; a_{1, 5} \\ \vdots &amp; &amp; \vdots \\ a_{5, 1} &amp; \cdots &amp; a_{5, 5}\end{bmatrix}"/>  。</p>
-<div class="figure align-center" id="id34">
+<div class="figure align-center" id="id33">
 <img alt="../../_images/conv_procedure.png" src="../../_images/conv_procedure.png" />
-<p class="caption"><span class="caption-text">卷積示意圖。一個單通道的 7×7 圖像在通過一個感受野爲 3×3 ，參數爲10個的卷積層神經元後，得到 5×5 的矩陣作爲卷積結果。</span><a class="headerlink" href="#id34" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">卷積示意圖。一個單通道的 7×7 圖像在通過一個感受野爲 3×3 ，參數爲10個的卷積層神經元後，得到 5×5 的矩陣作爲卷積結果。</span><a class="headerlink" href="#id33" title="永久链接至图片">¶</a></p>
 </div>
 <p>下面，我們使用TensorFlow來驗證一下上圖的計算結果。</p>
 <p>將上圖中的輸入圖像、權值矩陣 <img class="math" src="../../_images/math/eb33eca75f5d77363c991bf041953da54a858bfb.png" alt="W"/> 和偏置項 <img class="math" src="../../_images/math/3de2ed824326dc0eb383a42dd6ec44d3b401047b.png" alt="b"/> 表示爲NumPy數組 <code class="docutils literal notranslate"><span class="pre">image</span></code> , <code class="docutils literal notranslate"><span class="pre">W</span></code> , <code class="docutils literal notranslate"><span class="pre">b</span></code> 如下：</p>
@@ -727,7 +727,7 @@
 <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>然後建立一個僅有一個卷積層的模型，用 <code class="docutils literal notranslate"><span class="pre">W</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 初始化 <a class="footnote-reference brackets" href="#sequential" id="id18">4</a> ：</p>
+<p>然後建立一個僅有一個卷積層的模型，用 <code class="docutils literal notranslate"><span class="pre">W</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 初始化 <a class="footnote-reference brackets" href="#sequential" id="id17">4</a> ：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
     <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span><span class="p">(</span>
         <span class="n">filters</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>              <span class="c1"># 卷积层神经元（卷积核）数目</span>
@@ -759,8 +759,8 @@
 <p>事實上，卷積的形式多種多樣，以上的介紹只是其中最簡單和基礎的一種。更多卷積方式的示例可見 <a class="reference external" href="https://github.com/vdumoulin/conv_arithmetic">Convolution arithmetic</a> 。</p>
 <p>池化層（Pooling Layer）的理解則簡單得多，其可以理解爲對圖像進行降採樣的過程，對於每一次滑動窗口中的所有值，輸出其中的最大值（MaxPooling）、均值或其他方法產生的值。例如，對於一個三通道的 16×16 圖像（即一個 <code class="docutils literal notranslate"><span class="pre">16*16*3</span></code> 的張量），經過感受野爲 2×2，滑動步長爲 2 的池化層，則得到一個 <code class="docutils literal notranslate"><span class="pre">8*8*3</span></code> 的張量。</p>
 <dl class="footnote brackets">
-<dt class="label" id="sequential"><span class="brackets"><a class="fn-backref" href="#id18">4</a></span></dt>
-<dd><p>這裡使用了較爲簡易的Sequential模式建立模型，具體介紹見 <a class="reference internal" href="#sequential-functional"><span class="std std-ref">後文</span></a>  。</p>
+<dt class="label" id="sequential"><span class="brackets"><a class="fn-backref" href="#id17">4</a></span></dt>
+<dd><p>這裡使用了較爲簡易的Sequential模式建立模型，具體介紹見 <a class="reference internal" href="#zh-hant-sequential-functional"><span class="std std-ref">後文</span></a>  。</p>
 </dd>
 </dl>
 </div>
@@ -779,10 +779,10 @@
 <li><p>《動手學深度學習》 的 <a class="reference external" href="https://zh.d2l.ai/chapter_recurrent-neural-networks/index.html">「循環神經網絡」一章</a> 。</p></li>
 </ul>
 </li>
-<li><p>RNN 序列生成：<a class="reference internal" href="#graves2013" id="id20"><span>[Graves2013]</span></a></p></li>
+<li><p>RNN 序列生成：<a class="reference internal" href="#graves2013" id="id19"><span>[Graves2013]</span></a></p></li>
 </ul>
 </div>
-<p>這裡，我們使用 RNN 來進行尼採風格文本的自動生成。 <a class="footnote-reference brackets" href="#rnn-reference" id="id21">5</a></p>
+<p>這裡，我們使用 RNN 來進行尼採風格文本的自動生成。 <a class="footnote-reference brackets" href="#rnn-reference" id="id20">5</a></p>
 <p>這個任務的本質其實預測一段英文文本的接續字母的概率分布。比如，我們有以下句子:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">I</span> <span class="n">am</span> <span class="n">a</span> <span class="n">studen</span>
 </pre></div>
@@ -811,13 +811,13 @@
 </pre></div>
 </div>
 <p>接下來進行模型的實現。在 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 方法中我們實例化一個常用的 <code class="docutils literal notranslate"><span class="pre">LSTMCell</span></code> 單元，以及一個線性變換用的全連接層，我們首先對序列進行「One Hot」操作，即將序列中的每個字符的編碼 i 均變換爲一個 <code class="docutils literal notranslate"><span class="pre">num_char</span></code> 維向量，其第 i 位爲 1，其餘均爲 0。變換後的序列張量形狀爲 <code class="docutils literal notranslate"><span class="pre">[seq_length,</span> <span class="pre">num_chars]</span></code> 。然後，我們初始化 RNN 單元的狀態，存入變量 <code class="docutils literal notranslate"><span class="pre">state</span></code> 中。接下來，將序列從頭到尾依次送入 RNN 單元，即在 t 時刻，將上一個時刻 t-1 的 RNN 單元狀態 <code class="docutils literal notranslate"><span class="pre">state</span></code> 和序列的第 t 個元素 <code class="docutils literal notranslate"><span class="pre">inputs[t,</span> <span class="pre">:]</span></code> 送入 RNN 單元，得到當前時刻的輸出 <code class="docutils literal notranslate"><span class="pre">output</span></code> 和 RNN 單元狀態。取 RNN 單元最後一次的輸出，通過全連接層變換到 <code class="docutils literal notranslate"><span class="pre">num_chars</span></code> 維，即作爲模型的輸出。</p>
-<div class="figure align-center" id="id35">
+<div class="figure align-center" id="id34">
 <a class="reference internal image-reference" href="../../_images/rnn_single.jpg"><img alt="../../_images/rnn_single.jpg" src="../../_images/rnn_single.jpg" style="width: 50%;" /></a>
-<p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">output,</span> <span class="pre">state</span> <span class="pre">=</span> <span class="pre">self.cell(inputs[:,</span> <span class="pre">t,</span> <span class="pre">:],</span> <span class="pre">state)</span></code> 圖示</span><a class="headerlink" href="#id35" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">output,</span> <span class="pre">state</span> <span class="pre">=</span> <span class="pre">self.cell(inputs[:,</span> <span class="pre">t,</span> <span class="pre">:],</span> <span class="pre">state)</span></code> 圖示</span><a class="headerlink" href="#id34" title="永久链接至图片">¶</a></p>
 </div>
-<div class="figure align-center" id="id36">
+<div class="figure align-center" id="id35">
 <a class="reference internal image-reference" href="../../_images/rnn.jpg"><img alt="../../_images/rnn.jpg" src="../../_images/rnn.jpg" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">RNN 流程圖示</span><a class="headerlink" href="#id36" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">RNN 流程圖示</span><a class="headerlink" href="#id35" title="永久链接至图片">¶</a></p>
 </div>
 <p>具體實現如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RNN</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
@@ -916,7 +916,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </pre></div>
 </div>
 <dl class="footnote brackets">
-<dt class="label" id="rnn-reference"><span class="brackets"><a class="fn-backref" href="#id21">5</a></span></dt>
+<dt class="label" id="rnn-reference"><span class="brackets"><a class="fn-backref" href="#id20">5</a></span></dt>
 <dd><p>此處的任務及實現參考了 <a class="reference external" href="https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py">https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py</a></p>
 </dd>
 </dl>
@@ -930,25 +930,25 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <li><p>將上述得到的兩個向量相加並通過激活函數，作爲當前狀態 <img class="math" src="../../_images/math/aef454ab9a36bb7c18fa5c3ba6a5b1523c56ddd5.png" alt="s_t"/> 的值，即 <img class="math" src="../../_images/math/0c01ef2b58de660764f869ab39361569ccd789eb.png" alt="s_t = f(U x_t + W s_{t-1})"/>。也就是說，當前狀態的值是上一個狀態的值和當前輸入進行某種信息整合而產生的；</p></li>
 <li><p>對當前狀態 <img class="math" src="../../_images/math/aef454ab9a36bb7c18fa5c3ba6a5b1523c56ddd5.png" alt="s_t"/> 通過矩陣 <img class="math" src="../../_images/math/48d9710a8a12a6209e54e4d872252e9403e78683.png" alt="V"/> 進行線性變換，得到當前時刻的輸出 <img class="math" src="../../_images/math/1dcf8af77e86ef764397a8f107aa550c617351c4.png" alt="o_t"/>。</p></li>
 </ul>
-<div class="figure align-center" id="id37">
+<div class="figure align-center" id="id36">
 <img alt="../../_images/rnn_cell.jpg" src="../../_images/rnn_cell.jpg" />
-<p class="caption"><span class="caption-text">RNN 工作過程圖示（來自 <a class="reference external" href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/</a>）</span><a class="headerlink" href="#id37" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">RNN 工作過程圖示（來自 <a class="reference external" href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/</a>）</span><a class="headerlink" href="#id36" title="永久链接至图片">¶</a></p>
 </div>
 <p>我們假設輸入向量 <img class="math" src="../../_images/math/80e7212143003eaa2efb31fc9c7aa8f016c3a3dd.png" alt="x_t"/> 、狀態 <img class="math" src="../../_images/math/bafbf63de17508c8c25cd882e0178342c193ae0c.png" alt="s"/> 和輸出向量 <img class="math" src="../../_images/math/1dcf8af77e86ef764397a8f107aa550c617351c4.png" alt="o_t"/> 的維度分別爲 <img class="math" src="../../_images/math/4b59fb8246fb77698911d761c596ef6066458b4c.png" alt="m"/>、<img class="math" src="../../_images/math/1005bf222658283b2edeaaaed3761ce5d5bb3e6c.png" alt="n"/>、<img class="math" src="../../_images/math/8f788889a02d716315011e6c07d3b81cc1cfc419.png" alt="p"/>，則 <img class="math" src="../../_images/math/190195050cecc54ea0ac8083ae0aa6df0b02cf51.png" alt="U \in \mathbb{R}^{m \times n}"/>、<img class="math" src="../../_images/math/c71f85f8dbe403bd5b3d62f4b6f5d5f4544eb8f3.png" alt="W \in \mathbb{R}^{n \times n}"/>、<img class="math" src="../../_images/math/1c78f0e6e369155ac8d9d7f2092f6617dee6c494.png" alt="V \in \mathbb{R}^{n \times p}"/>。</p>
 <p>上述爲最基礎的 RNN 原理介紹。在實際使用時往往使用一些常見的改進型，如LSTM（長短期記憶神經網絡，解決了長序列的梯度消失問題，適用於較長的序列）、GRU等。</p>
 </div>
 </div>
 <div class="section" id="drl">
-<span id="rl"></span><h2>深度強化學習（DRL）<a class="headerlink" href="#drl" title="永久链接至标题">¶</a></h2>
+<span id="zh-hant-rl"></span><h2>深度強化學習（DRL）<a class="headerlink" href="#drl" title="永久链接至标题">¶</a></h2>
 <p><a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0">強化學習</a> （Reinforcement learning，RL）強調如何基於環境而行動，以取得最大化的預期利益。結合了深度學習技術後的強化學習（Deep Reinforcement learning，DRL）更是如虎添翼。近年廣爲人知的 AlphaGo 即是深度強化學習的典型應用。</p>
 <div class="admonition note">
 <p class="admonition-title">注解</p>
 <p>可參考本手冊附錄的 <a class="reference internal" href="../appendix/rl.html"><span class="doc">強化學習簡介</span></a> 一章以獲得強化學習的基礎知識。</p>
 </div>
 <p>這裡，我們使用深度強化學習玩 CartPole（倒立擺）遊戲。倒立擺是控制論中的經典問題，在這個遊戲中，一根杆的底部與一個小車通過軸相連，而杆的重心在軸之上，因此是一個不穩定的系統。在重力的作用下，杆很容易倒下。而我們則需要控制小車在水平的軌道上進行左右運動，以使得杆一直保持豎直平衡狀態。</p>
-<div class="figure align-center" id="id38">
+<div class="figure align-center" id="id37">
 <a class="reference internal image-reference" href="../../_images/cartpole.gif"><img alt="../../_images/cartpole.gif" src="../../_images/cartpole.gif" style="width: 500px;" /></a>
-<p class="caption"><span class="caption-text">CartPole 遊戲</span><a class="headerlink" href="#id38" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">CartPole 遊戲</span><a class="headerlink" href="#id37" title="永久链接至图片">¶</a></p>
 </div>
 <p>我們使用 <a class="reference external" href="https://gym.openai.com/">OpenAI 推出的 Gym 環境庫</a> 中的 CartPole 遊戲環境，可使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">gym</span></code> 進行安裝，具體安裝步驟和教程可參考 <a class="reference external" href="https://gym.openai.com/docs/">官方文檔</a> 和 <a class="reference external" href="https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-4-gym/">這裡</a> 。和Gym的交互過程很像是一個回合制遊戲，我們首先獲得遊戲的初始狀態（比如杆的初始角度和小車位置），然後在每個回合t，我們都需要在當前可行的動作中選擇一個並交由Gym執行（比如向左或者向右推動小車，每個回合中二者只能擇一），Gym在執行動作後，會返回動作執行後的下一個狀態和當前回合所獲得的獎勵值（比如我們選擇向左推動小車並執行後，小車位置更加偏左，而杆的角度更加偏右，Gym將新的角度和位置返回給我們。而如果杆在這一回合仍沒有倒下，Gym同時返回給我們一個小的正獎勵）。這個過程可以一直疊代下去，直到遊戲終止（比如杆倒下了）。在 Python 中，Gym 的基本調用方法如下：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gym</span>
@@ -964,9 +964,94 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </pre></div>
 </div>
 <p>那麼，我們的任務就是訓練出一個模型，能夠根據當前的狀態預測出應該進行的一個好的動作。粗略地說，一個好的動作應當能夠最大化整個遊戲過程中獲得的獎勵之和，這也是強化學習的目標。以CartPole遊戲爲例，我們的目標是希望做出合適的動作使得杆一直不倒，即遊戲交互的回合數儘可能地多。而回合每進行一次，我們都會獲得一個小的正獎勵，回合數越多則累積的獎勵值也越高。因此，我們最大化遊戲過程中的獎勵之和與我們的最終目標是一致的。</p>
-<p>以下代碼展示了如何使用深度強化學習中的 Deep Q-Learning 方法 <a class="reference internal" href="#mnih2013" id="id25"><span>[Mnih2013]</span></a> 來訓練模型。首先，我們引入TensorFlow、Gym和一些常用庫，並定義一些模型超參數：</p>
+<p>以下代碼展示了如何使用深度強化學習中的 Deep Q-Learning 方法 <a class="reference internal" href="#mnih2013" id="id24"><span>[Mnih2013]</span></a> 來訓練模型。首先，我們引入TensorFlow、Gym和一些常用庫，並定義一些模型超參數：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">gym</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">deque</span>
+
+<span class="n">num_episodes</span> <span class="o">=</span> <span class="mi">500</span>              <span class="c1"># 游戏训练的总episode数量</span>
+<span class="n">num_exploration_episodes</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># 探索过程所占的episode数量</span>
+<span class="n">max_len_episode</span> <span class="o">=</span> <span class="mi">1000</span>          <span class="c1"># 每个episode的最大回合数</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">32</span>                 <span class="c1"># 批次大小</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">1e-3</span>            <span class="c1"># 学习率</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mf">1.</span>                      <span class="c1"># 折扣因子</span>
+<span class="n">initial_epsilon</span> <span class="o">=</span> <span class="mf">1.</span>            <span class="c1"># 探索起始时的探索率</span>
+<span class="n">final_epsilon</span> <span class="o">=</span> <span class="mf">0.01</span>            <span class="c1"># 探索终止时的探索率</span>
+</pre></div>
+</div>
 <p>然後，我們使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 建立一個Q函數網絡（Q-network），用於擬合Q Learning中的Q函數。這裡我們使用較簡單的多層全連接神經網絡進行擬合。該網絡輸入當前狀態，輸出各個動作下的Q-value（CartPole下爲2維，即向左和向右推動小車）。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">QNetwork</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense3</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
+        <span class="n">q_values</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">q_values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>最後，我們在主程序中實現Q Learning算法。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;CartPole-v1&#39;</span><span class="p">)</span>       <span class="c1"># 实例化一个游戏环境，参数为游戏名称</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">QNetwork</span><span class="p">()</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
+    <span class="n">replay_buffer</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="n">maxlen</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span> <span class="c1"># 使用一个 deque 作为 Q Learning 的经验回放池</span>
+    <span class="n">epsilon</span> <span class="o">=</span> <span class="n">initial_epsilon</span>
+    <span class="k">for</span> <span class="n">episode_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_episodes</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>             <span class="c1"># 初始化环境，获得初始状态</span>
+        <span class="n">epsilon</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>                  <span class="c1"># 计算当前探索率</span>
+            <span class="n">initial_epsilon</span> <span class="o">*</span> <span class="p">(</span><span class="n">num_exploration_episodes</span> <span class="o">-</span> <span class="n">episode_id</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_exploration_episodes</span><span class="p">,</span>
+            <span class="n">final_epsilon</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_len_episode</span><span class="p">):</span>
+            <span class="n">env</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>                                <span class="c1"># 对当前帧进行渲染，绘图到屏幕</span>
+            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">:</span>               <span class="c1"># epsilon-greedy 探索策略，以 epsilon 的概率选择随机动作</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">action_space</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>      <span class="c1"># 选择随机动作（探索）</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>   <span class="c1"># 选择模型计算出的 Q Value 最大的动作</span>
+                <span class="n">action</span> <span class="o">=</span> <span class="n">action</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1"># 让环境执行动作，获得执行完动作的下一个状态，动作的奖励，游戏是否已结束以及额外信息</span>
+            <span class="n">next_state</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">done</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+            <span class="c1"># 如果游戏Game Over，给予大的负奖励</span>
+            <span class="n">reward</span> <span class="o">=</span> <span class="o">-</span><span class="mf">10.</span> <span class="k">if</span> <span class="n">done</span> <span class="k">else</span> <span class="n">reward</span>
+            <span class="c1"># 将(state, action, reward, next_state)的四元组（外加 done 标签表示是否结束）放入经验回放池</span>
+            <span class="n">replay_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">done</span> <span class="k">else</span> <span class="mi">0</span><span class="p">))</span>
+            <span class="c1"># 更新当前 state</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">next_state</span>
+
+            <span class="k">if</span> <span class="n">done</span><span class="p">:</span>                                    <span class="c1"># 游戏结束则退出本轮循环，进行下一个 episode</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;episode </span><span class="si">%d</span><span class="s2">, epsilon </span><span class="si">%f</span><span class="s2">, score </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">episode_id</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">t</span><span class="p">))</span>
+                <span class="k">break</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">replay_buffer</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">batch_size</span><span class="p">:</span>
+                <span class="c1"># 从经验回放池中随机取一个批次的四元组，并分别转换为 NumPy 数组</span>
+                <span class="n">batch_state</span><span class="p">,</span> <span class="n">batch_action</span><span class="p">,</span> <span class="n">batch_reward</span><span class="p">,</span> <span class="n">batch_next_state</span><span class="p">,</span> <span class="n">batch_done</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span>
+                    <span class="o">*</span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">replay_buffer</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">))</span>
+                <span class="n">batch_state</span><span class="p">,</span> <span class="n">batch_reward</span><span class="p">,</span> <span class="n">batch_next_state</span><span class="p">,</span> <span class="n">batch_done</span> <span class="o">=</span> \
+                    <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="p">[</span><span class="n">batch_state</span><span class="p">,</span> <span class="n">batch_reward</span><span class="p">,</span> <span class="n">batch_next_state</span><span class="p">,</span> <span class="n">batch_done</span><span class="p">]]</span>
+                <span class="n">batch_action</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">batch_action</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+
+                <span class="n">q_value</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">batch_next_state</span><span class="p">)</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">batch_reward</span> <span class="o">+</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_max</span><span class="p">(</span><span class="n">q_value</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">batch_done</span><span class="p">)</span>  <span class="c1"># 计算 y 值</span>
+                <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
+                    <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">mean_squared_error</span><span class="p">(</span>  <span class="c1"># 最小化 y 和 Q-value 的距离</span>
+                        <span class="n">y_true</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+                        <span class="n">y_pred</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">batch_state</span><span class="p">)</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">batch_action</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+                <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">))</span>       <span class="c1"># 计算梯度并更新参数</span>
+</pre></div>
+</div>
 <p>對於不同的任務（或者說環境），我們需要根據任務的特點，設計不同的狀態以及採取合適的網絡來擬合 Q 函數。例如，如果我們考慮經典的打磚塊遊戲（Gym 環境庫中的  <a class="reference external" href="https://gym.openai.com/envs/Breakout-v0/">Breakout-v0</a> ），每一次執行動作（擋板向左、向右或不動），都會返回一個 <code class="docutils literal notranslate"><span class="pre">210</span> <span class="pre">*</span> <span class="pre">160</span> <span class="pre">*</span> <span class="pre">3</span></code> 的 RGB 圖片，表示當前屏幕畫面。爲了給打磚塊遊戲這個任務設計合適的狀態表示，我們有以下分析：</p>
 <ul class="simple">
 <li><p>磚塊的顏色信息並不是很重要，畫面轉換成灰度也不影響操作，因此可以去除狀態中的顏色信息（即將圖片轉爲灰度表示）；</p></li>
@@ -979,7 +1064,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <h2>Keras Pipeline *<a class="headerlink" href="#keras-pipeline" title="永久链接至标题">¶</a></h2>
 <p>以上示例均使用了 Keras 的 Subclassing API 建立模型，即對 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 類進行擴展以定義自己的新模型，同時手工編寫了訓練和評估模型的流程。這種方式靈活度高，且與其他流行的深度學習框架（如 PyTorch、Chainer）共通，是本手冊所推薦的方法。不過在很多時候，我們只需要建立一個結構相對簡單和典型的神經網絡（比如上文中的 MLP 和 CNN），並使用常規的手段進行訓練。這時，Keras 也給我們提供了另一套更爲簡單高效的內置方法來建立、訓練和評估模型。</p>
 <div class="section" id="keras-sequential-functional-api">
-<span id="sequential-functional"></span><h3>Keras Sequential/Functional API 模式建立模型<a class="headerlink" href="#keras-sequential-functional-api" title="永久链接至标题">¶</a></h3>
+<span id="zh-hant-sequential-functional"></span><h3>Keras Sequential/Functional API 模式建立模型<a class="headerlink" href="#keras-sequential-functional-api" title="永久链接至标题">¶</a></h3>
 <p>最典型和常用的神經網絡結構是將一堆層按特定順序疊加起來，那麼，我們是不是只需要提供一個層的列表，就能由 Keras 將它們自動首尾相連，形成模型呢？Keras 的 Sequential API 正是如此。通過向 <code class="docutils literal notranslate"><span class="pre">tf.keras.models.Sequential()</span></code> 提供一個層的列表，就能快速地建立一個 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 模型並返回：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
             <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Flatten</span><span class="p">(),</span>
@@ -1031,18 +1116,18 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <li><p><code class="docutils literal notranslate"><span class="pre">validation_data</span></code> ：驗證數據，可用於在訓練過程中監控模型的性能。</p></li>
 </ul>
 </div></blockquote>
-<p>Keras 支持使用 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 進行訓練，詳見 <a class="reference internal" href="tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 。</p>
+<p>Keras 支持使用 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 進行訓練，詳見 <a class="reference internal" href="tools.html#zh-hant-tfdata"><span class="std std-ref">tf.data</span></a> 。</p>
 <p>最後，使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model.evaluate</span></code> 評估訓練效果，提供測試數據及標籤即可：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">,</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">test_label</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="id26">
-<h2>自定義層、損失函數和評估指標 *<a class="headerlink" href="#id26" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id25">
+<h2>自定義層、損失函數和評估指標 *<a class="headerlink" href="#id25" title="永久链接至标题">¶</a></h2>
 <p>可能你還會問，如果現有的這些層無法滿足我的要求，我需要定義自己的層怎麼辦？事實上，我們不僅可以繼承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 編寫自己的模型類，也可以繼承 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 編寫自己的層。</p>
-<div class="section" id="custom-layer">
-<span id="id27"></span><h3>自定義層<a class="headerlink" href="#custom-layer" title="永久链接至标题">¶</a></h3>
+<div class="section" id="zh-hant-custom-layer">
+<span id="id26"></span><h3>自定義層<a class="headerlink" href="#zh-hant-custom-layer" title="永久链接至标题">¶</a></h3>
 <p>自定義層需要繼承 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 類，並重寫 <code class="docutils literal notranslate"><span class="pre">__init__</span></code> 、 <code class="docutils literal notranslate"><span class="pre">build</span></code> 和 <code class="docutils literal notranslate"><span class="pre">call</span></code> 三個方法，如下所示：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyLayer</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1061,7 +1146,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
         <span class="k">return</span> <span class="n">output</span>
 </pre></div>
 </div>
-<p>例如，如果我們要自己實現一個 <a class="reference internal" href="#linear"><span class="std std-ref">本章第一節</span></a> 中的全連接層（ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），可以按如下方式編寫。此代碼在 <code class="docutils literal notranslate"><span class="pre">build</span></code> 方法中創建兩個變量，並在 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法中使用創建的變量進行運算：</p>
+<p>例如，如果我們要自己實現一個 <a class="reference internal" href="#zh-hant-linear"><span class="std std-ref">本章第一節</span></a> 中的全連接層（ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），可以按如下方式編寫。此代碼在 <code class="docutils literal notranslate"><span class="pre">build</span></code> 方法中創建兩個變量，並在 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法中使用創建的變量進行運算：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LinearLayer</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">units</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -1090,8 +1175,8 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </pre></div>
 </div>
 </div>
-<div class="section" id="id28">
-<h3>自定義損失函數和評估指標<a class="headerlink" href="#id28" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id27">
+<h3>自定義損失函數和評估指標<a class="headerlink" href="#id27" title="永久链接至标题">¶</a></h3>
 <p>自定義損失函數需要繼承 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses.Loss</span></code> 類，重寫 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法即可，輸入真實值 <code class="docutils literal notranslate"><span class="pre">y_true</span></code> 和模型預測值 <code class="docutils literal notranslate"><span class="pre">y_pred</span></code> ，輸出模型預測值和真實值之間通過自定義的損失函數計算出的損失值。下面的示例爲均方差損失函數：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MeanSquaredError</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">Loss</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
@@ -1115,15 +1200,15 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </pre></div>
 </div>
 <dl class="citation">
-<dt class="label" id="lecun1998"><span class="brackets"><a class="fn-backref" href="#id7">LeCun1998</a></span></dt>
+<dt class="label" id="lecun1998"><span class="brackets"><a class="fn-backref" href="#id6">LeCun1998</a></span></dt>
 <dd><ol class="upperalpha simple" start="25">
 <li><p>LeCun, L. Bottou, Y. Bengio, and P. Haffner. “Gradient-based learning applied to document recognition.” Proceedings of the IEEE, 86(11):2278-2324, November 1998. <a class="reference external" href="http://yann.lecun.com/exdb/mnist/">http://yann.lecun.com/exdb/mnist/</a></p></li>
 </ol>
 </dd>
-<dt class="label" id="graves2013"><span class="brackets"><a class="fn-backref" href="#id20">Graves2013</a></span></dt>
+<dt class="label" id="graves2013"><span class="brackets"><a class="fn-backref" href="#id19">Graves2013</a></span></dt>
 <dd><p>Graves, Alex. 「Generating Sequences With Recurrent Neural Networks.」 ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.</p>
 </dd>
-<dt class="label" id="mnih2013"><span class="brackets"><a class="fn-backref" href="#id25">Mnih2013</a></span></dt>
+<dt class="label" id="mnih2013"><span class="brackets"><a class="fn-backref" href="#id24">Mnih2013</a></span></dt>
 <dd><p>Mnih, Volodymyr, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. 「Playing Atari with Deep Reinforcement Learning.」 ArXiv:1312.5602 [Cs], December 19, 2013. http://arxiv.org/abs/1312.5602.</p>
 </dd>
 </dl>

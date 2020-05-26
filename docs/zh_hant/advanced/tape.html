@@ -272,7 +272,7 @@
             
   <div class="section" id="tf-gradienttape">
 <h1><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 詳解<a class="headerlink" href="#tf-gradienttape" title="永久链接至标题">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的出現是 TensorFlow 2 最大的變化之一。其以一種簡潔優雅的方式，爲 TensorFlow 的即時執行模式和圖執行模式提供了統一的自動求導 API。不過對於從 TensorFlow 1.X 過渡到 TensorFlow 2 的開發人員而言，也增加了一定的學習門檻。本章即在 <a class="reference internal" href="../basic/basic.html#automatic-derivation"><span class="std std-ref">第一章「自動求導機制」一節</span></a> 的基礎上，詳細介紹 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的使用方法及機制。</p>
+<p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的出現是 TensorFlow 2 最大的變化之一。其以一種簡潔優雅的方式，爲 TensorFlow 的即時執行模式和圖執行模式提供了統一的自動求導 API。不過對於從 TensorFlow 1.X 過渡到 TensorFlow 2 的開發人員而言，也增加了一定的學習門檻。本章即在 <a class="reference internal" href="../basic/basic.html#zh-hant-automatic-derivation"><span class="std std-ref">第一章「自動求導機制」一節</span></a> 的基礎上，詳細介紹 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的使用方法及機制。</p>
 <div class="section" id="id1">
 <h2>基本使用<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 是一個記錄器，能夠記錄在其上下文環境中的計算步驟和操作，並用於自動求導。其使用方法分爲兩步：</p>
@@ -280,7 +280,7 @@
 <li><p>使用 with 語句，將需要求導的計算步驟封裝在 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的上下文中；</p></li>
 <li><p>使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法計算導數。</p></li>
 </ol>
-<p>回顧 <a class="reference internal" href="../basic/basic.html#automatic-derivation"><span class="std std-ref">第一章「自動求導機制」一節</span></a> 所舉的例子，使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 計算函數 <img class="math" src="../../_images/math/2261dfa63cebc11353c25f3b42ab8812925703e7.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/6242bf7ca264a34d82d13f3307438c9bd77b8e15.png" alt="x = 3"/> 時的導數：</p>
+<p>回顧 <a class="reference internal" href="../basic/basic.html#zh-hant-automatic-derivation"><span class="std std-ref">第一章「自動求導機制」一節</span></a> 所舉的例子，使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 計算函數 <img class="math" src="../../_images/math/2261dfa63cebc11353c25f3b42ab8812925703e7.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/6242bf7ca264a34d82d13f3307438c9bd77b8e15.png" alt="x = 3"/> 時的導數：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial_value</span><span class="o">=</span><span class="mf">3.</span><span class="p">)</span>
@@ -362,7 +362,7 @@
 </div>
 <div class="section" id="id5">
 <h2>圖執行模式<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
-<p>在圖執行模式（即使用 <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 封裝計算圖）下也可以使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 。此時，其與 TensorFlow 1.X 中的 <code class="docutils literal notranslate"><span class="pre">tf.gradients</span></code> 基本等同。詳情見 <a class="reference internal" href="static.html#graph-compare"><span class="std std-ref">自動求導機制的計算圖對比 *</span></a> 。</p>
+<p>在圖執行模式（即使用 <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 封裝計算圖）下也可以使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 。此時，其與 TensorFlow 1.X 中的 <code class="docutils literal notranslate"><span class="pre">tf.gradients</span></code> 基本等同。詳情見 <a class="reference internal" href="../../zh/advanced/static.html#graph-compare"><span class="std std-ref">自动求导机制的计算图对比 *</span></a> 。</p>
 </div>
 <div class="section" id="id6">
 <h2>性能優化<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
@@ -381,7 +381,7 @@
 </div>
 <div class="section" id="id7">
 <h2>實例：對神經網絡的各層變量獨立求導<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
-<p>在實際的訓練流程中，我們有時需要對 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 模型的部分變量求導，或者對模型不同部分的變量採取不同的優化策略。此時，我們可以通過模型中各個 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 層的 <code class="docutils literal notranslate"><span class="pre">variables</span></code> 屬性取出層內的部分變量，並對這部分變量單獨應用優化器。以下示例展示了使用一個持久的 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 記錄器，對前節 <a class="reference internal" href="../basic/models.html#mlp"><span class="std std-ref">基礎示例：多層感知機（MLP）</span></a> 中多層感知機的第一層和第二層獨立進行優化的過程。</p>
+<p>在實際的訓練流程中，我們有時需要對 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 模型的部分變量求導，或者對模型不同部分的變量採取不同的優化策略。此時，我們可以通過模型中各個 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 層的 <code class="docutils literal notranslate"><span class="pre">variables</span></code> 屬性取出層內的部分變量，並對這部分變量單獨應用優化器。以下示例展示了使用一個持久的 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 記錄器，對前節 <a class="reference internal" href="../../zh/basic/models.html#mlp"><span class="std std-ref">基础示例：多层感知机（MLP）</span></a> 中多層感知機的第一層和第二層獨立進行優化的過程。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">from</span> <span class="nn">zh.model.mnist.mlp</span> <span class="k">import</span> <span class="n">MLP</span>
 <span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="k">import</span> <span class="n">MNISTLoader</span>

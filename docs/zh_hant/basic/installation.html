@@ -294,7 +294,7 @@
 <div class="section" id="id1">
 <h2>一般安裝步驟<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <ol class="arabic simple">
-<li><p>安裝Python環境。此處建議安裝 <a class="reference external" href="https://www.anaconda.com/">Anaconda</a> 的Python 3.7版本（後文均以此為準），這是一個開源的Python發行版本，提供了一個完整的科學計算環境，包括NumPy、SciPy等常用科學計算庫。當然，你有權選擇自己喜歡的Python環境。Anaconda的安裝包可在 <a class="reference external" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">這裡</a> 獲得。</p></li>
+<li><p>安裝Python環境。此處建議安裝 <a class="reference external" href="https://www.anaconda.com/">Anaconda</a> 的Python 3.7 64位版本（後文均以此為準），這是一個開源的Python發行版本，提供了一個完整的科學計算環境，包括NumPy、SciPy等常用科學計算庫。當然，你有權選擇自己喜歡的Python環境。Anaconda的安裝包可在 <a class="reference external" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">這裡</a> 獲得。</p></li>
 <li><p>使用Anaconda自帶的conda包管理器建立一個Conda虛擬環境，並進入該虛擬環境。在命令行下輸入：</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">tf2</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.7</span>      <span class="c1"># 「tf2」是你建立的conda虛擬環境的名字</span>
@@ -364,7 +364,7 @@
 </div>
 </div>
 <div class="section" id="gputensorflow">
-<span id="gpu-tensorflow"></span><h2>GPU版本TensorFlow安裝指南<a class="headerlink" href="#gputensorflow" title="永久链接至标题">¶</a></h2>
+<span id="zh-hant-gpu-tensorflow"></span><h2>GPU版本TensorFlow安裝指南<a class="headerlink" href="#gputensorflow" title="永久链接至标题">¶</a></h2>
 <p>GPU版本的TensorFlow可以利用NVIDIA GPU強大的計算加速能力，使TensorFlow的運行更爲高效，尤其是可以成倍提升模型訓練的速度。</p>
 <p>在安裝GPU版本的TensorFlow前，你需要具有一塊不太舊的NVIDIA顯卡，以及正確安裝NVIDIA顯卡驅動程序、CUDA Toolkit和cuDNN。</p>
 <div class="section" id="gpu">
@@ -467,7 +467,7 @@ Mon Jun 10 23:19:54 2019
 <p class="admonition-title">小技巧</p>
 <p>如果你是學生並有.edu結尾的郵箱的話，可以在 <a class="reference external" href="http://www.jetbrains.com/student/">這裡</a> 申請PyCharm的免費Professional版本授權。</p>
 </div>
-<p>對於TensorFlow及深度學習的業餘愛好者或者初學者， <a class="reference external" href="https://code.visualstudio.com/">Visual Studio Code</a> 或者一些在線的交互式Python環境（比如免費的 <a class="reference external" href="https://colab.research.google.com/">Google Colab</a> ）也是不錯的選擇。Colab的使用方式可參考 <a class="reference internal" href="../appendix/cloud.html#colab"><span class="std std-ref">附錄</span></a> 。</p>
+<p>對於TensorFlow及深度學習的業餘愛好者或者初學者， <a class="reference external" href="https://code.visualstudio.com/">Visual Studio Code</a> 或者一些在線的交互式Python環境（比如免費的 <a class="reference external" href="https://colab.research.google.com/">Google Colab</a> ）也是不錯的選擇。Colab的使用方式可參考 <a class="reference internal" href="../appendix/cloud.html#zh-hant-colab"><span class="std std-ref">附錄</span></a> 。</p>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>
 <p>如果你使用的是舊版本的 PyCharm ，可能會在安裝 TensorFlow 2 後出現部分代碼自動補全功能喪失的問題。升級到新版的 PyCharm （2019.3及以後版本）即可解決這一問題。</p>
@@ -482,11 +482,11 @@ Mon Jun 10 23:19:54 2019
 <h2>TensorFlow所需的硬體配置 *<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h2>
 <div class="admonition hint">
 <p class="admonition-title">提示</p>
-<p>對於學習而言，TensorFlow的硬體門檻並不高。甚至，藉助 <a class="reference internal" href="../appendix/cloud.html#colab"><span class="std std-ref">免費</span></a> 或 <a class="reference internal" href="../appendix/cloud.html#gcp"><span class="std std-ref">靈活</span></a> 的雲端計算資源，只要你有一台能上網的電腦，就能夠熟練掌握TensorFlow！</p>
+<p>對於學習而言，TensorFlow的硬體門檻並不高。甚至，藉助 <a class="reference internal" href="../appendix/cloud.html#zh-hant-colab"><span class="std std-ref">免費</span></a> 或 <a class="reference internal" href="../appendix/cloud.html#zh-hant-gcp"><span class="std std-ref">靈活</span></a> 的雲端計算資源，只要你有一台能上網的電腦，就能夠熟練掌握TensorFlow！</p>
 </div>
 <p>在很多人的刻板印象中，TensorFlow乃至深度學習是一件非常「吃硬體」的事情，以至於一接觸TensorFlow，第一件事情可能就是想如何升級自己的電腦硬體。不過，TensorFlow所需的硬體配置很大程度是視任務和使用環境而定的：</p>
 <ul class="simple">
-<li><p>對於TensorFlow初學者，無需硬體升級也可以很好地學習和掌握TensorFlow。本手冊中的大部分教學示例，大部分當前主流的個人電腦（即使沒有GPU）均可勝任，無需添置其他硬體設備。對於本手冊中部分計算量較大的示例（例如 <a class="reference internal" href="tools.html#cats-vs-dogs"><span class="std std-ref">在cats_vs_dogs數據集上訓練CNN圖像分類</span></a> ），一塊主流的NVIDIA GPU會大幅加速訓練。如果自己的個人電腦難以勝任，可以考慮在雲端（例如 <a class="reference internal" href="../appendix/cloud.html#colab"><span class="std std-ref">免費的 Colab</span></a> ）進行模型訓練。</p></li>
+<li><p>對於TensorFlow初學者，無需硬體升級也可以很好地學習和掌握TensorFlow。本手冊中的大部分教學示例，大部分當前主流的個人電腦（即使沒有GPU）均可勝任，無需添置其他硬體設備。對於本手冊中部分計算量較大的示例（例如 <a class="reference internal" href="tools.html#zh-hant-cats-vs-dogs"><span class="std std-ref">在cats_vs_dogs數據集上訓練CNN圖像分類</span></a> ），一塊主流的NVIDIA GPU會大幅加速訓練。如果自己的個人電腦難以勝任，可以考慮在雲端（例如 <a class="reference internal" href="../appendix/cloud.html#zh-hant-colab"><span class="std std-ref">免費的 Colab</span></a> ）進行模型訓練。</p></li>
 <li><p>對於參加數據科學競賽（比如Kaggle）或者經常在本機進行訓練的個人愛好者或開發者，一塊高性能的NVIDIA GPU往往是必要的。CUDA核心數和顯存大小是決定顯卡機器學習性能的兩個關鍵參數，前者決定訓練速度，後者決定可以訓練多大的模型以及訓練時的最大Batch Size，對於較大規模的訓練而言尤其敏感。</p></li>
 <li><p>對於前沿的機器學習研究（尤其是計算機視覺和自然語言處理領域），多GPU並行訓練是標準配置。爲了快速疊代實驗結果以及訓練更大規模的模型以提升性能，4卡、8卡或更高的GPU數量是常態。</p></li>
 </ul>

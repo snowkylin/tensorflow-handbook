@@ -27,7 +27,7 @@
         <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
-        <script type="text/javascript" src="../../_static/js/custom_20200506.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200523.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -87,11 +87,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">教学活动</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/mlstudyjam.html">ML Study Jam 2020</a></li>
-</ul>
-<p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
@@ -130,10 +126,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/jupyterlab.html">部署自己的交互式Python开发环境JupyterLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/recommended_books.html">参考资料与推荐阅读</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/appendix/terms.html">术语中英对照表</a></li>
-</ul>
-<p class="caption"><span class="caption-text">教學活動</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../zh_hant/mlstudyjam.html">ML Study Jam 2020</a></li>
 </ul>
 <p class="caption"><span class="caption-text">目錄</span></p>
 <ul>
@@ -280,7 +272,7 @@
             
   <div class="section" id="tensorflow-datasets">
 <h1>TensorFlow Datasets 数据集载入<a class="headerlink" href="#tensorflow-datasets" title="永久链接至标题">¶</a></h1>
-<p><a class="reference external" href="https://www.tensorflow.org/datasets/">TensorFlow Datasets</a> 是一个开箱即用的数据集集合，包含数十种常用的机器学习数据集。通过简单的几行代码即可将数据以 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 的格式载入。关于 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 的使用可参考 <a class="reference internal" href="../../zh_hant/basic/tools.html#tfdata"><span class="std std-ref">tf.data</span></a>。</p>
+<p><a class="reference external" href="https://www.tensorflow.org/datasets/">TensorFlow Datasets</a> 是一个开箱即用的数据集集合，包含数十种常用的机器学习数据集。通过简单的几行代码即可将数据以 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 的格式载入。关于 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 的使用可参考 <a class="reference internal" href="../basic/tools.html#tfdata"><span class="std std-ref">tf.data</span></a>。</p>
 <p>该工具是一个独立的Python包，可以通过:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">-</span><span class="n">datasets</span>
 </pre></div>
@@ -334,7 +326,7 @@ Dataset mnist downloaded and prepared to C:\Users\snowkylin\tensorflow_datasets\
     <span class="c1"># 对images和labels进行操作</span>
 </pre></div>
 </div>
-<p>详细操作说明可见 <a class="reference internal" href="../../zh_hant/basic/tools.html#tfdata"><span class="std std-ref">本手册的 tf.data 一节</span></a> 。同时，本手册的 <a class="reference internal" href="distributed.html"><span class="doc">分布式训练</span></a> 一章也使用了 TensorFlow Datasets 载入数据集。可以参考这些章节的示例代码以进一步了解 TensorFlow Datasets 的使用方法。</p>
+<p>详细操作说明可见 <a class="reference internal" href="../basic/tools.html#tfdata"><span class="std std-ref">本手册的 tf.data 一节</span></a> 。同时，本手册的 <a class="reference internal" href="distributed.html"><span class="doc">分布式训练</span></a> 一章也使用了 TensorFlow Datasets 载入数据集。可以参考这些章节的示例代码以进一步了解 TensorFlow Datasets 的使用方法。</p>
 <script>
     $(document).ready(function(){
         $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");

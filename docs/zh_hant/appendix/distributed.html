@@ -280,7 +280,7 @@
 <h1>TensorFlow分布式訓練<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
 <p>當我們擁有大量計算資源時，通過使用合適的分布式策略，我們可以充分利用這些計算資源，從而大幅壓縮模型訓練的時間。針對不同的使用場景，TensorFlow在 <code class="docutils literal notranslate"><span class="pre">tf.distribute.Strategy</span></code> 中爲我們提供了若干種分布式策略，使得我們能夠更高效地訓練模型。</p>
 <div class="section" id="mirroredstrategy">
-<span id="multi-gpu"></span><h2>單機多卡訓練： <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code><a class="headerlink" href="#mirroredstrategy" title="永久链接至标题">¶</a></h2>
+<span id="zh-hant-multi-gpu"></span><h2>單機多卡訓練： <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code><a class="headerlink" href="#mirroredstrategy" title="永久链接至标题">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">tf.distribute.MirroredStrategy</span></code> 是一種簡單且高性能的，數據並行的同步式分布式策略，主要支持多個GPU在同一台主機上訓練。使用這種策略時，我們只需實例化一個 <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 策略:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">MirroredStrategy</span><span class="p">()</span>
 </pre></div>
@@ -432,7 +432,7 @@
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>在以下測試中，我們在Google Cloud Platform分別建立兩台具有單張NVIDIA Tesla K80的虛擬機實例（具體建立方式參見 <a class="reference internal" href="cloud.html#gcp"><span class="std std-ref">後文介紹</span></a> ），並分別測試在使用一個GPU時的訓練時長和使用兩台虛擬機實例進行分布式訓練的訓練時長。所有測試的epoch數均爲5。使用單機單卡時，Batch Size設置爲64。使用雙機單卡時，測試總Batch Size爲64（分發到單台機器的Batch Size爲32）和總Batch Size爲128（分發到單台機器的Batch Size爲64）兩種情況。</p>
+<p>在以下測試中，我們在Google Cloud Platform分別建立兩台具有單張NVIDIA Tesla K80的虛擬機實例（具體建立方式參見 <a class="reference internal" href="cloud.html#zh-hant-gcp"><span class="std std-ref">後文介紹</span></a> ），並分別測試在使用一個GPU時的訓練時長和使用兩台虛擬機實例進行分布式訓練的訓練時長。所有測試的epoch數均爲5。使用單機單卡時，Batch Size設置爲64。使用雙機單卡時，測試總Batch Size爲64（分發到單台機器的Batch Size爲32）和總Batch Size爲128（分發到單台機器的Batch Size爲64）兩種情況。</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 12%" />

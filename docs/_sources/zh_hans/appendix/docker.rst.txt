@@ -1,4 +1,4 @@
-.. _install_by_docker:
+.. _zh_hans_install_by_docker:
 
 使用Docker部署TensorFlow环境
 ============================================
@@ -54,7 +54,7 @@ Linux下通过以下命令启动Docker服务：
 
 **GPU版本的TensorFlow：**
 
-若需在TensorFlow Docker容器中开启GPU支持，需要具有一块NVIDIA显卡并已正确安装驱动程序（详见 :ref:`“TensorFlow安装”一章 <gpu_tensorflow>` ）。同时需要安装 `nvidia-docker <https://github.com/NVIDIA/nvidia-docker>`_ 。依照官方文档中的quickstart部分逐行输入命令即可。
+若需在TensorFlow Docker容器中开启GPU支持，需要具有一块NVIDIA显卡并已正确安装驱动程序（详见 :ref:`“TensorFlow安装”一章 <zh_hans_gpu_tensorflow>` ）。同时需要安装 `nvidia-docker <https://github.com/NVIDIA/nvidia-docker>`_ 。依照官方文档中的quickstart部分逐行输入命令即可。
 
 .. warning:: 当前nvidia-docker仅支持Linux。
 

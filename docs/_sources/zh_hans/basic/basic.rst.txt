@@ -54,7 +54,7 @@ TensorFlow里有大量的 **操作** （Operation），使得我们可以将已�
 
 可见，我们成功使用 ``tf.add()`` 操作计算出 :math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} + \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = \begin{bmatrix} 6 & 8 \\ 10 & 12 \end{bmatrix}`，使用 ``tf.matmul()`` 操作计算出 :math:`\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \times \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix} = \begin{bmatrix} 19 & 22 \\43 & 50 \end{bmatrix}` 。
 
-.. _automatic_derivation:
+.. _zh_hans_automatic_derivation:
 
 自动求导机制
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -99,11 +99,11 @@ TensorFlow里有大量的 **操作** （Operation），使得我们可以将已�
     \frac{\partial L(w, b)}{\partial b} |_{w = (1, 2)^T, b = 1} &= 30
 
 ..
-    以上的自动求导机制结合 **优化器** ，可以计算函数的极值。这里以线性回归示例（本质是求 :math:`\min_{w, b} L = (Xw + b - y)^2` ，具体原理见 :ref:`后节 <linear-regression>` ）：
+    以上的自动求导机制结合 **优化器** ，可以计算函数的极值。这里以线性回归示例（本质是求 :math:`\min_{w, b} L = (Xw + b - y)^2` ，具体原理见 :ref:`后节 <zh_hans_linear-regression>` ）：
 
     .. literalinclude:: /_static/code/zh/basic/eager/regression.py  
 
-.. _linear-regression:
+.. _zh_hans_linear-regression:
 
 基础示例：线性回归
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -154,7 +154,7 @@ NumPy下的线性回归
 
 而TensorFlow等深度学习框架的出现很大程度上解决了这些痛点，为机器学习模型的实现带来了很大的便利。
 
-.. _optimizer:
+.. _zh_hans_optimizer:
 
 TensorFlow下的线性回归
 -------------------------------------------

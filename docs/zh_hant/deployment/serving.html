@@ -151,7 +151,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#keras">自定義Keras模型的部署</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#call-serving-api">在客戶端調用以TensorFlow Serving部署的模型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#zh-hant-call-serving-api">在客戶端調用以TensorFlow Serving部署的模型</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#python">Python客戶端示例</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#node-js-ziyang">Node.js客戶端示例（Ziyang）</a></li>
 </ul>
@@ -327,7 +327,7 @@
 </div>
 <div class="section" id="id2">
 <h2>TensorFlow Serving模型部署<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<p>TensorFlow Serving可以直接讀取SavedModel格式的模型進行部署（導出模型到SavedModel文件的方法見 <a class="reference internal" href="export.html#savedmodel"><span class="std std-ref">前文</span></a> ）。使用以下命令即可：</p>
+<p>TensorFlow Serving可以直接讀取SavedModel格式的模型進行部署（導出模型到SavedModel文件的方法見 <a class="reference internal" href="export.html#zh-hant-savedmodel"><span class="std std-ref">前文</span></a> ）。使用以下命令即可：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>tensorflow_model_server \
     --rest_api_port=埠號（如8501） \
     --model_name=模型名 \
@@ -353,14 +353,14 @@
 </div>
 <div class="section" id="keras-sequential">
 <h3>Keras Sequential模式模型的部署<a class="headerlink" href="#keras-sequential" title="永久链接至标题">¶</a></h3>
-<p>由於Sequential模式的輸入和輸出都很固定，因此這種類型的模型很容易部署，無需其他額外操作。例如，要將 <a class="reference internal" href="export.html#savedmodel"><span class="std std-ref">前文使用SavedModel導出的MNIST手寫體識別模型</span></a> （使用Keras Sequential模式建立）以 <code class="docutils literal notranslate"><span class="pre">MLP</span></code> 的模型名在 <code class="docutils literal notranslate"><span class="pre">8501</span></code> 埠進行部署，可以直接使用以下命令：</p>
+<p>由於Sequential模式的輸入和輸出都很固定，因此這種類型的模型很容易部署，無需其他額外操作。例如，要將 <a class="reference internal" href="export.html#zh-hant-savedmodel"><span class="std std-ref">前文使用SavedModel導出的MNIST手寫體識別模型</span></a> （使用Keras Sequential模式建立）以 <code class="docutils literal notranslate"><span class="pre">MLP</span></code> 的模型名在 <code class="docutils literal notranslate"><span class="pre">8501</span></code> 埠進行部署，可以直接使用以下命令：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tensorflow_model_server</span> \
     <span class="o">--</span><span class="n">rest_api_port</span><span class="o">=</span><span class="mi">8501</span> \
     <span class="o">--</span><span class="n">model_name</span><span class="o">=</span><span class="n">MLP</span> \
     <span class="o">--</span><span class="n">model_base_path</span><span class="o">=</span><span class="s2">&quot;/home/.../.../saved&quot;</span>  <span class="c1"># 文件夾絕對地址根據自身情況填寫，無需加入版本號</span>
 </pre></div>
 </div>
-<p>然後就可以按照 <a class="reference internal" href="#call-serving-api"><span class="std std-ref">後文的介紹</span></a> ，使用gRPC或者RESTful API在客戶端調用模型了。</p>
+<p>然後就可以按照 <a class="reference internal" href="#zh-hant-call-serving-api"><span class="std std-ref">後文的介紹</span></a> ，使用gRPC或者RESTful API在客戶端調用模型了。</p>
 </div>
 <div class="section" id="keras">
 <h3>自定義Keras模型的部署<a class="headerlink" href="#keras" title="永久链接至标题">¶</a></h3>
@@ -393,8 +393,8 @@
 </div>
 </div>
 </div>
-<div class="section" id="call-serving-api">
-<span id="id3"></span><h2>在客戶端調用以TensorFlow Serving部署的模型<a class="headerlink" href="#call-serving-api" title="永久链接至标题">¶</a></h2>
+<div class="section" id="zh-hant-call-serving-api">
+<span id="id3"></span><h2>在客戶端調用以TensorFlow Serving部署的模型<a class="headerlink" href="#zh-hant-call-serving-api" title="永久链接至标题">¶</a></h2>
 <p>TensorFlow Serving支持以gRPC和RESTful API調用以TensorFlow Serving部署的模型。本手冊主要介紹較爲通用的RESTful API方法。</p>
 <p>RESTful API以標準的HTTP POST方法進行交互，請求和回復均爲JSON對象。爲了調用伺服器端的模型，我們在客戶端向伺服器發送以下格式的請求：</p>
 <p>伺服器URI： <code class="docutils literal notranslate"><span class="pre">http://伺服器地址:埠號/v1/models/模型名:predict</span></code></p>

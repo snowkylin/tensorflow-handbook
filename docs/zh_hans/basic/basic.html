@@ -99,10 +99,10 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">TensorFlow安装与环境配置</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow基础</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#tensorflow-1-1">TensorFlow 1+1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#automatic-derivation">自动求导机制</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#linear-regression">基础示例：线性回归</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id14">NumPy下的线性回归</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#optimizer">TensorFlow下的线性回归</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#zh-hans-automatic-derivation">自动求导机制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#zh-hans-linear-regression">基础示例：线性回归</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id13">NumPy下的线性回归</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#zh-hans-optimizer">TensorFlow下的线性回归</a></li>
 </ul>
 </li>
 </ul>
@@ -347,8 +347,8 @@
 </div>
 <p>可见，我们成功使用 <code class="docutils literal notranslate"><span class="pre">tf.add()</span></code> 操作计算出 <img class="math" src="../../_images/math/a0e8239c355d42a1c2a5bcc27e28bd5b0515c564.png" alt="\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} + \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = \begin{bmatrix} 6 &amp; 8 \\ 10 &amp; 12 \end{bmatrix}"/>，使用 <code class="docutils literal notranslate"><span class="pre">tf.matmul()</span></code> 操作计算出 <img class="math" src="../../_images/math/339ecd3d3a3e43dc6d6c69cf08cdfebba8a88643.png" alt="\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} \times \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = \begin{bmatrix} 19 &amp; 22 \\43 &amp; 50 \end{bmatrix}"/> 。</p>
 </div>
-<div class="section" id="automatic-derivation">
-<span id="id7"></span><h2>自动求导机制<a class="headerlink" href="#automatic-derivation" title="永久链接至标题">¶</a></h2>
+<div class="section" id="zh-hans-automatic-derivation">
+<span id="id7"></span><h2>自动求导机制<a class="headerlink" href="#zh-hans-automatic-derivation" title="永久链接至标题">¶</a></h2>
 <p>在机器学习中，我们经常需要计算函数的导数。TensorFlow提供了强大的 <strong>自动求导机制</strong> 来计算导数。在即时执行模式下，TensorFlow引入了 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 这个“求导记录器”来实现自动求导。以下代码展示了如何使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 计算函数 <img class="math" src="../../_images/math/2261dfa63cebc11353c25f3b42ab8812925703e7.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/6242bf7ca264a34d82d13f3307438c9bd77b8e15.png" alt="x = 3"/> 时的导数：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
@@ -394,8 +394,8 @@
 
 \frac{\partial L(w, b)}{\partial b} |_{w = (1, 2)^T, b = 1} &amp;= 30"/></p>
 </div></div>
-<div class="section" id="linear-regression">
-<span id="id10"></span><h2>基础示例：线性回归<a class="headerlink" href="#linear-regression" title="永久链接至标题">¶</a></h2>
+<div class="section" id="zh-hans-linear-regression">
+<span id="id10"></span><h2>基础示例：线性回归<a class="headerlink" href="#zh-hans-linear-regression" title="永久链接至标题">¶</a></h2>
 <div class="admonition- admonition">
 <p class="admonition-title">基础知识和原理</p>
 <ul class="simple">
@@ -440,7 +440,7 @@
 <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_raw</span> <span class="o">-</span> <span class="n">y_raw</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">y_raw</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">y_raw</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
 </pre></div>
 </div>
-<p>接下来，我们使用梯度下降方法来求线性模型中两个参数 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的值 <a class="footnote-reference brackets" href="#f1" id="id12">3</a>。</p>
+<p>接下来，我们使用梯度下降方法来求线性模型中两个参数 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的值 <a class="footnote-reference brackets" href="#f1" id="id11">3</a>。</p>
 <p>回顾机器学习的基础知识，对于多元函数 <img class="math" src="../../_images/math/79f40f147e28ccf9e9ffc1444476982d82b10dd8.png" alt="f(x)"/> 求局部极小值，<a class="reference external" href="https://zh.wikipedia.org/wiki/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95">梯度下降</a> 的过程如下：</p>
 <ul>
 <li><p>初始化自变量为 <img class="math" src="../../_images/math/4c72fcabd7dee7baed0b5dd1e1cb19fcba10e393.png" alt="x_0"/> ， <img class="math" src="../../_images/math/50cfe232e3009061047c77379101c266c05aa4bd.png" alt="k=0"/></p></li>
@@ -455,9 +455,9 @@
 </li>
 </ul>
 <p>接下来，我们考虑如何使用程序来实现梯度下降方法，求得线性回归的解 <img class="math" src="../../_images/math/0d65712f1fa8f236b1ac84c404e5761364c3d877.png" alt="\min_{a, b} L(a, b) = \sum_{i=1}^n(ax_i + b - y_i)^2"/> 。</p>
-<div class="section" id="id14">
-<h3>NumPy下的线性回归<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
-<p>机器学习模型的实现并不是TensorFlow的专利。事实上，对于简单的模型，即使使用常规的科学计算库或者工具也可以求解。在这里，我们使用NumPy这一通用的科学计算库来实现梯度下降方法。NumPy提供了多维数组支持，可以表示向量、矩阵以及更高维的张量。同时，也提供了大量支持在多维数组上进行操作的函数（比如下面的 <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code> 是求内积， <code class="docutils literal notranslate"><span class="pre">np.sum()</span></code> 是求和）。在这方面，NumPy和MATLAB比较类似。在以下代码中，我们手工求损失函数关于参数 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的偏导数 <a class="footnote-reference brackets" href="#f2" id="id15">4</a>，并使用梯度下降法反复迭代，最终获得 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的值。</p>
+<div class="section" id="id13">
+<h3>NumPy下的线性回归<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
+<p>机器学习模型的实现并不是TensorFlow的专利。事实上，对于简单的模型，即使使用常规的科学计算库或者工具也可以求解。在这里，我们使用NumPy这一通用的科学计算库来实现梯度下降方法。NumPy提供了多维数组支持，可以表示向量、矩阵以及更高维的张量。同时，也提供了大量支持在多维数组上进行操作的函数（比如下面的 <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code> 是求内积， <code class="docutils literal notranslate"><span class="pre">np.sum()</span></code> 是求和）。在这方面，NumPy和MATLAB比较类似。在以下代码中，我们手工求损失函数关于参数 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的偏导数 <a class="footnote-reference brackets" href="#f2" id="id14">4</a>，并使用梯度下降法反复迭代，最终获得 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的值。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
 
 <span class="n">num_epoch</span> <span class="o">=</span> <span class="mi">10000</span>
@@ -480,9 +480,9 @@
 </ul>
 <p>而TensorFlow等深度学习框架的出现很大程度上解决了这些痛点，为机器学习模型的实现带来了很大的便利。</p>
 </div>
-<div class="section" id="optimizer">
-<span id="id16"></span><h3>TensorFlow下的线性回归<a class="headerlink" href="#optimizer" title="永久链接至标题">¶</a></h3>
-<p>TensorFlow的 <strong>即时执行模式</strong> <a class="footnote-reference brackets" href="#f4" id="id17">5</a> 与上述NumPy的运行方式十分类似，然而提供了更快速的运算（GPU支持）、自动求导、优化器等一系列对深度学习非常重要的功能。以下展示了如何使用TensorFlow计算线性回归。可以注意到，程序的结构和前述NumPy的实现非常类似。这里，TensorFlow帮助我们做了两件重要的工作：</p>
+<div class="section" id="zh-hans-optimizer">
+<span id="id15"></span><h3>TensorFlow下的线性回归<a class="headerlink" href="#zh-hans-optimizer" title="永久链接至标题">¶</a></h3>
+<p>TensorFlow的 <strong>即时执行模式</strong> <a class="footnote-reference brackets" href="#f4" id="id16">5</a> 与上述NumPy的运行方式十分类似，然而提供了更快速的运算（GPU支持）、自动求导、优化器等一系列对深度学习非常重要的功能。以下展示了如何使用TensorFlow计算线性回归。可以注意到，程序的结构和前述NumPy的实现非常类似。这里，TensorFlow帮助我们做了两件重要的工作：</p>
 <ul class="simple">
 <li><p>使用 <code class="docutils literal notranslate"><span class="pre">tape.gradient(ys,</span> <span class="pre">xs)</span></code> 自动计算梯度；</p></li>
 <li><p>使用 <code class="docutils literal notranslate"><span class="pre">optimizer.apply_gradients(grads_and_vars)</span></code> 自动更新模型参数。</p></li>
@@ -514,9 +514,9 @@
 <div class="admonition-python-zip admonition">
 <p class="admonition-title">Python的 <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函数</p>
 <p><code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函数是Python的内置函数。用自然语言描述这个函数的功能很绕口，但如果举个例子就很容易理解了：如果 <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5]</span></code>， <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">[2,</span> <span class="pre">4,</span> <span class="pre">6]</span></code>，那么 <code class="docutils literal notranslate"><span class="pre">zip(a,</span> <span class="pre">b)</span> <span class="pre">=</span> <span class="pre">[(1,</span> <span class="pre">2),</span> <span class="pre">(3,</span> <span class="pre">4),</span> <span class="pre">...,</span> <span class="pre">(5,</span> <span class="pre">6)]</span></code> 。即“将可迭代的对象作为参数，将对象中对应的元素打包成一个个元组，然后返回由这些元组组成的列表”，和我们日常生活中拉上拉链（zip）的操作有异曲同工之妙。在Python 3中， <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函数返回的是一个 zip 对象，本质上是一个生成器，需要调用 <code class="docutils literal notranslate"><span class="pre">list()</span></code> 来将生成器转换成列表。</p>
-<div class="figure align-center" id="id18">
+<div class="figure align-center" id="id17">
 <a class="reference internal image-reference" href="../../_images/zip.jpg"><img alt="../../_images/zip.jpg" src="../../_images/zip.jpg" style="width: 60%;" /></a>
-<p class="caption"><span class="caption-text">Python的 <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函数图示</span><a class="headerlink" href="#id18" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">Python的 <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函数图示</span><a class="headerlink" href="#id17" title="永久链接至图片">¶</a></p>
 </div>
 </div>
 <p>在实际应用中，我们编写的模型往往比这里一行就能写完的线性模型 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> （模型参数为 <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> ）要复杂得多。所以，我们往往会编写并实例化一个模型类 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">Model()</span></code> ，然后使用 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">model(X)</span></code> 调用模型，使用 <code class="docutils literal notranslate"><span class="pre">model.variables</span></code> 获取模型参数。关于模型类的编写方式可见 <a class="reference internal" href="models.html"><span class="doc">“TensorFlow模型”一章</span></a>。</p>
@@ -527,13 +527,13 @@
 <dt class="label" id="f3"><span class="brackets"><a class="fn-backref" href="#id9">2</a></span></dt>
 <dd><p>主要可以参考 <a class="reference external" href="https://www.tensorflow.org/versions/r1.9/api_guides/python/array_ops">Tensor Transformations</a> 和 <a class="reference external" href="https://www.tensorflow.org/versions/r1.9/api_guides/python/math_ops">Math</a> 两个页面。可以注意到，TensorFlow的张量操作API在形式上和Python下流行的科学计算库NumPy非常类似，如果对后者有所了解的话可以快速上手。</p>
 </dd>
-<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id12">3</a></span></dt>
+<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id11">3</a></span></dt>
 <dd><p>其实线性回归是有解析解的。这里使用梯度下降方法只是为了展示TensorFlow的运作方式。</p>
 </dd>
-<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id15">4</a></span></dt>
+<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id14">4</a></span></dt>
 <dd><p>此处的损失函数为均方误差 <img class="math" src="../../_images/math/11181af9aedfe5ac815a780317fb0d67e82e52d6.png" alt="L(x) = \sum_{i=1}^N (ax_i + b - y_i)^2"/>。其关于参数 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的偏导数为 <img class="math" src="../../_images/math/e205b6f3ab6c43af375f44ddb8b016599f031143.png" alt="\frac{\partial L}{\partial a} = 2 \sum_{i=1}^N (ax_i + b - y) x_i"/>，<img class="math" src="../../_images/math/4c1c42943923e01ff33adf6ef6206476d6a700ae.png" alt="\frac{\partial L}{\partial b} = 2 \sum_{i=1}^N (ax_i + b - y)"/> 。本例中 <img class="math" src="../../_images/math/cd94bb514683acc17a52b6301993950852f35def.png" alt="N = 5"/> 。由于均方误差取均值的系数 <img class="math" src="../../_images/math/a064274dada3c2c77089f0a111fc9013f0df4c25.png" alt="\frac{1}{N}"/> 在训练过程中一般为常数（ <img class="math" src="../../_images/math/455ca481a018a5903aa0e72e4d4764e2e8cf7ea5.png" alt="N"/> 一般为批次大小），对损失函数乘以常数等价于调整学习率，因此在具体实现时通常不写在损失函数中。</p>
 </dd>
-<dt class="label" id="f4"><span class="brackets"><a class="fn-backref" href="#id17">5</a></span></dt>
+<dt class="label" id="f4"><span class="brackets"><a class="fn-backref" href="#id16">5</a></span></dt>
 <dd><p>与即时执行模式相对的是图执行模式（Graph Execution），即 TensorFlow 2 之前所主要使用的执行模式。本手册以面向快速迭代开发的即时执行模式为主，但会在 <span class="xref std std-doc">附录</span> 中介绍图执行模式的基本使用，供需要的读者查阅。</p>
 </dd>
 </dl>
