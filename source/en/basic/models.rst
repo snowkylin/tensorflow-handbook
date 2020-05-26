@@ -3,159 +3,160 @@ Model Construction and Training
 
 .. _linear:
 
-本章介绍如何使用 TensorFlow 快速搭建动态模型。
+This chapter describes how to build models with Keras and Eager Execution using TensorFlow 2.
 
-- 模型的构建： ``tf.keras.Model`` 和 ``tf.keras.layers``
-- 模型的损失函数： ``tf.keras.losses``
-- 模型的优化器： ``tf.keras.optimizer``
-- 模型的评估： ``tf.keras.metrics``
+- Model construction: ``tf.keras.Model`` and ``tf.keras.layers``
+- Loss function of the model: ``tf.keras.losses``
+- Optimizer of the model: ``tf.keras.optimizer``
+- Evaluation of models: ``tf.keras.metrics``
 
-.. admonition:: 前置知识
+.. ADMONITION:: Prerequisite
 
-    * `Python 面向对象编程 <http://www.runoob.com/python3/python3-class.html>`_ （在 Python 内定义类和方法、类的继承、构造和析构函数，`使用 super() 函数调用父类方法 <http://www.runoob.com/python/python-func-super.html>`_ ，`使用__call__() 方法对实例进行调用 <https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319098638265527beb24f7840aa97de564ccc7f20f6000>`_ 等）；
-    * 多层感知机、卷积神经网络、循环神经网络和强化学习（每节之前给出参考资料）。
-    *  `Python 的函数装饰器 <https://www.runoob.com/w3cnote/python-func-decorators.html>`_ （非必须）
-
+    * `Object-oriented Python programming <http://www.runoob.com/python3/python3-class.html>`_ (define classes and methods, class inheritance, constructor and deconstructor within Python, `use super() functions to call parent class methods <http://www.runoob.com/python/python-func-super.html>`_, `use __call__() methods to call instances <https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319098638265527beb24f7840aa97de564ccc7f20f6000>`_, etc.).
+    * Multilayer perceptron, convolutional neural networks, recurrent neural networks and reinforcement learning (references given before each section).
+    * `Python function decorator <https://www.runoob.com/w3cnote/python-func-decorators.html>`_ (not required)
 
 Models and layers
 ^^^^^^^^^^^^^^^^^
 ..  https://www.tensorflow.org/programmers_guide/eager
 
-在 TensorFlow 中，推荐使用 Keras（ ``tf.keras`` ）构建模型。Keras 是一个广为流行的高级神经网络 API，简单、快速而不失灵活性，现已得到 TensorFlow 的官方内置和全面支持。
+In TensorFlow, it is recommended to build models using Keras (``tf.keras``), a popular high-level neural network API that is simple, fast and flexible. It is officially built-in and fully supported by TensorFlow.
 
-Keras 有两个重要的概念： **模型（Model）** 和 **层（Layer）** 。层将各种计算流程和变量进行了封装（例如基本的全连接层，CNN 的卷积层、池化层等），而模型则将各种层进行组织和连接，并封装成一个整体，描述了如何将输入数据通过各种层以及运算而得到输出。在需要模型调用的时候，使用 ``y_pred = model(X)`` 的形式即可。Keras 在 ``tf.keras.layers`` 下内置了深度学习中大量常用的的预定义层，同时也允许我们自定义层。
+There are two important concepts in Keras: **Model** and **Layer** . The layers encapsulate various computational processes and variables (e.g., fully connected layers, convolutional layers, pooling layers, etc.), while the model connects the layers and encapsulates them as a whole, describing how the input data is passed through the layers and operations to get the output. Keras has built in a number of predefined layers commonly used in deep learning under ``tf.keras.layers``, while also allowing us to customize the layers.
 
-Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 这个 Python 类来定义自己的模型。在继承类中，我们需要重写 ``__init__()`` （构造函数，初始化）和 ``call(input)`` （模型调用）两个方法，同时也可以根据需要增加自定义的方法。
+Keras models are presented as classes, and we can define our own models by inheriting the Python class ``tf.keras.Model``. In the inheritance class, we need to rewrite the ``__init__()`` (constructor) and ``call(input)`` (model call) methods, but we can also add custom methods as needed.
 
 .. code-block:: python
 
     class MyModel(tf.keras.Model):
         def __init__(self):
-            super().__init__()     # Python 2 下使用 super(MyModel, self).__init__()
-            # 此处添加初始化代码（包含 call 方法中会用到的层），例如
+            super().__init__()
+            # Add initialization code here, including the layers that will be used in call(). e.g., 
             # layer1 = tf.keras.layers.BuiltInLayer(...)
             # layer2 = MyCustomLayer(...)
 
         def call(self, input):
-            # 此处添加模型调用的代码（处理输入并返回输出），例如
+            # Add the code for the model call here (process the input and return the output). e.g.,
             # x = layer1(input)
             # output = layer2(x)
             return output
 
-        # 还可以添加自定义的方法
+        # add your custom methods here
 
 .. figure:: /_static/image/model/model.png
     :width: 50%
     :align: center
 
-    Keras 模型类定义示意图
+    Keras model class structure
 
-继承 ``tf.keras.Model`` 后，我们同时可以使用父类的若干方法和属性，例如在实例化类 ``model = Model()`` 后，可以通过 ``model.variables`` 这一属性直接获得模型中的所有变量，免去我们一个个显式指定变量的麻烦。
+After inheriting ``tf.keras.Model``, we can use several methods and properties of the parent class at the same time. For example, after instantiating the class ``model = Model()``, we can get all the variables in the model directly through the property ``model.variables``, saving us from the trouble of specifying them one by one explicitly.
 
-上一章中简单的线性模型 ``y_pred = a * X + b`` ，我们可以通过模型类的方式编写如下：
+Then, we can rewrite the simple linear model in the previous chapter ``y_pred = a * X + b`` with Keras model class as follows
 
 .. literalinclude:: /_static/code/zh/model/linear/linear.py
 
-这里，我们没有显式地声明 ``a`` 和 ``b`` 两个变量并写出 ``y_pred = a * X + b`` 这一线性变换，而是建立了一个继承了 ``tf.keras.Model`` 的模型类 ``Linear`` 。这个类在初始化部分实例化了一个 **全连接层** （ ``tf.keras.layers.Dense`` ），并在 call 方法中对这个层进行调用，实现了线性变换的计算。如果需要显式地声明自己的变量并使用变量进行自定义运算，或者希望了解 Keras 层的内部原理，请参考 :ref:`自定义层 <custom_layer>`。
+Here, instead of explicitly declaring two variables ``a`` and ``b`` and writing the linear transformation ``y_pred = a * X + b``, we create a model class ``Linear`` that inherits ``tf.keras.Model``. This class instantiates a **fully connected layer** (``tf.keras.layers.Dense```) in the constructor, and calls this layer in the call method, implementing the calculation of the linear transformation. If you need to explicitly declare your own variables and use them for custom operations, or want to understand the inner workings of the Keras layer, see :ref:`Custom Layer <custom_layer>`.
 
-.. admonition:: Keras 的全连接层：线性变换 + 激活函数
+.. admonition:: Fully connection layer in Keras: linear transformation + activation function
 
-    `全连接层 <https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense>`_ （Fully-connected Layer，``tf.keras.layers.Dense`` ）是 Keras 中最基础和常用的层之一，对输入矩阵 :math:`A` 进行 :math:`f(AW + b)` 的线性变换 + 激活函数操作。如果不指定激活函数，即是纯粹的线性变换 :math:`AW + b`。具体而言，给定输入张量 ``input = [batch_size, input_dim]`` ，该层对输入张量首先进行 ``tf.matmul(input, kernel) + bias`` 的线性变换（ ``kernel`` 和 ``bias`` 是层中可训练的变量），然后对线性变换后张量的每个元素通过激活函数 ``activation`` ，从而输出形状为 ``[batch_size, units]`` 的二维张量。
+    `Fully-connected Layer <https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense>`_ (``tf.keras.layers.Dense``) is one of the most basic and commonly used layers in Keras, which performs a linear transformation and activation :math:`f(AW + b)` on the input matrix :math:`A`. If the activation function is not specified, it is a purely linear transformation :math:`AW + b`. Specifically, for a given input tensor ``input = [match_size, input_dim]`` , the layer first performs a linear transformation on the input tensor ``tf.matmul(input, kernel) + bias`` (``kernel`` and ``bias`` are trainable variables in the layer), and then apply the activation function ``activation`` on each element of the linearly transformed tensor, thereby outputting a two-dimensional tensor with shape ``[match_size, units]``.
 
     .. figure:: /_static/image/model/dense.png
         :width: 60%
         :align: center
 
-    其包含的主要参数如下：
+    ``tf.keras.layers.Dense`` contains the following main parameters.
 
-    * ``units`` ：输出张量的维度；
-    * ``activation`` ：激活函数，对应于 :math:`f(AW + b)` 中的 :math:`f` ，默认为无激活函数（ ``a(x) = x`` ）。常用的激活函数包括 ``tf.nn.relu`` 、 ``tf.nn.tanh`` 和 ``tf.nn.sigmoid`` ；
-    * ``use_bias`` ：是否加入偏置向量 ``bias`` ，即 :math:`f(AW + b)` 中的 :math:`b`。默认为 ``True`` ；
-    * ``kernel_initializer`` 、 ``bias_initializer`` ：权重矩阵 ``kernel`` 和偏置向量 ``bias`` 两个变量的初始化器。默认为 ``tf.glorot_uniform_initializer`` [#glorot]_ 。设置为 ``tf.zeros_initializer`` 表示将两个变量均初始化为全 0；
+    * ``units``: the dimension of the output tensor.
+    * ``activation``: the activation function, corresponding to :math:`f` in :math:`f(AW + b)` (Default: no activation). Commonly used activation functions include ``tf.nn.relu``, ``tf.nn.tanh`` and ``tf.nn.sigmoid``.
+    * ``use_bias``: whether to add the bias vector ``bias``, i.e. :math:`b` in :math:`f(AW + b)` (Default: ``True``).
+    * ``kernel_initializer``, ``bias_initializer``: initializer of the two variables, the weight matrix ``kernel`` and the bias vector ``bias``. The default is ``tf.glorot_uniform_initializer`` [#glorot]_. Set them to ``tf.zeros_initializer`` means that both variables are initialized to zero tensors.
 
-    该层包含权重矩阵 ``kernel = [input_dim, units]`` 和偏置向量 ``bias = [units]`` [#broadcast]_ 两个可训练变量，对应于 :math:`f(AW + b)` 中的 :math:`W` 和 :math:`b`。
+    This layer contains two trainable variables, the weight matrix ``kernel = [input_dim, units]`` and the bias vector ``bias = [bits]`` [#broadcast]_ , corresponding to :math:`W` and :math:`b` in :math:`f(AW + b)`.
 
-    这里着重从数学矩阵运算和线性变换的角度描述了全连接层。基于神经元建模的描述可参考 :ref:`后文介绍 <neuron>` 。
+    The fully connected layer is described here with emphasis on mathematical matrix operations. A description of neuron-based modeling can be found :ref:`here <en_neuron>`.
 
-    .. [#glorot] Keras 中的很多层都默认使用 ``tf.glorot_uniform_initializer`` 初始化变量，关于该初始化器可参考 https://www.tensorflow.org/api_docs/python/tf/glorot_uniform_initializer 。
-    .. [#broadcast] 你可能会注意到， ``tf.matmul(input, kernel)`` 的结果是一个形状为 ``[batch_size, units]`` 的二维矩阵，这个二维矩阵要如何与形状为 ``[units]`` 的一维偏置向量 ``bias`` 相加呢？事实上，这里是 TensorFlow 的 Broadcasting 机制在起作用，该加法运算相当于将二维矩阵的每一行加上了 ``Bias`` 。Broadcasting 机制的具体介绍可见 https://www.tensorflow.org/xla/broadcasting 。
+    .. [#glorot] Many layers in Keras use ``tf.glorot_uniform_initializer`` by default to initialize variables, which can be found at https://www.tensorflow.org/api_docs/python/tf/glorot_uniform_initializer.
+    .. [#broadcast] You may notice that ``tf.matmul(input, kernel)`` results in a two-dimensional matrix with shape ``[batch_size, units]``. How is this two-dimensional matrix to be added to the one-dimensional bias vector ``bias`` with shape ``[units]``? In fact, here is TensorFlow's Broadcasting mechanism at work. The add operation is equivalent to adding ``bias`` to each row of the two-dimensional matrix. A detailed description of the Broadcasting mechanism can be found at https://www.tensorflow.org/xla/broadcasting.
 
-.. admonition:: 为什么模型类是重载 ``call()`` 方法而不是  ``__call__()`` 方法？
+.. admonition:: Why is the model class overloaded ``call()`` instead of ``__call__()``?
 
-    在 Python 中，对类的实例 ``myClass`` 进行形如 ``myClass()`` 的调用等价于 ``myClass.__call__()`` （具体请见本章初 “前置知识” 的 ``__call__()`` 部分）。那么看起来，为了使用 ``y_pred = model(X)`` 的形式调用模型类，应该重写 ``__call__()`` 方法才对呀？原因是 Keras 在模型调用的前后还需要有一些自己的内部操作，所以暴露出一个专门用于重载的 ``call()`` 方法。 ``tf.keras.Model`` 这一父类已经包含 ``__call__()`` 的定义。 ``__call__()`` 中主要调用了 ``call()`` 方法，同时还需要在进行一些 keras 的内部操作。这里，我们通过继承 ``tf.keras.Model`` 并重载 ``call()`` 方法，即可在保持 keras 结构的同时加入模型调用的代码。
+    In Python, a call to an instance of a class ``myClass`` (i.e., ``myClass(params)``) is equivalent to ``myClass.__call__(params)`` (see the ``__call__()`` part of "Prerequisite" at the beginning of this chapter). Then in order to call the model using ``y_pred = model(X)``, it seems that one should override the ``__call__()`` method instead of ``call()``. Why we do the opposite? The reason is that Keras still needs to have some pre-processing and post-processing for the model call, so it is more reasonable to expose a ``call()`` method specifically for overriding. The parent class ``tf.keras.Model`` already contains the definition of ``__call__()``. The ``call()`` method is invoked in ``__call__()`` while some internal operations of the keras are also performed. Therefore, by inheriting the ``tf.keras.Model`` and overriding the ``call()`` method, we can add the code of model call while maintaining the inner structure of Keras.
 
-.. _mlp:
+.. _en_mlp:
 
-A basic example: Multilayer Perceptron (MLP)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Basic example: multi-layer perceptron (MLP)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-我们从编写一个最简单的 `多层感知机 <https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8>`_ （Multilayer Perceptron, MLP），或者说 “多层全连接神经网络” 开始，介绍 TensorFlow 的模型编写方式。在这一部分，我们依次进行以下步骤：
+We use the simplest `multilayer perceptron <https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8>`_ (MLP), or "multilayer fully connected neural network" as an example to introduce the model building process in TensorFlow 2. In this section, we take the following steps
 
-- 使用 ``tf.keras.datasets`` 获得数据集并预处理
-- 使用 ``tf.keras.Model`` 和 ``tf.keras.layers`` 构建模型
-- 构建模型训练流程，使用 ``tf.keras.losses`` 计算损失函数，并使用 ``tf.keras.optimizer`` 优化模型
-- 构建模型评估流程，使用 ``tf.keras.metrics`` 计算评估指标
+- Acquisition and pre-processing of datasets using ``tf.keras.datasets``
+- Model construction using ``tf.keras.Model`` and ``tf.keras.layers``
+- Build model training process. Use ``tf.keras.loses`` to calculate loss functions and use ``tf.keras.optimizer`` to optimize models
+- Build model evaluation process. Use ``tf.keras.metrics`` to calculate assessment indicators (e.g., accuracy)
 
-.. admonition:: 基础知识和原理
+.. admonition:: Basic knowledges and principles
 
-    * UFLDL 教程 `Multi-Layer Neural Network <http://ufldl.stanford.edu/tutorial/supervised/MultiLayerNeuralNetworks/>`_ 一节；
-    * 斯坦福课程 `CS231n: Convolutional Neural Networks for Visual Recognition <http://cs231n.github.io/>`_ 中的 “Neural Networks Part 1 ~ 3” 部分。
+    * The `Multi-Layer Neural Network <http://ufldl.stanford.edu/tutorial/supervised/MultiLayerNeuralNetworks/>`_ section of the UFLDL tutorial.
+    * "Neural Networks Part 1 ~ 3" section of the Stanford course `CS231n: Convolutional Neural Networks for Visual Recognition <http://cs231n.github.io/>`_.
 
-这里，我们使用多层感知机完成 MNIST 手写体数字图片数据集 [LeCun1998]_ 的分类任务。
+Here, we use a multilayer perceptron to tackle the classification task on the MNIST handwritten digit dataset [LeCun1998]_.
 
 .. figure:: /_static/image/model/mnist_0-9.png
     :align: center
 
-    MNIST 手写体数字图片示例
+    examples of MNIST handwritten digit
 
-Data collection and preprocessing: ``tf.keras.datasets``
---------------------------------------------------------
+Data acquisition and pre-processing with ``tf.keras.datasets``
+----------------------------------------------------------
 
-先进行预备工作，实现一个简单的 ``MNISTLoader`` 类来读取 MNIST 数据集数据。这里使用了 ``tf.keras.datasets`` 快速载入 MNIST 数据集。
+To prepare the data, we first implement a simple ``MNISTLoader`` class to read data from the MNIST dataset. ``tf.keras.datasets`` are used here to simplify the download and loading process of MNIST dataset.
 
 .. literalinclude:: /_static/code/zh/model/utils.py
     :lines: 5-19
 
-.. hint:: ``mnist = tf.keras.datasets.mnist`` 将从网络上自动下载 MNIST 数据集并加载。如果运行时出现网络连接错误，可以从 https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz 或 https://s3.amazonaws.com/img-datasets/mnist.npz 下载 MNIST 数据集 ``mnist.npz`` 文件，并放置于用户目录的 ``.keras/dataset`` 目录下（Windows 下用户目录为 ``C:\Users\用户名`` ，Linux 下用户目录为 ``/home/用户名`` ）。
+.. admonition:: Hint 
+    
+    ``mnist = tf.keras.datasets.mnist`` will automatically download and load the MNIST data set from the Internet. If a network connection error occurs at runtime, you can download the MNIST dataset ``mnist.npz`` manually from https://storage.googleapis.com/tensorflow/tf-keras-datasets/mnist.npz or https://s3.amazonaws.com/img-datasets/mnist.npz ,and move it into the ``.keras/dataset`` directory of the user directory (``C:\Users\USERNAME`` for Windows and ``/home/USERNAME`` for Linux).
 
-.. admonition:: TensorFlow 的图像数据表示
+.. admonition:: Image data representation in TensorFlow
 
-    在 TensorFlow 中，图像数据集的一种典型表示是 ``[图像数目，长，宽，色彩通道数]`` 的四维张量。在上面的 ``DataLoader`` 类中， ``self.train_data`` 和 ``self.test_data`` 分别载入了 60,000 和 10,000 张大小为 ``28*28`` 的手写体数字图片。由于这里读入的是灰度图片，色彩通道数为 1（彩色 RGB 图像色彩通道数为 3），所以我们使用 ``np.expand_dims()`` 函数为图像数据手动在最后添加一维通道。
+    In TensorFlow, a typical representation of an image data set is a four-dimensional tensor of ``[number of images, width, height, number of color channels]``. In the ``DataLoader`` class above, ``self.train_data`` and ``self.test_data`` were loaded with 60,000 and 10,000 handwritten digit images of size ``28*28``, respectively. Since we are reading a grayscale image here with only one color channel (a regular RGB color image has 3 color channels), we use the ``np.expand_dims()`` function to manually add one dimensional channels at the last dimension for the image data.
 
-.. _mlp_model:
+.. _en_mlp_model:
 
-Model construction: ``tf.keras.Model`` and ``tf.keras.layers``
---------------------------------------------------------------
+Model construction with ``tf.keras.Model`` and ``tf.keras.layers``
+-------------------------------------------------------------------------------
 
-多层感知机的模型类实现与上面的线性模型类似，使用 ``tf.keras.Model`` 和 ``tf.keras.layers`` 构建，所不同的地方在于层数增加了（顾名思义，“多层” 感知机），以及引入了非线性激活函数（这里使用了 `ReLU 函数 <https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0>`_ ， 即下方的 ``activation=tf.nn.relu`` ）。该模型输入一个向量（比如这里是拉直的 ``1×784`` 手写体数字图片），输出 10 维的向量，分别代表这张图片属于 0 到 9 的概率。
+The implementation of the multi-layer perceptron is similar to the linear model above, constructed using ``tf.keras.Model`` and ``tf.keras.layers``, except that the number of layers is increased (as the name implies, "multi-layer" perceptron), and a non-linear activation function is introduced (here we use the `ReLU function <https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0>`_ activation function, i.e. ``activation=tf.nn.relu`` below). The model accepts a vector (e.g. here a flattened ``1×784`` handwritten digit image) as input and outputs a 10-dimensional vector representing the probability that this image belongs to 0 to 9 respectively.
 
 .. literalinclude:: /_static/code/zh/model/mnist/mlp.py
     :lines: 4-
 
-.. admonition:: softmax 函数
+.. admonition:: Softmax function
 
-    这里，因为我们希望输出 “输入图片分别属于 0 到 9 的概率”，也就是一个 10 维的离散概率分布，所以我们希望这个 10 维向量至少满足两个条件：
+    Here, because we want to output the probabilities that the input images belongs to 0 to 9 respectively, i.e. a 10-dimensional discrete probability distribution, we want this 10-dimensional vector to satisfy at least two conditions.
 
-    * 该向量中的每个元素均在 :math:`[0, 1]` 之间；
-    * 该向量的所有元素之和为 1。
+    * Each element in the vector is between :math:`[0, 1]`.
+    * The sum of all elements of the vector is 1.
 
-    为了使得模型的输出能始终满足这两个条件，我们使用 `Softmax 函数 <https://zh.wikipedia.org/wiki/Softmax%E5%87%BD%E6%95%B0>`_ （归一化指数函数， ``tf.nn.softmax`` ）对模型的原始输出进行归一化。其形式为 :math:`\sigma(\mathbf{z})_j = \frac{e^{z_j}}{\sum_{k=1}^K e^{z_k}}` 。不仅如此，softmax 函数能够凸显原始向量中最大的值，并抑制远低于最大值的其他分量，这也是该函数被称作 softmax 函数的原因（即平滑化的 argmax 函数）。
+    To ensure the output of the model to always satisfy both conditions, we normalize the raw output of the model using the `Softmax function <https://zh.wikipedia.org/wiki/Softmax%E5%87%BD%E6%95%B0>`_ (normalized exponential function, ``tf.nn.softmax``). Its mathematical form is :math:`\sigma(\mathbf{z})_j = \frac{e^{z_j}}{\sum_{k=1}^K e^{z_k}}` . Not only that, the softmax function is able to highlight the largest value in the original vector and suppress other components that are far below the maximum, which is why it is called the softmax function (that is, the smoothed argmax function).
 
 .. figure:: /_static/image/model/mlp.png
     :width: 80%
     :align: center
 
-    MLP 模型示意图
+    MLP model
 
-Model training: ``tf.keras.losses`` and ``tf.keras.optimizer``
---------------------------------------------------------------
+Model training with ``tf.keras.losses`` and ``tf.keras.optimizer``
+-------------------------------------------------------------------------------
 
-定义一些模型超参数：
+To train the model, first we define some hyperparameters of the model used in training process
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 8-10
 
-实例化模型和数据读取类，并实例化一个 ``tf.keras.optimizer`` 的优化器（这里使用常用的 Adam 优化器）：
+Then, we instantiate the model and data reading classes, and instantiate an optimizer in ``tf.keras.optimizer`` (the Adam optimizer is used here).
 
 .. code-block:: python
 
@@ -163,32 +164,32 @@ Model training: ``tf.keras.losses`` and ``tf.keras.optimizer``
     data_loader = MNISTLoader()
     optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
 
-然后迭代进行以下步骤：
+The following steps are then iterated.
 
-- 从 DataLoader 中随机取一批训练数据；
-- 将这批数据送入模型，计算出模型的预测值；
-- 将模型预测值与真实值进行比较，计算损失函数（loss）。这里使用 ``tf.keras.losses`` 中的交叉熵函数作为损失函数；
-- 计算损失函数关于模型变量的导数；
-- 将求出的导数值传入优化器，使用优化器的 ``apply_gradients`` 方法更新模型参数以最小化损失函数（优化器的详细使用方法见 :ref:`前章 <optimizer>`  ）。
+- A random batch of training data is taken from the DataLoader.
+- Feed the data into the model, and obtain the predicted value from the model.
+- Calculate the loss function ( ``loss`` ) by comparing the model predicted value with the true value. Here we use the cross-entropy function in ``tf.keras.losses`` as a loss function.
+- Calculate the derivative of the loss function on the model variables (gradients).
+- The derivative values (gradients) are passed into the optimizer, and use the ``apply_gradients`` method to update the model variables so that the loss value is minimized (see :ref:`previous chapter <en_optimizer>` for details on how to use the optimizer).
 
-具体代码实现如下：
+The code is as follows
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 93-102
 
-.. admonition:: 交叉熵（cross entropy）与 ``tf.keras.losses``
+.. admonition:: Cross entropy and ``tf.keras.losses``
 
-    你或许注意到了，在这里，我们没有显式地写出一个损失函数，而是使用了 ``tf.keras.losses`` 中的 ``sparse_categorical_crossentropy`` （交叉熵）函数，将模型的预测值 ``y_pred`` 与真实的标签值 ``y`` 作为函数参数传入，由 Keras 帮助我们计算损失函数的值。
+    You may notice that, instead of explicitly writing a loss function, we use the ``sparse_categorical_crossentropy`` (cross entropy) function in ``tf.keras.losses``. We pass the model predicted value ``y_pred`` and the real value ``y_true`` into the function as parameters, then this Keras function helps us calculate the loss value.
 
-    交叉熵作为损失函数，在分类问题中被广泛应用。其离散形式为 :math:`H(y, \hat{y}) = -\sum_{i=1}^{n}y_i \log(\hat{y_i})` ，其中 :math:`y` 为真实概率分布， :math:`\hat{y}` 为预测概率分布， :math:`n` 为分类任务的类别个数。预测概率分布与真实分布越接近，则交叉熵的值越小，反之则越大。更具体的介绍及其在机器学习中的应用可参考 `这篇博客文章 <https://blog.csdn.net/tsyccnh/article/details/79163834>`_ 。
+    Cross-entropy is widely used as a loss function in classification problems. The discrete form is :math:`H(y, \hat{y}) = -\sum_{i=1}^{n}y_i \log(\hat{y_i})`, where :math:`y` is the true probability distribution, :math:`\hat{y}` is the predicted probability distribution, and :math:`n` is the number of categories in the classification task. The closer the predicted probability distribution is to the true distribution, the smaller the value of the cross-entropy, and vice versa. A more specific introduction and its application to machine learning can be found in `this blog post <https://blog.csdn.net/tsyccnh/article/details/79163834>`_.
 
-    在 ``tf.keras`` 中，有两个交叉熵相关的损失函数 ``tf.keras.losses.categorical_crossentropy`` 和 ``tf.keras.losses.sparse_categorical_crossentropy`` 。其中 sparse 的含义是，真实的标签值 ``y_true`` 可以直接传入 int 类型的标签类别。具体而言：
+    In ``tf.keras``, there are two cross-entropy related loss functions ``tf.keras.losses.categorical_crossentropy`` and ``tf.keras.losses.sparse_categorical_crossentropy``. Here "sparse" means that the true label value ``y_true`` can be passed directly into the function as integer. That means,
 
     .. code-block:: python
 
         loss = tf.keras.losses.sparse_categorical_crossentropy(y_true=y, y_pred=y_pred)
 
-    与
+    is equivalent to
 
     .. code-block:: python
 
@@ -197,64 +198,61 @@ Model training: ``tf.keras.losses`` and ``tf.keras.optimizer``
             y_pred=y_pred
         )
 
-    的结果相同。
+Model Evaluation with ``tf.keras.metrics``
+-------------------------------------------------------------------------------
 
-Model evaluation: ``tf.keras.metrics``
---------------------------------------
+Finally, we use the test set to evaluate the performance of the model. Here, we use the ``SparseCategoricalAccuracy`` metric in ``tf.keras.metrics`` to evaluate the performance of the model on the test set, which compares the results predicted by the model with the true results, and outputs the proportion of the test data samples that is correctly classified by the model. We do evaluatio iteratively on the test set, feeding the results predicted by the model and the true results into the metric instance each time by the ``update_state()`` method, with two parameters ``y_pred`` and ``y_true`` respectively. The metric instance has internal variables to maintain the values associated with the current evaluation process (e.g., the current cumulative number of samples that has been passed in and the current number of samples that predicts correctly). At the end of the iteration, we use the ``result()`` method to output the final evaluation value (the proportion of the correctly classified samples over the total samples).
 
-最后，我们使用测试集评估模型的性能。这里，我们使用 ``tf.keras.metrics`` 中的 ``SparseCategoricalAccuracy`` 评估器来评估模型在测试集上的性能，该评估器能够对模型预测的结果与真实结果进行比较，并输出预测正确的样本数占总样本数的比例。我们迭代测试数据集，每次通过 ``update_state()`` 方法向评估器输入两个参数： ``y_pred`` 和 ``y_true`` ，即模型预测出的结果和真实结果。评估器具有内部变量来保存当前评估指标相关的参数数值（例如当前已传入的累计样本数和当前预测正确的样本数）。迭代结束后，我们使用 ``result()`` 方法输出最终的评估指标值（预测正确的样本数占总样本数的比例）。
-
-在以下代码中，我们实例化了一个 ``tf.keras.metrics.SparseCategoricalAccuracy`` 评估器，并使用 For 循环迭代分批次传入了测试集数据的预测结果与真实结果，并输出训练后的模型在测试数据集上的准确率。
+In the following code, we instantiate a ``tf.keras.metrics.SparseCategoricalAccuracy`` metric, use a for loop to feed the predicted and true results iteratively, and output the accuracy of the trained model on the test set.
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 104-110
 
-输出结果::
+Output::
 
     test accuracy: 0.947900
 
-可以注意到，使用这样简单的模型，已经可以达到 95% 左右的准确率。
+It can be noted that we can reach an accuracy rate of around 95% just using such a simple model.
 
-.. _neuron:
+.. _en_neuron:
 
-.. admonition:: 神经网络的基本单位：神经元 [#order]_
+.. admonition:: The basic unit of a neural network: the neuron [#order]_
 
-    如果我们将上面的神经网络放大来看，详细研究计算过程，比如取第二层的第 k 个计算单元，可以得到示意图如下：
+    If we take a closer look at the neural network above and study the computational process in detail, for example by taking the k-th computational unit of the second layer, we can get the following schematic
 
     .. figure:: /_static/image/model/neuron.png
         :width: 80%
         :align: center
 
-    该计算单元 :math:`Q_k` 有 100 个权值参数 :math:`w_{0k}, w_{1k}, ..., w_{99k}` 和 1 个偏置参数 :math:`b_k` 。将第 1 层中所有的 100 个计算单元 :math:`P_0, P_1, ..., P_{99}` 的值作为输入，分别按权值 :math:`w_{ik}` 加和（即 :math:`\sum_{i=0}^{99} w_{ik} P_i` ），并加上偏置值 :math:`b_k` ，然后送入激活函数 :math:`f` 进行计算，即得到输出结果。
+    The computational unit :math:`Q_k` has 100 weight parameters :math:`w_{0k}, w_{1k}, \cdots , w_{99k}` and 1 bias parameter :math:`b_k` . The values of :math:`P_0, P_1, \cdots , P_{99}` of all 100 computational units in layer 1 are taken as inputs, summed by weight :math:`w_{ik}` (i.e. :math:`\sum_{i=0}^{99} w_{ik} P_i` ) and biased by :math:`b_k` , then it is fed into the activation function :math:`f` to get the output result.
 
-    事实上，这种结构和真实的神经细胞（神经元）类似。神经元由树突、胞体和轴突构成。树突接受其他神经元传来的信号作为输入（一个神经元可以有数千甚至上万树突），胞体对电位信号进行整合，而产生的信号则通过轴突传到神经末梢的突触，传播到下一个（或多个）神经元。
+    In fact, this structure is quite similar to real nerve cells (neurons). Neurons are composed of dendrites, cytosomes and axons. Dendrites receive signals from other neurons as input (one neuron can have thousands or even tens of thousands of dendrites), the cell body integrates the potential signal, and the resulting signal travels through axons to synapses at nerve endings and propagates to the next (or more) neuron.
 
     .. figure:: /_static/image/model/real_neuron.png
         :width: 80%
         :align: center
 
-        神经细胞模式图（修改自 Quasar Jarosz at English Wikipedia [CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)]）
+        Neural cell pattern diagram (modified from Quasar Jarosz at English Wikipedia [CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0)])
 
-    上面的计算单元，可以被视作对神经元结构的数学建模。在上面的例子里，第二层的每一个计算单元（人工神经元）有 100 个权值参数和 1 个偏置参数，而第二层计算单元的数目是 10 个，因此这一个全连接层的总参数量为 100*10 个权值参数和 10 个偏置参数。事实上，这正是该全连接层中的两个变量 ``kernel`` 和 ``bias`` 的形状。仔细研究一下，你会发现，这里基于神经元建模的介绍与上文基于矩阵计算的介绍是等价的。
+    The computational unit above can be viewed as a mathematical modeling of neuronal structure. In the above example, each computational unit (artificial neuron) in the second layer has 100 weight parameters and 1 bias parameter, while the number of computational units in the second layer is 10, so the total number of participants in this fully connected layer is 100*10 weight parameters and 10 bias parameters. In fact, this is the shape of the two variables ``kernel`` and ``bias`` in this fully connected layer. Upon closer examination, you will see that the introduction to neuron-based modeling here is equivalent to the introduction to matrix-based computing above.
 
-    .. [#order] 事实上，应当是先有神经元建模的概念，再有基于人工神经元和层结构的人工神经网络。但由于本手册着重介绍 TensorFlow 的使用方法，所以调换了介绍顺序。
+    .. [#order] Actually, there should be the concept of neuronal modeling first, followed by artificial neural networks based on artificial neurons and layer structures. However, since this manual focuses on how to use TensorFlow, the order of introduction is switched.
 
-Convolutional neural network (CNN)
+Convolutional Neural Network (CNN)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-`卷积神经网络 <https://zh.wikipedia.org/wiki/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C>`_ （Convolutional Neural Network, CNN）是一种结构类似于人类或动物的 `视觉系统 <https://zh.wikipedia.org/wiki/%E8%A7%86%E8%A7%89%E7%B3%BB%E7%BB%9F>`_ 的人工神经网络，包含一个或多个卷积层（Convolutional Layer）、池化层（Pooling Layer）和全连接层（Fully-connected Layer）。
+`Convolutional Neural Network <https://zh.wikipedia.org/wiki/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C>`_ (CNN) is an artificial neural network with a structure similar to the `visual system <https://zh.wikipedia.org/wiki/%E8%A7%86%E8%A7%89%E7%B3%BB%E7%BB%9F>`_ of a human or animal, that contains one or more Convolutional Layer, Pooling Layer and Fully-connected Layer.
 
-.. admonition:: 基础知识和原理
+.. admonition:: Basic knowledges and principles
 
-    * 台湾大学李宏毅教授的《机器学习》课程的 `Convolutional Neural Network <https://www.bilibili.com/video/av10590361/?p=21>`_ 一章；
-    * UFLDL 教程 `Convolutional Neural Network <http://ufldl.stanford.edu/tutorial/supervised/ConvolutionalNeuralNetwork/>`_ 一节；
-    * 斯坦福课程 `CS231n: Convolutional Neural Networks for Visual Recognition <http://cs231n.github.io/>`_ 中的 “Module 2: Convolutional Neural Networks” 部分。
+    * `Convolutional Neural Network <http://ufldl.stanford.edu/tutorial/supervised/ConvolutionalNeuralNetwork/>`_ in UFLDL Tutorial
+    * "Module 2: Convolutional Neural Networks" in Stanford course `CS231n: Convolutional Neural Networks for Visual Recognition <http://cs231n.github.io/>`_
+    * `"Convolutional Neural Networks" <https://d2l.ai/chapter_convolutional-neural-networks/index.html>`_ in *Dive into Deep Learning*
 
+Implementing Convolutional Neural Networks with Keras
+-------------------------------------------------------
 
-Implementing CNN with Keras
----------------------------
-
-卷积神经网络的一个示例实现如下所示，和 :ref:`上节中的多层感知机 <mlp_model>` 在代码结构上很类似，只是新加入了一些卷积层和池化层。这里的网络结构并不是唯一的，可以增加、删除或调整 CNN 的网络结构和参数，以达到更好的性能。
+An example implementation of a convolutional neural network is shown below. The code structure is similar to the :ref:`multi-layer perceptron <en_mlp_model>` in the previous section, except that some new convolutional and pooling layers are added. The network structure here is not unique: the layers in the CNN can be added, removed or adjusted for better performance.
 
 .. literalinclude:: /_static/code/zh/model/mnist/cnn.py
     :lines: 4-
@@ -262,86 +260,96 @@ Implementing CNN with Keras
 .. figure:: /_static/image/model/cnn.png
     :align: center
 
-    示例代码中的 CNN 结构图示
+    CNN structure diagram in the above sample code
 
-将前节的 ``model = MLP()`` 更换成 ``model = CNN()`` ，输出如下::
+Replace the code line ``model = MLP()`` in previous MLP section to ``model = CNN()`` , the output will be as follows::
 
     test accuracy: 0.988100
 
-可以发现准确率相较于前节的多层感知机有非常显著的提高。事实上，通过改变模型的网络结构（比如加入 Dropout 层防止过拟合），准确率还有进一步提升的空间。
+A very significant improvement of accuracy can be found compared to MLP in the previous section. In fact, there is still room for further improvements by changing the network structure of the model (e.g. by adding a Dropout layer to prevent overfitting).
 
-Using predefined classic CNN structure in Keras
------------------------------------------------
+Using predefined classical CNN structures in Keras
+---------------------------------------------------------------------------
 
-``tf.keras.applications`` 中有一些预定义好的经典卷积神经网络结构，如 ``VGG16`` 、 ``VGG19`` 、 ``ResNet`` 、 ``MobileNet`` 等。我们可以直接调用这些经典的卷积神经网络结构（甚至载入预训练的参数），而无需手动定义网络结构。
+There are some pre-defined classical convolutional neural network structures in ``tf.keras.applications``, such as ``VGG16``, ``VGG19``, ``ResNet`` and ``MobileNet``. We can directly apply these classical convolutional neural network (and load pre-trained weights) without manually defining the CNN structure.
 
-例如，我们可以使用以下代码来实例化一个 ``MobileNetV2`` 网络结构：
+For example, we can use the following code to instantiate a ``MobileNetV2`` network structure.
 
 .. code-block:: python
 
     model = tf.keras.applications.MobileNetV2()
 
-当执行以上代码时，TensorFlow会自动从网络上下载 ``MobileNetV2`` 网络结构，因此在第一次执行代码时需要具备网络连接。每个网络结构具有自己特定的详细参数设置，一些共通的常用参数如下：
+When the above code is executed, TensorFlow will automatically download the pre-trained weights of the ``MobileNetV2`` network, so Internet connection is required for the first execution of the code. You can also initialize variables randomly by setting the parameter ``weights`` to ``None``. Each network structure has its own specific detailed parameter settings. Some shared common parameters are as follows.
 
-- ``input_shape`` ：输入张量的形状（不含第一维的Batch），大多默认为 ``224 × 224 × 3`` 。一般而言，模型对输入张量的大小有下限，长和宽至少为 ``32 × 32`` 或 ``75 × 75`` ；
-- ``include_top`` ：在网络的最后是否包含全连接层，默认为 ``True`` ；
-- ``weights`` ：预训练权值，默认为 ``'imagenet'`` ，即为当前模型载入在ImageNet数据集上预训练的权值。如需随机初始化变量可设为 ``None`` ；
-- ``classes`` ：分类数，默认为1000。修改该参数需要 ``include_top`` 参数为 ``True`` 且 ``weights`` 参数为 ``None`` 。
+- ``input_shape``: the shape of the input tensor (without the first batch dimension), which mostly defaults to ``224 × 224 × 3``. In general, models have lower bounds on the size of the input tensor, with a minimum length and width of ``32 × 32`` or ``75 × 75``.
+- ``include_top``: whether the fully-connected layer is included at the end of the network, which defaults to ``True``.
+- ``weights``: pre-trained weights, which default to ``imagenet`` (using pre-trained weights trained on ImageNet dataset). It can be set to ``None`` if you want to randomly initialize the variables.
+- ``classes``: the number of classes, which defaults to 1000. If you want to modify this parameter, the ``include_top`` parameter has to be ``True`` and the ``weights`` parameter has to be ``None``.
 
-各网络模型参数的详细介绍可参考 `Keras文档 <https://keras.io/applications/>`_ 。
+A detailed description of each network model parameter can be found in the `Keras documentation <https://keras.io/applications/>`_.
 
-以下展示一个例子，使用 ``MobileNetV2`` 网络在 ``tf_flowers`` 五分类数据集上进行训练（为了代码的简短高效，在该示例中我们使用了 :doc:`TensorFlow Datasets <../appendix/tfds>` 和 :ref:`tf.data <tfdata>` 载入和预处理数据）。通过将 ``weights`` 设置为 ``None`` ，我们随机初始化变量而不使用预训练权值。同时将 ``classes`` 设置为5，对应于5分类的数据集。
+.. admonition:: Set learning phase
+
+    For some pre-defined classical models, some of the layers (e.g. ``BatchNormalization``) behave differently on training and testing stage (see `this article <https://zhuanlan.zhihu.com/p/64310188>`_). Therefore, when training this kind of model, you need to set the learning phase manually, telling the model "I am in the training stage of the model". This can be done through
+
+    .. code-block:: python
+
+        tf.keras.backend.set_learning_phase(True)
+
+    or by setting the ``training`` parameter to ``True`` when the model is called.
+
+An example is shown below, using ``MobileNetV2`` network to train on ``tf_flowers`` five-classifying datasets (for the sake of code brevity and efficiency, we use :doc:`TensorFlow Datasets <../appendix/tfds>` and :ref:`tf.data <en_tfdata>` to load and preprocess the data in this example). Also we set ``classes`` to 5, corresponding to the ``tf_flowers`` dataset with 5 kind of labels.
 
 .. literalinclude:: /_static/code/zh/model/cnn/mobilenet.py
-    :emphasize-lines: 10    
+    :emphasize-lines: 10, 15  
 
-后文的部分章节（如 :doc:`分布式训练 <../appendix/distributed>` ）中，我们也会直接调用这些经典的网络结构来进行训练。
+In later sections (e.g. :doc:`Distributed Training <../appendix/distributed>`), we will also directly use these classicial network structures for training.
 
-.. admonition:: 卷积层和池化层的工作原理
+.. admonition:: How the Convolutional and Pooling Layers Work
 
-    卷积层（Convolutional Layer，以 ``tf.keras.layers.Conv2D`` 为代表）是 CNN 的核心组件，其结构与大脑的视觉皮层有类似之处。
+    The Convolutional Layer, represented by ``tf.keras.layers.Conv2D`` in Keras, is a core component of CNN and has a structure similar to the visual cortex of the brain.
 
-    回忆我们之前建立的 :ref:`神经细胞的计算模型 <neuron>` 以及全连接层，我们默认每个神经元与上一层的所有神经元相连。不过，在视觉皮层的神经元中，情况并不是这样。你或许在生物课上学习过 **感受野** （Receptive Field）这一概念，即视觉皮层中的神经元并非与前一层的所有神经元相连，而只是感受一片区域内的视觉信号，并只对局部区域的视觉刺激进行反应。CNN 中的卷积层正体现了这一特性。
+    Recall our previously established computational model of :ref:`neurons <en_neuron>` and the fully-connected layer, in which we let each neuron connect to all other neurons in the previous layer. However, this is not the case in the visual cortex. You may have learned in biology class about the concept of **Receptive Field**, where neurons in the visual cortex are not connected to all the neurons in the previous layer, but only sense visual signals in an area and respond only to visual stimuli in the local area.
 
-    例如，下图是一个 7×7 的单通道图片信号输入：
+    For example, the following figure is a 7×7 single-channel image signal input.
 
     .. figure:: /_static/image/model/conv_image.png
         :align: center
 
-    如果使用之前基于全连接层的模型，我们需要让每个输入信号对应一个权值，即建模一个神经元需要 7×7=49 个权值（加上偏置项是50个），并得到一个输出信号。如果一层有 N 个神经元，我们就需要 49N 个权值，并得到 N 个输出信号。
+    If we use the MLP model based on fully-connected layers, we need to make each input signal correspond to a weight value. In this case, modeling a neuron requires 7×7=49 weights (50 if we consider the bias) to get an output signal. If there are N neurons in a layer, we need 49N weights and get N output signals.
 
-    而在 CNN 的卷积层中，我们这样建模一个卷积层的神经元：
+    In the convolutional layer of CNN, we model a neuron in a convolutional layer like this.
 
     .. figure:: /_static/image/model/conv_field.png
         :align: center
 
-    图中 3×3 的红框代表该神经元的感受野。由此，我们只需 3×3=9 个权值 :math:`W = \begin{bmatrix}w_{1, 1} & w_{1, 2} & w_{1, 3} \\w_{2, 1} & w_{2, 2} & w_{2, 3} \\w_{3, 1} & w_{3, 2} & w_{3, 3}\end{bmatrix}`  ，外加1个偏置项 :math:`b`  ，即可得到一个输出信号。例如，对于红框所示的位置，输出信号即为对矩阵 :math:`\begin{bmatrix}0 \times w_{1, 1} & 0 \times w_{1, 2} & 0 \times w_{1, 3} \\0 \times w_{2, 1} & 1 \times w_{2, 2} & 0 \times w_{2, 3} \\0 \times w_{3, 1} & 0 \times w_{3, 2} & 2 \times w_{3, 3}\end{bmatrix}` 的所有元素求和并加上偏置项 :math:`b`，记作 :math:`a_{1, 1}`  。
+    The 3×3 red box in the figure represents the receptor field of this neuron. In this case, we only need a 3×3 weight matrix :math:`W = \begin{bmatrix}w_{1, 1} & w_{1, 2} & w_{1, 3} \\w_{2, 1} & w_{2, 2} & w_{2, 3} \\w_{3, 1} & w_{3, 2} & w_{3, 3}\end{bmatrix}`  with an additional bias :math:`b`  to get an output signal. E.g., for the red box shown in the figure, the output is the sum of all elements of matrix :math:`\begin{bmatrix}0 \times w_{1, 1} & 0 \times w_{1, 2} & 0 \times w_{1, 3} \\0 \times w_{2, 1} & 1 \times w_{2, 2} & 0 \times w_{2, 3} \\0 \times w_{3, 1} & 0 \times w_{3, 2} & 2 \times w_{3, 3}\end{bmatrix}` adding bias :math:`b`, noted as :math:`a_{1, 1}` .
 
-    不过，3×3 的范围显然不足以处理整个图像，因此我们使用滑动窗口的方法。使用相同的参数 :math:`W` ，但将红框在图像中从左到右滑动，进行逐行扫描，每滑动到一个位置就计算一个值。例如，当红框向右移动一个单位时，我们计算矩阵 :math:`\begin{bmatrix}0 \times w_{1, 1} & 0 \times w_{1, 2} & 0 \times w_{1, 3} \\1 \times w_{2, 1} & 0 \times w_{2, 2} & 1 \times w_{2, 3} \\0 \times w_{3, 1} & 2 \times w_{3, 2} & 1 \times w_{3, 3}\end{bmatrix}` 的所有元素的和加上偏置项 :math:`b`，记作 :math:`a_{1, 2}` 。由此，和一般的神经元只能输出 1 个值不同，这里的卷积层神经元可以输出一个 5×5 的矩阵 :math:`A = \begin{bmatrix}a_{1, 1} & \cdots & a_{1, 5} \\ \vdots & & \vdots \\ a_{5, 1} & \cdots & a_{5, 5}\end{bmatrix}`  。
+    However, the 3×3 range is clearly not enough to handle the entire image, so we use the sliding window approach. Use the same parameter :math:`W` but swipe the red box from left to right in the image, scanning it line by line, calculating a value for each position it slides to. For example, when the red box moves one unit to the right, we calculate the sum of all elements of the matrix :math:`\begin{bmatrix}0 \times w_{1, 1} & 0 \times w_{1, 2} & 0 \times w_{1, 3} \\1 \times w_{2, 1} & 0 \times w_{2, 2} & 1 \times w_{2, 3} \\0 \times w_{3, 1} & 2 \times w_{3, 2} & 1 \times w_{3, 3}\end{bmatrix}` , adding bias :math:`b`, noted as :math:`a_{1, 2}` . Thus, unlike normal neurons that can only output one value, the convolutional neurons here can output a 5×5 matrix :math:`A = \begin{bmatrix}a_{1, 1} & \cdots & a_{1, 5} \\ \vdots & & \vdots \\ a_{5, 1} & \cdots & a_{5, 5}\end{bmatrix}` .
 
     .. figure:: /_static/image/model/conv_procedure.png
         :align: center
 
-        卷积示意图。一个单通道的 7×7 图像在通过一个感受野为 3×3 ，参数为10个的卷积层神经元后，得到 5×5 的矩阵作为卷积结果。
+        Diagram of convolution process. A single channel 7×7 image passes through a convolutional layer with a receptor field of 3×3, yielded a 5×5 matrix as result.
 
-    下面，我们使用TensorFlow来验证一下上图的计算结果。
+    In the following part, we use TensorFlow to verify the results of the above calculation.
 
-    将上图中的输入图像、权值矩阵 :math:`W` 和偏置项 :math:`b` 表示为NumPy数组 ``image`` , ``W`` , ``b`` 如下：
+    The input image, the weight matrix :math:`W` and the bias term :math:`b` in the above figure are represented as the NumPy array ``image``, ``W``, ``b`` as follows.
 
     .. literalinclude:: /_static/code/zh/model/cnn/cnn_example.py
         :lines: 4-21
 
-    然后建立一个仅有一个卷积层的模型，用 ``W`` 和 ``b`` 初始化 [#sequential]_ ：
+    Then, we build a model with only one convolutional layer, initialized by ``W`` and ``b`` [#sequential]_ ：
 
     .. literalinclude:: /_static/code/zh/model/cnn/cnn_example.py
         :lines: 23-30
 
-    最后将图像数据 ``image`` 输入模型，打印输出：
+    Finally, feed the image data ``image`` into the model and print the output.
 
     .. literalinclude:: /_static/code/zh/model/cnn/cnn_example.py
         :lines: 32-33
 
-    程序运行结果为：
+    The result will be
 
     ::
 
@@ -352,99 +360,91 @@ Using predefined classic CNN structure in Keras
          [ 2.  1.  2. -1. -3.]
          [ 1.  1.  1.  3.  1.]], shape=(5, 5), dtype=float32)
 
-    可见与上图中矩阵 :math:`A`  的值一致。
+    You can find out that this result is consistent with the value of the matrix :math:`A` in the figure above.
     
-    还有一个问题，以上假设图片都只有一个通道（例如灰度图片），但如果图像是彩色的（例如有 RGB 三个通道）该怎么办呢？此时，我们可以为每个通道准备一个 3×3 的权值矩阵，即一共有 3×3×3=27 个权值。对于每个通道，均使用自己的权值矩阵进行处理，输出时将多个通道所输出的值进行加和即可。
+    One more question, the above convolution process assumes that the images only have one channel (e.g. grayscale images), but what if the image is in color (e.g. has three channels of RGB)? Actually, we can prepare a 3×3 weight matrix for each channel, i.e. there are 3×3×3=27 weights in total. Each channel is processed using its own weight matrix, and the output can be summed by adding the values from multiple channels.
 
-    可能有读者会注意到，按照上述介绍的方法，每次卷积后的结果相比于原始图像而言，四周都会“少一圈”。比如上面 7×7 的图像，卷积后变成了 5×5 ，这有时会为后面的工作带来麻烦。因此，我们可以设定padding策略。在 ``tf.keras.layers.Conv2D`` 中，当我们将 ``padding`` 参数设为 ``same`` 时，会将周围缺少的部分使用0补齐，使得输出的矩阵大小和输入一致。
+    Some readers may notice that, following the method described above, the result after each convolution will be "one pixel shrinked" around. The 7×7 image above, for example, becomes 5×5 after convolution, which sometimes causes problems to the forthcoming layers. Therefore, we can set the padding strategy. In ``tf.keras.layers.Conv2D``, when we set the ``padding`` parameter to ``same``, the missing pixels around it are filled with 0, so that the size of the output matches the input.
 
-    最后，既然我们可以使用滑动窗口的方法进行卷积，那么每次滑动的步长是不是可以设置呢？答案是肯定的。通过 ``tf.keras.layers.Conv2D`` 的 ``strides`` 参数即可设置步长（默认为1）。比如，在上面的例子中，如果我们将步长设定为2，输出的卷积结果即会是一个3×3的矩阵。
+    Finally, since we can use the sliding window method to do convolution, can we set a different step size for the slide? The answer is yes. The step size (default is 1) can be set using the ``strides`` parameter of ``tf.keras.layers.Conv2D``. For example, in the above example, if we set the step length to 2, the output will be a 3×3 matrix.
 
-    ..
-        一个动态演示如下图所示。其中红色的矩阵为多通道的图像（这里展示为 2 个通道），绿色的矩阵为图像的每个通道所对应的权值矩阵 :math:`W` ，蓝色的矩阵为输出矩阵 :math:`A`  。
+    In fact, there are many forms of convolution, and the above introduction is only one of the simplest one. Further examples of the convolutional approach can be found in `Convolution Arithmetic <https://github.com/vdumoulin/conv_arithmetic>`_.
 
-        .. figure:: /_static/image/model/conv_sliding_window.gif
-            :align: center
+    The Pooling Layer is much simpler to understand as the process of downsampling an image, outputting the maximum value (MaxPooling), the mean value, or the value generated by other methods for all values in the window for each slide. For example, for a three-channel 16×16 image (i.e., a tensor of ``16*16*3``), a tensor of ``8*8*3`` is obtained after a pooled layer with a receptive field of 2×2 and a slide step of 2.
 
-            卷积示意图（来源： https://blog.csdn.net/huachao1001/article/details/79120521 ）
+    .. [#sequential] Here we use the sequential mode to build the model for simplicity, as described :ref:`later <en_sequential_functional>` .
 
-    事实上，卷积的形式多种多样，以上的介绍只是其中最简单和基础的一种。更多卷积方式的示例可见 `Convolution arithmetic <https://github.com/vdumoulin/conv_arithmetic>`_ 。
+Recurrent Neural Network (RNN)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    池化层（Pooling Layer）的理解则简单得多，其可以理解为对图像进行降采样的过程，对于每一次滑动窗口中的所有值，输出其中的最大值（MaxPooling）、均值或其他方法产生的值。例如，对于一个三通道的 16×16 图像（即一个 ``16*16*3`` 的张量），经过感受野为 2×2，滑动步长为 2 的池化层，则得到一个 ``8*8*3`` 的张量。
+Recurrent Neural Network (RNN) is a type of neural network suitable for processing sequence data (especially text). It is widely used in language models, text generation and machine translation.
 
-    .. [#sequential] 这里使用了较为简易的Sequential模式建立模型，具体介绍见 :ref:`后文 <sequential_functional>`  。
-
-Recurrent neural network (RNN)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-循环神经网络（Recurrent Neural Network, RNN）是一种适宜于处理序列数据的神经网络，被广泛用于语言模型、文本生成、机器翻译等。
-
-.. admonition:: 基础知识和原理
+.. admonition:: Basic knowledges and principles
 
     - `Recurrent Neural Networks Tutorial, Part 1 – Introduction to RNNs <http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/>`_
-    - 台湾大学李宏毅教授的《机器学习》课程的 `Recurrent Neural Network (part 1) <https://www.bilibili.com/video/av10590361/?p=36>`_ `Recurrent Neural Network (part 2) <https://www.bilibili.com/video/av10590361/?p=37>`_ 两部分。
-    - LSTM 原理：`Understanding LSTM Networks <https://colah.github.io/posts/2015-08-Understanding-LSTMs/>`_
-    - RNN 序列生成：[Graves2013]_
+    - `Understanding LSTM Networks <https://colah.github.io/posts/2015-08-Understanding-LSTMs/>`_
+    - `"Recurrent Neural Networks" <https://d2l.ai/chapter_recurrent-neural-networks/index.html>`_ in *Dive into Deep Learning*。
+    - RNN sequence generation: [Graves2013]_
 
-这里，我们使用 RNN 来进行尼采风格文本的自动生成。 [#rnn_reference]_
+Here, we use RNN to generate Nietzschean-style text automatically. [#rnn_reference]_
 
-这个任务的本质其实预测一段英文文本的接续字母的概率分布。比如，我们有以下句子::
+The essence of this task is to predict the probability distribution of an English sentence's successive character. For example, we have the following sentence::
 
     I am a studen
 
-这个句子（序列）一共有 13 个字符（包含空格）。当我们阅读到这个由 13 个字符组成的序列后，根据我们的经验，我们可以预测出下一个字符很大概率是 “t”。我们希望建立这样一个模型，逐个输入一段长为 ``seq_length`` 的序列，输出这些序列接续的下一个字符的概率分布。我们从下一个字符的概率分布中采样作为预测值，然后滚雪球式地生成下两个字符，下三个字符等等，即可完成文本的生成任务。
+This sentence (sequence) has a total of 13 characters including spaces. When we read this sequence of 13 characters, we can predict based on our experience, that the next character is "t" with a high probability. Now we want to build a model to do the same thing as our experience, in which we input a sequence of ``seq_length`` one by one, and output the probability distribution of the next character that follows this sentence. Then we can generate text by sampling a character from the probability distribution as a predictive value, then do snowballing to generate the next two characters, the next three characters, etc.
 
-首先，还是实现一个简单的 ``DataLoader`` 类来读取文本，并以字符为单位进行编码。设字符种类数为 ``num_chars`` ，则每种字符赋予一个 0 到 ``num_chars - 1`` 之间的唯一整数编号 i。
+First of all, we implement a simple ``DataLoader`` class to read training corpus (Nietzsche's work) and encode it in characters. Each character is assigned a unique integer number i between 0 and ``num_chars - 1``, in which ``num_chars`` is the number of character types.
 
 .. literalinclude:: /_static/code/zh/model/text_generation/rnn.py
     :lines: 35-53
 
-接下来进行模型的实现。在 ``__init__`` 方法中我们实例化一个常用的 ``LSTMCell`` 单元，以及一个线性变换用的全连接层，我们首先对序列进行“One Hot”操作，即将序列中的每个字符的编码 i 均变换为一个 ``num_char`` 维向量，其第 i 位为 1，其余均为 0。变换后的序列张量形状为 ``[seq_length, num_chars]`` 。然后，我们初始化 RNN 单元的状态，存入变量 ``state`` 中。接下来，将序列从头到尾依次送入 RNN 单元，即在 t 时刻，将上一个时刻 t-1 的 RNN 单元状态 ``state`` 和序列的第 t 个元素 ``inputs[t, :]`` 送入 RNN 单元，得到当前时刻的输出 ``output`` 和 RNN 单元状态。取 RNN 单元最后一次的输出，通过全连接层变换到 ``num_chars`` 维，即作为模型的输出。
+The model implementation is carried out next. In the constructor (``__init__`` method), we instantiate a ``LSTMCell`` unit and a fully connected layer. in ``call`` method, We first perform a "One Hot" operation on the sequence, i.e., we transform the encoding i of each character in the sequence into a ``num_char`` dimensional vector with bit i being 1 and the rest being 0. The transformed sequence tensor has a shape of ``[seq_length, num_chars]`` . We then initialize the state of the RNN unit. Next, the characters of the sequence is fed into the RNN unit one by one. At moment t, the state of RNN unit ``state`` in the previous time step ``t-1`` and the t-th element of the sequence ``inputs[t, :]`` are fed into the RNN unit, to get the output ``output`` and the RNN unit state in the current time step ``t``. The last output of the RNN unit is taken and transformed through the fully connected layer to ``num_chars`` dimension.
 
 .. figure:: /_static/image/model/rnn_single.jpg
     :width: 50%
     :align: center
 
-    ``output, state = self.cell(inputs[:, t, :], state)`` 图示
+    Diagram of ``output, state = self.cell(inputs[:, t, :], state)``
 
 .. figure:: /_static/image/model/rnn.jpg
     :width: 100%
     :align: center
 
-    RNN 流程图示
+    RNN working process
 
-具体实现如下：
+The code implementation is like this
 
 .. literalinclude:: /_static/code/zh/model/text_generation/rnn.py
     :lines: 7-25
 
-定义一些模型超参数：
+Defining some hyperparameters of the model
 
 .. literalinclude:: /_static/code/zh/model/text_generation/rnn.py
     :lines: 57-60
 
-训练过程与前节基本一致，在此复述：
+The training process is very similar to the previous section. Here we just repeat it:
 
-- 从 ``DataLoader`` 中随机取一批训练数据；
-- 将这批数据送入模型，计算出模型的预测值；
-- 将模型预测值与真实值进行比较，计算损失函数（loss）；
-- 计算损失函数关于模型变量的导数；
-- 使用优化器更新模型参数以最小化损失函数。
+- A random batch of training data is taken from the DataLoader.
+- Feed the data into the model, and obtain the predicted value from the model.
+- Calculate the loss function ( ``loss`` ) by comparing the model predicted value with the true value. Here we use the cross-entropy function in ``tf.keras.losses`` as a loss function.
+- Calculate the derivative of the loss function on the model variables (gradients).
+- The derivative values (gradients) are passed into the optimizer, and use the ``apply_gradients`` method to update the model variables so that the loss value is minimized.
 
 .. literalinclude:: /_static/code/zh/model/text_generation/rnn.py
     :lines: 62-73
 
-关于文本生成的过程有一点需要特别注意。之前，我们一直使用 ``tf.argmax()`` 函数，将对应概率最大的值作为预测值。然而对于文本生成而言，这样的预测方式过于绝对，会使得生成的文本失去丰富性。于是，我们使用 ``np.random.choice()`` 函数按照生成的概率分布取样。这样，即使是对应概率较小的字符，也有机会被取样到。同时，我们加入一个 ``temperature`` 参数控制分布的形状，参数值越大则分布越平缓（最大值和最小值的差值越小），生成文本的丰富度越高；参数值越小则分布越陡峭，生成文本的丰富度越低。
+One thing about the process of text generation requires special attention. Previously, we have been using the ``tf.argmax()`` function, which takes the value corresponding to the maximum probability as the predicted value. For text generation, however, such predictions are too "absolute" and can make the generated text lose its richness. Thus, we use the ``np.random.choice()`` function to sample the resulting probability distribution. In this way, even characters that correspond to a small probability have a chance of being sampled. At the same time, we add a ``temperature`` parameter to control the shape of the distribution, the larger the parameter value, the smoother the distribution (the smaller the difference between the maximum and minimum values), the higher the richness of the generated text; the smaller the parameter value, the steeper the distribution, the lower the richness of the generated text.
 
 .. literalinclude:: /_static/code/zh/model/text_generation/rnn.py
     :lines: 27-32
 
-通过这种方式进行 “滚雪球” 式的连续预测，即可得到生成文本。
+Through a contineous prediction of characters, we can get the automatically generated text.
 
 .. literalinclude:: /_static/code/zh/model/text_generation/rnn.py
     :lines: 75-83
 
-生成的文本如下::
+The generated text is like follows::
 
     diversity 0.200000:
     conserted and conseive to the conterned to it is a self--and seast and the selfes as a seast the expecience and and and the self--and the sered is a the enderself and the sersed and as a the concertion of the series of the self in the self--and the serse and and the seried enes and seast and the sense and the eadure to the self and the present and as a to the self--and the seligious and the enders
@@ -468,39 +468,40 @@ Recurrent neural network (RNN)
     arn inneves to sya" natorne. hag open reals whicame oderedte,[fingo is
     zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey tomm--whach
 
-.. [#rnn_reference] 此处的任务及实现参考了 https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py
+.. [#rnn_reference] Here we referenced https://github.com/keras-team/keras/blob/master/examples/lstm_text_generation.py
 
-.. admonition:: 循环神经网络的工作过程
+.. admonition:: The working process of recurrent neural networks
 
-    循环神经网络是一个处理时间序列数据的神经网络结构，也就是说，我们需要在脑海里有一根时间轴，循环神经网络具有初始状态 :math:`s_0` ，在每个时间点 :math:`t` 迭代对当前时间的输入 :math:`x_t` 进行处理，修改自身的状态 :math:`s_t` ，并进行输出 :math:`o_t` 。
+    A recurrent neural network is a neural network that processes time series data. To understand the working process of RNN, we need to have a timeline in our mind. The RNN unit has an initial state :math:`s_0` at initial time step 0, then at each time step :math:`t`, the RNN unit process the current input :math:`x_t`, modifies its own state :math:`s_t` , and outputs :math:`o_t` .
 
-    循环神经网络的核心是状态 :math:`s` ，是一个特定维数的向量，类似于神经网络的 “记忆”。在 :math:`t=0` 的初始时刻，:math:`s_0` 被赋予一个初始值（常用的为全 0 向量）。然后，我们用类似于递归的方法来描述循环神经网络的工作过程。即在 :math:`t` 时刻，我们假设 :math:`s_{t-1}` 已经求出，关注如何在此基础上求出 :math:`s_{t}` ：
+    The core of a recurrent neural network is the state :math:`s` , which is a vector of specific dimensions, regarded as the "memory" of a neural network. At the initial moment of :math:`t=0`, :math:`s_0` is given an initial value (usually use a zero vector). We then describe the workings of the recurrent neural network in a recursive way. That is, at the moment :math:`t`, we assume that :math:`s_{t-1}` is known, and focus on how to calculate :math:`s_{t}` based on the input and the previous state.
 
-    - 对输入向量 :math:`x_t` 通过矩阵 :math:`U` 进行线性变换，:math:`U x_t` 与状态 s 具有相同的维度；
-    - 对 :math:`s_{t-1}` 通过矩阵 :math:`W` 进行线性变换，:math:`W s_{t-1}` 与状态 s 具有相同的维度；
-    - 将上述得到的两个向量相加并通过激活函数，作为当前状态 :math:`s_t` 的值，即 :math:`s_t = f(U x_t + W s_{t-1})`。也就是说，当前状态的值是上一个状态的值和当前输入进行某种信息整合而产生的；
-    - 对当前状态 :math:`s_t` 通过矩阵 :math:`V` 进行线性变换，得到当前时刻的输出 :math:`o_t`。
+    - Linear transformation of the input vector :math:`x_t` through the matrix :math:`U`. The result :math:`U x_t` has the same dimension as the state s.
+    - Linear transformation of :math:`s_{t-1}` through the matrix :math:`W`, where :math:`W s_{t-1}` has the same dimension as the state s.
+    - The two vectors obtained above are summed and passed through the activation function as the value of the current state :math:`s_t`, i.e. :math:`s_t = f(U x_t + W s_{t-1})`. That is, the value of the current state is the result of non-linear information combination of the previous state and the current input.
+    - Linear transformation of the current state :math:`s_t` through the matrix :math:`V` to get the output of the current moment :math:`o_t`.
 
     .. figure:: /_static/image/model/rnn_cell.jpg
         :align: center
 
-        RNN 工作过程图示（来自 http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/）
+        RNN working process (from http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns )
 
-    我们假设输入向量 :math:`x_t` 、状态 :math:`s` 和输出向量 :math:`o_t` 的维度分别为 :math:`m`、:math:`n`、:math:`p`，则 :math:`U \in \mathbb{R}^{m \times n}`、:math:`W \in \mathbb{R}^{n \times n}`、:math:`V \in \mathbb{R}^{n \times p}`。
+    We assume the dimension of the input vector :math:`x_t`, the state :math:`s` and the output vector :math:`o_t` are :math:`m`, :math:`n` and :math:`p` respectively, then :math:`U \in \mathbb{R}^{m \times n}`, :math:`W \in \mathbb{R}^{n \times n}`, :math:`V \in \mathbb{R}^{n \times p}`.
 
-    上述为最基础的 RNN 原理介绍。在实际使用时往往使用一些常见的改进型，如LSTM（长短期记忆神经网络，解决了长序列的梯度消失问题，适用于较长的序列）、GRU等。
+    The above is an introduction to the most basic RNN type. In practice, some improved version of RNN are often used, such as LSTM (Long Short-Term Memory Neural Network, which solves the problem of gradient disappearance for longer sequences), GRU, etc.
 
-Deep reinforcement learning (DRL)
+.. _en_rl:
+
+Deep Reinforcement Learning (DRL)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-`强化学习 <https://zh.wikipedia.org/wiki/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0>`_ （Reinforcement learning，RL）强调如何基于环境而行动，以取得最大化的预期利益。结合了深度学习技术后的强化学习更是如虎添翼。这两年广为人知的 AlphaGo 即是深度强化学习的典型应用。
+`Reinforcement learning <https://zh.wikipedia.org/wiki/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0>`_ (RL) emphasizes how to act based on the environment in order to maximize the intended benefits. With deep learning techniques combined, Deep Reinforcement Learning (DRL) is a powerful tool to solve decision tasks. AlphaGo, which has become widely known in recent years, is a typical application of deep reinforcement learning.
 
-.. admonition:: 基础知识和原理
+.. admonition:: Note
 
-    - `Demystifying Deep Reinforcement Learning <https://ai.intel.com/demystifying-deep-reinforcement-learning/>`_ （`中文编译 <https://snowkylin.github.io/rl/2017/01/04/Reinforcement-Learning.html>`_）
-    - [Mnih2013]_
+    You can visit :doc:`../appendix/rl` in the appendix to get some basic ideas of reinforcement learning.
 
-这里，我们使用深度强化学习玩 CartPole（平衡杆）游戏。简单说，我们需要让模型控制杆的左右运动，以让其一直保持竖直平衡状态。
+Here, we use deep reinforcement learning to learn to play CartPole (inverted pendulum). The inverted pendulum is a classic problem in cybernetics, where the bottom of a pole is connected to a cart through an axle, and the center of gravity of the pole is above the axle, making it an unstable system. Under the force of gravity, the pole falls down easily. In this task, we need to control the cart to move left and right on a horizontal track to keep the pole in vertical balance.
 
 .. only:: html
 
@@ -508,7 +509,7 @@ Deep reinforcement learning (DRL)
         :width: 500
         :align: center
 
-        CartPole 游戏
+        CartPole Game
 
 .. only:: latex
 
@@ -516,94 +517,105 @@ Deep reinforcement learning (DRL)
         :width: 500
         :align: center
 
-        CartPole 游戏
+        CartPole Game
 
-我们使用 `OpenAI 推出的 Gym 环境库 <https://gym.openai.com/>`_ 中的 CartPole 游戏环境，具体安装步骤和教程可参考 `官方文档 <https://gym.openai.com/docs/>`_ 和 `这里 <https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-4-gym/>`_ 。Gym 的基本调用方法如下：
+We use the CartPole game environment from `OpenAI's Gym Environment Library <https://gym.openai.com/>`_, which can be installed using ``pip install gym``, the installation steps and tutorials can be found in the `official documentation <https://gym.openai.com/docs/>`_ and `here <https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-4-gym/>`_. The interaction with Gym is very much like a turn-based game. We first get the initial state of the game (such as the initial angle of the pole and the position of the cart), then in each turn t, we need to choose one of the currently feasible actions and send it to Gym to execute (such as pushing the cart to the left or to the right, only one of the two actions can be chosen in each turn). After executing the action, Gym will return the next state after the action is executed and the reward value obtained in the current turn (for example, after we choose to push the cart to the left and execute, the cart position is more to the left and the angle of the pole is more to the right, Gym will return the new angle and position to us. if the pole still doesn't go down on this round, Gym returns us a small positive bonus simultaneously). This process can iterate on and on until the game ends (e.g. the pole goes down). In Python, the sample code to use Gym is as follows.
 
 .. code-block:: python
 
     import gym
 
-    env = gym.make('CartPole-v1')       # 实例化一个游戏环境，参数为游戏名称
-    state = env.reset()                 # 初始化环境，获得初始状态
+    env = gym.make('CartPole-v1')   # Instantiate a game environment with the game name
+    state = env.reset()             # Initialize the environment, get the initial state
     while True:
-        env.render()                    # 对当前帧进行渲染，绘图到屏幕
-        action = model.predict(state)   # 假设我们有一个训练好的模型，能够通过当前状态预测出这时应该进行的动作
-        next_state, reward, done, info = env.step(action)   # 让环境执行动作，获得执行完动作的下一个状态，动作的奖励，游戏是否已结束以及额外信息
-        if done:                        # 如果游戏结束则退出循环
+        env.render()                # Render the current frame and draw it to the screen.
+        action = model.predict(state)   # Suppose we have a trained model that can predict what action should be performed at this time from the current state
+        next_state, reward, done, info = env.step(action)   # Let the environment execute the action, get the next state of the executed action, the reward for the action, whether the game is over and additional information
+        if done:                    # Exit loop if game over
             break
 
-那么，我们的任务就是训练出一个模型，能够根据当前的状态预测出应该进行的一个好的动作。粗略地说，一个好的动作应当能够最大化整个游戏过程中获得的奖励之和，这也是强化学习的目标。
+Now, our task is to train a model that can predict a good move based on the current state. Roughly speaking, a good move should maximize the sum of the rewards earned throughout the game, which is the goal of reinforcement learning. In the CartPole game, the goal is to make the right moves to keep the pole from falling, i.e. as many rounds of game interaction as possible. In each round, we get a small positive bonus, and the more rounds the higher the cumulative bonus value. Thus, maximizing the sum of the rewards is consistent with our ultimate goal.
 
-以下代码展示了如何使用深度强化学习中的 Deep Q-Learning 方法来训练模型。
+The following code shows how to train the model using the Deep Q-Learning method [Mnih2013]_ with Deep Reinforcement Learning. First, we import TensorFlow, Gym and some common libraries, and define some model hyperparameters.
 
 .. literalinclude:: /_static/code/zh/model/rl/qlearning.py
+    :lines: 1-14
 
-对于不同的任务（或者说环境），我们需要根据任务的特点，设计不同的状态以及采取合适的网络来拟合 Q 函数。例如，如果我们考虑经典的打砖块游戏（Gym 环境库中的  `Breakout-v0 <https://gym.openai.com/envs/Breakout-v0/>`_ ），每一次执行动作（挡板向左、向右或不动），都会返回一个 ``210 * 160 * 3`` 的 RGB 图片，表示当前屏幕画面。为了给打砖块游戏这个任务设计合适的状态表示，我们有以下分析：
+We then use ``tf.keras.Model``` to build a Q-network for fitting the Q functions in Q-Learning. Here we use a simple multilayered fully connected neural network for fitting. The network inputs the current state and outputs the Q-value for each action (2-dimensional for CartPole, i.e. pushing the cart left and right).
 
-* 砖块的颜色信息并不是很重要，画面转换成灰度也不影响操作，因此可以去除状态中的颜色信息（即将图片转为灰度表示）；
-* 小球移动的信息很重要，如果只知道单帧画面而不知道小球往哪边运动，即使是人也很难判断挡板应当移动的方向。因此，必须在状态中加入表征小球运动方向的信息。一个简单的方式是将当前帧与前面几帧的画面进行叠加，得到一个 ``210 * 160 * X`` （X 为叠加帧数）的状态表示；
-* 每帧的分辨率不需要特别高，只要能大致表征方块、小球和挡板的位置以做出决策即可，因此对于每帧的长宽可做适当压缩。
+.. literalinclude:: /_static/code/zh/model/rl/qlearning.py
+    :lines: 16-31
 
-而考虑到我们需要从图像信息中提取特征，使用 CNN 作为拟合 Q 函数的网络将更为适合。将上面的 ``QNetwork`` 更换为 CNN 网络，即可用于玩一些简单的视频游戏。
+Finally, we implement the Q-learning algorithm in the main program.
+
+.. literalinclude:: /_static/code/zh/model/rl/qlearning.py
+    :lines: 34-82
+
+For different tasks (or environments), we need to design different states and adopt appropriate networks to fit the Q function depending on the characteristics of the task. For example, if we consider the classic "Block Breaker" game (`Breakout-v0 <https://gym.openai.com/envs/Breakout-v0/>`_ in the Gym environment library), every action performed (baffle moving to the left, right, or motionless) returns an RGB image of ``210 * 160 * 3`` representing the current screen. In order to design a suitable state representation for this game, we have the following analysis.
+
+* The colour information of the bricks is not very important and the conversion of the image to grayscale does not affect the operation, so the colour information in the state can be removed (i.e. the image is converted to grayscale).
+* Information on the movement of the ball is important, and it is difficult for even a human being to judge the direction in which the baffle should move, if only a single frame is known (so the direction in which the ball is moving is not known). Therefore, information that characterizes the direction of motion of the ball must be added to the state. A simple way is to stack the current frame with the previous frames to obtain a state representation of ``210 * 160 * X`` (X being the number of stacked frames).
+* The resolution of each frame does not need to be particularly high, as long as the position of the squares, spheres and baffles can be roughly characterized for decision-making purposes, so that the length and width of each frame can be compressed appropriately.
+
+And considering that we need to extract features from the image information, using CNN as a network for fitting Q functions would be more appropriate. Based on the analysis, we can just replace the ``QNetwork`` above to CNN and make some changes for the status, then the same program can be used to play some simple video games.
 
 Keras Pipeline *
-^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ..
     https://medium.com/tensorflow/what-are-symbolic-and-imperative-apis-in-tensorflow-2-0-dfccecb01021
     https://www.tensorflow.org/beta/guide/keras/overview
     https://www.tensorflow.org/beta/guide/keras/custom_layers_and_models
 
-以上示例均使用了 Keras 的 Subclassing API 建立模型，即对 ``tf.keras.Model`` 类进行扩展以定义自己的新模型，同时手工编写了训练和评估模型的流程。这种方式灵活度高，且与其他流行的深度学习框架（如 PyTorch、Chainer）共通，是本手册所推荐的方法。不过在很多时候，我们只需要建立一个结构相对简单和典型的神经网络（比如上文中的 MLP 和 CNN），并使用常规的手段进行训练。这时，Keras 也给我们提供了另一套更为简单高效的内置方法来建立、训练和评估模型。
+Until now, all the examples are using Keras' Subclassing API and customized training loop, i.e. we inherit ``tf.keras.Model`` class to build our new model, while the process of training and evaluating the model is explicitly implemented by us. This approach is flexible and similar to other popular deep learning frameworks (e.g. PyTorch and Chainer), and is the approach recommended in this handbook. In many cases, however, we just need to build a neural network with a relatively simple and typical structure (e.g., MLP and CNN in the above section) and train it using conventional means. For this scenario, Keras also give us another simpler and more efficient built-in way to build, train and evaluate models.
 
 .. _sequential_functional:
 
-Using Keras Sequential/Functional API mode to construct models
---------------------------------------------------------------
+Use Keras Sequential/Functional API to build models
+---------------------------------------------------
 
-最典型和常用的神经网络结构是将一堆层按特定顺序叠加起来，那么，我们是不是只需要提供一个层的列表，就能由 Keras 将它们自动首尾相连，形成模型呢？Keras 的 Sequential API 正是如此。通过向 ``tf.keras.models.Sequential()`` 提供一个层的列表，就能快速地建立一个 ``tf.keras.Model`` 模型并返回：
+The most typical and common neural network structure is to stack a bunch of layers in a specific order, so can we just provide a list of layers and have Keras automatically connect them head to tail to form a model? The Sequential API of Keras just does this. By providing a list of layers to ``tf.keras.models.Sequential()``, we can quickly get a ``tf.keras.Model`` model.
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 18-23
 
-不过，这种层叠结构并不能表示任意的神经网络结构。为此，Keras 提供了 Functional API，帮助我们建立更为复杂的模型，例如多输入 / 输出或存在参数共享的模型。其使用方法是将层作为可调用的对象并返回张量（这点与之前章节的使用方法一致），并将输入向量和输出向量提供给 ``tf.keras.Model`` 的 ``inputs`` 和 ``outputs`` 参数，示例如下：
+However, this sequential structure is quite limited. Then Keras provides a Functional API to help us build more complex models, such as models with multiple inputs/outputs or where parameters are shared. This is done by using the layer as an invocable object and returning the tensor (which is consistent with the usage in the previous section) and providing the input and output vectors to the ``inputs`` and ``outputs`` parameters of ``tf.keras.Model``, as follows.
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 25-30
 ..
     https://www.tensorflow.org/alpha/guide/keras/functional
 
-Using ``compile``, ``fit`` and ``evaluate`` method in Keras Model to train and evaluate models
-----------------------------------------------------------------------------------------------
+Train and evaluate models using the ``compile``, ``fit`` and ``evaluate`` methods of Keras
+------------------------------------------------------------------------------------------
 
-当模型建立完成后，通过 ``tf.keras.Model`` 的 ``compile`` 方法配置训练过程：
+When the model has been built, the training process can be configured through the ``compile`` method of ``tf.keras.Model``.
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 84-88
 
-``tf.keras.Model.compile`` 接受 3 个重要的参数：
+``tf.keras.Model.compile`` accepts 3 important parameters.
 
- - ``oplimizer`` ：优化器，可从 ``tf.keras.optimizers`` 中选择；
- - ``loss`` ：损失函数，可从 ``tf.keras.losses`` 中选择；
- - ``metrics`` ：评估指标，可从 ``tf.keras.metrics`` 中选择。
+- ``oplimizer``: an optimizer, can be selected from ``tf.keras.optimizers''.
+- ``loss``: a loss function, can be selected from ``tf.keras.loses''.
+- ``metrics``: a metric, can be selected from ``tf.keras.metrics``.
 
-接下来，可以使用 ``tf.keras.Model`` 的 ``fit`` 方法训练模型：
+Next, the ``fit`` method of ``tf.keras.Model`` can be used to train the model.
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 89
 
-``tf.keras.Model.fit`` 接受 5 个重要的参数：
+``tf.keras.model.fit`` accepts five important parameters.
 
- - ``x`` ：训练数据；
- - ``y`` ：目标数据（数据标签）；
- - ``epochs`` ：将训练数据迭代多少遍；
- - ``batch_size`` ：批次的大小；
- - ``validation_data`` ：验证数据，可用于在训练过程中监控模型的性能。
+- ``x``: training data.
+- ``y``: target data (labels of data).
+- ``epochs``: the number of iterations through training data.
+- ``batch_size``: the size of the batch.
+- ``validation_data``: validation data that can be used to monitor the performance of the model during training.
 
-Keras 支持使用 ``tf.data.Dataset`` 进行训练，详见 :ref:`tf.data <tfdata>` 。
+Keras supports training using ``tf.data.Dataset`` as detailed in :ref:`tf.data <en_tfdata>`.
 
-最后，使用 ``tf.keras.Model.evaluate`` 评估训练效果，提供测试数据及标签即可：
+Finally, we can use ``tf.keras.Model.evaluate`` to evaluate the trained model, just by providing the test data and labels.
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 90
@@ -611,53 +623,54 @@ Keras 支持使用 ``tf.data.Dataset`` 进行训练，详见 :ref:`tf.data <tfda
 ..
     https://www.tensorflow.org/beta/guide/keras/training_and_evaluation
 
-Custom layers, losses and evaluations*
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Custom layers, losses and metrics *
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-可能你还会问，如果现有的这些层无法满足我的要求，我需要定义自己的层怎么办？事实上，我们不仅可以继承 ``tf.keras.Model`` 编写自己的模型类，也可以继承 ``tf.keras.layers.Layer`` 编写自己的层。
+Perhaps you will also ask, what if these existing layers do not meet my requirements and I need to define my own layers? In fact, we can inherit not only ``tf.keras.Model`` to write our own model classes, but also ``tf.keras.layers.Layer`` to write our own layers.
 
 .. _custom_layer:
 
 Custom layers
 -------------------------------------------
 
-自定义层需要继承 ``tf.keras.layers.Layer`` 类，并重写 ``__init__`` 、 ``build`` 和 ``call`` 三个方法，如下所示：
+The custom layer requires inheriting the ``tf.keras.layers.Layer`` class and rewriting the ``__init__``, ``build`` and ``call`` methods, as follows.
 
 .. code-block:: python
 
     class MyLayer(tf.keras.layers.Layer):
         def __init__(self):
             super().__init__()
-            # 初始化代码
+            # Initialization code
 
-        def build(self, input_shape):     # input_shape 是一个 TensorShape 类型对象，提供输入的形状
-            # 在第一次使用该层的时候调用该部分代码，在这里创建变量可以使得变量的形状自适应输入的形状
-            # 而不需要使用者额外指定变量形状。
-            # 如果已经可以完全确定变量的形状，也可以在__init__部分创建变量
+        def build(self, input_shape): # input_shape is a TensorShape object that provides the shape of the input
+            # this part of the code will run at the first time you call this layer
+            # you can create variables here so that the the shape of the variable is adaptive to the input shape
+            # If the shape of the variable can already be fully determined without the infomation of input shape
+            # you can also create the variable in the constructor (__init__)
             self.variable_0 = self.add_weight(...)
             self.variable_1 = self.add_weight(...)
 
         def call(self, inputs):
-            # 模型调用的代码（处理输入并返回输出）
+            # Code for model call (handles inputs and returns outputs)
             return output
 
-例如，如果我们要自己实现一个 :ref:`本章第一节 <linear>` 中的全连接层（ ``tf.keras.layers.Dense`` ），可以按如下方式编写。此代码在 ``build`` 方法中创建两个变量，并在 ``call`` 方法中使用创建的变量进行运算：
+For example, we can implement a :ref:`fully-connected layer <en_linear>` on our own with the following code. This code creates two variables in the ``build`` method and uses the created variables in the ``call`` method.
 
 .. literalinclude:: /_static/code/zh/model/custom/linear.py
     :lines: 9-22
 
-在定义模型的时候，我们便可以如同 Keras 中的其他层一样，调用我们自定义的层 ``LinearLayer``：
+When defining a model, we can use our custom layer ``LinearLayer`` just like other pre-defined layers in Keras.
 
 .. literalinclude:: /_static/code/zh/model/custom/linear.py
     :lines: 25-32
 
-Custom loss functions and evaluation criteria
----------------------------------------------
+Custom loss functions and metrics
+-------------------------------------------
 
 ..
     https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/keras/losses/Loss
 
-自定义损失函数需要继承 ``tf.keras.losses.Loss`` 类，重写 ``call`` 方法即可，输入真实值 ``y_true`` 和模型预测值 ``y_pred`` ，输出模型预测值和真实值之间通过自定义的损失函数计算出的损失值。下面的示例为均方差损失函数：
+The custom loss function needs to inherit the ``tf.keras.losses.losses`` class and rewrite the ``call`` method. The ``call`` method use the real value ``y_true`` and the model predicted value ``y_pred`` as input, and return the customized loss value between the model predicted value and the real value. The following example implements a mean square error loss function.
 
 .. code-block:: python
 
@@ -668,7 +681,7 @@ Custom loss functions and evaluation criteria
 ..
     https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/keras/metrics/Metric
 
-自定义评估指标需要继承 ``tf.keras.metrics.Metric`` 类，并重写 ``__init__`` 、 ``update_state`` 和 ``result`` 三个方法。下面的示例对前面用到的 ``SparseCategoricalAccuracy`` 评估指标类做了一个简单的重实现：
+The custom metrics need to inherit the ``tf.keras.metrics.Metric`` class and rewrite the ``__init__``, ``update_state`` and ``result`` methods. The following example makes a simple re-implementation of the ``SparseCategoricalAccuracy``` metric class that we used earlier.
 
 .. literalinclude:: /_static/code/zh/model/utils.py
     :lines: 22-34
@@ -677,5 +690,17 @@ Custom loss functions and evaluation criteria
 .. [Graves2013] Graves, Alex. “Generating Sequences With Recurrent Neural Networks.” ArXiv:1308.0850 [Cs], August 4, 2013. http://arxiv.org/abs/1308.0850.
 .. [Mnih2013] Mnih, Volodymyr, Koray Kavukcuoglu, David Silver, Alex Graves, Ioannis Antonoglou, Daan Wierstra, and Martin Riedmiller. “Playing Atari with Deep Reinforcement Learning.” ArXiv:1312.5602 [Cs], December 19, 2013. http://arxiv.org/abs/1312.5602.
 
+.. raw:: html
 
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 190 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>
 
