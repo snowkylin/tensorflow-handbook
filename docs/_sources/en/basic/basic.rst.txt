@@ -139,10 +139,10 @@ Recall the basic knowledge of machine learning, to find a local minimum of a mul
 
 Next, we consider how to programme to implement the gradient descent method to find the solution of the linear regression :math:`\min_{a, b} L(a, b) = \sum_{i=1}^n(ax_i + b - y_i)^2`. 
 
-Linear regression under numPy
+Linear regression under NumPy
 -----------------------------
 
-Implementations of ML models are not preserved for TensorFlow. In fact, simple models can be solved even by using regular scientific computing libraries. Here we use Numpy, the common scientific computing library to implement gradient descent. NumPy provides support for multidimensional arrays, which can represent vectors, matrices and even higher dimensional tensors. Meanwhile, it also provides many functions that support operations on multidimensional arrays (e.g. the following ``np.dot()`` evaluates the dot product and ``np.sum()`` gets the sum). NumPy and MATLAB are similar in this regard. In the following codes, we will find the partial derivative of the loss function with respect to the parameters ``a`` and ``b`` manually [#f2]_ and use gradient descent iteratively to obtain the values of ``a`` and ``b`` eventually.
+Implementations of ML models are not preserved for TensorFlow. In fact, simple models can be solved even by using regular scientific computing libraries. Here we use NumPy, a common scientific computing library to implement gradient descent. NumPy provides support for multidimensional arrays, which can represent vectors, matrices and even higher dimensional tensors. Meanwhile, it also provides many functions that support operations on multidimensional arrays (e.g. the following ``np.dot()`` evaluates the dot product and ``np.sum()`` gets the sum). NumPy and MATLAB are similar in this regard. In the following codes, we will find the partial derivative of the loss function with respect to the parameters ``a`` and ``b`` manually [#f2]_ and use gradient descent iteratively to obtain the values of ``a`` and ``b`` eventually.
 
 .. literalinclude:: /_static/code/en/basic/example/numpy_manual_grad.py
     :lines: 9-
@@ -154,12 +154,12 @@ However, you may have already noticed that there are two pain points for impleme
 
 The emergence of DL frameworks such as TensorFlow has largely solved these problems and has brought considerable convenience for implementing ML models.
 
-.. _optimizer:
+.. _en_optimizer:
 
 Linear regression under TensorFlow
 ----------------------------------
 
-TensorFlow **Eager Execution Mode** [#f4]_ is quite similar with how NumPy worked above, while it provides a series of features which are rather crucial for deep learning, such as faster computation (GPU support), automatic differentiation, optimizers, etc. The following shows how to use TensorFlow to compute linear regression. You can notice that the structure of the program is very similar with the previous implemention with NumPy. Here TensorFlow helps us accomplished two crucial tasks:
+TensorFlow **Eager Execution Mode** [#f4]_ is quite similar with how NumPy worked above, while it provides a series of features which are rather crucial for deep learning, such as faster computation (GPU support), automatic differentiation, optimizers, etc. The following shows how to use TensorFlow to compute linear regression. You can notice that the structure of the program is very similar to the previous implemention with NumPy. Here TensorFlow helps us accomplished two crucial tasks:
 
 * Using ``tape.gradient(ys, xs)`` to compute the gradient automatically
 * Using ``optimizer.apply_gradients(grads_and_vars)`` to update model parameters automatically
