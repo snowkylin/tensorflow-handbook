@@ -79,7 +79,7 @@ Here, instead of explicitly declaring two variables ``a`` and ``b`` and writing 
     .. [#glorot] Many layers in Keras use ``tf.glorot_uniform_initializer`` by default to initialize variables, which can be found at https://www.tensorflow.org/api_docs/python/tf/glorot_uniform_initializer.
     .. [#broadcast] You may notice that ``tf.matmul(input, kernel)`` results in a two-dimensional matrix with shape ``[batch_size, units]``. How is this two-dimensional matrix to be added to the one-dimensional bias vector ``bias`` with shape ``[units]``? In fact, here is TensorFlow's Broadcasting mechanism at work. The add operation is equivalent to adding ``bias`` to each row of the two-dimensional matrix. A detailed description of the Broadcasting mechanism can be found at https://www.tensorflow.org/xla/broadcasting.
 
-.. admonition:: Why is the model class overloaded ``call()`` instead of ``__call__()``?
+.. admonition:: Why is the model class override ``call()`` instead of ``__call__()``?
 
     In Python, a call to an instance of a class ``myClass`` (i.e., ``myClass(params)``) is equivalent to ``myClass.__call__(params)`` (see the ``__call__()`` part of "Prerequisite" at the beginning of this chapter). Then in order to call the model using ``y_pred = model(X)``, it seems that one should override the ``__call__()`` method instead of ``call()``. Why we do the opposite? The reason is that Keras still needs to have some pre-processing and post-processing for the model call, so it is more reasonable to expose a ``call()`` method specifically for overriding. The parent class ``tf.keras.Model`` already contains the definition of ``__call__()``. The ``call()`` method is invoked in ``__call__()`` while some internal operations of the keras are also performed. Therefore, by inheriting the ``tf.keras.Model`` and overriding the ``call()`` method, we can add the code of model call while maintaining the inner structure of Keras.
 
@@ -472,12 +472,12 @@ The generated text is like follows::
 
 .. admonition:: The working process of recurrent neural networks
 
-    A recurrent neural network is a neural network that processes time series data. To understand the working process of RNN, we need to have a timeline in our mind. The RNN unit has an initial state :math:`s_0` at initial time step 0, then at each time step :math:`t`, the RNN unit process the current input :math:`x_t`, modifies its own state :math:`s_t` , and outputs :math:`o_t` .
+    Recurrent neural network is a kind of neural network designed to process time series data. To understand the working process of RNN, we need to have a timeline in our mind. The RNN unit has an initial state :math:`s_0` at initial time step 0, then at each time step :math:`t`, the RNN unit process the current input :math:`x_t`, modifies its own state :math:`s_t` , and outputs :math:`o_t` .
 
-    The core of a recurrent neural network is the state :math:`s` , which is a vector of specific dimensions, regarded as the "memory" of a neural network. At the initial moment of :math:`t=0`, :math:`s_0` is given an initial value (usually use a zero vector). We then describe the workings of the recurrent neural network in a recursive way. That is, at the moment :math:`t`, we assume that :math:`s_{t-1}` is known, and focus on how to calculate :math:`s_{t}` based on the input and the previous state.
+    The core of RNN is the state :math:`s` , which is a vector of fixed dimensions, regarded as the "memory" of RNN. At the initial moment of :math:`t=0`, :math:`s_0` is given an initial value (usually a zero vector). We then describe the working process of RNN in a recursive way. That is, at the moment :math:`t`, we assume that :math:`s_{t-1}` is known, and focus on how to calculate :math:`s_{t}` based on the input and the previous state.
 
     - Linear transformation of the input vector :math:`x_t` through the matrix :math:`U`. The result :math:`U x_t` has the same dimension as the state s.
-    - Linear transformation of :math:`s_{t-1}` through the matrix :math:`W`, where :math:`W s_{t-1}` has the same dimension as the state s.
+    - Linear transformation of :math:`s_{t-1}` through the matrix :math:`W`. The result :math:`W s_{t-1}` has the same dimension as the state s.
     - The two vectors obtained above are summed and passed through the activation function as the value of the current state :math:`s_t`, i.e. :math:`s_t = f(U x_t + W s_{t-1})`. That is, the value of the current state is the result of non-linear information combination of the previous state and the current input.
     - Linear transformation of the current state :math:`s_t` through the matrix :math:`V` to get the output of the current moment :math:`o_t`.
 
@@ -499,9 +499,9 @@ Deep Reinforcement Learning (DRL)
 
 .. admonition:: Note
 
-    You can visit :doc:`../appendix/rl` in the appendix to get some basic ideas of reinforcement learning.
+    You may want to read :doc:`../appendix/rl` in the appendix to get some basic ideas of reinforcement learning.
 
-Here, we use deep reinforcement learning to learn to play CartPole (inverted pendulum). The inverted pendulum is a classic problem in cybernetics, where the bottom of a pole is connected to a cart through an axle, and the center of gravity of the pole is above the axle, making it an unstable system. Under the force of gravity, the pole falls down easily. In this task, we need to control the cart to move left and right on a horizontal track to keep the pole in vertical balance.
+Here, we use deep reinforcement learning to learn to play CartPole (inverted pendulum). The inverted pendulum is a classic problem in cybernetics. In this task, the bottom of a pole is connected to a cart through an axle, and the pole's center of gravity is above the axle, making it an unstable system. Under the force of gravity, the pole falls down easily. We need to control the cart to move left and right on a horizontal track to keep the pole in vertical balance.
 
 .. only:: html
 
@@ -519,7 +519,7 @@ Here, we use deep reinforcement learning to learn to play CartPole (inverted pen
 
         CartPole Game
 
-We use the CartPole game environment from `OpenAI's Gym Environment Library <https://gym.openai.com/>`_, which can be installed using ``pip install gym``, the installation steps and tutorials can be found in the `official documentation <https://gym.openai.com/docs/>`_ and `here <https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-4-gym/>`_. The interaction with Gym is very much like a turn-based game. We first get the initial state of the game (such as the initial angle of the pole and the position of the cart), then in each turn t, we need to choose one of the currently feasible actions and send it to Gym to execute (such as pushing the cart to the left or to the right, only one of the two actions can be chosen in each turn). After executing the action, Gym will return the next state after the action is executed and the reward value obtained in the current turn (for example, after we choose to push the cart to the left and execute, the cart position is more to the left and the angle of the pole is more to the right, Gym will return the new angle and position to us. if the pole still doesn't go down on this round, Gym returns us a small positive bonus simultaneously). This process can iterate on and on until the game ends (e.g. the pole goes down). In Python, the sample code to use Gym is as follows.
+We use the CartPole game environment from `OpenAI's Gym Environment Library <https://gym.openai.com/>`_, which can be installed using ``pip install gym``, the installation steps and tutorials can be found in the `official documentation <https://gym.openai.com/docs/>`_ and `here <https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-4-gym/>`_. The interaction with Gym is very much like a turn-based game. We first get the initial state of the game (such as the initial angle of the pole and the position of the cart), then in each turn t, we need to choose one of the currently feasible actions and send it to Gym to execute (such as pushing the cart to the left or to the right, only one of the two actions can be chosen in each turn). After executing the action, Gym will return the next state after the action is executed and the reward value obtained in the current turn (for example, after we choose to push the cart to the left and execute, the cart position is more to the left and the angle of the pole is more to the right, Gym will return the new angle and position to us. if the pole still doesn't go down on this round, Gym returns us a small positive reward simultaneously). This process can iterate on and on until the game ends (e.g. the pole goes down). In Python, the sample code to use Gym is as follows.
 
 .. code-block:: python
 
@@ -536,12 +536,12 @@ We use the CartPole game environment from `OpenAI's Gym Environment Library <htt
 
 Now, our task is to train a model that can predict a good move based on the current state. Roughly speaking, a good move should maximize the sum of the rewards earned throughout the game, which is the goal of reinforcement learning. In the CartPole game, the goal is to make the right moves to keep the pole from falling, i.e. as many rounds of game interaction as possible. In each round, we get a small positive bonus, and the more rounds the higher the cumulative bonus value. Thus, maximizing the sum of the rewards is consistent with our ultimate goal.
 
-The following code shows how to train the model using the Deep Q-Learning method [Mnih2013]_ with Deep Reinforcement Learning. First, we import TensorFlow, Gym and some common libraries, and define some model hyperparameters.
+The following code shows how to train the model using the Deep Q-Learning method [Mnih2013]_ , a classical Deep Reinforcement Learning algorithm. First, we import TensorFlow, Gym and some common libraries, and define some model hyperparameters.
 
 .. literalinclude:: /_static/code/zh/model/rl/qlearning.py
     :lines: 1-14
 
-We then use ``tf.keras.Model``` to build a Q-network for fitting the Q functions in Q-Learning. Here we use a simple multilayered fully connected neural network for fitting. The network inputs the current state and outputs the Q-value for each action (2-dimensional for CartPole, i.e. pushing the cart left and right).
+We then use ``tf.keras.Model``` to build a Q-network for fitting the Q functions in Q-Learning algorithm. Here we use a simple multilayered fully connected neural network for fitting. The network use the current state as input and outputs the Q-value for each action (2-dimensional for CartPole, i.e. pushing the cart left and right).
 
 .. literalinclude:: /_static/code/zh/model/rl/qlearning.py
     :lines: 16-31
@@ -553,11 +553,11 @@ Finally, we implement the Q-learning algorithm in the main program.
 
 For different tasks (or environments), we need to design different states and adopt appropriate networks to fit the Q function depending on the characteristics of the task. For example, if we consider the classic "Block Breaker" game (`Breakout-v0 <https://gym.openai.com/envs/Breakout-v0/>`_ in the Gym environment library), every action performed (baffle moving to the left, right, or motionless) returns an RGB image of ``210 * 160 * 3`` representing the current screen. In order to design a suitable state representation for this game, we have the following analysis.
 
-* The colour information of the bricks is not very important and the conversion of the image to grayscale does not affect the operation, so the colour information in the state can be removed (i.e. the image is converted to grayscale).
-* Information on the movement of the ball is important, and it is difficult for even a human being to judge the direction in which the baffle should move, if only a single frame is known (so the direction in which the ball is moving is not known). Therefore, information that characterizes the direction of motion of the ball must be added to the state. A simple way is to stack the current frame with the previous frames to obtain a state representation of ``210 * 160 * X`` (X being the number of stacked frames).
-* The resolution of each frame does not need to be particularly high, as long as the position of the squares, spheres and baffles can be roughly characterized for decision-making purposes, so that the length and width of each frame can be compressed appropriately.
+* The colour information of the bricks is not very important and the conversion of the image to grayscale does not affect the operation, so the colour information in the state can be removed (i.e. the image can be converted to grayscale).
+* Information on the movement of the ball is important. For CartPole, it is difficult for even a human being to judge the direction in which the baffle should move if only a single frame is known (so the direction in which the ball is moving is not known). Therefore, information that characterizes motion direction of the ball should be added to the state. A simple way is to stack the current frame with the previous frames to obtain a state representation of ``210 * 160 * X`` (X being the number of stacked frames).
+* The resolution of each frame does not need to be particularly high, as long as the position of the blocks, ball and baffle can be roughly characterized for decision-making purposes, so that the length and width of each frame can be compressed appropriately.
 
-And considering that we need to extract features from the image information, using CNN as a network for fitting Q functions would be more appropriate. Based on the analysis, we can just replace the ``QNetwork`` above to CNN and make some changes for the status, then the same program can be used to play some simple video games.
+Considering that we need to extract features from the image information, using CNN as a network for fitting Q functions would be more appropriate. Based on the analysis, we can just replace the ``QNetwork`` model class above to a CNN-based model and make some changes for the status, then the same program can be used to play some simple video games like "Block Breaker".
 
 Keras Pipeline *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -567,19 +567,19 @@ Keras Pipeline *
     https://www.tensorflow.org/beta/guide/keras/overview
     https://www.tensorflow.org/beta/guide/keras/custom_layers_and_models
 
-Until now, all the examples are using Keras' Subclassing API and customized training loop, i.e. we inherit ``tf.keras.Model`` class to build our new model, while the process of training and evaluating the model is explicitly implemented by us. This approach is flexible and similar to other popular deep learning frameworks (e.g. PyTorch and Chainer), and is the approach recommended in this handbook. In many cases, however, we just need to build a neural network with a relatively simple and typical structure (e.g., MLP and CNN in the above section) and train it using conventional means. For this scenario, Keras also give us another simpler and more efficient built-in way to build, train and evaluate models.
+Until now, all the examples are using Keras' Subclassing API and customized training loop. That is, we inherit ``tf.keras.Model`` class to build our new model, while the process of training and evaluating the model is explicitly implemented by us. This approach is flexible and similar to other popular deep learning frameworks (e.g. PyTorch and Chainer), and is the approach recommended in this handbook. In many cases, however, we just need to build a neural network with a relatively simple and typical structure (e.g., MLP and CNN in the above section) and train it using conventional means. For these scenarios, Keras also give us another simpler and more efficient built-in way to build, train and evaluate models.
 
 .. _sequential_functional:
 
 Use Keras Sequential/Functional API to build models
 ---------------------------------------------------
 
-The most typical and common neural network structure is to stack a bunch of layers in a specific order, so can we just provide a list of layers and have Keras automatically connect them head to tail to form a model? The Sequential API of Keras just does this. By providing a list of layers to ``tf.keras.models.Sequential()``, we can quickly get a ``tf.keras.Model`` model.
+The most typical and common neural network structure is to stack a bunch of layers in a specific order, so can we just provide a list of layers and have Keras automatically connect them head to tail to form a model? This is exactly what Keras Sequential API does. By providing a list of layers to ``tf.keras.models.Sequential()``, we can quickly construct a ``tf.keras.Model`` model.
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 18-23
 
-However, this sequential structure is quite limited. Then Keras provides a Functional API to help us build more complex models, such as models with multiple inputs/outputs or where parameters are shared. This is done by using the layer as an invocable object and returning the tensor (which is consistent with the usage in the previous section) and providing the input and output vectors to the ``inputs`` and ``outputs`` parameters of ``tf.keras.Model``, as follows.
+However, the sequential network structure is quite limited. Then Keras provides a more powerful functional API to help us build complex models, such as models with multiple inputs/outputs or where parameters are shared. This is done by using the layer as an invocable object and returning the tensor (which is consistent with the usage in the previous section). Then we can build a model by providing the input and output vectors to the ``inputs`` and ``outputs`` parameters of ``tf.keras.Model``, as follows
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 25-30
@@ -594,13 +594,13 @@ When the model has been built, the training process can be configured through th
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 84-88
 
-``tf.keras.Model.compile`` accepts 3 important parameters.
+``tf.keras.Model.compile`` accepts three important parameters.
 
 - ``oplimizer``: an optimizer, can be selected from ``tf.keras.optimizers''.
 - ``loss``: a loss function, can be selected from ``tf.keras.loses''.
 - ``metrics``: a metric, can be selected from ``tf.keras.metrics``.
 
-Next, the ``fit`` method of ``tf.keras.Model`` can be used to train the model.
+Then, the ``fit`` method of ``tf.keras.Model`` can be used to actually train the model.
 
 .. literalinclude:: /_static/code/zh/model/mnist/main.py
     :lines: 89
@@ -613,7 +613,7 @@ Next, the ``fit`` method of ``tf.keras.Model`` can be used to train the model.
 - ``batch_size``: the size of the batch.
 - ``validation_data``: validation data that can be used to monitor the performance of the model during training.
 
-Keras supports training using ``tf.data.Dataset`` as detailed in :ref:`tf.data <en_tfdata>`.
+Keras supports ``tf.data.Dataset`` as data source, detailed in :ref:`tf.data <en_tfdata>`.
 
 Finally, we can use ``tf.keras.Model.evaluate`` to evaluate the trained model, just by providing the test data and labels.
 
@@ -626,14 +626,14 @@ Finally, we can use ``tf.keras.Model.evaluate`` to evaluate the trained model, j
 Custom layers, losses and metrics *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Perhaps you will also ask, what if these existing layers do not meet my requirements and I need to define my own layers? In fact, we can inherit not only ``tf.keras.Model`` to write our own model classes, but also ``tf.keras.layers.Layer`` to write our own layers.
+Perhaps you will also ask, what if these existing layers do not meet my requirements, and I need to define my own layers? In fact, we can inherit not only ``tf.keras.Model`` to write our own model classes, but also ``tf.keras.layers.Layer`` to write our own layers.
 
 .. _custom_layer:
 
 Custom layers
 -------------------------------------------
 
-The custom layer requires inheriting the ``tf.keras.layers.Layer`` class and rewriting the ``__init__``, ``build`` and ``call`` methods, as follows.
+The custom layer requires inheriting the ``tf.keras.layers.Layer`` class and overriding the ``__init__``, ``build`` and ``call`` methods, as follows.
 
 .. code-block:: python
 
@@ -670,7 +670,7 @@ Custom loss functions and metrics
 ..
     https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/keras/losses/Loss
 
-The custom loss function needs to inherit the ``tf.keras.losses.losses`` class and rewrite the ``call`` method. The ``call`` method use the real value ``y_true`` and the model predicted value ``y_pred`` as input, and return the customized loss value between the model predicted value and the real value. The following example implements a mean square error loss function.
+The custom loss function needs to inherit the ``tf.keras.losses.Loss`` class and override the ``call`` method. The ``call`` method use the real value ``y_true`` and the model predicted value ``y_pred`` as input, and return the customized loss value between the model predicted value and the real value. The following example implements a mean square error loss function.
 
 .. code-block:: python
 
@@ -681,7 +681,7 @@ The custom loss function needs to inherit the ``tf.keras.losses.losses`` class a
 ..
     https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/keras/metrics/Metric
 
-The custom metrics need to inherit the ``tf.keras.metrics.Metric`` class and rewrite the ``__init__``, ``update_state`` and ``result`` methods. The following example makes a simple re-implementation of the ``SparseCategoricalAccuracy``` metric class that we used earlier.
+The custom metrics need to inherit the ``tf.keras.metrics.Metric`` class and override the ``__init__``, ``update_state`` and ``result`` methods. The following example re-implements a simple ``SparseCategoricalAccuracy`` metric class that we used earlier.
 
 .. literalinclude:: /_static/code/zh/model/utils.py
     :lines: 22-34
