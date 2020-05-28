@@ -24,7 +24,7 @@ TensorFlow分布式訓練
 並將模型建構的程式碼放入 ``strategy.scope()`` 的上下文環境中::
 
     with strategy.scope():
-        # 模型構建程式碼
+        # 模型建構程式碼
 
 .. tip:: 可以在參數中指定設備，如::
 
@@ -32,7 +32,7 @@ TensorFlow分布式訓練
     
     即指定只使用第0、1號GPU參與分散式策略。
     
-以下代碼展示了使用 ``MirroredStrategy`` 策略，在 :doc:`TensorFlow Datasets <../appendix/tfds>` 中的部分圖像資料集上使用 Keras 訓練 MobileNetV2 的過程：
+以下程式碼展示了使用 ``MirroredStrategy`` 策略，在 :doc:`TensorFlow Datasets <../appendix/tfds>` 中的部分圖像資料集上使用 Keras 訓練 MobileNetV2 的過程：
 
 .. literalinclude:: /_static/code/zh-hant/distributed/multi_gpu.py
     :emphasize-lines: 8-10, 21

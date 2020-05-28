@@ -8,7 +8,7 @@ y = (y_raw - y_raw.min()) / (y_raw.max() - y_raw.min())
 
 import tensorflow as tf
 
-# 定义数据流图
+# 定義資料流圖
 learning_rate_ = tf.placeholder(dtype=tf.float32)
 X_ = tf.placeholder(dtype=tf.float32, shape=[5])
 y_ = tf.placeholder(dtype=tf.float32, shape=[5])
@@ -18,26 +18,26 @@ b = tf.get_variable('b', dtype=tf.float32, shape=[], initializer=tf.zeros_initia
 y_pred = a * X_ + b
 loss = tf.constant(0.5) * tf.reduce_sum(tf.square(y_pred - y_))
 
-# 反向传播，手动计算变量（模型参数）的梯度
+# 反向傳播，手動計算變數（模型參數）的梯度
 grad_a = tf.reduce_sum((y_pred - y_) * X_)
 grad_b = tf.reduce_sum(y_pred - y_)
 
-# 梯度下降法，手动更新参数
+# 梯度下降法，手動更新參數
 new_a = a - learning_rate_ * grad_a
 new_b = b - learning_rate_ * grad_b
 update_a = tf.assign(a, new_a)
 update_b = tf.assign(b, new_b)
 
 train_op = [update_a, update_b] 
-# 数据流图定义到此结束
-# 注意，直到目前，我们都没有进行任何实质的数据计算，仅仅是定义了一个数据图
+# 資料流圖定義到此結束
+# 注意，直到目前，我們都沒有進行任何實質的資料計算，僅僅是定義了一個資料流圖
 
 num_epoch = 10000
 learning_rate = 1e-3
 with tf.Session() as sess:
-    # 初始化变量a和b
+    # 初始化變數a和b
     tf.global_variables_initializer().run()
-    # 循环将数据送入上面建立的数据流图中进行计算和更新变量
+    # 迴圈將資料送入上面建立的資料流圖中進行計算和更新變數
     for e in range(num_epoch):
         sess.run(train_op, feed_dict={X_: X, y_: y, learning_rate_: learning_rate})
     print(sess.run([a, b]))

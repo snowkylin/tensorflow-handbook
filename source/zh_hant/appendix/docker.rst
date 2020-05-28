@@ -59,13 +59,13 @@ Linux下通過以下命令啓動Docker服務：
 
 .. warning:: 當前nvidia-docker僅支援Linux。
 
-安裝完畢後，在 ``docker container run`` 命令中添加 ``--runtime=nvidia`` 選項，並基於具有 GPU 支援的 TensorFlow Docker 映像檔啟動容器即可，如下：
+安裝完畢後，在 ``docker container run`` 指令中加入 ``--runtime=nvidia`` 選項，並基於具有 GPU 支援的 TensorFlow Docker 映像檔啟動容器即可，如下：
 
 ::
 
     docker container run -it --runtime=nvidia tensorflow/tensorflow:latest-gpu-py3 bash
 
-.. admonition:: Docker常用命令
+.. admonition:: Docker常用指令
 
     映像（image）相關操作：
 

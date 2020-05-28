@@ -16,7 +16,7 @@ def prepare_mnist_features_and_labels(x, y):
 
 # @tf.function
 def train():    
-    # 使用TensorFlow内置的tf.data预处理数据集
+    # 使用TensorFlow內建的tf.data預處理資料集
     (x, y), _ = tf.keras.datasets.mnist.load_data()
     dataset = tf.data.Dataset.from_tensor_slices((x, y))
     dataset = dataset.map(prepare_mnist_features_and_labels)

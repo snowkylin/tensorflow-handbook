@@ -1,14 +1,14 @@
 import tensorflow as tf
 
-# 以下被 @tf.function 修饰的函数定义了一个计算图
+# 以下被 @tf.function 修飾的函數定義了一個計算圖
 @tf.function
 def graph():
     a = tf.constant(1)
     b = tf.constant(1)
     c = a + b
     return c
-# 到此为止，计算图定义完毕。由于 graph() 是一个函数，在其被调用之前，程序是不会进行任何实质计算的。
-# 只有调用函数，才能通过函数返回值，获得 c = 2 的结果
+# 到此為止，計算圖定義完畢。由於 graph() 是一個函數，在其被呼叫之前，程式是不會進行任何實質計算的。
+# 只有呼叫函數，才能通過函數取得回傳值，取得 c = 2 的結果
 
 c_ = graph()
 print(c_.numpy())
