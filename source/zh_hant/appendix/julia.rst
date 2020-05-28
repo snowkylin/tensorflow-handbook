@@ -1,35 +1,35 @@
 TensorFlow in Julia（Ziyang）
 ==========================================================
 
-TensorFlow.jl 簡介
+TensorFlow.jl 简介
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-雖然 Julia 是一門非常優秀的語言，但是目前 TensorFlow 並不直接支持 Julia 。如果有需要，你可以選擇 TensorFlow.jl ，
-這是一個由 `malmaud <https://github.com/malmaud/>`_ 封裝的第三方 Julia 包。它有和 Python 版本類似的 API ，也能支持 GPU 加速。
+虽然 Julia 是一门非常优秀的语言，但是目前 TensorFlow 并不直接支持 Julia 。如果有需要，你可以选择 TensorFlow.jl ，
+这是一个由 `malmaud <https://github.com/malmaud/>`_ 封装的第三方 Julia 包。它有和 Python 版本类似的 API ，也能支持 GPU 加速。
 
-爲什麼要使用 Julia ？
+为什么要使用 Julia ？
 ---------------------------------------------
 
-先進的語法糖，讓你能簡明扼要的表述計算過程。而高性能的 JIT ，提供了媲美靜態語言的速度（這一點是在數據預處理中非常重要，但也是 Python 難以企及的）。
-所以，使用 Julia ，寫的快，跑的更快。
-（你可以通過 `這個視頻 <https://www.youtube.com/watch?v=n2MwJ1guGVQ>`_ 了解更多）
+先进的语法糖，让你能简明扼要的表述计算过程。而高性能的 JIT ，提供了媲美静态语言的速度（这一点是在数据预处理中非常重要，但也是 Python 难以企及的）。
+所以，使用 Julia ，写的快，跑的更快。
+（你可以通过 `这个视频 <https://www.youtube.com/watch?v=n2MwJ1guGVQ>`_ 了解更多）
 
-本章我們將基於 TensorFlow.jl 0.12，向大家簡要介紹 Tensorflow 在 Julia 下的使用. 你可以參考最新的 `TensorFlow.jl 文檔 <https://malmaud.github.io/TensorFlow.jl/stable/tutorial.html>`_.
+本章我们将基于 TensorFlow.jl 0.12，向大家简要介绍 Tensorflow 在 Julia 下的使用. 你可以参考最新的 `TensorFlow.jl 文档 <https://malmaud.github.io/TensorFlow.jl/stable/tutorial.html>`_.
 
-TensorFlow.jl 環境配置
+TensorFlow.jl 环境配置
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-在 docker 中快速體驗 TensorFlow.jl
+在 docker 中快速体验 TensorFlow.jl
 --------------------------------------------
 
-在本機已有 docker 環境的情況下，使用預裝 TensorFlow.jl 的 docker image 是非常方便的。
+在本机已有 docker 环境的情况下，使用预装 TensorFlow.jl 的 docker image 是非常方便的。
 
-在命令行中執行 ``docker run -it malmaud/julia:tf`` ，然後就可以獲得一個已經安裝好 TensorFlow.jl 的 Julia REPL 環境。 (如果你不想直接打開 Julia，請在執行 ``docker run -it malmaud/julia:tf /bin/bash`` 來打開一個bash終端. 如需執行您需要的jl代碼文件，可以使用 docker 的目錄映射)
+在命令行中执行 ``docker run -it malmaud/julia:tf`` ，然后就可以获得一个已经安装好 TensorFlow.jl 的 Julia REPL 环境。 (如果你不想直接打开 Julia，请在执行 ``docker run -it malmaud/julia:tf /bin/bash`` 来打开一个bash终端. 如需执行您需要的jl代码文件，可以使用 docker 的目录映射)
 
-在 julia 包管理器中安裝 TensorFlow.jl
+在 julia 包管理器中安装 TensorFlow.jl
 --------------------------------------------
 
-在命令行中執行 ``julia`` 進入 Julia REPL 環境，然後執行以下命令安裝 TensorFlow.jl
+在命令行中执行 ``julia`` 进入 Julia REPL 环境，然后执行以下命令安装 TensorFlow.jl
 
 .. code-block:: julia
 
@@ -37,47 +37,47 @@ TensorFlow.jl 環境配置
     Pkg.add("TensorFlow")
 
 
-TensorFlow.jl 基礎使用
+TensorFlow.jl 基础使用
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: julia
 
     using TensorFlow
 
-    # 定義一個 Session
+    # 定义一个 Session
     sess = TensorFlow.Session()
 
-    # 定義一個常量和變量
+    # 定义一个常量和变量
     x = TensorFlow.constant([1])
     y = TensorFlow.Variable([2])
 
-    # 定義一個計算
+    # 定义一个计算
     w = x + y
 
-    # 執行計算過程
+    # 执行计算过程
     run(sess, TensorFlow.global_variables_initializer())
     res = run(sess, w)
 
-    # 輸出結果
+    # 输出结果
     println(res)
 
-MNIST數字分類
+MNIST数字分类
 ---------------------------------------------
 
-這個例子來自於 `TensorFlow.jl 文檔 <https://malmaud.github.io/TensorFlow.jl/stable/tutorial.html>`_ ，可以用於對比 python 版本的 API.
+这个例子来自于 `TensorFlow.jl 文档 <https://malmaud.github.io/TensorFlow.jl/stable/tutorial.html>`_ ，可以用于对比 python 版本的 API.
 
 .. code-block:: julia
 
-    # 使用自帶例子中的 mnist_loader.jl 加載數據
+    # 使用自带例子中的 mnist_loader.jl 加载数据
     include(Pkg.dir("TensorFlow", "examples", "mnist_loader.jl"))
     loader = DataLoader()
 
-    # 定義一個 Session
+    # 定义一个 Session
     using TensorFlow
     sess = Session()
 
 
-    # 構建 softmax 回歸模型
+    # 构建 softmax 回归模型
     x = placeholder(Float32)
     y_ = placeholder(Float32)
     W = Variable(zeros(Float32, 784, 10))
@@ -85,18 +85,18 @@ MNIST數字分類
 
     run(sess, global_variables_initializer())
 
-    # 預測類和損失函數
+    # 预测类和损失函数
     y = nn.softmax(x*W + b)
     cross_entropy = reduce_mean(-reduce_sum(y_ .* log(y), axis=[2]))
 
-    # 開始訓練模型
+    # 开始训练模型
     train_step = train.minimize(train.GradientDescentOptimizer(.00001), cross_entropy)
     for i in 1:1000
         batch = next_batch(loader, 100)
         run(sess, train_step, Dict(x=>batch[1], y_=>batch[2]))
     end
 
-    # 查看結果並評估模型
+    # 查看结果并评估模型
     correct_prediction = indmax(y, 2) .== indmax(y_, 2)
     accuracy=reduce_mean(cast(correct_prediction, Float32))
     testx, testy = load_test_set()
