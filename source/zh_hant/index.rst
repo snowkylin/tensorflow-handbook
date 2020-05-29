@@ -22,7 +22,7 @@
 
 這是一本簡明的 TensorFlow 2 入門指導手冊，基於 Keras 和即時執行模式（Eager Execution），力圖讓具備一定機器學習及 Python 基礎的開發者們快速上手 TensorFlow 2。
 
-本手冊的所有代碼基於 TensorFlow 2.1 和 2.0 正式版。文中的所有示例代碼可至 `這裡 <https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/en>`_ 獲得。
+本手冊的所有代碼基於 TensorFlow 2.1 和 2.0 正式版。文中的所有示例代碼可至 `這裡 <https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/zh_hant>`_ 獲得。
 
 本手冊正於TensorFlow官方微信公衆號（TensorFlow_official）連載，可點此查看 `連載文章目錄 <https://mp.weixin.qq.com/s/cvZHUWS3MiGHq3UDynucxw>`_ 。本手冊的原始語言爲中文，其英文版仍在翻譯中。請訪問 https://v1.tf.wiki 以查看本手冊上一版的英文版。本手冊是  `Google Summer of Code 2019 <https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/>`_  項目之一。
 

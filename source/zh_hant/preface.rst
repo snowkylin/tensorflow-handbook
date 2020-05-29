@@ -38,7 +38,7 @@
 
 對於希望將 TensorFlow 模型部署到實際環境中的開發者和工程師，可以重點閱讀本書的「部署」部分，尤其是需要結合代碼示例進行親手操作。不過，依然非常建議學習一些機器學習的基本知識並閱讀本手冊的「基礎」部分，以更加深入地了解 TensorFlow 2。
 
-對於已有 TensorFlow 1.X 使用經驗的開發者，可以從本手冊的「高級」部分開始閱讀，尤其是「圖執行模式下的 TensorFlow 2」和「 ``tf.GradientTape`` 詳解」兩章。隨後，可以快速瀏覽一遍「基礎」部分以了解即時執行模式下 TensorFlow 的使用方式。
+對於已有 TensorFlow 1.X 使用經驗的開發者，可以從本手冊的「高級」部分開始閱讀，尤其是「 `圖執行模式下的 TensorFlow 2 <https://mp.weixin.qq.com/s?__biz=MzU1OTMyNDcxMQ==&mid=2247487599&idx=1&sn=13a53532ad1d2528f0ece4f33e3ae143&chksm=fc185b27cb6fd2313992f8f2644b0a10e8dd7724353ff5e93a97d121cd1c7f3a4d4fcbcb82e8&scene=21#wechat_redirect>`_ 」和「 `tf.GradientTape 詳解 <https://mp.weixin.qq.com/s?__biz=MzU1OTMyNDcxMQ==&mid=2247487701&idx=1&sn=2ef1a15986b1ffd1127460bf6029be01&chksm=fc185b9dcb6fd28befe1a199741b78a6d64cc9eaa1f29c8a0ca251c4e2157a8395917d67b49e&scene=21#wechat_redirect>`_ 」兩章。隨後，可以快速瀏覽一遍「基礎」部分以了解即時執行模式下 TensorFlow 的使用方式。
 
 在整本手冊中，帶「*」的部分均爲選讀。
 
