@@ -4,22 +4,22 @@ Tensorflow Seq2Seq 閒聊機器人（Huan）
 Tensorflow Python 閒聊機器人
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-在本章，我們實現一個可以用來閒聊的對話模型。這個對話模型將基於序列到序列（Seq2Seq）來對電影台詞中的對話數據進行訓練。
+在本章，我們實現一個可以用來閒聊的對話模型。這個對話模型將基於序列到序列（Seq2Seq）來對電影台詞中的對話資料進行訓練。
 
-序列到序列模型（Sequence to Sequence, SEQ2SEQ）是一種基於 RNN 的 Encoder-Decoder 結構，它也是現在谷歌應用於線上機器翻譯的算法，翻譯質量已經和人類水平不相上下。
+序列到序列模型（Sequence to Sequence, SEQ2SEQ）是一種基於 RNN 的 Encoder-Decoder 結構，它也是現在谷歌應用於線上機器翻譯的演算法，翻譯質量已經和人類水平不相上下。
 
-這裡通過 Keras 自定義模型建立一個閒聊對話模型（Seq2Seq）。它使用 Encoder-Decoder 結構，簡單的來說就是算法包含兩部分，一個負責對輸入的信息進行 Encoding，將輸入轉換爲向量形式；然後由 Decoder 對這個向量進行解碼，還原爲輸出序列。
+這里通過 Keras 自定義模型建立一個閒聊對話模型（Seq2Seq）。它使用 Encoder-Decoder 結構，簡單的來說就是演算法包含兩部分，一個負責對輸入的信息進行 Encoding，將輸入轉換為向量形式；然後由 Decoder 對這個向量進行解碼，還原為輸出序列。
 
 關於 Seq2Seq 的原理和介紹，可以參考 Keras 的博客：A ten-minute introduction to sequence-to-sequence learning in Keras。地址： https://blog.keras.io/a-ten-minute-introduction-to-sequence-to-sequence-learning-in-keras.html
 
-這裡，我們使用 Seq2Seq 來實現一個閒聊（ChitChat）對話機器人。除了閒聊任務（輸入一句話，輸出一句回復）之外，它也可以被直接應用於解決其他類似問題，比如：翻譯（輸入一句英文，輸出一句中文）、摘要（輸入一篇文章，輸出一份總結）、作詩（輸入幾個關鍵字，輸出一首短詩）、對對聯（輸入上聯，輸出下聯），等等。
+這里，我們使用 Seq2Seq 來實現一個閒聊（ChitChat）對話機器人。除了閒聊任務（輸入一句話，輸出一句回復）之外，它也可以被直接應用於解決其他類似問題，比如：翻譯（輸入一句英文，輸出一句中文）、摘要（輸入一篇文章，輸出一份總結）、作詩（輸入幾個關鍵字，輸出一首短詩）、對對聯（輸入上聯，輸出下聯），等等。
 
-這個任務對比與之前的RNN尼採風格文本生成，區別在於我們預測的不再是文本的連續字母概率分布，而是通過一個序列，來預測另外一個對應的完整序列。舉例來說，針對一句常見的打招呼::
+這個任務對比與之前的RNN尼採風格文本生成，區別在於我們預測的不再是文本的連續字母機率分佈，而是通過一個序列，來預測另外一個對應的完整序列。舉例來說，針對一句常見的打招呼::
 
     How are you
 
 
-這個句子（序列）一共有3個單詞。當我們聽到這個由3個單詞組成的句子後，根據我們的習慣，我們最傾向與回復的一句話是 "Fine thank you"。我們希望建立這樣的模型，輸入 num_batch 個由編碼後單詞和字符組成的，長爲 max_length 的序列，輸入張量形狀爲 [num_batch, max_length]，輸出與這個序列對應的序列（如聊天回復、翻譯等）中單詞和字符的概率分布，概率分布的維度爲詞彙表大小 voc_size，輸出張量形狀爲 [num_batch, max_length, voc_size]。
+這個句子（序列）一共有3個單詞。當我們聽到這個由3個單詞組成的句子後，根據我們的習慣，我們最傾向與回復的一句話是 "Fine thank you"。我們希望建立這樣的模型，輸入 num_batch 個由編碼後單詞和字元組成的，長為 max_length 的序列，輸入張量形狀為 [num_batch, max_length]，輸出與這個序列對應的序列（如聊天回復、翻譯等）中單詞和字元的機率分佈，機率分佈的維度為詞匯表大小 voc_size，輸出張量形狀為 [num_batch, max_length, voc_size]。
 
 首先，還是實現一個簡單的 ``DataLoader`` 類來讀取文本，
 
@@ -53,12 +53,12 @@ Tensorflow Python 閒聊機器人
                 response_list.append('{} {} {}'.format(START_TOKEN, response, END_TOKEN))
             return np.array(query_list), np.array(response_list)
 
-其次，我們還需要基於 `DataLoader` 加載的文本數據，建立一個詞彙表 `Vocabulary` 來負責管理以下5項任務：
+其次，我們還需要基於 `DataLoader` 加載的文本資料，建立一個詞匯表 `Vocabulary` 來負責管理以下5項任務：
 
 1. 將所有單詞和標點符號進行編碼；
-2. 記錄詞彙表大小；
+2. 記錄詞匯表大小；
 3. 建立單詞到編碼數字，以及編碼數字到單詞的映射字典；
-4. 負責將文本句子轉化爲填充後的編碼序列，形狀爲[batch_size, max_length]；
+4. 負責將文本句子轉化為填充後的編碼序列，形狀為[batch_size, max_length]；
 
 .. code-block:: python
 
@@ -78,7 +78,7 @@ Tensorflow Python 閒聊機器人
 
 接下來進行模型的實現。我們建立一個ChitChat模型。ChitChat 模型是一個 Seq2Seq 的模型，主要由 ChitEncoder 和 ChatDecoder 組成。
 
-ChitEncoder 子模型輸入 num_batch 個由編碼後單詞和字符組成的，長爲 max_length 的序列，輸入張量形狀爲 [num_batch, max_length]，輸出與這個序列對應的上下文張量。爲了簡化代碼，我們這裡只使用一個最基本的 GRU 單元，沒有使用可以獲得更佳效果的雙向RNN、注意力機制等方法。在 `__init__` 方法中我們實例化一個常用的 `GRU` 單元，並將其設置爲 `return_state=True` 來獲得最終的狀態輸出，我們首先對序列進行 GRU 操作，即將編碼序列變換爲 GRU 最終輸出的狀態 ，並將其作爲代表編碼序列的上下文信息 `context` ，作爲模型的輸出。
+ChitEncoder 子模型輸入 num_batch 個由編碼後單詞和字元組成的，長為 max_length 的序列，輸入張量形狀為 [num_batch, max_length]，輸出與這個序列對應的上下文張量。為了簡化代碼，我們這里只使用一個最基本的 GRU 單元，沒有使用可以獲得更佳效果的雙向RNN、註意力機制等方法。在 `__init__` 方法中我們實例化一個常用的 `GRU` 單元，並將其設置為 `return_state=True` 來獲得最終的狀態輸出，我們首先對序列進行 GRU 操作，即將編碼序列變換為 GRU 最終輸出的狀態 ，並將其作為代表編碼序列的上下文信息 `context` ，作為模型的輸出。
 
 `ChitEncoder` 子模型具體實現如下：
 
@@ -97,7 +97,7 @@ ChitEncoder 子模型輸入 num_batch 個由編碼後單詞和字符組成的，
             [outputs, state] = self.gru(inputs)
             return outputs, state
 
-ChatDecoder 子模型輸入 num_batch 個編碼後的一個單詞或字符的 Embedding，和當前的上下文信息張量 `initial_state` 兩個信息構成，輸入張量形狀分別爲 [num_batch, 1, EMBEDDING_DIM]，和 [num_batch, RNN_UNIT_NUM]。在 `__init__` 方法中我們保存詞彙表容量 `voc_size` ，實例化一個常用的 `GRU` 單元，並將其設置爲輸出單元狀態 `return_state=True` 來獲得 GRU 的狀態輸出，以及一個全連接層 `Dense` 單元，負責將 GRU 的輸出變換爲最終的單詞字符分布概率，並將其作爲這個上下文信息對應的單詞符號序列概率分布張量，作爲模型的輸出，形狀爲[num_batch, 1, voc_size]。
+ChatDecoder 子模型輸入 num_batch 個編碼後的一個單詞或字元的 Embedding，和當前的上下文信息張量 `initial_state` 兩個信息構成，輸入張量形狀分別為 [num_batch, 1, EMBEDDING_DIM]，和 [num_batch, RNN_UNIT_NUM]。在 `__init__` 方法中我們保存詞匯表容量 `voc_size` ，實例化一個常用的 `GRU` 單元，並將其設置為輸出單元狀態 `return_state=True` 來獲得 GRU 的狀態輸出，以及一個全連接層 `Dense` 單元，負責將 GRU 的輸出變換為最終的單詞字元分佈機率，並將其作為這個上下文信息對應的單詞符號序列機率分佈張量，作為模型的輸出，形狀為[num_batch, 1, voc_size]。
 
 `ChitDecoder` 子模型具體實現如下：
 
@@ -115,9 +115,9 @@ ChatDecoder 子模型輸入 num_batch 個編碼後的一個單詞或字符的 Em
             outputs = self.dense(outputs)
             return outputs, state
 
-構建 ChitChat 模型將基於上面的兩個 ChitEncoder 和 ChatDecoder 子模型。在 `__init__` 方法中我們將 `Vocabulary` 中的詞彙到編碼字典 `word_index` 和編碼到詞彙字典 `index_word` ，以及詞彙量 `voc_size` 保存備用，實例化一個詞向量的 `Embedding` 單元，以及一個 `ChitEncoder` 子模型和對應的 `ChatDecoder` 子模型。`ChatDecoder` 子模型中需要使用詞彙表尺寸，我們通過構造參數傳給它。
+構建 ChitChat 模型將基於上面的兩個 ChitEncoder 和 ChatDecoder 子模型。在 `__init__` 方法中我們將 `Vocabulary` 中的詞匯到編碼字典 `word_index` 和編碼到詞匯字典 `index_word` ，以及詞匯量 `voc_size` 保存備用，實例化一個詞向量的 `Embedding` 單元，以及一個 `ChitEncoder` 子模型和對應的 `ChatDecoder` 子模型。`ChatDecoder` 子模型中需要使用詞匯表尺寸，我們通過構造參數傳給它。
 
-模型的工作流程爲：我們首先對輸入序列通過 `Embedding` 層進行詞向量轉換，然後進行 Encoder 操作，即將編碼序列 `inputs` 的詞嵌入向量，變換爲一個上下文向量 `encoder_hidden_state` 。然後，我們進入解碼流程：將 START_TOKEN 詞向量和 `encoder_hidden_state` 作爲解碼器的首次輸入，解碼得到解碼器的輸出編碼張量 `decoder_outputs`，以及狀態張量 `decoder_state`。接下來將 `decoder_outputs` 和 `decoder_state` 重複輸入解碼器，即可不斷得到新的 `decoder_outputs` 即作爲模型的輸出，直到 `decoder_outputs` 解碼出來的字符爲 END_TOKEN 爲止。最終輸出的張量形狀爲[num_batch, max_length, voc_size]。
+模型的工作流程為：我們首先對輸入序列通過 `Embedding` 層進行詞向量轉換，然後進行 Encoder 操作，即將編碼序列 `inputs` 的詞嵌入向量，變換為一個上下文向量 `encoder_hidden_state` 。然後，我們進入解碼流程：將 START_TOKEN 詞向量和 `encoder_hidden_state` 作為解碼器的首次輸入，解碼得到解碼器的輸出編碼張量 `decoder_outputs`，以及狀態張量 `decoder_state`。接下來將 `decoder_outputs` 和 `decoder_state` 重復輸入解碼器，即可不斷得到新的 `decoder_outputs` 即作為模型的輸出，直到 `decoder_outputs` 解碼出來的字元為 END_TOKEN 為止。最終輸出的張量形狀為[num_batch, max_length, voc_size]。
 
 `ChitChat` 模型具體實現如下：
 
@@ -168,10 +168,10 @@ ChatDecoder 子模型輸入 num_batch 個編碼後的一個單詞或字符的 Em
                 outputs = tf.concat([outputs, decoder_output], axis=1)
             return outputs
 
-訓練過程與本書的 RNN 模型訓練基本一致，在此複述：
+訓練過程與本書的 RNN 模型訓練基本一致，在此復述：
 
-- 從DataLoader中隨機取一批訓練數據；
-- 將這批數據送入模型，計算出模型的預測值；
+- 從DataLoader中隨機取一批訓練資料；
+- 將這批資料送入模型，計算出模型的預測值；
 - 將模型預測值與真實值進行比較，計算損失函數（loss）；
 - 計算損失函數關於模型變量的導數；
 - 使用優化器更新模型參數以最小化損失函數。
@@ -214,7 +214,7 @@ ChatDecoder 子模型輸入 num_batch 個編碼後的一個單詞或字符的 Em
 
     checkpoint.save('./checkpoints')
 
-訓練時，可以通過輸出了解模型的loss::
+訓練時，可以透過輸出了解模型的loss::
 
     step 0: loss 2.019347
     step 10: loss 1.798050
@@ -222,7 +222,7 @@ ChatDecoder 子模型輸入 num_batch 個編碼後的一個單詞或字符的 Em
     step 30: loss 1.758132
     step 40: loss 1.821826
 
-模型訓練完成後，我們通過 `checkpoint.save()` 函數將模型的參數存在 `./checkpoints` 目錄中。最後，我們需要一個用來對話的程序，來測試實際效果。我們來給 ChitChat 增加 predict 方法：
+模型訓練完成後，我們通過 `checkpoint.save()` 函數將模型的參數存在 `./checkpoints` 目錄中。最後，我們需要一個用來對話的程式，來測試實際效果。我們來給 ChitChat 增加 predict 方法：
 
 .. code-block:: python
 
@@ -241,7 +241,7 @@ ChatDecoder 子模型輸入 num_batch 個編碼後的一個單詞或字符的 Em
                 response_indices.append(indice)
             return response_indices
 
-然後，我們就可以實現一個簡單的 Chat 程序。具體實現如下：
+然後，我們就可以實現一個簡單的 Chat 程式。具體實現如下：
 
 .. code-block:: python
 
@@ -288,23 +288,23 @@ Tensorflow JavaScript 閒聊對話模型
  
 本章我們將根據前述章節的 Python 版閒聊對話模型，實現一個基於 JavaScript 版的序列到序列模型（Sequence to Sequence, Seq2Seq）。它同樣是基於 RNN 的 Encoder-Decoder 結構，具體基本介紹，請讀者參考 Python 版閒聊對話模型的相關章節。
 
-這裡的Encoder-Decoder結構，簡單的來說就是算法包含兩部分，一個負責對輸入的信息進行Encoding，將輸入轉換爲向量形式；然後由Decoder對這個向量進行解碼，還原爲輸出序列。
+這里的Encoder-Decoder結構，簡單的來說就是演算法包含兩部分，一個負責對輸入的信息進行Encoding，將輸入轉換為向量形式；然後由Decoder對這個向量進行解碼，還原為輸出序列。
 
 這個任務預測的是通過一個序列，來預測另外一個對應的序列。舉例來說，常見的打招呼就是一個序列到序列的過程::
 
     輸入：How are you ?
     輸出：Fine, thank you .
 
-這個過程的輸入序列有4個 token： ``['how', 'are', 'you', '?']`` ，輸出序列有5個 token： ``['fine', ',', 'thank', 'you', '.']`` 。我們希望建立這樣的模型，輸入長爲 ``maxLength`` 的序列，輸入張量形狀爲 ``[null, max_length]`` ，輸出與這個序列對應的序列中 token 的概率分布，概率分布的維度爲詞彙表大小 ``vocSize`` ，輸出張量形狀爲 ``[null, maxLength, vocSize]`` 。
+這個過程的輸入序列有4個 token： ``['how', 'are', 'you', '?']`` ，輸出序列有5個 token： ``['fine', ',', 'thank', 'you', '.']`` 。我們希望建立這樣的模型，輸入長為 ``maxLength`` 的序列，輸入變數形狀為 ``[null, max_length]`` ，輸出與這個序列對應的序列中 token 的機率分佈，機率分佈的維度為詞匯表大小 ``vocSize`` ，輸出變數形狀為 ``[null, maxLength, vocSize]`` 。
 
-首先，我們下載預先準備好數據集，將其存爲 ``dataset.txt`` 。數據集的格式爲每行爲一對序列，分別爲輸入序列和輸出序列，之間用 ``'\t'`` 制表符隔開。序列中的每一個 token 之間，都通過 ``' '`` 空格符號進行分割。
+首先，我們下載預先準備好資料集，將其存為 ``dataset.txt`` 。資料集的格式為每行為一對序列，分別為輸入序列和輸出序列，之間用 ``'\t'`` 製表符隔開。序列中的每一個 token 之間，都透過 ``' '`` 空格符號進行分割。
 
 ::
 
     $ wget https://github.com/huan/python-concise-chitchat/releases/download/v0.0.1/dataset.txt.gz
     dataset.txt.gz 100% [======================>] 986.60K   282KB/s    in 3.5s
 
-    2019-03-15 22:59:00 (282 KB/s) - 『dataset.txt.gz』 saved [1010276/1010276]
+    2019-03-15 22:59:00 (282 KB/s) - ‘dataset.txt.gz’ saved [1010276/1010276]
 
     $ gzip -d dataset.txt.gz
 
@@ -316,7 +316,7 @@ Tensorflow JavaScript 閒聊對話模型
     no .	you might wanna think about it
     you the new guy ?	so they tell me ...
 
-我們需要將它轉換爲 Tensorflow Dataset 格式：
+我們需要將它轉換為 Tensorflow Dataset 格式：
 
 .. code-block:: javascript
 
@@ -333,11 +333,11 @@ Tensorflow JavaScript 閒聊對話模型
         delimiter: '\t',
     }) as any as tf.data.Dataset<Seq2seqData>
 
-其次，我們還需要基於 ``Dataset`` 中輸入序列和輸出序列中的文本數據，建立對應的詞彙表 ``Vocabulary`` 來負責管理以下5項任務：
+其次，我們還需要基於 ``Dataset`` 中輸入序列和輸出序列中的文本資料，建立對應的詞匯表 ``Vocabulary`` 來負責管理以下5項任務：
 
 1. 將所有單詞和標點符號進行編碼；
-2. 記錄詞彙表大小；
-3. 建立單詞到編碼數字，以及編碼數字到單詞的映射字典；
+2. 記錄詞匯表大小；
+3. 建立單詞到編碼數字，以及編碼數字到單詞的對應字典；
 
 .. code-block:: javascript
 
@@ -401,7 +401,7 @@ Tensorflow JavaScript 閒聊對話模型
       }
     }
 
-接下來，我們將數據集和 ``Vocabulary`` 結合起來，並對數據集進行數據向量化。
+接下來，我們將資料集和 ``Vocabulary`` 結合起來，並對資料集進行資料向量化。
 
 .. code-block:: javascript
 
@@ -497,15 +497,15 @@ Tensorflow JavaScript 閒聊對話模型
     })
 
 
-然後，由這些 Layers ，來組建我們的 Seq2Seq 模型。需要注意的是我們需要共享這些 Layers 建立三個不同的模型，分別是：
+然後，由這些 Layers ，來建立我們的 Seq2Seq 模型。需要註意的是我們需要共用這些 Layers 建立三個不同的模型，分別是：
 
 * 用來訓練的完整 Seq2Seq 模型： ``seq2seqModel`` 
 * 用來對序列進行編碼的 Encoder 模型： ``encoderModel`` 
 * 用來對序列進行解碼的 Decoder 模型： ``decoderModel`` 
 
-請注意這三個模型中，只有第一個模型  ``seq2seqModel``  是用來訓練參數所需要的，所以訓練的的時候使用這個模型。而另外的兩個模型 ``encoderModel`` 和 ``decoderModel`` ，使我們用來預測的時候需要使用的。這三個模型共享所有的 Layers 參數。
+請註意這三個模型中，只有第一個模型  ``seq2seqModel``  是用來訓練參數所需要的，所以訓練的的時候使用這個模型。而另外的兩個模型 ``encoderModel`` 和 ``decoderModel`` ，使我們用來預測的時候需要使用的。這三個模型共用所有的 Layers 參數。
 
-``seq2seqModel`` 模型的輸入包含兩個，一個是 Encoder 的輸入，另外一個是 Decoder 的輸入。模型的輸出是我們數據集的輸出。
+``seq2seqModel`` 模型的輸入包含兩個，一個是 Encoder 的輸入，另外一個是 Decoder 的輸入。模型的輸出是我們資料集的輸出。
 
 .. code-block:: javascript
 
@@ -570,9 +570,9 @@ Tensorflow JavaScript 閒聊對話模型
     eta=0.0 - loss=3.52 
     ...
 
-然後，爲了能夠讓我們使用訓練好的模型，我們還需要基於已經訓練好的模型 Layer 參數，構建獨立的 ``encoderModel`` 和 ``decoderModel`` 。
+然後，為了能夠讓我們使用訓練好的模型，我們還需要基於已經訓練好的模型 Layer 參數，構建獨立的 ``encoderModel`` 和 ``decoderModel`` 。
 
-Encoder子模型輸入 ``numBatch`` 個由編碼後單詞和字符組成的，長爲 ``maxLength`` 的序列，輸入張量形狀爲 ``[numBatch, maxLength]`` ，輸出與這個序列對應的上下文狀態張量。
+Encoder子模型輸入 ``numBatch`` 個由編碼後單詞和字元組成的，長為 ``maxLength`` 的序列，輸入張量形狀為 ``[numBatch, maxLength]`` ，輸出與這個序列對應的上下文狀態張量。
 
 ``encoderModel`` 的代碼實現如下：
 
@@ -590,7 +590,7 @@ Encoder子模型輸入 ``numBatch`` 個由編碼後單詞和字符組成的，�
       outputs: encoderState,
     })
 
-``deocoderModel`` 的輸入有兩個，分別是 t 時刻的 token indice，和對應的解碼器 ``state``；輸出也有兩個，分別是 t+1 時刻的 token 的 voc 分布概率，和對應的解碼器 ``state`` ：
+``deocoderModel`` 的輸入有兩個，分別是 t 時間的 token indice，和對應的解碼器 ``state``；輸出也有兩個，分別是 t+1 時間的 token 的 voc 分佈機率，和對應的解碼器 ``state`` ：
 
 ``decoderModel`` 子模型具體實現如下：
 
@@ -620,7 +620,7 @@ Encoder子模型輸入 ``numBatch`` 個由編碼後單詞和字符組成的，�
       outputs: [decoderDenseOutputs, decoderStateOutput],
     })
 
-最後，我們需要一個用來對話的程序。我們建立一個專門用來接收一句話輸入，然後通過我們的模型預測，得到序列輸出的函數 ``seq2seqDecoder()`` ：
+最後，我們需要一個用來對話的程式。我們建立一個專門用來接收一句話輸入，然後通過我們的模型預測，得到序列輸出的函數 ``seq2seqDecoder()`` ：
 
 .. code-block:: javascript
 
@@ -704,7 +704,7 @@ Encoder子模型輸入 ``numBatch`` 個由編碼後單詞和字符組成的，�
     Decoded setence: "good ."
 
 
-註：本章節中的 JavaScript 版 ChitChat 完整代碼，使用說明，和訓練好的模型文件及參數，都可以在作者的 GitHub 上找到。地址： https://github.com/huan/tensorflow-handbook-javascript
+註：本章節中的 JavaScript 版 ChitChat 完整程式碼，使用說明，和訓練好的模型文件及參數，都可以在作者的 GitHub 上找到。地址： https://github.com/huan/tensorflow-handbook-javascript
 
 TensorFlow Swift 閒聊機器人
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

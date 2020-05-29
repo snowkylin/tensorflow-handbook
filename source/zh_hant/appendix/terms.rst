@@ -1,23 +1,22 @@
-術語中英對照表
+專有名詞中英對照表
 ========================================
-
 * 張量 Tensor
-* 變量 Variable
+* 變數 Variable
 * 操作 Operation
 * 優化器 Optimizer
 * 層 Layer
-* 導數（梯度） Gradient
+* 梯度 Gradient
 * 損失函數 Loss Function
 * 評估指標 Metrics
 * 即時執行模式 Eager Execution
 * 圖執行模式 Graph Execution
-* 計算圖（數據流圖） Dataflow Graph
-* 多層感知機 Multilayer Perceptron, MLP
-* 卷積神經網絡 Convolutional Neural Network, CNN
-* 循環神經網絡 Recurrent Neural Network, RNN
+* 資料流圖 Dataflow Graph
+* 多層感知器 Multilayer Perceptron, MLP
+* 卷積神經網路 Convolutional Neural Network, CNN
+* 循環神經網路 Recurrent Neural Network, RNN
 * 強化學習 Reinforcement Learning, RL
 * 深度強化學習 Deep Reinforcement Learning, DRL
-* 多智能體強化學習 Multi-Agent Reinforcement Learning, MARL
+* 多智慧體強化學習 Multi-Agent Reinforcement Learning, MARL
 * 批次 Batch
 * 形狀 Shape
 * 容器 Container
@@ -30,6 +29,7 @@
 * 上下文管理器 Context Manager
 * 梯度帶 GradientTape
 * 監視 Watch
+
 
 .. raw:: html
 
