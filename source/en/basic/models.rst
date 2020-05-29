@@ -3,7 +3,7 @@ Model Construction and Training
 
 .. _linear:
 
-This chapter describes how to build models with Keras and Eager Execution using TensorFlow 2.
+This chapter describes how to build models with Keras and Eager Execution using TensorFlow 2..
 
 - Model construction: ``tf.keras.Model`` and ``tf.keras.layers``
 - Loss function of the model: ``tf.keras.losses``
