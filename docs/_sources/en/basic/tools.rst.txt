@@ -258,136 +258,136 @@ For extremely large datasets that cannot be fully loaded into the memory, we can
 Dataset preprocessing
 -------------------------------------------
 
-``tf.data.Dataset`` 类为我们提供了多种数据集预处理方法。最常用的如：
+The ``tf.data.Dataset`` class provides us with a variety of dataset preprocessing methods. Some of the most commonly used methods are
 
-- ``Dataset.map(f)`` ：对数据集中的每个元素应用函数 ``f`` ，得到一个新的数据集（这部分往往结合 ``tf.io`` 进行读写和解码文件， ``tf.image`` 进行图像处理）；
-- ``Dataset.shuffle(buffer_size)`` ：将数据集打乱（设定一个固定大小的缓冲区（Buffer），取出前 ``buffer_size`` 个元素放入，并从缓冲区中随机采样，采样后的数据用后续数据替换）；
-- ``Dataset.batch(batch_size)`` ：将数据集分成批次，即对每 ``batch_size`` 个元素，使用 ``tf.stack()`` 在第0维合并，成为一个元素；
+- ``Dataset.map(f)``: apply the function ``f`` to each element of the dataset to obtain a new dataset (this part is often combined with ``tf.io`` to read, write and decode files and ``tf.image`` to process images).
+- ``Dataset.shuffle(buffer_size)``: shuffle the dataset (set a fixed-size buffer, put the first ``buffer_size`` element in the buffer, and sample randomly from the buffer, replacing the sampled data with subsequent data).
+- ``Dataset.batch(batch_size)``: batches the dataset, i.e. for each ``batch_size`` elements, using ``tf.stack()` to merge into one element on dimension 0.
 
-除此以外，还有 ``Dataset.repeat()`` （重复数据集的元素）、 ``Dataset.reduce()`` （与Map相对的聚合操作）、 ``Dataset.take()`` （截取数据集中的前若干个元素）等，可参考 `API文档 <https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/data/Dataset>`_ 进一步了解。
+In addition, there are ``Dataset.repeat()`` (repeat elements in the dataset), ``Dataset.reduce()`` (aggregation operation), ``Dataset.take()`` (interception of the first few elements of a dataset), etc. Further description can be found in the `API document <https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/data/Dataset>`_.
 
-以下以MNIST数据集进行示例。
+The following example is based on the MNIST data set.
 
-使用 ``Dataset.map()`` 将所有图片旋转90度：
+Using ``Dataset.map()`` to rotate all pictures 90 degrees.
 
 .. literalinclude:: /_static/code/zh/tools/tfdata/tutorial.py
     :lines: 27-37
     :emphasize-lines: 1-5
 
-输出
+Output:
 
 .. figure:: /_static/image/tools/mnist_1_rot90.png
     :width: 40%
     :align: center
 
-使用 ``Dataset.batch()`` 将数据集划分批次，每个批次的大小为4：
+Use ``Dataset.batch()`` to divide the dataset into batches, each with a size of 4.
 
 .. literalinclude:: /_static/code/zh/tools/tfdata/tutorial.py
     :lines: 38-45
     :emphasize-lines: 1
 
-输出
+Output:
 
 .. figure:: /_static/image/tools/mnist_batch.png
     :width: 100%
     :align: center
 
-使用 ``Dataset.shuffle()`` 将数据打散后再设置批次，缓存大小设置为10000：
+Use ``Dataset.shuffle()`` to shuffle the dataset with the cache size set to 10000, and then set the batch.
 
 .. literalinclude:: /_static/code/zh/tools/tfdata/tutorial.py
     :lines: 47-54
     :emphasize-lines: 1
 
-输出
+Output:
 
 .. figure:: /_static/image/tools/mnist_shuffle_1.png
     :width: 100%
     :align: center
     
-    第一次运行
+    The first run
 
 .. figure:: /_static/image/tools/mnist_shuffle_2.png
     :width: 100%
     :align: center
     
-    第二次运行
+    The second run
 
-可见每次的数据都会被随机打散。
+It can be seen that each time the data is randomly shuffled.
 
-.. admonition:: ``Dataset.shuffle()`` 时缓冲区大小 ``buffer_size`` 的设置
+.. admonition:: ``buffer_size`` setting of ``Dataset.shuffle()``
 
-    ``tf.data.Dataset`` 作为一个针对大规模数据设计的迭代器，本身无法方便地获得自身元素的数量或随机访问元素。因此，为了高效且较为充分地打散数据集，需要一些特定的方法。``Dataset.shuffle()`` 采取了以下方法：
+    As an iterator designed for large-scale data, ``tf.data.Dataset`` does not support easy access to the number of its own elements or random access to elements. Therefore, in order to shuffle the data set efficiently, some specific designed methods are needed. ``Dataset.shuffle()`` took the following approach.
 
-    - 设定一个固定大小为 ``buffer_size`` 的缓冲区（Buffer）；
-    - 初始化时，取出数据集中的前 ``buffer_size`` 个元素放入缓冲区；
-    - 每次需要从数据集中取元素时，即从缓冲区中随机采样一个元素并取出，然后从后续的元素中取出一个放回到之前被取出的位置，以维持缓冲区的大小。
+    - Set a buffer with fixed size ``buffer_size``.
+    - At initialization, the first ``buffer_size`` element of the dataset is moved to the buffer.
+    - Each time an element needs to be randomly taken from the dataset, then one element is randomly sampled and taken out from the buffer (so there is an empty space in the buffer), and then one subsequent element in the dataset is taken out and put back into the empty space to maintain the size of the buffer.
 
-    因此，缓冲区的大小需要根据数据集的特性和数据排列顺序特点来进行合理的设置。比如：
+    Therefore, the size of the buffer needs to be set reasonably according to the characteristics of the dataset. For example.
 
-    - 当 ``buffer_size`` 设置为1时，其实等价于没有进行任何打散；
-    - 当数据集的标签顺序分布极为不均匀（例如二元分类时数据集前N个的标签为0，后N个的标签为1）时，较小的缓冲区大小会使得训练时取出的Batch数据很可能全为同一标签，从而影响训练效果。一般而言，数据集的顺序分布若较为随机，则缓冲区的大小可较小，否则则需要设置较大的缓冲区。
+    - When ``buffer_size`` is set to 1, it is equivalent to no shuffling at all.
+    - When the label order of the dataset is extremely unevenly distributed (e.g., the first half labels of the dataset are 0 and the second half labels are 1 in binary classification), a small buffer size will result in all elements in a batch to have same label, thus affecting the training effect. In general, the size of the buffer can be smaller if the distribution of the dataset is more random, otherwise a larger buffer is required.
 
-.. _prefetch:
+.. _en_prefetch:
 
-使用 ``tf.data`` 的并行化策略提高训练流程效率
---------------------------------------------------------------------------------------
+Increase the efficiency using the parallelization strategy of ``tf.data``
+--------------------------------------------------------------------------
 
 ..
     https://www.tensorflow.org/guide/data_performance
 
-当训练模型时，我们希望充分利用计算资源，减少CPU/GPU的空载时间。然而有时，数据集的准备处理非常耗时，使得我们在每进行一次训练前都需要花费大量的时间准备待训练的数据，而此时GPU只能空载而等待数据，造成了计算资源的浪费，如下图所示：
+When training models, we want to make the most of computing resources and reduce CPU/GPU idle time. However, sometimes, the preparation of dataset is very time-consuming, thus we have to spend a lot of time preparing data for training before each batch of training. When we are preparing the data, the GPU can only wait for data with no load, resulting in a waste of computing resources, as shown in the following figure.
 
 .. figure:: /_static/image/tools/datasets_without_pipelining.png
     :width: 100%
     :align: center
 
-    常规训练流程，在准备数据时，GPU只能空载。`1图示来源 <https://www.tensorflow.org/guide/data_performance>`_ 。
+    Original training process, GPU can only be idle when preparing data. `Source 1 <https://www.tensorflow.org/guide/data_performance>`_ 。
 
-此时， ``tf.data`` 的数据集对象为我们提供了 ``Dataset.prefetch()`` 方法，使得我们可以让数据集对象 ``Dataset`` 在训练时预取出若干个元素，使得在GPU训练的同时CPU可以准备数据，从而提升训练流程的效率，如下图所示：
+To tackle this problem, ``tf.data`` provides us with the ``Dataset.prefetch()`` method, which allows us to let the dataset prefetch several elements during training, so that the CPU can prepare data while training in the GPU, improving the efficiency of the training process, as shown below.
 
 .. figure:: /_static/image/tools/datasets_with_pipelining.png
     :width: 100%
     :align: center
     
-    使用 ``Dataset.prefetch()`` 方法进行数据预加载后的训练流程，在GPU进行训练的同时CPU进行数据预加载，提高了训练效率。 `2图示来源  <https://www.tensorflow.org/guide/data_performance>`_ 。
+     The training process with ``Dataset.prefetch()``. The CPU preloads the data while the GPU is training the model, improving training efficiency. `Source 2 <https://www.tensorflow.org/guide/data_performance>`_ 。
 
-``Dataset.prefetch()`` 的使用方法和前节的 ``Dataset.batch()`` 、 ``Dataset.shuffle()`` 等非常类似。继续以前节的MNIST数据集为例，若希望开启预加载数据，使用如下代码即可：
+The usage of ``Dataset.prefetch()`` is very similar to ``Dataset.batch()`` and ``Dataset.shuffle()`` in the previous section. Continuing with the MNIST dataset example, if you want to preloaded data, you can use the following code
 
 .. code-block:: python
 
     mnist_dataset = mnist_dataset.prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
 
-此处参数 ``buffer_size`` 既可手工设置，也可设置为 ``tf.data.experimental.AUTOTUNE`` 从而由TensorFlow自动选择合适的数值。
+Here the parameter ``buffer_size`` can be set either manually, or set to ``tf.data.experimental.AUTOTUNE`` to let TensorFlow select the appropriate value automatically.
 
-与此类似， ``Dataset.map()`` 也可以利用多GPU资源，并行化地对数据项进行变换，从而提高效率。以前节的MNIST数据集为例，假设用于训练的计算机具有2核的CPU，我们希望充分利用多核心的优势对数据进行并行化变换（比如前节的旋转90度函数 ``rot90`` ），可以使用以下代码：
+Similarly, ``Dataset.map()`` can also transform data elements in parallel with multiple GPU resources to increase efficiency. Take the MNIST dataset as an example. assumes that the training machine has a 2-core CPU, and we want to take full advantage of the multi-core CPU to perform a parallelized transformation of the data (e.g. the 90-degree rotation function ``rot90`` in the previous section), we can using the following code
 
 .. code-block:: python
 
     mnist_dataset = mnist_dataset.map(map_func=rot90, num_parallel_calls=2)
 
-其运行过程如下图所示：
+The operation process is shown in the following figure.
 
 .. figure:: /_static/image/tools/datasets_parallel_map.png
     :width: 100%
     :align: center
 
-    通过设置 ``Dataset.map()`` 的 ``num_parallel_calls`` 参数实现数据转换的并行化。上部分是未并行化的图示，下部分是2核并行的图示。 `3图示来源  <https://www.tensorflow.org/guide/data_performance>`_ 。
+    Parallelization of data conversion is achieved by setting the ``num_parallel_calls`` parameter of ``Dataset.map()``. The top part is unparallelized and the bottom part is 2-core parallel. `Source 3 <https://www.tensorflow.org/guide/data_performance>`_ 。
 
-当然，这里同样可以将 ``num_parallel_calls`` 设置为 ``tf.data.experimental.AUTOTUNE`` 以让TensorFlow自动选择合适的数值。
+It is also possible to set ``num_parallel_calls`` to ``tf.data.experimental.AUTOTUNE`` to allow TensorFlow to automatically select the appropriate value.
 
-除此以外，还有很多提升数据集处理性能的方式，可参考 `TensorFlow文档 <https://www.tensorflow.org/guide/data_performance>`_ 进一步了解。后文的实例中展示了tf.data并行化策略的强大性能，可 :ref:`点此 <tfdata_performance>` 查看。
+In addition to this, there are a number of ways to improve dataset processing performance, which can be found in the `TensorFlow documentation <https://www.tensorflow.org/guide/data_performance>`_. The powerful performance of the tf.data parallelization policy is demonstrated in a later example, which can be viewed :ref:`here <en_tfdata_performance>`.
 
-数据集元素的获取与使用
+Fetching elements from datasets
 -------------------------------------------
-构建好数据并预处理后，我们需要从其中迭代获取数据以用于训练。``tf.data.Dataset`` 是一个Python的可迭代对象，因此可以使用For循环迭代获取数据，即：
+After the data is constructed and pre-processed, we need to iterate through it to get the data for training. ``tf.data.Dataset`` is an iteratable Python object, so data can be obtained using the For loop iteratively, namely.
 
 .. code-block:: python
 
     dataset = tf.data.Dataset.from_tensor_slices((A, B, C, ...))
     for a, b, c, ... in dataset:
-        # 对张量a, b, c等进行操作，例如送入模型进行训练
+        # Operate on tensor a, b, c, etc., e.g. feed into model for training
 
-也可以使用 ``iter()`` 显式创建一个Python迭代器并使用 ``next()`` 获取下一个元素，即：
+You can also use ``iter()` to explicitly create a Python iterator and use ``next()` to get the next element, namely.
 
 .. code-block:: python
 
@@ -396,57 +396,57 @@ Dataset preprocessing
     a_0, b_0, c_0, ... = next(it)
     a_1, b_1, c_1, ... = next(it)
 
-Keras支持使用 ``tf.data.Dataset`` 直接作为输入。当调用 ``tf.keras.Model`` 的 ``fit()`` 和 ``evaluate()`` 方法时，可以将参数中的输入数据 ``x`` 指定为一个元素格式为 ``(输入数据, 标签数据)`` 的 ``Dataset`` ，并忽略掉参数中的标签数据 ``y`` 。例如，对于上述的MNIST数据集，常规的Keras训练方式是：
+Keras supports the use of ``tf.data.Dataset`` directly as input. When calling the ``fit()`` and ``evaluate()`` methods of ``tf.keras.Model``, the input data ``x`` in the parameter can be specified as ``Dataset`` with all elements formatted as ``(input data, label data) ``. In this case, the parameter ``y`` (label data) can be ignored. For example, for the MNIST dataset mentioned above, the original Keras training approach is.
 
 .. code-block:: python
 
     model.fit(x=train_data, y=train_label, epochs=num_epochs, batch_size=batch_size)
 
-使用 ``tf.data.Dataset`` 后，我们可以直接传入 ``Dataset`` ：
+After using ``tf.data.Dataset``, we can pass the dataset directly into Keras API.
 
 .. code-block:: python
 
     model.fit(mnist_dataset, epochs=num_epochs)
 
-由于已经通过 ``Dataset.batch()`` 方法划分了数据集的批次，所以这里也无需提供批次的大小。
+Since the dataset have already been divided into batches by the ``Dataset.batch()`` method, we do not need to provide the size of the batch to ``model.fit()``.
 
-.. _cats_vs_dogs:
+.. _en_cats_vs_dogs:
 
-实例：cats_vs_dogs图像分类
+Example: cats_vs_dogs image classification
 -------------------------------------------
 
-以下代码以猫狗图片二分类任务为示例，展示了使用 ``tf.data`` 结合 ``tf.io`` 和 ``tf.image`` 建立 ``tf.data.Dataset`` 数据集，并进行训练和测试的完整过程。数据集可至 `这里 <https://www.floydhub.com/fastai/datasets/cats-vs-dogs>`_ 下载。使用前须将数据集解压到代码中 ``data_dir`` 所设置的目录（此处默认设置为 ``C:/datasets/cats_vs_dogs`` ，可根据自己的需求进行修改）。
+The following code, using the "Cat and Dog" binary image classification task as an example, demonstrates the complete process of building, training and testing model with ``tf.data`` combined with ``tf.io`` and ``tf.image``. The dataset can be downloaded `here <https://www.floydhub.com/fastai/datasets/cats-vs-dogs>`_. The dataset should be decompressed into the ``data_dir`` directory in the code (here the default setting is ``C:/datasets/cats_vs_dogs``, which can be modified to suit your needs).
 
 .. literalinclude:: /_static/code/zh/tools/tfdata/cats_vs_dogs.py
     :lines: 1-54
     :emphasize-lines: 13-17, 29-36, 54
 
-使用以下代码进行测试：
+Use the following code to test the model
 
 .. literalinclude:: /_static/code/zh/tools/tfdata/cats_vs_dogs.py
     :lines: 56-70
 
-.. _tfdata_performance:
+.. _en_tfdata_performance:
 
-通过对以上示例进行性能测试，我们可以感受到 ``tf.data`` 的强大并行化性能。通过 ``prefetch()`` 的使用和在 ``map()`` 过程中加入 ``num_parallel_calls`` 参数，模型训练的时间可缩减至原来的一半甚至更低。测试结果如下：
+By performing performance tests on the above examples, we can feel the powerful parallelization performance of ``tf.data``. Through the use of ``prefetch()`` and the addition of the ``num_parallel_calls`` parameter to the ``map()`` process, the model training time can be reduced to half or even less than before. The test results are as follows.
 
 .. figure:: /_static/image/tools/tfdata_performance.jpg
     :width: 100%
     :align: center
 
-    tf.data 的并行化策略性能测试（纵轴为每epoch训练所需时间，单位：秒）
+    Parallelization performance test for tf.data (vertical axis is time taken per epoch, in seconds)
 
-.. _tfrecord:
+.. _en_tfrecord:
 
-TFRecord ：TensorFlow数据集存储格式
+TFRecord: Dataset format of TensorFlow
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ..
     https://www.tensorflow.org/tutorials/load_data/tfrecord
 
-TFRecord 是TensorFlow 中的数据集存储格式。当我们将数据集整理成 TFRecord 格式后，TensorFlow就可以高效地读取和处理这些数据集，从而帮助我们更高效地进行大规模的模型训练。
+TFRecord is the dataset storage format in TensorFlow. Once we have organized the datasets into TFRecord format, TensorFlow can read and process them efficiently, helping us to train large-scale models more efficiently.
 
-TFRecord可以理解为一系列序列化的 ``tf.train.Example`` 元素所组成的列表文件，而每一个 ``tf.train.Example`` 又由若干个 ``tf.train.Feature`` 的字典组成。形式如下：
+TFRecord can be understood as a file consisting of a series of serialized ``tf.train.Sample`` elements, each ``tf.train.Sample`` consisting of a dict of several ``tf.train.Feature``. The form is as follows.
 
 ::
 
@@ -466,73 +466,73 @@ TFRecord可以理解为一系列序列化的 ``tf.train.Example`` 元素所组�
     ]
 
 
-为了将形式各样的数据集整理为 TFRecord 格式，我们可以对数据集中的每个元素进行以下步骤：
+In order to organize the various datasets into TFRecord format, we can do the following steps for each element of the dataset.
 
-- 读取该数据元素到内存；
-- 将该元素转换为 ``tf.train.Example`` 对象（每一个 ``tf.train.Example`` 由若干个 ``tf.train.Feature`` 的字典组成，因此需要先建立Feature的字典）；
-- 将该 ``tf.train.Example`` 对象序列化为字符串，并通过一个预先定义的 ``tf.io.TFRecordWriter`` 写入 TFRecord 文件。
+- Read the data element into memory.
+- Convert the element to `tf.train.example` objects (each `tf.train.example` consists of several ``tf.train.Feature``, so a dictionary of Feature needs to be created first).
+- Serialize the ``tf.train.Sample``` object as a string and write it to a TFRecord file with a predefined ``tf.io.TFRecordWriter``.
 
-而读取 TFRecord 数据则可按照以下步骤：
+To read the TFRecord data, follow these steps.
 
-- 通过 ``tf.data.TFRecordDataset`` 读入原始的 TFRecord 文件（此时文件中的 ``tf.train.Example`` 对象尚未被反序列化），获得一个 ``tf.data.Dataset`` 数据集对象；
-- 通过 ``Dataset.map`` 方法，对该数据集对象中的每一个序列化的 ``tf.train.Example`` 字符串执行 ``tf.io.parse_single_example`` 函数，从而实现反序列化。
+- Obtain a ``tf.data.Dataset`` instance by reading the original TFRecord file (notice that the ``tf.train.Sample`` object in the file has not been deserialized).
+- Deserialize the ``tf.train.Sample`` string by ``tf.io.parse_single_example`` function for each serialized ``tf.train.Sample`` string in the dataset through the ``Dataset.map`` method.
 
-以下我们通过一个实例，展示将 :ref:`上一节 <cats_vs_dogs>` 中使用的cats_vs_dogs二分类数据集的训练集部分转换为TFRecord文件，并读取该文件的过程。
+In the following part, we show a code example to convert the training set of the :ref:`cats_vs_dogs dataset  <en_cats_vs_dogs>` into a TFRecord file and load this file.
 
-将数据集存储为 TFRecord 文件
+Convert the dataset into a TFRecord file
 -------------------------------------------
 
-首先，与 :ref:`上一节 <cats_vs_dogs>` 类似，我们进行一些准备工作，`下载数据集 <https://www.floydhub.com/fastai/datasets/cats-vs-dogs>`_ 并解压到 ``data_dir`` ，初始化数据集的图片文件名列表及标签。
+First, similar to the :ref:`previous section <en_cats_vs_dogs>`, we `download the dataset <https://www.floydhub.com/fastai/datasets/cats-vs-dogs>`_ and extract it to ``data_dir``. We also initialize the list of image filenames and tags for the dataset.
 
 .. literalinclude:: /_static/code/zh/tools/tfrecord/cats_vs_dogs.py
     :lines: 1-12
 
-然后，通过以下代码，迭代读取每张图片，建立 ``tf.train.Feature`` 字典和 ``tf.train.Example`` 对象，序列化并写入TFRecord文件。
+Then, through the following code, we iteratively read each image, build the ``tf.train.Feature`` dictionary and the ``tf.train.Sample`` object, serialize it and write it to the TFRecord file.
 
 .. literalinclude:: /_static/code/zh/tools/tfrecord/cats_vs_dogs.py
     :lines: 14-22
 
-值得注意的是， ``tf.train.Feature`` 支持三种数据格式：
+It is worth noting that ``tf.train.Feature`` supports three data formats.
 
-- ``tf.train.BytesList`` ：字符串或原始Byte文件（如图片），通过 ``bytes_list`` 参数传入一个由字符串数组初始化的 ``tf.train.BytesList`` 对象；
-- ``tf.train.FloatList`` ：浮点数，通过 ``float_list`` 参数传入一个由浮点数数组初始化的 ``tf.train.FloatList`` 对象；
-- ``tf.train.Int64List`` ：整数，通过 ``int64_list`` 参数传入一个由整数数组初始化的 ``tf.train.Int64List`` 对象。
+- ``tf.train.BytesList``: string or binary files (e.g. image). Use ``bytes_list`` parameter to pass through a ``tf.train.BytesList`` object initialized by an array of strings or bytes.
+- ``tf.train.FloatList`` : float or double numbers. Use ``float_list`` parameter to pass through a ``tf.train.FloatList`` object initialized by a float or double array.
+- ``tf.train.Int64List`` : integers. Use ``int64_list`` parameter to pass through a ``tf.train.Int64List`` object initialized by an array of integers.
 
-如果只希望保存一个元素而非数组，传入一个只有一个元素的数组即可。
+If you want to feed in only one element rather than an array, you can pass in an array with only one element.
 
-运行以上代码，不出片刻，我们即可在 ``tfrecord_file`` 所指向的文件地址获得一个 500MB 左右的 ``train.tfrecords`` 文件。
+With the code above, we can get a file sized around 500MB named ``train.tfrecords``.
 
-读取 TFRecord 文件
+Read the TFRecord file
 -------------------------------------------
 
-我们可以通过以下代码，读取之间建立的 ``train.tfrecords`` 文件，并通过 ``Dataset.map`` 方法，使用 ``tf.io.parse_single_example`` 函数对数据集中的每一个序列化的 ``tf.train.Example`` 对象解码。
+We can read the file ``train.tfrecords`` created in the previous section, and decode each serialized ``tf.train.Example`` object with ``Dataset.map`` and ``tf.io.parse_single_example`` .
 
 .. literalinclude:: /_static/code/zh/tools/tfrecord/cats_vs_dogs.py
     :lines: 24-36
 
-这里的 ``feature_description`` 类似于一个数据集的“描述文件”，通过一个由键值对组成的字典，告知 ``tf.io.parse_single_example`` 函数每个 ``tf.train.Example`` 数据项有哪些Feature，以及这些Feature的类型、形状等属性。 ``tf.io.FixedLenFeature`` 的三个输入参数 ``shape`` 、 ``dtype`` 和 ``default_value`` （可省略）为每个Feature的形状、类型和默认值。这里我们的数据项都是单个的数值或者字符串，所以 ``shape`` 为空数组。
+The ``feature_description`` is like a "description file" of a dataset, informing the ``tf.io.parse_single_example`` function the properties of each ``tf.train.sample`` element, through a dictionary of key-value pairs. The properties contain which features are available for each ``tf.train.sample`` element, and the type, shape, and other properties of those features. The three input parameters of ``tf.io.FixedLenFeatures``: ``shape``, ``dtype`` and ``default_value`` (optional) are the shape, type and default values for each Feature. Here our data items are single values or strings, so ``shape``` is an empty array.
 
-运行以上代码后，我们获得一个数据集对象 ``dataset`` ，这已经是一个可以用于训练的 ``tf.data.Dataset`` 对象了！我们从该数据集中读取元素并输出验证：
+After running the above code, we get a dataset instance ``dataset``, which is already a ``tf.data.Dataset`` instance that can be used for training! We output an element from this dataset to validate the code
 
 .. literalinclude:: /_static/code/zh/tools/tfrecord/cats_vs_dogs.py
     :lines: 38-43
 
-显示：
+Output:
 
 .. figure:: /_static/image/tools/tfrecord_cat.png
     :width: 60%
     :align: center
 
-可见图片和标签都正确显示，数据集构建成功。
+It can be seen that the images and labels are displayed correctly, and the data set is constructed successfully.
 
 .. _tffunction:
 
-``tf.function`` ：图执行模式 *
+Graph Execution mode: ``@tf.function`` *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-虽然默认的即时执行模式（Eager Execution）为我们带来了灵活及易调试的特性，但在特定的场合，例如追求高性能或部署模型时，我们依然希望使用 TensorFlow 1.X 中默认的图执行模式（Graph Execution），将模型转换为高效的 TensorFlow 图模型。此时，TensorFlow 2 为我们提供了 ``tf.function`` 模块，结合 AutoGraph 机制，使得我们仅需加入一个简单的 ``@tf.function`` 修饰符，就能轻松将模型以图执行模式运行。
+While the default Eager Execution mode gives us flexibility and ease of debugging, in some scenarios, we still want to use the Graph Execution mode (default in in TensorFlow 1.X) to transform the model into an efficient TensorFlow graph model, especially when we want high performance or to deploy models. Therefore, TensorFlow 2 provides us with the ``tf.function`` module, which, in conjunction with the AutoGraph mechanism, makes it easy to run the model in graph execution mode by simply adding a ``@tf.function``` decorator.
 
-``tf.function`` 基础使用方法
+Basic usage of ``@tf.function``
 -------------------------------------------
 
 ..
@@ -543,14 +543,16 @@ TFRecord可以理解为一系列序列化的 ``tf.train.Example`` 元素所组�
     https://pgaleone.eu/tensorflow/tf.function/2019/04/03/dissecting-tf-function-part-2/
     https://pgaleone.eu/tensorflow/tf.function/2019/05/10/dissecting-tf-function-part-3/
 
-在 TensorFlow 2 中，推荐使用 ``tf.function`` （而非1.X中的 ``tf.Session`` ）实现图执行模式，从而将模型转换为易于部署且高性能的TensorFlow图模型。只需要将我们希望以图执行模式运行的代码封装在一个函数内，并在函数前加上 ``@tf.function`` 即可，如下例所示。关于图执行模式的深入探讨可参考 :doc:`附录 <../appendix/static>` 。
+In TensorFlow 2, it is recommended to use ``tf.function`` (instead of ``tf.Session`` in 1.X) to implement the graph execution, so that you can convert the model to an easy-to-deploy, high-performance TensorFlow graph model. To use tf.function, you can just simply encapsulate the code within a function, and decorate the function with ``@tf.function`` decorator, as shown in the example below. For an in-depth discussion of the graph execution mode, see :doc:`the appendix <../advanced/static>` .
 
-.. warning:: 并不是任何函数都可以被 ``@tf.function`` 修饰！``@tf.function`` 使用静态编译将函数内的代码转换成计算图，因此对函数内可使用的语句有一定限制（仅支持Python语言的一个子集），且需要函数内的操作本身能够被构建为计算图。建议在函数内只使用TensorFlow的原生操作，不要使用过于复杂的Python语句，函数参数只包括TensorFlow张量或NumPy数组，并最好是能够按照计算图的思想去构建函数（换言之，``@tf.function`` 只是给了你一种更方便的写计算图的方法，而不是一颗能给任何函数加速的 `银子弹 <https://en.wikipedia.org/wiki/No_Silver_Bullet>`_ ）。详细内容可参考 `AutoGraph Capabilities and Limitations <https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/autograph/g3doc/reference/limitations.md>`_ 。建议配合 :doc:`附录 <../appendix/static>` 一同阅读本节以获得较深入的理解。
+.. admonition:: Warning
+
+    Not all functions can be decorated by ``@tf.function``! ``@tf.function`` uses static compilation to convert the code within the function into a dataflow graph, so there are restrictions on the statements that can be used within the function (only a subset of the Python language is supported), and the operations within the function need to be able to act as a node in the computational graph. It is recommended to use only native TensorFlow operations within the function, not to use overly complex Python statements, and only include TensorFlow tensors or NumPy arrays in the function arguments. In conclusion, it will be better to build the function according to the idea of a dataflow graph. ``@tf.function`` just gives you a more convenient way to write computational graphs, not a `"silver bullet" <https://en.wikipedia.org/wiki/No_Silver_Bullet>`_ that will accelerate any function. Details are available at `AutoGraph Capabilities and Limitations <https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/autograph/g3doc/reference/limitations.md>`_. You can read this section together with :doc:`the appendix <../advanced/static>` for better understanding. 
 
 .. literalinclude:: /_static/code/zh/model/autograph/main.py
     :emphasize-lines: 11, 18
 
-运行400个Batch进行测试，加入 ``@tf.function`` 的程序耗时35.5秒，未加入 ``@tf.function`` 的纯即时执行模式程序耗时43.8秒。可见 ``@tf.function`` 带来了一定的性能提升。一般而言，当模型由较多小的操作组成的时候， ``@tf.function`` 带来的提升效果较大。而当模型的操作数量较少，但单一操作均很耗时的时候，则 ``@tf.function`` 带来的性能提升不会太大。
+With 400 batches, the program took 35.5 seconds with ``@tf.function`` and 43.8 seconds without ``@tf.function''. It can be seen that ``@tf.function`` brought some performance improvements. In general, ``@tf.function`` brings greater performance boost when the model is composed of many small operations. But if the model does not have much operations while each operation is time-consuming, the performance gains from ``@tf.function`` will not be significant.
 
 ..
     https://www.tensorflow.org/beta/guide/autograph
@@ -649,7 +651,7 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
 
 .. literalinclude:: /_static/code/zh/model/autograph/autograph.py
 
-输出：
+Output:
 
 ::
 
@@ -743,7 +745,7 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
 
 .. literalinclude:: /_static/code/zh/tools/tensorarray/example.py
 
-输出：
+Output
 
 ::
     
@@ -768,7 +770,7 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
     cpus = tf.config.list_physical_devices(device_type='CPU')
     print(gpus, cpus)
 
-输出：
+Output:
 
 .. code-block:: python
 

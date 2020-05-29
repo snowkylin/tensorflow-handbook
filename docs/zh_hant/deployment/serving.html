@@ -41,7 +41,7 @@
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
     <link rel="next" title="TensorFlow Lite（Jinpeng）" href="lite.html" />
-    <link rel="prev" title="TensorFlow模型導出" href="export.html" /> 
+    <link rel="prev" title="TensorFlow模型匯出" href="export.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -136,24 +136,24 @@
 </ul>
 <p class="caption"><span class="caption-text">基礎</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安裝與環境配置</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow 安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow 基礎</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立與訓練</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模塊</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模組</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="export.html">TensorFlow模型匯出</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Serving</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">TensorFlow Serving安裝</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">TensorFlow Serving模型部署</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#keras-sequential">Keras Sequential模式模型的部署</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#keras">自定義Keras模型的部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">TensorFlow Serving 安裝</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">TensorFlow Serving 模型部署</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#keras-sequential">Keras Sequential 模式模型的部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keras">自定義 Keras 模型的部署</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#zh-hant-call-serving-api">在客戶端調用以TensorFlow Serving部署的模型</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#python">Python客戶端示例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#node-js-ziyang">Node.js客戶端示例（Ziyang）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#call-serving-api">在客戶端呼叫以 TensorFlow Serving 部署的模型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python">Python 客戶端範例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#node-js-ziyang">Node.js客戶端範例（Ziyang）</a></li>
 </ul>
 </li>
 </ul>
@@ -168,8 +168,8 @@
 </ul>
 <p class="caption"><span class="caption-text">擴展</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型複用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 資料集載入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
 </ul>
@@ -178,9 +178,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../appendix/rl.html">強化學習簡介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow環境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在雲端使用TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的互動式 Python 開發環境 JupyterLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">參考資料與推薦閱讀</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">術語中英對照表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">專有名詞中英對照表</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Preface</span></p>
 <ul>
@@ -287,86 +287,86 @@
             
   <div class="section" id="tensorflow-serving">
 <h1>TensorFlow Serving<a class="headerlink" href="#tensorflow-serving" title="永久链接至标题">¶</a></h1>
-<p>當我們將模型訓練完畢後，往往需要將模型在生產環境中部署。最常見的方式，是在伺服器上提供一個API，即客戶機向伺服器的某個API發送特定格式的請求，伺服器收到請求數據後通過模型進行計算，並返回結果。如果僅僅是做一個Demo，不考慮高並發和性能問題，其實配合 <a class="reference external" href="https://palletsprojects.com/p/flask/">Flask</a> 等Python下的Web框架就能非常輕鬆地實現伺服器API。不過，如果是在真的實際生產環境中部署，這樣的方式就顯得力不從心了。這時，TensorFlow爲我們提供了TensorFlow Serving這一組件，能夠幫助我們在實際生產環境中靈活且高性能地部署機器學習模型。</p>
+<p>當我們將模型訓練完畢後，往往需要將模型在開發環境中部署。最常見的方式是在伺服器上提供一個 API，即客戶端向伺服器的某個 API 發送特定格式的請求，伺服器收到請求資料後透過模型進行計算，並返回結果。如果只是做一個 Demo，不考慮並發性和性能問題，其實配合 <a class="reference external" href="https://palletsprojects.com/p/flask/">Flask</a> 等 Python 下的 Web 框架就能非常輕鬆地實現伺服器 API。不過，如果是在真的實際開發環境中部署，這樣的方式就顯得力不從心了。這時，TensorFlow 為我們提供了 TensorFlow Serving 這一組件，能夠幫助我們在實際開發環境中靈活且高性能地部署機器學習模型。</p>
 <div class="section" id="id1">
-<h2>TensorFlow Serving安裝<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
-<p>TensorFlow Serving可以使用apt-get或Docker安裝。在生產環境中，推薦 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/docker">使用Docker部署TensorFlow Serving</a> 。不過此處出於教學目的，介紹依賴環境較少的 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup#installing_using_apt">apt-get安裝</a> 。</p>
+<h2>TensorFlow Serving 安裝<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>TensorFlow Serving 可以使用 apt-get 或 Docker安裝。在開發環境中，推薦 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/docker">使用Docker部署TensorFlow Serving</a> 。不過此處出於教學目的，介紹環境依賴較少的 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup#installing_using_apt">apt-get安裝</a> 。</p>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>
-<p>軟體的安裝方法往往具有時效性，本節的更新日期爲2019年8月。若遇到問題，建議參考 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup">TensorFlow網站上的最新安裝說明</a> 進行操作。</p>
+<p>軟體的安裝方法往往具有時效性，本節的更新日期為2019年8月。若遇到問題，建議參考 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup">TensorFlow網站上的最新安裝說明</a> 進行操作。</p>
 </div>
-<p>首先設置安裝源：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 添加Google的TensorFlow Serving源</span>
+<p>首先設置安裝來源：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 添加Google的TensorFlow Serving安裝來源</span>
 <span class="n">echo</span> <span class="s2">&quot;deb [arch=amd64] http://storage.googleapis.com/tensorflow-serving-apt stable tensorflow-model-server tensorflow-model-server-universal&quot;</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">tee</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">-</span><span class="n">serving</span><span class="o">.</span><span class="n">list</span>
 <span class="c1"># 添加gpg key</span>
 <span class="n">curl</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">storage</span><span class="o">.</span><span class="n">googleapis</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">-</span><span class="n">serving</span><span class="o">-</span><span class="n">apt</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">-</span><span class="n">serving</span><span class="o">.</span><span class="n">release</span><span class="o">.</span><span class="n">pub</span><span class="o">.</span><span class="n">gpg</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">key</span> <span class="n">add</span> <span class="o">-</span>
 </pre></div>
 </div>
-<p>更新源後，即可使用apt-get安裝TensorFlow Serving</p>
+<p>更新安裝來源後，即可使用 apt-get 安裝 TensorFlow Serving</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
 <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="n">server</span>
 </pre></div>
 </div>
 <div class="admonition hint">
 <p class="admonition-title">提示</p>
-<p>在運行curl和apt-get命令時，可能需要設置代理。</p>
-<p>curl設置代理的方式爲 <code class="docutils literal notranslate"><span class="pre">-x</span></code> 選項或設置 <code class="docutils literal notranslate"><span class="pre">http_proxy</span></code> 環境變量，即</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">http_proxy</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理伺服器IP</span><span class="p">:</span><span class="n">埠</span>
+<p>在執行 curl 和 apt-get 命令時，可能需要設置代理伺服器。</p>
+<p>curl 設置代理伺服器的方式為 <code class="docutils literal notranslate"><span class="pre">-x</span></code> 選項或設置 <code class="docutils literal notranslate"><span class="pre">http_proxy</span></code> 環境變量，即</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">http_proxy</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理伺服器IP</span><span class="p">:</span><span class="n">埠號</span>
 </pre></div>
 </div>
 <p>或</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">x</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理伺服器IP</span><span class="p">:</span><span class="n">埠</span> <span class="n">URL</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">x</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理伺服器IP</span><span class="p">:</span><span class="n">埠號</span> <span class="n">URL</span>
 </pre></div>
 </div>
-<p>apt-get設置代理的方式爲 <code class="docutils literal notranslate"><span class="pre">-o</span></code> 選項，即</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">o</span> <span class="n">Acquire</span><span class="p">::</span><span class="n">http</span><span class="p">::</span><span class="n">proxy</span><span class="o">=</span><span class="s2">&quot;http://代理伺服器IP:埠&quot;</span> <span class="o">...</span>
+<p>apt-get設置代理的方式為 <code class="docutils literal notranslate"><span class="pre">-o</span></code> 選項，即</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">o</span> <span class="n">Acquire</span><span class="p">::</span><span class="n">http</span><span class="p">::</span><span class="n">proxy</span><span class="o">=</span><span class="s2">&quot;http://代理伺服器IP:埠號&quot;</span> <span class="o">...</span>
 </pre></div>
 </div>
-<p>Windows 10下，可以在 <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Linux子系統（WSL）</a> 內使用相同的方式安裝TensorFlow Serving。</p>
+<p>Windows 10 下，可以在 <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Linux子系統（WSL）</a> 使用相同的方式安裝 TensorFlow Serving。</p>
 </div>
 </div>
 <div class="section" id="id2">
-<h2>TensorFlow Serving模型部署<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<p>TensorFlow Serving可以直接讀取SavedModel格式的模型進行部署（導出模型到SavedModel文件的方法見 <a class="reference internal" href="export.html#zh-hant-savedmodel"><span class="std std-ref">前文</span></a> ）。使用以下命令即可：</p>
+<h2>TensorFlow Serving 模型部署<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>TensorFlow Serving 可以直接讀取 SavedModel 格式的模型進行部署（匯出模型到 SavedModel 文件的方法見 <a class="reference internal" href="export.html#savedmodel"><span class="std std-ref">前文</span></a> ）。使用以下指令即可：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>tensorflow_model_server \
     --rest_api_port=埠號（如8501） \
     --model_name=模型名 \
-    --model_base_path=&quot;SavedModel格式模型的文件夾絕對地址（不含版本號）&quot;
+    --model_base_path=&quot;SavedModel格式模型的資料夾絕對地址（不含版本號碼）&quot;
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注解</p>
-<p>TensorFlow Serving支持熱更新模型，其典型的模型文件夾結構如下：</p>
+<p>TensorFlow Serving 支援即時更新模型，其典型的模型資料夾結構如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">saved_model_files</span>
-    <span class="o">/</span><span class="mi">1</span>      <span class="c1"># 版本號爲1的模型文件</span>
+    <span class="o">/</span><span class="mi">1</span>      <span class="c1"># 版本號碼為1的模型文件</span>
         <span class="o">/</span><span class="n">assets</span>
         <span class="o">/</span><span class="n">variables</span>
         <span class="n">saved_model</span><span class="o">.</span><span class="n">pb</span>
     <span class="o">...</span>
-    <span class="o">/</span><span class="n">N</span>      <span class="c1"># 版本號爲N的模型文件</span>
+    <span class="o">/</span><span class="n">N</span>      <span class="c1"># 版本號碼為N的模型文件</span>
         <span class="o">/</span><span class="n">assets</span>
         <span class="o">/</span><span class="n">variables</span>
         <span class="n">saved_model</span><span class="o">.</span><span class="n">pb</span>
 </pre></div>
 </div>
-<p>上面1~N的子文件夾代表不同版本號的模型。當指定 <code class="docutils literal notranslate"><span class="pre">--model_base_path</span></code> 時，只需要指定根目錄的 <strong>絕對地址</strong> （不是相對地址）即可。例如，如果上述文件夾結構存放在 <code class="docutils literal notranslate"><span class="pre">home/snowkylin</span></code> 文件夾內，則 <code class="docutils literal notranslate"><span class="pre">--model_base_path</span></code> 應當設置爲 <code class="docutils literal notranslate"><span class="pre">home/snowkylin/saved_model_files</span></code> （不附帶模型版本號）。TensorFlow Serving會自動選擇版本號最大的模型進行載入。</p>
+<p>上面 1~N 的子資料夾代表不同版本號的模型。當指定 <code class="docutils literal notranslate"><span class="pre">--model_base_path</span></code> 時，只需要指定根目錄的 <strong>絕對路徑</strong> （不是相對路徑）即可。例如，如果上述資料夾結構存放在 <code class="docutils literal notranslate"><span class="pre">home/snowkylin</span></code> 資料夾內，則 <code class="docutils literal notranslate"><span class="pre">--model_base_path</span></code> 應該設置為 <code class="docutils literal notranslate"><span class="pre">home/snowkylin/saved_model_files</span></code> （不附帶模型版本號碼）。TensorFlow Serving 會自動選擇版本號碼最大的模型進行載入。</p>
 </div>
 <div class="section" id="keras-sequential">
-<h3>Keras Sequential模式模型的部署<a class="headerlink" href="#keras-sequential" title="永久链接至标题">¶</a></h3>
-<p>由於Sequential模式的輸入和輸出都很固定，因此這種類型的模型很容易部署，無需其他額外操作。例如，要將 <a class="reference internal" href="export.html#zh-hant-savedmodel"><span class="std std-ref">前文使用SavedModel導出的MNIST手寫體識別模型</span></a> （使用Keras Sequential模式建立）以 <code class="docutils literal notranslate"><span class="pre">MLP</span></code> 的模型名在 <code class="docutils literal notranslate"><span class="pre">8501</span></code> 埠進行部署，可以直接使用以下命令：</p>
+<h3>Keras Sequential 模式模型的部署<a class="headerlink" href="#keras-sequential" title="永久链接至标题">¶</a></h3>
+<p>由於 Sequential 模式的輸入和輸出都很固定，因此這種類型的模型很容易部署，不需要其他額外操作。例如，要將 <a class="reference internal" href="export.html#savedmodel"><span class="std std-ref">前文使用 SavedModel 匯出的 MNIST 手寫體識別模型</span></a> （使用Keras Sequential模式建立）以 <code class="docutils literal notranslate"><span class="pre">MLP</span></code> 的模型名在埠號 <code class="docutils literal notranslate"><span class="pre">8501</span></code> 進行部署，可以直接使用以下指令：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tensorflow_model_server</span> \
     <span class="o">--</span><span class="n">rest_api_port</span><span class="o">=</span><span class="mi">8501</span> \
     <span class="o">--</span><span class="n">model_name</span><span class="o">=</span><span class="n">MLP</span> \
-    <span class="o">--</span><span class="n">model_base_path</span><span class="o">=</span><span class="s2">&quot;/home/.../.../saved&quot;</span>  <span class="c1"># 文件夾絕對地址根據自身情況填寫，無需加入版本號</span>
+    <span class="o">--</span><span class="n">model_base_path</span><span class="o">=</span><span class="s2">&quot;/home/.../.../saved&quot;</span>  <span class="c1"># 資料夾絕對路徑根據自身情況填寫，無需加入版本號碼</span>
 </pre></div>
 </div>
-<p>然後就可以按照 <a class="reference internal" href="#zh-hant-call-serving-api"><span class="std std-ref">後文的介紹</span></a> ，使用gRPC或者RESTful API在客戶端調用模型了。</p>
+<p>然後就可以按照 <a class="reference internal" href="#call-serving-api"><span class="std std-ref">後文的介紹</span></a> ，使用 gRPC 或者 RESTful API 在客戶端呼叫模型了。</p>
 </div>
 <div class="section" id="keras">
-<h3>自定義Keras模型的部署<a class="headerlink" href="#keras" title="永久链接至标题">¶</a></h3>
-<p>使用繼承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 類建立的自定義Keras模型的自由度相對更高。因此當使用TensorFlow Serving部署模型時，對導出的SavedModel文件也有更多的要求：</p>
+<h3>自定義 Keras 模型的部署<a class="headerlink" href="#keras" title="永久链接至标题">¶</a></h3>
+<p>使用繼承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 類建立的自定義 Keras 模型的自由度相對更高。因此使用 TensorFlow Serving 部署模型時，對導出的 SavedModel 文件也有更多的要求：</p>
 <ul class="simple">
-<li><p>需要導出到SavedModel格式的方法（比如 <code class="docutils literal notranslate"><span class="pre">call</span></code> ）不僅需要使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修飾，還要在修飾時指定 <code class="docutils literal notranslate"><span class="pre">input_signature</span></code> 參數，以顯式說明輸入的形狀。該參數傳入一個由 <code class="docutils literal notranslate"><span class="pre">tf.TensorSpec</span></code> 組成的列表，指定每個輸入張量的形狀和類型。例如，對於MNIST手寫體數字識別，我們的輸入是一個 <code class="docutils literal notranslate"><span class="pre">[None,</span> <span class="pre">28,</span> <span class="pre">28,</span> <span class="pre">1]</span></code> 的四維張量（ <code class="docutils literal notranslate"><span class="pre">None</span></code> 表示第一維即Batch Size的大小不固定），此時我們可以將模型的 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法做以下修飾：</p></li>
+<li><p>匯出 SavedModel 格式的方法（比如 <code class="docutils literal notranslate"><span class="pre">call</span></code> ）不僅需要使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修飾，還要在修飾時指定 <code class="docutils literal notranslate"><span class="pre">input_signature</span></code> 參數，以說明輸入的形狀。該參數傳入一個由 <code class="docutils literal notranslate"><span class="pre">tf.TensorSpec</span></code> 組成的列表，指定每個輸入張量的形狀和類型。例如，對於 MNIST 手寫體數字辨識，我們的輸入是一個 <code class="docutils literal notranslate"><span class="pre">[None,</span> <span class="pre">28,</span> <span class="pre">28,</span> <span class="pre">1]</span></code> 的四維張量（ <code class="docutils literal notranslate"><span class="pre">None</span></code> 表示第一維即 Batch Size 的大小不固定），此時我們可以將模型的 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法做以下修飾：</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="o">...</span>
@@ -377,43 +377,43 @@
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>在將模型使用 <code class="docutils literal notranslate"><span class="pre">tf.saved_model.save</span></code> 導出時，需要通過 <code class="docutils literal notranslate"><span class="pre">signature</span></code> 參數提供待導出的函數的簽名（Signature）。簡單說來，由於自定義的模型類里可能有多個方法都需要導出，因此，需要告訴TensorFlow Serving每個方法在被客戶端調用時分別叫做什麼名字。例如，如果我們希望客戶端在調用模型時使用 <code class="docutils literal notranslate"><span class="pre">call</span></code> 這一簽名來調用 <code class="docutils literal notranslate"><span class="pre">model.call</span></code> 方法時，我們可以在導出時傳入 <code class="docutils literal notranslate"><span class="pre">signature</span></code> 參數，以 <code class="docutils literal notranslate"><span class="pre">dict</span></code> 的鍵值對形式告知導出的方法對應的簽名，代碼如下：</p></li>
+<li><p>將模型使用 <code class="docutils literal notranslate"><span class="pre">tf.saved_model.save</span></code> 匯出時，需要通過 <code class="docutils literal notranslate"><span class="pre">signature</span></code> 參數提供待匯出的函數的簽名（Signature）。簡單說來，由於自定義的模型類別裡可能有多個方法都需要匯出，因此，需要告訴 TensorFlow Serving 每個方法在被客戶端呼叫時分別叫做什麼名字。例如，如果我們希望客戶端在呼叫模型時使用 <code class="docutils literal notranslate"><span class="pre">call</span></code> 這一簽名來呼叫 <code class="docutils literal notranslate"><span class="pre">model.call</span></code> 方法時，我們可以在匯出時傳入 <code class="docutils literal notranslate"><span class="pre">signature</span></code> 參數，以 <code class="docutils literal notranslate"><span class="pre">dict</span></code> 的形式告知匯出的方法對應的名稱，程式碼如下：</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">MLP</span><span class="p">()</span>
 <span class="o">...</span>
 <span class="hll"><span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;saved_with_signature/1&quot;</span><span class="p">,</span> <span class="n">signatures</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;call&quot;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">call</span><span class="p">})</span>
 </span></pre></div>
 </div>
-<p>以上兩步均完成後，即可使用以下命令部署：</p>
+<p>以上兩步均完成後，即可使用以下指令部署：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tensorflow_model_server</span> \
     <span class="o">--</span><span class="n">rest_api_port</span><span class="o">=</span><span class="mi">8501</span> \
     <span class="o">--</span><span class="n">model_name</span><span class="o">=</span><span class="n">MLP</span> \
-    <span class="o">--</span><span class="n">model_base_path</span><span class="o">=</span><span class="s2">&quot;/home/.../.../saved_with_signature&quot;</span>  <span class="c1"># 修改爲自己模型的絕對地址</span>
+    <span class="o">--</span><span class="n">model_base_path</span><span class="o">=</span><span class="s2">&quot;/home/.../.../saved_with_signature&quot;</span>  <span class="c1"># 修改為自己模型的絕對地址</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="zh-hant-call-serving-api">
-<span id="id3"></span><h2>在客戶端調用以TensorFlow Serving部署的模型<a class="headerlink" href="#zh-hant-call-serving-api" title="永久链接至标题">¶</a></h2>
-<p>TensorFlow Serving支持以gRPC和RESTful API調用以TensorFlow Serving部署的模型。本手冊主要介紹較爲通用的RESTful API方法。</p>
-<p>RESTful API以標準的HTTP POST方法進行交互，請求和回復均爲JSON對象。爲了調用伺服器端的模型，我們在客戶端向伺服器發送以下格式的請求：</p>
-<p>伺服器URI： <code class="docutils literal notranslate"><span class="pre">http://伺服器地址:埠號/v1/models/模型名:predict</span></code></p>
+<div class="section" id="call-serving-api">
+<span id="id3"></span><h2>在客戶端呼叫以 TensorFlow Serving 部署的模型<a class="headerlink" href="#call-serving-api" title="永久链接至标题">¶</a></h2>
+<p>TensorFlow Serving 支援以 gRPC和RESTful API 調用以 TensorFlow Serving 部署的模型。本手冊主要介紹較為通用的 RESTful API 方法。</p>
+<p>RESTful API 以標準的 HTTP POST 方法進行通信，請求和回覆均為 JSON 對象。為了呼叫伺服器端的模型，我們在客戶端向伺服器發送以下格式的請求：</p>
+<p>伺服器 URI： <code class="docutils literal notranslate"><span class="pre">http://伺服器地址:埠號/v1/models/模型名:predict</span></code></p>
 <p>請求內容：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;signature_name&quot;</span><span class="p">:</span> <span class="s2">&quot;需要調用的函數簽名（Sequential模式不需要）&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;instances&quot;</span><span class="p">:</span> <span class="n">輸入數據</span>
+    <span class="s2">&quot;signature_name&quot;</span><span class="p">:</span> <span class="s2">&quot;需要呼叫的函數簽名（Sequential模式不需要）&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;instances&quot;</span><span class="p">:</span> <span class="n">輸入資料</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>回復爲：</p>
+<p>回覆為：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="s2">&quot;predictions&quot;</span><span class="p">:</span> <span class="n">返回值</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <div class="section" id="python">
-<h3>Python客戶端示例<a class="headerlink" href="#python" title="永久链接至标题">¶</a></h3>
-<p>以下示例使用 <a class="reference external" href="https://2.python-requests.org//zh_CN/latest/user/quickstart.html">Python的Requests庫</a> （你可能需要使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">requests</span></code> 安裝該庫）向本機的TensorFlow Serving伺服器發送MNIST測試集的前10幅圖像並返回預測結果，同時與測試集的真實標籤進行比較。</p>
+<h3>Python 客戶端範例<a class="headerlink" href="#python" title="永久链接至标题">¶</a></h3>
+<p>以下範例使用 <a class="reference external" href="https://requests.readthedocs.io/en/master/">Python的Requests庫</a> （你可能需要使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">requests</span></code> 安裝該函式庫）向本機的TensorFlow Serving 伺服器發送 MNIST 測試集的前 10 幅圖像並返回預測結果，同時與測試集的真實標籤進行比較。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">requests</span>
@@ -438,8 +438,8 @@
 <span class="p">[</span><span class="mi">7</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">4</span> <span class="mi">1</span> <span class="mi">4</span> <span class="mi">9</span> <span class="mi">5</span> <span class="mi">9</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>可見預測結果與真實標籤值非常接近。</p>
-<p>對於自定義的Keras模型，在發送的數據中加入 <code class="docutils literal notranslate"><span class="pre">signature_name</span></code> 鍵值即可，即將上面代碼的 <code class="docutils literal notranslate"><span class="pre">data</span></code> 建立過程改爲</p>
+<p>可以發現，預測結果與真實標籤值非常接近。</p>
+<p>對於自定義的 Keras 模型，在發送的資料中加入 <code class="docutils literal notranslate"><span class="pre">signature_name</span></code> 鍵值即可，將上面程式碼 <code class="docutils literal notranslate"><span class="pre">data</span></code> 建立過程改為</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
     <span class="s2">&quot;signature_name&quot;</span><span class="p">:</span> <span class="s2">&quot;call&quot;</span><span class="p">,</span>
     <span class="s2">&quot;instances&quot;</span><span class="p">:</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -448,11 +448,11 @@
 </div>
 </div>
 <div class="section" id="node-js-ziyang">
-<h3>Node.js客戶端示例（Ziyang）<a class="headerlink" href="#node-js-ziyang" title="永久链接至标题">¶</a></h3>
-<p>以下示例使用 <a class="reference external" href="https://nodejs.org/zh-cn/">Node.js</a> 將下圖轉換爲28*28的灰度圖，發送給本機的TensorFlow Serving伺服器，並輸出返回的預測值和概率。（其中使用了 <a class="reference external" href="https://github.com/oliver-moran/jimp">圖像處理庫jimp</a> 和 <a class="reference external" href="https://visionmedia.github.io/superagent/">HTTP庫superagent</a> ，可使用 <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">jimp</span></code> 和 <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">superagent</span></code> 安裝）</p>
+<h3>Node.js客戶端範例（Ziyang）<a class="headerlink" href="#node-js-ziyang" title="永久链接至标题">¶</a></h3>
+<p>以下範例使用 <a class="reference external" href="https://nodejs.org/zh-tw/">Node.js</a> 將下圖轉換為 28*28 的灰階圖，發送給本機的 TensorFlow Serving 伺服器，並輸出返回的預測結果和機率。（其中使用了 <a class="reference external" href="https://github.com/oliver-moran/jimp">圖像處理庫jimp</a> 和 <a class="reference external" href="https://visionmedia.github.io/superagent/">HTTP庫superagent</a> ，可使用 <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">jimp</span></code> 和 <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">superagent</span></code> 安裝）</p>
 <div class="figure align-center" id="id7">
 <img alt="../../_images/test_pic_tag_5.png" src="../../_images/test_pic_tag_5.png" />
-<p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">test_pic_tag_5.png</span></code> ：一個由作者手寫的數字5。（運行下面的代碼時可下載該圖片並放在與代碼同一目錄下）</span><a class="headerlink" href="#id7" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">test_pic_tag_5.png</span></code> ：一個由作者手寫的數字5。（運行下麵的代碼時可下載該圖片並放在與代碼同一目錄下）</span><a class="headerlink" href="#id7" title="永久链接至图片">¶</a></p>
 </div>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">Jimp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jimp&#39;</span><span class="p">)</span>
 <span class="kr">const</span> <span class="nx">superagent</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;superagent&#39;</span><span class="p">)</span>
@@ -490,14 +490,14 @@
   <span class="nx">result</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">predictions</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="p">{</span>
     <span class="kr">const</span> <span class="nx">sortedRes</span> <span class="o">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">_</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">[</span><span class="nx">_</span><span class="p">,</span> <span class="nx">i</span><span class="p">])</span>
     <span class="p">.</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="nx">a</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`我们猜这个数字是</span><span class="si">${</span><span class="nx">sortedRes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="sb">，概率是</span><span class="si">${</span><span class="nx">sortedRes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`我們猜這個數字是</span><span class="si">${</span><span class="nx">sortedRes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="sb">，機率是</span><span class="si">${</span><span class="nx">sortedRes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
   <span class="p">})</span>
 <span class="p">}</span>
 
 <span class="nx">evaluatePic</span><span class="p">(</span><span class="s1">&#39;test_pic_tag_5.png&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>運行結果爲：</p>
+<p>執行結果為：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1
@@ -526,15 +526,15 @@
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-我們猜這個數字是5，概率是0.846008837
+我們猜這個數字是5，機率是0.846008837
 </pre></div>
 </div>
-<p>可見輸出結果符合預期。</p>
+<p>可以發現、輸出結果符合預期。</p>
 <div class="admonition note">
 <p class="admonition-title">注解</p>
-<p>如果你不熟悉HTTP POST，可以參考 <a class="reference external" href="https://www.runoob.com/tags/html-httpmethods.html">這裡</a> 。事實上，當你在用瀏覽器填寫表單（比方說性格測試）並點擊「提交」按鈕，然後獲得返回結果（比如說「你的性格是ISTJ」）時，就很有可能是在向伺服器發送一個HTTP POST請求並獲得了伺服器的回覆。</p>
-<p>RESTful API是一個流行的API設計理論，可以參考 <a class="reference external" href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html">這裡</a> 獲得簡要介紹。</p>
-<p>關於TensorFlow Serving的RESTful API的完整使用方式可參考 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/api_rest">文檔</a> 。</p>
+<p>如果你不熟悉 HTTP POST，可以參考 <a class="reference external" href="https://blog.toright.com/posts/1203/%E6%B7%BA%E8%AB%87-http-method%EF%BC%9A%E8%A1%A8%E5%96%AE%E4%B8%AD%E7%9A%84-get-%E8%88%87-post-%E6%9C%89%E4%BB%80%E9%BA%BC%E5%B7%AE%E5%88%A5%EF%BC%9F.html">這裡</a> 。事實上，當你在用瀏覽器填寫表單（比方說性格測試）並點擊“提交”按鈕，然後獲得返回結果（比如說“你的性格是 ISTJ”）時，就很有可能是在向伺服器發送一個 HTTP POST 請求並獲得了伺服器的回覆。</p>
+<p>RESTful API 是一個流行的 API 設計理論，可以參考 <a class="reference external" href="https://medium.com/itsems-frontend/api-%E6%98%AF%E4%BB%80%E9%BA%BC-restful-api-%E5%8F%88%E6%98%AF%E4%BB%80%E9%BA%BC-a001a85ab638">這裡</a> 查看簡介。</p>
+<p>關於 TensorFlow Serving 的 RESTful API 的完整使用方式可參考 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/api_rest">文件</a> 。</p>
 </div>
 <script>
     $(document).ready(function(){
@@ -561,7 +561,7 @@
         <a href="lite.html" class="btn btn-neutral float-right" title="TensorFlow Lite（Jinpeng）" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="export.html" class="btn btn-neutral float-left" title="TensorFlow模型導出" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="export.html" class="btn btn-neutral float-left" title="TensorFlow模型匯出" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

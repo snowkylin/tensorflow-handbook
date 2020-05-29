@@ -51,11 +51,13 @@
 
 本手冊的TensorFlow.js和TensorFlow Lite章節分別由李卓桓和朱金鵬兩位在JavaScript和Android領域有豐富履歷的GDE和前GDE撰寫，同時，卓桓撰寫了TensorFlow for Swift和TPU部分的介紹，金鵬提供了TensorFlow Hub的介紹。來自豆瓣閱讀的王子陽也提供了關於Node.js和阿里雲的部分示例代碼和說明。在此特別表示感謝。
 
-在基於本手冊初稿的多場線下、線上教學活動和TensorFlow官方微信公衆號連載中，大量活動參與者與讀者爲本手冊提供了有價值的反饋，促進了本手冊的持續更新。谷歌開發者社羣和 TensorFlow Usergroup 的多位志願者們也爲這些活動的順利舉辦做出了重要貢獻。來自中國科學技術大學的 Zida Jin 將本手冊2018年初版的大部分內容翻譯爲了英文，Ming 和 Ji-An Li 在英文版翻譯中亦有貢獻，促進了本手冊在世界範圍內的推廣。在此一併表示由衷的謝意。
+在基於本手冊初稿的多場線下、線上教學活動和TensorFlow官方微信公衆號連載中，大量活動參與者與讀者爲本手冊提供了有價值的反饋，促進了本手冊的持續更新。谷歌開發者社羣和 TensorFlow Usergroup 的多位志願者們也爲這些活動的順利舉辦做出了重要貢獻。來自中國科學技術大學的 Zida Jin 將本手冊2018年初版的大部分內容翻譯爲了英文，Ming 和 Ji-An Li 在英文版翻譯中亦有貢獻，促進了本手冊在世界範圍內的推廣。Eric ShangKuan、Jerry Wu 、Hsiang Huang、Po-Yi Li、Charlie Li 、Chunju Hsu 協助了本手冊的簡轉繁轉譯。在此一併表示由衷的謝意。
 
-衷心感謝 Google 中國開發者關係團隊和 TensorFlow 工程團隊的成員及前成員們對本手冊的編寫所提供的幫助。其中，開發者關係團隊的 Luke Cheng 在本手冊初版編寫過程中提供重要的思路啓發和鼓勵，且提供本手冊在線版本的域名 `tf.wiki <https://tf.wiki>`_ 和留言版 https://discuss.tf.wiki ；開發者關係團隊的 Soonson Kwon、Lily Chen、Wei Duan、Tracy Wang、Rui Li、Pryce Mu，TensorFlow 產品經理 Mike Liang 和谷歌開發者大使 Paige Bailey 爲本手冊宣傳及推廣提供了大力支持；TensorFlow 工程團隊的 Tiezhen Wang 在本手冊的工程細節方面提供了諸多建議和補充；TensorFlow 中國研發負責人 Shuangfeng Li 和 TensorFlow 工程團隊的其他工程師們爲本手冊提供了專業的審閱意見。同時感謝 TensorFlow 工程總監 Rajat Monga 和 Google AI 負責人 Jeff Dean 在社交媒體上對本手冊的推薦與關注。感謝 Google Summer of Code 2019 對本項目的資助。
+衷心感謝 Google 開發者關係團隊和 TensorFlow 工程團隊的成員及前成員們對本手冊的編寫所提供的幫助。其中，開發者關係團隊的 Luke Cheng 在本手冊初版編寫過程中提供重要的思路啓發和鼓勵，且提供本手冊在線版本的域名 `tf.wiki <https://tf.wiki>`_ 和留言版 https://discuss.tf.wiki ；開發者關係團隊的 Soonson Kwon、Lily Chen、Wei Duan、Tracy Wang、Rui Li、Pryce Mu，TensorFlow 產品經理 Mike Liang 和谷歌開發者大使 Paige Bailey 爲本手冊宣傳及推廣提供了大力支持；開發者關係團隊的 Eric ShangKuan 協助了本手冊的繁體版轉譯；TensorFlow 工程團隊的 Tiezhen Wang 在本手冊的工程細節方面提供了諸多建議和補充；TensorFlow 中國研發負責人 Shuangfeng Li 和 TensorFlow 工程團隊的其他工程師們爲本手冊提供了專業的審閱意見。同時感謝 TensorFlow 工程總監 Rajat Monga 和 Google AI 負責人 Jeff Dean 在社交媒體上對本手冊的推薦與關注。感謝 Google Summer of Code 2019 對本開源項目的資助。
 
-最後，感謝我的父母、導師、同學和好友對本手冊的支持。
+本手冊主體部分為我在北京大學信息科學技術學院智能科學系攻讀碩士學位時所撰寫。感謝我的導師童雲海教授和實驗室的同學們對本手冊的支持和建議。
+
+最後，感謝人民郵電出版社的王軍花、武芮欣兩位編輯對本手冊紙質版的細緻編校及出版流程跟進。感謝我的父母和好友對本手冊的關注和支持。
 
 關於本手冊的意見和建議，歡迎在 https://discuss.tf.wiki 提交。您的寶貴意見將促進本手冊的持續更新。
 

@@ -40,7 +40,7 @@
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
-    <link rel="next" title="TensorFlow Hub 模型復用（Jinpeng）" href="tfhub.html" />
+    <link rel="next" title="TensorFlow Hub 模型複用（Jinpeng）" href="tfhub.html" />
     <link rel="prev" title="TensorFlow分布式訓練" href="distributed.html" /> 
 </head>
 
@@ -136,14 +136,14 @@
 </ul>
 <p class="caption"><span class="caption-text">基礎</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安裝與環境配置</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow 安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow 基礎</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立與訓練</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模塊</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模組</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型匯出</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
@@ -163,14 +163,13 @@
 <li class="toctree-l3"><a class="reference internal" href="#cloud-tpu">Cloud TPU</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">TPU 基礎使用</a></li>
 </ul>
 </li>
 </ul>
 <p class="caption"><span class="caption-text">擴展</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub 模型複用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets 資料集載入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
 </ul>
@@ -179,9 +178,9 @@
 <li class="toctree-l1"><a class="reference internal" href="rl.html">強化學習簡介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docker.html">使用Docker部署TensorFlow環境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud.html">在雲端使用TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyterlab.html">部署自己的互動式 Python 開發環境 JupyterLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="recommended_books.html">參考資料與推薦閱讀</a></li>
-<li class="toctree-l1"><a class="reference internal" href="terms.html">術語中英對照表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms.html">專有名詞中英對照表</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Preface</span></p>
 <ul>
@@ -291,15 +290,15 @@
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/tensorflow-tpu.png"><img alt="Tensor Processing Unit - TPU" src="../../_images/tensorflow-tpu.png" style="width: 60%;" /></a>
 </div>
-<p>2017年5月，Alpha Go 在中國烏鎮圍棋峯會上，與世界第一棋士柯潔比試，並取得了三比零全勝戰績。之後的版本Alpha Zero可以通過自我學習21天即可以達到勝過中國頂尖棋手柯潔的Alpha Go Master的水平。</p>
-<p>Alpha Go 背後的動力全部由 TPU 提供。TPU 使其能夠更快地「思考」並在每一步之間看得更遠。</p>
+<p>2017 年 5 月，Alpha Go 在中國烏鎮圍棋峰會上，與世界第一棋士柯潔比試，並取得了三比零全勝戰績。之後的版本 Alpha Zero 可以透過自我學習 21 天即可以達到勝過中國頂尖棋手柯潔的 Alpha Go Master 的水平。</p>
+<p>Alpha Go 背後的動力全部由 TPU 提供。TPU 使其能夠更快地 “思考” 並在每一步之間看得更遠。</p>
 <div class="section" id="tpu">
 <h2>TPU 簡介<a class="headerlink" href="#tpu" title="永久链接至标题">¶</a></h2>
 <div class="section" id="id1">
 <h3>什麼是 TPU<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h3>
-<p>TPU 代表 Tensor Processing Unit (張量處理單元) ，是由谷歌在2016年5月發布的爲機器學習而構建的定製集成電路（ASIC），並爲TensorFlow量身定製。</p>
-<p>早在2015年，谷歌大腦團隊就成立了第一個TPU中心，爲 Google Translation，Photos 和 Gmail等產品提供支持。 爲了使所有數據科學家和開發人員能夠訪問此技術，不久之後就發布了易於使用，可擴展且功能強大的基於雲的TPU，以便在 Google Cloud 上運行 TensorFlow 模型。</p>
-<p>TPU 由多個計算核心（Tensor Core）組成，其中包括標量，矢量和矩陣單元（MXU）。TPU（張量處理單元）與CPU（中央處理單元）和GPU（圖形處理單元）最重要的區別是：TPU的硬體專爲線性代數而設計，線性代數是深度學習的基石。在過去幾年中，Google TPU 已經發布了 v1，v2，v3, v2 Pod, v3 Pod, Edge 等多個版本：</p>
+<p>TPU 代表 Tensor Processing Unit (張量處理器) ，是由谷歌在 2016 年 5 月發布的為機器學習而建構的定製集成電路（ASIC），並為 TensorFlow 量身定製。</p>
+<p>早在 2015 年，谷歌大腦團隊就成立了第一個 TPU 中心，為 Google Translation，Photos 和 Gmail 等產品提供支援。 為了讓所有資料科學家和開發人員能夠使用此技術，不久之後就發布了容易使用、可擴展且功能強大的基於谷歌雲的 TPU，以便在 Google Cloud 上執行 TensorFlow 模型。</p>
+<p>TPU 由多個計算核心（Tensor Core）組成，其中包括純量，矢量和矩陣單元（MXU）。TPU（張量處理器）與 CPU（中央處理器）和 GPU（圖形處理器）最重要的區別是：TPU 的硬體專為線性代數設計，而線性代數是深度學習的基石。在過去幾年中，Google TPU 已經發布了 v1，v2，v3, v2 Pod, v3 Pod, Edge 等多個版本：</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 25%" />
@@ -360,17 +359,17 @@
 1. OPS: 每秒位整數計算次數（Integer Operations Per Second）</p>
 </dd>
 </dl>
-<p>基於 Google Cloud，TPU 可以方便的進行建立和使用。同時，Google 也推出了專門爲邊緣計算環境而部署的 Edge TPU。Edge TPU 尺寸小，功耗低，性能高，可以在邊緣計算環境中廣泛部署高質量的AI。其作爲 Cloud TPU 的補充，可以大大促進AI的解決方案在IoT環境中的部署。</p>
+<p>基於 Google Cloud，TPU 可以方便的進行建立和使用。同時，Google 也推出了專門為邊緣計算環境而部署的 Edge TPU。Edge TPU 尺寸小，功耗低，性能高，可以在邊緣計算環境中廣泛部署高質量的 AI。其作為 Cloud TPU 的補充，可以大大促進 AI 的解決方案在 IoT 環境中的部署。</p>
 </div>
 <div class="section" id="id2">
 <h3>爲什麼使用 TPU<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
-<p>通過使用 Cloud TPU ，我們可以大大提升 TensorFlow 進行機器學習訓練和預測的性能，並能夠靈活的幫助研究人員，開發人員和企業 TensorFlow 計算羣集。</p>
+<p>透過使用 Cloud TPU ，我們可以大大提升 TensorFlow 進行機器學習訓練和預測的性能，並能夠靈活的幫助研究人員，開發人員和企業 TensorFlow 計算群集。</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/tpu-pod.jpg"><img alt="TPU Pod" src="../../_images/tpu-pod.jpg" style="width: 60%;" /></a>
 </div>
-<p>根據 Google 提供的數據顯示，在 Google Cloud TPU Pod 上可以僅用 8 分鐘就能夠完成ResNet-50 模型的訓練。</p>
-<table class="docutils align-default" id="id6">
-<caption><span class="caption-text">ResNet-50</span><a class="headerlink" href="#id6" title="永久链接至表格">¶</a></caption>
+<p>根據 Google 提供的資料顯示，在 Google Cloud TPU Pod 上可以僅用 8 分鍾就能夠完成 ResNet-50 模型的訓練。</p>
+<table class="docutils align-default" id="id5">
+<caption><span class="caption-text">ResNet-50</span><a class="headerlink" href="#id5" title="永久链接至表格">¶</a></caption>
 <colgroup>
 <col style="width: 33%" />
 <col style="width: 33%" />
@@ -401,9 +400,9 @@
 </div>
 <div class="section" id="id3">
 <h3>TPU 性能<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
-<p>根據研究顯示，TPU 比現代 GPU 和 CPU 快 15 到 30 倍。同時，TPU 還實現了比傳統晶片更好的能耗效率，算力能耗比值提高了30倍至80倍。</p>
-<table class="docutils align-default" id="id7">
-<caption><span class="caption-text">每個周期的操作次數</span><a class="headerlink" href="#id7" title="永久链接至表格">¶</a></caption>
+<p>根據研究顯示，TPU 比現代 GPU 和 CPU 快 15 到 30 倍。同時，TPU 還實現了比傳統晶片更好的功耗效率，算力功耗比值提高了 30 倍至 80 倍。</p>
+<table class="docutils align-default" id="id6">
+<caption><span class="caption-text">每個周期的操作次數</span><a class="headerlink" href="#id6" title="永久链接至表格">¶</a></caption>
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
@@ -427,9 +426,9 @@
 <h2>TPU 環境配置<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
 <div class="section" id="tpu-google-colab">
 <h3>免費 TPU：Google Colab<a class="headerlink" href="#tpu-google-colab" title="永久链接至标题">¶</a></h3>
-<p>最方便使用 TPU 的方法，就是使用 Google 的 Colab ，不但通過瀏覽器訪問直接可以用，而且還免費。</p>
-<p>在 <a class="reference external" href="https://colab.research.google.com">Google Colab</a> 的 Notebook 界面中，打開界面中，打開主菜單 <cite>Runtime</cite> ，然後選擇 <cite>Change runtime type</cite>，會彈出 <cite>Notebook settings</cite> 的窗口。選擇裡面的 <cite>Hardware accelerator</cite> 爲 <cite>TPU</cite> 就可以了。</p>
-<p>爲了確認 Colab Notebook 中的確分配了 TPU 資源，我們可以運行以下測試代碼。如果輸出 ERROR 信息，則表示目前的 Runetime 並沒有分配到 TPU；如果輸出 TPU 地址及設備列表，則表示 Colab 已經分配了 TPU。</p>
+<p>最方便使用 TPU 的方法，就是使用 Google 的 Colab ，不但可以透過瀏覽器直接使用，而且還免費。</p>
+<p>在 <a class="reference external" href="https://colab.research.google.com">Google Colab</a> 的 Notebook 界面中，打開界面中，打開主目錄 Runtime ，然後選擇 Change runtime type，會彈出 Notebook settings 的窗口。選擇裡面的 Hardware accelerator 為 TPU 就可以了。</p>
+<p>為了確認 Colab Notebook 中的確分配了 TPU 資源，我們可以執行以下測試程式碼。如果輸出 ERROR 資訊，則表示目前的 Runetime 並沒有分配到 TPU；如果輸出 TPU 位置及設備列表，則表示 Colab 已經分配了 TPU。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pprint</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
@@ -441,34 +440,32 @@
     <span class="k">print</span> <span class="p">(</span><span class="s1">&#39;TPU address is&#39;</span><span class="p">,</span> <span class="n">tpu_address</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>輸出信息：</p>
+<p>輸出資訊：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TPU</span> <span class="n">address</span> <span class="ow">is</span> <span class="n">grpc</span><span class="p">:</span><span class="o">//</span><span class="mf">10.49</span><span class="o">.</span><span class="mf">237.2</span><span class="p">:</span><span class="mi">8470</span>
 </pre></div>
 </div>
-<p>看到以上信息（TPU grpc address），既可以確認 Colab 的 TPU 環境設置正常。</p>
+<p>看到以上資訊（TPU grpc address），即可以確認 Colab 的 TPU 環境設置正常。</p>
 </div>
 <div class="section" id="cloud-tpu">
 <h3>Cloud TPU<a class="headerlink" href="#cloud-tpu" title="永久链接至标题">¶</a></h3>
-<p>在 Google Cloud 上，我們可以購買所需的 TPU 資源，用來按需進行機器學習訓練。爲了使用 Cloud TPU ，需要在 Google Cloud Engine 中啓動 VM 並爲 VM 請求 Cloud TPU 資源。請求完成後，VM 就可以直接訪問分配給它專屬的 Cloud TPU了。</p>
+<p>在 Google Cloud 上，我們可以購買所需的 TPU 資源，按照需求進行機器學習訓練。為了使用 Cloud TPU ，需要在 Google Cloud Engine 中啟動 VM 並為 VM 請求 Cloud TPU 資源。請求完成後，VM 就可以直接使用分配給它專屬的 Cloud TPU 了。</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/cloud-tpu-architecture.png"><img alt="../../_images/cloud-tpu-architecture.png" src="../../_images/cloud-tpu-architecture.png" style="width: 60%;" /></a>
 </div>
 <p>&gt; Source: <a class="reference external" href="https://docs.google.com/presentation/d/1iodAZkOX0YMnUwohgQqNsbEkhR0zAnO-jncK9SkJ69o/edit#slide=id.g4461849552_8_3664">TPUs for Developers</a></p>
-<p>在使用 Cloud TPU 時，爲了免除繁瑣的驅動安裝，我們可以通過直接使用 Google Cloud 提供的 VM 作業系統鏡像。</p>
-</div>
-</div>
-<div class="section" id="id5">
-<h2>TPU 基礎使用<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
-<p>在 TPU 上進行 TensorFlow 分布式訓練的核心API是 <code class="docutils literal notranslate"><span class="pre">tf.distribute.TPUStrategy</span></code> ，可以簡單幾行代碼就實現在 TPU 上的分布式訓練，同時也可以很容易的遷移到 GPU單機多卡、多機多卡的環境。以下是如何實例化 <code class="docutils literal notranslate"><span class="pre">TPUStrategy</span></code> ：</p>
+<p>在使用 Cloud TPU 時，為了免除繁瑣的驅動安裝，我們可以透過直接使用 Google Cloud 提供的 VM 操作系統鏡像。
+TPU 基礎使用
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
+<p>在 TPU 上進行 TensorFlow 分散式訓練的核心 API 是 <code class="docutils literal notranslate"><span class="pre">tf.distribute.TPUStrategy</span></code> ，可以用簡單幾行程式碼就實作出 TPU 上的分散式訓練，同時也可以很容易的遷移到 GPU 單機多卡、多機多卡的環境。以下是如何實例化 <code class="docutils literal notranslate"><span class="pre">TPUStrategy</span></code> ：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tpu</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">cluster_resolver</span><span class="o">.</span><span class="n">TPUClusterResolver</span><span class="p">()</span>
 <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental_connect_to_cluster</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
 <span class="n">tf</span><span class="o">.</span><span class="n">tpu</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">initialize_tpu_system</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
 <span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">TPUStrategy</span><span class="p">(</span><span class="n">tpu</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>在上面的代碼中，首先我們實例化 <cite>TPUClusterResolver</cite>；然後，我們連接 TPU Cluster，並對其進行初始化；最後，完成實例化 <cite>TPUStrategy</cite>。</p>
-<p>以下使用 Fashion MNIST 分類任務展示 TPU 的使用方式。本小節的原始碼可以在 <a class="reference external" href="https://github.com/huan/tensorflow-handbook-tpu">https://github.com/huan/tensorflow-handbook-tpu</a> 找到。</p>
-<p>更方便的是在 Google Colab 上直接打開本例子的 Jupyter 直接運行，地址：<a class="reference external" href="https://colab.research.google.com/github/huan/tensorflow-handbook-tpu/blob/master/tensorflow-handbook-tpu-example.ipynb">https://colab.research.google.com/github/huan/tensorflow-handbook-tpu/blob/master/tensorflow-handbook-tpu-example.ipynb</a> （推薦）</p>
+<p>在上面的程式碼中，首先我們實例化 <cite>TPUClusterResolver</cite>；然後，我們連接 TPU Cluster，並對其進行初始化；最後，完成實例化 <cite>TPUStrategy</cite>。</p>
+<p>以下使用 Fashion MNIST 分類任務展示 TPU 的使用方式。本小節的程式碼可以在 <a class="reference external" href="https://github.com/huan/tensorflow-handbook-tpu">https://github.com/huan/tensorflow-handbook-tpu</a> 找到。</p>
+<p>更方便的是在 Google Colab 上直接打開本例子的 Jupyter 直接執行，網址：<a class="reference external" href="https://colab.research.google.com/github/huan/tensorflow-handbook-tpu/blob/master/tensorflow-handbook-tpu-example.ipynb">https://colab.research.google.com/github/huan/tensorflow-handbook-tpu/blob/master/tensorflow-handbook-tpu-example.ipynb</a> （推薦）</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -513,7 +510,7 @@
 <span class="p">)</span>
 </pre></div>
 </div>
-<p>以上程序運行輸出爲：</p>
+<p>以上程式執行輸出為：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Epoch</span> <span class="mi">1</span><span class="o">/</span><span class="mi">5</span>
 <span class="mi">60</span><span class="o">/</span><span class="mi">60</span> <span class="p">[</span><span class="o">==========</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="n">s</span> <span class="mi">23</span><span class="n">ms</span><span class="o">/</span><span class="n">step</span> <span class="o">-</span> <span class="n">loss</span><span class="p">:</span> <span class="mf">12.7235</span> <span class="o">-</span> <span class="n">accuracy</span><span class="p">:</span> <span class="mf">0.7156</span>
 <span class="n">Epoch</span> <span class="mi">2</span><span class="o">/</span><span class="mi">5</span>
@@ -541,6 +538,7 @@
     });
 </script></div>
 </div>
+</div>
 
 
            </div>
@@ -550,7 +548,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="tfhub.html" class="btn btn-neutral float-right" title="TensorFlow Hub 模型復用（Jinpeng）" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="tfhub.html" class="btn btn-neutral float-right" title="TensorFlow Hub 模型複用（Jinpeng）" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="distributed.html" class="btn btn-neutral float-left" title="TensorFlow分布式訓練" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

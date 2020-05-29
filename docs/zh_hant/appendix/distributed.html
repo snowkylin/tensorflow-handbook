@@ -136,14 +136,14 @@
 </ul>
 <p class="caption"><span class="caption-text">基礎</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安裝與環境配置</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow 安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow 基礎</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立與訓練</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模塊</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模組</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型匯出</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
@@ -159,8 +159,8 @@
 </ul>
 <p class="caption"><span class="caption-text">擴展</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub 模型複用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets 資料集載入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
 </ul>
@@ -169,9 +169,9 @@
 <li class="toctree-l1"><a class="reference internal" href="rl.html">強化學習簡介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docker.html">使用Docker部署TensorFlow環境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud.html">在雲端使用TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jupyterlab.html">部署自己的互動式 Python 開發環境 JupyterLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="recommended_books.html">參考資料與推薦閱讀</a></li>
-<li class="toctree-l1"><a class="reference internal" href="terms.html">術語中英對照表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms.html">專有名詞中英對照表</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Preface</span></p>
 <ul>
@@ -278,16 +278,16 @@
             
   <div class="section" id="tensorflow">
 <h1>TensorFlow分布式訓練<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
-<p>當我們擁有大量計算資源時，通過使用合適的分布式策略，我們可以充分利用這些計算資源，從而大幅壓縮模型訓練的時間。針對不同的使用場景，TensorFlow在 <code class="docutils literal notranslate"><span class="pre">tf.distribute.Strategy</span></code> 中爲我們提供了若干種分布式策略，使得我們能夠更高效地訓練模型。</p>
+<p>當我們擁有大量計算資源時，透過使用合適的分散式策略，我們可以充分利用這些計算資源，大幅壓縮模型訓練的時間。針對不同的使用場景，TensorFlow 在 <code class="docutils literal notranslate"><span class="pre">tf.distribute.Strategy</span></code> 中為我們提供了許多種分散式策略，使得我們能夠更高效的訓練模型。</p>
 <div class="section" id="mirroredstrategy">
 <span id="zh-hant-multi-gpu"></span><h2>單機多卡訓練： <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code><a class="headerlink" href="#mirroredstrategy" title="永久链接至标题">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">tf.distribute.MirroredStrategy</span></code> 是一種簡單且高性能的，數據並行的同步式分布式策略，主要支持多個GPU在同一台主機上訓練。使用這種策略時，我們只需實例化一個 <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 策略:</p>
+<p><code class="docutils literal notranslate"><span class="pre">tf.distribute.MirroredStrategy</span></code> 是一種簡單且高性能的，資料並行的同步式分散式策略，主要支援多個 GPU 在同一台主機上訓練。使用這種策略時，我們只需實例化一個 <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 策略:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">MirroredStrategy</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>並將模型構建的代碼放入 <code class="docutils literal notranslate"><span class="pre">strategy.scope()</span></code> 的上下文環境中:</p>
+<p>並將模型建構的程式碼放入 <code class="docutils literal notranslate"><span class="pre">strategy.scope()</span></code> 的上下文環境中:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">strategy</span><span class="o">.</span><span class="n">scope</span><span class="p">():</span>
-    <span class="c1"># 模型構建代碼</span>
+    <span class="c1"># 模型建構程式碼</span>
 </pre></div>
 </div>
 <div class="admonition tip">
@@ -296,9 +296,9 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">MirroredStrategy</span><span class="p">(</span><span class="n">devices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;/gpu:0&quot;</span><span class="p">,</span> <span class="s2">&quot;/gpu:1&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>即指定只使用第0、1號GPU參與分布式策略。</p>
+<p>即指定只使用第0、1號GPU參與分散式策略。</p>
 </div>
-<p>以下代碼展示了使用 <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 策略，在 <a class="reference internal" href="tfds.html"><span class="doc">TensorFlow Datasets</span></a> 中的部分圖像數據集上使用Keras訓練MobileNetV2的過程：</p>
+<p>以下程式碼展示了使用 <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 策略，在 <a class="reference internal" href="tfds.html"><span class="doc">TensorFlow Datasets</span></a> 中的部分圖像資料集上使用 Keras 訓練 MobileNetV2 的過程：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
 
@@ -307,20 +307,20 @@
 <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.001</span>
 
 <span class="hll"><span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">MirroredStrategy</span><span class="p">()</span>
-</span><span class="hll"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of devices: </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">strategy</span><span class="o">.</span><span class="n">num_replicas_in_sync</span><span class="p">)</span>  <span class="c1"># 输出设备数量</span>
+</span><span class="hll"><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of devices: </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">strategy</span><span class="o">.</span><span class="n">num_replicas_in_sync</span><span class="p">)</span>  <span class="c1"># 輸出設備數量</span>
 </span><span class="hll"><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size_per_replica</span> <span class="o">*</span> <span class="n">strategy</span><span class="o">.</span><span class="n">num_replicas_in_sync</span>
 </span>
-<span class="c1"># 载入数据集并预处理</span>
+<span class="c1"># 載入資料集並預處理</span>
 <span class="k">def</span> <span class="nf">resize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
     <span class="n">image</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">[</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">])</span> <span class="o">/</span> <span class="mf">255.0</span>
     <span class="k">return</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span>
 
-<span class="c1"># 使用 TensorFlow Datasets 载入猫狗分类数据集，详见“TensorFlow Datasets数据集载入”一章</span>
+<span class="c1"># 使用 TensorFlow Datasets 載入貓狗分類資料集，詳見“TensorFlow Datasets資料集載入”一章</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;cats_vs_dogs&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">tfds</span><span class="o">.</span><span class="n">Split</span><span class="o">.</span><span class="n">TRAIN</span><span class="p">,</span> <span class="n">as_supervised</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">resize</span><span class="p">)</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
 
 <span class="hll"><span class="k">with</span> <span class="n">strategy</span><span class="o">.</span><span class="n">scope</span><span class="p">():</span>
-</span>    <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">MobileNetV2</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span>    <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">MobileNetV2</span><span class="p">()</span>
     <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
         <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">),</span>
         <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">,</span>
@@ -330,7 +330,7 @@
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>在以下的測試中，我們使用同一台主機上的4塊NVIDIA GeForce GTX 1080 Ti顯卡進行單機多卡的模型訓練。所有測試的epoch數均爲5。使用單機無分布式配置時，雖然機器依然具有4塊顯卡，但程序不使用分布式的設置，直接進行訓練，Batch Size設置爲64。使用單機四卡時，測試總Batch Size爲64（分發到單台機器的Batch Size爲16）和總Batch Size爲256（分發到單台機器的Batch Size爲64）兩種情況。</p>
+<p>在以下的測試中，我們使用同一台主機上的 4 塊 NVIDIA GeForce GTX 1080 Ti 顯卡進行單機多卡的模型訓練。所有測試的 epoch 數均為 5。使用單機無分散式配置時，雖然機器依然具有 4 塊顯卡，但程式不使用分散式的設置，直接進行訓練，Batch Size 設置為 64。使用單機四卡時，測試總 Batch Size 為 64（分發到單台機器的 Batch Size 為 16）和總 Batch Size 為 256（分發到單台機器的 Batch Size 為 64）兩種情況。</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 12%" />
@@ -339,8 +339,8 @@
 <col style="width: 29%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>數據集</p></th>
-<th class="head"><p>單機無分布式（Batch Size爲64）</p></th>
+<tr class="row-odd"><th class="head"><p>資料集</p></th>
+<th class="head"><p>單機無分散式（Batch Size爲64）</p></th>
 <th class="head"><p>單機四卡（總Batch Size爲64）</p></th>
 <th class="head"><p>單機四卡（總Batch Size爲256）</p></th>
 </tr>
@@ -358,24 +358,24 @@
 </tr>
 </tbody>
 </table>
-<p>可見，使用MirroredStrategy後，模型訓練的速度有了大幅度的提高。在所有顯卡性能接近的情況下，訓練時長與顯卡的數目接近於反比關係。</p>
+<p>可見，使用 MirroredStrategy 後，模型訓練的速度有了大幅度的提高。在所有顯卡性能接近的情況下，訓練時間與顯卡的數目接近於反比關係。</p>
 <div class="admonition-mirroredstrategy admonition">
 <p class="admonition-title"><code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 過程簡介</p>
 <p>MirroredStrategy的步驟如下：</p>
 <ul class="simple">
-<li><p>訓練開始前，該策略在所有N個計算設備上均各複製一份完整的模型；</p></li>
-<li><p>每次訓練傳入一個批次的數據時，將數據分成N份，分別傳入N個計算設備（即數據並行）；</p></li>
-<li><p>N個計算設備使用本地變量（鏡像變量）分別計算自己所獲得的部分數據的梯度；</p></li>
-<li><p>使用分布式計算的All-reduce操作，在計算設備間高效交換梯度數據並進行求和，使得最終每個設備都有了所有設備的梯度之和；</p></li>
-<li><p>使用梯度求和的結果更新本地變量（鏡像變量）；</p></li>
-<li><p>當所有設備均更新本地變量後，進行下一輪訓練（即該並行策略是同步的）。</p></li>
+<li><p>訓練開始前，該策略在所有 N 個計算設備上均各複製一份完整的模型；</p></li>
+<li><p>每次訓練傳入一個批量的資料時，將資料分成 N 份，分別傳入 N 個計算設備（即資料平行處理）；</p></li>
+<li><p>N 個計算設備使用區域變數（鏡像變數）分別計算自己所獲得部分的資料梯度；</p></li>
+<li><p>使用分散式計算的 All-reduce 操作，在計算設備間高效的，交換梯度資料並進行求和，使得最終每個設備都有了所有設備的梯度和；</p></li>
+<li><p>使用梯度求和的結果更新區域變數（鏡像變數）；</p></li>
+<li><p>當所有設備均更新區域變數後，進行下一輪訓練（該並行策略是同步的）。</p></li>
 </ul>
-<p>默認情況下，TensorFlow中的 <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 策略使用NVIDIA NCCL進行All-reduce操作。</p>
+<p>默認情況下，TensorFlow 中的 <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 策略使用 NVIDIA NCCL 進行 All-reduce 操作。</p>
 </div>
 </div>
 <div class="section" id="multiworkermirroredstrategy">
 <h2>多機訓練： <code class="docutils literal notranslate"><span class="pre">MultiWorkerMirroredStrategy</span></code><a class="headerlink" href="#multiworkermirroredstrategy" title="永久链接至标题">¶</a></h2>
-<p>多機訓練的方法和單機多卡類似，將 <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 更換爲適合多機訓練的 <code class="docutils literal notranslate"><span class="pre">MultiWorkerMirroredStrategy</span></code> 即可。不過，由於涉及到多台計算機之間的通訊，還需要進行一些額外的設置。具體而言，需要設置環境變量 <code class="docutils literal notranslate"><span class="pre">TF_CONFIG</span></code> ，示例如下:</p>
+<p>多機訓練的方法和單機多卡類似，將 <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 更換為適合多機訓練的 <code class="docutils literal notranslate"><span class="pre">MultiWorkerMirroredStrategy</span></code> 即可。不過，由於涉及到多台電腦之間的通訊，還需要進行一些額外的設置。具體而言，需要設置環境變數 <code class="docutils literal notranslate"><span class="pre">TF_CONFIG</span></code> ，範例如下:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TF_CONFIG&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
     <span class="s1">&#39;cluster&#39;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s1">&#39;worker&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;localhost:20000&quot;</span><span class="p">,</span> <span class="s2">&quot;localhost:20001&quot;</span><span class="p">]</span>
@@ -386,15 +386,15 @@
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">TF_CONFIG</span></code> 由 <code class="docutils literal notranslate"><span class="pre">cluster</span></code> 和 <code class="docutils literal notranslate"><span class="pre">task</span></code> 兩部分組成：</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">cluster</span></code> 說明了整個多機集羣的結構和每台機器的網絡地址（IP+埠號）。對於每一台機器，<code class="docutils literal notranslate"><span class="pre">cluster</span></code> 的值都是相同的；</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">task</span></code> 說明了當前機器的角色。例如， <code class="docutils literal notranslate"><span class="pre">{'type':</span> <span class="pre">'worker',</span> <span class="pre">'index':</span> <span class="pre">0}</span></code> 說明當前機器是 <code class="docutils literal notranslate"><span class="pre">cluster</span></code> 中的第0個worker（即 <code class="docutils literal notranslate"><span class="pre">localhost:20000</span></code> ）。每一台機器的 <code class="docutils literal notranslate"><span class="pre">task</span></code> 值都需要針對當前主機進行分別的設置。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cluster</span></code> 說明了整個多機集群的結構和每台機器的網路位置（IP + 埠號）。對於每一台機器，<code class="docutils literal notranslate"><span class="pre">cluster</span></code> 的值都是相同的；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">task</span></code> 說明了目前機器的角色。例如， <code class="docutils literal notranslate"><span class="pre">{'type':</span> <span class="pre">'worker',</span> <span class="pre">'index':</span> <span class="pre">0}</span></code> 說明目前機器是 <code class="docutils literal notranslate"><span class="pre">cluster</span></code> 中的第 0 個 worker（即 <code class="docutils literal notranslate"><span class="pre">localhost:20000</span></code> ）。每一台機器的 <code class="docutils literal notranslate"><span class="pre">task</span></code> 值都需要針對目前主機進行分別的設置。</p></li>
 </ul>
-<p>以上內容設置完成後，在所有的機器上逐個運行訓練代碼即可。先運行的代碼在尚未與其他主機連接時會進入監聽狀態，待整個集羣的連接建立完畢後，所有的機器即會同時開始訓練。</p>
+<p>以上內容設置完成後，在所有的機器上逐一執行訓練程式碼即可。先執行的程式碼在尚未與其他主機連接時會進入監聽狀態，待整個集群的連接建立完畢後，所有的機器即會同時開始訓練。</p>
 <div class="admonition hint">
 <p class="admonition-title">提示</p>
-<p>請在各台機器上均注意防火牆的設置，尤其是需要開放與其他主機通信的埠。如上例的0號worker需要開放20000埠，1號worker需要開放20001埠。</p>
+<p>請在各台機器上均注意防火牆的設置，尤其是需要開放與其他主機通信的埠號。如上例的 0 號 worker 需要開放 20000 埠號，1 號 worker 需要開放 20001 埠號。</p>
 </div>
-<p>以下示例的訓練任務與前節相同，只不過遷移到了多機訓練環境。假設我們有兩台機器，即首先在兩台機器上均部署下面的程序，唯一的區別是 <code class="docutils literal notranslate"><span class="pre">task</span></code> 部分，第一台機器設置爲 <code class="docutils literal notranslate"><span class="pre">{'type':</span> <span class="pre">'worker',</span> <span class="pre">'index':</span> <span class="pre">0}</span></code> ，第二台機器設置爲 <code class="docutils literal notranslate"><span class="pre">{'type':</span> <span class="pre">'worker',</span> <span class="pre">'index':</span> <span class="pre">1}</span></code> 。接下來，在兩台機器上依次運行程序，待通訊成功後，即會自動開始訓練流程。</p>
+<p>以下範例的訓練任務與之前章節相同，只不過遷移到了多機訓練環境。假設我們有兩台機器，即首先在兩台機器上均部署下面的程式，唯一的區別是 <code class="docutils literal notranslate"><span class="pre">task</span></code> 部分，第一台機器設置為 <code class="docutils literal notranslate"><span class="pre">{'type':</span> <span class="pre">'worker',</span> <span class="pre">'index':</span> <span class="pre">0}</span></code> ，第二台機器設置為 <code class="docutils literal notranslate"><span class="pre">{'type':</span> <span class="pre">'worker',</span> <span class="pre">'index':</span> <span class="pre">1}</span></code> 。接下來，在兩台機器上依序執行程式，待通訊成功後，即會自動開始訓練流程。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -422,7 +422,7 @@
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">resize</span><span class="p">)</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
 
 <span class="hll"><span class="k">with</span> <span class="n">strategy</span><span class="o">.</span><span class="n">scope</span><span class="p">():</span>
-</span>    <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">MobileNetV2</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span>    <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">applications</span><span class="o">.</span><span class="n">MobileNetV2</span><span class="p">()</span>
     <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
         <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">),</span>
         <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">sparse_categorical_crossentropy</span><span class="p">,</span>
@@ -432,7 +432,7 @@
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>在以下測試中，我們在Google Cloud Platform分別建立兩台具有單張NVIDIA Tesla K80的虛擬機實例（具體建立方式參見 <a class="reference internal" href="cloud.html#zh-hant-gcp"><span class="std std-ref">後文介紹</span></a> ），並分別測試在使用一個GPU時的訓練時長和使用兩台虛擬機實例進行分布式訓練的訓練時長。所有測試的epoch數均爲5。使用單機單卡時，Batch Size設置爲64。使用雙機單卡時，測試總Batch Size爲64（分發到單台機器的Batch Size爲32）和總Batch Size爲128（分發到單台機器的Batch Size爲64）兩種情況。</p>
+<p>在以下測試中，我們在 Google Cloud Platform 分別建立兩台具有單張 NVIDIA Tesla K80 的虛擬機實例（具體建立方式參見 <a class="reference internal" href="cloud.html#zh-hant-gcp"><span class="std std-ref">後文介紹</span></a> ），並分別測試在使用一個 GPU 時的訓練時間和使用兩台虛擬機實例進行分散式訓練的訓練時間。所有測試的 epoch 數均為 5。使用單機單卡時，Batch Size 設置為 64。使用雙機單卡時，測試總 Batch Size 為 64（分發到單台機器的 Batch Size 為 32）和總 Batch Size 為 128（分發到單台機器的 Batch Size 為 64）兩種情況。</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 12%" />
@@ -441,7 +441,7 @@
 <col style="width: 31%" />
 </colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>數據集</p></th>
+<tr class="row-odd"><th class="head"><p>資料集</p></th>
 <th class="head"><p>單機單卡（Batch Size爲64）</p></th>
 <th class="head"><p>雙機單卡（總Batch Size爲64）</p></th>
 <th class="head"><p>雙機單卡（總Batch Size爲128）</p></th>
@@ -460,7 +460,7 @@
 </tr>
 </tbody>
 </table>
-<p>可見模型訓練的速度同樣有大幅度的提高。在所有機器性能接近的情況下，訓練時長與機器的數目接近於反比關係。</p>
+<p>可見模型訓練的速度同樣有大幅度的提高。在所有機器性能接近的情況下，訓練時間與機器的數目接近於反比關係。</p>
 <script>
     $(document).ready(function(){
         $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");

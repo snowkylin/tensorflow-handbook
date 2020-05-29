@@ -3,23 +3,23 @@ Tensorflow JavaScript 閒聊對話模型
  
 本章我們將根據前述章節的 Python 版閒聊對話模型，實現一個基於 JavaScript 版的序列到序列模型（Sequence to Sequence, Seq2Seq）。它同樣是基於 RNN 的 Encoder-Decoder 結構，具體基本介紹，請讀者參考 Python 版閒聊對話模型的相關章節。
 
-這裡的Encoder-Decoder結構，簡單的來說就是算法包含兩部分，一個負責對輸入的信息進行Encoding，將輸入轉換爲向量形式；然後由Decoder對這個向量進行解碼，還原爲輸出序列。
+這里的Encoder-Decoder結構，簡單的來說就是演算法包含兩部分，一個負責對輸入的資訊進行Encoding，將輸入轉換為向量形式；然後由Decoder對這個向量進行解碼，還原為輸出序列。
 
 這個任務預測的是通過一個序列，來預測另外一個對應的序列。舉例來說，常見的打招呼就是一個序列到序列的過程::
 
     輸入：How are you ?
     輸出：Fine, thank you .
 
-這個過程的輸入序列有4個 token： ``['how', 'are', 'you', '?']`` ，輸出序列有5個 token： ``['fine', ',', 'thank', 'you', '.']`` 。我們希望建立這樣的模型，輸入長爲 ``maxLength`` 的序列，輸入張量形狀爲 ``[null, max_length]`` ，輸出與這個序列對應的序列中 token 的概率分布，概率分布的維度爲詞彙表大小 ``vocSize`` ，輸出張量形狀爲 ``[null, maxLength, vocSize]`` 。
+這個過程的輸入序列有4個 token： ``['how', 'are', 'you', '?']`` ，輸出序列有5個 token： ``['fine', ',', 'thank', 'you', '.']`` 。我們希望建立這樣的模型，輸入長為 ``maxLength`` 的序列，輸入變數形狀為 ``[null, max_length]`` ，輸出與這個序列對應的序列中 token 的機率分佈，機率分佈的維度為詞匯表大小 ``vocSize`` ，輸出變數形狀為 ``[null, maxLength, vocSize]`` 。
 
-首先，我們下載預先準備好數據集，將其存爲 ``dataset.txt`` 。數據集的格式爲每行爲一對序列，分別爲輸入序列和輸出序列，之間用 ``'\t'`` 制表符隔開。序列中的每一個 token 之間，都通過 ``' '`` 空格符號進行分割。
+首先，我們下載預先準備好資料集，將其存為 ``dataset.txt`` 。資料集的格式為每行為一對序列，分別為輸入序列和輸出序列，之間用 ``'\t'`` 製表符隔開。序列中的每一個 token 之間，都通過 ``' '`` 空格符號進行分割。
 
 ::
 
     $ wget https://github.com/huan/python-concise-chitchat/releases/download/v0.0.1/dataset.txt.gz
     dataset.txt.gz 100% [======================>] 986.60K   282KB/s    in 3.5s
 
-    2019-03-15 22:59:00 (282 KB/s) - 『dataset.txt.gz』 saved [1010276/1010276]
+    2019-03-15 22:59:00 (282 KB/s) - ‘dataset.txt.gz’ saved [1010276/1010276]
 
     $ gzip -d dataset.txt.gz
 
@@ -31,7 +31,7 @@ Tensorflow JavaScript 閒聊對話模型
     no .	you might wanna think about it
     you the new guy ?	so they tell me ...
 
-我們需要將它轉換爲 Tensorflow Dataset 格式：
+我們需要將它轉換為 Tensorflow Dataset 格式：
 
 .. code-block:: javascript
 
@@ -48,11 +48,11 @@ Tensorflow JavaScript 閒聊對話模型
         delimiter: '\t',
     }) as any as tf.data.Dataset<Seq2seqData>
 
-其次，我們還需要基於 ``Dataset`` 中輸入序列和輸出序列中的文本數據，建立對應的詞彙表 ``Vocabulary`` 來負責管理以下5項任務：
+其次，我們還需要基於 ``Dataset`` 中輸入序列和輸出序列中的文本資料，建立對應的詞匯表 ``Vocabulary`` 來負責管理以下5項任務：
 
 1. 將所有單詞和標點符號進行編碼；
-2. 記錄詞彙表大小；
-3. 建立單詞到編碼數字，以及編碼數字到單詞的映射字典；
+2. 記錄詞匯表大小；
+3. 建立單詞到編碼數字，以及編碼數字到單詞的對應字典；
 
 .. code-block:: javascript
 
@@ -116,7 +116,7 @@ Tensorflow JavaScript 閒聊對話模型
       }
     }
 
-接下來，我們將數據集和 ``Vocabulary`` 結合起來，並對數據集進行數據向量化。
+接下來，我們將資料集和 ``Vocabulary`` 結合起來，並對資料集進行資料向量化。
 
 .. code-block:: javascript
 
@@ -212,15 +212,15 @@ Tensorflow JavaScript 閒聊對話模型
     })
 
 
-然後，由這些 Layers ，來組建我們的 Seq2Seq 模型。需要注意的是我們需要共享這些 Layers 建立三個不同的模型，分別是：
+然後，由這些 Layers ，來組建我們的 Seq2Seq 模型。需要註意的是我們需要共用這些 Layers 建立三個不同的模型，分別是：
 
 * 用來訓練的完整 Seq2Seq 模型： ``seq2seqModel`` 
 * 用來對序列進行編碼的 Encoder 模型： ``encoderModel`` 
 * 用來對序列進行解碼的 Decoder 模型： ``decoderModel`` 
 
-請注意這三個模型中，只有第一個模型  ``seq2seqModel``  是用來訓練參數所需要的，所以訓練的的時候使用這個模型。而另外的兩個模型 ``encoderModel`` 和 ``decoderModel`` ，使我們用來預測的時候需要使用的。這三個模型共享所有的 Layers 參數。
+請注意這三個模型中，只有第一個模型  ``seq2seqModel``  是用來訓練參數所需要的，所以訓練的的時候使用這個模型。而另外的兩個模型 ``encoderModel`` 和 ``decoderModel`` ，使我們用來預測的時候需要使用的。這三個模型共用所有的 Layers 參數。
 
-``seq2seqModel`` 模型的輸入包含兩個，一個是 Encoder 的輸入，另外一個是 Decoder 的輸入。模型的輸出是我們數據集的輸出。
+``seq2seqModel`` 模型的輸入包含兩個，一個是 Encoder 的輸入，另外一個是 Decoder 的輸入。模型的輸出是我們資料集的輸出。
 
 .. code-block:: javascript
 
@@ -285,9 +285,9 @@ Tensorflow JavaScript 閒聊對話模型
     eta=0.0 - loss=3.52 
     ...
 
-然後，爲了能夠讓我們使用訓練好的模型，我們還需要基於已經訓練好的模型 Layer 參數，構建獨立的 ``encoderModel`` 和 ``decoderModel`` 。
+然後，為了能夠讓我們使用訓練好的模型，我們還需要基於已經訓練好的模型 Layer 參數，建構獨立的 ``encoderModel`` 和 ``decoderModel`` 。
 
-Encoder子模型輸入 ``numBatch`` 個由編碼後單詞和字符組成的，長爲 ``maxLength`` 的序列，輸入張量形狀爲 ``[numBatch, maxLength]`` ，輸出與這個序列對應的上下文狀態張量。
+Encoder子模型輸入 ``numBatch`` 個由編碼後單詞和字元組成的，長為 ``maxLength`` 的序列，輸入變數形狀為 ``[numBatch, maxLength]`` ，輸出與這個序列對應的上下文狀態變數。
 
 ``encoderModel`` 的代碼實現如下：
 
@@ -305,7 +305,7 @@ Encoder子模型輸入 ``numBatch`` 個由編碼後單詞和字符組成的，�
       outputs: encoderState,
     })
 
-``deocoderModel`` 的輸入有兩個，分別是 t 時刻的 token indice，和對應的解碼器 ``state``；輸出也有兩個，分別是 t+1 時刻的 token 的 voc 分布概率，和對應的解碼器 ``state`` ：
+``deocoderModel`` 的輸入有兩個，分別是 t 時間的 token indice，和對應的解碼器 ``state``；輸出也有兩個，分別是 t+1 時間的 token 的 voc 分佈機率，和對應的解碼器 ``state`` ：
 
 ``decoderModel`` 子模型具體實現如下：
 
@@ -335,7 +335,7 @@ Encoder子模型輸入 ``numBatch`` 個由編碼後單詞和字符組成的，�
       outputs: [decoderDenseOutputs, decoderStateOutput],
     })
 
-最後，我們需要一個用來對話的程序。我們建立一個專門用來接收一句話輸入，然後通過我們的模型預測，得到序列輸出的函數 ``seq2seqDecoder()`` ：
+最後，我們需要一個用來對話的程式。我們建立一個專門用來接收一句話輸入，然後通過我們的模型預測，得到序列輸出的函數 ``seq2seqDecoder()`` ：
 
 .. code-block:: javascript
 
@@ -419,4 +419,4 @@ Encoder子模型輸入 ``numBatch`` 個由編碼後單詞和字符組成的，�
     Decoded setence: "good ."
 
 
-註：本章節中的 JavaScript 版 ChitChat 完整代碼，使用說明，和訓練好的模型文件及參數，都可以在作者的 GitHub 上找到。地址： https://github.com/huan/tensorflow-handbook-javascript
+註：本章節中的 JavaScript 版 ChitChat 完整程式碼，使用說明，和訓練好的模型文件及參數，都可以在作者的 GitHub 上找到。地址： https://github.com/huan/tensorflow-handbook-javascript

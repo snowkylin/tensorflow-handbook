@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>部署自己的交互式Python開發環境JupyterLab &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
+  <title>部署自己的互動式 Python 開發環境 JupyterLab &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
@@ -136,14 +136,14 @@
 </ul>
 <p class="caption"><span class="caption-text">基礎</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安裝與環境配置</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow 安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow 基礎</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立與訓練</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模塊</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模組</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型匯出</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
@@ -155,8 +155,8 @@
 </ul>
 <p class="caption"><span class="caption-text">擴展</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub 模型複用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets 資料集載入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
 </ul>
@@ -165,9 +165,9 @@
 <li class="toctree-l1"><a class="reference internal" href="rl.html">強化學習簡介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docker.html">使用Docker部署TensorFlow環境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cloud.html">在雲端使用TensorFlow</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">部署自己的互動式 Python 開發環境 JupyterLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="recommended_books.html">參考資料與推薦閱讀</a></li>
-<li class="toctree-l1"><a class="reference internal" href="terms.html">術語中英對照表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms.html">專有名詞中英對照表</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Preface</span></p>
 <ul>
@@ -253,7 +253,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>部署自己的交互式Python開發環境JupyterLab</li>
+      <li>部署自己的互動式 Python 開發環境 JupyterLab</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -272,22 +272,22 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="pythonjupyterlab">
-<h1>部署自己的交互式Python開發環境JupyterLab<a class="headerlink" href="#pythonjupyterlab" title="永久链接至标题">¶</a></h1>
-<p>如果你既希望獲得本地或雲端強大的計算能力，又希望獲得Jupyter Notebook或Colab中方便的在線Python交互式運行環境，可以自己爲的本地伺服器或雲伺服器安裝JupyterLab。JupyterLab可以理解成升級版的Jupyter Notebook/Colab，提供多標籤頁支持，在線終端和文件管理等一系列方便的功能，接近於一個在線的Python IDE。</p>
+  <div class="section" id="python-jupyterlab">
+<h1>部署自己的互動式 Python 開發環境 JupyterLab<a class="headerlink" href="#python-jupyterlab" title="永久链接至标题">¶</a></h1>
+<p>如果你既希望獲得本機端或雲端強大的計算能力，又希望獲得 Jupyter Notebook 或 Colab 中方便的線上 Python 互動式運行環境，可以自己為的本機伺服器或雲伺服器安裝 JupyterLab。JupyterLab 可以想像成升級版的 Jupyter Notebook/Colab，提供多標簽頁支援，線上終端和文件管理等一系列方便的功能，接近於一個線上版的 Python IDE。</p>
 <div class="admonition tip">
 <p class="admonition-title">小技巧</p>
-<p>部分雲服務提供了開箱即用的JupyterLab環境，例如前章介紹的 <a class="reference internal" href="cloud.html#zh-hant-notebook"><span class="std std-ref">GCP中AI Platform的Notebook</span></a> ，以及 <a class="reference external" href="https://www.floydhub.com/">FloydHub</a> 。</p>
+<p>部分雲服務提供了能夠立即使用的 JupyterLab 環境，例如前章介紹的 <a class="reference internal" href="cloud.html#zh-hant-notebook"><span class="std std-ref">GCP中AI Platform的Notebook</span></a> ，以及 <a class="reference external" href="https://www.floydhub.com/">FloydHub</a> 。</p>
 </div>
-<p>在已經部署Python環境後，使用以下命令安裝JupyterLab：</p>
+<p>在已經部署 Python 環境後，使用以下命令安裝 JupyterLab：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">jupyterlab</span>
 </pre></div>
 </div>
-<p>然後使用以下命令運行JupyterLab：</p>
+<p>然後使用以下命令運行 JupyterLab：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">lab</span> <span class="o">--</span><span class="n">ip</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
 </pre></div>
 </div>
-<p>然後根據輸出的提示，使用瀏覽器訪問 <code class="docutils literal notranslate"><span class="pre">http://伺服器地址:8888</span></code> ，並使用輸出中提供的token直接登錄（或設置密碼後登錄）即可。</p>
+<p>然後根據輸出的提示，使用瀏覽器連線 <code class="docutils literal notranslate"><span class="pre">http://伺服器地址:8888</span></code> ，並使用輸出中提供的 token 直接登錄（或設置密碼後登錄）即可。</p>
 <p>JupyterLab界面如下所示：</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/jupyterlab.png"><img alt="../../_images/jupyterlab.png" src="../../_images/jupyterlab.png" style="width: 100%;" /></a>
@@ -295,20 +295,20 @@
 <div class="admonition hint">
 <p class="admonition-title">提示</p>
 <p>可以使用 <code class="docutils literal notranslate"><span class="pre">--port</span></code> 參數指定埠號。</p>
-<p>部分雲服務（如GCP）的實例默認不開放大多數網絡埠。如果使用默認埠號，需要在防火牆設置中打開埠（例如GCP需要在「虛擬機實例詳情-網絡接口-查看詳情」中新建防火牆規則，開放對應埠並應用到當前實例）。</p>
-<p>如果需要在終端退出後仍然持續運行JupyterLab，可以使用 <code class="docutils literal notranslate"><span class="pre">nohup</span></code> 命令及 <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> 放入後台運行，即：</p>
+<p>部分雲端服務（如 GCP）的實例預設不會開放大多數網路端口。如果使用默認端口號，需要在防火牆設置中開啟端口（例如 GCP 需要在 “虛擬機實例詳情 - 網路接口 - 查看詳情” 中新建防火牆規則，開放對應端口並應用到目前的實例）。
+如果需要在終端退出後仍然持續運行 JupyterLab，可以使用 <code class="docutils literal notranslate"><span class="pre">nohup</span></code> 指令及 <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> 放入後台運行，即：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nohup</span> <span class="n">jupyter</span> <span class="n">lab</span> <span class="o">--</span><span class="n">ip</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="o">&amp;</span>
 </pre></div>
 </div>
-<p>程序輸出可以在當前目錄下的 <code class="docutils literal notranslate"><span class="pre">nohup.txt</span></code> 找到。</p>
+<p>程式輸出可以在當前目錄下的 <code class="docutils literal notranslate"><span class="pre">nohup.txt</span></code> 找到。</p>
 </div>
-<p>爲了在JupyterLab的Notebook中使用自己的Conda環境，需要使用以下命令：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>conda activate 環境名（比如在GCP章節建立的tf2.0-beta-gpu）
+<p>為了在 JupyterLab 的 Notebook 中使用自己的 Conda 環境，需要使用以下命令：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>conda activate  環境名稱（比如在GCP章節建立的tf2.0-beta-gpu）
 conda install ipykernel
-ipython kernel install --name 環境名 --user
+ipython kernel install --name 環境名稱 --user
 </pre></div>
 </div>
-<p>然後重新啓動JupyterLab，即可在Kernel選項和啓動器中建立Notebook的選項中找到自己的Conda環境。</p>
+<p>然後重新啟動 JupyterLab，即可在 Kernel 選項和啟動器中建立 Notebook 的選項中找到自己的 Conda 環境。</p>
 <div class="figure align-center" id="id1">
 <a class="reference internal image-reference" href="../../_images/add_env.png"><img alt="../../_images/add_env.png" src="../../_images/add_env.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">Notebook中新增了「tf2.0-beta-gpu」選項</span><a class="headerlink" href="#id1" title="永久链接至图片">¶</a></p>

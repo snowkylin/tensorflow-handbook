@@ -9,7 +9,7 @@
 
 在2019年3月的第三届TensorFlow Dev Summit开发者峰会上，我再次受邀来到谷歌的硅谷总部，见证了 TensorFlow 2.0 alpha 的发布。此时的 TensorFlow 已经形成了一个拥有庞大版图的生态系统。TensorFlow Lite、TensorFlow.js、TensorFlow for Swift、TPU 等各种组件日益成熟，同时 TensorFlow 2 加入了提升易用性的诸多新特性（例如以 ``tf.keras`` 为核心的统一高层API、使用 ``tf.function`` 构建图模型、默认使用即时执行模式等）。这使得本手册的大幅扩充更新提上日程。GDE 社群的两位 JavaScript 和 Android 领域的资深专家李卓桓和朱金鹏加入了本手册的编写，使得本手册增加了诸多面向业界的 TensorFlow 模块详解与实例。同时，我在谷歌开发者大使（Developer Advocate） Paige Bailey 的邀请下申请并成功加入了 Google Summer of Code 2019 活动。作为全世界 20 位由 Google TensorFlow 项目资助的学生开发者之一，我在 2019 年的暑期基于 TensorFlow 2.0 Beta 版本，对本手册进行了大幅扩充和可读性上的改进。这使得本手册从 2018 年发布的小型入门指南逐渐成长为一本内容全面的 TensorFlow 技术手册和开发指导。
 
-2019年10月1日，TensorFlow 2.0 正式版发布，同时本手册也开始了在 TensorFlow 官方公众微信号（TensorFlow_official）上的长篇连载。在连载过程中，我收到了大量的读者提问和意见反馈。为读者答疑的同时，我也修订了手册中的较多细节。受到新冠疫情的影响，2020年3月的第四届 TensorFlow Dev Summit 开发者峰会在线上直播举行。我根据峰会的内容为手册增添了部分内容，特别是介绍了 TensorFlow Quantum 这一混合量子-经典机器学习库的基本使用方式。我在研究生期间旁听过量子力学，还做过量子计算和机器学习结合的专题报告。TensorFlow Quantum 的推出着实让我感到兴奋，并迫不及待地希望介绍给广大读者。2020年4月，为了适应新冠疫情期间的线上教学需求，我接受 TensorFlow Usergroup （TFUG）和谷歌开发者社群的邀请，依托本手册在 TensorFlow 官方公众微信号上开展了“机器学习Study Jam”线上教学活动，并启用了手册留言版 https://discuss.tf.wiki 进行教学互动答疑。此次教学也同样有不少学习者为本手册提供了重要的改进意见。
+2019年10月1日，TensorFlow 2.0 正式版发布，同时本手册也开始了在 TensorFlow 官方公众微信号（TensorFlow_official）上的长篇连载。在连载过程中，我收到了大量的读者提问和意见反馈。为读者答疑的同时，我也修订了手册中的较多细节。受到新冠疫情的影响，2020年3月的第四届 TensorFlow Dev Summit 开发者峰会在线上直播举行。我根据峰会的内容为手册增添了部分内容，特别是介绍了 TensorFlow Quantum 这一混合量子-经典机器学习库的基本使用方式。我在研究生期间旁听过量子力学，还做过量子计算和机器学习结合的专题报告。TensorFlow Quantum 的推出着实让我感到兴奋，并迫不及待地希望介绍给广大读者。2020年4月，为了适应新冠疫情期间的线上教学需求，我接受 TensorFlow User Group （TFUG）和谷歌开发者社群的邀请，依托本手册在 TensorFlow 官方公众微信号上开展了“机器学习Study Jam”线上教学活动，并启用了手册留言版 https://discuss.tf.wiki 进行教学互动答疑。此次教学也同样有不少学习者为本手册提供了重要的改进意见。
 
 由于我的研究方向是强化学习，所以在本手册的附录中加入了“强化学习简介”一章，对强化学习进行了更细致的介绍。和绝大多数强化学习教程一开始就介绍马尔可夫决策过程和各种概念不同，我从纯动态规划出发，结合具体算例来介绍强化学习，试图让强化学习和动态规划的关系更清晰，以及对程序员更友好。这个视角相对比较特立独行，如果您发现了谬误之处，也请多加指正。
 
@@ -51,11 +51,13 @@
 
 本手册的TensorFlow.js和TensorFlow Lite章节分别由李卓桓和朱金鹏两位在JavaScript和Android领域有丰富履历的GDE和前GDE撰写，同时，卓桓撰写了TensorFlow for Swift和TPU部分的介绍，金鹏提供了TensorFlow Hub的介绍。来自豆瓣阅读的王子阳也提供了关于Node.js和阿里云的部分示例代码和说明。在此特别表示感谢。
 
-在基于本手册初稿的多场线下、线上教学活动和TensorFlow官方微信公众号连载中，大量活动参与者与读者为本手册提供了有价值的反馈，促进了本手册的持续更新。谷歌开发者社群和 TensorFlow Usergroup 的多位志愿者们也为这些活动的顺利举办做出了重要贡献。来自中国科学技术大学的 Zida Jin 将本手册2018年初版的大部分内容翻译为了英文，Ming 和 Ji-An Li 在英文版翻译中亦有贡献，促进了本手册在世界范围内的推广。在此一并表示由衷的谢意。
+在基于本手册初稿的多场线下、线上教学活动和TensorFlow官方微信公众号连载中，大量活动参与者与读者为本手册提供了有价值的反馈，促进了本手册的持续更新。谷歌开发者社群和 TensorFlow User Group 的多位志愿者们也为这些活动的顺利举办做出了重要贡献。来自中国科学技术大学的 Zida Jin 将本手册2018年初版的大部分内容翻译为了英文，Ming 和 Ji-An Li 在英文版翻译中亦有贡献，促进了本手册在世界范围内的推广。Eric ShangKuan、Jerry Wu 、Hsiang Huang、Po-Yi Li、Charlie Li 、Chunju Hsu 协助了本手册的简转繁转译。在此一并表示由衷的谢意。
 
-衷心感谢 Google 中国开发者关系团队和 TensorFlow 工程团队的成员及前成员们对本手册的编写所提供的帮助。其中，开发者关系团队的 Luke Cheng 在本手册初版编写过程中提供重要的思路启发和鼓励，且提供本手册在线版本的域名 `tf.wiki <https://tf.wiki>`_ 和留言版 https://discuss.tf.wiki ；开发者关系团队的 Soonson Kwon、Lily Chen、Wei Duan、Tracy Wang、Rui Li、Pryce Mu，TensorFlow 产品经理 Mike Liang 和谷歌开发者大使 Paige Bailey 为本手册宣传及推广提供了大力支持；TensorFlow 工程团队的 Tiezhen Wang 在本手册的工程细节方面提供了诸多建议和补充；TensorFlow 中国研发负责人 Shuangfeng Li 和 TensorFlow 工程团队的其他工程师们为本手册提供了专业的审阅意见。同时感谢 TensorFlow 工程总监 Rajat Monga 和 Google AI 负责人 Jeff Dean 在社交媒体上对本手册的推荐与关注。感谢 Google Summer of Code 2019 对本项目的资助。
+衷心感谢 Google 开发者关系团队和 TensorFlow 工程团队的成员及前成员们对本手册的编写所提供的帮助。其中，开发者关系团队的 Luke Cheng 在本手册初版编写过程中提供重要的思路启发和鼓励，且提供本手册在线版本的域名 `tf.wiki <https://tf.wiki>`_ 和留言版 https://discuss.tf.wiki ；开发者关系团队的 Soonson Kwon、Lily Chen、Wei Duan、Tracy Wang、Rui Li、Pryce Mu，TensorFlow 产品经理 Mike Liang 和谷歌开发者大使 Paige Bailey 为本手册宣传及推广提供了大力支持；开发者关系团队的 Eric ShangKuan 协助了本手册的繁体版转译。TensorFlow 工程团队的 Tiezhen Wang 在本手册的工程细节方面提供了诸多建议和补充；TensorFlow 中国研发负责人 Shuangfeng Li 和 TensorFlow 工程团队的其他工程师们为本手册提供了专业的审阅意见。同时感谢 TensorFlow 工程总监 Rajat Monga 和 Google AI 负责人 Jeff Dean 在社交媒体上对本手册的推荐与关注。感谢 Google Summer of Code 2019 对本开源项目的资助。
 
-最后，感谢我的父母、导师、同学和好友对本手册的支持。
+本手册主体部分为我在北京大学信息科学技术学院智能科学系攻读硕士学位时所撰写。感谢我的导师童云海教授和实验室的同学们对本手册的支持和建议。
+
+最后，感谢人民邮电出版社的王军花、武芮欣两位编辑对本手册纸质版的细致编校及出版流程跟进。感谢我的父母和好友对本手册的关注和支持。
 
 关于本手册的意见和建议，欢迎在 https://discuss.tf.wiki 提交。您的宝贵意见将促进本手册的持续更新。
 

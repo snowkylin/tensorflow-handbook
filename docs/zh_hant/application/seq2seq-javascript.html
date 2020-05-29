@@ -134,14 +134,14 @@
 </ul>
 <p class="caption"><span class="caption-text">基礎</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安裝與環境配置</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow 安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow 基礎</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立與訓練</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模塊</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模組</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型匯出</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
@@ -153,8 +153,8 @@
 </ul>
 <p class="caption"><span class="caption-text">擴展</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型複用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 資料集載入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
 </ul>
@@ -163,9 +163,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../appendix/rl.html">強化學習簡介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow環境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在雲端使用TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的互動式 Python 開發環境 JupyterLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">參考資料與推薦閱讀</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">術語中英對照表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">專有名詞中英對照表</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Preface</span></p>
 <ul>
@@ -273,18 +273,18 @@
   <div class="section" id="tensorflow-javascript">
 <h1>Tensorflow JavaScript 閒聊對話模型<a class="headerlink" href="#tensorflow-javascript" title="永久链接至标题">¶</a></h1>
 <p>本章我們將根據前述章節的 Python 版閒聊對話模型，實現一個基於 JavaScript 版的序列到序列模型（Sequence to Sequence, Seq2Seq）。它同樣是基於 RNN 的 Encoder-Decoder 結構，具體基本介紹，請讀者參考 Python 版閒聊對話模型的相關章節。</p>
-<p>這裡的Encoder-Decoder結構，簡單的來說就是算法包含兩部分，一個負責對輸入的信息進行Encoding，將輸入轉換爲向量形式；然後由Decoder對這個向量進行解碼，還原爲輸出序列。</p>
+<p>這里的Encoder-Decoder結構，簡單的來說就是演算法包含兩部分，一個負責對輸入的資訊進行Encoding，將輸入轉換為向量形式；然後由Decoder對這個向量進行解碼，還原為輸出序列。</p>
 <p>這個任務預測的是通過一個序列，來預測另外一個對應的序列。舉例來說，常見的打招呼就是一個序列到序列的過程:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>輸入：How are you ?
 輸出：Fine, thank you .
 </pre></div>
 </div>
-<p>這個過程的輸入序列有4個 token： <code class="docutils literal notranslate"><span class="pre">['how',</span> <span class="pre">'are',</span> <span class="pre">'you',</span> <span class="pre">'?']</span></code> ，輸出序列有5個 token： <code class="docutils literal notranslate"><span class="pre">['fine',</span> <span class="pre">',',</span> <span class="pre">'thank',</span> <span class="pre">'you',</span> <span class="pre">'.']</span></code> 。我們希望建立這樣的模型，輸入長爲 <code class="docutils literal notranslate"><span class="pre">maxLength</span></code> 的序列，輸入張量形狀爲 <code class="docutils literal notranslate"><span class="pre">[null,</span> <span class="pre">max_length]</span></code> ，輸出與這個序列對應的序列中 token 的概率分布，概率分布的維度爲詞彙表大小 <code class="docutils literal notranslate"><span class="pre">vocSize</span></code> ，輸出張量形狀爲 <code class="docutils literal notranslate"><span class="pre">[null,</span> <span class="pre">maxLength,</span> <span class="pre">vocSize]</span></code> 。</p>
-<p>首先，我們下載預先準備好數據集，將其存爲 <code class="docutils literal notranslate"><span class="pre">dataset.txt</span></code> 。數據集的格式爲每行爲一對序列，分別爲輸入序列和輸出序列，之間用 <code class="docutils literal notranslate"><span class="pre">'\t'</span></code> 制表符隔開。序列中的每一個 token 之間，都通過 <code class="docutils literal notranslate"><span class="pre">'</span> <span class="pre">'</span></code> 空格符號進行分割。</p>
+<p>這個過程的輸入序列有4個 token： <code class="docutils literal notranslate"><span class="pre">['how',</span> <span class="pre">'are',</span> <span class="pre">'you',</span> <span class="pre">'?']</span></code> ，輸出序列有5個 token： <code class="docutils literal notranslate"><span class="pre">['fine',</span> <span class="pre">',',</span> <span class="pre">'thank',</span> <span class="pre">'you',</span> <span class="pre">'.']</span></code> 。我們希望建立這樣的模型，輸入長為 <code class="docutils literal notranslate"><span class="pre">maxLength</span></code> 的序列，輸入變數形狀為 <code class="docutils literal notranslate"><span class="pre">[null,</span> <span class="pre">max_length]</span></code> ，輸出與這個序列對應的序列中 token 的機率分佈，機率分佈的維度為詞匯表大小 <code class="docutils literal notranslate"><span class="pre">vocSize</span></code> ，輸出變數形狀為 <code class="docutils literal notranslate"><span class="pre">[null,</span> <span class="pre">maxLength,</span> <span class="pre">vocSize]</span></code> 。</p>
+<p>首先，我們下載預先準備好資料集，將其存為 <code class="docutils literal notranslate"><span class="pre">dataset.txt</span></code> 。資料集的格式為每行為一對序列，分別為輸入序列和輸出序列，之間用 <code class="docutils literal notranslate"><span class="pre">'\t'</span></code> 製表符隔開。序列中的每一個 token 之間，都通過 <code class="docutils literal notranslate"><span class="pre">'</span> <span class="pre">'</span></code> 空格符號進行分割。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ wget https://github.com/huan/python-concise-chitchat/releases/download/v0.0.1/dataset.txt.gz
 dataset.txt.gz 100% [======================&gt;] 986.60K   282KB/s    in 3.5s
 
-2019-03-15 22:59:00 (282 KB/s) - 『dataset.txt.gz』 saved [1010276/1010276]
+2019-03-15 22:59:00 (282 KB/s) - ‘dataset.txt.gz’ saved [1010276/1010276]
 
 $ gzip -d dataset.txt.gz
 
@@ -297,7 +297,7 @@ no .        you might wanna think about it
 you the new guy ?   so they tell me ...
 </pre></div>
 </div>
-<p>我們需要將它轉換爲 Tensorflow Dataset 格式：</p>
+<p>我們需要將它轉換為 Tensorflow Dataset 格式：</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">tf</span> <span class="nx">from</span> <span class="s1">&#39;@tensorflow/tfjs&#39;</span>
 
 <span class="nx">type</span> <span class="nx">Seq2seqData</span> <span class="o">=</span> <span class="p">{</span>
@@ -312,11 +312,11 @@ you the new guy ?   so they tell me ...
 <span class="p">})</span> <span class="nx">as</span> <span class="nx">any</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">Dataset</span><span class="o">&lt;</span><span class="nx">Seq2seqData</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>其次，我們還需要基於 <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> 中輸入序列和輸出序列中的文本數據，建立對應的詞彙表 <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code> 來負責管理以下5項任務：</p>
+<p>其次，我們還需要基於 <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> 中輸入序列和輸出序列中的文本資料，建立對應的詞匯表 <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code> 來負責管理以下5項任務：</p>
 <ol class="arabic simple">
 <li><p>將所有單詞和標點符號進行編碼；</p></li>
-<li><p>記錄詞彙表大小；</p></li>
-<li><p>建立單詞到編碼數字，以及編碼數字到單詞的映射字典；</p></li>
+<li><p>記錄詞匯表大小；</p></li>
+<li><p>建立單詞到編碼數字，以及編碼數字到單詞的對應字典；</p></li>
 </ol>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">Vocabulary</span> <span class="p">{</span>
   <span class="kr">private</span> <span class="nx">readonly</span> <span class="nx">tokenIndice</span><span class="o">:</span> <span class="nx">Map</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">,</span> <span class="nx">number</span><span class="o">&gt;</span>
@@ -379,7 +379,7 @@ you the new guy ?   so they tell me ...
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>接下來，我們將數據集和 <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code> 結合起來，並對數據集進行數據向量化。</p>
+<p>接下來，我們將資料集和 <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code> 結合起來，並對資料集進行資料向量化。</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">START_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;\t&#39;</span>
 <span class="kr">export</span> <span class="kr">const</span> <span class="nx">END_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;\n&#39;</span>
 
@@ -470,14 +470,14 @@ you the new guy ?   so they tell me ...
 <span class="p">})</span>
 </pre></div>
 </div>
-<p>然後，由這些 Layers ，來組建我們的 Seq2Seq 模型。需要注意的是我們需要共享這些 Layers 建立三個不同的模型，分別是：</p>
+<p>然後，由這些 Layers ，來組建我們的 Seq2Seq 模型。需要註意的是我們需要共用這些 Layers 建立三個不同的模型，分別是：</p>
 <ul class="simple">
 <li><p>用來訓練的完整 Seq2Seq 模型： <code class="docutils literal notranslate"><span class="pre">seq2seqModel</span></code></p></li>
 <li><p>用來對序列進行編碼的 Encoder 模型： <code class="docutils literal notranslate"><span class="pre">encoderModel</span></code></p></li>
 <li><p>用來對序列進行解碼的 Decoder 模型： <code class="docutils literal notranslate"><span class="pre">decoderModel</span></code></p></li>
 </ul>
-<p>請注意這三個模型中，只有第一個模型  <code class="docutils literal notranslate"><span class="pre">seq2seqModel</span></code>  是用來訓練參數所需要的，所以訓練的的時候使用這個模型。而另外的兩個模型 <code class="docutils literal notranslate"><span class="pre">encoderModel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">decoderModel</span></code> ，使我們用來預測的時候需要使用的。這三個模型共享所有的 Layers 參數。</p>
-<p><code class="docutils literal notranslate"><span class="pre">seq2seqModel</span></code> 模型的輸入包含兩個，一個是 Encoder 的輸入，另外一個是 Decoder 的輸入。模型的輸出是我們數據集的輸出。</p>
+<p>請注意這三個模型中，只有第一個模型  <code class="docutils literal notranslate"><span class="pre">seq2seqModel</span></code>  是用來訓練參數所需要的，所以訓練的的時候使用這個模型。而另外的兩個模型 <code class="docutils literal notranslate"><span class="pre">encoderModel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">decoderModel</span></code> ，使我們用來預測的時候需要使用的。這三個模型共用所有的 Layers 參數。</p>
+<p><code class="docutils literal notranslate"><span class="pre">seq2seqModel</span></code> 模型的輸入包含兩個，一個是 Encoder 的輸入，另外一個是 Decoder 的輸入。模型的輸出是我們資料集的輸出。</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">inputs</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
   <span class="nx">shape</span><span class="o">:</span> <span class="p">[</span><span class="kc">null</span><span class="p">],</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;seq2seqInputs&#39;</span><span class="p">,</span>
@@ -527,8 +527,8 @@ you the new guy ?   so they tell me ...
 <span class="o">...</span>
 </pre></div>
 </div>
-<p>然後，爲了能夠讓我們使用訓練好的模型，我們還需要基於已經訓練好的模型 Layer 參數，構建獨立的 <code class="docutils literal notranslate"><span class="pre">encoderModel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">decoderModel</span></code> 。</p>
-<p>Encoder子模型輸入 <code class="docutils literal notranslate"><span class="pre">numBatch</span></code> 個由編碼後單詞和字符組成的，長爲 <code class="docutils literal notranslate"><span class="pre">maxLength</span></code> 的序列，輸入張量形狀爲 <code class="docutils literal notranslate"><span class="pre">[numBatch,</span> <span class="pre">maxLength]</span></code> ，輸出與這個序列對應的上下文狀態張量。</p>
+<p>然後，為了能夠讓我們使用訓練好的模型，我們還需要基於已經訓練好的模型 Layer 參數，建構獨立的 <code class="docutils literal notranslate"><span class="pre">encoderModel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">decoderModel</span></code> 。</p>
+<p>Encoder子模型輸入 <code class="docutils literal notranslate"><span class="pre">numBatch</span></code> 個由編碼後單詞和字元組成的，長為 <code class="docutils literal notranslate"><span class="pre">maxLength</span></code> 的序列，輸入變數形狀為 <code class="docutils literal notranslate"><span class="pre">[numBatch,</span> <span class="pre">maxLength]</span></code> ，輸出與這個序列對應的上下文狀態變數。</p>
 <p><code class="docutils literal notranslate"><span class="pre">encoderModel</span></code> 的代碼實現如下：</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">encoderInputs</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
   <span class="nx">shape</span><span class="o">:</span> <span class="p">[</span><span class="kc">null</span><span class="p">],</span>
@@ -543,7 +543,7 @@ you the new guy ?   so they tell me ...
 <span class="p">})</span>
 </pre></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">deocoderModel</span></code> 的輸入有兩個，分別是 t 時刻的 token indice，和對應的解碼器 <code class="docutils literal notranslate"><span class="pre">state</span></code>；輸出也有兩個，分別是 t+1 時刻的 token 的 voc 分布概率，和對應的解碼器 <code class="docutils literal notranslate"><span class="pre">state</span></code> ：</p>
+<p><code class="docutils literal notranslate"><span class="pre">deocoderModel</span></code> 的輸入有兩個，分別是 t 時間的 token indice，和對應的解碼器 <code class="docutils literal notranslate"><span class="pre">state</span></code>；輸出也有兩個，分別是 t+1 時間的 token 的 voc 分佈機率，和對應的解碼器 <code class="docutils literal notranslate"><span class="pre">state</span></code> ：</p>
 <p><code class="docutils literal notranslate"><span class="pre">decoderModel</span></code> 子模型具體實現如下：</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">decoderInput</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
   <span class="nx">shape</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
@@ -570,7 +570,7 @@ you the new guy ?   so they tell me ...
 <span class="p">})</span>
 </pre></div>
 </div>
-<p>最後，我們需要一個用來對話的程序。我們建立一個專門用來接收一句話輸入，然後通過我們的模型預測，得到序列輸出的函數 <code class="docutils literal notranslate"><span class="pre">seq2seqDecoder()</span></code> ：</p>
+<p>最後，我們需要一個用來對話的程式。我們建立一個專門用來接收一句話輸入，然後通過我們的模型預測，得到序列輸出的函數 <code class="docutils literal notranslate"><span class="pre">seq2seqDecoder()</span></code> ：</p>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">export</span> <span class="nx">async</span> <span class="kd">function</span> <span class="nx">seq2seqDecoder</span> <span class="p">(</span>
   <span class="nx">input</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
   <span class="nx">encoderModel</span><span class="o">:</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">LayersModel</span><span class="p">,</span>
@@ -647,7 +647,7 @@ you the new guy ?   so they tell me ...
 Decoded setence: &quot;good .&quot;
 </pre></div>
 </div>
-<p>註：本章節中的 JavaScript 版 ChitChat 完整代碼，使用說明，和訓練好的模型文件及參數，都可以在作者的 GitHub 上找到。地址： <a class="reference external" href="https://github.com/huan/tensorflow-handbook-javascript">https://github.com/huan/tensorflow-handbook-javascript</a></p>
+<p>註：本章節中的 JavaScript 版 ChitChat 完整程式碼，使用說明，和訓練好的模型文件及參數，都可以在作者的 GitHub 上找到。地址： <a class="reference external" href="https://github.com/huan/tensorflow-handbook-javascript">https://github.com/huan/tensorflow-handbook-javascript</a></p>
 </div>
 
 

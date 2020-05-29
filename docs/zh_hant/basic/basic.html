@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TensorFlow基礎 &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
+  <title>TensorFlow 基礎 &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
@@ -41,7 +41,7 @@
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
     <link rel="next" title="TensorFlow 模型建立與訓練" href="models.html" />
-    <link rel="prev" title="TensorFlow安裝與環境配置" href="installation.html" /> 
+    <link rel="prev" title="TensorFlow 安裝與環境配置" href="installation.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -136,23 +136,23 @@
 </ul>
 <p class="caption"><span class="caption-text">基礎</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="installation.html">TensorFlow安裝與環境配置</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow基礎</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">TensorFlow 安裝與環境配置</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow 基礎</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#tensorflow-1-1">TensorFlow 1+1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#zh-hant-automatic-derivation">自動求導機制</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#zh-hant-linear-regression">基礎示例：線性回歸</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id13">NumPy下的線性回歸</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#zh-hant-optimizer">TensorFlow下的線性回歸</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#automatic-derivation">自動推導機制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linear-regression">基礎範例：線性回歸</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id16">NumPy 下的線性回歸</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#optimizer">TensorFlow下的線性回歸</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">TensorFlow 模型建立與訓練</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tools.html">TensorFlow常用模塊</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">TensorFlow常用模組</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型匯出</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
@@ -164,8 +164,8 @@
 </ul>
 <p class="caption"><span class="caption-text">擴展</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型複用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 資料集載入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
 </ul>
@@ -174,9 +174,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../appendix/rl.html">強化學習簡介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow環境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在雲端使用TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的互動式 Python 開發環境 JupyterLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">參考資料與推薦閱讀</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">術語中英對照表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">專有名詞中英對照表</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Preface</span></p>
 <ul>
@@ -262,7 +262,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>TensorFlow基礎</li>
+      <li>TensorFlow 基礎</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -282,61 +282,61 @@
            <div itemprop="articleBody">
             
   <div class="section" id="tensorflow">
-<h1>TensorFlow基礎<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
-<p>本章介紹TensorFlow的基本操作。</p>
+<h1>TensorFlow 基礎<a class="headerlink" href="#tensorflow" title="永久链接至标题">¶</a></h1>
+<p>本章介紹 TensorFlow 的基本操作。</p>
 <div class="admonition- admonition">
 <p class="admonition-title">前置知識</p>
 <ul class="simple">
-<li><p><a class="reference external" href="http://www.runoob.com/python3/python3-tutorial.html">Python基本操作</a> （賦值、分支及循環語句、使用import導入庫）；</p></li>
-<li><p><a class="reference external" href="https://www.ibm.com/developerworks/cn/opensource/os-cn-pythonwith/index.html">Python的With語句</a> ；</p></li>
-<li><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/user/quickstart.html">NumPy</a> ，Python下常用的科學計算庫。TensorFlow與之結合緊密；</p></li>
+<li><p><a class="reference external" href="https://openhome.cc/Gossip/CodeData/PythonTutorial/HelloWorldPy3.html">Python 基本操作</a> （賦值、程式分支及控制流程、使用 import 導入套件）；</p></li>
+<li><p><a class="reference external" href="https://openhome.cc/Gossip/CodeData/PythonTutorial/WithAsPy3.html">Python 的 With 語句</a> ；</p></li>
+<li><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/user/quickstart.html">NumPy</a> ，Python 下常用的科學計算套件。TensorFlow 與之結合緊密；</p></li>
 <li><p><a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%90%91%E9%87%8F">向量</a> 和 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E7%9F%A9%E9%98%B5">矩陣</a> 運算（矩陣的加減法、矩陣與向量相乘、矩陣與矩陣相乘、矩陣的轉置等。測試題：<img class="math" src="../../_images/math/daa6ed586253d99032cf07854b35677c48cefeb7.png" alt="\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} \times \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = ?"/>）；</p></li>
-<li><p><a class="reference external" href="http://old.pep.com.cn/gzsx/jszx_1/czsxtbjxzy/qrzptgjzxjc/dzkb/dscl/">函數的導數</a> ，<a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%81%8F%E5%AF%BC%E6%95%B0">多元函數求導</a> （測試題：<img class="math" src="../../_images/math/782dbae0a39ca7339521de07460e1b48745c2b13.png" alt="f(x, y) = x^2 + xy + y^2, \frac{\partial f}{\partial x} = ?, \frac{\partial f}{\partial y} = ?"/>）；</p></li>
-<li><p><a class="reference external" href="http://old.pep.com.cn/gzsx/jszx_1/czsxtbjxzy/qrzptgjzxjc/dzkb/dscl/">線性回歸</a> ；</p></li>
+<li><p><a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%AF%BC%E6%95%B0">函數的導數</a> ，<a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%AF%BC%E6%95%B0">多元函數推導</a> （測試題：<img class="math" src="../../_images/math/782dbae0a39ca7339521de07460e1b48745c2b13.png" alt="f(x, y) = x^2 + xy + y^2, \frac{\partial f}{\partial x} = ?, \frac{\partial f}{\partial y} = ?"/>）；</p></li>
+<li><p><a class="reference external" href="https://brohrer.mcknote.com/zh-Hant/how_machine_learning_works/how_linear_regression_works.html">線性迴歸</a> ；</p></li>
 <li><p><a class="reference external" href="https://zh.wikipedia.org/wiki/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95">梯度下降方法</a> 求函數的局部最小值。</p></li>
 </ul>
 </div>
 <div class="section" id="tensorflow-1-1">
 <h2>TensorFlow 1+1<a class="headerlink" href="#tensorflow-1-1" title="永久链接至标题">¶</a></h2>
-<p>我們可以先簡單地將TensorFlow視爲一個科學計算庫（類似於Python下的NumPy）。</p>
-<p>首先，我們導入TensorFlow：</p>
+<p>我們可以先簡單地將 TensorFlow 視為一個科學計算套件（類似於 Python 下的 NumPy）。</p>
+<p>首先，我們導入 TensorFlow：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
 </pre></div>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">警告</p>
-<p>本手冊基於TensorFlow的即時執行模式（Eager Execution）。在TensorFlow 1.X版本中， <strong>必須</strong> 在導入TensorFlow庫後調用 <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code> 函數以啓用即時執行模式。在 TensorFlow 2 中，即時執行模式將成爲默認模式，無需額外調用 <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code> 函數（不過若要關閉即時執行模式，則需調用 <code class="docutils literal notranslate"><span class="pre">tf.compat.v1.disable_eager_execution()</span></code> 函數）。</p>
+<p>本手冊基於 TensorFlow 的即時執行模式（Eager Execution）。在 TensorFlow 1.X 版本中， <strong>必須</strong> 在導入 TensorFlow 套件後呼叫 <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code> 函數以啟用即時執行模式。在 TensorFlow 2 中，即時執行模式將成為預設模式，無需額外呼叫 <code class="docutils literal notranslate"><span class="pre">tf.enable_eager_execution()</span></code> 函數（不過若要關閉即時執行模式，則需呼叫 <code class="docutils literal notranslate"><span class="pre">tf.compat.v1.disable_eager_execution()</span></code> 函数）。</p>
 </div>
-<p>TensorFlow使用 <strong>張量</strong> （Tensor）作爲數據的基本單位。TensorFlow的張量在概念上等同於多維數組，我們可以使用它來描述數學中的標量（0維數組）、向量（1維數組）、矩陣（2維數組）等各種量，示例如下：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定义一个随机数（标量）</span>
+<p>TensorFlow 使用 <a href="#id7"><span class="problematic" id="id8">**</span></a>張量**（Tensor）作為資料的基本單位。TensorFlow 的張量在概念上等同於多維陣列，我們可以使用它來描述數學中的純量（0 維陣列）、向量（1 維陣列）、矩陣（2 維陣列）等各種量，範例如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 定義一個隨機數（純量）</span>
 <span class="n">random_float</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">())</span>
 
-<span class="c1"># 定义一个有2个元素的零向量</span>
+<span class="c1"># 定義一個有2個元素的零向量</span>
 <span class="n">zero_vector</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 
-<span class="c1"># 定义两个2×2的常量矩阵</span>
+<span class="c1"># 定義兩個2×2的常量矩陣</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">]])</span>
 <span class="n">B</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">5.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">],</span> <span class="p">[</span><span class="mf">7.</span><span class="p">,</span> <span class="mf">8.</span><span class="p">]])</span>
 </pre></div>
 </div>
 <p>張量的重要屬性是其形狀、類型和值。可以通過張量的 <code class="docutils literal notranslate"><span class="pre">shape</span></code> 、 <code class="docutils literal notranslate"><span class="pre">dtype</span></code> 屬性和 <code class="docutils literal notranslate"><span class="pre">numpy()</span></code> 方法獲得。例如：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 查看矩阵A的形状、类型和值</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>      <span class="c1"># 输出(2, 2)，即矩阵的长和宽均为2</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>      <span class="c1"># 输出&lt;dtype: &#39;float32&#39;&gt;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>    <span class="c1"># 输出[[1. 2.]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 查看矩陣A的形狀、類型和值</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>      <span class="c1"># 輸出(2, 2)，即矩陣的長和寬均為2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>      <span class="c1"># 輸出&lt;dtype: &#39;float32&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>    <span class="c1"># 輸出[[1. 2.]</span>
                     <span class="c1">#      [3. 4.]]</span>
 </pre></div>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">小技巧</p>
-<p>TensorFlow的大多數API函數會根據輸入的值自動推斷張量中元素的類型（一般默認爲 <code class="docutils literal notranslate"><span class="pre">tf.float32</span></code> ）。不過你也可以通過加入 <code class="docutils literal notranslate"><span class="pre">dtype</span></code> 參數來自行指定類型，例如 <code class="docutils literal notranslate"><span class="pre">zero_vector</span> <span class="pre">=</span> <span class="pre">tf.zeros(shape=(2),</span> <span class="pre">dtype=tf.int32)</span></code> 將使得張量中的元素類型均爲整數。張量的 <code class="docutils literal notranslate"><span class="pre">numpy()</span></code> 方法是將張量的值轉換爲一個NumPy數組。</p>
+<p>TensorFlow 的大多數 API 函數會根據輸入的值自動推斷張量中元素的類型（一般預設為 <code class="docutils literal notranslate"><span class="pre">tf.float32</span></code> ）。不過你也可以通過加入 <code class="docutils literal notranslate"><span class="pre">dtype</span></code> 參數來自行指定類型，例如 <code class="docutils literal notranslate"><span class="pre">zero_vector</span> <span class="pre">=</span> <span class="pre">tf.zeros(shape=(2),</span> <span class="pre">dtype=tf.int32)</span></code> 將使得張量中的元素類型均為整數。張量的 <code class="docutils literal notranslate"><span class="pre">numpy()</span></code> 方法是將張量的值轉換為一個 NumPy 陣列。</p>
 </div>
-<p>TensorFlow里有大量的 <strong>操作</strong> （Operation），使得我們可以將已有的張量進行運算後得到新的張量。示例如下：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>    <span class="c1"># 计算矩阵A和B的和</span>
-<span class="n">D</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="c1"># 计算矩阵A和B的乘积</span>
+<p>TensorFlow 裡有大量的運算函數（Operation），使得我們可以將已有的張量進行運算後得到新的張量。範例如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>    <span class="c1"># 計算矩陣A和B的和</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span> <span class="c1"># 計算矩陣A和B的乘積</span>
 </pre></div>
 </div>
-<p>操作完成後， <code class="docutils literal notranslate"><span class="pre">C</span></code> 和 <code class="docutils literal notranslate"><span class="pre">D</span></code> 的值分別爲:</p>
+<p>操作完成後， <code class="docutils literal notranslate"><span class="pre">C</span></code> 和 <code class="docutils literal notranslate"><span class="pre">D</span></code> 的值分別為:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span>
 <span class="p">[[</span> <span class="mf">6.</span>  <span class="mf">8.</span><span class="p">]</span>
  <span class="p">[</span><span class="mf">10.</span> <span class="mf">12.</span><span class="p">]],</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
@@ -347,15 +347,15 @@
 </div>
 <p>可見，我們成功使用 <code class="docutils literal notranslate"><span class="pre">tf.add()</span></code> 操作計算出 <img class="math" src="../../_images/math/a0e8239c355d42a1c2a5bcc27e28bd5b0515c564.png" alt="\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} + \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = \begin{bmatrix} 6 &amp; 8 \\ 10 &amp; 12 \end{bmatrix}"/>，使用 <code class="docutils literal notranslate"><span class="pre">tf.matmul()</span></code> 操作計算出 <img class="math" src="../../_images/math/339ecd3d3a3e43dc6d6c69cf08cdfebba8a88643.png" alt="\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} \times \begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix} = \begin{bmatrix} 19 &amp; 22 \\43 &amp; 50 \end{bmatrix}"/> 。</p>
 </div>
-<div class="section" id="zh-hant-automatic-derivation">
-<span id="id7"></span><h2>自動求導機制<a class="headerlink" href="#zh-hant-automatic-derivation" title="永久链接至标题">¶</a></h2>
-<p>在機器學習中，我們經常需要計算函數的導數。TensorFlow提供了強大的 <strong>自動求導機制</strong> 來計算導數。在即時執行模式下，TensorFlow引入了 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 這個「求導記錄器」來實現自動求導。以下代碼展示了如何使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 計算函數 <img class="math" src="../../_images/math/2261dfa63cebc11353c25f3b42ab8812925703e7.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/6242bf7ca264a34d82d13f3307438c9bd77b8e15.png" alt="x = 3"/> 時的導數：</p>
+<div class="section" id="automatic-derivation">
+<span id="id9"></span><h2>自動推導機制<a class="headerlink" href="#automatic-derivation" title="永久链接至标题">¶</a></h2>
+<p>在機器學習中，我們經常需要計算函數的導數。TensorFlow 提供了強大的 <strong>自動推導機制</strong> 来计算导数。來計算導數。在即時執行模式下，TensorFlow 引入了 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 這個“推導記錄器”來實現自動微分。以下程式碼展示了如何使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 計算函數 <img class="math" src="../../_images/math/2261dfa63cebc11353c25f3b42ab8812925703e7.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/6242bf7ca264a34d82d13f3307438c9bd77b8e15.png" alt="x = 3"/> 時的導數：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial_value</span><span class="o">=</span><span class="mf">3.</span><span class="p">)</span>
-<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>     <span class="c1"># 在 tf.GradientTape() 的上下文内，所有计算步骤都会被记录以用于求导</span>
+<span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>     <span class="c1"># 在 tf.GradientTape() 的上下文內，所有計算步驟都會被記錄以用於推導</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">y_grad</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>        <span class="c1"># 计算y关于x的导数</span>
+<span class="n">y_grad</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>        <span class="c1"># 計算y關於x的導數</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_grad</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -364,16 +364,16 @@
 <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mf">6.0</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>這裡 <code class="docutils literal notranslate"><span class="pre">x</span></code> 是一個初始化爲3的 <strong>變量</strong> （Variable），使用 <code class="docutils literal notranslate"><span class="pre">tf.Variable()</span></code> 聲明。與普通張量一樣，變量同樣具有形狀、類型和值三種屬性。使用變量需要有一個初始化過程，可以通過在 <code class="docutils literal notranslate"><span class="pre">tf.Variable()</span></code> 中指定 <code class="docutils literal notranslate"><span class="pre">initial_value</span></code> 參數來指定初始值。這裡將變量 <code class="docutils literal notranslate"><span class="pre">x</span></code> 初始化爲 <code class="docutils literal notranslate"><span class="pre">3.</span></code> <a class="footnote-reference brackets" href="#f0" id="id8">1</a>。變量與普通張量的一個重要區別是其默認能夠被TensorFlow的自動求導機制所求導，因此往往被用於定義機器學習模型的參數。</p>
-<p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 是一個自動求導的記錄器。只要進入了 <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">tf.GradientTape()</span> <span class="pre">as</span> <span class="pre">tape</span></code> 的上下文環境，則在該環境中計算步驟都會被自動記錄。比如在上面的示例中，計算步驟 <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">tf.square(x)</span></code> 即被自動記錄。離開上下文環境後，記錄將停止，但記錄器 <code class="docutils literal notranslate"><span class="pre">tape</span></code> 依然可用，因此可以通過 <code class="docutils literal notranslate"><span class="pre">y_grad</span> <span class="pre">=</span> <span class="pre">tape.gradient(y,</span> <span class="pre">x)</span></code> 求張量 <code class="docutils literal notranslate"><span class="pre">y</span></code> 對變量 <code class="docutils literal notranslate"><span class="pre">x</span></code> 的導數。</p>
-<p>在機器學習中，更加常見的是對多元函數求偏導數，以及對向量或矩陣的求導。這些對於TensorFlow也不在話下。以下代碼展示了如何使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 計算函數 <img class="math" src="../../_images/math/479f15e307e3012ebd95ddd6be5c66f360ffc3d3.png" alt="L(w, b) = \|Xw + b - y\|^2"/> 在 <img class="math" src="../../_images/math/22cb26d288c0a6b52f9882ae272afee98d3017aa.png" alt="w = (1, 2)^T, b = 1"/> 時分別對 <img class="math" src="../../_images/math/8c636669cd40f0b12ecca4a300cc3197e9e4fd4b.png" alt="w, b"/> 的偏導數。其中 <img class="math" src="../../_images/math/190428cb73985eba651bd2b7c04ff94a28f9feb3.png" alt="X = \begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix},  y = \begin{bmatrix} 1 \\ 2\end{bmatrix}"/>。</p>
+<p>這裡 <code class="docutils literal notranslate"><span class="pre">x</span></code> 是一個初始化為 3 的 <strong>變數</strong> （Variable），使用 <code class="docutils literal notranslate"><span class="pre">tf.Variable()</span></code> 宣告。與普通張量一樣，變數同樣具有形狀、類型和值三種屬性。使用變數需要有一個初始化過程，可以通過在 <code class="docutils literal notranslate"><span class="pre">tf.Variable()</span></code> 中指定 <code class="docutils literal notranslate"><span class="pre">initial_value</span></code> 參數來指定初始值。這裡將變數 <code class="docutils literal notranslate"><span class="pre">x</span></code> 初始化為 <code class="docutils literal notranslate"><span class="pre">3.</span></code> <a class="footnote-reference brackets" href="#f0" id="id10">1</a>。變數與普通張量的一個重要區別是其預設能夠被 TensorFlow 的自動推導機制所求，因此往往被用於定義機器學習模型的參數。</p>
+<p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 是一個自動推導的記錄器。只要進入了 <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">tf.GradientTape()</span> <span class="pre">as</span> <span class="pre">tape</span></code> 的上下文環境，則在該環境中計算步驟都會被自動記錄。比如在上面的範例中，計算步驟 <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">tf.square(x)</span></code> 即被自動記錄。離開上下文環境後，記錄將停止，但記錄器 <code class="docutils literal notranslate"><span class="pre">tape</span></code> 依然可用，因此可以通過 <code class="docutils literal notranslate"><span class="pre">y_grad</span> <span class="pre">=</span> <span class="pre">tape.gradient(y,</span> <span class="pre">x)</span></code> 求張量 <code class="docutils literal notranslate"><span class="pre">y</span></code> 對變數 <code class="docutils literal notranslate"><span class="pre">x</span></code> 的導數。</p>
+<p>在機器學習中，更加常見的是對多元函數求偏導數，以及對向量或矩陣的推導。這些對於 TensorFlow 也不在話下。以下程式碼展示了如何使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 計算函數 <img class="math" src="../../_images/math/479f15e307e3012ebd95ddd6be5c66f360ffc3d3.png" alt="L(w, b) = \|Xw + b - y\|^2"/> 在 <img class="math" src="../../_images/math/22cb26d288c0a6b52f9882ae272afee98d3017aa.png" alt="w = (1, 2)^T, b = 1"/> 時分別對 <img class="math" src="../../_images/math/8c636669cd40f0b12ecca4a300cc3197e9e4fd4b.png" alt="w, b"/> 的偏導數。其中 <img class="math" src="../../_images/math/190428cb73985eba651bd2b7c04ff94a28f9feb3.png" alt="X = \begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix},  y = \begin{bmatrix} 1 \\ 2\end{bmatrix}"/>。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">]])</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">([[</span><span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.</span><span class="p">]])</span>
 <span class="n">w</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial_value</span><span class="o">=</span><span class="p">[[</span><span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.</span><span class="p">]])</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial_value</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
 <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
     <span class="n">L</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span> <span class="o">-</span> <span class="n">y</span><span class="p">))</span>
-<span class="n">w_grad</span><span class="p">,</span> <span class="n">b_grad</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>        <span class="c1"># 计算L(w, b)关于w, b的偏导数</span>
+<span class="n">w_grad</span><span class="p">,</span> <span class="n">b_grad</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>        <span class="c1"># 計算L(w, b)關於w, b的偏導數</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">w_grad</span><span class="p">,</span> <span class="n">b_grad</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -385,8 +385,8 @@
 <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mf">30.0</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>這裡， <code class="docutils literal notranslate"><span class="pre">tf.square()</span></code> 操作代表對輸入張量的每一個元素求平方，不改變張量形狀。 <code class="docutils literal notranslate"><span class="pre">tf.reduce_sum()</span></code> 操作代表對輸入張量的所有元素求和，輸出一個形狀爲空的純量張量（可以通過 <code class="docutils literal notranslate"><span class="pre">axis</span></code> 參數來指定求和的維度，不指定則默認對所有元素求和）。TensorFlow中有大量的張量操作API，包括數學運算、張量形狀操作（如 <code class="docutils literal notranslate"><span class="pre">tf.reshape()</span></code>）、切片和連接（如 <code class="docutils literal notranslate"><span class="pre">tf.concat()</span></code>）等多種類型，可以通過查閱TensorFlow的官方API文檔 <a class="footnote-reference brackets" href="#f3" id="id9">2</a> 來進一步了解。</p>
-<p>從輸出可見，TensorFlow幫助我們計算出了</p>
+<p>這裡， <code class="docutils literal notranslate"><span class="pre">tf.square()</span></code> 操作代表對輸入張量的每一個元素求平方，不改變張量形狀。 <code class="docutils literal notranslate"><span class="pre">tf.reduce_sum()</span></code> 操作代表對輸入張量的所有元素求和，輸出一個形狀為空的純量張量（可以通過 <code class="docutils literal notranslate"><span class="pre">axis</span></code> 參數來指定求和的維度，不指定則預設對所有元素求和）。TensorFlow 中有大量的張量操作 API，包括數學運算、張量形狀操作（如 <code class="docutils literal notranslate"><span class="pre">tf.reshape()</span></code>）、切片和連接（如 <code class="docutils literal notranslate"><span class="pre">tf.concat()</span></code>）等多種類型，可以通過查閱 TensorFlow 的官方 API 文件 <a class="footnote-reference brackets" href="#f3" id="id11">2</a> 來進一步了解。</p>
+<p>從輸出可見，TensorFlow 幫助我們計算出了</p>
 <div class="math">
 <p><img src="../../_images/math/1ac464fd70b56c10c245f81d76eaf97e7e436d54.png" alt="L((1, 2)^T, 1) &amp;= 125
 
@@ -394,15 +394,15 @@
 
 \frac{\partial L(w, b)}{\partial b} |_{w = (1, 2)^T, b = 1} &amp;= 30"/></p>
 </div></div>
-<div class="section" id="zh-hant-linear-regression">
-<span id="id10"></span><h2>基礎示例：線性回歸<a class="headerlink" href="#zh-hant-linear-regression" title="永久链接至标题">¶</a></h2>
+<div class="section" id="linear-regression">
+<span id="id12"></span><h2>基礎範例：線性回歸<a class="headerlink" href="#linear-regression" title="永久链接至标题">¶</a></h2>
 <div class="admonition- admonition">
 <p class="admonition-title">基礎知識和原理</p>
 <ul class="simple">
-<li><p>UFLDL教程 <a class="reference external" href="http://ufldl.stanford.edu/tutorial/supervised/LinearRegression/">Linear Regression</a> 一節。</p></li>
+<li><p>UFLDL 教程 <a class="reference external" href="http://ufldl.stanford.edu/tutorial/supervised/LinearRegression/">Linear Regression</a> 一節。</p></li>
 </ul>
 </div>
-<p>考慮一個實際問題，某城市在2013年-2017年的房價如下表所示：</p>
+<p>考慮一個實際問題，某城市在 2013 年 - 2017 年的房價如下表所示：</p>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 19%" />
@@ -429,8 +429,8 @@
 </tr>
 </tbody>
 </table>
-<p>現在，我們希望通過對該數據進行線性回歸，即使用線性模型 <img class="math" src="../../_images/math/08657936072cefe083681bc78c8c9bcda2c86e2d.png" alt="y = ax + b"/> 來擬合上述數據，此處 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 是待求的參數。</p>
-<p>首先，我們定義數據，進行基本的歸一化操作。</p>
+<p>現在，我們希望通過對該資料進行線性回歸，即使用線性模型 <img class="math" src="../../_images/math/08657936072cefe083681bc78c8c9bcda2c86e2d.png" alt="y = ax + b"/> 來擬合上述資料，此處 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 是待求的參數。</p>
+<p>首先，我們定義資料，進行基本的正規化操作。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="n">X_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">2014</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">,</span> <span class="mi">2017</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
@@ -440,49 +440,49 @@
 <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_raw</span> <span class="o">-</span> <span class="n">y_raw</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">/</span> <span class="p">(</span><span class="n">y_raw</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">y_raw</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
 </pre></div>
 </div>
-<p>接下來，我們使用梯度下降方法來求線性模型中兩個參數 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的值 <a class="footnote-reference brackets" href="#f1" id="id11">3</a>。</p>
-<p>回顧機器學習的基礎知識，對於多元函數 <img class="math" src="../../_images/math/79f40f147e28ccf9e9ffc1444476982d82b10dd8.png" alt="f(x)"/> 求局部極小值，<a class="reference external" href="https://zh.wikipedia.org/wiki/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95">梯度下降</a> 的過程如下：</p>
+<p>接下來，我們使用梯度下降方法來求線性模型中兩個參數 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的值 <a class="footnote-reference brackets" href="#f1" id="id14">3</a>。</p>
+<p>回顧機器學習的基礎知識，對於多元函數  求局部極小值，<a class="reference external" href="https://zh.wikipedia.org/wiki/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95">梯度下降</a> 的過程如下：</p>
 <ul>
-<li><p>初始化自變量爲 <img class="math" src="../../_images/math/4c72fcabd7dee7baed0b5dd1e1cb19fcba10e393.png" alt="x_0"/> ， <img class="math" src="../../_images/math/50cfe232e3009061047c77379101c266c05aa4bd.png" alt="k=0"/></p></li>
+<li><p>初始化自變數為 <img class="math" src="../../_images/math/4c72fcabd7dee7baed0b5dd1e1cb19fcba10e393.png" alt="x_0"/> ， <img class="math" src="../../_images/math/50cfe232e3009061047c77379101c266c05aa4bd.png" alt="k=0"/></p></li>
 <li><p>疊代進行下列步驟直到滿足收斂條件：</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>求函數 <img class="math" src="../../_images/math/79f40f147e28ccf9e9ffc1444476982d82b10dd8.png" alt="f(x)"/> 關於自變量的梯度 <img class="math" src="../../_images/math/93db086a28007bb879765c0f3565949370012430.png" alt="\nabla f(x_k)"/></p></li>
-<li><p>更新自變量： <img class="math" src="../../_images/math/13a668025d3ec26103884489e7cfa885ad850897.png" alt="x_{k+1} = x_{k} - \gamma \nabla f(x_k)"/> 。這裡 <img class="math" src="../../_images/math/6b4bdbbff158a9000549042619446ccde93ed095.png" alt="\gamma"/> 是學習率（也就是梯度下降一次邁出的「步子」大小）</p></li>
+<li><p>求函数 <img class="math" src="../../_images/math/79f40f147e28ccf9e9ffc1444476982d82b10dd8.png" alt="f(x)"/> 關於自變數的梯度 <img class="math" src="../../_images/math/93db086a28007bb879765c0f3565949370012430.png" alt="\nabla f(x_k)"/></p></li>
+<li><p>更新自變數： <img class="math" src="../../_images/math/13a668025d3ec26103884489e7cfa885ad850897.png" alt="x_{k+1} = x_{k} - \gamma \nabla f(x_k)"/> 。這裡 <img class="math" src="../../_images/math/6b4bdbbff158a9000549042619446ccde93ed095.png" alt="\gamma"/> 是學習率（也就是梯度下降一次邁出的“步長”大小）</p></li>
 <li><p><img class="math" src="../../_images/math/57bd938dc0c899c308b17bef0c14ec613dcbbcd9.png" alt="k \leftarrow k+1"/></p></li>
 </ul>
 </div></blockquote>
 </li>
 </ul>
-<p>接下來，我們考慮如何使用程序來實現梯度下降方法，求得線性回歸的解 <img class="math" src="../../_images/math/0d65712f1fa8f236b1ac84c404e5761364c3d877.png" alt="\min_{a, b} L(a, b) = \sum_{i=1}^n(ax_i + b - y_i)^2"/> 。</p>
-<div class="section" id="id13">
-<h3>NumPy下的線性回歸<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
-<p>機器學習模型的實現並不是TensorFlow的專利。事實上，對於簡單的模型，即使使用常規的科學計算庫或者工具也可以求解。在這裡，我們使用NumPy這一通用的科學計算庫來實現梯度下降方法。NumPy提供了多維數組支持，可以表示向量、矩陣以及更高維的張量。同時，也提供了大量支持在多維數組上進行操作的函數（比如下面的 <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code> 是求內積， <code class="docutils literal notranslate"><span class="pre">np.sum()</span></code> 是求和）。在這方面，NumPy和MATLAB比較類似。在以下代碼中，我們手工求損失函數關於參數 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的偏導數 <a class="footnote-reference brackets" href="#f2" id="id14">4</a>，並使用梯度下降法反覆疊代，最終獲得 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的值。</p>
+<p>接下來，我們考慮如何使用程式來實現梯度下降方法，求得線性回歸的解 <img class="math" src="../../_images/math/0d65712f1fa8f236b1ac84c404e5761364c3d877.png" alt="\min_{a, b} L(a, b) = \sum_{i=1}^n(ax_i + b - y_i)^2"/> 。</p>
+<div class="section" id="id16">
+<h3>NumPy 下的線性回歸<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h3>
+<p>機器學習模型的實現並不是 TensorFlow 的專利。事實上，對於簡單的模型，即使使用常規的科學計算套件或者工具也可以求解。在這裡，我們使用 NumPy 這一通用的科學計算套件來實現梯度下降方法。NumPy 提供了多維陣列支援，可以表示向量、矩陣以及更高維的張量。同時，也提供了大量支援在多維陣列上進行操作的函數（比如下面的 <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code> 是求內積， <code class="docutils literal notranslate"><span class="pre">np.sum()</span></code> 是求和）。在這方面，NumPy 和 MATLAB 比較類似。在以下程式碼中，我們推導求損失函數關於參數 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的偏導數 <a class="footnote-reference brackets" href="#f2" id="id17">4</a>，並使用梯度下降法反複疊代，最終獲得 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的值。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
 
 <span class="n">num_epoch</span> <span class="o">=</span> <span class="mi">10000</span>
 <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">5e-4</span>
 <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epoch</span><span class="p">):</span>
-    <span class="c1"># 手动计算损失函数关于自变量（模型参数）的梯度</span>
+    <span class="c1"># 手動計算損失函數關於自變數（模型參數）的梯度</span>
     <span class="n">y_pred</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">X</span> <span class="o">+</span> <span class="n">b</span>
     <span class="n">grad_a</span><span class="p">,</span> <span class="n">grad_b</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
-    <span class="c1"># 更新参数</span>
+    <span class="c1"># 更新參數</span>
     <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">-</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">grad_a</span><span class="p">,</span> <span class="n">b</span> <span class="o">-</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">grad_b</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>然而，你或許已經可以注意到，使用常規的科學計算庫實現機器學習模型有兩個痛點：</p>
+<p>然而，你或許已經可以注意到，使用常規的科學計算套件實現機器學習模型有兩個痛點：</p>
 <ul class="simple">
-<li><p>經常需要手工求函數關於參數的偏導數。如果是簡單的函數或許還好，但一旦函數的形式變得複雜（尤其是深度學習模型），手工求導的過程將變得非常痛苦，甚至不可行。</p></li>
-<li><p>經常需要手工根據求導的結果更新參數。這裡使用了最基礎的梯度下降方法，因此參數的更新還較爲容易。但如果使用更加複雜的參數更新方法（例如Adam或者Adagrad），這個更新過程的編寫同樣會非常繁雜。</p></li>
+<li><p>經常需要人工推導求函數關於參數的偏導數。如果是簡單的函數或許還好，但一旦函數的形式變得複雜（尤其是深度學習模型），人工推導的過程將變得非常痛苦，甚至不可行。</p></li>
+<li><p>經常需要人工根據推導的結果更新參數。這裡使用了最基礎的梯度下降方法，因此參數的更新還較為容易。但如果使用更加複雜的參數更新方法（例如 Adam 或者 Adagrad），這個更新過程的編寫同樣會非常繁雜。</p></li>
 </ul>
-<p>而TensorFlow等深度學習框架的出現很大程度上解決了這些痛點，爲機器學習模型的實現帶來了很大的便利。</p>
+<p>而 TensorFlow 等深度學習框架的出現很大程度上解決了這些痛點，為機器學習模型的實現帶來了很大的便利。</p>
 </div>
-<div class="section" id="zh-hant-optimizer">
-<span id="id15"></span><h3>TensorFlow下的線性回歸<a class="headerlink" href="#zh-hant-optimizer" title="永久链接至标题">¶</a></h3>
-<p>TensorFlow的 <strong>即時執行模式</strong> <a class="footnote-reference brackets" href="#f4" id="id16">5</a> 與上述NumPy的運行方式十分類似，然而提供了更快速的運算（GPU支持）、自動求導、優化器等一系列對深度學習非常重要的功能。以下展示了如何使用TensorFlow計算線性回歸。可以注意到，程序的結構和前述NumPy的實現非常類似。這裡，TensorFlow幫助我們做了兩件重要的工作：</p>
+<div class="section" id="optimizer">
+<span id="id18"></span><h3>TensorFlow下的線性回歸<a class="headerlink" href="#optimizer" title="永久链接至标题">¶</a></h3>
+<p>TensorFlow的 <strong>即時執行模式</strong> <a class="footnote-reference brackets" href="#f4" id="id19">5</a> 與上述 NumPy 的運行方式十分類似，然而提供了更快速的運算（GPU 支援）、自動推導、優化器等一系列對深度學習非常重要的功能。以下展示了如何使用 TensorFlow 計算線性回歸。可以注意到，程式的結構和前述 NumPy 的實現非常類似。這裡，TensorFlow 幫助我們做了兩件重要的工作：</p>
 <ul class="simple">
 <li><p>使用 <code class="docutils literal notranslate"><span class="pre">tape.gradient(ys,</span> <span class="pre">xs)</span></code> 自動計算梯度；</p></li>
 <li><p>使用 <code class="docutils literal notranslate"><span class="pre">optimizer.apply_gradients(grads_and_vars)</span></code> 自動更新模型參數。</p></li>
@@ -497,44 +497,44 @@
 <span class="n">num_epoch</span> <span class="o">=</span> <span class="mi">10000</span>
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">5e-4</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epoch</span><span class="p">):</span>
-    <span class="c1"># 使用tf.GradientTape()记录损失函数的梯度信息</span>
+    <span class="c1"># 使用tf.GradientTape()記錄損失函數的梯度資訊</span>
     <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>
         <span class="n">y_pred</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">X</span> <span class="o">+</span> <span class="n">b</span>
         <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_pred</span> <span class="o">-</span> <span class="n">y</span><span class="p">))</span>
-    <span class="c1"># TensorFlow自动计算损失函数关于自变量（模型参数）的梯度</span>
+    <span class="c1"># TensorFlow自動計算損失函數關於自變數（模型參數）的梯度</span>
     <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="n">variables</span><span class="p">)</span>
-    <span class="c1"># TensorFlow自动根据梯度更新参数</span>
+    <span class="c1"># TensorFlow自動根據梯度更新參數</span>
     <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">variables</span><span class="p">))</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>在這裡，我們使用了前文的方式計算了損失函數關於參數的偏導數。同時，使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizers.SGD(learning_rate=5e-4)</span></code> 聲明了一個梯度下降 <strong>優化器</strong> （Optimizer），其學習率爲5e-4。優化器可以幫助我們根據計算出的求導結果更新模型參數，從而最小化某個特定的損失函數，具體使用方式是調用其 <code class="docutils literal notranslate"><span class="pre">apply_gradients()</span></code> 方法。</p>
-<p>注意到這裡，更新模型參數的方法 <code class="docutils literal notranslate"><span class="pre">optimizer.apply_gradients()</span></code> 需要提供參數 <code class="docutils literal notranslate"><span class="pre">grads_and_vars</span></code>，即待更新的變量（如上述代碼中的 <code class="docutils literal notranslate"><span class="pre">variables</span></code> ）及損失函數關於這些變量的偏導數（如上述代碼中的 <code class="docutils literal notranslate"><span class="pre">grads</span></code> ）。具體而言，這裡需要傳入一個Python列表（List），列表中的每個元素是一個 <code class="docutils literal notranslate"><span class="pre">（變量的偏導數，變量）</span></code> 對。比如上例中需要傳入的參數是 <code class="docutils literal notranslate"><span class="pre">[(grad_a,</span> <span class="pre">a),</span> <span class="pre">(grad_b,</span> <span class="pre">b)]</span></code> 。我們通過 <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">tape.gradient(loss,</span> <span class="pre">variables)</span></code> 求出tape中記錄的 <code class="docutils literal notranslate"><span class="pre">loss</span></code> 關於 <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> 中每個變量的偏導數，也就是 <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">[grad_a,</span> <span class="pre">grad_b]</span></code>，再使用Python的 <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函數將 <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">[grad_a,</span> <span class="pre">grad_b]</span></code> 和 <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> 拼裝在一起，就可以組合出所需的參數了。</p>
+<p>在這裡，我們使用了前文的方式計算了損失函數關於參數的偏導數。同時，使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizers.SGD(learning_rate=5e-4)</span></code> 宣告了一個梯度下降 <strong>優化器</strong> （Optimizer），其學習率為 5e-4。優化器可以幫助我們根據計算出的推導結果更新模型參數，從而最小化某個特定的損失函數，具體使用方式是呼叫其 <code class="docutils literal notranslate"><span class="pre">apply_gradients()</span></code> 方法。</p>
+<p>注意到這裡，更新模型參數的方法 <code class="docutils literal notranslate"><span class="pre">optimizer.apply_gradients()</span></code> 需要提供参数 <code class="docutils literal notranslate"><span class="pre">grads_and_vars</span></code>，即待更新的變數（如上述程式碼中的 <code class="docutils literal notranslate"><span class="pre">variables</span></code> ）及損失函數關於這些變數的偏導數（如上述程式碼中的 <code class="docutils literal notranslate"><span class="pre">grads</span></code> ）。具體而言，這裡需要傳入一個 Python 列表（List），列表中的每個元素是一個 <code class="docutils literal notranslate"><span class="pre">（變數的偏導數，變數）</span></code>  對。比如上例中需要傳入的參數是 <code class="docutils literal notranslate"><span class="pre">[(grad_a,</span> <span class="pre">a),</span> <span class="pre">(grad_b,</span> <span class="pre">b)]</span></code> 。我們通過 <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">tape.gradient(loss,</span> <span class="pre">variables)</span></code> 求出 tape 中記錄的 <code class="docutils literal notranslate"><span class="pre">loss</span></code> 關於 <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> 中每個變數的偏導數，也就是 <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">[grad_a,</span> <span class="pre">grad_b]</span></code>，再使用Python的 <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函數將 <code class="docutils literal notranslate"><span class="pre">grads</span> <span class="pre">=</span> <span class="pre">[grad_a,</span> <span class="pre">grad_b]</span></code> 和 <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> 結合在一起，就可以組合出所需的參數了。</p>
 <div class="admonition-python-zip admonition">
 <p class="admonition-title">Python的 <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函數</p>
-<p><code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函數是Python的內置函數。用自然語言描述這個函數的功能很繞口，但如果舉個例子就很容易理解了：如果 <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5]</span></code>， <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">[2,</span> <span class="pre">4,</span> <span class="pre">6]</span></code>，那麼 <code class="docutils literal notranslate"><span class="pre">zip(a,</span> <span class="pre">b)</span> <span class="pre">=</span> <span class="pre">[(1,</span> <span class="pre">2),</span> <span class="pre">(3,</span> <span class="pre">4),</span> <span class="pre">...,</span> <span class="pre">(5,</span> <span class="pre">6)]</span></code> 。即「將可疊代的對象作爲參數，將對象中對應的元素打包成一個個元組，然後返回由這些元組組成的列表」，和我們日常生活中拉上拉鏈（zip）的操作有異曲同工之妙。在Python 3中， <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函數返回的是一個 zip 對象，本質上是一個生成器，需要調用 <code class="docutils literal notranslate"><span class="pre">list()</span></code> 來將生成器轉換成列表。</p>
-<div class="figure align-center" id="id17">
+<p><code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函數是 Python 的內建函數。用自然語言描述這個函數的功能很繞口，但如果舉個例子就很容易理解了：如果 <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">[1,</span> <span class="pre">3,</span> <span class="pre">5]</span></code>， <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">[2,</span> <span class="pre">4,</span> <span class="pre">6]</span></code>，那麼 <code class="docutils literal notranslate"><span class="pre">zip(a,</span> <span class="pre">b)</span> <span class="pre">=</span> <span class="pre">[(1,</span> <span class="pre">2),</span> <span class="pre">(3,</span> <span class="pre">4),</span> <span class="pre">...,</span> <span class="pre">(5,</span> <span class="pre">6)]</span></code> 。即 “將可疊代的對象作為參數，將對象中對應的元素打包成一個個元組，然組合後返回由這些組合組成的列表”，和我們日常生活中拉上拉鏈（zip）的操作有異曲同工之妙。在 Python 3 中， <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函數返回的是一個 zip 對象，本質上是一個生成器(Generator)，需要呼叫 <code class="docutils literal notranslate"><span class="pre">list()</span></code> 來將生成器轉換成列表。</p>
+<div class="figure align-center" id="id20">
 <a class="reference internal image-reference" href="../../_images/zip.jpg"><img alt="../../_images/zip.jpg" src="../../_images/zip.jpg" style="width: 60%;" /></a>
-<p class="caption"><span class="caption-text">Python的 <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函數圖示</span><a class="headerlink" href="#id17" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">Python的 <code class="docutils literal notranslate"><span class="pre">zip()</span></code> 函數圖示</span><a class="headerlink" href="#id20" title="永久链接至图片">¶</a></p>
 </div>
 </div>
-<p>在實際應用中，我們編寫的模型往往比這裡一行就能寫完的線性模型 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> （模型參數爲 <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> ）要複雜得多。所以，我們往往會編寫並實例化一個模型類 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">Model()</span></code> ，然後使用 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">model(X)</span></code> 調用模型，使用 <code class="docutils literal notranslate"><span class="pre">model.variables</span></code> 獲取模型參數。關於模型類的編寫方式可見 <a class="reference internal" href="models.html"><span class="doc">“TensorFlow模型”一章</span></a>。</p>
+<p>在實際應用中，我們編寫的模型往往比這裡一行就能寫完的線性模型 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> （模型參數為 <code class="docutils literal notranslate"><span class="pre">variables</span> <span class="pre">=</span> <span class="pre">[a,</span> <span class="pre">b]</span></code> ）要複雜得多。所以，我們往往會編寫並實例化一個模型類 <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">Model()</span></code> ，然後使用 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">model(X)</span></code> 呼叫模型，使用 <code class="docutils literal notranslate"><span class="pre">model.variables</span></code> 獲取模型參數。關於模型類的編寫方式可見 <a class="reference internal" href="models.html"><span class="doc">“TensorFlow模型”一章</span></a>。</p>
 <dl class="footnote brackets">
-<dt class="label" id="f0"><span class="brackets"><a class="fn-backref" href="#id8">1</a></span></dt>
-<dd><p>Python中可以使用整數後加小數點表示將該整數定義爲浮點數類型。例如 <code class="docutils literal notranslate"><span class="pre">3.</span></code> 代表浮點數 <code class="docutils literal notranslate"><span class="pre">3.0</span></code>。</p>
+<dt class="label" id="f0"><span class="brackets"><a class="fn-backref" href="#id10">1</a></span></dt>
+<dd><p>Python 中可以使用整數後加小數點表示將該整數定義為浮點數類型。例如 <code class="docutils literal notranslate"><span class="pre">3.</span></code> 代表浮點數 <code class="docutils literal notranslate"><span class="pre">3.0</span></code>。</p>
 </dd>
-<dt class="label" id="f3"><span class="brackets"><a class="fn-backref" href="#id9">2</a></span></dt>
-<dd><p>主要可以參考 <a class="reference external" href="https://www.tensorflow.org/versions/r1.9/api_guides/python/array_ops">Tensor Transformations</a> 和 <a class="reference external" href="https://www.tensorflow.org/versions/r1.9/api_guides/python/math_ops">Math</a> 兩個頁面。可以注意到，TensorFlow的張量操作API在形式上和Python下流行的科學計算庫NumPy非常類似，如果對後者有所了解的話可以快速上手。</p>
+<dt class="label" id="f3"><span class="brackets"><a class="fn-backref" href="#id11">2</a></span></dt>
+<dd><p>主要可以參考 <a class="reference external" href="https://www.tensorflow.org/versions/r2.2/api_docs/python/tf">Tensor Transformations</a> 頁面。可以注意到，TensorFlow 的張量操作 API 在形式上和 Python 下流行的科學計算套件 NumPy 非常類似，如果對後者有所了解的話可以快速上手。</p>
 </dd>
-<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id11">3</a></span></dt>
-<dd><p>其實線性回歸是有解析解的。這裡使用梯度下降方法只是爲了展示TensorFlow的運作方式。</p>
+<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id14">3</a></span></dt>
+<dd><p>其實線性回歸是有詳細解的。這裡使用梯度下降方法只是為了展示 TensorFlow 的運作方式。</p>
 </dd>
-<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id14">4</a></span></dt>
-<dd><p>此處的損失函數爲均方誤差 <img class="math" src="../../_images/math/11181af9aedfe5ac815a780317fb0d67e82e52d6.png" alt="L(x) = \sum_{i=1}^N (ax_i + b - y_i)^2"/>。其關於參數 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的偏導數爲 <img class="math" src="../../_images/math/e205b6f3ab6c43af375f44ddb8b016599f031143.png" alt="\frac{\partial L}{\partial a} = 2 \sum_{i=1}^N (ax_i + b - y) x_i"/>，<img class="math" src="../../_images/math/4c1c42943923e01ff33adf6ef6206476d6a700ae.png" alt="\frac{\partial L}{\partial b} = 2 \sum_{i=1}^N (ax_i + b - y)"/> 。本例中 <img class="math" src="../../_images/math/cd94bb514683acc17a52b6301993950852f35def.png" alt="N = 5"/> 。由於均方誤差取均值的係數 <img class="math" src="../../_images/math/a064274dada3c2c77089f0a111fc9013f0df4c25.png" alt="\frac{1}{N}"/> 在訓練過程中一般爲常數（ <img class="math" src="../../_images/math/455ca481a018a5903aa0e72e4d4764e2e8cf7ea5.png" alt="N"/> 一般爲批次大小），對損失函數乘以常數等價於調整學習率，因此在具體實現時通常不寫在損失函數中。</p>
+<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id17">4</a></span></dt>
+<dd><p>此處的損失函數為均方誤差 <img class="math" src="../../_images/math/11181af9aedfe5ac815a780317fb0d67e82e52d6.png" alt="L(x) = \sum_{i=1}^N (ax_i + b - y_i)^2"/>。其關於參數 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的偏導數為 <img class="math" src="../../_images/math/e205b6f3ab6c43af375f44ddb8b016599f031143.png" alt="\frac{\partial L}{\partial a} = 2 \sum_{i=1}^N (ax_i + b - y) x_i"/>，<img class="math" src="../../_images/math/4c1c42943923e01ff33adf6ef6206476d6a700ae.png" alt="\frac{\partial L}{\partial b} = 2 \sum_{i=1}^N (ax_i + b - y)"/> 。本例中 <img class="math" src="../../_images/math/cd94bb514683acc17a52b6301993950852f35def.png" alt="N = 5"/> 。由於均方誤差取均值的係數 <img class="math" src="../../_images/math/a064274dada3c2c77089f0a111fc9013f0df4c25.png" alt="\frac{1}{N}"/> 在訓練過程中一般為常數（ <img class="math" src="../../_images/math/455ca481a018a5903aa0e72e4d4764e2e8cf7ea5.png" alt="N"/> 一般為批次大小），對損失函數乘以常數等價於調整學習率，因此在具體實現時通常不寫在損失函數中。</p>
 </dd>
-<dt class="label" id="f4"><span class="brackets"><a class="fn-backref" href="#id16">5</a></span></dt>
-<dd><p>與即時執行模式相對的是圖執行模式（Graph Execution），即 TensorFlow 2 之前所主要使用的執行模式。本手冊以面向快速疊代開發的即時執行模式爲主，但會在 <span class="xref std std-doc">附錄</span> 中介紹圖執行模式的基本使用，供需要的讀者查閱。</p>
+<dt class="label" id="f4"><span class="brackets"><a class="fn-backref" href="#id19">5</a></span></dt>
+<dd><p>與即時執行模式相對的是圖執行模式（Graph Execution），即 TensorFlow 2 之前所主要使用的執行模式。本手冊以面向快速疊代開發的即時執行模式為主，但會在 附錄中介紹圖執行模式的基本使用，供需要的讀者查閱。</p>
 </dd>
 </dl>
 <script>
@@ -562,7 +562,7 @@
         <a href="models.html" class="btn btn-neutral float-right" title="TensorFlow 模型建立與訓練" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="installation.html" class="btn btn-neutral float-left" title="TensorFlow安裝與環境配置" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="installation.html" class="btn btn-neutral float-left" title="TensorFlow 安裝與環境配置" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

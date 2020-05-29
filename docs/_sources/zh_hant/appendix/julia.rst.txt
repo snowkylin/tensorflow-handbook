@@ -5,14 +5,14 @@ TensorFlow.jl 簡介
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 雖然 Julia 是一門非常優秀的語言，但是目前 TensorFlow 並不直接支持 Julia 。如果有需要，你可以選擇 TensorFlow.jl ，
-這是一個由 `malmaud <https://github.com/malmaud/>`_ 封裝的第三方 Julia 包。它有和 Python 版本類似的 API ，也能支持 GPU 加速。
+這是一個由 `malmaud <https://github.com/malmaud/>`_ 封裝的第三方 Julia 套件。它有和 Python 版本類似的 API ，也能支持 GPU 加速。
 
-爲什麼要使用 Julia ？
+為什麼要使用 Julia ？
 ---------------------------------------------
 
-先進的語法糖，讓你能簡明扼要的表述計算過程。而高性能的 JIT ，提供了媲美靜態語言的速度（這一點是在數據預處理中非常重要，但也是 Python 難以企及的）。
+先進的語法糖，讓你能簡單明瞭的表述計算過程。而高性能的 JIT ，提供了媲美靜態語言的速度（這一點是在資料預處理中非常重要，但也是 Python 難以觸及的）。
 所以，使用 Julia ，寫的快，跑的更快。
-（你可以通過 `這個視頻 <https://www.youtube.com/watch?v=n2MwJ1guGVQ>`_ 了解更多）
+（你可以通過 `這個影片 <https://www.youtube.com/watch?v=n2MwJ1guGVQ>`_ 了解更多）
 
 本章我們將基於 TensorFlow.jl 0.12，向大家簡要介紹 Tensorflow 在 Julia 下的使用. 你可以參考最新的 `TensorFlow.jl 文檔 <https://malmaud.github.io/TensorFlow.jl/stable/tutorial.html>`_.
 
@@ -22,14 +22,14 @@ TensorFlow.jl 環境配置
 在 docker 中快速體驗 TensorFlow.jl
 --------------------------------------------
 
-在本機已有 docker 環境的情況下，使用預裝 TensorFlow.jl 的 docker image 是非常方便的。
+在本機已有 docker 環境的情況下，使用預先裝好的 TensorFlow.jl 的 docker image 是非常方便的。
 
 在命令行中執行 ``docker run -it malmaud/julia:tf`` ，然後就可以獲得一個已經安裝好 TensorFlow.jl 的 Julia REPL 環境。 (如果你不想直接打開 Julia，請在執行 ``docker run -it malmaud/julia:tf /bin/bash`` 來打開一個bash終端. 如需執行您需要的jl代碼文件，可以使用 docker 的目錄映射)
 
 在 julia 包管理器中安裝 TensorFlow.jl
 --------------------------------------------
 
-在命令行中執行 ``julia`` 進入 Julia REPL 環境，然後執行以下命令安裝 TensorFlow.jl
+在命令行中執行 ``julia`` 進入 Julia REPL 環境，然後執行以下指令安裝 TensorFlow.jl
 
 .. code-block:: julia
 
@@ -47,7 +47,7 @@ TensorFlow.jl 基礎使用
     # 定義一個 Session
     sess = TensorFlow.Session()
 
-    # 定義一個常量和變量
+    # 定義一個常數和變數
     x = TensorFlow.constant([1])
     y = TensorFlow.Variable([2])
 
@@ -77,7 +77,7 @@ MNIST數字分類
     sess = Session()
 
 
-    # 構建 softmax 回歸模型
+    # 建構 softmax 回歸模型
     x = placeholder(Float32)
     y_ = placeholder(Float32)
     W = Variable(zeros(Float32, 784, 10))
