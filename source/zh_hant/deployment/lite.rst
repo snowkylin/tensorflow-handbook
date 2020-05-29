@@ -17,7 +17,7 @@ TF2.0 對模型轉換工具發生了非常大的變化，推薦大家使用 Pyth
 
 轉換方式有兩種：Float 格式和 Quantized 格式
 
-為了熟悉兩種方式我們都會使用，針對 Float 格式的，先使用終端機工具 ``tflite_convert`` ，跟著 TensorFlow 一起安裝（見 `一般安裝步驟 <https://tf.wiki/zh/basic/installation.html#id1>`_ ）。 
+為了熟悉兩種方式我們都會使用，針對 Float 格式的，先使用終端機工具 ``tflite_convert`` ，跟著 TensorFlow 一起安裝（見 `一般安裝步驟 <https://tf.wiki/zh_hant/basic/installation.html#tensorflow>`_ ）。 
 
 在終端機執行下列指令：
 
@@ -38,7 +38,7 @@ TF2.0 對模型轉換工具發生了非常大的變化，推薦大家使用 Pyth
       --keras_model_file KERAS_MODEL_FILE
                             Full filepath of HDF5 file containing tf.Keras model.
 
-在 `TensorFlow 模型匯出 <https://tf.wiki/zh-hant/deployment/export.html>`_ 中，我們知道 TF2.0 支援兩種模型匯出方法和格式 SavedModel 和 Keras Sequential。
+在 `TensorFlow 模型匯出 <https://tf.wiki/zh_hant/deployment/export.html#tensorflow>`_ 中，我們知道 TF2.0 支援兩種模型匯出方法和格式 SavedModel 和 Keras Sequential。
 
 SavedModel 匯出模型轉換：
 

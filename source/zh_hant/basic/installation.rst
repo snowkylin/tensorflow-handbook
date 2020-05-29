@@ -201,7 +201,7 @@ IDE 設置
 
 .. tip:: 如果你是學生並有.edu 結尾的信箱的話，可以在 `這裡 <http://www.jetbrains.com/student/>`_ 申請 PyCharm 的免費 Professional 版本授權。
 
-對於 TensorFlow 及深度學習的業餘愛好者或者初學者， `Visual Studio Code <https://code.visualstudio.com/>`_ 或者一些線上的交互式 Python 環境（比如免費的 `Google Colab <https://colab.research.google.com/>`_ ）也是不錯的選擇。Colab 的使用方式可參考 :ref:`附錄 <colab>` 。
+對於 TensorFlow 及深度學習的業餘愛好者或者初學者， `Visual Studio Code <https://code.visualstudio.com/>`_ 或者一些線上的交互式 Python 環境（比如免費的 `Google Colab <https://colab.research.google.com/>`_ ）也是不錯的選擇。Colab 的使用方式可參考 :doc:`附錄 <../appendix/cloud#tensorflow>`。
 
 .. warning:: 如果你使用的是舊版本的 PyCharm ，可能會在安裝 TensorFlow 2 後出現部分程式碼自動補全功能遺失的問題。升級到新版的 PyCharm （2019.3 及以後版本）即可解決這一問題。
 
@@ -211,11 +211,11 @@ IDE 設置
 TensorFlow 所需的硬體配置 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. hint:: 對於學習而言，TensorFlow 的硬體門檻並不高。甚至，借助 :ref:`免費 <colab>` 或 :ref:`靈活 <gcp>` 的雲端計算資源，只要你有一台能上網的電腦，就能夠熟練掌握 TensorFlow！
+.. hint:: 對於學習而言，TensorFlow 的硬體門檻並不高。甚至，借助 :`免費 <https://tf.wiki/zh_hant/appendix/cloud.html#tensorflow>`_ 或 `靈活 <https://tf.wiki/zh_hant/appendix/cloud.html#google-cloud-platform-gcp-tensorflow>`_ 的雲端計算資源，只要你有一台能上網的電腦，就能夠熟練掌握 TensorFlow！
 
 在很多人的刻板印象中，TensorFlow 乃至深度學習是一件非常 “吃硬體資源” 的事情，以至於一接觸 TensorFlow，第一件事情可能就是想如何升級自己的電腦硬體。不過，TensorFlow 所需的硬體配置很大程度是依照任務和使用環境而定的：
 
-- 對於 TensorFlow 初學者，無需硬體升級也可以很好地的學習和掌握 TensorFlow。本手冊中的大部分教學範例，大部分當前主流的個人電腦（即使沒有 GPU）均可勝任，無需添置其他硬體設備。對於本手冊中部分計算量較大的範例（例如 :ref:`在cats_vs_dogs資料集上訓練 CNN 圖片分類 <cats_vs_dogs>` ），一張主流的 NVIDIA GPU 會大幅加速訓練。如果自己的個人電腦難以勝任，可以考慮在雲端（例如 ref:`免費的 Colab <colab>` ）進行模型訓練。
+- 對於 TensorFlow 初學者，無需硬體升級也可以很好地的學習和掌握 TensorFlow。本手冊中的大部分教學範例，大部分當前主流的個人電腦（即使沒有 GPU）均可勝任，無需添置其他硬體設備。對於本手冊中部分計算量較大的範例（例如 :ref:`在cats_vs_dogs資料集上訓練 CNN 圖片分類 <cats_vs_dogs>` ），一張主流的 NVIDIA GPU 會大幅加速訓練。如果自己的個人電腦難以勝任，可以考慮在雲端（例如 `免費的 Colab <https://tf.wiki/zh_hant/appendix/cloud.html#tensorflow>`_ ）進行模型訓練。
 - 對於參加資料科學競賽（比如 Kaggle）或者經常在本機進行訓練的個人愛好者或開發者，一塊高性能的 NVIDIA GPU 往往是必要的。CUDA 核心數和顯示卡內存大小是決定顯卡機器學習性能的兩個關鍵參數，前者決定訓練速度，後者決定可以訓練多大的模型以及訓練時的最大 Batch Size，對於較大規模的訓練而言尤其更為明顯。
 - 對於前瞻的機器學習研究（尤其是電腦視覺和自然語言處理領域），多 GPU 平行訓練是標準配置。為了快速疊代實驗結果以及訓練更大規模的模型以提升性能，4 塊顯示卡、8 塊顯示卡或更高的 GPU 數量是常態。
 
