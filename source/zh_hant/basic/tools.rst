@@ -491,7 +491,7 @@ TFRecord可以理解為一系列序列化的 ``tf.train.Example`` 元素所組�
 讀取 TFRecord 文件
 -------------------------------------------
 
-我們可以通過以下程式碼，讀取之間建立的 ``train.tfrecords`` 文件，並通過 ``Dataset.map`` 方法，使用 ``tf.io.parse_single_example`` 函數對資料集中的每一個序列化的 ``tf.train.Example`` 對象解碼。
+我們可以通過以下程式碼，讀取之前建立的 ``train.tfrecords`` 文件，並通過 ``Dataset.map`` 方法，使用 ``tf.io.parse_single_example`` 函數對資料集中的每一個序列化的 ``tf.train.Example`` 對象解碼。
 
 .. literalinclude:: /_static/code/zh-hant/tools/tfrecord/cats_vs_dogs.py
     :lines: 24-36
