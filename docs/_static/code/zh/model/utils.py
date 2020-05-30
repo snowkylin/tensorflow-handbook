@@ -15,7 +15,7 @@ class MNISTLoader():
 
     def get_batch(self, batch_size):
         # 从数据集中随机取出batch_size个元素并返回
-        index = np.random.randint(0, np.shape(self.train_data)[0], batch_size)
+        index = np.random.randint(0, self.num_train_data, batch_size)
         return self.train_data[index, :], self.train_label[index]
 
 

@@ -651,7 +651,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">Dataset.shuffle(buffer_size)</span></code> ：將資料集打亂（設定一個固定大小的緩衝區（Buffer），取出前 <code class="docutils literal notranslate"><span class="pre">buffer_size</span></code> 各元素放入，並從緩衝區中隨機採樣，取樣後的資料用後續資料替換）；</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Dataset.batch(batch_size)</span></code> ：將資料集分成批次，即對每 <code class="docutils literal notranslate"><span class="pre">batch_size</span></code> 個元素，使用 <code class="docutils literal notranslate"><span class="pre">tf.stack()</span></code> 在第0維合並，成為一個元素；</p></li>
 </ul>
-<p>除此以外，還有 <code class="docutils literal notranslate"><span class="pre">Dataset.repeat()</span></code> （重複資料集的元素）、 <code class="docutils literal notranslate"><span class="pre">Dataset.reduce()</span></code> （與Map相對的聚合操作）、 <code class="docutils literal notranslate"><span class="pre">Dataset.take()</span></code> （截取資料集中的前若干個元素）等，可參考 <a class="reference external" href="https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/data/Dataset">API文檔</a> 進一步了解。</p>
+<p>除此以外，還有 <code class="docutils literal notranslate"><span class="pre">Dataset.repeat()</span></code> （重複資料集的元素）、 <code class="docutils literal notranslate"><span class="pre">Dataset.reduce()</span></code> （與Map相對的聚合操作）、 <code class="docutils literal notranslate"><span class="pre">Dataset.take()</span></code> （截取資料集中的前若干個元素）等，可參考 <a class="reference external" href="https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/data/Dataset">API文件</a> 進一步了解。</p>
 <p>以下以MNIST資料集進行範例。</p>
 <p>使用 <code class="docutils literal notranslate"><span class="pre">Dataset.map()</span></code> 將所有圖片旋轉90度：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="k">def</span> <span class="nf">rot90</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
@@ -749,7 +749,7 @@
 <p class="caption"><span class="caption-text">通過設置 <code class="docutils literal notranslate"><span class="pre">Dataset.map()</span></code> 的 <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> 參數實現資料轉換的平行化。上部分是未平行化的圖示，下部分是2核平行的圖示。 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">3圖示來源</a> 。</span><a class="headerlink" href="#id26" title="永久链接至图片">¶</a></p>
 </div>
 <p>當然，這裡同樣可以將 <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> 設置為 <code class="docutils literal notranslate"><span class="pre">tf.data.experimental.AUTOTUNE</span></code> 讓TensorFlow自動選擇合適的數值。</p>
-<p>除此以外，還有很多提升資料集處理性能的方式，可參考 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">TensorFlow文檔</a> 進一步了解。後文的實例中展示了tf.data平行化策略的強大性能，可 <a class="reference internal" href="#tfdata-performance"><span class="std std-ref">點此</span></a> 查看。</p>
+<p>除此以外，還有很多提升資料集處理性能的方式，可參考 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">TensorFlow文件</a> 進一步了解。後文的實例中展示了tf.data平行化策略的強大性能，可 <a class="reference internal" href="#tfdata-performance"><span class="std std-ref">點此</span></a> 查看。</p>
 </div>
 <div class="section" id="id11">
 <h3>資料集元素的獲取與使用<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
@@ -932,7 +932,7 @@
 </div>
 <div class="section" id="id16">
 <h3>讀取 TFRecord 文件<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h3>
-<p>我們可以通過以下程式碼，讀取之間建立的 <code class="docutils literal notranslate"><span class="pre">train.tfrecords</span></code> 文件，並通過 <code class="docutils literal notranslate"><span class="pre">Dataset.map</span></code> 方法，使用 <code class="docutils literal notranslate"><span class="pre">tf.io.parse_single_example</span></code> 函數對資料集中的每一個序列化的 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 對象解碼。</p>
+<p>我們可以通過以下程式碼，讀取之前建立的 <code class="docutils literal notranslate"><span class="pre">train.tfrecords</span></code> 文件，並通過 <code class="docutils literal notranslate"><span class="pre">Dataset.map</span></code> 方法，使用 <code class="docutils literal notranslate"><span class="pre">tf.io.parse_single_example</span></code> 函數對資料集中的每一個序列化的 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 對象解碼。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">raw_dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TFRecordDataset</span><span class="p">(</span><span class="n">tfrecord_file</span><span class="p">)</span>    <span class="c1"># 讀取 TFRecord 文件</span>
 
 <span class="n">feature_description</span> <span class="o">=</span> <span class="p">{</span> <span class="c1"># 定義Feature結構，告訴解碼器每個Feature的類型是什麼</span>
@@ -1209,7 +1209,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;test accuracy: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">sparse_categorical_accuracy</span><span class="o">.</span><span class="n">result</span><span class="p">()))</span>
 </pre></div>
 </div>
-<p>關於圖執行模式的更多內容可參見 <span class="xref std std-doc">/zh/appendix/static</span>。</p>
+<p>關於圖執行模式的更多內容可參見 <a class="reference internal" href="../advanced/static.html"><span class="doc">圖執行模式下的 TensorFlow 2</span></a>。</p>
 </div>
 </div>
 <div class="section" id="tf-tensorarray-tensorflow">
@@ -1224,7 +1224,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">write(index,</span> <span class="pre">value)</span></code> ：將 <code class="docutils literal notranslate"><span class="pre">value</span></code> 寫入陣列的第 <code class="docutils literal notranslate"><span class="pre">index</span></code> 個位置；</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">read(index)</span></code> ：讀取陣列的第 <code class="docutils literal notranslate"><span class="pre">index</span></code> 個值；</p></li>
 </ul>
-<p>除此以外，TensorArray還包括 <code class="docutils literal notranslate"><span class="pre">stack()</span></code> 、 <code class="docutils literal notranslate"><span class="pre">unstack()</span></code> 等常用操作，可參考 <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/TensorArray">文檔</a> 以了解詳情。</p>
+<p>除此以外，TensorArray還包括 <code class="docutils literal notranslate"><span class="pre">stack()</span></code> 、 <code class="docutils literal notranslate"><span class="pre">unstack()</span></code> 等常用操作，可參考 <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/TensorArray">文件</a> 以了解詳情。</p>
 <p>請注意，由於需要支持計算圖， <code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> 的 <code class="docutils literal notranslate"><span class="pre">write()</span></code> 方法是不可以忽略儲存變數的！也就是說，在圖執行模式下，必須按照以下的形式寫入陣列：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </pre></div>

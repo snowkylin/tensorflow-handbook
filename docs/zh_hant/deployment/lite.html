@@ -291,7 +291,7 @@
 <p>轉換工具有兩種：終端機工具和 Python API</p>
 <p>TF2.0 對模型轉換工具發生了非常大的變化，推薦大家使用 Python API 進行轉換，終端機工具只提供了基本的轉化功能。轉換後的原模型為 <code class="docutils literal notranslate"><span class="pre">FlatBuffers</span></code> 格式。 <code class="docutils literal notranslate"><span class="pre">FlatBuffers</span></code> 原來主要應用於遊戲場景，是Google為了高性能場景創建的序列化函式庫，相比 Protocol Buffer 有更高的性能和更小的檔案等優勢，更適合於邊緣設備部署。</p>
 <p>轉換方式有兩種：Float 格式和 Quantized 格式</p>
-<p>為了熟悉兩種方式我們都會使用，針對 Float 格式的，先使用終端機工具 <code class="docutils literal notranslate"><span class="pre">tflite_convert</span></code> ，跟著 TensorFlow 一起安裝（見 <a class="reference external" href="https://tf.wiki/zh/basic/installation.html#id1">一般安裝步驟</a> ）。</p>
+<p>為了熟悉兩種方式我們都會使用，針對 Float 格式的，先使用終端機工具 <code class="docutils literal notranslate"><span class="pre">tflite_convert</span></code> ，跟著 TensorFlow 一起安裝（見 <a class="reference external" href="https://tf.wiki/zh_hant/basic/installation.html#tensorflow">一般安裝步驟</a> ）。</p>
 <p>在終端機執行下列指令：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tflite_convert</span> <span class="o">-</span><span class="n">h</span>
 </pre></div>
@@ -307,7 +307,7 @@
                         <span class="n">Full</span> <span class="n">filepath</span> <span class="n">of</span> <span class="n">HDF5</span> <span class="n">file</span> <span class="n">containing</span> <span class="n">tf</span><span class="o">.</span><span class="n">Keras</span> <span class="n">model</span><span class="o">.</span>
 </pre></div>
 </div>
-<p>在 <a class="reference external" href="https://tf.wiki/zh-hant/deployment/export.html">TensorFlow 模型匯出</a> 中，我們知道 TF2.0 支援兩種模型匯出方法和格式 SavedModel 和 Keras Sequential。</p>
+<p>在 <a class="reference external" href="https://tf.wiki/zh_hant/deployment/export.html#tensorflow">TensorFlow 模型匯出</a> 中，我們知道 TF2.0 支援兩種模型匯出方法和格式 SavedModel 和 Keras Sequential。</p>
 <p>SavedModel 匯出模型轉換：</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tflite_convert --saved_model_dir<span class="o">=</span>saved/1 --output_file<span class="o">=</span>mnist_savedmodel.tflite
 </pre></div>

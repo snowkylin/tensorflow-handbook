@@ -250,7 +250,7 @@ TensorBoard的使用有以下注意事項：
 - ``Dataset.shuffle(buffer_size)`` ：將資料集打亂（設定一個固定大小的緩衝區（Buffer），取出前 ``buffer_size`` 各元素放入，並從緩衝區中隨機採樣，取樣後的資料用後續資料替換）；
 - ``Dataset.batch(batch_size)`` ：將資料集分成批次，即對每 ``batch_size`` 個元素，使用 ``tf.stack()`` 在第0維合並，成為一個元素；
 
-除此以外，還有 ``Dataset.repeat()`` （重複資料集的元素）、 ``Dataset.reduce()`` （與Map相對的聚合操作）、 ``Dataset.take()`` （截取資料集中的前若干個元素）等，可參考 `API文檔 <https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/data/Dataset>`_ 進一步了解。
+除此以外，還有 ``Dataset.repeat()`` （重複資料集的元素）、 ``Dataset.reduce()`` （與Map相對的聚合操作）、 ``Dataset.take()`` （截取資料集中的前若干個元素）等，可參考 `API文件 <https://www.tensorflow.org/versions/r2.0/api_docs/python/tf/data/Dataset>`_ 進一步了解。
 
 以下以MNIST資料集進行範例。
 
@@ -361,7 +361,7 @@ TensorBoard的使用有以下注意事項：
 
 當然，這裡同樣可以將 ``num_parallel_calls`` 設置為 ``tf.data.experimental.AUTOTUNE`` 讓TensorFlow自動選擇合適的數值。
 
-除此以外，還有很多提升資料集處理性能的方式，可參考 `TensorFlow文檔 <https://www.tensorflow.org/guide/data_performance>`_ 進一步了解。後文的實例中展示了tf.data平行化策略的強大性能，可 :ref:`點此 <tfdata_performance>` 查看。
+除此以外，還有很多提升資料集處理性能的方式，可參考 `TensorFlow文件 <https://www.tensorflow.org/guide/data_performance>`_ 進一步了解。後文的實例中展示了tf.data平行化策略的強大性能，可 :ref:`點此 <tfdata_performance>` 查看。
 
 資料集元素的獲取與使用
 -------------------------------------------
@@ -491,7 +491,7 @@ TFRecord可以理解為一系列序列化的 ``tf.train.Example`` 元素所組�
 讀取 TFRecord 文件
 -------------------------------------------
 
-我們可以通過以下程式碼，讀取之間建立的 ``train.tfrecords`` 文件，並通過 ``Dataset.map`` 方法，使用 ``tf.io.parse_single_example`` 函數對資料集中的每一個序列化的 ``tf.train.Example`` 對象解碼。
+我們可以通過以下程式碼，讀取之前建立的 ``train.tfrecords`` 文件，並通過 ``Dataset.map`` 方法，使用 ``tf.io.parse_single_example`` 函數對資料集中的每一個序列化的 ``tf.train.Example`` 對象解碼。
 
 .. literalinclude:: /_static/code/zh-hant/tools/tfrecord/cats_vs_dogs.py
     :lines: 24-36
@@ -692,7 +692,7 @@ AutoGraph：將Python控制流轉換為TensorFlow計算圖
     :lines: 112-136
 
 
-關於圖執行模式的更多內容可參見 :doc:`/zh/appendix/static`。
+關於圖執行模式的更多內容可參見 :doc:`../advanced/static`。
 
 ``tf.TensorArray`` ：TensorFlow 動態陣列 *
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -711,7 +711,7 @@ AutoGraph：將Python控制流轉換為TensorFlow計算圖
 - ``write(index, value)`` ：將 ``value`` 寫入陣列的第 ``index`` 個位置；
 - ``read(index)`` ：讀取陣列的第 ``index`` 個值；
 
-除此以外，TensorArray還包括 ``stack()`` 、 ``unstack()`` 等常用操作，可參考 `文檔 <https://www.tensorflow.org/api_docs/python/tf/TensorArray>`_ 以了解詳情。
+除此以外，TensorArray還包括 ``stack()`` 、 ``unstack()`` 等常用操作，可參考 `文件 <https://www.tensorflow.org/api_docs/python/tf/TensorArray>`_ 以了解詳情。
 
 請注意，由於需要支持計算圖， ``tf.TensorArray`` 的 ``write()`` 方法是不可以忽略儲存變數的！也就是說，在圖執行模式下，必須按照以下的形式寫入陣列：
 

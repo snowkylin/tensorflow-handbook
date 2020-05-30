@@ -102,7 +102,7 @@ GCP 的 Compute Engine 類似於 AWS、阿里雲等，允許使用者快速建�
 
 需要注意兩點：
 
-1. 只有特定區域的機房具有 GPU，且不同類型的 GPU 地區範圍也不同，可參考`GCP官方文檔 <https://cloud.google.com/compute/docs/gpus>`_ 並選擇適合的地區建立實例；
+1. 只有特定區域的機房具有 GPU，且不同類型的 GPU 地區範圍也不同，可參考`GCP官方文件 <https://cloud.google.com/compute/docs/gpus>`_ 並選擇適合的地區建立實例；
 #. 預設情況下 GCP 帳號的 GPU 配額非常有限（可能是怕你付不起錢？）。你很可能需要在使用前申請提升自己帳號在特定地區的特定型號 GPU 的配額，可參考 `GCP 官方文件：申請提升配額 <https://cloud.google.com/compute/quotas#requesting_additional_quota>`_ ，GCP 會有工作人員手動處理申請，並給你的信箱發送信件通知，大約需要數小時至兩個工作日不等。
 
 當建立好支援 GPU 的 GCP 虛擬機實例後，配置工作與在本機端大致相同。系統中預設並沒有 NVIDIA 顯卡驅動，依然需要自己安裝。

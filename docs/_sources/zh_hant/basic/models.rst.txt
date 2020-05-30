@@ -55,7 +55,7 @@ Keras 模型以類別的形式呈現，我們可以通過繼承 ``tf.keras.Model
 
 .. literalinclude:: /_static/code/zh-hant/model/linear/linear.py
 
-這裡，我們沒有顯式宣告 ``a`` 和 ``b`` 兩個變數並寫出 ``y_pred = a * X + b`` 這一線性變換，而是建立了一個繼承了 ``tf.keras.Model`` 的模型類 ``Linear`` 。這個類別在初始化部分實例了一個 **全連接層** （ ``tf.keras.layers.Dense`` ），並在 call 方法中對這個層進行呼叫，實現了線性變換的計算。如果需要顯式宣告自己的變數並使用變數進行自定義運算，或者希望了解 Keras 層的內部原理，請參考 :ref:` 自定義層 <custom_layer>`。
+這裡，我們沒有顯式宣告 ``a`` 和 ``b`` 兩個變數並寫出 ``y_pred = a * X + b`` 這一線性變換，而是建立了一個繼承了 ``tf.keras.Model`` 的模型類 ``Linear`` 。這個類別在初始化部分實例了一個 **全連接層** （ ``tf.keras.layers.Dense`` ），並在 call 方法中對這個層進行呼叫，實現了線性變換的計算。如果需要顯式宣告自己的變數並使用變數進行自定義運算，或者希望了解 Keras 層的內部原理，請參考 :ref:`自定義層 <custom_layer>`。
 
 .. admonition:: Keras 的全連接層：線性變換 + 激活函數
 
@@ -85,10 +85,10 @@ Keras 模型以類別的形式呈現，我們可以通過繼承 ``tf.keras.Model
 
 .. _mlp:
 
-基礎範例：多層感知機（MLP）
+基礎範例：多層感知器（MLP）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-我們從編寫一個最簡單的 `多層感知機 <https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8>`_ （Multilayer Perceptron, MLP），或者說 “多層全連接神經網路” 開始，介紹 TensorFlow 的模型編寫方式。在這一部分，我們依次進行以下步驟：
+我們從編寫一個最簡單的 `多層感知器 <https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8>`_ （Multilayer Perceptron, MLP），或者說 “多層全連接神經網路” 開始，介紹 TensorFlow 的模型編寫方式。在這一部分，我們依次進行以下步驟：
 
 - 使用 ``tf.keras.datasets`` 獲得資料集並預處理
 - 使用 ``tf.keras.Model`` 和 ``tf.keras.layers`` 建構模型
@@ -126,7 +126,7 @@ Keras 模型以類別的形式呈現，我們可以通過繼承 ``tf.keras.Model
 模型的建構： ``tf.keras.Model`` 和 ``tf.keras.layers``
 -------------------------------------------------------------------------------
 
-多層感知機的模型類別實現與上面的線性模型類似，使用 ``tf.keras.Model`` 和 ``tf.keras.layers`` 建構，所不同的地方在於層數增加了（顧名思義，“多層” 感知機），以及引入了非線性激活函數（這裡使用了 `ReLU 函數 <https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0>`_ ， 即下方的 ``activation=tf.nn.relu`` ）。該模型輸入一個向量（比如這裡是拉直的 ``1×784`` 手寫體數字圖片），輸出 10 維的向量，分別代表這張圖片屬於 0 到 9 的機率。
+多層感知器的模型類別實現與上面的線性模型類似，使用 ``tf.keras.Model`` 和 ``tf.keras.layers`` 建構，所不同的地方在於層數增加了（顧名思義，“多層” 感知器），以及引入了非線性激活函數（這裡使用了 `ReLU 函數 <https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0>`_ ， 即下方的 ``activation=tf.nn.relu`` ）。該模型輸入一個向量（比如這裡是拉直的 ``1×784`` 手寫體數字圖片），輸出 10 維的向量，分別代表這張圖片屬於 0 到 9 的機率。
 
 .. literalinclude:: /_static/code/zh-hant/model/mnist/mlp.py
     :lines: 4-
@@ -488,7 +488,7 @@ Keras 模型以類別的形式呈現，我們可以通過繼承 ``tf.keras.Model
 
     上述為最基礎的 RNN 原理介紹。在實際使用時往往使用一些常見的改進型，如LSTM（長短期記憶神經網路，解決了長序列的梯度消失問題，適用於較長的序列）、GRU等。
 
-.. _rl:
+.. _zh_hant_rl:
 
 深度強化學習（DRL）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -505,7 +505,7 @@ Keras 模型以類別的形式呈現，我們可以通過繼承 ``tf.keras.Model
         :width: 500
         :align: center
 
-        CartPole 游戲
+        CartPole 遊戲
 
 .. only:: latex
 
@@ -513,7 +513,7 @@ Keras 模型以類別的形式呈現，我們可以通過繼承 ``tf.keras.Model
         :width: 500
         :align: center
 
-        CartPole 游戲
+        CartPole 遊戲
 
 我們使用 `OpenAI 推出的 Gym 環境套件 <https://gym.openai.com/>`_ 中的 CartPole 遊戲環境，可使用 ``pip install gym`` 進行安裝，具體安裝步驟和教程可參考 `官方文件 <https://gym.openai.com/docs/>`_ 和 `這裡 <https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-4-gym/>`_ 。和Gym的交互過程很像是一個回合制遊戲，我們首先獲得遊戲的初始狀態（比如桿子的初始角度和小車位置），然後在每個回合t，我們都需要在當前可行的動作中選擇一個並交由Gym執行（比如向左或者向右推動小車，每個回合中二者只能擇一），Gym在執行動作後，會返回動作執行後的下一個狀態和當前回合所獲得的獎勵值（比如我們選擇向左推動小車並執行後，小車位置更加偏左，而桿的角度更加偏右，Gym將新的角度和位置返回給我們。而如果桿在這一回合仍沒有倒下，Gym同時返回給我們一個小的正獎勵）。這個過程可以一直疊代下去，直到遊戲結束（比如桿子倒下）。在 Python 中，Gym 的基本呼叫方法如下：
 

@@ -140,7 +140,7 @@
 <li class="toctree-l1"><a class="reference internal" href="basic.html">TensorFlow 基礎</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow 模型建立與訓練</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#model-layer">模型（Model）與層（Layer）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#mlp">基礎範例：多層感知機（MLP）</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mlp">基礎範例：多層感知器（MLP）</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#tf-keras-datasets">資料獲取及預處理： <code class="docutils literal notranslate"><span class="pre">tf.keras.datasets</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#tf-keras-model-tf-keras-layers">模型的建構： <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#tf-keras-losses-tf-keras-optimizer">模型的訓練： <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizer</span></code></a></li>
@@ -376,7 +376,7 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>這裡，我們沒有顯式宣告 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 兩個變數並寫出 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> 這一線性變換，而是建立了一個繼承了 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的模型類 <code class="docutils literal notranslate"><span class="pre">Linear</span></code> 。這個類別在初始化部分實例了一個 <strong>全連接層</strong> （ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），並在 call 方法中對這個層進行呼叫，實現了線性變換的計算。如果需要顯式宣告自己的變數並使用變數進行自定義運算，或者希望了解 Keras 層的內部原理，請參考 :ref:` 自定義層 &lt;custom_layer&gt;`。</p>
+<p>這裡，我們沒有顯式宣告 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 兩個變數並寫出 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> 這一線性變換，而是建立了一個繼承了 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的模型類 <code class="docutils literal notranslate"><span class="pre">Linear</span></code> 。這個類別在初始化部分實例了一個 <strong>全連接層</strong> （ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），並在 call 方法中對這個層進行呼叫，實現了線性變換的計算。如果需要顯式宣告自己的變數並使用變數進行自定義運算，或者希望了解 Keras 層的內部原理，請參考 <a class="reference internal" href="#custom-layer"><span class="std std-ref">自定義層</span></a>。</p>
 <div class="admonition-keras admonition">
 <p class="admonition-title">Keras 的全連接層：線性變換 + 激活函數</p>
 <p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense">全連接層</a> （Fully-connected Layer，<code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ）是 Keras 中最基礎和常用的層之一，對輸入矩陣 <img class="math" src="../../_images/math/b86d9659948ffa756133d580cfc95f923705c2b5.png" alt="A"/> 進行 <img class="math" src="../../_images/math/92bb903eabd575a64bd61bd559678418cda7afb2.png" alt="f(AW + b)"/> 的線性變換 + 激活函數操作。如果不指定激活函數，即是純粹的線性變換 <img class="math" src="../../_images/math/62bbbb16ac53d3269d7aa9fc5a15a986f8f0f08c.png" alt="AW + b"/>。具體而言，給定輸入張量 <code class="docutils literal notranslate"><span class="pre">input</span> <span class="pre">=</span> <span class="pre">[batch_size,</span> <span class="pre">input_dim]</span></code> ，該層對輸入張量首先進行 <code class="docutils literal notranslate"><span class="pre">tf.matmul(input,</span> <span class="pre">kernel)</span> <span class="pre">+</span> <span class="pre">bias</span></code> 的線性變換（ <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 是層中可訓練的變量），然後對線性變換後張量的每個元素通過激活函數 <code class="docutils literal notranslate"><span class="pre">activation</span></code> ，從而輸出形狀為 <code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">units]</span></code> 的二維張量。</p>
@@ -407,8 +407,8 @@
 </div>
 </div>
 <div class="section" id="mlp">
-<span id="id5"></span><h2>基礎範例：多層感知機（MLP）<a class="headerlink" href="#mlp" title="永久链接至标题">¶</a></h2>
-<p>我們從編寫一個最簡單的 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8">多層感知機</a> （Multilayer Perceptron, MLP），或者說 “多層全連接神經網路” 開始，介紹 TensorFlow 的模型編寫方式。在這一部分，我們依次進行以下步驟：</p>
+<span id="id5"></span><h2>基礎範例：多層感知器（MLP）<a class="headerlink" href="#mlp" title="永久链接至标题">¶</a></h2>
+<p>我們從編寫一個最簡單的 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%A4%9A%E5%B1%82%E6%84%9F%E7%9F%A5%E5%99%A8">多層感知器</a> （Multilayer Perceptron, MLP），或者說 “多層全連接神經網路” 開始，介紹 TensorFlow 的模型編寫方式。在這一部分，我們依次進行以下步驟：</p>
 <ul class="simple">
 <li><p>使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.datasets</span></code> 獲得資料集並預處理</p></li>
 <li><p>使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code> 建構模型</p></li>
@@ -443,7 +443,7 @@
 
     <span class="k">def</span> <span class="nf">get_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
         <span class="c1"># 從資料集中隨機取出batch_size個元素並返回</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">batch_size</span><span class="p">)</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_train_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="p">:],</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_label</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -458,7 +458,7 @@
 </div>
 <div class="section" id="tf-keras-model-tf-keras-layers">
 <span id="mlp-model"></span><h3>模型的建構： <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code><a class="headerlink" href="#tf-keras-model-tf-keras-layers" title="永久链接至标题">¶</a></h3>
-<p>多層感知機的模型類別實現與上面的線性模型類似，使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code> 建構，所不同的地方在於層數增加了（顧名思義，“多層” 感知機），以及引入了非線性激活函數（這裡使用了 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0">ReLU 函數</a> ， 即下方的 <code class="docutils literal notranslate"><span class="pre">activation=tf.nn.relu</span></code> ）。該模型輸入一個向量（比如這裡是拉直的 <code class="docutils literal notranslate"><span class="pre">1×784</span></code> 手寫體數字圖片），輸出 10 維的向量，分別代表這張圖片屬於 0 到 9 的機率。</p>
+<p>多層感知器的模型類別實現與上面的線性模型類似，使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code> 建構，所不同的地方在於層數增加了（顧名思義，“多層” 感知器），以及引入了非線性激活函數（這裡使用了 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%95%B4%E6%B5%81%E5%87%BD%E6%95%B0">ReLU 函數</a> ， 即下方的 <code class="docutils literal notranslate"><span class="pre">activation=tf.nn.relu</span></code> ）。該模型輸入一個向量（比如這裡是拉直的 <code class="docutils literal notranslate"><span class="pre">1×784</span></code> 手寫體數字圖片），輸出 10 維的向量，分別代表這張圖片屬於 0 到 9 的機率。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -924,7 +924,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </div>
 </div>
 <div class="section" id="drl">
-<span id="rl"></span><h2>深度強化學習（DRL）<a class="headerlink" href="#drl" title="永久链接至标题">¶</a></h2>
+<span id="zh-hant-rl"></span><h2>深度強化學習（DRL）<a class="headerlink" href="#drl" title="永久链接至标题">¶</a></h2>
 <p><a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0">強化學習</a> （Reinforcement learning，RL）強調如何基於環境而行動，以取得最大化的預期利益。結合了深度學習技術後的強化學習（Deep Reinforcement learning，DRL）更是如虎添翼。近年廣為人知的 AlphaGo 即是深度強化學習的典型應用。</p>
 <div class="admonition note">
 <p class="admonition-title">注解</p>
@@ -933,7 +933,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <p>這裡，我們使用深度強化學習玩 CartPole（平衡桿）遊戲。平衡桿是控制論中的經典問題，在這個遊戲中，一根桿子的底部與一個小車通過軸相連，而桿的重心在軸之上，因此是一個不穩定的系統。在重力的作用下，桿很容易倒下。而我們則需要控制小車在水平的軌道上進行左右運動，以使得桿一直保持豎直平衡狀態。</p>
 <div class="figure align-center" id="id35">
 <a class="reference internal image-reference" href="../../_images/cartpole.gif"><img alt="../../_images/cartpole.gif" src="../../_images/cartpole.gif" style="width: 500px;" /></a>
-<p class="caption"><span class="caption-text">CartPole 游戲</span><a class="headerlink" href="#id35" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">CartPole 遊戲</span><a class="headerlink" href="#id35" title="永久链接至图片">¶</a></p>
 </div>
 <p>我們使用 <a class="reference external" href="https://gym.openai.com/">OpenAI 推出的 Gym 環境套件</a> 中的 CartPole 遊戲環境，可使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">gym</span></code> 進行安裝，具體安裝步驟和教程可參考 <a class="reference external" href="https://gym.openai.com/docs/">官方文件</a> 和 <a class="reference external" href="https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/4-4-gym/">這裡</a> 。和Gym的交互過程很像是一個回合制遊戲，我們首先獲得遊戲的初始狀態（比如桿子的初始角度和小車位置），然後在每個回合t，我們都需要在當前可行的動作中選擇一個並交由Gym執行（比如向左或者向右推動小車，每個回合中二者只能擇一），Gym在執行動作後，會返回動作執行後的下一個狀態和當前回合所獲得的獎勵值（比如我們選擇向左推動小車並執行後，小車位置更加偏左，而桿的角度更加偏右，Gym將新的角度和位置返回給我們。而如果桿在這一回合仍沒有倒下，Gym同時返回給我們一個小的正獎勵）。這個過程可以一直疊代下去，直到遊戲結束（比如桿子倒下）。在 Python 中，Gym 的基本呼叫方法如下：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gym</span>

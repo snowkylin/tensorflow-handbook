@@ -443,7 +443,7 @@
 
     <span class="k">def</span> <span class="nf">get_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
         <span class="c1"># 从数据集中随机取出batch_size个元素并返回</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">batch_size</span><span class="p">)</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_train_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="p">:],</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_label</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1090,8 +1090,8 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">tf.keras.Model.compile</span></code> accepts three important parameters.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">oplimizer</span></code>: an optimizer, can be selected from <a href="#id11"><span class="problematic" id="id12">``</span></a>tf.keras.optimizers’’.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">loss</span></code>: a loss function, can be selected from <a href="#id13"><span class="problematic" id="id14">``</span></a>tf.keras.loses’’.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">oplimizer</span></code>: an optimizer, can be selected from <a href="#id11"><span class="problematic" id="id12">``</span></a>tf.keras.optimizers’‘.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">loss</span></code>: a loss function, can be selected from <a href="#id13"><span class="problematic" id="id14">``</span></a>tf.keras.loses’‘.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">metrics</span></code>: a metric, can be selected from <code class="docutils literal notranslate"><span class="pre">tf.keras.metrics</span></code>.</p></li>
 </ul>
 <p>Then, the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method of <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> can be used to actually train the model.</p>

@@ -134,14 +134,14 @@
 </ul>
 <p class="caption"><span class="caption-text">基礎</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow安裝與環境配置</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/installation.html">TensorFlow 安裝與環境配置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/basic.html">TensorFlow 基礎</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic/models.html">TensorFlow 模型建立與訓練</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模塊</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basic/tools.html">TensorFlow常用模組</a></li>
 </ul>
 <p class="caption"><span class="caption-text">部署</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型導出</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow模型匯出</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite（Jinpeng）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript（Huan）</a></li>
@@ -153,8 +153,8 @@
 </ul>
 <p class="caption"><span class="caption-text">擴展</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型復用（Jinpeng）</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 數據集載入</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub 模型複用（Jinpeng）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets 資料集載入</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan）</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/quantum.html">TensorFlow Quantum: 混合量子-經典機器學習 *</a></li>
 </ul>
@@ -163,9 +163,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../appendix/rl.html">強化學習簡介</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/docker.html">使用Docker部署TensorFlow環境</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/cloud.html">在雲端使用TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的交互式Python開發環境JupyterLab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/jupyterlab.html">部署自己的互動式 Python 開發環境 JupyterLab</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/recommended_books.html">參考資料與推薦閱讀</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">術語中英對照表</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/terms.html">專有名詞中英對照表</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Preface</span></p>
 <ul>
@@ -334,7 +334,7 @@
 </div>
 <div class="section" id="id3">
 <h2>模型訓練：數據預處理和預載入<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
-<p>相對於模型的訓練而言，有時候數據的預處理和載入反而是一件更爲耗時的工作。爲了優化模型的訓練流程，有必要對訓練的全流程做一個時間上的評測（Profiling），以弄清每一步所耗費的時間，並發現性能上的瓶頸。這一步可以使用 TensorBoard 的評測工具（參考前文的 <a class="reference internal" href="../../zh/basic/tools.html#graph-profile"><span class="std std-ref">查看Graph和Profile信息</span></a> ），也可以簡單地使用Python的 <code class="docutils literal notranslate"><span class="pre">time</span></code> 庫在終端輸出每一步所需時間。評測完成後，如果發現瓶頸在數據端（例如每一步訓練只花費1秒，而處理數據就花了5秒），我們即需要思考數據端的優化方式。一般而言，可以通過事先預處理好需要傳入模型訓練的數據來提高性能，也可以在模型訓練的時候並行進行數據的讀取和處理。可以參考前文的 <a class="reference internal" href="../../zh/basic/tools.html#prefetch"><span class="std std-ref">使用 tf.data 的并行化策略提高训练流程效率</span></a> 以了解詳情。</p>
+<p>相對於模型的訓練而言，有時候數據的預處理和載入反而是一件更爲耗時的工作。爲了優化模型的訓練流程，有必要對訓練的全流程做一個時間上的評測（Profiling），以弄清每一步所耗費的時間，並發現性能上的瓶頸。這一步可以使用 TensorBoard 的評測工具（參考前文的 <a class="reference internal" href="../basic/tools.html#graph-profile"><span class="std std-ref">查看Graph和Profile信息</span></a> ），也可以簡單地使用Python的 <code class="docutils literal notranslate"><span class="pre">time</span></code> 庫在終端輸出每一步所需時間。評測完成後，如果發現瓶頸在數據端（例如每一步訓練只花費1秒，而處理數據就花了5秒），我們即需要思考數據端的優化方式。一般而言，可以通過事先預處理好需要傳入模型訓練的數據來提高性能，也可以在模型訓練的時候並行進行數據的讀取和處理。可以參考前文的 <a class="reference internal" href="../basic/tools.html#prefetch"><span class="std std-ref">使用 tf.data 的平行化策略提高訓練流程效率</span></a> 以了解詳情。</p>
 </div>
 <div class="section" id="id4">
 <h2>模型類型與加速潛力的關係<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
@@ -347,7 +347,7 @@
 </pre></div>
 </div>
 <p>以上提示告訴你，你的 CPU 支持 AVX2 指令集，但當前安裝的 TensorFlow 版本並未針對這一指令集進行優化。</p>
-<p>不過，如果你的機器學習任務恰好在 CPU 上訓練更加有效，或者因爲某些原因而必須在 CPU 上訓練，那麼你可以通過開啓這些擴展指令集，來榨乾最後一點 TensorFlow 本體的性能提升空間。一般而言，開啓這些擴展指令集支持必須重新編譯 TensorFlow （這一過程漫長而痛苦，並不推薦一般人嘗試），不過好在有一些第三方編譯的，開啓了擴展指令集的 TensorFlow 版本（例如 GitHub 上的 <a class="reference external" href="https://github.com/fo40225/tensorflow-windows-wheel">fo40225/tensorflow-windows-wheel</a> ）。你可以根據自己的 CPU 支持的擴展指令集，下載並安裝第三方提供的預編譯的 <code class="docutils literal notranslate"><span class="pre">.whl</span></code> 文件來使用開啓了擴展指令集支持的 TensorFlow。此處性能的提升也視應用而定，筆者使用一顆支持 AVX2 指令集的 AMD Ryzen 5 3500U 處理器，使用 <a class="reference internal" href="../../zh/basic/tools.html#tffunction"><span class="std std-ref">tf.function ：图执行模式 *</span></a> 中的 MNIST 分類任務進行測試。針對 AVX2 優化後的 TensorFlow 速度提升約爲5~10%。</p>
+<p>不過，如果你的機器學習任務恰好在 CPU 上訓練更加有效，或者因爲某些原因而必須在 CPU 上訓練，那麼你可以通過開啓這些擴展指令集，來榨乾最後一點 TensorFlow 本體的性能提升空間。一般而言，開啓這些擴展指令集支持必須重新編譯 TensorFlow （這一過程漫長而痛苦，並不推薦一般人嘗試），不過好在有一些第三方編譯的，開啓了擴展指令集的 TensorFlow 版本（例如 GitHub 上的 <a class="reference external" href="https://github.com/fo40225/tensorflow-windows-wheel">fo40225/tensorflow-windows-wheel</a> ）。你可以根據自己的 CPU 支持的擴展指令集，下載並安裝第三方提供的預編譯的 <code class="docutils literal notranslate"><span class="pre">.whl</span></code> 文件來使用開啓了擴展指令集支持的 TensorFlow。此處性能的提升也視應用而定，筆者使用一顆支持 AVX2 指令集的 AMD Ryzen 5 3500U 處理器，使用 <a class="reference internal" href="../basic/tools.html#tffunction"><span class="std std-ref">tf.function ：圖執行模式 *</span></a> 中的 MNIST 分類任務進行測試。針對 AVX2 優化後的 TensorFlow 速度提升約爲5~10%。</p>
 </div>
 <div class="section" id="id5">
 <h2>性能優化策略<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>

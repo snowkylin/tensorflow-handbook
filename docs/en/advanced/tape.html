@@ -362,7 +362,7 @@
 </div>
 <div class="section" id="id5">
 <h2>图执行模式<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
-<p>在图执行模式（即使用 <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 封装计算图）下也可以使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 。此时，其与 TensorFlow 1.X 中的 <code class="docutils literal notranslate"><span class="pre">tf.gradients</span></code> 基本等同。详情见 <a class="reference internal" href="static.html#graph-compare"><span class="std std-ref">自动求导机制的计算图对比 *</span></a> 。</p>
+<p>在图执行模式（即使用 <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 封装计算图）下也可以使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 。此时，其与 TensorFlow 1.X 中的 <code class="docutils literal notranslate"><span class="pre">tf.gradients</span></code> 基本等同。详情见 <a class="reference internal" href="../../zh/advanced/static.html#graph-compare"><span class="std std-ref">自动求导机制的计算图对比 *</span></a> 。</p>
 </div>
 <div class="section" id="id6">
 <h2>性能优化<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
@@ -381,7 +381,7 @@
 </div>
 <div class="section" id="id7">
 <h2>实例：对神经网络的各层变量独立求导<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
-<p>在实际的训练流程中，我们有时需要对 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 模型的部分变量求导，或者对模型不同部分的变量采取不同的优化策略。此时，我们可以通过模型中各个 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 层的 <code class="docutils literal notranslate"><span class="pre">variables</span></code> 属性取出层内的部分变量，并对这部分变量单独应用优化器。以下示例展示了使用一个持久的 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 记录器，对前节 <a class="reference internal" href="../../zh_hant/basic/models.html#mlp"><span class="std std-ref">基礎範例：多層感知機（MLP）</span></a> 中多层感知机的第一层和第二层独立进行优化的过程。</p>
+<p>在实际的训练流程中，我们有时需要对 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 模型的部分变量求导，或者对模型不同部分的变量采取不同的优化策略。此时，我们可以通过模型中各个 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 层的 <code class="docutils literal notranslate"><span class="pre">variables</span></code> 属性取出层内的部分变量，并对这部分变量单独应用优化器。以下示例展示了使用一个持久的 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 记录器，对前节 <a class="reference internal" href="../../zh_hant/basic/models.html#mlp"><span class="std std-ref">基礎範例：多層感知器（MLP）</span></a> 中多层感知机的第一层和第二层独立进行优化的过程。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">from</span> <span class="nn">zh.model.mnist.mlp</span> <span class="k">import</span> <span class="n">MLP</span>
 <span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="k">import</span> <span class="n">MNISTLoader</span>

@@ -53,7 +53,7 @@ TensorFlow Datasets 資料集載入
 - ``as_supervised`` ：若為 True，則根據資料集的特性，將資料集中的每行元素整理為監督式的二元組 ``(input, label)`` （即 “資料 + 標籤”）形式，否則資料集中，每行元素為包含所有特徵的字典。
 - ``split``：指定返回資料集的特定部分。若不指定，則返回整個資料集。一般有 ``tfds.Split.TRAIN`` （訓練集）和 ``tfds.Split.TEST`` （測試集）選項。
 
-TensorFlow Datasets 當前支持的資料集可在 `官方文檔 <https://www.tensorflow.org/datasets/datasets>`_ 查看，或者也可以使用 ``tfds.list_builders()`` 查看。
+TensorFlow Datasets 當前支持的資料集可在 `官方文件 <https://www.tensorflow.org/datasets/datasets>`_ 查看，或者也可以使用 ``tfds.list_builders()`` 查看。
 
 當得到了 ``tf.data.Dataset`` 類型的資料集後，我們即可使用 ``tf.data`` 對資料集進行各種預處理以及讀取資料。例如：
 

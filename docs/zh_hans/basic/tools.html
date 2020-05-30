@@ -932,7 +932,7 @@
 </div>
 <div class="section" id="id14">
 <h3>读取 TFRecord 文件<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
-<p>我们可以通过以下代码，读取之间建立的 <code class="docutils literal notranslate"><span class="pre">train.tfrecords</span></code> 文件，并通过 <code class="docutils literal notranslate"><span class="pre">Dataset.map</span></code> 方法，使用 <code class="docutils literal notranslate"><span class="pre">tf.io.parse_single_example</span></code> 函数对数据集中的每一个序列化的 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 对象解码。</p>
+<p>我们可以通过以下代码，读取之前建立的 <code class="docutils literal notranslate"><span class="pre">train.tfrecords</span></code> 文件，并通过 <code class="docutils literal notranslate"><span class="pre">Dataset.map</span></code> 方法，使用 <code class="docutils literal notranslate"><span class="pre">tf.io.parse_single_example</span></code> 函数对数据集中的每一个序列化的 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 对象解码。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">raw_dataset</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TFRecordDataset</span><span class="p">(</span><span class="n">tfrecord_file</span><span class="p">)</span>    <span class="c1"># 读取 TFRecord 文件</span>
 
 <span class="n">feature_description</span> <span class="o">=</span> <span class="p">{</span> <span class="c1"># 定义Feature结构，告诉解码器每个Feature的类型是什么</span>
