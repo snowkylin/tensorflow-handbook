@@ -25,7 +25,7 @@ TensorFlow Quantum: 混合量子-經典機器學習 *
 
     如果你希望更深入的的了解量子力學以及量子計算的基本原理，建議可以從以下資源學習：
 
-    -  `Andrew Ng. <https://www.youtube.com/watch?v=g-MrXrRxOil>`_ 
+    - `Andrew Ng. --> Andrew Ng. Machine Learning 機械學習 <https://www.youtube.com/watch?v=g-MrXrRxOiI&list=PLoDvOw64tSYtEs_KOcIApM0eZpk-gnl5M&index=2>`_ 
     - Hidary, Jack D. `Quantum Computing: An Applied Approach <http://link.springer.com/10.1007/978-3-030-23922-0>`_ . Cham: Springer International Publishing, 2019. https://doi.org/10.1007/978-3-030-23922-0. （注重程式碼實操的量子計算教程，GitHub 上有配套源碼： https://github.com/JackHidary/quantumcomputingbook ）
 
 

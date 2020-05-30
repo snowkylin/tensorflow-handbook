@@ -277,8 +277,8 @@ q值的漸進性更新
     - `陳士杰, 強化學習 <http://debussy.im.nuu.edu.tw/sjchen/MachineLearning/final/Reinforcement.pdf>`_ （內容廣泛的中文強化學習簡報）
     - 郭憲, 方勇純. 深入淺出強化學習：原理入門. 電子工業出版社, 2018. （較爲通俗易懂的中文強化學習入門教程）
     - Richard S. Sutton, Andrew G. Barto. 強化學習（第二版）. 電子工業出版社, 2019. （較爲系統理論的經典強化學習教材）
-    - JerryWu, `強化學習完全入門指南<https://hiskio.com/courses/325>` ,HiSKIO, 2020.
-    - Richard S. Sutton and Andrew G. Barto, `Reinforcement Learning: An Introduction <http://incompleteideas.net/book/the-book-2nd.html>` ,2018.
+    - `JerryWu, 強化學習完全入門指南 <https://hiskio.com/courses/325>`_ ,HiSKIO, 2020.
+    - `Richard S. Sutton and Andrew G. Barto, Reinforcement Learning: An Introduction <http://incompleteideas.net/book/the-book-2nd.html>`_ ,2018.
 
 .. [#f0] 所以有時又被稱為 “記憶化搜索”，或者說記憶化搜索是動態規劃的一種具體實現形式。
 .. [#f1] 期望值是試驗中每次可能結果的機率乘以其結果的總和，反映了隨機變數平均取值的大小。例如，你在一次投資中有  :math:`\frac{1}{4}` 的機率賺 100 元，有 :math:`\frac{3}{4}` 的機率賺 200 元，則你本次投資賺取金額的期望值為 :math:`\frac{1}{4} \times 100 + \frac{3}{4} \times 200 = 175` 元。也就是說，如果你重複這項投資多次，則所獲收益的平均值趨近於 175 元。
