@@ -20,7 +20,7 @@ Google 推出的 Swift for TensorFlow （簡稱 S4TF）是專門針對 TensorFlo
 
     Swift 語言是 Chris Lattner 在蘋果公司工作時創建的。 現在 Chris Lattner 在 Google Brain 工作，專門從事深度學習的研究，並為 Swift 重寫了編譯器，為 TensorFlow 做定製優化。
 
-本章我們將向大家簡要介紹 Swift for TensorFlow 的使用。你可以參考最新的 `Swift for TensorFlow 文檔 <https://www.tensorflow.org/swift>`_.
+本章我們將向大家簡要介紹 Swift for TensorFlow 的使用。你可以參考最新的 `Swift for TensorFlow 文件 <https://www.tensorflow.org/swift>`_.
 
 為什麼要使用 Swift 進行 TensorFlow 開發
 ---------------------------------------------
@@ -283,7 +283,7 @@ MNIST數字分類
     Constructing data tensors.
     Test Accuracy: 0.9116667
 
-本節的原始碼可以在 https://github.com/huan/tensorflow-handbook-swift 找到。找到。載入 MNIST 資料集使用了作者封裝的 Swift Module： `swift-MNIST <https://github.com/huan/swift-MNIST>`_。更方便的是在 Google Colab 上直接打開 `本例子的 Jupyter Notebook <https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb>`_ 直接運行。
+本節的原始碼可以在 https://github.com/huan/tensorflow-handbook-swift 找到。載入 MNIST 資料集使用了作者封裝的 Swift Module： `swift-MNIST <https://github.com/huan/swift-MNIST>`_。更方便的是在 Google Colab 上直接打開 `本例子的 Jupyter Notebook <https://colab.research.google.com/github/huan/tensorflow-handbook-swift/blob/master/tensorflow-handbook-swift-example.ipynb>`_ 直接運行。
 
 .. raw:: html
 
