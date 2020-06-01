@@ -35,6 +35,7 @@ TensorFlow的最新安装步骤可参考官方网站上的说明（https://tenso
         - -{zh-hant:北京清華大學;zh-hans:清华大学;}-的pypi镜像：https://mirrors.tuna.tsinghua.edu.cn/help/pypi/
         - -{zh-hant:北京清華大學;zh-hans:清华大学;}-的Anaconda镜像：https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/
     5. 如果对磁盘空间要求严格（比如服务器环境），可以安装 `Miniconda <https://docs.conda.io/en/latest/miniconda.html>`_ ，仅包含Python和Conda，其他的包可自己按需安装。Miniconda的安装包可在 `这里 <https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/>`_ 获得。
+    6. 如果在pip安装TensorFlow时出现了“Could not find a version that satisfies the requirement tensorflow”提示，比较大的可能性是你使用了32位（x86）的Python环境。请更换为64位的Python。可以通过在命令行里输入 ``python`` 进入Python交互界面，查看进入界面时的提示信息来判断Python是32位（如 ``[MSC v.XXXX 32 bit (Intel)]`` ）还是64位（如 ``[MSC v.XXXX 64 bit (AMD64)]`` ）来判断Python的平台。
 
 .. admonition:: pip和conda包管理器
 
@@ -186,7 +187,11 @@ CUDA Toolkit和cuDNN的安装
 
 说明TensorFlow已安装成功。运行途中可能会输出一些TensorFlow的提示信息，属于正常现象。
 
-.. warning:: 如果你在Windows下安装了TensorFlow 2.1正式版，可能会在导入TensorFlow时出现 `DLL载入错误 <https://github.com/tensorflow/tensorflow/issues/35749>`_ 。此时安装 `Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019 <https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads>`_ 即可正常使用。
+.. admonition:: 导入 TensorFlow 时部分可能出现的错误信息及解决方案
+
+    如果你在 Windows 下安装了 TensorFlow 2.1 正式版，可能会在导入TensorFlow时出现 `DLL载入错误 <https://github.com/tensorflow/tensorflow/issues/35749>`_ 。此时安装 `Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019 <https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads>`_ 即可正常使用。
+
+    如果你的 CPU 年代比较久远或型号较为低端（例如，英特尔的 Atom 系列处理器），可能会在导入 TensorFlow 时直接崩溃。这是由于 TensorFlow 在版本 1.6 及之后，在官方编译版本中默认加入了 AVX 指令集。如果你的 CPU 不支持 AVX 指令集就会报错（你可以在Windows下使用CPU-Z，或在Linux下使用 ``cat /proc/cpuinfo`` 查看当前CPU的指令集支持）。此时，建议结合自己的软硬件环境，使用社区编译版本进行安装，例如 GitHub上的 `yaroslavvb/tensorflow-community-wheels <https://github.com/yaroslavvb/tensorflow-community-wheels>`_ 。截至 2020 年 6 月，`这个Issue <https://github.com/yaroslavvb/tensorflow-community-wheels/issues/153>`_ 里包含了去除 AVX 后，Ubuntu下编译的最新版 TensorFlow。如果你的动手能力较强，也可以考虑在自己的平台下重新编译 TensorFlow。关于 CPU 指令集的更多内容可参考 `“TensorFlow性能优化”一章的“使用针对特定 CPU 指令集优化的 TensorFlow”一节 <https://mp.weixin.qq.com/s?__biz=MzU1OTMyNDcxMQ==&mid=2247487801&idx=1&sn=acc74835c7cb8b4d15614dc7f758209e&chksm=fc185a71cb6fd367c580e24f408e6bbfaec4848393f490eb4a6769100b5a8058e653d22ed8da&scene=21#wechat_redirect>`_ 。 
 
 此处使用的是Python语言，关于Python语言的入门教程可以参考 `runoob网站的Python 3教程 <http://www.runoob.com/python3/python3-tutorial.html>`_ 或 `廖雪峰的Python教程 <https://www.liaoxuefeng.com>`_ ，本手册之后将默认读者拥有Python语言的基本知识。不用紧张，Python语言易于上手，而TensorFlow本身也不会用到Python语言的太多高级特性。
 

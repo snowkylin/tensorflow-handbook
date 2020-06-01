@@ -1,4 +1,4 @@
-图执行模式下的 TensorFlow 2
+Graph Execution Mode in TensorFlow 2
 ======================================
 
 尽管 TensorFlow 2 建议以即时执行模式（Eager Execution）作为主要执行模式，然而，图执行模式（Graph Execution）作为 TensorFlow 2 之前的主要执行模式，依旧对于我们理解 TensorFlow 具有重要意义。尤其是当我们需要使用 :ref:`tf.function <tffunction>` 时，对图执行模式的理解更是不可或缺。

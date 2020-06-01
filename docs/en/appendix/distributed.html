@@ -280,7 +280,7 @@
 <h1>Distributed Training with TensorFlow<a class="headerlink" href="#distributed-training-with-tensorflow" title="永久链接至标题">¶</a></h1>
 <p>当我们拥有大量计算资源时，通过使用合适的分布式策略，我们可以充分利用这些计算资源，从而大幅压缩模型训练的时间。针对不同的使用场景，TensorFlow在 <code class="docutils literal notranslate"><span class="pre">tf.distribute.Strategy</span></code> 中为我们提供了若干种分布式策略，使得我们能够更高效地训练模型。</p>
 <div class="section" id="training-on-a-single-machine-with-multiple-gpus-mirroredstrategy">
-<span id="multi-gpu"></span><h2>Training on a single machine with multiple GPUs: <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code><a class="headerlink" href="#training-on-a-single-machine-with-multiple-gpus-mirroredstrategy" title="永久链接至标题">¶</a></h2>
+<span id="en-multi-gpu"></span><h2>Training on a single machine with multiple GPUs: <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code><a class="headerlink" href="#training-on-a-single-machine-with-multiple-gpus-mirroredstrategy" title="永久链接至标题">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">tf.distribute.MirroredStrategy</span></code> 是一种简单且高性能的，数据并行的同步式分布式策略，主要支持多个GPU在同一台主机上训练。使用这种策略时，我们只需实例化一个 <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code> 策略:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">strategy</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">distribute</span><span class="o">.</span><span class="n">MirroredStrategy</span><span class="p">()</span>
 </pre></div>

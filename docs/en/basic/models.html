@@ -664,7 +664,7 @@
 <span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
 
 <span class="n">num_epoch</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">19</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span>
 <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.001</span>
 
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;tf_flowers&quot;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">tfds</span><span class="o">.</span><span class="n">Split</span><span class="o">.</span><span class="n">TRAIN</span><span class="p">,</span> <span class="n">as_supervised</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1090,8 +1090,8 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">tf.keras.Model.compile</span></code> accepts three important parameters.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">oplimizer</span></code>: an optimizer, can be selected from <a href="#id11"><span class="problematic" id="id12">``</span></a>tf.keras.optimizers’‘.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">loss</span></code>: a loss function, can be selected from <a href="#id13"><span class="problematic" id="id14">``</span></a>tf.keras.loses’‘.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">oplimizer</span></code>: an optimizer, can be selected from <a href="#id11"><span class="problematic" id="id12">``</span></a>tf.keras.optimizers’’.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">loss</span></code>: a loss function, can be selected from <a href="#id13"><span class="problematic" id="id14">``</span></a>tf.keras.loses’’.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">metrics</span></code>: a metric, can be selected from <code class="docutils literal notranslate"><span class="pre">tf.keras.metrics</span></code>.</p></li>
 </ul>
 <p>Then, the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method of <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> can be used to actually train the model.</p>

@@ -200,18 +200,18 @@
 <li class="toctree-l3"><a class="reference internal" href="#read-the-tfrecord-file">Read the TFRecord file</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#graph-execution-mode-tf-function">Graph Execution mode: <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> *</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#basic-usage-of-tf-function">Basic usage of <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#tf-function"><code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 内在机制</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#autograph-pythontensorflow">AutoGraph：将Python控制流转换为TensorFlow计算图</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#tf-session">使用传统的 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graph-execution-mode-tf-function">Graph execution mode: <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> *</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-usage-of-tf-function">Basic usage of <code class="docutils literal notranslate"><span class="pre">tf.function</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#internal-mechanism-of-tf-function">Internal mechanism of <code class="docutils literal notranslate"><span class="pre">tf.function</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#autograph-converting-python-control-flows-into-tensorflow-graphs">AutoGraph: Converting Python control flows into TensorFlow graphs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-traditional-tf-session">Using traditional <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#tf-tensorarray-tensorflow"><code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> ：TensorFlow 动态数组 *</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#tf-config-gpu"><code class="docutils literal notranslate"><span class="pre">tf.config</span></code>：GPU的使用与分配 *</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#gpu">指定当前程序使用的GPU</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id8">设置显存使用策略</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#gpugpu">单GPU模拟多GPU环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tensorflow-dynamic-array-tf-tensorarray">TensorFlow dynamic array: <code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> *</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-and-allocating-gpus-tf-config">Setting and allocating GPUs: <code class="docutils literal notranslate"><span class="pre">tf.config</span></code> *</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#allocate-gpus-for-current-program">Allocate GPUs for current program</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-gpu-memory-usage-policy">Setting GPU memory usage policy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simulating-a-multi-gpu-environment-with-a-single-gpu">Simulating a multi-GPU environment with a single GPU</a></li>
 </ul>
 </li>
 </ul>
@@ -702,13 +702,13 @@
 </pre></div>
 </div>
 <p>Output:</p>
-<div class="figure align-center" id="id9">
+<div class="figure align-center" id="id7">
 <a class="reference internal image-reference" href="../../_images/mnist_shuffle_1.png"><img alt="../../_images/mnist_shuffle_1.png" src="../../_images/mnist_shuffle_1.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">The first run</span><a class="headerlink" href="#id9" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">The first run</span><a class="headerlink" href="#id7" title="永久链接至图片">¶</a></p>
 </div>
-<div class="figure align-center" id="id10">
+<div class="figure align-center" id="id8">
 <a class="reference internal image-reference" href="../../_images/mnist_shuffle_2.png"><img alt="../../_images/mnist_shuffle_2.png" src="../../_images/mnist_shuffle_2.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">The second run</span><a class="headerlink" href="#id10" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">The second run</span><a class="headerlink" href="#id8" title="永久链接至图片">¶</a></p>
 </div>
 <p>It can be seen that each time the data is randomly shuffled.</p>
 <div class="admonition-buffer-size-setting-of-dataset-shuffle admonition">
@@ -729,9 +729,9 @@
 <div class="section" id="increase-the-efficiency-using-the-parallelization-strategy-of-tf-data">
 <span id="en-prefetch"></span><h3>Increase the efficiency using the parallelization strategy of <code class="docutils literal notranslate"><span class="pre">tf.data</span></code><a class="headerlink" href="#increase-the-efficiency-using-the-parallelization-strategy-of-tf-data" title="永久链接至标题">¶</a></h3>
 <p>When training models, we want to make the most of computing resources and reduce CPU/GPU idle time. However, sometimes, the preparation of dataset is very time-consuming, thus we have to spend a lot of time preparing data for training before each batch of training. When we are preparing the data, the GPU can only wait for data with no load, resulting in a waste of computing resources, as shown in the following figure.</p>
-<div class="figure align-center" id="id11">
+<div class="figure align-center" id="id9">
 <a class="reference internal image-reference" href="../../_images/datasets_without_pipelining.png"><img alt="../../_images/datasets_without_pipelining.png" src="../../_images/datasets_without_pipelining.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">Original training process, GPU can only be idle when preparing data. <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">Source 1</a> 。</span><a class="headerlink" href="#id11" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">Original training process, GPU can only be idle when preparing data. <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">Source 1</a> 。</span><a class="headerlink" href="#id9" title="永久链接至图片">¶</a></p>
 </div>
 <p>To tackle this problem, <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> provides us with the <code class="docutils literal notranslate"><span class="pre">Dataset.prefetch()</span></code> method, which allows us to let the dataset prefetch several elements during training, so that the CPU can prepare data while training in the GPU, improving the efficiency of the training process, as shown below.</p>
 <div class="figure align-center">
@@ -747,9 +747,9 @@
 </pre></div>
 </div>
 <p>The operation process is shown in the following figure.</p>
-<div class="figure align-center" id="id12">
+<div class="figure align-center" id="id10">
 <a class="reference internal image-reference" href="../../_images/datasets_parallel_map.png"><img alt="../../_images/datasets_parallel_map.png" src="../../_images/datasets_parallel_map.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">Parallelization of data conversion is achieved by setting the <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> parameter of <code class="docutils literal notranslate"><span class="pre">Dataset.map()</span></code>. The top part is unparallelized and the bottom part is 2-core parallel. <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">Source 3</a> 。</span><a class="headerlink" href="#id12" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">Parallelization of data conversion is achieved by setting the <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> parameter of <code class="docutils literal notranslate"><span class="pre">Dataset.map()</span></code>. The top part is unparallelized and the bottom part is 2-core parallel. <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">Source 3</a> 。</span><a class="headerlink" href="#id10" title="永久链接至图片">¶</a></p>
 </div>
 <p>It is also possible to set <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> to <code class="docutils literal notranslate"><span class="pre">tf.data.experimental.AUTOTUNE</span></code> to allow TensorFlow to automatically select the appropriate value.</p>
 <p>In addition to this, there are a number of ways to improve dataset processing performance, which can be found in the <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">TensorFlow documentation</a>. The powerful performance of the tf.data parallelization policy is demonstrated in a later example, which can be viewed <a class="reference internal" href="#en-tfdata-performance"><span class="std std-ref">here</span></a>.</p>
@@ -857,9 +857,9 @@
 </pre></div>
 </div>
 <p id="en-tfdata-performance">By performing performance tests on the above examples, we can feel the powerful parallelization performance of <code class="docutils literal notranslate"><span class="pre">tf.data</span></code>. Through the use of <code class="docutils literal notranslate"><span class="pre">prefetch()</span></code> and the addition of the <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> parameter to the <code class="docutils literal notranslate"><span class="pre">map()</span></code> process, the model training time can be reduced to half or even less than before. The test results are as follows.</p>
-<div class="figure align-center" id="id13">
+<div class="figure align-center" id="id11">
 <a class="reference internal image-reference" href="../../_images/tfdata_performance.jpg"><img alt="../../_images/tfdata_performance.jpg" src="../../_images/tfdata_performance.jpg" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">Parallelization performance test for tf.data (vertical axis is time taken per epoch, in seconds)</span><a class="headerlink" href="#id13" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">Parallelization performance test for tf.data (vertical axis is time taken per epoch, in seconds)</span><a class="headerlink" href="#id11" title="永久链接至图片">¶</a></p>
 </div>
 </div>
 </div>
@@ -969,10 +969,10 @@
 </div>
 </div>
 <div class="section" id="graph-execution-mode-tf-function">
-<span id="tffunction"></span><h2>Graph Execution mode: <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> *<a class="headerlink" href="#graph-execution-mode-tf-function" title="永久链接至标题">¶</a></h2>
+<span id="tffunction"></span><h2>Graph execution mode: <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> *<a class="headerlink" href="#graph-execution-mode-tf-function" title="永久链接至标题">¶</a></h2>
 <p>While the default Eager Execution mode gives us flexibility and ease of debugging, in some scenarios, we still want to use the Graph Execution mode (default in in TensorFlow 1.X) to transform the model into an efficient TensorFlow graph model, especially when we want high performance or to deploy models. Therefore, TensorFlow 2 provides us with the <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> module, which, in conjunction with the AutoGraph mechanism, makes it easy to run the model in graph execution mode by simply adding a <code class="docutils literal notranslate"><span class="pre">&#64;tf.function`</span></code> decorator.</p>
 <div class="section" id="basic-usage-of-tf-function">
-<h3>Basic usage of <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code><a class="headerlink" href="#basic-usage-of-tf-function" title="永久链接至标题">¶</a></h3>
+<h3>Basic usage of <code class="docutils literal notranslate"><span class="pre">tf.function</span></code><a class="headerlink" href="#basic-usage-of-tf-function" title="永久链接至标题">¶</a></h3>
 <p>In TensorFlow 2, it is recommended to use <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> (instead of <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code> in 1.X) to implement the graph execution, so that you can convert the model to an easy-to-deploy, high-performance TensorFlow graph model. To use tf.function, you can just simply encapsulate the code within a function, and decorate the function with <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> decorator, as shown in the example below. For an in-depth discussion of the graph execution mode, see <a class="reference internal" href="../advanced/static.html"><span class="doc">the appendix</span></a> .</p>
 <div class="admonition-warning admonition">
 <p class="admonition-title">Warning</p>
@@ -1011,26 +1011,26 @@
 </div>
 <p>With 400 batches, the program took 35.5 seconds with <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> and 43.8 seconds without <code class="docutils literal notranslate"><span class="pre">&#64;tf.function''.</span> <span class="pre">It</span> <span class="pre">can</span> <span class="pre">be</span> <span class="pre">seen</span> <span class="pre">that</span> <span class="pre">``&#64;tf.function</span></code> brought some performance improvements. In general, <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> brings greater performance boost when the model is composed of many small operations. But if the model does not have much operations while each operation is time-consuming, the performance gains from <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> will not be significant.</p>
 </div>
-<div class="section" id="tf-function">
-<h3><code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 内在机制<a class="headerlink" href="#tf-function" title="永久链接至标题">¶</a></h3>
-<p>当被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰的函数第一次被调用的时候，进行以下操作：</p>
+<div class="section" id="internal-mechanism-of-tf-function">
+<h3>Internal mechanism of <code class="docutils literal notranslate"><span class="pre">tf.function</span></code><a class="headerlink" href="#internal-mechanism-of-tf-function" title="永久链接至标题">¶</a></h3>
+<p>When the function decorated by <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> is called for the first time, the following is done.</p>
 <ul class="simple">
-<li><p>在即时执行模式关闭的环境下，函数内的代码依次运行。也就是说，每个 <code class="docutils literal notranslate"><span class="pre">tf.</span></code> 方法都只是定义了计算节点，而并没有进行任何实质的计算。这与TensorFlow 1.X的图执行模式是一致的；</p></li>
-<li><p>使用AutoGraph将函数中的Python控制流语句转换成TensorFlow计算图中的对应节点（比如说 <code class="docutils literal notranslate"><span class="pre">while</span></code> 和 <code class="docutils literal notranslate"><span class="pre">for</span></code> 语句转换为 <code class="docutils literal notranslate"><span class="pre">tf.while</span></code> ， <code class="docutils literal notranslate"><span class="pre">if</span></code> 语句转换为 <code class="docutils literal notranslate"><span class="pre">tf.cond</span></code> 等等；</p></li>
-<li><p>基于上面的两步，建立函数内代码的计算图表示（为了保证图的计算顺序，图中还会自动加入一些 <code class="docutils literal notranslate"><span class="pre">tf.control_dependencies</span></code> 节点）；</p></li>
-<li><p>运行一次这个计算图；</p></li>
-<li><p>基于函数的名字和输入的函数参数的类型生成一个哈希值，并将建立的计算图缓存到一个哈希表中。</p></li>
+<li><p>In an environment where the eager execution mode is off, the code within the function runs sequentially. That is, each TensorFlow operation API simply defines the computation node (OpNode) in a dataflow graph, and does not perform any substantive computation. This is consistent with the graph execution mode of TensorFlow 1.X.</p></li>
+<li><p>Use AutoGraph to convert Python control flow statements to corresponding computation nodes in the TensorFlow datagraph graph (e.g. <code class="docutils literal notranslate"><span class="pre">while</span></code> and <code class="docutils literal notranslate"><span class="pre">for</span></code> statements to <code class="docutils literal notranslate"><span class="pre">tf.while</span></code>, <code class="docutils literal notranslate"><span class="pre">if</span></code> statements to <code class="docutils literal notranslate"><span class="pre">tf.cond</span></code>).</p></li>
+<li><p>Based on the above two steps, create a dataflow graph representation of the code within the function (the graph will also automatically include some <code class="docutils literal notranslate"><span class="pre">tf.control_dependencies</span></code> nodes in order to ensure the computational order of the graph).</p></li>
+<li><p>Run this calculation once.</p></li>
+<li><p>Cache the built dataflow graph to a hash table. The hash key based on the name of the function and the type of function argument</p></li>
 </ul>
-<p>在被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰的函数之后再次被调用的时候，根据函数名和输入的函数参数的类型计算哈希值，检查哈希表中是否已经有了对应计算图的缓存。如果是，则直接使用已缓存的计算图，否则重新按上述步骤建立计算图。</p>
-<div class="admonition hint">
-<p class="admonition-title">提示</p>
-<p>对于熟悉 TensorFlow 1.X 的开发者，如果想要直接获得 <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 所生成的计算图以进行进一步处理和调试，可以使用被修饰函数的 <code class="docutils literal notranslate"><span class="pre">get_concrete_function</span></code> 方法。该方法接受的参数与被修饰函数相同。例如，为了获取前节被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰的函数 <code class="docutils literal notranslate"><span class="pre">train_one_step</span></code> 所生成的计算图，可以使用以下代码：</p>
+<p>When a function is called again after being decorated by <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code>, TensorFlow will first calculate the hash key based on the function name and the type of function argument. If the corresponding dataflow graph is already in the hash table, then use the cached dataflow graph directly, otherwise recreate the dataflow graph by following the steps above.</p>
+<div class="admonition-hint admonition">
+<p class="admonition-title">Hint</p>
+<p>For developers familiar with TensorFlow 1.X who want to obtain the dataflow graphs generated by <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> directly for further processing and debugging, you can use the <code class="docutils literal notranslate"><span class="pre">get_concrete_function`</span></code> method of the decorated function. The method accepts the same arguments as the decorated function. For example, in order to obtain the graph generated by the function <code class="docutils literal notranslate"><span class="pre">train_one_step</span></code> modified by <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> in the previous section, the following code can be used.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">graph</span> <span class="o">=</span> <span class="n">train_one_step</span><span class="o">.</span><span class="n">get_concrete_function</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>其中 <code class="docutils literal notranslate"><span class="pre">graph</span></code> 即为一个 <code class="docutils literal notranslate"><span class="pre">tf.Graph</span></code> 对象。</p>
+<p>in which the <code class="docutils literal notranslate"><span class="pre">graph</span></code> is an <code class="docutils literal notranslate"><span class="pre">tf.Graph</span></code> object.</p>
 </div>
-<p>以下是一个测试题：</p>
+<p>The following is a quiz:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -1051,8 +1051,8 @@
 <span class="n">f</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>思考一下，上面这段程序的结果是什么？</p>
-<p>答案是:</p>
+<p>What is the result of this procedure above?</p>
+<p>Answer:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
 <span class="mi">1</span>
 <span class="mi">2</span>
@@ -1062,16 +1062,16 @@
 <span class="mf">0.2</span>
 </pre></div>
 </div>
-<p>当计算 <code class="docutils literal notranslate"><span class="pre">f(a)</span></code> 时，由于是第一次调用该函数，TensorFlow进行了以下操作：</p>
+<p>When calculating <code class="docutils literal notranslate"><span class="pre">f(a)</span></code>, TensorFlow does the following, since it is the first time this function is called.</p>
 <ul class="simple">
-<li><p>将函数内的代码依次运行了一遍（因此输出了文本）；</p></li>
-<li><p>构建了计算图，然后运行了一次该计算图（因此输出了1）。这里 <code class="docutils literal notranslate"><span class="pre">tf.print(x)</span></code> 可以作为计算图的节点，但Python内置的 <code class="docutils literal notranslate"><span class="pre">print</span></code> 则不能被转换成计算图的节点。因此，计算图中只包含了 <code class="docutils literal notranslate"><span class="pre">tf.print(x)</span></code> 这一操作；</p></li>
-<li><p>将该计算图缓存到了一个哈希表中（如果之后再有类型为 <code class="docutils literal notranslate"><span class="pre">tf.int32</span></code> ，shape为空的张量输入，则重复使用已构建的计算图）。</p></li>
+<li><p>The code within the function is run through in turn (hence it output the text “The function is running in Python”).</p></li>
+<li><p>A dataflow graph was constructed, and then that graph was run once (thus outputting number “1”). Here <code class="docutils literal notranslate"><span class="pre">tf.print(x)</span></code> can be used as a node of the dataflow graph, but Python’s built-in <code class="docutils literal notranslate"><span class="pre">print</span></code> cannot be converted to a node of the dataflow graph. Therefore, only the operation <code class="docutils literal notranslate"><span class="pre">tf.print(x)</span></code> is included in the calculation graph.</p></li>
+<li><p>The graph is cached in a hash table (the constructed graph is reused if it is followed by a tensor input of type <code class="docutils literal notranslate"><span class="pre">tf.int32</span></code> with an empty shape).</p></li>
 </ul>
-<p>计算 <code class="docutils literal notranslate"><span class="pre">f(b)</span></code> 时，由于b的类型与a相同，所以TensorFlow重复使用了之前已构建的计算图并运行（因此输出了2）。这里由于并没有真正地逐行运行函数中的代码，所以函数第一行的文本输出代码没有运行。计算 <code class="docutils literal notranslate"><span class="pre">f(b_)</span></code> 时，TensorFlow自动将numpy的数据结构转换成了TensorFlow中的张量，因此依然能够复用之前已构建的计算图。</p>
-<p>计算 <code class="docutils literal notranslate"><span class="pre">f(c)</span></code> 时，虽然张量 <code class="docutils literal notranslate"><span class="pre">c</span></code> 的shape和 <code class="docutils literal notranslate"><span class="pre">a</span></code> 、 <code class="docutils literal notranslate"><span class="pre">b</span></code> 均相同，但类型为 <code class="docutils literal notranslate"><span class="pre">tf.float32</span></code> ，因此TensorFlow重新运行了函数内代码（从而再次输出了文本）并建立了一个输入为 <code class="docutils literal notranslate"><span class="pre">tf.float32</span></code> 类型的计算图。</p>
-<p>计算 <code class="docutils literal notranslate"><span class="pre">f(d)</span></code> 时，由于 <code class="docutils literal notranslate"><span class="pre">d</span></code> 和 <code class="docutils literal notranslate"><span class="pre">c</span></code> 的类型相同，所以TensorFlow复用了计算图，同理没有输出文本。</p>
-<p>而对于 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 对Python内置的整数和浮点数类型的处理方式，我们通过以下示例展现：</p>
+<p>When calculating <code class="docutils literal notranslate"><span class="pre">f(b)</span></code>, since b has the same type as a, TensorFlow reuses the previously constructed dataflow graph and runs (thus outputting number “2”). Here the text output code on the first line of the function is not run because the code in the function is not really run line by line. When calculating <code class="docutils literal notranslate"><span class="pre">f(b_)</span></code>, TensorFlow automatically converts the numpy data structure to a tensor in TensorFlow, so it can still reuse the previously constructed graph.</p>
+<p>When calculating <code class="docutils literal notranslate"><span class="pre">f(c)</span></code>, although the tensor <code class="docutils literal notranslate"><span class="pre">c</span></code> has the same shape as <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, but the type is <code class="docutils literal notranslate"><span class="pre">tf.float32</span></code> instead. For this case, TensorFlow re-runs the code in the function (thus outputting the text again) and creates a dataflow graph with input of type <code class="docutils literal notranslate"><span class="pre">tf.float32</span></code>.</p>
+<p>When calculating <code class="docutils literal notranslate"><span class="pre">f(d)</span></code>, since <code class="docutils literal notranslate"><span class="pre">d</span></code> and <code class="docutils literal notranslate"><span class="pre">c</span></code> are of the same type, TensorFlow reuse the dataflow graph and similarly does not output text.</p>
+<p>The treatment of Python’s built-in integer and floating-point types by <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> is shown by the following example.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
 <span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -1081,7 +1081,7 @@
 <span class="n">f</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>结果为:</p>
+<p>The result is:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
 <span class="mi">1</span>
 <span class="n">The</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">running</span> <span class="ow">in</span> <span class="n">Python</span>
@@ -1094,8 +1094,8 @@
 <span class="mf">0.1</span>
 </pre></div>
 </div>
-<p>简而言之，对于Python内置的整数和浮点数类型，只有当值完全一致的时候， <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 才会复用之前建立的计算图，而并不会自动将Python内置的整数或浮点数等转换成张量。因此，当函数参数包含Python内置整数或浮点数时，需要格外小心。一般而言，应当只在指定超参数等少数场合使用Python内置类型作为被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰的函数的参数。</p>
-<p>下一个思考题：</p>
+<p>In short, for Python’s built-in integer and floating-point types, <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> will only reuse a previously created graph when the values are exactly the same, and will not automatically convert Python’s built-in integers or floating-point numbers into tensors. Therefore, extra care needs to be taken if you need to contain Python’s built-in integers or floating-point numbers in function arguments. In general, Python built-in types should only be used as parameters for functions decorated by <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> on a few occasions, such as specifying hyperparameters.</p>
+<p>The next quiz:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
@@ -1110,17 +1110,17 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">g</span><span class="p">())</span>
 </pre></div>
 </div>
-<p>这段代码的输出是:</p>
+<p>The output is:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
 <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
 <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>正如同正文里的例子一样，你可以在被 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰的函数里调用 <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizers</span></code> 、 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 等包含有变量的数据结构。一旦被调用，这些结构将作为隐含的参数提供给函数。当这些结构内的值在函数内被修改时，在函数外也同样生效。</p>
+<p>As in the other examples in this handbook, you can call <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code>, <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizers</span></code>, <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> and other classes containing variables in functions decorated by <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code>. Once called, these class instances are provided to the function as implicit arguments. When the values within these instance are modified inside the function, the modification is also valid outside the function.</p>
 </div>
-<div class="section" id="autograph-pythontensorflow">
-<h3>AutoGraph：将Python控制流转换为TensorFlow计算图<a class="headerlink" href="#autograph-pythontensorflow" title="永久链接至标题">¶</a></h3>
-<p>前面提到，<code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 使用名为AutoGraph的机制将函数中的Python控制流语句转换成TensorFlow计算图中的对应节点。以下是一个示例，使用 <code class="docutils literal notranslate"><span class="pre">tf.autograph</span></code> 模块的低层API <code class="docutils literal notranslate"><span class="pre">tf.autograph.to_code</span></code> 将函数 <code class="docutils literal notranslate"><span class="pre">square_if_positive</span></code> 转换成TensorFlow计算图：</p>
+<div class="section" id="autograph-converting-python-control-flows-into-tensorflow-graphs">
+<h3>AutoGraph: Converting Python control flows into TensorFlow graphs<a class="headerlink" href="#autograph-converting-python-control-flows-into-tensorflow-graphs" title="永久链接至标题">¶</a></h3>
+<p>As mentioned earlier, <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> uses a mechanism called “AutoGraph” to convert the Python control flow statement in the function to the corresponding node in the TensorFlow dataflow graph. Here is an example of using the low-level API of <code class="docutils literal notranslate"><span class="pre">tf.autograph</span></code>, <code class="docutils literal notranslate"><span class="pre">tf.autograph.to_code</span></code>, to convert the function <code class="docutils literal notranslate"><span class="pre">square_if_positive</span></code> to a TensorFlow dataflow graph.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
@@ -1179,12 +1179,12 @@
     <span class="k">return</span> <span class="n">retval_</span>
 </pre></div>
 </div>
-<p>我们注意到，原函数中的Python控制流 <code class="docutils literal notranslate"><span class="pre">if...else...</span></code> 被转换为了 <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">ag__.if_stmt(cond,</span> <span class="pre">if_true,</span> <span class="pre">if_false,</span> <span class="pre">get_state,</span> <span class="pre">set_state)</span></code> 这种计算图式的写法。AutoGraph起到了类似编译器的作用，能够帮助我们通过更加自然的Python控制流轻松地构建带有条件/循环的计算图，而无需手动使用TensorFlow的API进行构建。</p>
+<p>We note that the Python control flow in the original function <code class="docutils literal notranslate"><span class="pre">if...</span> <span class="pre">else...</span></code> are automatically compiled to <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">ag__.if_stmt(cond,</span> <span class="pre">if_true,</span> <span class="pre">if_false,</span> <span class="pre">get_state,</span> <span class="pre">set_state)</span></code> which is based on dataflow graph. AutoGraph serves as a compiler-like function that helps us easily build dataflow graphs with conditions/loops using a more natural Python control flow, without having to build them manually using TensorFlow’s API.</p>
 </div>
-<div class="section" id="tf-session">
-<h3>使用传统的 <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code><a class="headerlink" href="#tf-session" title="永久链接至标题">¶</a></h3>
-<p>不过，如果你依然钟情于TensorFlow传统的图执行模式也没有问题。TensorFlow 2 提供了 <code class="docutils literal notranslate"><span class="pre">tf.compat.v1</span></code> 模块以支持TensorFlow 1.X版本的API。同时，只要在编写模型的时候稍加注意，Keras的模型是可以同时兼容即时执行模式和图执行模式的。注意，在图执行模式下， <code class="docutils literal notranslate"><span class="pre">model(input_tensor)</span></code> 只需运行一次以完成图的建立操作。</p>
-<p>例如，通过以下代码，同样可以在MNIST数据集上训练前面所建立的MLP或CNN模型：</p>
+<div class="section" id="using-traditional-tf-session">
+<h3>Using traditional <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code><a class="headerlink" href="#using-traditional-tf-session" title="永久链接至标题">¶</a></h3>
+<p>It is okay if you still want to use the API in TensorFlow 1.X to build dataflow graph. TensorFlow 2 provides the <code class="docutils literal notranslate"><span class="pre">tf.compat.v1</span></code> module to support the TensorFlow 1.X API, and Keras model is compatible with both the eager execution and graph execution modes (with a little care when writing the model). Note that in graph execution mode, <code class="docutils literal notranslate"><span class="pre">model(input_tensor)</span></code> only needs to be run once to build the graph.</p>
+<p>For example, the MLP or CNN model created in the previous chapter can also be trained on the MNIST dataset with the following code.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
     <span class="n">num_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">num_train_data</span> <span class="o">//</span> <span class="n">batch_size</span> <span class="o">*</span> <span class="n">num_epochs</span><span class="p">)</span>
     <span class="c1"># 建立计算图</span>
@@ -1212,31 +1212,31 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;test accuracy: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">sparse_categorical_accuracy</span><span class="o">.</span><span class="n">result</span><span class="p">()))</span>
 </pre></div>
 </div>
-<p>关于图执行模式的更多内容可参见 <a class="reference internal" href="../appendix/static.html"><span class="doc">TensorFlow Under Graph Model</span></a>。</p>
+<p>More information about graph execution mode can be found in <a class="reference internal" href="../advanced/static.html"><span class="doc">Graph Execution Mode in TensorFlow 2</span></a>。</p>
 </div>
 </div>
-<div class="section" id="tf-tensorarray-tensorflow">
-<h2><code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> ：TensorFlow 动态数组 *<a class="headerlink" href="#tf-tensorarray-tensorflow" title="永久链接至标题">¶</a></h2>
-<p>在部分网络结构，尤其是涉及到时间序列的结构中，我们可能需要将一系列张量以数组的方式依次存放起来，以供进一步处理。当然，在即时执行模式下，你可以直接使用一个Python列表（List）存放数组。不过，如果你需要基于计算图的特性（例如使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 加速模型运行或者使用SavedModel导出模型），就无法使用这种方式了。因此，TensorFlow提供了 <code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> ，一种支持计算图特性的TensorFlow动态数组。</p>
-<p>其声明的方式为：</p>
+<div class="section" id="tensorflow-dynamic-array-tf-tensorarray">
+<h2>TensorFlow dynamic array: <code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> *<a class="headerlink" href="#tensorflow-dynamic-array-tf-tensorarray" title="永久链接至标题">¶</a></h2>
+<p>In some network structures, especially those involving time series, we may need to store a series of tensor sequentially in an array for further processing. In eager execution mode, you can simply use a Python List to store the values directly. However, if you need features based on dataflow graphs (e.g. using <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> to speed up models or using SavedModel to export models), you cannot use this approach. Thus, TensorFlow provides <code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code>, a TensorFlow dynamic array that supports dataflow graph.</p>
+<p>To instantiate a <code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code>, use the following code</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">arr</span> <span class="pre">=</span> <span class="pre">tf.TensorArray(dtype,</span> <span class="pre">size,</span> <span class="pre">dynamic_size=False)</span></code> ：声明一个大小为 <code class="docutils literal notranslate"><span class="pre">size</span></code> ，类型为 <code class="docutils literal notranslate"><span class="pre">dtype</span></code> 的TensorArray <code class="docutils literal notranslate"><span class="pre">arr</span></code> 。如果将 <code class="docutils literal notranslate"><span class="pre">dynamic_size</span></code> 参数设置为 <code class="docutils literal notranslate"><span class="pre">True</span></code> ，则该数组会自动增长空间。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">arr</span> <span class="pre">=</span> <span class="pre">tf.TensorArray(dtype,</span> <span class="pre">size,</span> <span class="pre">dynamic_size=False)</span></code>: Instantiate a TensorArray <code class="docutils literal notranslate"><span class="pre">arr</span></code> of size <code class="docutils literal notranslate"><span class="pre">size</span></code> and type <code class="docutils literal notranslate"><span class="pre">dtype</span></code>. If the <code class="docutils literal notranslate"><span class="pre">dynamic_size</span></code> parameter is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, the array will automatically grow in space.</p></li>
 </ul>
-<p>其读取和写入的方法为：</p>
+<p>To read and write values, use:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">write(index,</span> <span class="pre">value)</span></code> ：将 <code class="docutils literal notranslate"><span class="pre">value</span></code> 写入数组的第 <code class="docutils literal notranslate"><span class="pre">index</span></code> 个位置；</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">read(index)</span></code> ：读取数组的第 <code class="docutils literal notranslate"><span class="pre">index</span></code> 个值；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">write(index,</span> <span class="pre">value)</span></code> ：write <code class="docutils literal notranslate"><span class="pre">value</span></code> to the <code class="docutils literal notranslate"><span class="pre">index</span></code>-th position of the array.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">read(index)</span></code> : read the <code class="docutils literal notranslate"><span class="pre">index</span></code>-th value of the array.</p></li>
 </ul>
-<p>除此以外，TensorArray还包括 <code class="docutils literal notranslate"><span class="pre">stack()</span></code> 、 <code class="docutils literal notranslate"><span class="pre">unstack()</span></code> 等常用操作，可参考 <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/TensorArray">文档</a> 以了解详情。</p>
-<p>请注意，由于需要支持计算图， <code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code> 的 <code class="docutils literal notranslate"><span class="pre">write()</span></code> 方法是不可以忽略左值的！也就是说，在图执行模式下，必须按照以下的形式写入数组：</p>
+<p>In addition, TensorArray includes some useful operations such as <code class="docutils literal notranslate"><span class="pre">stack()</span></code> and <code class="docutils literal notranslate"><span class="pre">unstack()</span></code>. See the <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/TensorArray">document</a> for details.</p>
+<p>Please note that the you should always add left value to <code class="docutils literal notranslate"><span class="pre">write()</span></code> method of <code class="docutils literal notranslate"><span class="pre">tf.TensorArray</span></code>, due to the need to support the dataflow graph. That is, in the graph execution mode, the operation must be in the following form.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>这样才可以正常生成一个计算图操作，并将该操作返回给 <code class="docutils literal notranslate"><span class="pre">arr</span></code> 。而不可以写成：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>     <span class="c1"># 生成的计算图操作没有左值接收，从而丢失</span>
+<p>Only then can a dataflow graph operation be generated and returned to <code class="docutils literal notranslate"><span class="pre">arr</span></code>. It cannot be written as</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>     <span class="c1"># the generated operation node is lost since no left variable store it</span>
 </pre></div>
 </div>
-<p>一个简单的示例如下：</p>
+<p>A simple example is as follows</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
@@ -1259,12 +1259,12 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="tf-config-gpu">
-<h2><code class="docutils literal notranslate"><span class="pre">tf.config</span></code>：GPU的使用与分配 *<a class="headerlink" href="#tf-config-gpu" title="永久链接至标题">¶</a></h2>
-<div class="section" id="gpu">
-<h3>指定当前程序使用的GPU<a class="headerlink" href="#gpu" title="永久链接至标题">¶</a></h3>
-<p>很多时候的场景是：实验室/公司研究组里有许多学生/研究员需要共同使用一台多GPU的工作站，而默认情况下TensorFlow会使用其所能够使用的所有GPU，这时就需要合理分配显卡资源。</p>
-<p>首先，通过 <code class="docutils literal notranslate"><span class="pre">tf.config.list_physical_devices</span></code> ，我们可以获得当前主机上某种特定运算设备类型（如 <code class="docutils literal notranslate"><span class="pre">GPU</span></code> 或 <code class="docutils literal notranslate"><span class="pre">CPU</span></code> ）的列表，例如，在一台具有4块GPU和一个CPU的工作站上运行以下代码：</p>
+<div class="section" id="setting-and-allocating-gpus-tf-config">
+<h2>Setting and allocating GPUs: <code class="docutils literal notranslate"><span class="pre">tf.config</span></code> *<a class="headerlink" href="#setting-and-allocating-gpus-tf-config" title="永久链接至标题">¶</a></h2>
+<div class="section" id="allocate-gpus-for-current-program">
+<h3>Allocate GPUs for current program<a class="headerlink" href="#allocate-gpus-for-current-program" title="永久链接至标题">¶</a></h3>
+<p>In many scenarios, there are several students or researchers that need to share a workstation with multiple GPUs. However, TensorFlow will use all the GPUs it can reach by default. Therefore, we need some settings about the allocation of computational resources.</p>
+<p>First, by <code class="docutils literal notranslate"><span class="pre">tf.config.list_physical_devices</span></code>, we can get a list of a particular type of computing device (e.g. <code class="docutils literal notranslate"><span class="pre">GPU</span></code> or <code class="docutils literal notranslate"><span class="pre">CPU</span></code>) on the current machine. For example, running the following code on a workstation with four GPUs and one CPU.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gpus</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">list_physical_devices</span><span class="p">(</span><span class="n">device_type</span><span class="o">=</span><span class="s1">&#39;GPU&#39;</span><span class="p">)</span>
 <span class="n">cpus</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">list_physical_devices</span><span class="p">(</span><span class="n">device_type</span><span class="o">=</span><span class="s1">&#39;CPU&#39;</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">gpus</span><span class="p">,</span> <span class="n">cpus</span><span class="p">)</span>
@@ -1278,55 +1278,55 @@
 <span class="p">[</span><span class="n">PhysicalDevice</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;/physical_device:CPU:0&#39;</span><span class="p">,</span> <span class="n">device_type</span><span class="o">=</span><span class="s1">&#39;CPU&#39;</span><span class="p">)]</span>
 </pre></div>
 </div>
-<p>可见，该工作站具有4块GPU：<code class="docutils literal notranslate"><span class="pre">GPU:0</span></code> 、 <code class="docutils literal notranslate"><span class="pre">GPU:1</span></code> 、 <code class="docutils literal notranslate"><span class="pre">GPU:2</span></code> 、 <code class="docutils literal notranslate"><span class="pre">GPU:3</span></code> ，以及一个CPU <code class="docutils literal notranslate"><span class="pre">CPU:0</span></code> 。</p>
-<p>然后，通过 <code class="docutils literal notranslate"><span class="pre">tf.config.set_visible_devices</span></code> ，可以设置当前程序可见的设备范围（当前程序只会使用自己可见的设备，不可见的设备不会被当前程序使用）。例如，如果在上述4卡的机器中我们需要限定当前程序只使用下标为0、1的两块显卡（<code class="docutils literal notranslate"><span class="pre">GPU:0</span></code> 和 <code class="docutils literal notranslate"><span class="pre">GPU:1</span></code>），可以使用以下代码：</p>
+<p>As can be seen, the workstation has four GPUs: <code class="docutils literal notranslate"><span class="pre">GPU:0</span></code>, <code class="docutils literal notranslate"><span class="pre">GPU:1</span></code>, <code class="docutils literal notranslate"><span class="pre">GPU:2</span></code>, <code class="docutils literal notranslate"><span class="pre">GPU:3</span></code> and one CPU <code class="docutils literal notranslate"><span class="pre">CPU:0</span></code>.</p>
+<p>Then, by <code class="docutils literal notranslate"><span class="pre">tf.config.set_visible_devices</span></code>, you can set the range of devices visible to the current program (the current program will only use its own visible devices, the invisible ones will not be used by the current program). For example, if in the above 4-GPU machine we need to restrict the current program to use only two graphics cards <code class="docutils literal notranslate"><span class="pre">GPU:0</span></code> and <code class="docutils literal notranslate"><span class="pre">GPU:1</span></code>, we can use the following code.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gpus</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">list_physical_devices</span><span class="p">(</span><span class="n">device_type</span><span class="o">=</span><span class="s1">&#39;GPU&#39;</span><span class="p">)</span>
 <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set_visible_devices</span><span class="p">(</span><span class="n">devices</span><span class="o">=</span><span class="n">gpus</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">device_type</span><span class="o">=</span><span class="s1">&#39;GPU&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="admonition tip">
-<p class="admonition-title">小技巧</p>
-<p>使用环境变量 <code class="docutils literal notranslate"><span class="pre">CUDA_VISIBLE_DEVICES</span></code> 也可以控制程序所使用的GPU。假设发现四卡的机器上显卡0,1使用中，显卡2,3空闲，Linux终端输入:</p>
+<div class="admonition-tip admonition">
+<p class="admonition-title">Tip</p>
+<p>You can also use the environment variable <code class="docutils literal notranslate"><span class="pre">CUDA_VISIBLE_DEVICES</span></code> to control the GPUs used by the current program. Suppose we have a 4-GPU machine is found with GPU 0,1 in use and GPU 2,3 idle. Input the following command in Linux shell:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">CUDA_VISIBLE_DEVICES</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span>
 </pre></div>
 </div>
-<p>或在代码中加入</p>
+<p>Or add the following code</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CUDA_VISIBLE_DEVICES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;2,3&quot;</span>
 </pre></div>
 </div>
-<p>即可指定程序只在显卡2,3上运行。</p>
+<p>can allocate GPU 2, 3 to the current program.</p>
 </div>
 </div>
-<div class="section" id="id8">
-<h3>设置显存使用策略<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
-<p>默认情况下，TensorFlow将使用几乎所有可用的显存，以避免内存碎片化所带来的性能损失。不过，TensorFlow提供两种显存使用策略，让我们能够更灵活地控制程序的显存使用方式：</p>
+<div class="section" id="setting-gpu-memory-usage-policy">
+<h3>Setting GPU memory usage policy<a class="headerlink" href="#setting-gpu-memory-usage-policy" title="永久链接至标题">¶</a></h3>
+<p>By default, TensorFlow will use almost all available GPU memory to avoid the performance loss associated with memory fragmentation. However, TensorFlow offers two memory usage policies that give us more flexibility to control how our programs use GPU memory.</p>
 <ul class="simple">
-<li><p>仅在需要时申请显存空间（程序初始运行时消耗很少的显存，随着程序的运行而动态申请显存）；</p></li>
-<li><p>限制消耗固定大小的显存（程序不会超出限定的显存大小，若超出的报错）。</p></li>
+<li><p>Requiring GPU memory space only when needed (the program consumes very little GPU memory in initial, and requires it dynamically as the program runs).</p></li>
+<li><p>Limiting the consumption of of memory into a fixed size (the program will not exceed the limited memory size, an exception will be raised if it exceeds the limit).</p></li>
 </ul>
-<p>可以通过 <code class="docutils literal notranslate"><span class="pre">tf.config.experimental.set_memory_growth</span></code> 将GPU的显存使用策略设置为“仅在需要时申请显存空间”。以下代码将所有GPU设置为仅在需要时申请显存空间：</p>
+<p>You can set the GPU memory usage policy to “request memory space only when needed” by <code class="docutils literal notranslate"><span class="pre">tf.config.experimental.set_memory_growth</span></code>. The following code sets all GPUs to request memory space only when needed.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gpus</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">list_physical_devices</span><span class="p">(</span><span class="n">device_type</span><span class="o">=</span><span class="s1">&#39;GPU&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">gpu</span> <span class="ow">in</span> <span class="n">gpus</span><span class="p">:</span>
     <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">set_memory_growth</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="n">gpu</span><span class="p">,</span> <span class="n">enable</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>以下代码通过 <code class="docutils literal notranslate"><span class="pre">tf.config.set_logical_device_configuration</span></code> 选项并传入 <code class="docutils literal notranslate"><span class="pre">tf.config.LogicalDeviceConfiguration</span></code> 实例，设置TensorFlow固定消耗 <code class="docutils literal notranslate"><span class="pre">GPU:0</span></code> 的1GB显存（其实可以理解为建立了一个显存大小为1GB的“虚拟GPU”）：</p>
+<p>The following code use <code class="docutils literal notranslate"><span class="pre">tf.config.set_logical_device_configuration</span></code> with a <code class="docutils literal notranslate"><span class="pre">tf.config.LogicalDeviceConfiguration</span></code> instance to set TensorFlow to consume a fixed size of 1GB GPU memory to <code class="docutils literal notranslate"><span class="pre">GPU:0</span></code> (which can also be regarded as creating a “virtual GPU” with 1GB of GPU memory).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gpus</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">list_physical_devices</span><span class="p">(</span><span class="n">device_type</span><span class="o">=</span><span class="s1">&#39;GPU&#39;</span><span class="p">)</span>
 <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set_logical_device_configuration</span><span class="p">(</span>
     <span class="n">gpus</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
     <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">LogicalDeviceConfiguration</span><span class="p">(</span><span class="n">memory_limit</span><span class="o">=</span><span class="mi">1024</span><span class="p">)])</span>
 </pre></div>
 </div>
-<div class="admonition hint">
-<p class="admonition-title">提示</p>
-<p>TensorFlow 1.X 的 图执行模式 下，可以在实例化新的session时传入 <code class="docutils literal notranslate"><span class="pre">tf.compat.v1.ConfigPhoto</span></code> 类来设置TensorFlow使用显存的策略。具体方式是实例化一个 <code class="docutils literal notranslate"><span class="pre">tf.ConfigProto</span></code> 类，设置参数，并在创建 <code class="docutils literal notranslate"><span class="pre">tf.compat.v1.Session</span></code> 时指定Config参数。以下代码通过 <code class="docutils literal notranslate"><span class="pre">allow_growth</span></code> 选项设置TensorFlow仅在需要时申请显存空间：</p>
+<div class="admonition-hint admonition">
+<p class="admonition-title">Hint</p>
+<p>in graph execution mode of TensorFlow 1.X API, you can also set TensorFlow’s policy for using GPU memory by passing a <code class="docutils literal notranslate"><span class="pre">tf.compat.v1.ConfigPhoto</span></code> instance when you instantiate a new session. This is done by instantiating a <code class="docutils literal notranslate"><span class="pre">tf.ConfigProto</span></code> class, setting parameters, and specifying the <code class="docutils literal notranslate"><span class="pre">config</span></code> parameter when creating the <code class="docutils literal notranslate"><span class="pre">tf.compat.v1.Session</span></code>. The following code sets TensorFlow to request memory space only when needed by the <code class="docutils literal notranslate"><span class="pre">allow_growth</span></code> option.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">()</span>
 <span class="n">config</span><span class="o">.</span><span class="n">gpu_options</span><span class="o">.</span><span class="n">allow_growth</span> <span class="o">=</span> <span class="bp">True</span>
 <span class="n">sess</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>以下代码通过 <code class="docutils literal notranslate"><span class="pre">per_process_gpu_memory_fraction</span></code> 选项设置TensorFlow固定消耗40%的GPU显存：</p>
+<p>The following code sets TensorFlow to consume a fixed 40% proportion of the GPU memory with the <code class="docutils literal notranslate"><span class="pre">per_process_gpu_memory_fraction</span></code> option.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">ConfigProto</span><span class="p">()</span>
 <span class="n">config</span><span class="o">.</span><span class="n">gpu_options</span><span class="o">.</span><span class="n">per_process_gpu_memory_fraction</span> <span class="o">=</span> <span class="mf">0.4</span>
 <span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
@@ -1334,9 +1334,9 @@
 </div>
 </div>
 </div>
-<div class="section" id="gpugpu">
-<h3>单GPU模拟多GPU环境<a class="headerlink" href="#gpugpu" title="永久链接至标题">¶</a></h3>
-<p>当我们的本地开发环境只有一个GPU，但却需要编写多GPU的程序在工作站上进行训练任务时，TensorFlow为我们提供了一个方便的功能，可以让我们在本地开发环境中建立多个模拟GPU，从而让多GPU的程序调试变得更加方便。以下代码在实体GPU <code class="docutils literal notranslate"><span class="pre">GPU:0</span></code> 的基础上建立了两个显存均为2GB的虚拟GPU。</p>
+<div class="section" id="simulating-a-multi-gpu-environment-with-a-single-gpu">
+<h3>Simulating a multi-GPU environment with a single GPU<a class="headerlink" href="#simulating-a-multi-gpu-environment-with-a-single-gpu" title="永久链接至标题">¶</a></h3>
+<p>When our local development environment has only one GPU, but we need to write programs with multiple GPUs to perform training tasks on the workstation, TensorFlow provides us with a convenient feature that allows us to build multiple virtual GPUs in the local development environment, making debugging programs with multiple GPUs much easier. The following code builds two virtual GPUs, both with 2GB of memory, based on the physical GPU <code class="docutils literal notranslate"><span class="pre">GPU:0</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gpus</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">list_physical_devices</span><span class="p">(</span><span class="s1">&#39;GPU&#39;</span><span class="p">)</span>
 <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set_logical_device_configuration</span><span class="p">(</span>
     <span class="n">gpus</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
@@ -1344,7 +1344,7 @@
      <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">LogicalDeviceConfiguration</span><span class="p">(</span><span class="n">memory_limit</span><span class="o">=</span><span class="mi">2048</span><span class="p">)])</span>
 </pre></div>
 </div>
-<p>我们在 <a class="reference internal" href="../../zh/appendix/distributed.html#multi-gpu"><span class="std std-ref">单机多卡训练</span></a> 的代码前加入以上代码，即可让原本为多GPU设计的代码在单GPU环境下运行。当输出设备数量时，程序会输出：</p>
+<p>We add the above code before the <a class="reference internal" href="../appendix/distributed.html#en-multi-gpu"><span class="std std-ref">multi-GPU training</span></a> code to allow code originally designed for multiple GPUs to run in a single GPU environment. When outputting the number of devices, the program will output.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Number</span> <span class="n">of</span> <span class="n">devices</span><span class="p">:</span> <span class="mi">2</span>
 </pre></div>
 </div>
