@@ -288,10 +288,20 @@ Keras 模型以類別的形式呈現，我們可以通過繼承 ``tf.keras.Model
 
 各網路模型參數的詳細介紹可參考 `Keras文件 <https://keras.io/applications/>`_ 。
 
+.. admonition:: 設置訓練狀態
+
+    對於一些預定義的經典模型，其中的某些層（例如``BatchNormalization`` ）在訓練和測試時的行為是不同的（可以參考`這篇文章<https://zhuanlan.zhihu.com/p/64310188>`_ ）。因此，在訓練模型時，需要手動設置訓練狀態，告訴模型“我現在是處於訓練模型的階段”。可以通過
+
+    .. code-block:: python
+
+        tf.keras.backend.set_learning_phase(True)
+
+    進行設置，也可以在調用模型時通過將 ``training`` 參數設為 ``True`` 來設置。
+
 以下展示一個例子，使用 ``MobileNetV2`` 網路在 ``tf_flowers`` 五種分類數據集上進行訓練（為了程式碼的簡短高效，在該範例中我們使用了 :doc:`TensorFlow Datasets <../appendix/tfds>` 和 :ref:`tf.data <tfdata>` 載入和預處理資料）。通過將 ``weights`` 設置為 ``None`` ，我們隨機初始化變數而不使用預訓練權重值。同時將 ``classes`` 設置為5，對應於5種分類的資料集。
 
 .. literalinclude:: /_static/code/zh-hant/model/cnn/mobilenet.py
-    :emphasize-lines: 10    
+    :emphasize-lines: 10, 15
 
 後文的部分章節（如 :doc:`分散式訓練 <../appendix/distributed>` ）中，我們也會直接呼叫這些經典的網路結構來進行訓練。
 
