@@ -1,71 +1,67 @@
-Distributed Training with TensorFlow
-====================================
+Distributed training with TensorFlow
+============================================
 
 ..
     https://www.tensorflow.org/beta/guide/distribute_strategy
 
-当我们拥有大量计算资源时，通过使用合适的分布式策略，我们可以充分利用这些计算资源，从而大幅压缩模型训练的时间。针对不同的使用场景，TensorFlow在 ``tf.distribute.Strategy`` 中为我们提供了若干种分布式策略，使得我们能够更高效地训练模型。
+When we have a large number of computational resources, we can leverage these computational resources by using a suitable distributed strategy, which can significantly compress the time spent on model training. For different use scenarios, TensorFlow provides us with several distributed strategies in ``tf.distribute.Strategy`` that allow us to train models more efficiently.
 
 .. _en_multi_gpu:
 
 Training on a single machine with multiple GPUs: ``MirroredStrategy``
-----------------------------------------------------------------------
+---------------------------------------------------------------------
 
 ..
     https://www.tensorflow.org/beta/tutorials/distribute/keras
     https://juejin.im/post/5ba9d72ff265da0ac849384b
     https://www.codercto.com/a/86644.html
 
-``tf.distribute.MirroredStrategy`` 是一种简单且高性能的，数据并行的同步式分布式策略，主要支持多个GPU在同一台主机上训练。使用这种策略时，我们只需实例化一个 ``MirroredStrategy`` 策略::
+``MirroredStrategy`` is a simple and high-performance, data-parallel, synchronous distributed strategy that supports training on multiple GPUs of the same machine. To use this strategy, we simply instantiate a ``MirroredStrategy`` strategy::
 
     strategy = tf.distribute.MirroredStrategy()
 
-并将模型构建的代码放入 ``strategy.scope()`` 的上下文环境中::
+and place the model construction code in the context of ``strategy.scope()``::
 
     with strategy.scope():
-        # 模型构建代码
+        # Model construction code
 
-.. tip:: 可以在参数中指定设备，如::
+.. admonition:: Tip
+
+    You can specify devices in parameters such as::
 
         strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1"])
     
-    即指定只使用第0、1号GPU参与分布式策略。
+    That is, only GPUs 0 and 1 are specified to participate in the distributed policy.
     
-以下代码展示了使用 ``MirroredStrategy`` 策略，在TensorFlow Datasets中的部分图像数据集上使用Keras训练MobileNetV2的过程：
+The following code demonstrates using the ``MirroredStrategy`` strategy to train MobileNetV2 using Keras on some of the image datasets in :doc:`TensorFlow Datasets <../appendix/tfds>`.
 
 .. literalinclude:: /_static/code/zh/distributed/multi_gpu.py
     :emphasize-lines: 8-10, 21
 
-在以下的测试中，我们使用同一台主机上的4块NVIDIA GeForce GTX 1080 Ti显卡进行单机多卡的模型训练。所有测试的epoch数均为5。使用单机无分布式配置时，虽然机器依然具有4块显卡，但程序不使用分布式的设置，直接进行训练，Batch Size设置为64。使用单机四卡时，测试总Batch Size为64（分发到单台机器的Batch Size为16）和总Batch Size为256（分发到单台机器的Batch Size为64）两种情况。
+In the following test, we used four NVIDIA GeForce GTX 1080 Ti graphics cards on the same machine to do multi-GPU training. The number of epochs is 5 in all cases. when using a single machine with no distributed configuration, although the machine still has four graphics cards, the program just trains directly, with batch size set to 64. When using a distributed training strategy, both total batch size of 64 (batch size of 16 distributed to a single machine) and total batch size of 256 (batch size of 64 distributed to a single machine) were tested.
 
-============  ==============================  ==============================  =============================
-数据集        单机无分布式（Batch Size为64）  单机四卡（总Batch Size为64）    单机四卡（总Batch Size为256）
-============  ==============================  ==============================  =============================
-cats_vs_dogs  146s/epoch                      39s/epoch                       29s/epoch
-tf_flowers    22s/epoch                       7s/epoch                        5s/epoch
-============  ==============================  ==============================  =============================
+============  ==============================  ================================  ================================
+Dataset       No distributed strategy         Distributed training with 4 gpus  Distributed training with 4 gpus
+                                              (batch size 64)                   (batch size 256)
+============  ==============================  ================================  ================================
+cats_vs_dogs  146s/epoch                      39s/epoch                         29s/epoch
+tf_flowers    22s/epoch                       7s/epoch                          5s/epoch
+============  ==============================  ================================  ================================
 
-可见，使用MirroredStrategy后，模型训练的速度有了大幅度的提高。在所有显卡性能接近的情况下，训练时长与显卡的数目接近于反比关系。
+It can be seen that the speed of model training has increased significantly with MirroredStrategy.
 
-.. admonition:: ``MirroredStrategy`` 过程简介
+.. admonition:: ``MirroredStrategy``` Process
 
-    MirroredStrategy的步骤如下：
+    The steps of MirroredStrategy are as follows.
 
-    - 训练开始前，该策略在所有N个计算设备上均各复制一份完整的模型；
-    - 每次训练传入一个批次的数据时，将数据分成N份，分别传入N个计算设备（即数据并行）；
-    - N个计算设备使用本地变量（镜像变量）分别计算自己所获得的部分数据的梯度；
-    - 使用分布式计算的All-reduce操作，在计算设备间高效交换梯度数据并进行求和，使得最终每个设备都有了所有设备的梯度之和；
-    - 使用梯度求和的结果更新本地变量（镜像变量）；
-    - 当所有设备均更新本地变量后，进行下一轮训练（即该并行策略是同步的）。
+    - The strategy replicates a complete model on each of the N computing devices before training begins.
+    - Each time a batch of data is passed in for training, the data is divided into N copies and passed into N computing devices (i.e. data parallel). 
+    - N computing devices use local variables (mirror variables) to calculate the gradient of their data separately.
+    - Apply all-reduce operations to efficiently exchange and sum gradient data between computing devices, so that each device eventually has the sum of all devices' gradients.
+    - Update local variables (mirror variables) using the results of gradient summation.
+    - After all devices have updated their local variables, the next round of training takes place (i.e., this parallel strategy is synchronized).
 
-    默认情况下，TensorFlow中的 ``MirroredStrategy`` 策略使用NVIDIA NCCL进行All-reduce操作。
-
-    ..
-        https://www.tensorflow.org/beta/tutorials/distribute/training_loops
-
-    为了进一步理解MirroredStrategy的过程，以下展示一个手工构建训练流程的示例，相对而言要复杂不少：
-
-    # TODO
+    By default, the ``MirroredStrategy`` strategy in TensorFlow uses NVIDIA NCCL for All-reduce operations.
 
 Training on multiple machines: ``MultiWorkerMirroredStrategy`` 
 --------------------------------------------------------------
@@ -73,7 +69,7 @@ Training on multiple machines: ``MultiWorkerMirroredStrategy``
 ..
     https://www.tensorflow.org/beta/tutorials/distribute/multi_worker_with_keras
 
-多机训练的方法和单机多卡类似，将 ``MirroredStrategy`` 更换为适合多机训练的 ``MultiWorkerMirroredStrategy`` 即可。不过，由于涉及到多台计算机之间的通讯，还需要进行一些额外的设置。具体而言，需要设置环境变量 ``TF_CONFIG`` ，示例如下::
+Multi-machine distributed training in TensorFlow is similar to multi-GPU training in the previous section, just replacing ``MirroredStrategy`` with ``MultiWorkerMirroredStrategy``. However, there are some additional settings that need to be made as communication between multiple computers is involved. Specifically, the environment variable ``TF_CONFIG`` needs to be set, for example::
 
     os.environ['TF_CONFIG'] = json.dumps({
         'cluster': {
@@ -82,29 +78,46 @@ Training on multiple machines: ``MultiWorkerMirroredStrategy``
         'task': {'type': 'worker', 'index': 0}
     })
 
-``TF_CONFIG`` 由 ``cluster`` 和 ``task`` 两部分组成：
+``TF_CONFIG`` consists of two parts, ``cluster`` and ``task``.
 
-- ``cluster`` 说明了整个多机集群的结构和每台机器的网络地址（IP+端口号）。对于每一台机器，``cluster`` 的值都是相同的；
-- ``task`` 说明了当前机器的角色。例如， ``{'type': 'worker', 'index': 0}`` 说明当前机器是 ``cluster`` 中的第0个worker（即 ``localhost:20000`` ）。每一台机器的 ``task`` 值都需要针对当前主机进行分别的设置。
+- The ``cluster`` describes the structure of the entire multi-machine cluster and the network address (IP + port number) of each machine. The value of ``cluster`` is the same for each machine.
+- The ``task`` describes the role of the current machine. For example, ``{'type': 'worker', 'index': 0}`` indicates that the current machine is the 0th worker in ``cluster`` (i.e. ``localhost:20000``). The ``task`` value of each machine needs to be set separately for the current host.
 
-以上内容设置完成后，在所有的机器上逐个运行训练代码即可。先运行的代码在尚未与其他主机连接时会进入监听状态，待整个集群的连接建立完毕后，所有的机器即会同时开始训练。
+Once the above is set up, just run the training code on all machines one by one. The machine that runs first will wait before it is connected to other machines. When all the machines is connected, they will start training at the same time.
 
-.. hint:: 请在各台机器上均注意防火墙的设置，尤其是需要开放与其他主机通信的端口。如上例的0号worker需要开放20000端口，1号worker需要开放20001端口。
+.. admonition:: Hint
 
-以下示例的训练任务与前节相同，只不过迁移到了多机训练环境。假设我们有两台机器，即首先在两台机器上均部署下面的程序，唯一的区别是 ``task`` 部分，第一台机器设置为 ``{'type': 'worker', 'index': 0}`` ，第二台机器设置为 ``{'type': 'worker', 'index': 1}`` 。接下来，在两台机器上依次运行程序，待通讯成功后，即会自动开始训练流程。
+    Please pay attention to the firewall settings on each machine, especially the need to open ports for communication with other machines. As in the example above, worker 0 needs to open port 20000 and worker 1 needs to open port 20001.
+
+The training tasks in the following example are the same as in the previous section, except that they have been migrated to a multi-computer training environment. Suppose we have two machines, we first deploy the following program on both machines. The only difference is the ``task`` part, the first machine is set to ``{'type': 'worker', 'index': 0}`` and the second machine is set to ``{'type': 'worker', 'index': 1}``. Next, run the programs on both machines, and when the communication is established, the training process begins automatically.
 
 .. literalinclude:: /_static/code/zh/distributed/multi_worker.py
-    :emphasize-lines: 10-18, 27
+    :emphasisize-lines: 10-18, 27
 
-在以下测试中，我们在Google Cloud Platform分别建立两台具有单张NVIDIA Tesla K80的虚拟机实例（具体建立方式参见 :ref:`后文介绍 <GCP>` ），并分别测试在使用一个GPU时的训练时长和使用两台虚拟机实例进行分布式训练的训练时长。所有测试的epoch数均为5。使用单机单卡时，Batch Size设置为64。使用双机单卡时，测试总Batch Size为64（分发到单台机器的Batch Size为32）和总Batch Size为128（分发到单台机器的Batch Size为64）两种情况。
+In the following tests, we build two separate virtual machine instances with a single NVIDIA Tesla K80 on Google Cloud Platform (see :ref:`the appendix <en_GCP>` for the usage of GCP), and report the training time with one GPU and the training time with two virtual machine instances for distributed training, respectively. The number of epochs is 5. The batch size is set to 64 when using a single machine with a single GPU, and tested with both a total batch size of 64 (batch size 32 when distributed to a single machine) and a total batch size of 128 (batch size 64 when distributed to a single machine) when using two machines with single GPU.
 
-============  ==========================  ==============================  =============================
-数据集        单机单卡（Batch Size为64）   双机单卡（总Batch Size为64）    双机单卡（总Batch Size为128）
-============  ==========================  ==============================  =============================
-cats_vs_dogs  1622s                       858s                            755s
-tf_flowers    301s                        152s                            144s                               
-============  ==========================  ==============================  =============================
+============  ==========================  ====================================  ====================================
+Dataset       No distributed strategy     Distributed training with 2 machines  Distributed training with 2 machines
+                                          (batch size 64)                       (batch size 128)
+============  ==========================  ====================================  ====================================
+cats_vs_dogs  1622s                       858s                                  755s
+tf_flowers    301s                        152s                                  144s                               
+============  ==========================  ====================================  ====================================
 
-可见模型训练的速度同样有大幅度的提高。在所有机器性能接近的情况下，训练时长与机器的数目接近于反比关系。
+It can be seen that the speed of model training has also increased considerably.
+
+.. raw:: html
+
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 196 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>
 
 

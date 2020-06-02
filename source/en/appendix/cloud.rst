@@ -67,7 +67,7 @@ Google Colab是谷歌的免费在线交互式Python运行环境，且提供GPU�
 
 可见GPU的型号为Tesla T4。
 
-.. _GCP:
+.. _en_GCP:
 
 Using TensorFlow on Google Cloud Platform (GCP)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
