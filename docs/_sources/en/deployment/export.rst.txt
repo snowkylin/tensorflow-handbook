@@ -1,49 +1,51 @@
-TensorFlow Model Saving
+TensorFlow Model Export
 ====================================================
 
-.. _savedmodel:
+In order to deploy trained machine learning models to various target platforms (e.g. servers, mobile, embedded devices, browsers, etc.), our first step is often to export (serialize) the entire trained model into a series of files with standard format. TensorFlow provides a unified model export format, SavedModel, which allows us to deploy our trained models on a variety of platforms using this format as an intermediary. It is the main export format we use in TensorFlow 2. Also, for historical reasons, Keras's Sequential and Functional models have their own model export formats, which we will also introduce later.
 
-Using SavedModel to export a model
+.. _en_savedmodel:
+
+Export models by SavedModel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ..
     https://www.tensorflow.org/beta/guide/saved_model
 
-在部署模型时，我们的第一步往往是将训练好的整个模型完整导出为一系列标准格式的文件，然后即可在不同的平台上部署模型文件。这时，TensorFlow为我们提供了SavedModel这一格式。与前面介绍的Checkpoint不同，SavedModel包含了一个TensorFlow程序的完整信息： **不仅包含参数的权值，还包含计算的流程（即计算图）** 。当模型导出为SavedModel文件时，无需建立模型的源代码即可再次运行模型，这使得SavedModel尤其适用于模型的分享和部署。后文的TensorFlow Serving（服务器端部署模型）、TensorFlow Lite（移动端部署模型）以及TensorFlow.js都会用到这一格式。
+In the previous section we introduced :ref:`Checkpoint <en_chechpoint>`, which helps us save and recover the weights in the model. SavedModel, as a model export format, goes one step further and contains complete information about a TensorFlow program: not only the weights of the model, but also the computation process (i.e., the dataflow graph). When the model is exported as a SavedModel file, the model can be run again without source code, which makes SavedModel especially suitable for model sharing and deployment. This format is used later in TensorFlow Serving (server-side deployment), TensorFlow Lite (mobile-side deployment), and TensorFlow.js.
 
-Keras模型均可方便地导出为SavedModel格式。不过需要注意的是，因为SavedModel基于计算图，所以对于使用继承 ``tf.keras.Model`` 类建立的Keras模型，其需要导出到SavedModel格式的方法（比如 ``call`` ）都需要使用 ``@tf.function`` 修饰（ ``@tf.function`` 的使用方式见 :ref:`前文 <tffunction>` ）。然后，假设我们有一个名为 ``model`` 的Keras模型，使用下面的代码即可将模型导出为SavedModel：
-
-.. code-block:: python
-
-    tf.saved_model.save(model, "保存的目标文件夹名称")
-
-在需要载入SavedModel文件时，使用
+All Keras models can be easily exported to SavedModel format. It should be noted, however, that since SavedModel is based on graph execution mode, any method (e.g. ``call``) that needs to be exported to SavedModel format requires to be decorated by ``@tf.function`` (see :ref:` previous <tffunction>` for the usage of ``@tf.function``. Models built with sequantial or function API is not required for the decoration). Then, assuming we have a Keras model named ``model``, the model can be exported as SavedModel using the following code.
 
 .. code-block:: python
 
-    model = tf.saved_model.load("保存的目标文件夹名称")
+    tf.saved_model.save(model, "target export folder")
 
-即可。
+When you need to load a SavedModel file, use
 
-.. hint:: 对于使用继承 ``tf.keras.Model`` 类建立的Keras模型 ``model`` ，使用SavedModel载入后将无法使用 ``model()`` 直接进行推断，而需要使用 ``model.call()`` 。
+.. code-block:: python
 
-以下是一个简单的示例，将 :ref:`前文MNIST手写体识别的模型 <mlp>` 进行导出和导入。
+    model = tf.saved_model.load("target export folder")
 
-导出模型到 ``saved/1`` 文件夹：
+.. admonition:: Hint
+
+    For the Keras model ``model`` inheriting ``tf.keras.Model`` class, loaded instance using the SavedModel will not allow direct inference using ``model()`, but will require the use of ``model.call()``.
+
+Here is a simple example of exporting and importing the model of :ref:`previous MNIST digit classification task <en_mlp>`.
+
+Export the model to the ``saved/1`` folder.
 
 .. literalinclude:: /_static/code/zh/savedmodel/keras/train_and_export.py
     :emphasize-lines: 22
 
-将 ``saved/1`` 中的模型导入并测试性能：
+Import and test the performance of the exported model in ``saved/1``.
 
 .. literalinclude:: /_static/code/zh/savedmodel/keras/load_savedmodel.py
     :emphasize-lines: 6, 12
 
-输出::
+Output::
 
     test accuracy: 0.952000
 
-使用继承 ``tf.keras.Model`` 类建立的Keras模型同样可以以相同方法导出，唯须注意 ``call`` 方法需要以 ``@tf.function`` 修饰，以转化为SavedModel支持的计算图，代码如下：
+Keras models inheriting ``tf.keras.Model`` class can also be exported in the same way, but note that the ``call`` method requires a ``@tf.function`` modification to translate into a SavedModel-supported dataflow graph. The following code is an example
 
 .. code-block:: python
     :emphasize-lines: 8
@@ -66,22 +68,19 @@ Keras模型均可方便地导出为SavedModel格式。不过需要注意的是�
     model = MLP()
     ...
 
-模型导入并测试性能的过程也相同，唯须注意模型推断时需要显式调用 ``call`` 方法，即使用：
+The process of importing the model is the same, except that model inference requires an explicit call to the ``call`` method, i.e. using.
 
 .. code-block:: python
-    :emphasize-lines: 2
 
-        ...
         y_pred = model.call(data_loader.test_data[start_index: end_index])
-        ...
 
-Keras Sequential save (Jinpeng)
+Built-in export format in Keras（Jinpeng）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 我们以keras模型训练和保存为例进行讲解，如下是keras官方的mnist模型训练样例。
 
 源码地址::
-    
+
     https://github.com/keras-team/keras/blob/master/examples/mnist_cnn.py
 
 以上代码，是基于keras的Sequential构建了多层的卷积神经网络，并进行训练。
@@ -104,3 +103,17 @@ Keras Sequential save (Jinpeng)
 执行过程会比较久，执行结束后，会在当前目录产生 ``mnist_cnn.h5`` 文件（HDF5格式），就是keras训练后的模型，其中已经包含了训练后的模型结构和权重等信息。
 
 在服务器端，可以直接通过 ``keras.models.load_model("mnist_cnn.h5")`` 加载，然后进行推理；在移动设备需要将HDF5模型文件转换为TensorFlow Lite的格式，然后通过相应平台的Interpreter加载，然后进行推理。
+
+.. raw:: html
+
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 192 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>

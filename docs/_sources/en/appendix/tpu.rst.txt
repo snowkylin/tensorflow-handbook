@@ -1,5 +1,5 @@
-Training TensorFlow models with TPU
-===================================
+Training TensorFlow models with TPU (Huan)
+==========================================
 
 .. figure:: /_static/image/tpu/tensorflow-tpu.png
     :width: 60%

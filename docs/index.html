@@ -182,21 +182,21 @@
 </ul>
 <p class="caption"><span class="caption-text">Deployment</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="en/deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/deployment/export.html">TensorFlow Model Export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="en/deployment/serving.html">TensorFlow Serving</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/deployment/lite.html">TensorFlow Lite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/deployment/javascript.html">TensorFlow in JavaScript</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/deployment/lite.html">TensorFlow Lite (Jinpeng)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/deployment/javascript.html">TensorFlow in JavaScript (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Large-scale Training</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="en/appendix/distributed.html">Distributed Training with TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/appendix/distributed.html">Distributed training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/appendix/tpu.html">Training TensorFlow models with TPU (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Extensions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="en/appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/appendix/tfhub.html">TensorFlow Hub: Model Reuse (Jinpeng)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="en/appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
@@ -411,7 +411,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="zh_hans/deployment/export.html">TensorFlow模型导出</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="zh_hans/deployment/export.html#savedmodel">使用SavedModel完整导出模型</a></li>
-<li class="toctree-l2"><a class="reference internal" href="zh_hans/deployment/export.html#keras-sequential-save-jinpeng">Keras Sequential save方法（Jinpeng）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh_hans/deployment/export.html#keras-jinpeng">Keras 自有的模型导出格式（Jinpeng）</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="zh_hans/deployment/serving.html">TensorFlow Serving</a><ul>
@@ -873,7 +873,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="en/basic/installation.html">Installation and Environment Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="en/basic/installation.html#general-steps-for-installation">General steps for installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="en/basic/installation.html#guide-for-tensorflow-gpuversion-installation">Guide for TensorFlow GPUversion installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="en/basic/installation.html#guide-for-tensorflow-gpu-version-installation">Guide for TensorFlow GPU version installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="en/basic/installation.html#preperations-for-gpu-hardwares">Preperations for GPU hardwares</a></li>
 <li class="toctree-l3"><a class="reference internal" href="en/basic/installation.html#installation-of-nvidia-drivers">Installation of NVIDIA drivers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="en/basic/installation.html#installation-of-cuda-toolkit-and-cudnn">Installation of CUDA Toolkit and cuDNN</a></li>
@@ -964,9 +964,9 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Deployment</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="en/deployment/export.html">TensorFlow Model Saving</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="en/deployment/export.html#using-savedmodel-to-export-a-model">Using SavedModel to export a model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="en/deployment/export.html#keras-sequential-save-jinpeng">Keras Sequential save (Jinpeng)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/deployment/export.html">TensorFlow Model Export</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="en/deployment/export.html#export-models-by-savedmodel">Export models by SavedModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/deployment/export.html#built-in-export-format-in-keras-jinpeng">Built-in export format in Keras（Jinpeng）</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="en/deployment/serving.html">TensorFlow Serving</a><ul>
@@ -983,13 +983,13 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="en/deployment/lite.html">TensorFlow Lite</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="en/deployment/lite.html">TensorFlow Lite (Jinpeng)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="en/deployment/lite.html#converting-models">Converting models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="en/deployment/lite.html#converting-models-with-quantization">Converting models with Quantization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="en/deployment/lite.html#deployment-on-android">Deployment on Android</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="en/deployment/javascript.html">TensorFlow in JavaScript</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="en/deployment/javascript.html">TensorFlow in JavaScript (Huan)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="en/deployment/javascript.html#introduction-to-tensorflow-js">Introduction to Tensorflow.js</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="en/deployment/javascript.html#advantages-of-using-tensorflow-js-on-browser">Advantages of using Tensorflow.js on browser</a></li>
 <li class="toctree-l3"><a class="reference internal" href="en/deployment/javascript.html#tensorflow-js-performance-comparison">TensorFlow.js performance comparison</a></li>
@@ -1014,12 +1014,12 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Large-scale Training</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="en/appendix/distributed.html">Distributed Training with TensorFlow</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="en/appendix/distributed.html">Distributed training with TensorFlow</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="en/appendix/distributed.html#training-on-a-single-machine-with-multiple-gpus-mirroredstrategy">Training on a single machine with multiple GPUs: <code class="docutils literal notranslate"><span class="pre">MirroredStrategy</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="en/appendix/distributed.html#training-on-multiple-machines-multiworkermirroredstrategy">Training on multiple machines: <code class="docutils literal notranslate"><span class="pre">MultiWorkerMirroredStrategy</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="en/appendix/tpu.html">Training TensorFlow models with TPU</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="en/appendix/tpu.html">Training TensorFlow models with TPU (Huan)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="en/appendix/tpu.html#introduction-to-tpu">Introduction to TPU</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="en/appendix/tpu.html#what-is-tpu">What is TPU?</a></li>
 <li class="toctree-l3"><a class="reference internal" href="en/appendix/tpu.html#why-using-tpu">Why using TPU?</a></li>
@@ -1039,9 +1039,9 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Extensions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="en/appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/appendix/tfhub.html">TensorFlow Hub: Model Reuse (Jinpeng)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/appendix/swift.html">Swift for TensorFlow (S4TF)</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="en/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="en/appendix/swift.html#introduction-to-s4tf">Introduction to S4TF</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="en/appendix/swift.html#why-using-swift-for-tensorflow-development">Why using Swift for TensorFlow Development</a></li>
 </ul>

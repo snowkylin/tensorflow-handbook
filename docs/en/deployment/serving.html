@@ -40,8 +40,8 @@
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
-    <link rel="next" title="TensorFlow Lite" href="lite.html" />
-    <link rel="prev" title="TensorFlow Model Saving" href="export.html" /> 
+    <link rel="next" title="TensorFlow Lite (Jinpeng)" href="lite.html" />
+    <link rel="prev" title="TensorFlow Model Export" href="export.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -183,7 +183,7 @@
 </ul>
 <p class="caption"><span class="caption-text">Deployment</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="export.html">TensorFlow Model Export</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Serving</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation-of-tensorflow-serving">Installation of TensorFlow Serving</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tensorflow-serving-models-deployment">TensorFlow Serving models deployment</a><ul>
@@ -198,19 +198,19 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="lite.html">TensorFlow Lite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="javascript.html">TensorFlow in JavaScript</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lite.html">TensorFlow Lite (Jinpeng)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="javascript.html">TensorFlow in JavaScript (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Large-scale Training</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">Distributed Training with TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">Distributed training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">Training TensorFlow models with TPU (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Extensions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub: Model Reuse (Jinpeng)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
@@ -287,86 +287,73 @@
             
   <div class="section" id="tensorflow-serving">
 <h1>TensorFlow Serving<a class="headerlink" href="#tensorflow-serving" title="永久链接至标题">¶</a></h1>
-<p>当我们将模型训练完毕后，往往需要将模型在生产环境中部署。最常见的方式，是在服务器上提供一个API，即客户机向服务器的某个API发送特定格式的请求，服务器收到请求数据后通过模型进行计算，并返回结果。如果仅仅是做一个Demo，不考虑高并发和性能问题，其实配合 <a class="reference external" href="https://palletsprojects.com/p/flask/">Flask</a> 等Python下的Web框架就能非常轻松地实现服务器API。不过，如果是在真的实际生产环境中部署，这样的方式就显得力不从心了。这时，TensorFlow为我们提供了TensorFlow Serving这一组件，能够帮助我们在实际生产环境中灵活且高性能地部署机器学习模型。</p>
+<p>When we have the model trained, it is often necessary to deploy the model in a production environment. The most common way to do this is to provide an API on the server, where the client sends a request in a specific format to one of the server’s APIs, then the server receives the requested data, computes it through the model, and returns the results. The server API can be implemented very easily with Python web frameworks such as <a class="reference external" href="https://palletsprojects.com/p/flask/">Flask</a> if what we want is just a demo, regardless of the high concurrency and performance issues. However, most of the real production environment is not that case. Therefore, TensorFlow provides us with TensorFlow Serving, a serving system that helps us deploy machine learning models flexibly and with high performance in real production environments.</p>
 <div class="section" id="installation-of-tensorflow-serving">
 <h2>Installation of TensorFlow Serving<a class="headerlink" href="#installation-of-tensorflow-serving" title="永久链接至标题">¶</a></h2>
-<p>TensorFlow Serving可以使用apt-get或Docker安装。在生产环境中，推荐 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/docker">使用Docker部署TensorFlow Serving</a> 。不过此处出于教学目的，介绍依赖环境较少的 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup#installing_using_apt">apt-get安装</a> 。</p>
-<div class="admonition warning">
-<p class="admonition-title">警告</p>
-<p>软件的安装方法往往具有时效性，本节的更新日期为2019年8月。若遇到问题，建议参考 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup">TensorFlow网站上的最新安装说明</a> 进行操作。</p>
+<p>TensorFlow Serving can be installed using either apt-get or Docker. In a production environment, it is recommended to <a class="reference external" href="https://www.tensorflow.org/tfx/serving/docker">use Docker to deploy TensorFlow Serving</a>. However, as a tutorial, we will introduce <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup#installing_using_apt">apt-get installization</a> which do not rely on docker..</p>
+<div class="admonition-hint admonition">
+<p class="admonition-title">Hint</p>
+<p>Software installation method is time-sensitive, this section is updated in August 2019. If you encounter problems, it is recommended to refer to the latest installation instructions on the <a class="reference external" href="https://www.tensorflow.org/tfx/serving/setup">TensorFlow website</a>.</p>
 </div>
-<p>首先设置安装源：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 添加Google的TensorFlow Serving源</span>
+<p>First add the package source:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Add the TensorFlow Serving package source from Google</span>
 <span class="n">echo</span> <span class="s2">&quot;deb [arch=amd64] http://storage.googleapis.com/tensorflow-serving-apt stable tensorflow-model-server tensorflow-model-server-universal&quot;</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">tee</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">-</span><span class="n">serving</span><span class="o">.</span><span class="n">list</span>
-<span class="c1"># 添加gpg key</span>
+<span class="c1"># Add gpg key</span>
 <span class="n">curl</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">storage</span><span class="o">.</span><span class="n">googleapis</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">-</span><span class="n">serving</span><span class="o">-</span><span class="n">apt</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">-</span><span class="n">serving</span><span class="o">.</span><span class="n">release</span><span class="o">.</span><span class="n">pub</span><span class="o">.</span><span class="n">gpg</span> <span class="o">|</span> <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">key</span> <span class="n">add</span> <span class="o">-</span>
 </pre></div>
 </div>
-<p>更新源后，即可使用apt-get安装TensorFlow Serving</p>
+<p>Then you can use apt-get to install TensorFlow Serving</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
 <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="n">server</span>
 </pre></div>
 </div>
-<div class="admonition hint">
-<p class="admonition-title">提示</p>
-<p>在运行curl和apt-get命令时，可能需要设置代理。</p>
-<p>curl设置代理的方式为 <code class="docutils literal notranslate"><span class="pre">-x</span></code> 选项或设置 <code class="docutils literal notranslate"><span class="pre">http_proxy</span></code> 环境变量，即</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">http_proxy</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理服务器IP</span><span class="p">:</span><span class="n">端口</span>
-</pre></div>
-</div>
-<p>或</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">x</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">代理服务器IP</span><span class="p">:</span><span class="n">端口</span> <span class="n">URL</span>
-</pre></div>
-</div>
-<p>apt-get设置代理的方式为 <code class="docutils literal notranslate"><span class="pre">-o</span></code> 选项，即</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">o</span> <span class="n">Acquire</span><span class="p">::</span><span class="n">http</span><span class="p">::</span><span class="n">proxy</span><span class="o">=</span><span class="s2">&quot;http://代理服务器IP:端口&quot;</span> <span class="o">...</span>
-</pre></div>
-</div>
-<p>Windows 10下，可以在 <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Linux子系统（WSL）</a> 内使用相同的方式安装TensorFlow Serving。</p>
+<div class="admonition-hint admonition">
+<p class="admonition-title">Hint</p>
+<p>You can use <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Windows Subsystem Linux (WSL)</a> to install TensorFlow Serving on Windows for development.</p>
 </div>
 </div>
 <div class="section" id="tensorflow-serving-models-deployment">
 <h2>TensorFlow Serving models deployment<a class="headerlink" href="#tensorflow-serving-models-deployment" title="永久链接至标题">¶</a></h2>
-<p>TensorFlow Serving可以直接读取SavedModel格式的模型进行部署（导出模型到SavedModel文件的方法见 <a class="reference internal" href="../../zh_hant/deployment/export.html#savedmodel"><span class="std std-ref">前文</span></a> ）。使用以下命令即可：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>tensorflow_model_server \
-    --rest_api_port=端口号（如8501） \
-    --model_name=模型名 \
-    --model_base_path=&quot;SavedModel格式模型的文件夹绝对地址（不含版本号）&quot;
+<p>TensorFlow Serving can read models in SavedModel format directly for deployment (see <a class="reference internal" href="export.html#en-savedmodel"><span class="std std-ref">previous chapter</span></a> for exporting models to SavedModel files). The command is as follows</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tensorflow_model_server</span> \
+    <span class="o">--</span><span class="n">rest_api_port</span><span class="o">=</span><span class="n">PORT</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="p">,</span> <span class="mi">8501</span><span class="p">)</span> \
+    <span class="o">--</span><span class="n">model_name</span><span class="o">=</span><span class="n">MODEL_NAME</span> \
+    <span class="o">--</span><span class="n">model_base_path</span><span class="o">=</span><span class="s2">&quot;Absolute folder path of the SavedModel format model (without version number)&quot;</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">注解</p>
-<p>TensorFlow Serving支持热更新模型，其典型的模型文件夹结构如下：</p>
+<p>TensorFlow Serving supports hot update of models with the following typical model folder structure.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">saved_model_files</span>
-    <span class="o">/</span><span class="mi">1</span>      <span class="c1"># 版本号为1的模型文件</span>
+    <span class="o">/</span><span class="mi">1</span>      <span class="c1"># model files of version 1</span>
         <span class="o">/</span><span class="n">assets</span>
         <span class="o">/</span><span class="n">variables</span>
         <span class="n">saved_model</span><span class="o">.</span><span class="n">pb</span>
     <span class="o">...</span>
-    <span class="o">/</span><span class="n">N</span>      <span class="c1"># 版本号为N的模型文件</span>
+    <span class="o">/</span><span class="n">N</span>      <span class="c1"># model files of version N</span>
         <span class="o">/</span><span class="n">assets</span>
         <span class="o">/</span><span class="n">variables</span>
         <span class="n">saved_model</span><span class="o">.</span><span class="n">pb</span>
 </pre></div>
 </div>
-<p>上面1~N的子文件夹代表不同版本号的模型。当指定 <code class="docutils literal notranslate"><span class="pre">--model_base_path</span></code> 时，只需要指定根目录的 <strong>绝对地址</strong> （不是相对地址）即可。例如，如果上述文件夹结构存放在 <code class="docutils literal notranslate"><span class="pre">home/snowkylin</span></code> 文件夹内，则 <code class="docutils literal notranslate"><span class="pre">--model_base_path</span></code> 应当设置为 <code class="docutils literal notranslate"><span class="pre">home/snowkylin/saved_model_files</span></code> （不附带模型版本号）。TensorFlow Serving会自动选择版本号最大的模型进行载入。</p>
+<p>The subfolders from 1 to N above represent models with different version numbers. When specifying <code class="docutils literal notranslate"><span class="pre">--model_base_path</span></code>, you only need to specify the absolute address (not the relative address) of the root directory. For example, if the above folder structure is in the <code class="docutils literal notranslate"><span class="pre">home/snowkylin</span></code> folder, then <code class="docutils literal notranslate"><span class="pre">--model_base_path</span></code> should be set to <code class="docutils literal notranslate"><span class="pre">home/snowkylin/saved_model_files</span></code> (without the model version number). TensorFlow Serving will automatically select the model with the largest version number for loading.</p>
 </div>
 <div class="section" id="keras-sequential-mode-models-deployment">
 <h3>Keras Sequential mode models deployment<a class="headerlink" href="#keras-sequential-mode-models-deployment" title="永久链接至标题">¶</a></h3>
-<p>由于Sequential模式的输入和输出都很固定，因此这种类型的模型很容易部署，无需其他额外操作。例如，要将 <a class="reference internal" href="../../zh_hant/deployment/export.html#savedmodel"><span class="std std-ref">前文使用SavedModel导出的MNIST手写体识别模型</span></a> （使用Keras Sequential模式建立）以 <code class="docutils literal notranslate"><span class="pre">MLP</span></code> 的模型名在 <code class="docutils literal notranslate"><span class="pre">8501</span></code> 端口进行部署，可以直接使用以下命令：</p>
+<p>Since the Sequential model has fixed inputs and outputs, this type of model is easy to deploy without additional operations. For example, to deploy the <a class="reference external" href="en_savedmodel">MNIST handwriting digit classification model</a> (built using the Keras Sequential mode) in the previous chapter using SavedModel with the model name <code class="docutils literal notranslate"><span class="pre">MLP</span></code> on port <code class="docutils literal notranslate"><span class="pre">8501</span></code>, you can directly use the following command.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tensorflow_model_server</span> \
     <span class="o">--</span><span class="n">rest_api_port</span><span class="o">=</span><span class="mi">8501</span> \
     <span class="o">--</span><span class="n">model_name</span><span class="o">=</span><span class="n">MLP</span> \
-    <span class="o">--</span><span class="n">model_base_path</span><span class="o">=</span><span class="s2">&quot;/home/.../.../saved&quot;</span>  <span class="c1"># 文件夹绝对地址根据自身情况填写，无需加入版本号</span>
+    <span class="o">--</span><span class="n">model_base_path</span><span class="o">=</span><span class="s2">&quot;/home/.../.../saved&quot;</span>  <span class="c1"># The absolute address of the SavedModel folder without version number</span>
 </pre></div>
 </div>
-<p>然后就可以按照 <a class="reference internal" href="../../zh_hant/deployment/serving.html#call-serving-api"><span class="std std-ref">后文的介绍</span></a> ，使用gRPC或者RESTful API在客户端调用模型了。</p>
+<p>The model can then be called on the client using gRPC or RESTful API as described <a class="reference internal" href="#en-call-serving-api"><span class="std std-ref">later</span></a>.</p>
 </div>
 <div class="section" id="custom-keras-models-deployment">
 <h3>Custom Keras models deployment<a class="headerlink" href="#custom-keras-models-deployment" title="永久链接至标题">¶</a></h3>
-<p>使用继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 类建立的自定义Keras模型的自由度相对更高。因此当使用TensorFlow Serving部署模型时，对导出的SavedModel文件也有更多的要求：</p>
+<p>Custom Keras models built inheriting <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> class are more flexible. Therefore, when using the TensorFlow Serving deployment model, there are additional requirements for the exported SavedModel file.</p>
 <ul class="simple">
-<li><p>需要导出到SavedModel格式的方法（比如 <code class="docutils literal notranslate"><span class="pre">call</span></code> ）不仅需要使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰，还要在修饰时指定 <code class="docutils literal notranslate"><span class="pre">input_signature</span></code> 参数，以显式说明输入的形状。该参数传入一个由 <code class="docutils literal notranslate"><span class="pre">tf.TensorSpec</span></code> 组成的列表，指定每个输入张量的形状和类型。例如，对于MNIST手写体数字识别，我们的输入是一个 <code class="docutils literal notranslate"><span class="pre">[None,</span> <span class="pre">28,</span> <span class="pre">28,</span> <span class="pre">1]</span></code> 的四维张量（ <code class="docutils literal notranslate"><span class="pre">None</span></code> 表示第一维即Batch Size的大小不固定），此时我们可以将模型的 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法做以下修饰：</p></li>
+<li><p>Methods that need to be exported to the SavedModel format (e.g. <code class="docutils literal notranslate"><span class="pre">call</span></code>) require not only being decorated by <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code>, but also specifying the <code class="docutils literal notranslate"><span class="pre">input_signature</span></code> parameter at the time of decoration to explicitly describe the input shape, using a list of <code class="docutils literal notranslate"><span class="pre">tf.TensorSpec</span></code> specifying the shape and type of each input tensor. For example, for MNIST handwriting digit classification, the input is a four-dimensional tensor of <code class="docutils literal notranslate"><span class="pre">[None,</span> <span class="pre">28,</span> <span class="pre">28,</span> <span class="pre">1]</span></code> (<code class="docutils literal notranslate"><span class="pre">None</span></code> denotes that the first dimension, i.e., the batch size, is not fixed). We can decorate the <code class="docutils literal notranslate"><span class="pre">call</span></code> method of the model as follows.</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="o">...</span>
@@ -377,14 +364,14 @@
 </pre></div>
 </div>
 <ul class="simple">
-<li><p>在将模型使用 <code class="docutils literal notranslate"><span class="pre">tf.saved_model.save</span></code> 导出时，需要通过 <code class="docutils literal notranslate"><span class="pre">signature</span></code> 参数提供待导出的函数的签名（Signature）。简单说来，由于自定义的模型类里可能有多个方法都需要导出，因此，需要告诉TensorFlow Serving每个方法在被客户端调用时分别叫做什么名字。例如，如果我们希望客户端在调用模型时使用 <code class="docutils literal notranslate"><span class="pre">call</span></code> 这一签名来调用 <code class="docutils literal notranslate"><span class="pre">model.call</span></code> 方法时，我们可以在导出时传入 <code class="docutils literal notranslate"><span class="pre">signature</span></code> 参数，以 <code class="docutils literal notranslate"><span class="pre">dict</span></code> 的键值对形式告知导出的方法对应的签名，代码如下：</p></li>
+<li><p>When exporting the model using <code class="docutils literal notranslate"><span class="pre">tf.saved_model.save</span></code>, we need to provide an additional “signature of the function to be exported” via the <code class="docutils literal notranslate"><span class="pre">signature</span></code> parameter. In short, since there may be multiple methods in a custom model class that need to be exported, TensorFlow Serving needs to be told which method is called when receiving a request from the client. For example, if we want to assign signature <code class="docutils literal notranslate"><span class="pre">call</span></code> to the <code class="docutils literal notranslate"><span class="pre">model.call</span></code> method, we can pass the <code class="docutils literal notranslate"><span class="pre">signature</span></code> parameter when exporting to tell the correspondence between the signature and the method to be exported, in the form of a key-value pair of <code class="docutils literal notranslate"><span class="pre">dict</span></code>. The following code is an example</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">MLP</span><span class="p">()</span>
 <span class="o">...</span>
 <span class="hll"><span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;saved_with_signature/1&quot;</span><span class="p">,</span> <span class="n">signatures</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;call&quot;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">call</span><span class="p">})</span>
 </span></pre></div>
 </div>
-<p>以上两步均完成后，即可使用以下命令部署：</p>
+<p>Once both of these steps have been completed, you can deploy the model using the following commands</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tensorflow_model_server</span> \
     <span class="o">--</span><span class="n">rest_api_port</span><span class="o">=</span><span class="mi">8501</span> \
     <span class="o">--</span><span class="n">model_name</span><span class="o">=</span><span class="n">MLP</span> \
@@ -394,26 +381,26 @@
 </div>
 </div>
 <div class="section" id="calling-models-deployed-by-tensorflow-serving-on-client">
-<span id="call-serving-api"></span><h2>Calling models deployed by TensorFlow Serving on client<a class="headerlink" href="#calling-models-deployed-by-tensorflow-serving-on-client" title="永久链接至标题">¶</a></h2>
-<p>TensorFlow Serving支持以gRPC和RESTful API调用以TensorFlow Serving部署的模型。本手册主要介绍较为通用的RESTful API方法。</p>
-<p>RESTful API以标准的HTTP POST方法进行交互，请求和回复均为JSON对象。为了调用服务器端的模型，我们在客户端向服务器发送以下格式的请求：</p>
-<p>服务器URI： <code class="docutils literal notranslate"><span class="pre">http://服务器地址:端口号/v1/models/模型名:predict</span></code></p>
-<p>请求内容：</p>
+<span id="en-call-serving-api"></span><h2>Calling models deployed by TensorFlow Serving on client<a class="headerlink" href="#calling-models-deployed-by-tensorflow-serving-on-client" title="永久链接至标题">¶</a></h2>
+<p>TensorFlow Serving supports gRPC and RESTful API for models deployed with TensorFlow Serving. This handbook mainly introduces the more general RESTful API method.</p>
+<p>The RESTful API use standard HTTP POST method, with both requests and response being JSON objects. In order to call the server-side model, we send a request to the server on the client side in the following format.</p>
+<p>Server URI: <code class="docutils literal notranslate"><span class="pre">http://SERVER_ADDRESS:PORT/v1/models/MODEL_NAME:predict</span></code></p>
+<p>Content of the request:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;signature_name&quot;</span><span class="p">:</span> <span class="s2">&quot;需要调用的函数签名（Sequential模式不需要）&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;instances&quot;</span><span class="p">:</span> <span class="n">输入数据</span>
+    <span class="s2">&quot;signature_name&quot;</span><span class="p">:</span> <span class="s2">&quot;the signature of the method to be called (do not request for Sequential models)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;instances&quot;</span><span class="p">:</span> <span class="nb">input</span> <span class="n">data</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>回复为：</p>
+<p>The format of the response is</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s2">&quot;predictions&quot;</span><span class="p">:</span> <span class="n">返回值</span>
+    <span class="s2">&quot;predictions&quot;</span><span class="p">:</span> <span class="n">the</span> <span class="n">returned</span> <span class="n">value</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <div class="section" id="an-example-of-python-client">
 <h3>An example of Python client<a class="headerlink" href="#an-example-of-python-client" title="永久链接至标题">¶</a></h3>
-<p>以下示例使用 <a class="reference external" href="https://2.python-requests.org//zh_CN/latest/user/quickstart.html">Python的Requests库</a> （你可能需要使用 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">requests</span></code> 安装该库）向本机的TensorFlow Serving服务器发送MNIST测试集的前10幅图像并返回预测结果，同时与测试集的真实标签进行比较。</p>
+<p>The following example uses <a class="reference external" href="https://2.python-requests.org//zh_CN/latest/user/quickstart.html">Python’s Requests library</a> (which you may need to install via <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">requests</span></code>) to send the first 10 images of the MNIST test set to the local TensorFlow Serving server and return the predicted results, which are then compared to the actual tags of the test set.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">requests</span>
@@ -433,13 +420,13 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_label</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>输出：</p>
+<p>Output:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">7</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">4</span> <span class="mi">1</span> <span class="mi">4</span> <span class="mi">9</span> <span class="mi">6</span> <span class="mi">9</span><span class="p">]</span>
 <span class="p">[</span><span class="mi">7</span> <span class="mi">2</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">4</span> <span class="mi">1</span> <span class="mi">4</span> <span class="mi">9</span> <span class="mi">5</span> <span class="mi">9</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>可见预测结果与真实标签值非常接近。</p>
-<p>对于自定义的Keras模型，在发送的数据中加入 <code class="docutils literal notranslate"><span class="pre">signature_name</span></code> 键值即可，即将上面代码的 <code class="docutils literal notranslate"><span class="pre">data</span></code> 建立过程改为</p>
+<p>It can be seen that the predicted results are very close to the true label values.</p>
+<p>For a custom Keras model, simply add the <code class="docutils literal notranslate"><span class="pre">signature_name</span></code> parameter to the sent data, changing the <code class="docutils literal notranslate"><span class="pre">data</span></code> build process in the above code to</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
     <span class="s2">&quot;signature_name&quot;</span><span class="p">:</span> <span class="s2">&quot;call&quot;</span><span class="p">,</span>
     <span class="s2">&quot;instances&quot;</span><span class="p">:</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -449,10 +436,10 @@
 </div>
 <div class="section" id="an-example-of-node-js-client">
 <h3>An example of Node.js client<a class="headerlink" href="#an-example-of-node-js-client" title="永久链接至标题">¶</a></h3>
-<p>以下示例使用 <a class="reference external" href="https://nodejs.org/zh-cn/">Node.js</a> 将下图转换为28*28的灰度图，发送给本机的TensorFlow Serving服务器，并输出返回的预测值和概率。（其中使用了 <a class="reference external" href="https://github.com/oliver-moran/jimp">图像处理库jimp</a> 和 <a class="reference external" href="https://visionmedia.github.io/superagent/">HTTP库superagent</a> ，可使用 <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">jimp</span></code> 和 <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">superagent</span></code> 安装）</p>
-<div class="figure align-center" id="id4">
+<p>The following example uses <a class="reference external" href="https://nodejs.org/zh-cn/">Node.js</a> to convert the following image to a 28*28 grayscale image, send it to the local TensorFlow Serving server, and output the returned predicted values and probabilities. This program uses the <a class="reference external" href="https://github.com/oliver-moran/jimp">image processing library jimp</a> and the <a class="reference external" href="https://visionmedia.github.io/superagent/">HTTP library superagent</a>, which can be installed using <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">jimp</span></code> and <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">superagent</span></code>.</p>
+<div class="figure align-center" id="id2">
 <img alt="../../_images/test_pic_tag_5.png" src="../../_images/test_pic_tag_5.png" />
-<p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">test_pic_tag_5.png</span></code> ：一个由作者手写的数字5。（运行下面的代码时可下载该图片并放在与代码同一目录下）</span><a class="headerlink" href="#id4" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">test_pic_tag_5.png</span></code> : A handwritten number 5. (This image can be downloaded and placed in the same directory as the code when running the code below)</span><a class="headerlink" href="#id2" title="永久链接至图片">¶</a></p>
 </div>
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">Jimp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jimp&#39;</span><span class="p">)</span>
 <span class="kr">const</span> <span class="nx">superagent</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;superagent&#39;</span><span class="p">)</span>
@@ -497,46 +484,56 @@
 <span class="nx">evaluatePic</span><span class="p">(</span><span class="s1">&#39;test_pic_tag_5.png&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>运行结果为：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1 1               1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1                 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1       1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1       1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1     1                 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1                         1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1         1 1 1 1 1 1     1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1       1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1     1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1         1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1 1 1 1 1         1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1     1 1 1         1 1 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1                 1 1 1 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1         1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-我们猜这个数字是5，概率是0.846008837
+<p>The output is</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>     <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>     <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>     <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>               <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>                 <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>     <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>     <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>       <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>     <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>       <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>     <span class="mi">1</span>                 <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>                         <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>         <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>     <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>     <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>     <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>       <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>     <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>         <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>         <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>     <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>         <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>                 <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>         <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="n">We</span> <span class="n">guess</span> <span class="n">the</span> <span class="n">number</span> <span class="ow">is</span> <span class="mi">5</span><span class="p">,</span> <span class="n">the</span> <span class="n">probability</span> <span class="ow">is</span> <span class="mf">0.846008837</span>
 </pre></div>
 </div>
-<p>可见输出结果符合预期。</p>
-<div class="admonition note">
-<p class="admonition-title">注解</p>
-<p>如果你不熟悉HTTP POST，可以参考 <a class="reference external" href="https://www.runoob.com/tags/html-httpmethods.html">这里</a> 。事实上，当你在用浏览器填写表单（比方说性格测试）并点击“提交”按钮，然后获得返回结果（比如说“你的性格是ISTJ”）时，就很有可能是在向服务器发送一个HTTP POST请求并获得了服务器的回复。</p>
-<p>RESTful API是一个流行的API设计理论，可以参考 <a class="reference external" href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html">这里</a> 获得简要介绍。</p>
-<p>关于TensorFlow Serving的RESTful API的完整使用方式可参考 <a class="reference external" href="https://www.tensorflow.org/tfx/serving/api_rest">文档</a> 。</p>
+<p>The output can be seen to be as expected.</p>
+<div class="admonition-note admonition">
+<p class="admonition-title">Note</p>
+<p>If you are not familiar with HTTP POST, you can refer to <a class="reference external" href="https://www.runoob.com/tags/html-httpmethods.html">this article</a>. In fact, when you fill out a form in your browser (let’s say a personality test), click the “Submit” button and get a return result (let’s say “Your personality is ISTJ”), you are most likely sending an HTTP POST request to the server and getting a response from the server.</p>
+<p>RESTful API is a popular API design theory that is briefly described at <a class="reference external" href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html">this article</a>.</p>
+<p>The complete use of the RESTful API for TensorFlow Serving can be found in the <a class="reference external" href="https://www.tensorflow.org/tfx/serving/api_rest">documentation</a>.</p>
 </div>
-</div>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 193 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
 </div>
 </div>
 
@@ -548,10 +545,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="lite.html" class="btn btn-neutral float-right" title="TensorFlow Lite" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="lite.html" class="btn btn-neutral float-right" title="TensorFlow Lite (Jinpeng)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="export.html" class="btn btn-neutral float-left" title="TensorFlow Model Saving" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="export.html" class="btn btn-neutral float-left" title="TensorFlow Model Export" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

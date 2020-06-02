@@ -1,6 +1,8 @@
 TensorFlow模型导出
 ====================================================
 
+为了将训练好的机器学习模型部署到各个目标平台（如服务器、移动端、嵌入式设备和浏览器等），我们的第一步往往是将训练好的整个模型完整导出（序列化）为一系列标准格式的文件。在此基础上，我们才可以在不同的平台上使用相对应的部署工具来部署模型文件。TensorFlow提供了统一模型导出格式SavedModel，使得我们训练好的模型可以以这一格式为中介，在多种不同平台上部署，这是我们在TensorFlow 2中主要使用的导出格式。同时，基于历史原因，Keras的Sequential和Functional模式也有自有的模型导出格式，我们也一并介绍。
+
 .. _savedmodel:
 
 使用SavedModel完整导出模型
@@ -9,7 +11,7 @@ TensorFlow模型导出
 ..
     https://www.tensorflow.org/beta/guide/saved_model
 
-在部署模型时，我们的第一步往往是将训练好的整个模型完整导出为一系列标准格式的文件，然后即可在不同的平台上部署模型文件。这时，TensorFlow为我们提供了SavedModel这一格式。与前面介绍的Checkpoint不同，SavedModel包含了一个TensorFlow程序的完整信息： **不仅包含参数的权值，还包含计算的流程（即计算图）** 。当模型导出为SavedModel文件时，无需建立模型的源代码即可再次运行模型，这使得SavedModel尤其适用于模型的分享和部署。后文的TensorFlow Serving（服务器端部署模型）、TensorFlow Lite（移动端部署模型）以及TensorFlow.js都会用到这一格式。
+在前节中我们介绍了 :ref:`Checkpoint <chechpoint>`，它可以帮助我们保存和恢复模型中参数的权值。而作为模型导出格式的SavedModel则更进一步，其包含了一个 TensorFlow 程序的完整信息：不仅包含参数的权值，还包含计算的流程（即计算图）。当模型导出为 SavedModel 文件时，无须模型的源代码即可再次运行模型，这使得 SavedModel 尤其适用于模型的分享和部署。后文的 TensorFlow Serving（服务器端部署模型）、TensorFlow Lite（移动端部署模型）以及 TensorFlow.js 都会用到这一格式。
 
 Keras模型均可方便地导出为SavedModel格式。不过需要注意的是，因为SavedModel基于计算图，所以对于使用继承 ``tf.keras.Model`` 类建立的Keras模型，其需要导出到SavedModel格式的方法（比如 ``call`` ）都需要使用 ``@tf.function`` 修饰（ ``@tf.function`` 的使用方式见 :ref:`前文 <tffunction>` ）。然后，假设我们有一个名为 ``model`` 的Keras模型，使用下面的代码即可将模型导出为SavedModel：
 
@@ -69,16 +71,13 @@ Keras模型均可方便地导出为SavedModel格式。不过需要注意的是�
 模型导入并测试性能的过程也相同，唯须注意模型推断时需要显式调用 ``call`` 方法，即使用：
 
 .. code-block:: python
-    :emphasize-lines: 2
 
-        ...
         y_pred = model.call(data_loader.test_data[start_index: end_index])
-        ...
 
-Keras Sequential save方法（Jinpeng）
+Keras 自有的模型导出格式（Jinpeng）
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-我们以keras模型训练和保存为例进行讲解，如下是keras官方的mnist模型训练样例。
+由于历史原因，我们在有些场景也会用到Keras的Sequential和Functional模式的自有模型导出格式（H5）。我们以keras模型训练和保存为例进行讲解，如下是keras官方的mnist模型训练样例。
 
 源码地址::
 

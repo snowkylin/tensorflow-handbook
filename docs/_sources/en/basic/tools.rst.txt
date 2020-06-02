@@ -7,6 +7,8 @@ Common Modules in TensorFlow
     * `Python's special function parameter **kwargs <https://eastlakeside.gitbooks.io/interpy-zh/content/args_kwargs/Usage_kwargs.html>`_ (not required)
     * `Python iterator <https://www.runoob.com/python3/python3-iterator-generator.html>`_ 
 
+.. _en_chechpoint:
+
 Variable saving and restore: ``tf.train.Checkpoint``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

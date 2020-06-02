@@ -210,21 +210,21 @@
 </ul>
 <p class="caption"><span class="caption-text">Deployment</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow Model Export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite (Jinpeng)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Large-scale Training</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">Distributed Training with TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">Distributed training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">Training TensorFlow models with TPU (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Extensions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub: Model Reuse (Jinpeng)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
@@ -301,7 +301,7 @@
             
   <div class="section" id="model-construction-and-training">
 <h1>Model Construction and Training<a class="headerlink" href="#model-construction-and-training" title="永久链接至标题">¶</a></h1>
-<p id="linear">This chapter describes how to build models with Keras and Eager Execution using TensorFlow 2..</p>
+<p id="linear">This chapter describes how to build models with Keras and Eager Execution using TensorFlow 2.</p>
 <ul class="simple">
 <li><p>Model construction: <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> and <code class="docutils literal notranslate"><span class="pre">tf.keras.layers</span></code></p></li>
 <li><p>Loss function of the model: <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code></p></li>
@@ -376,7 +376,7 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Here, instead of explicitly declaring two variables <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> and writing the linear transformation <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code>, we create a model class <code class="docutils literal notranslate"><span class="pre">Linear</span></code> that inherits <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code>. This class instantiates a <strong>fully connected layer</strong> (<code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense`</span></code>) in the constructor, and calls this layer in the call method, implementing the calculation of the linear transformation. If you need to explicitly declare your own variables and use them for custom operations, or want to understand the inner workings of the Keras layer, see <a class="reference internal" href="../../zh_hant/basic/models.html#custom-layer"><span class="std std-ref">Custom Layer</span></a>.</p>
+<p>Here, instead of explicitly declaring two variables <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> and writing the linear transformation <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code>, we create a model class <code class="docutils literal notranslate"><span class="pre">Linear</span></code> that inherits <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code>. This class instantiates a <strong>fully connected layer</strong> (<code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense`</span></code>) in the constructor, and calls this layer in the call method, implementing the calculation of the linear transformation. If you need to explicitly declare your own variables and use them for custom operations, or want to understand the inner workings of the Keras layer, see <a class="reference internal" href="#custom-layer"><span class="std std-ref">Custom Layer</span></a>.</p>
 <div class="admonition-fully-connection-layer-in-keras-linear-transformation-activation-function admonition">
 <p class="admonition-title">Fully connection layer in Keras: linear transformation + activation function</p>
 <p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense">Fully-connected Layer</a> (<code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code>) is one of the most basic and commonly used layers in Keras, which performs a linear transformation and activation <img class="math" src="../../_images/math/92bb903eabd575a64bd61bd559678418cda7afb2.png" alt="f(AW + b)"/> on the input matrix <img class="math" src="../../_images/math/b86d9659948ffa756133d580cfc95f923705c2b5.png" alt="A"/>. If the activation function is not specified, it is a purely linear transformation <img class="math" src="../../_images/math/62bbbb16ac53d3269d7aa9fc5a15a986f8f0f08c.png" alt="AW + b"/>. Specifically, for a given input tensor <code class="docutils literal notranslate"><span class="pre">input</span> <span class="pre">=</span> <span class="pre">[match_size,</span> <span class="pre">input_dim]</span></code> , the layer first performs a linear transformation on the input tensor <code class="docutils literal notranslate"><span class="pre">tf.matmul(input,</span> <span class="pre">kernel)</span> <span class="pre">+</span> <span class="pre">bias</span></code> (<code class="docutils literal notranslate"><span class="pre">kernel</span></code> and <code class="docutils literal notranslate"><span class="pre">bias</span></code> are trainable variables in the layer), and then apply the activation function <code class="docutils literal notranslate"><span class="pre">activation</span></code> on each element of the linearly transformed tensor, thereby outputting a two-dimensional tensor with shape <code class="docutils literal notranslate"><span class="pre">[match_size,</span> <span class="pre">units]</span></code>.</p>
@@ -422,7 +422,7 @@
 <li><p>“Neural Networks Part 1 ~ 3” section of the Stanford course <a class="reference external" href="http://cs231n.github.io/">CS231n: Convolutional Neural Networks for Visual Recognition</a>.</p></li>
 </ul>
 </div>
-<p>Here, we use a multilayer perceptron to tackle the classification task on the MNIST handwritten digit dataset <a class="reference internal" href="../../zh_hant/basic/models.html#lecun1998" id="id3"><span>[LeCun1998]</span></a>.</p>
+<p>Here, we use a multilayer perceptron to tackle the classification task on the MNIST handwritten digit dataset <a class="reference internal" href="../../zh_hans/basic/models.html#lecun1998" id="id3"><span>[LeCun1998]</span></a>.</p>
 <div class="figure align-center" id="id16">
 <img alt="../../_images/mnist_0-9.png" src="../../_images/mnist_0-9.png" />
 <p class="caption"><span class="caption-text">examples of MNIST handwritten digit</span><a class="headerlink" href="#id16" title="永久链接至图片">¶</a></p>
@@ -773,7 +773,7 @@
 <li><p><a class="reference external" href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">Recurrent Neural Networks Tutorial, Part 1 – Introduction to RNNs</a></p></li>
 <li><p><a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></p></li>
 <li><p><a class="reference external" href="https://d2l.ai/chapter_recurrent-neural-networks/index.html">“Recurrent Neural Networks”</a> in <em>Dive into Deep Learning</em>。</p></li>
-<li><p>RNN sequence generation: <a class="reference internal" href="../../zh_hant/basic/models.html#graves2013" id="id8"><span>[Graves2013]</span></a></p></li>
+<li><p>RNN sequence generation: <a class="reference internal" href="../../zh_hans/basic/models.html#graves2013" id="id8"><span>[Graves2013]</span></a></p></li>
 </ul>
 </div>
 <p>Here, we use RNN to generate Nietzschean-style text automatically. <a class="footnote-reference brackets" href="#rnn-reference" id="id9">5</a></p>
@@ -958,7 +958,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </pre></div>
 </div>
 <p>Now, our task is to train a model that can predict a good move based on the current state. Roughly speaking, a good move should maximize the sum of the rewards earned throughout the game, which is the goal of reinforcement learning. In the CartPole game, the goal is to make the right moves to keep the pole from falling, i.e. as many rounds of game interaction as possible. In each round, we get a small positive bonus, and the more rounds the higher the cumulative bonus value. Thus, maximizing the sum of the rewards is consistent with our ultimate goal.</p>
-<p>The following code shows how to train the model using the Deep Q-Learning method <a class="reference internal" href="../../zh_hant/basic/models.html#mnih2013" id="id10"><span>[Mnih2013]</span></a> , a classical Deep Reinforcement Learning algorithm. First, we import TensorFlow, Gym and some common libraries, and define some model hyperparameters.</p>
+<p>The following code shows how to train the model using the Deep Q-Learning method <a class="reference internal" href="../../zh_hans/basic/models.html#mnih2013" id="id10"><span>[Mnih2013]</span></a> , a classical Deep Reinforcement Learning algorithm. First, we import TensorFlow, Gym and some common libraries, and define some model hyperparameters.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">gym</span>

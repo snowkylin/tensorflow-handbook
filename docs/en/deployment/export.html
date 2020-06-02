@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>TensorFlow Model Saving &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
+  <title>TensorFlow Model Export &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
@@ -183,25 +183,25 @@
 </ul>
 <p class="caption"><span class="caption-text">Deployment</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Model Saving</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#using-savedmodel-to-export-a-model">Using SavedModel to export a model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#keras-sequential-save-jinpeng">Keras Sequential save (Jinpeng)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Model Export</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#export-models-by-savedmodel">Export models by SavedModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#built-in-export-format-in-keras-jinpeng">Built-in export format in Keras（Jinpeng）</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="serving.html">TensorFlow Serving</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lite.html">TensorFlow Lite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="javascript.html">TensorFlow in JavaScript</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lite.html">TensorFlow Lite (Jinpeng)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="javascript.html">TensorFlow in JavaScript (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Large-scale Training</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">Distributed Training with TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">Distributed training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">Training TensorFlow models with TPU (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Extensions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub: Model Reuse (Jinpeng)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
@@ -257,7 +257,7 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-      <li>TensorFlow Model Saving</li>
+      <li>TensorFlow Model Export</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -276,26 +276,26 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="tensorflow-model-saving">
-<h1>TensorFlow Model Saving<a class="headerlink" href="#tensorflow-model-saving" title="永久链接至标题">¶</a></h1>
-<div class="section" id="using-savedmodel-to-export-a-model">
-<span id="savedmodel"></span><h2>Using SavedModel to export a model<a class="headerlink" href="#using-savedmodel-to-export-a-model" title="永久链接至标题">¶</a></h2>
-<p>在部署模型时，我们的第一步往往是将训练好的整个模型完整导出为一系列标准格式的文件，然后即可在不同的平台上部署模型文件。这时，TensorFlow为我们提供了SavedModel这一格式。与前面介绍的Checkpoint不同，SavedModel包含了一个TensorFlow程序的完整信息： <strong>不仅包含参数的权值，还包含计算的流程（即计算图）</strong> 。当模型导出为SavedModel文件时，无需建立模型的源代码即可再次运行模型，这使得SavedModel尤其适用于模型的分享和部署。后文的TensorFlow Serving（服务器端部署模型）、TensorFlow Lite（移动端部署模型）以及TensorFlow.js都会用到这一格式。</p>
-<p>Keras模型均可方便地导出为SavedModel格式。不过需要注意的是，因为SavedModel基于计算图，所以对于使用继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 类建立的Keras模型，其需要导出到SavedModel格式的方法（比如 <code class="docutils literal notranslate"><span class="pre">call</span></code> ）都需要使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰（ <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 的使用方式见 <a class="reference internal" href="../../zh_hant/basic/tools.html#tffunction"><span class="std std-ref">前文</span></a> ）。然后，假设我们有一个名为 <code class="docutils literal notranslate"><span class="pre">model</span></code> 的Keras模型，使用下面的代码即可将模型导出为SavedModel：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;保存的目标文件夹名称&quot;</span><span class="p">)</span>
+  <div class="section" id="tensorflow-model-export">
+<h1>TensorFlow Model Export<a class="headerlink" href="#tensorflow-model-export" title="永久链接至标题">¶</a></h1>
+<p>In order to deploy trained machine learning models to various target platforms (e.g. servers, mobile, embedded devices, browsers, etc.), our first step is often to export (serialize) the entire trained model into a series of files with standard format. TensorFlow provides a unified model export format, SavedModel, which allows us to deploy our trained models on a variety of platforms using this format as an intermediary. It is the main export format we use in TensorFlow 2. Also, for historical reasons, Keras’s Sequential and Functional models have their own model export formats, which we will also introduce later.</p>
+<div class="section" id="export-models-by-savedmodel">
+<span id="en-savedmodel"></span><h2>Export models by SavedModel<a class="headerlink" href="#export-models-by-savedmodel" title="永久链接至标题">¶</a></h2>
+<p>In the previous section we introduced <a class="reference internal" href="../basic/tools.html#en-chechpoint"><span class="std std-ref">Checkpoint</span></a>, which helps us save and recover the weights in the model. SavedModel, as a model export format, goes one step further and contains complete information about a TensorFlow program: not only the weights of the model, but also the computation process (i.e., the dataflow graph). When the model is exported as a SavedModel file, the model can be run again without source code, which makes SavedModel especially suitable for model sharing and deployment. This format is used later in TensorFlow Serving (server-side deployment), TensorFlow Lite (mobile-side deployment), and TensorFlow.js.</p>
+<p>All Keras models can be easily exported to SavedModel format. It should be noted, however, that since SavedModel is based on graph execution mode, any method (e.g. <code class="docutils literal notranslate"><span class="pre">call</span></code>) that needs to be exported to SavedModel format requires to be decorated by <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> (see :ref:` previous &lt;tffunction&gt;` for the usage of <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code>. Models built with sequantial or function API is not required for the decoration). Then, assuming we have a Keras model named <code class="docutils literal notranslate"><span class="pre">model</span></code>, the model can be exported as SavedModel using the following code.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;target export folder&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>在需要载入SavedModel文件时，使用</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;保存的目标文件夹名称&quot;</span><span class="p">)</span>
+<p>When you need to load a SavedModel file, use</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;target export folder&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>即可。</p>
-<div class="admonition hint">
-<p class="admonition-title">提示</p>
-<p>对于使用继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 类建立的Keras模型 <code class="docutils literal notranslate"><span class="pre">model</span></code> ，使用SavedModel载入后将无法使用 <code class="docutils literal notranslate"><span class="pre">model()</span></code> 直接进行推断，而需要使用 <code class="docutils literal notranslate"><span class="pre">model.call()</span></code> 。</p>
+<div class="admonition-hint admonition">
+<p class="admonition-title">Hint</p>
+<p>For the Keras model <code class="docutils literal notranslate"><span class="pre">model</span></code> inheriting <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> class, loaded instance using the SavedModel will not allow direct inference using <code class="docutils literal notranslate"><span class="pre">model()`,</span> <span class="pre">but</span> <span class="pre">will</span> <span class="pre">require</span> <span class="pre">the</span> <span class="pre">use</span> <span class="pre">of</span> <span class="pre">``model.call()</span></code>.</p>
 </div>
-<p>以下是一个简单的示例，将 <a class="reference internal" href="../../zh_hant/basic/models.html#mlp"><span class="std std-ref">前文MNIST手写体识别的模型</span></a> 进行导出和导入。</p>
-<p>导出模型到 <code class="docutils literal notranslate"><span class="pre">saved/1</span></code> 文件夹：</p>
+<p>Here is a simple example of exporting and importing the model of <a class="reference internal" href="../basic/models.html#en-mlp"><span class="std std-ref">previous MNIST digit classification task</span></a>.</p>
+<p>Export the model to the <code class="docutils literal notranslate"><span class="pre">saved/1</span></code> folder.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="k">import</span> <span class="n">MNISTLoader</span>
 
@@ -320,7 +320,7 @@
 <span class="hll"><span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;saved/1&quot;</span><span class="p">)</span>
 </span></pre></div>
 </div>
-<p>将 <code class="docutils literal notranslate"><span class="pre">saved/1</span></code> 中的模型导入并测试性能：</p>
+<p>Import and test the performance of the exported model in <code class="docutils literal notranslate"><span class="pre">saved/1</span></code>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="k">import</span> <span class="n">MNISTLoader</span>
 
@@ -337,11 +337,11 @@
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;test accuracy: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">sparse_categorical_accuracy</span><span class="o">.</span><span class="n">result</span><span class="p">())</span>
 </pre></div>
 </div>
-<p>输出:</p>
+<p>Output:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test</span> <span class="n">accuracy</span><span class="p">:</span> <span class="mf">0.952000</span>
 </pre></div>
 </div>
-<p>使用继承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 类建立的Keras模型同样可以以相同方法导出，唯须注意 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法需要以 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修饰，以转化为SavedModel支持的计算图，代码如下：</p>
+<p>Keras models inheriting <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> class can also be exported in the same way, but note that the <code class="docutils literal notranslate"><span class="pre">call</span></code> method requires a <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> modification to translate into a SavedModel-supported dataflow graph. The following code is an example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -361,15 +361,13 @@
 <span class="o">...</span>
 </pre></div>
 </div>
-<p>模型导入并测试性能的过程也相同，唯须注意模型推断时需要显式调用 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法，即使用：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="o">...</span>
-<span class="hll">    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">[</span><span class="n">start_index</span><span class="p">:</span> <span class="n">end_index</span><span class="p">])</span>
-</span>    <span class="o">...</span>
+<p>The process of importing the model is the same, except that model inference requires an explicit call to the <code class="docutils literal notranslate"><span class="pre">call</span></code> method, i.e. using.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">[</span><span class="n">start_index</span><span class="p">:</span> <span class="n">end_index</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="keras-sequential-save-jinpeng">
-<h2>Keras Sequential save (Jinpeng)<a class="headerlink" href="#keras-sequential-save-jinpeng" title="永久链接至标题">¶</a></h2>
+<div class="section" id="built-in-export-format-in-keras-jinpeng">
+<h2>Built-in export format in Keras（Jinpeng）<a class="headerlink" href="#built-in-export-format-in-keras-jinpeng" title="永久链接至标题">¶</a></h2>
 <p>我们以keras模型训练和保存为例进行讲解，如下是keras官方的mnist模型训练样例。</p>
 <p>源码地址:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keras</span><span class="o">-</span><span class="n">team</span><span class="o">/</span><span class="n">keras</span><span class="o">/</span><span class="n">blob</span><span class="o">/</span><span class="n">master</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">mnist_cnn</span><span class="o">.</span><span class="n">py</span>
@@ -394,7 +392,17 @@
 </div>
 <p>执行过程会比较久，执行结束后，会在当前目录产生 <code class="docutils literal notranslate"><span class="pre">mnist_cnn.h5</span></code> 文件（HDF5格式），就是keras训练后的模型，其中已经包含了训练后的模型结构和权重等信息。</p>
 <p>在服务器端，可以直接通过 <code class="docutils literal notranslate"><span class="pre">keras.models.load_model(&quot;mnist_cnn.h5&quot;)</span></code> 加载，然后进行推理；在移动设备需要将HDF5模型文件转换为TensorFlow Lite的格式，然后通过相应平台的Interpreter加载，然后进行推理。</p>
-</div>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 192 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
 </div>
 
 

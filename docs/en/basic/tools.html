@@ -40,7 +40,7 @@
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
-    <link rel="next" title="TensorFlow Model Saving" href="../deployment/export.html" />
+    <link rel="next" title="TensorFlow Model Export" href="../deployment/export.html" />
     <link rel="prev" title="Model Construction and Training" href="models.html" /> 
 </head>
 
@@ -219,21 +219,21 @@
 </ul>
 <p class="caption"><span class="caption-text">Deployment</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow Model Export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite (Jinpeng)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Large-scale Training</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">Distributed Training with TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">Distributed training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">Training TensorFlow models with TPU (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Extensions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub: Model Reuse (Jinpeng)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
@@ -319,10 +319,10 @@
 </ul>
 </div>
 <div class="section" id="variable-saving-and-restore-tf-train-checkpoint">
-<h2>Variable saving and restore: <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code><a class="headerlink" href="#variable-saving-and-restore-tf-train-checkpoint" title="永久链接至标题">¶</a></h2>
+<span id="en-chechpoint"></span><h2>Variable saving and restore: <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code><a class="headerlink" href="#variable-saving-and-restore-tf-train-checkpoint" title="永久链接至标题">¶</a></h2>
 <div class="admonition-warning admonition">
 <p class="admonition-title">Warning</p>
-<p>Checkpoint only saves the parameters (variables) of the model, not the calculation process of the model, so it is generally used to recover previously trained model parameters when the model source code is available. If you need to export the model (and run it without source code), please refer to <span class="xref std std-ref">SavedModel</span> in the “Deployment” section.</p>
+<p>Checkpoint only saves the parameters (variables) of the model, not the calculation process of the model, so it is generally used to recover previously trained model parameters when the model source code is available. If you need to export the model (and run it without source code), please refer to <a class="reference internal" href="../deployment/export.html#en-savedmodel"><span class="std std-ref">SavedModel</span></a> in the “Deployment” section.</p>
 </div>
 <p>In many scenarios, we want to save the trained parameters (variables) after the model training is complete. By loading models and parameters elsewhere where they need to be used, you can get trained models directly. Probably the first thing that comes to mind is to use <code class="docutils literal notranslate"><span class="pre">pickle</span></code> in Python to serialize <code class="docutils literal notranslate"><span class="pre">model.variables</span></code>. Unfortunately, TensorFlow’s variable type <code class="docutils literal notranslate"><span class="pre">ResourceVariable</span></code> cannot be serialized.</p>
 <p>The good thing is that, TensorFlow provides a powerful variable save and restore class, <code class="docutils literal notranslate"><span class="pre">tf.train.Checkpoint</span></code>, which can save and restore all objects in TensorFlow that contain Checkpointable State using its <code class="docutils literal notranslate"><span class="pre">save()</span></code> and <code class="docutils literal notranslate"><span class="pre">restore()</span></code> methods. Specifically, TensorFlow instances including <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizer</span></code>, <code class="docutils literal notranslate"><span class="pre">tf.Variable</span></code>, <code class="docutils literal notranslate"><span class="pre">tf.keras.Layer</span></code> and <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> can be saved.</p>
@@ -544,7 +544,7 @@
     <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">trace_export</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;model_trace&quot;</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">profiler_outdir</span><span class="o">=</span><span class="n">log_dir</span><span class="p">)</span>    <span class="c1"># Save Trace information to a file</span>
 </pre></div>
 </div>
-<p>After that, we can select “Profile” in TensorBoard to see the time spent on each operation in a timeline. If you have created a dataflow graph using <a class="reference internal" href="../../zh_hant/basic/tools.html#tffunction"><span class="std std-ref">tf.function</span></a>, you can also click “Graph” to view the graph structure.</p>
+<p>After that, we can select “Profile” in TensorBoard to see the time spent on each operation in a timeline. If you have created a dataflow graph using <a class="reference internal" href="../../zh/basic/tools.html#tffunction"><span class="std std-ref">tf.function</span></a>, you can also click “Graph” to view the graph structure.</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/profiling.png"><img alt="../../_images/profiling.png" src="../../_images/profiling.png" style="width: 100%;" /></a>
 </div>
@@ -645,7 +645,7 @@
 </pre></div>
 </div>
 </div>
-<p>For extremely large datasets that cannot be fully loaded into the memory, we can first process the datasets in TFRecord format and then use <code class="docutils literal notranslate"><span class="pre">tf.data.TFRocrdDataset()</span></code> to load them. You can refer to <a class="reference internal" href="../../zh_hant/basic/tools.html#tfrecord"><span class="std std-ref">the TFRecord section</span></a> for details.</p>
+<p>For extremely large datasets that cannot be fully loaded into the memory, we can first process the datasets in TFRecord format and then use <code class="docutils literal notranslate"><span class="pre">tf.data.TFRocrdDataset()</span></code> to load them. You can refer to <a class="reference internal" href="../../zh/basic/tools.html#tfrecord"><span class="std std-ref">the TFRecord section</span></a> for details.</p>
 </div>
 <div class="section" id="dataset-preprocessing">
 <h3>Dataset preprocessing<a class="headerlink" href="#dataset-preprocessing" title="永久链接至标题">¶</a></h3>
@@ -1370,7 +1370,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../deployment/export.html" class="btn btn-neutral float-right" title="TensorFlow Model Saving" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../deployment/export.html" class="btn btn-neutral float-right" title="TensorFlow Model Export" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="models.html" class="btn btn-neutral float-left" title="Model Construction and Training" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

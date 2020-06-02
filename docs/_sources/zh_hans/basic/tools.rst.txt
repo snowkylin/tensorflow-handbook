@@ -7,6 +7,8 @@ TensorFlow常用模块
     * `Python的特殊函数参数**kwargs <https://eastlakeside.gitbooks.io/interpy-zh/content/args_kwargs/Usage_kwargs.html>`_ （非必须）
     * `Python的迭代器 <https://www.runoob.com/python3/python3-iterator-generator.html>`_ 
 
+.. _zh_hans_chechpoint:
+
 ``tf.train.Checkpoint`` ：变量的保存与恢复
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

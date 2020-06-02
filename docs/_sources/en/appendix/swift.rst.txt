@@ -1,5 +1,5 @@
-Swift for TensorFlow (S4TF)
-===========================
+Swift for TensorFlow (S4TF) (Huan)
+==================================
 
 .. figure:: /_static/image/swift/swift-tensorflow.png
     :width: 60%

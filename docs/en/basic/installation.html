@@ -178,7 +178,7 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation and Environment Configuration</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#general-steps-for-installation">General steps for installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#guide-for-tensorflow-gpuversion-installation">Guide for TensorFlow GPUversion installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#guide-for-tensorflow-gpu-version-installation">Guide for TensorFlow GPU version installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#preperations-for-gpu-hardwares">Preperations for GPU hardwares</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#installation-of-nvidia-drivers">Installation of NVIDIA drivers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#installation-of-cuda-toolkit-and-cudnn">Installation of CUDA Toolkit and cuDNN</a></li>
@@ -195,21 +195,21 @@
 </ul>
 <p class="caption"><span class="caption-text">Deployment</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow Model Export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite (Jinpeng)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Large-scale Training</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">Distributed Training with TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">Training TensorFlow models with TPU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/distributed.html">Distributed training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tpu.html">Training TensorFlow models with TPU (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Extensions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/tfhub.html">TensorFlow Hub: Model Reuse (Jinpeng)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/swift.html">Swift for TensorFlow (S4TF) (Huan)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
@@ -290,7 +290,6 @@
 <div class="admonition-hint admonition">
 <p class="admonition-title">Hint</p>
 <p>This chapter describes how to install TensorFlow 2.0 directly on normal PCs or servers. Please refer to the appendix <a class="reference internal" href="../appendix/docker.html"><span class="doc">Deploy TensorFlow from Docker</span></a> and <a class="reference internal" href="../appendix/cloud.html"><span class="doc">Use TensorFlow on cloud</span></a> for deploying TensorFlow in Docker, on cloud or using TensorFlow on online platforms. Software installation methods are usually time-sensitive, and the update date of this section is October 2019.</p>
-<p>本章介绍在一般的个人电脑或服务器上直接安装TensorFlow 2.0的方法。关于在容器环境（Docker）、云平台中部署TensorFlow或在线上环境中使用TensorFlow的方法，见附录 <a class="reference internal" href="../appendix/docker.html"><span class="doc">使用Docker部署TensorFlow环境</span></a> 和 <a class="reference internal" href="../appendix/cloud.html"><span class="doc">在云端使用TensorFlow</span></a> 。软件的安装方法往往具有时效性，本节的更新日期为2019年10月。</p>
 </div>
 <div class="section" id="general-steps-for-installation">
 <h2>General steps for installation<a class="headerlink" href="#general-steps-for-installation" title="永久链接至标题">¶</a></h2>
@@ -298,35 +297,25 @@
 <li><p>Install Python environment. Installing  <a class="reference external" href="https://www.anaconda.com/">Anaconda</a> with Python V3.7, which is a open-source Python distribution providing a full environment for scientific computation, including common scientific computation libraries like NumPy and SciPy, is advised. You have rights to choose your own favourite Python environment, of course. The installation package of Anaconda can be obtained <a class="reference external" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">here</a>.</p></li>
 <li><p>Use Anaconda’s own conda package manager to build a Conda virtual environment, then enter it and input the following commands at the command line:</p></li>
 </ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">tf2</span><span class="o">.</span><span class="mi">0</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.7</span>   <span class="c1"># &quot;tf2.0&quot; is the name of the Conda virtual environment that you build</span>
-<span class="n">conda</span> <span class="n">activate</span> <span class="n">tf2</span><span class="o">.</span><span class="mi">0</span>                   <span class="c1"># enter the &quot;tf2.0&quot; virtual environment</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">create</span> <span class="o">--</span><span class="n">name</span> <span class="n">tf2</span> <span class="n">python</span><span class="o">=</span><span class="mf">3.7</span>     <span class="c1"># &quot;tf2&quot; is the name of the Conda virtual environment that you build</span>
+<span class="n">conda</span> <span class="n">activate</span> <span class="n">tf2</span>                     <span class="c1"># enter the &quot;tf2&quot; virtual environment</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
 <li><p>Use pip, the Python package manager, to install TensorFlow. Input these at the command line:</p></li>
 </ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">==</span><span class="mf">2.0</span><span class="o">.</span><span class="mi">0</span>           <span class="c1"># TensorFlow CPU version</span>
-</pre></div>
-</div>
-<p>or</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">-</span><span class="n">gpu</span><span class="o">==</span><span class="mf">2.0</span><span class="o">.</span><span class="mi">0</span>       <span class="c1"># TensorFlow GPU version, NVIDIA graphics card and proper installation of driver required, details explained later</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span>
 </pre></div>
 </div>
 <p>Wait for a moment before finishing installation.</p>
 <div class="admonition-tip admonition">
 <p class="admonition-title">Tip</p>
-<ol class="arabic">
-<li><p>You can also use  <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">tensorflow</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">tensorflow-gpu</span></code> to install TensorFlow. However, the conda source version is often updated in a less frequency, thus making it harder to acquire the latest version of TensorFlow in the first place;</p></li>
-<li><p>You need to enter Anaconda command line environment by clicking “Anaconda Prompt” in the start menu if you use Windows;</p></li>
-<li><p>If you are in China, using local pypi mirrors and Anaconda mirrors, which enhances downloading speed from pip and conda greatly, is advised;</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Tsinghua University pypi mirror: <a class="reference external" href="https://mirrors.tuna.tsinghua.edu.cn/help/pypi/">https://mirrors.tuna.tsinghua.edu.cn/help/pypi/</a></p></li>
-<li><p>Tsinghua University Anaconda mirror: <a class="reference external" href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/">https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/</a></p></li>
-</ul>
-</div></blockquote>
-</li>
+<ol class="arabic simple">
+<li><p>You can also use <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">tensorflow</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">tensorflow-gpu</span></code> to install TensorFlow. However, the conda source version is often updated in a less frequency, thus making it harder to acquire the latest version of TensorFlow in the first place;</p></li>
+<li><p>Starting with TensorFlow 2.1, the pip package <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> also includes GPU support, eliminating the need to install the GPU version through a specific pip package <code class="docutils literal notranslate"><span class="pre">tensorflow-gpu</span></code>. If you are sensitive to the size of the pip package, you can use the <code class="docutils literal notranslate"><span class="pre">tensorflow-cpu</span></code> package to install the TensorFlow version that only supports CPU.</p></li>
+<li><p>If you use Windows, You need to enter Anaconda command line environment by clicking “Anaconda Prompt” in the start menu;</p></li>
 <li><p>If the limit on disk space is strict (like on a server), you can install <a class="reference external" href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a> instead, which only includes Python and Conda while the installation of other packages is at your discretion. You can obtain Miniconda installation package <a class="reference external" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/">here</a>.</p></li>
+<li><p>If you encountered “Could not find a version that satisfies the requirement tensorflow” error when installing TensorFlow with pip, it is more likely that you are using a 32-bit (x86) Python environment. Please change to 64-bit Python. You can check whether your Python version is 32-bit (e.g. <code class="docutils literal notranslate"><span class="pre">[MSC</span> <span class="pre">v.XXXX</span> <span class="pre">32</span> <span class="pre">bit</span> <span class="pre">(Intel)]</span></code>) or 64-bit (e.g. <code class="docutils literal notranslate"><span class="pre">[MSC</span> <span class="pre">v.XXXX</span> <span class="pre">64</span> <span class="pre">bit</span> <span class="pre">(AMD64)]</span></code>) by typing <code class="docutils literal notranslate"><span class="pre">python</span></code> in the command line to enter the Python interactive interface and checking the prompt information when entering the interface.</p></li>
 </ol>
 </div>
 <div class="admonition-pip-and-conda-package-manager admonition">
@@ -367,8 +356,8 @@
 </div>
 </div>
 </div>
-<div class="section" id="guide-for-tensorflow-gpuversion-installation">
-<span id="gpu-tensorflow"></span><h2>Guide for TensorFlow GPUversion installation<a class="headerlink" href="#guide-for-tensorflow-gpuversion-installation" title="永久链接至标题">¶</a></h2>
+<div class="section" id="guide-for-tensorflow-gpu-version-installation">
+<span id="gpu-tensorflow"></span><h2>Guide for TensorFlow GPU version installation<a class="headerlink" href="#guide-for-tensorflow-gpu-version-installation" title="永久链接至标题">¶</a></h2>
 <p>The GPU version of TensorFlow is able to utilize the powerful computing acceleration of NVIDIA GPU, making TensorFlow run more efficiently, especially multiplying the speed of training models.</p>
 <p>Before installing TensorFlow GPU version, you need a not ratherly old NVIDIA graphics card, a properly installed driver, CUDA Toolkit and cuDNN.</p>
 <div class="section" id="preperations-for-gpu-hardwares">
@@ -426,8 +415,12 @@ Mon Jun 10 23:19:54 2019
 <span class="n">conda</span> <span class="n">install</span> <span class="n">cudnn</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">X</span>
 </pre></div>
 </div>
-<p>to install CUDA Toolkit and cuDNN, where X.X and X.X.X are respectively the version of CUDA Toolkit and cuDNN that be installed. Before installation, you can use <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">search</span> <span class="pre">cudatoolkit</span></code> and <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">search</span> <span class="pre">cudnn</span></code> to search for available version number from the conda source.</p>
-<p>Of course you can also follow the <a class="reference external" href="https://www.tensorflow.org/install/gpu">instructions from TensorFlow official site</a> to download and install CUDA Toolkit and cuDNN manually. But this may be relatively complicated.</p>
+<p>to install CUDA Toolkit and cuDNN, where X.X and X.X.X are respectively the version of CUDA Toolkit and cuDNN that be installed. Before installation, you can use <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">search</span> <span class="pre">cudatoolkit</span></code> and <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">search</span> <span class="pre">cudnn</span></code> to search for available version number from the conda source. For example, for TensorFlow 2.1, you can use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">cudatoolkit</span><span class="o">=</span><span class="mf">10.1</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">cudnn</span><span class="o">=</span><span class="mf">7.6</span><span class="o">.</span><span class="mi">5</span>
+</pre></div>
+</div>
+<p>Of course you can also follow <a class="reference external" href="https://www.tensorflow.org/install/gpu">the instructions from TensorFlow official site</a> to download and install CUDA Toolkit and cuDNN manually. But this may be relatively complicated.</p>
 <p>When using conda package manager to install the GPU version of TensorFlow, CUDA Toolkit and cuDNN with corresponding versions are also installed automatically. The updates from conda source are less frequent, but if you are okay with its versions, it is recommended to directly use <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">tensorflow-gpu</span></code> for installation.</p>
 </div>
 </div>
@@ -451,18 +444,27 @@ Mon Jun 10 23:19:54 2019
 </pre></div>
 </div>
 <p>Then it means that TensorFlow is installed successfully. There may be some TensorFlow prompts when running, which is normal.</p>
+<div class="admonition-some-possible-error-messages-and-solutions-when-importing-tensorflow admonition">
+<p class="admonition-title">Some possible error messages and solutions when importing TensorFlow</p>
+<p>If you have TensorFlow 2.1 installed on Windows, you may experience a <a class="reference external" href="https://github.com/tensorflow/tensorflow/issues/35749">DLL loading error when importing TensorFlow</a> error. You can solve it by installing <a class="reference external" href="https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads">Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019</a> .</p>
+<p>If your CPU is too old or entry-level (e.g., Intel’s Atom series processors), your python environment may crash directly when importing TensorFlow. This is due to the lack of AVX instruction set. The AVX instruction set is added by default in the official version of TensorFlow in version 1.6 and later. If your CPU does not support the AVX instruction set, it will report an error (you can use CPU-Z on Windows or <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">/proc/cpuinfo</span></code> on Linux to see whether your CPU support AVX). In this case, it is recommended that you use a community version of your own hardware and software environment, such as <a class="reference external" href="https://github.com/yaroslavvb/tensorflow-community-wheels">yaroslavvb/tensorflow-community-wheels</a> on GitHub. As of June 2020, <a class="reference external" href="https://github.com/yaroslavvb/tensorflow-community-wheels/issues/153">this issue</a> includes the latest version of TensorFlow compiled under Ubuntu with AVX removed. You may also consider recompiling TensorFlow under your own platform.</p>
+</div>
 <p>Here we use Python language. For tutorials for Python language you can refer to <a class="reference external" href="http://www.runoob.com/python3/python3-tutorial.html">runoob Python 3 tutorial</a> or <a class="reference external" href="https://www.liaoxuefeng.com">Liao Xuefeng’s Python Tutorial</a>. This handbook may assume that the readers possess basic knowledge of the Python langauge. Do not be neverous. Python is easy to learn, and TensorFlow is not involved with Python advanced features.</p>
 </div>
 <div class="section" id="ide-configuration">
 <h2>IDE configuration<a class="headerlink" href="#ide-configuration" title="永久链接至标题">¶</a></h2>
 <p>For researchers and practitioners of machine learning, it is advised to use <a class="reference external" href="http://www.jetbrains.com/pycharm/">PyCharm</a> as the IDE for Python development.</p>
 <p>When creating a new project, you need to indicate its Python Interpreter, that is, what Python environment to use to run your project. In fact, in the installation part, every conda virtual environment you created owns its independent Python Interpreter. You only need to add them. Choose “Add”, then select “Existing Environment” in the following window. After that, select “[Anaconda installation path]/envs/[the name of the conda enviroment that be added]/python.exe” (exclude “.exe” suffix on Linux) at Interpreter, and finally click “OK”. If you tick on “Make available to all projects”, then all projects and select this Python Interpreter. Note that the default installation directory of Anaconda on Windows is special. It is usually <code class="docutils literal notranslate"><span class="pre">C:\Users\[user</span> <span class="pre">name]\Anaconda3\</span></code> or <code class="docutils literal notranslate"><span class="pre">C:\Users\[user</span> <span class="pre">name]\AppData\Local\Continuum\anaconda3</span></code>, where <code class="docutils literal notranslate"><span class="pre">AppData</span></code> is a hidden folder.</p>
-<p>For TensorFlow development, one of the most useful feature of the PyCharm Professional version is <strong>remote debugging</strong>. When you code on a terminal with limited performance while you also possess a high-performance computer (which usually contains high-performance GPUs) that can be accessed remotely by ssh, the remote debugging feature allows you to code on your local terminal as well as debug and run programs remotely (especially for model training). All modifications of codes and data that you make on the local terminal are automatically syncronized with the remote machine, which makes it seem to code on the remote machine, just like playing games with streaming. However, it requires high stability of internet connection when using remote debugging. If you need to train models in a long period of time, it is advised to login and train them directly on the remote machine (on Linux, by combining <code class="docutils literal notranslate"><span class="pre">nohup</span></code> command <a class="footnote-reference brackets" href="#nohup" id="id3">1</a>, making the process run in the background, avoiding termination when existing shell). For detailed configuration steps of the remote debugging feature, please refer to <a class="reference external" href="https://www.jetbrains.com/help/pycharm/remote-debugging-with-product.html">PyCharm documentation</a>.</p>
+<p>For TensorFlow development, one of the most useful feature of the PyCharm Professional version is remote debugging. When you code on a terminal with limited performance while you also possess a high-performance computer (which usually contains high-performance GPUs) that can be accessed remotely by ssh, the remote debugging feature allows you to code on your local terminal as well as debug and run programs remotely (especially for model training). All modifications of codes and data that you make on the local terminal are automatically syncronized with the remote machine, which makes it seem to code on the remote machine, just like playing games with streaming. However, it requires high stability of internet connection when using remote debugging. If you need to train models in a long period of time, it is advised to login and train them directly on the remote machine (on Linux, by combining <code class="docutils literal notranslate"><span class="pre">nohup</span></code> command <a class="footnote-reference brackets" href="#nohup" id="id3">1</a>, making the process run in the background, avoiding termination when existing shell). For detailed configuration steps of the remote debugging feature, please refer to <a class="reference external" href="https://www.jetbrains.com/help/pycharm/remote-debugging-with-product.html">PyCharm documentation</a>.</p>
 <div class="admonition-tip admonition">
 <p class="admonition-title">Tip</p>
 <p>If you are a student with a mail address ended with .edu, you can apply for a free PyCharm Professional version license <a class="reference external" href="http://www.jetbrains.com/student/">here</a>.</p>
 </div>
-<p>For amateurs and beginners of TensorFlow and deep learning, <a class="reference external" href="https://code.visualstudio.com/">Visual Studio Code</a> or some online interactive Python environment (like the free <a class="reference external" href="https://colab.research.google.com/">Google Colab</a>) are also good choices. For the usage of Colab please refer to <a class="reference internal" href="../../zh/appendix/cloud.html#colab"><span class="std std-ref">appendix</span></a>.</p>
+<p>For amateurs and beginners of TensorFlow and deep learning, <a class="reference external" href="https://code.visualstudio.com/">Visual Studio Code</a> or some online interactive Python environment (like the free <a class="reference external" href="https://colab.research.google.com/">Google Colab</a>) are also good choices. For the usage of Colab please refer to <a class="reference internal" href="../appendix/cloud.html#colab"><span class="std std-ref">appendix</span></a>.</p>
+<div class="admonition-warning admonition">
+<p class="admonition-title">Warning</p>
+<p>If you are using an older version of PyCharm, you may experience a loss of some code auto-completion after installing TensorFlow 2. Upgrading to the new version of PyCharm (2019.3 and later) will resolve this issue.</p>
+</div>
 <dl class="footnote brackets">
 <dt class="label" id="nohup"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
 <dd><p>Please refer to <a class="reference external" href="https://www.ibm.com/developerworks/cn/linux/l-cn-nohup/">https://www.ibm.com/developerworks/cn/linux/l-cn-nohup/</a> for details of the <code class="docutils literal notranslate"><span class="pre">nohup</span></code> command.</p>
@@ -473,11 +475,11 @@ Mon Jun 10 23:19:54 2019
 <h2>The hardware configuration for TensorFlow *<a class="headerlink" href="#the-hardware-configuration-for-tensorflow" title="永久链接至标题">¶</a></h2>
 <div class="admonition-hint admonition">
 <p class="admonition-title">Hint</p>
-<p>For mere learning TensorFlow, it does not require much for hardwares. Even using <a class="reference internal" href="../../zh/appendix/cloud.html#colab"><span class="std std-ref">free</span></a> or <a class="reference internal" href="../../zh/appendix/cloud.html#gcp"><span class="std std-ref">flexible</span></a> online computing resources, as long as you have a computer connected to the internet, is sufficient to master TensorFlow!</p>
+<p>TensorFlow does not require much for hardwares for beginners. Meanwhile, with <a class="reference internal" href="../appendix/cloud.html#colab"><span class="std std-ref">free</span></a> or <a class="reference internal" href="../../zh/appendix/cloud.html#gcp"><span class="std std-ref">flexible</span></a> online computing resources, you can learn TensorFlow easily just with a computer connected to the internet!</p>
 </div>
-<p>In the stereotype of the most, TensorFlow, even deep learning “costs” hardwares greatly, so that the first thing they may get when starting with TensorFlow is how to upgrade your computer’s hardware. However, the required hardware for TensorFlow is largely based on the task and the circumstance:</p>
+<p>In the stereotype of the most, TensorFlow and other deep learning frameworks “costs” hardwares greatly, so that the first thing for some people when starting with TensorFlow is to upgrade the computer’s hardware. However, the required hardware for TensorFlow is largely based on the task and the circumstance:</p>
 <ul class="simple">
-<li><p>For TensorFlow beginners, you can also learn and master TensorFlow well without upgrading your hardwares. Most of the examples in this handbook are suitable for almost all popular PC (even without a GPU) without adding any other device. For some examples in this handbook that requires more computation (e.g. <a class="reference internal" href="../../zh_hant/basic/tools.html#cats-vs-dogs"><span class="std std-ref">train CNN picture classification on cats_vs_dogs dataset</span></a>), a common NVIDIA GPU may help greatly. If your own computer is not adequate for this, you may consider using online resources (e.g. <a class="reference internal" href="../../zh/appendix/cloud.html#colab"><span class="std std-ref">The free Colab</span></a>) to train models.</p></li>
+<li><p>For TensorFlow beginners, you can also learn and master TensorFlow well without upgrading your hardwares. Most of the examples in this handbook are suitable for almost all popular PC (even without a GPU) without adding any other device. For some examples in this handbook that requires more computation (e.g. <a class="reference internal" href="../../zh/basic/tools.html#cats-vs-dogs"><span class="std std-ref">train CNN image classification on cats_vs_dogs dataset</span></a>), a common NVIDIA GPU may help greatly. If your own computer is not adequate for this, you may consider using online resources (e.g. <a class="reference internal" href="../appendix/cloud.html#colab"><span class="std std-ref">The free Colab</span></a>) to train models.</p></li>
 <li><p>For individuals or developers that particapte data science competitions (like Kaggle) or train models locally, a high-performance NVIDIA GPU is often necessary. The number of CUDA cores and the size of the graphics memory are two key factors of the GPU performance in machine learning, while the former determines the training speedm and the latter the size of the model and the maximum batch size, which are particularly sensitive in large-scale training.</p></li>
 <li><p>For edging machine learning researching (especially in computer vision and natural language processing), training with parallel mutliple GPUs are standard conditions. It is common to use 4, 8, or even more GPUs for rapid iterations of experiment results and acceleration of training large-scale models.</p></li>
 </ul>
@@ -488,8 +490,8 @@ Mon Jun 10 23:19:54 2019
 <li><p>The research laboratory I am in possesses a workstation with 4 NVIDIA GTX 1080 Ti paralleled (11 GB graphics memory per card) and a server with 10 NVIDIA GTX 1080 Ti paralleled (11 GB graphics memory per card) for training of edging computer vision models.</p></li>
 <li><p>The company that I once worked with use a server with 8 NVIDIA Tesla V100 paralleled (32 GB graphics memory per card) for training of the edging natural langauge processing models.</p></li>
 </ul>
-<p>Although the hardware configurations of the research institutions and companies are deluxe, they are not as expensive as those apparatus and reagents that cost even millions of yuans in other edging scientific researching fields (e.g. biology). A deep learning server that costs from 60 to 300 thousands of yuans is able to serve several researchers for long after all. Thus machine learning is rather affordable for most of people.</p>
-<p>For detailed configuration of a deep learning workstation, I am not going to list them due to the rapid update of the hardwares. It is recommended to follow the <a class="reference external" href="https://www.zhihu.com/question/33996159">question on Zhihu - How to configure a workstation for deep learning?</a> and combine with the latest market circumstances to make your own workstation.</p>
+<p>Although the hardware configurations of the research institutions and companies are deluxe, they are not as expensive as those apparatus and reagents that cost even millions of dollars in other edging scientific researching fields (e.g. biology). A deep learning server that costs from 10 to 50 thousands of dollars is able to serve several researchers for long. Thus machine learning is rather affordable for most of people.</p>
+<p>For detailed configuration of a deep learning workstation, I am not going to list them due to the rapid update of the hardwares. It is recommended to follow the <a class="reference external" href="https://www.zhihu.com/question/33996159">question on Zhihu - How to configure a workstation for deep learning?</a> and combine with the latest market circumstances to DIY or order a workstation.</p>
 </div>
 </div>
 

@@ -1,103 +1,87 @@
 TensorFlow Serving
 ==================
 
-当我们将模型训练完毕后，往往需要将模型在生产环境中部署。最常见的方式，是在服务器上提供一个API，即客户机向服务器的某个API发送特定格式的请求，服务器收到请求数据后通过模型进行计算，并返回结果。如果仅仅是做一个Demo，不考虑高并发和性能问题，其实配合 `Flask <https://palletsprojects.com/p/flask/>`_ 等Python下的Web框架就能非常轻松地实现服务器API。不过，如果是在真的实际生产环境中部署，这样的方式就显得力不从心了。这时，TensorFlow为我们提供了TensorFlow Serving这一组件，能够帮助我们在实际生产环境中灵活且高性能地部署机器学习模型。
+When we have the model trained, it is often necessary to deploy the model in a production environment. The most common way to do this is to provide an API on the server, where the client sends a request in a specific format to one of the server's APIs, then the server receives the requested data, computes it through the model, and returns the results. The server API can be implemented very easily with Python web frameworks such as `Flask <https://palletsprojects.com/p/flask/>`_ if what we want is just a demo, regardless of the high concurrency and performance issues. However, most of the real production environment is not that case. Therefore, TensorFlow provides us with TensorFlow Serving, a serving system that helps us deploy machine learning models flexibly and with high performance in real production environments.
 
 Installation of TensorFlow Serving
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-TensorFlow Serving可以使用apt-get或Docker安装。在生产环境中，推荐 `使用Docker部署TensorFlow Serving <https://www.tensorflow.org/tfx/serving/docker>`_ 。不过此处出于教学目的，介绍依赖环境较少的 `apt-get安装 <https://www.tensorflow.org/tfx/serving/setup#installing_using_apt>`_ 。
+TensorFlow Serving can be installed using either apt-get or Docker. In a production environment, it is recommended to `use Docker to deploy TensorFlow Serving <https://www.tensorflow.org/tfx/serving/docker>`_. However, as a tutorial, we will introduce `apt-get installization <https://www.tensorflow.org/tfx/serving/setup#installing_using_apt>`_ which do not rely on docker..
 
-.. warning:: 软件的安装方法往往具有时效性，本节的更新日期为2019年8月。若遇到问题，建议参考 `TensorFlow网站上的最新安装说明 <https://www.tensorflow.org/tfx/serving/setup>`_ 进行操作。
+.. admonition:: Hint
 
-首先设置安装源：
+    Software installation method is time-sensitive, this section is updated in August 2019. If you encounter problems, it is recommended to refer to the latest installation instructions on the `TensorFlow website <https://www.tensorflow.org/tfx/serving/setup>`_.
+
+First add the package source:
 
 ::
 
-    # 添加Google的TensorFlow Serving源
+    # Add the TensorFlow Serving package source from Google
     echo "deb [arch=amd64] http://storage.googleapis.com/tensorflow-serving-apt stable tensorflow-model-server tensorflow-model-server-universal" | sudo tee /etc/apt/sources.list.d/tensorflow-serving.list
-    # 添加gpg key
+    # Add gpg key
     curl https://storage.googleapis.com/tensorflow-serving-apt/tensorflow-serving.release.pub.gpg | sudo apt-key add -
 
-更新源后，即可使用apt-get安装TensorFlow Serving
+Then you can use apt-get to install TensorFlow Serving
 
 ::
 
     sudo apt-get update
     sudo apt-get install tensorflow-model-server
 
-.. hint:: 在运行curl和apt-get命令时，可能需要设置代理。
+.. admonition:: Hint 
 
-    curl设置代理的方式为 ``-x`` 选项或设置 ``http_proxy`` 环境变量，即
-
-    ::
-
-        export http_proxy=http://代理服务器IP:端口
-
-    或
-
-    ::
-
-        curl -x http://代理服务器IP:端口 URL
-
-    apt-get设置代理的方式为 ``-o`` 选项，即
-
-    ::
-
-        sudo apt-get -o Acquire::http::proxy="http://代理服务器IP:端口" ...
-
-    Windows 10下，可以在 `Linux子系统（WSL） <https://docs.microsoft.com/en-us/windows/wsl/install-win10>`_ 内使用相同的方式安装TensorFlow Serving。
+    You can use `Windows Subsystem Linux (WSL) <https://docs.microsoft.com/en-us/windows/wsl/install-win10>`_ to install TensorFlow Serving on Windows for development.
 
 TensorFlow Serving models deployment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-TensorFlow Serving可以直接读取SavedModel格式的模型进行部署（导出模型到SavedModel文件的方法见 :ref:`前文 <savedmodel>` ）。使用以下命令即可：
+TensorFlow Serving can read models in SavedModel format directly for deployment (see :ref:`previous chapter <en_savedmodel>` for exporting models to SavedModel files). The command is as follows
 
 ::
 
     tensorflow_model_server \
-        --rest_api_port=端口号（如8501） \
-        --model_name=模型名 \
-        --model_base_path="SavedModel格式模型的文件夹绝对地址（不含版本号）"
+        --rest_api_port=PORT(e.g., 8501) \
+        --model_name=MODEL_NAME \
+        --model_base_path="Absolute folder path of the SavedModel format model (without version number)"
 
-.. note:: TensorFlow Serving支持热更新模型，其典型的模型文件夹结构如下：
+.. note:: TensorFlow Serving supports hot update of models with the following typical model folder structure.
 
     ::
         
         /saved_model_files
-            /1      # 版本号为1的模型文件
+            /1      # model files of version 1
                 /assets
                 /variables
                 saved_model.pb
             ...
-            /N      # 版本号为N的模型文件
+            /N      # model files of version N
                 /assets
                 /variables
                 saved_model.pb
 
     
-    上面1~N的子文件夹代表不同版本号的模型。当指定 ``--model_base_path`` 时，只需要指定根目录的 **绝对地址** （不是相对地址）即可。例如，如果上述文件夹结构存放在 ``home/snowkylin`` 文件夹内，则 ``--model_base_path`` 应当设置为 ``home/snowkylin/saved_model_files`` （不附带模型版本号）。TensorFlow Serving会自动选择版本号最大的模型进行载入。 
+    The subfolders from 1 to N above represent models with different version numbers. When specifying ``--model_base_path``, you only need to specify the absolute address (not the relative address) of the root directory. For example, if the above folder structure is in the ``home/snowkylin`` folder, then ``--model_base_path`` should be set to ``home/snowkylin/saved_model_files`` (without the model version number). TensorFlow Serving will automatically select the model with the largest version number for loading. 
 
 Keras Sequential mode models deployment
 ---------------------------------------
 
-由于Sequential模式的输入和输出都很固定，因此这种类型的模型很容易部署，无需其他额外操作。例如，要将 :ref:`前文使用SavedModel导出的MNIST手写体识别模型 <savedmodel>` （使用Keras Sequential模式建立）以 ``MLP`` 的模型名在 ``8501`` 端口进行部署，可以直接使用以下命令：
+Since the Sequential model has fixed inputs and outputs, this type of model is easy to deploy without additional operations. For example, to deploy the `MNIST handwriting digit classification model <en_savedmodel>`_ (built using the Keras Sequential mode) in the previous chapter using SavedModel with the model name ``MLP`` on port ``8501``, you can directly use the following command.
 
 ::
 
     tensorflow_model_server \
         --rest_api_port=8501 \
         --model_name=MLP \
-        --model_base_path="/home/.../.../saved"  # 文件夹绝对地址根据自身情况填写，无需加入版本号
+        --model_base_path="/home/.../.../saved"  # The absolute address of the SavedModel folder without version number
 
-然后就可以按照 :ref:`后文的介绍 <call_serving_api>` ，使用gRPC或者RESTful API在客户端调用模型了。
+The model can then be called on the client using gRPC or RESTful API as described :ref:`later <en_call_serving_api>`.
 
 Custom Keras models deployment
 ------------------------------
 
-使用继承 ``tf.keras.Model`` 类建立的自定义Keras模型的自由度相对更高。因此当使用TensorFlow Serving部署模型时，对导出的SavedModel文件也有更多的要求：
+Custom Keras models built inheriting ``tf.keras.Model`` class are more flexible. Therefore, when using the TensorFlow Serving deployment model, there are additional requirements for the exported SavedModel file.
 
-- 需要导出到SavedModel格式的方法（比如 ``call`` ）不仅需要使用 ``@tf.function`` 修饰，还要在修饰时指定 ``input_signature`` 参数，以显式说明输入的形状。该参数传入一个由 ``tf.TensorSpec`` 组成的列表，指定每个输入张量的形状和类型。例如，对于MNIST手写体数字识别，我们的输入是一个 ``[None, 28, 28, 1]`` 的四维张量（ ``None`` 表示第一维即Batch Size的大小不固定），此时我们可以将模型的 ``call`` 方法做以下修饰：
+- Methods that need to be exported to the SavedModel format (e.g. ``call``) require not only being decorated by ``@tf.function``, but also specifying the ``input_signature`` parameter at the time of decoration to explicitly describe the input shape, using a list of ``tf.TensorSpec`` specifying the shape and type of each input tensor. For example, for MNIST handwriting digit classification, the input is a four-dimensional tensor of ``[None, 28, 28, 1]`` (``None`` denotes that the first dimension, i.e., the batch size, is not fixed). We can decorate the ``call`` method of the model as follows.
 
 .. code-block:: python
     :emphasize-lines: 4
@@ -109,7 +93,7 @@ Custom Keras models deployment
         def call(self, inputs):
             ...
 
-- 在将模型使用 ``tf.saved_model.save`` 导出时，需要通过 ``signature`` 参数提供待导出的函数的签名（Signature）。简单说来，由于自定义的模型类里可能有多个方法都需要导出，因此，需要告诉TensorFlow Serving每个方法在被客户端调用时分别叫做什么名字。例如，如果我们希望客户端在调用模型时使用 ``call`` 这一签名来调用 ``model.call`` 方法时，我们可以在导出时传入 ``signature`` 参数，以 ``dict`` 的键值对形式告知导出的方法对应的签名，代码如下：
+- When exporting the model using ``tf.saved_model.save``, we need to provide an additional "signature of the function to be exported" via the ``signature`` parameter. In short, since there may be multiple methods in a custom model class that need to be exported, TensorFlow Serving needs to be told which method is called when receiving a request from the client. For example, if we want to assign signature ``call`` to the ``model.call`` method, we can pass the ``signature`` parameter when exporting to tell the correspondence between the signature and the method to be exported, in the form of a key-value pair of ``dict``. The following code is an example
 
 .. code-block:: python
     :emphasize-lines: 3
@@ -118,7 +102,7 @@ Custom Keras models deployment
     ...
     tf.saved_model.save(model, "saved_with_signature/1", signatures={"call": model.call})
 
-以上两步均完成后，即可使用以下命令部署：
+Once both of these steps have been completed, you can deploy the model using the following commands
 
 ::
 
@@ -127,7 +111,7 @@ Custom Keras models deployment
         --model_name=MLP \
         --model_base_path="/home/.../.../saved_with_signature"  # 修改为自己模型的绝对地址
 
-.. _call_serving_api:
+.. _en_call_serving_api:
 
 Calling models deployed by TensorFlow Serving on client
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -136,46 +120,46 @@ Calling models deployed by TensorFlow Serving on client
     https://www.tensorflow.org/tfx/serving/api_rest
     http://www.ruanyifeng.com/blog/2014/05/restful_api.html
 
-TensorFlow Serving支持以gRPC和RESTful API调用以TensorFlow Serving部署的模型。本手册主要介绍较为通用的RESTful API方法。
+TensorFlow Serving supports gRPC and RESTful API for models deployed with TensorFlow Serving. This handbook mainly introduces the more general RESTful API method.
 
-RESTful API以标准的HTTP POST方法进行交互，请求和回复均为JSON对象。为了调用服务器端的模型，我们在客户端向服务器发送以下格式的请求：
+The RESTful API use standard HTTP POST method, with both requests and response being JSON objects. In order to call the server-side model, we send a request to the server on the client side in the following format.
 
-服务器URI： ``http://服务器地址:端口号/v1/models/模型名:predict`` 
+Server URI: ``http://SERVER_ADDRESS:PORT/v1/models/MODEL_NAME:predict`` 
 
-请求内容：
+Content of the request:
 
 ::
 
     {
-        "signature_name": "需要调用的函数签名（Sequential模式不需要）",
-        "instances": 输入数据
+        "signature_name": "the signature of the method to be called (do not request for Sequential models)",
+        "instances": input data
     }
 
-回复为：
+The format of the response is
 
 ::
 
     {
-        "predictions": 返回值
+        "predictions": the returned value
     }
 
 An example of Python client
 ---------------------------
 
-以下示例使用 `Python的Requests库 <https://2.python-requests.org//zh_CN/latest/user/quickstart.html>`_ （你可能需要使用 ``pip install requests`` 安装该库）向本机的TensorFlow Serving服务器发送MNIST测试集的前10幅图像并返回预测结果，同时与测试集的真实标签进行比较。
+The following example uses `Python's Requests library <https://2.python-requests.org//zh_CN/latest/user/quickstart.html>`_ (which you may need to install via ``pip install requests``) to send the first 10 images of the MNIST test set to the local TensorFlow Serving server and return the predicted results, which are then compared to the actual tags of the test set.
 
 .. literalinclude:: /_static/code/zh/savedmodel/keras/client.py
 
-输出：
+Output:
 
 ::
 
     [7 2 1 0 4 1 4 9 6 9]
     [7 2 1 0 4 1 4 9 5 9]
 
-可见预测结果与真实标签值非常接近。
+It can be seen that the predicted results are very close to the true label values.
 
-对于自定义的Keras模型，在发送的数据中加入 ``signature_name`` 键值即可，即将上面代码的 ``data`` 建立过程改为
+For a custom Keras model, simply add the ``signature_name`` parameter to the sent data, changing the ``data`` build process in the above code to
 
 .. literalinclude:: /_static/code/zh/savedmodel/custom/client.py
     :lines: 8-11
@@ -183,17 +167,17 @@ An example of Python client
 An example of Node.js client
 ----------------------------
 
-以下示例使用 `Node.js <https://nodejs.org/zh-cn/>`_ 将下图转换为28*28的灰度图，发送给本机的TensorFlow Serving服务器，并输出返回的预测值和概率。（其中使用了 `图像处理库jimp <https://github.com/oliver-moran/jimp>`_ 和 `HTTP库superagent <https://visionmedia.github.io/superagent/>`_ ，可使用 ``npm install jimp`` 和 ``npm install superagent`` 安装）
+The following example uses `Node.js <https://nodejs.org/zh-cn/>`_ to convert the following image to a 28*28 grayscale image, send it to the local TensorFlow Serving server, and output the returned predicted values and probabilities. This program uses the `image processing library jimp <https://github.com/oliver-moran/jimp>`_ and the `HTTP library superagent <https://visionmedia.github.io/superagent/>`_, which can be installed using ``npm install jimp`` and ``npm install superagent``.
 
 .. figure:: /_static/image/serving/test_pic_tag_5.png
     :align: center
 
-    ``test_pic_tag_5.png`` ：一个由作者手写的数字5。（运行下面的代码时可下载该图片并放在与代码同一目录下）
+    ``test_pic_tag_5.png`` : A handwritten number 5. (This image can be downloaded and placed in the same directory as the code when running the code below)
 
 .. literalinclude:: /_static/code/zh/savedmodel/keras/client.js
     :language: javascript
 
-运行结果为：
+The output is
 
 ::
 
@@ -225,15 +209,31 @@ An example of Node.js client
     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
     1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-    我们猜这个数字是5，概率是0.846008837
+    We guess the number is 5, the probability is 0.846008837
 
-可见输出结果符合预期。
+The output can be seen to be as expected.
 
-.. note:: 如果你不熟悉HTTP POST，可以参考 `这里 <https://www.runoob.com/tags/html-httpmethods.html>`_ 。事实上，当你在用浏览器填写表单（比方说性格测试）并点击“提交”按钮，然后获得返回结果（比如说“你的性格是ISTJ”）时，就很有可能是在向服务器发送一个HTTP POST请求并获得了服务器的回复。
+.. admonition:: Note
 
-    RESTful API是一个流行的API设计理论，可以参考 `这里 <http://www.ruanyifeng.com/blog/2014/05/restful_api.html>`_ 获得简要介绍。
+    If you are not familiar with HTTP POST, you can refer to `this article <https://www.runoob.com/tags/html-httpmethods.html>`_. In fact, when you fill out a form in your browser (let's say a personality test), click the "Submit" button and get a return result (let's say "Your personality is ISTJ"), you are most likely sending an HTTP POST request to the server and getting a response from the server.
 
-    关于TensorFlow Serving的RESTful API的完整使用方式可参考 `文档 <https://www.tensorflow.org/tfx/serving/api_rest>`_ 。
+    RESTful API is a popular API design theory that is briefly described at `this article <http://www.ruanyifeng.com/blog/2014/05/restful_api.html>`_.
+
+    The complete use of the RESTful API for TensorFlow Serving can be found in the `documentation <https://www.tensorflow.org/tfx/serving/api_rest>`_.
+
+.. raw:: html
+
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 193 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>
 
 
 
