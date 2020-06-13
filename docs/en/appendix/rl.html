@@ -183,21 +183,21 @@
 </ul>
 <p class="caption"><span class="caption-text">Deployment</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow Model Saving</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/export.html">TensorFlow Model Export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../deployment/serving.html">TensorFlow Serving</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/lite.html">TensorFlow Lite (Jinpeng)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../deployment/javascript.html">TensorFlow in JavaScript (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Large-scale Training</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="distributed.html">Distributed Training with TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tpu.html">Training TensorFlow models with TPU</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed.html">Distributed training with TensorFlow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tpu.html">Training TensorFlow models with TPU (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Extensions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub: Model Reuse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tfhub.html">TensorFlow Hub: Model Reuse (Jinpeng)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="swift.html">Swift for TensorFlow (S4TF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="swift.html">Swift for TensorFlow (S4TF) (Huan)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Appendix</span></p>
@@ -285,7 +285,7 @@
             
   <div class="section" id="introduction-to-reinforcement-learning">
 <h1>Introduction to Reinforcement Learning<a class="headerlink" href="#introduction-to-reinforcement-learning" title="永久链接至标题">¶</a></h1>
-<p>In this chapter, we will provide an introduction to the reinforcement learning algorithms covered in the Deep Reinforcement Learning section. What we know as supervised learning is learning on known training data with labels, obtaining a mapping (predictive model) from data features to labels, which in turn predict the labels that new data instances will have. And two new concepts have emerged in reinforcement learning, the “intelligent body” and the “environment”. In reinforcement learning, the intelligent body learns strategies by interacting with the environment to maximize the rewards it receives in the environment. For example, in the process of playing chess, you (the intelligent body) can maximize the rewards (number of wins) you receive in the process of playing chess by interacting with the board and your opponent (the environment) to learn the strategy of playing chess.</p>
+<p>In this chapter, we will provide an introduction to the reinforcement learning algorithms covered in the <a class="reference internal" href="../basic/models.html#en-rl"><span class="std std-ref">Deep Reinforcement Learning section</span></a>. What we know as supervised learning is learning on known training data with labels, obtaining a mapping (predictive model) from data features to labels, which in turn predict the labels that new data instances will have. And two new concepts have emerged in reinforcement learning, the “intelligent body” and the “environment”. In reinforcement learning, the intelligent body learns strategies by interacting with the environment to maximize the rewards it receives in the environment. For example, in the process of playing chess, you (the intelligent body) can maximize the rewards (number of wins) you receive in the process of playing chess by interacting with the board and your opponent (the environment) to learn the strategy of playing chess.</p>
 <p>If supervised learning is concerned with “prediction”, the type of learning that is closely related to statistical theory, reinforcement learning is concerned with “decision making”, which is deeply related to computer algorithms (especially dynamic programming and search). The author believes that the introduction to the principles of reinforcement learning has a higher threshold than supervised learning, especially for programmers accustomed to deterministic algorithms to suddenly present a bunch of abstract concepts of numerical iterative relationships, most of the time can only gulp. Therefore, the author hopes to illustrate the basic idea of reinforcement learning for readers with a certain algorithmic basis through some more specific examples, in order to express as plainly as possible.</p>
 <div class="section" id="let-s-start-with-dynamic-programming">
 <h2>Let’s start with dynamic programming<a class="headerlink" href="#let-s-start-with-dynamic-programming" title="永久链接至标题">¶</a></h2>
