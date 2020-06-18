@@ -42,3 +42,15 @@ pip install sphinx_rtd_theme
 # for auto build
 pip install sphinx_autobuild
 ```
+
+## CONTRIBUTORS
+
+[![contributor](https://sourcerer.io/fame/huan/snowkylin/tensorflow-handbook/images/0)](https://sourcerer.io/fame/huan/snowkylin/tensorflow-handbook/links/0)
+[![contributor](https://sourcerer.io/fame/huan/snowkylin/tensorflow-handbook/images/1)](https://sourcerer.io/fame/huan/snowkylin/tensorflow-handbook/links/1)
+[![contributor](https://sourcerer.io/fame/huan/snowkylin/tensorflow-handbook/images/2)](https://sourcerer.io/fame/huan/snowkylin/tensorflow-handbook/links/2)
+[![contributor](https://sourcerer.io/fame/huan/snowkylin/tensorflow-handbook/images/3)](https://sourcerer.io/fame/huan/snowkylin/tensorflow-handbook/links/3)
+[![contributor](https://sourcerer.io/fame/huan/snowkylin/tensorflow-handbook/images/4)](https://sourcerer.io/fame/huan/snowkylin/tensorflow-handbook/links/4)
+[![contributor](https://sourcerer.io/fame/huan/snowkylin/tensorflow-handbook/images/5)](https://sourcerer.io/fame/huan/snowkylin/tensorflow-handbook/links/5)
+[![contributor](https://sourcerer.io/fame/huan/snowkylin/tensorflow-handbook/images/6)](https://sourcerer.io/fame/huan/snowkylin/tensorflow-handbook/links/6)
+[![contributor](https://sourcerer.io/fame/huan/snowkylin/tensorflow-handbook/images/7)](https://sourcerer.io/fame/huan/snowkylin/tensorflow-handbook/links/7)
+
