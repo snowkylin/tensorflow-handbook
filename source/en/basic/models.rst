@@ -695,7 +695,7 @@ The custom metrics need to inherit the ``tf.keras.metrics.Metric`` class and ove
     <script>
         $(document).ready(function(){
             $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
-            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 190 };
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 355 };
             (function() {
                 var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
                 d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';

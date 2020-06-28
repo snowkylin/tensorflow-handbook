@@ -226,7 +226,7 @@ The output can be seen to be as expected.
     <script>
         $(document).ready(function(){
             $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
-            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 193 };
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 358 };
             (function() {
                 var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
                 d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
