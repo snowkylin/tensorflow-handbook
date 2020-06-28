@@ -14,7 +14,7 @@ A Concise Handbook of TensorFlow 2
                 <b><a href="/zh_hant">繁體中文版</a></b>           
             </td>
             <td width=33% style="text-align: center">
-                <b><a href="/en">English Version<br />(in progress)</a></b>
+                <b><a href="/en">English Version</a></b>
             </td>
         </tr>
         </tbody>
@@ -22,11 +22,11 @@ A Concise Handbook of TensorFlow 2
 
 This is a concise handbook of TensorFlow 2 based on Keras and Eager Execution mode, aiming to help developers with some basic machine learning and Python knowledge to get started with TensorFlow 2 quickly.
 
-The code of this handbook is based on TensorFlow 2.0 and 2.1 stable version. All sample code in this handbook can be found `here <https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/>`_ .
+The code of this handbook is based on TensorFlow 2.0 and 2.1 stable version. All sample code in this handbook can be found `here <https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/>`_ . This handbook is a project of `Google Summer of Code 2019 <https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/>`_ .
 
-.. warning:: The English version of this handbook is still in progress. Please refer to https://v1.tf.wiki for the eariler English version of this handbook.
+As of April 2020, a comment board has been added at the end of each chapter. You are welcome to discuss, exchange ideas and provide suggestions at the end of the chapters.
 
-This handbook is a project of `Google Summer of Code 2019 <https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/>`_ .
+This is still a beta version of this handbook. Your suggestions are important!
 
 GitHub： https://github.com/snowkylin/tensorflow-handbook
 
@@ -54,35 +54,31 @@ Q&A: https://discuss.tf.wiki
 
     deployment/export
     deployment/serving
-    deployment/lite
-    deployment/javascript
 
 .. toctree:: 
     :maxdepth: 3
     :caption: Large-scale Training
 
     appendix/distributed
-    appendix/tpu
 
 .. toctree:: 
     :maxdepth: 3
     :caption: Extensions
 
-    appendix/tfhub
     appendix/tfds  
-    appendix/swift
     appendix/quantum
 
-.. toctree:: 
-    :maxdepth: 3
-    :caption: Appendix
+..
+    .. toctree:: 
+        :maxdepth: 3
+        :caption: Appendix
 
-    appendix/rl
-    appendix/docker
-    appendix/cloud
-    appendix/jupyterlab
-    appendix/recommended_books
-    appendix/terms
+        appendix/rl
+        appendix/docker
+        appendix/cloud
+        appendix/jupyterlab
+        appendix/recommended_books
+        appendix/terms
 
 .. only:: html 
 

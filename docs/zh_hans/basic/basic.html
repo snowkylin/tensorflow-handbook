@@ -487,7 +487,8 @@
 <li><p>使用 <code class="docutils literal notranslate"><span class="pre">tape.gradient(ys,</span> <span class="pre">xs)</span></code> 自动计算梯度；</p></li>
 <li><p>使用 <code class="docutils literal notranslate"><span class="pre">optimizer.apply_gradients(grads_and_vars)</span></code> 自动更新模型参数。</p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 
 <span class="n">a</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial_value</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
@@ -506,7 +507,6 @@
     <span class="c1"># TensorFlow自动根据梯度更新参数</span>
     <span class="n">optimizer</span><span class="o">.</span><span class="n">apply_gradients</span><span class="p">(</span><span class="n">grads_and_vars</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="n">variables</span><span class="p">))</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>在这里，我们使用了前文的方式计算了损失函数关于参数的偏导数。同时，使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizers.SGD(learning_rate=5e-4)</span></code> 声明了一个梯度下降 <strong>优化器</strong> （Optimizer），其学习率为5e-4。优化器可以帮助我们根据计算出的求导结果更新模型参数，从而最小化某个特定的损失函数，具体使用方式是调用其 <code class="docutils literal notranslate"><span class="pre">apply_gradients()</span></code> 方法。</p>

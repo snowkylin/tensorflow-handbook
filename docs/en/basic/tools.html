@@ -544,7 +544,7 @@
     <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">trace_export</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;model_trace&quot;</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">profiler_outdir</span><span class="o">=</span><span class="n">log_dir</span><span class="p">)</span>    <span class="c1"># Save Trace information to a file</span>
 </pre></div>
 </div>
-<p>After that, we can select “Profile” in TensorBoard to see the time spent on each operation in a timeline. If you have created a dataflow graph using <a class="reference internal" href="../../zh_hant/basic/tools.html#tffunction"><span class="std std-ref">tf.function</span></a>, you can also click “Graph” to view the graph structure.</p>
+<p>After that, we can select “Profile” in TensorBoard to see the time spent on each operation in a timeline. If you have created a dataflow graph using <a class="reference internal" href="../../zh/basic/tools.html#tffunction"><span class="std std-ref">tf.function</span></a>, you can also click “Graph” to view the graph structure.</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/profiling.png"><img alt="../../_images/profiling.png" src="../../_images/profiling.png" style="width: 100%;" /></a>
 </div>
@@ -645,7 +645,7 @@
 </pre></div>
 </div>
 </div>
-<p>For extremely large datasets that cannot be fully loaded into the memory, we can first process the datasets in TFRecord format and then use <code class="docutils literal notranslate"><span class="pre">tf.data.TFRocrdDataset()</span></code> to load them. You can refer to <a class="reference internal" href="../../zh_hant/basic/tools.html#tfrecord"><span class="std std-ref">the TFRecord section</span></a> for details.</p>
+<p>For extremely large datasets that cannot be fully loaded into the memory, we can first process the datasets in TFRecord format and then use <code class="docutils literal notranslate"><span class="pre">tf.data.TFRocrdDataset()</span></code> to load them. You can refer to <a class="reference internal" href="../../zh/basic/tools.html#tfrecord"><span class="std std-ref">the TFRecord section</span></a> for details.</p>
 </div>
 <div class="section" id="dataset-preprocessing">
 <h3>Dataset preprocessing<a class="headerlink" href="#dataset-preprocessing" title="永久链接至标题">¶</a></h3>
@@ -1351,7 +1351,7 @@
 <script>
     $(document).ready(function(){
         $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
-        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 191 };
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 356 };
         (function() {
             var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
             d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';

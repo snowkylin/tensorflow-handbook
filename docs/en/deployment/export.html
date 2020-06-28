@@ -185,7 +185,6 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Model Export</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#export-models-by-savedmodel">Export models by SavedModel</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#built-in-export-format-in-keras-jinpeng">Built-in export format in Keras（Jinpeng）</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="serving.html">TensorFlow Serving</a></li>
@@ -365,37 +364,10 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">[</span><span class="n">start_index</span><span class="p">:</span> <span class="n">end_index</span><span class="p">])</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="built-in-export-format-in-keras-jinpeng">
-<h2>Built-in export format in Keras（Jinpeng）<a class="headerlink" href="#built-in-export-format-in-keras-jinpeng" title="永久链接至标题">¶</a></h2>
-<p>我们以keras模型训练和保存为例进行讲解，如下是keras官方的mnist模型训练样例。</p>
-<p>源码地址:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keras</span><span class="o">-</span><span class="n">team</span><span class="o">/</span><span class="n">keras</span><span class="o">/</span><span class="n">blob</span><span class="o">/</span><span class="n">master</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">mnist_cnn</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p>以上代码，是基于keras的Sequential构建了多层的卷积神经网络，并进行训练。</p>
-<p>为了方便起见可使用如下命令拷贝到本地:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">LO</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keras</span><span class="o">-</span><span class="n">team</span><span class="o">/</span><span class="n">keras</span><span class="o">/</span><span class="n">master</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">mnist_cnn</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<p>然后，在最后加上如下一行代码（主要是对keras训练完毕的模型进行保存）:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;mnist_cnn.h5&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>在终端中执行mnist_cnn.py文件，如下:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">mnist_cnn</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">警告</p>
-<p>该过程需要连接网络获取 <code class="docutils literal notranslate"><span class="pre">mnist.npz</span></code> 文件（<a class="reference external" href="https://s3.amazonaws.com/img-datasets/mnist.npz">https://s3.amazonaws.com/img-datasets/mnist.npz</a>），会被保存到 <code class="docutils literal notranslate"><span class="pre">$HOME/.keras/datasets/</span></code> 。如果网络连接存在问题，可以通过其他方式获取 <code class="docutils literal notranslate"><span class="pre">mnist.npz</span></code> 后，直接保存到该目录即可。</p>
-</div>
-<p>执行过程会比较久，执行结束后，会在当前目录产生 <code class="docutils literal notranslate"><span class="pre">mnist_cnn.h5</span></code> 文件（HDF5格式），就是keras训练后的模型，其中已经包含了训练后的模型结构和权重等信息。</p>
-<p>在服务器端，可以直接通过 <code class="docutils literal notranslate"><span class="pre">keras.models.load_model(&quot;mnist_cnn.h5&quot;)</span></code> 加载，然后进行推理；在移动设备需要将HDF5模型文件转换为TensorFlow Lite的格式，然后通过相应平台的Interpreter加载，然后进行推理。</p>
 <script>
     $(document).ready(function(){
         $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
-        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 192 };
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 357 };
         (function() {
             var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
             d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';

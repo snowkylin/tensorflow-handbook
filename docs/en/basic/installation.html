@@ -479,7 +479,7 @@ Mon Jun 10 23:19:54 2019
 </div>
 <p>In the stereotype of the most, TensorFlow and other deep learning frameworks “costs” hardwares greatly, so that the first thing for some people when starting with TensorFlow is to upgrade the computer’s hardware. However, the required hardware for TensorFlow is largely based on the task and the circumstance:</p>
 <ul class="simple">
-<li><p>For TensorFlow beginners, you can also learn and master TensorFlow well without upgrading your hardwares. Most of the examples in this handbook are suitable for almost all popular PC (even without a GPU) without adding any other device. For some examples in this handbook that requires more computation (e.g. <a class="reference internal" href="../../zh_hant/basic/tools.html#cats-vs-dogs"><span class="std std-ref">train CNN image classification on cats_vs_dogs dataset</span></a>), a common NVIDIA GPU may help greatly. If your own computer is not adequate for this, you may consider using online resources (e.g. <a class="reference internal" href="../../zh/appendix/cloud.html#colab"><span class="std std-ref">The free Colab</span></a>) to train models.</p></li>
+<li><p>For TensorFlow beginners, you can also learn and master TensorFlow well without upgrading your hardwares. Most of the examples in this handbook are suitable for almost all popular PC (even without a GPU) without adding any other device. For some examples in this handbook that requires more computation (e.g. <a class="reference internal" href="../../zh/basic/tools.html#cats-vs-dogs"><span class="std std-ref">train CNN image classification on cats_vs_dogs dataset</span></a>), a common NVIDIA GPU may help greatly. If your own computer is not adequate for this, you may consider using online resources (e.g. <a class="reference internal" href="../../zh/appendix/cloud.html#colab"><span class="std std-ref">The free Colab</span></a>) to train models.</p></li>
 <li><p>For individuals or developers that particapte data science competitions (like Kaggle) or train models locally, a high-performance NVIDIA GPU is often necessary. The number of CUDA cores and the size of the graphics memory are two key factors of the GPU performance in machine learning, while the former determines the training speedm and the latter the size of the model and the maximum batch size, which are particularly sensitive in large-scale training.</p></li>
 <li><p>For edging machine learning researching (especially in computer vision and natural language processing), training with parallel mutliple GPUs are standard conditions. It is common to use 4, 8, or even more GPUs for rapid iterations of experiment results and acceleration of training large-scale models.</p></li>
 </ul>
@@ -492,7 +492,17 @@ Mon Jun 10 23:19:54 2019
 </ul>
 <p>Although the hardware configurations of the research institutions and companies are deluxe, they are not as expensive as those apparatus and reagents that cost even millions of dollars in other edging scientific researching fields (e.g. biology). A deep learning server that costs from 10 to 50 thousands of dollars is able to serve several researchers for long. Thus machine learning is rather affordable for most of people.</p>
 <p>For detailed configuration of a deep learning workstation, I am not going to list them due to the rapid update of the hardwares. It is recommended to follow the <a class="reference external" href="https://www.zhihu.com/question/33996159">question on Zhihu - How to configure a workstation for deep learning?</a> and combine with the latest market circumstances to DIY or order a workstation.</p>
-</div>
+<script>
+    $(document).ready(function(){
+        $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+        DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 353 };
+        (function() {
+            var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+            d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+        })();
+    });
+</script></div>
 </div>
 
 

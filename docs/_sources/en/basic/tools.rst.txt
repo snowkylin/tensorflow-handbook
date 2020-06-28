@@ -875,7 +875,7 @@ We add the above code before the :ref:`multi-GPU training <en_multi_gpu>` code t
     <script>
         $(document).ready(function(){
             $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
-            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 191 };
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 356 };
             (function() {
                 var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
                 d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';

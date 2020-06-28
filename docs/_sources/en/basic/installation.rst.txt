@@ -241,3 +241,17 @@ For reference, I give out my own hardware configuration of the development envir
 Although the hardware configurations of the research institutions and companies are deluxe, they are not as expensive as those apparatus and reagents that cost even millions of dollars in other edging scientific researching fields (e.g. biology). A deep learning server that costs from 10 to 50 thousands of dollars is able to serve several researchers for long. Thus machine learning is rather affordable for most of people.
 
 For detailed configuration of a deep learning workstation, I am not going to list them due to the rapid update of the hardwares. It is recommended to follow the `question on Zhihu - How to configure a workstation for deep learning? <https://www.zhihu.com/question/33996159>`_ and combine with the latest market circumstances to DIY or order a workstation.
+
+.. raw:: html
+
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 353 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>

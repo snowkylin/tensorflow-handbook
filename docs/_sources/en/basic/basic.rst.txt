@@ -193,19 +193,16 @@ In practical applications, the models we code are usually much more complicated 
 .. [#f2] The loss function here is the mean squared error :math:`L(x) = \frac{1}{2} \sum_{i=1}^5 (ax_i + b - y_i)^2`, whose partial derivatives with respect to the parameters ``a`` and ``b`` are :math:`\frac{\partial L}{\partial a} = \sum_{i=1}^5 (ax_i + b - y) x_i` and :math:`\frac{\partial L}{\partial b} = \sum_{i=1}^5 (ax_i + b - y)`.
 .. [#f4] The opposite of the Eager Execution mode is the Graph Execution mode, which is the primary mode of TensorFlow before version 1.8 published in March 2018. In this handbook we focus on the Eager Execution mode for rapid iterative development, but we will get to the Graph Execution mode in the appendix for readers in need.
 
-..  
-    Tensors (variables, constants and placeholders)
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. raw:: html
 
-    Sessions and graphs
-    ^^^^^^^^^^^^^^^^^^^
-
-    Automatic differentiation and optimizers
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-    Scopes of variables
-    ^^^^^^^^^^^^^^^^^^^
-    ..  https://tensorflow.google.cn/versions/master/api_docs/python/tf/variable_scope
-
-    Saving, recovery and persistance
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    <script>
+        $(document).ready(function(){
+            $(".rst-footer-buttons").after("<div id='discourse-comments'></div>");
+            DiscourseEmbed = { discourseUrl: 'https://discuss.tf.wiki/', topicId: 354 };
+            (function() {
+                var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+                d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+            })();
+        });
+    </script>

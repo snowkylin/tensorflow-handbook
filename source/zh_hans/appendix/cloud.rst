@@ -35,6 +35,8 @@ Google Colab是谷歌的免费在线交互式Python运行环境，且提供GPU�
 
 .. tip:: Colab支持代码提示，可以在输入 ``tf.`` 后按下 ``tab`` 键，即会弹出代码提示的下拉菜单。
 
+    如果希望更换 Colab 的代码字体，可以到浏览器中设置默认等宽字体。以Chrome为例，在“设置-外观-自定义字体-宽度固定的字体”中设置自己希望的字体即可。
+
 可见，截至本文写作时，Colab中的TensorFlow默认版本是1.14.0。在Colab中，可以使用 ``!pip install`` 或者 ``!apt-get install`` 来安装Colab中尚未安装的Python库或Linux软件包。比如在这里，我们希望使用TensorFlow 2.0 beta1版本，即点击左上角的“+代码”，输入::
 
     !pip install tensorflow-gpu==2.0.0-beta1
