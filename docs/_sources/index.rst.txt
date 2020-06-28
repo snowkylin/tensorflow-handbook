@@ -213,35 +213,31 @@ Q&A: https://discuss.tf.wiki
 
     en/deployment/export
     en/deployment/serving
-    en/deployment/lite
-    en/deployment/javascript
 
 .. toctree:: 
     :maxdepth: 3
     :caption: Large-scale Training
 
     en/appendix/distributed
-    en/appendix/tpu
 
 .. toctree:: 
     :maxdepth: 3
     :caption: Extensions
 
-    en/appendix/tfhub
     en/appendix/tfds  
-    en/appendix/swift
     en/appendix/quantum
 
-.. toctree:: 
-    :maxdepth: 3
-    :caption: Appendix
+..
+    .. toctree:: 
+        :maxdepth: 3
+        :caption: Appendix
 
-    en/appendix/rl
-    en/appendix/docker
-    en/appendix/cloud
-    en/appendix/jupyterlab
-    en/appendix/recommended_books
-    en/appendix/terms
+        en/appendix/rl
+        en/appendix/docker
+        en/appendix/cloud
+        en/appendix/jupyterlab
+        en/appendix/recommended_books
+        en/appendix/terms
 
 .. only:: html
 
