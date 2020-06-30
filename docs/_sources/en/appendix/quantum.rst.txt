@@ -68,7 +68,7 @@ When we mark quantum bits, as well as quantum logic gates, sequentially on one o
 
     A simple quantum circuit.
 
-In a quantum circuit, each horizontal line represents one quantum bit. The leftmost :math:`\ket{0}` in the above diagram represents the initial state of a quantum bit. The X square in the middle represents the quantum NOT gate :math:`X` and the dial symbol on the right represents the measurement operation. The meaning of this line is "to perform quantum NOT gate :math:`X` operations on a quantum bit whose initial state is :math:`ket{0}` and measure the transformed quantum bit state". According to our discussion in the previous section, the transformed quantum bit state is the pure state :math:`\ket{1}`, so we can expect the final measurement of this quantum circuit to be always 1.
+In a quantum circuit, each horizontal line represents one quantum bit. The leftmost :math:`\ket{0}` in the above diagram represents the initial state of a quantum bit. The X square in the middle represents the quantum NOT gate :math:`X` and the dial symbol on the right represents the measurement operation. The meaning of this line is "to perform quantum NOT gate :math:`X` operations on a quantum bit whose initial state is :math:`\ket{0}` and measure the transformed quantum bit state". According to our discussion in the previous section, the transformed quantum bit state is the pure state :math:`\ket{1}`, so we can expect the final measurement of this quantum circuit to be always 1.
 
 Next, we consider replacing the quantum NOT gate :math:`X` of the quantum circuit in the above figure with the Hadamard gate :math:`H`.
 

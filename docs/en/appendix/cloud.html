@@ -259,7 +259,7 @@
   <div class="section" id="using-tensorflow-on-cloud">
 <h1>Using TensorFlow on cloud<a class="headerlink" href="#using-tensorflow-on-cloud" title="永久链接至标题">¶</a></h1>
 <div class="section" id="using-tensorflow-in-colab">
-<span id="colab"></span><h2>Using TensorFlow in Colab<a class="headerlink" href="#using-tensorflow-in-colab" title="永久链接至标题">¶</a></h2>
+<span id="en-colab"></span><h2>Using TensorFlow in Colab<a class="headerlink" href="#using-tensorflow-in-colab" title="永久链接至标题">¶</a></h2>
 <p>Google Colab是谷歌的免费在线交互式Python运行环境，且提供GPU支持，使得机器学习开发者们无需在自己的电脑上安装环境，就能随时随地从云端访问和运行自己的机器学习代码。</p>
 <div class="admonition- admonition">
 <p class="admonition-title">学习资源</p>
@@ -399,13 +399,13 @@ Fri Jul <span class="m">12</span> <span class="m">10</span>:30:37 <span class="m
 </div>
 <p>此处，我们选择一个带有 Tesla P4 计算卡的实例。</p>
 <p>在系统镜像中，阿里云提供多种选择，可以根据需要选择合适的镜像。</p>
-<div class="figure align-center" id="id6">
+<div class="figure align-center" id="id5">
 <a class="reference internal image-reference" href="../../_images/os_image_config_with_driver.png"><img alt="../../_images/os_image_config_with_driver.png" src="../../_images/os_image_config_with_driver.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">如果选择“公共镜像”，可以根据提示选择提前预装GPU驱动，可以避免后续安装驱动的麻烦。</span><a class="headerlink" href="#id6" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">如果选择“公共镜像”，可以根据提示选择提前预装GPU驱动，可以避免后续安装驱动的麻烦。</span><a class="headerlink" href="#id5" title="永久链接至图片">¶</a></p>
 </div>
-<div class="figure align-center" id="id7">
+<div class="figure align-center" id="id6">
 <a class="reference internal image-reference" href="../../_images/os_image_with_RAPIDS.png"><img alt="../../_images/os_image_with_RAPIDS.png" src="../../_images/os_image_with_RAPIDS.png" style="width: 100%;" /></a>
-<p class="caption"><span class="caption-text">在“镜像市场”中，官方也提供了适合深度学习的定制镜像。在本示例中我们选择预装了 NVIDIA RAPIDS 的 Ubuntu 16.04 镜像。</span><a class="headerlink" href="#id7" title="永久链接至图片">¶</a></p>
+<p class="caption"><span class="caption-text">在“镜像市场”中，官方也提供了适合深度学习的定制镜像。在本示例中我们选择预装了 NVIDIA RAPIDS 的 Ubuntu 16.04 镜像。</span><a class="headerlink" href="#id6" title="永久链接至图片">¶</a></p>
 </div>
 <p>然后，通过 ssh 连接上我们选购的服务器，并使用 <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> 查看 GPU 信息：</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>rapids<span class="o">)</span> root@iZ8vb2567465uc1ty3f4ovZ:~# nvidia-smi
