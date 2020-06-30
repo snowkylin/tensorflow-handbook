@@ -1,7 +1,7 @@
 Using TensorFlow on cloud
 =========================
 
-.. _colab:
+.. _en_colab:
 
 Using TensorFlow in Colab
 ^^^^^^^^^^^^^^^^^^^^^^^^^

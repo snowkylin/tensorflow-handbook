@@ -160,8 +160,6 @@ CUDA Toolkit和cuDNN的安装
 
 当然，也可以按照 `TensorFlow官方网站上的说明 <https://www.tensorflow.org/install/gpu>`_ 手动下载CUDA Toolkit和cuDNN并安装，不过过程会稍繁琐。
 
-使用conda包管理器安装GPU版本的TensorFlow时，会自动安装对应版本的CUDA Toolkit和cuDNN。conda源的更新往往较慢，如果对版本不太介意，也可以直接使用 ``conda install tensorflow-gpu`` 进行安装。
-
 第一个程序
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
