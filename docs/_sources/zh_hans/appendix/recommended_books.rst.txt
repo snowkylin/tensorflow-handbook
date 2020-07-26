@@ -6,7 +6,7 @@
 如果你是一名在校大学生，具有较好的数学基础，可以从以下教材入手，作为学习机器学习的起点：
 
 * 李航. `统计学习方法 <https://book.douban.com/subject/10590856/>`_ . 清华大学出版社, 2012. （有课件可在 `清华大学出版社网站 <http://www.tup.tsinghua.edu.cn/booksCenter/book_08132901.html>`_ 下载，点击“资源下载”-“网络资源”即可。有书中算法的 `GitHub开源代码实现 <https://github.com/fengdu78/lihang-code>`_ ）
-* 周志华. `机器学习 <https://book.douban.com/subject/26708119/>`_ . 清华大学出版社, 2016. 
+* 周志华. `机器学习 <https://book.douban.com/subject/26708119/>`_ . 清华大学出版社, 2016. （有辅助在线资料 `南瓜书 <https://datawhalechina.github.io/pumpkin-book>`_ ，`后续进阶版《机器学习理论导引》 <https://cs.nju.edu.cn/zhouzh/zhouzh.files/publication/MLthybook2020.htm>`_ ）
 * 邱锡鹏. `神经网络与深度学习 <https://nndl.github.io/>`_ . 机械工业出版社, 2020.（有在线版本可阅读）
 
 如果你希望更具实践性的内容，推荐以下书籍：

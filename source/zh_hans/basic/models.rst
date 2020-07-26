@@ -491,10 +491,10 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
     - 将上述得到的两个向量相加并通过激活函数，作为当前状态 :math:`s_t` 的值，即 :math:`s_t = f(U x_t + W s_{t-1})`。也就是说，当前状态的值是上一个状态的值和当前输入进行某种信息整合而产生的；
     - 对当前状态 :math:`s_t` 通过矩阵 :math:`V` 进行线性变换，得到当前时刻的输出 :math:`o_t`。
 
-    .. figure:: /_static/image/model/rnn_cell.jpg
+    .. figure:: /_static/image/model/rnn_cell_zh.png
         :align: center
 
-        RNN 工作过程图示（来自 http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/）
+        RNN 工作过程图示
 
     我们假设输入向量 :math:`x_t` 、状态 :math:`s` 和输出向量 :math:`o_t` 的维度分别为 :math:`m`、:math:`n`、:math:`p`，则 :math:`U \in \mathbb{R}^{m \times n}`、:math:`W \in \mathbb{R}^{n \times n}`、:math:`V \in \mathbb{R}^{n \times p}`。
 

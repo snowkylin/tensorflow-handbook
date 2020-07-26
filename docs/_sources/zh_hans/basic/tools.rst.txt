@@ -325,7 +325,7 @@ TensorBoard的使用有以下注意事项：
 
 当训练模型时，我们希望充分利用计算资源，减少CPU/GPU的空载时间。然而有时，数据集的准备处理非常耗时，使得我们在每进行一次训练前都需要花费大量的时间准备待训练的数据，而此时GPU只能空载而等待数据，造成了计算资源的浪费，如下图所示：
 
-.. figure:: /_static/image/tools/datasets_without_pipelining.png
+.. figure:: /_static/image/tools/datasets_without_pipelining_zh.png
     :width: 100%
     :align: center
 
@@ -333,7 +333,7 @@ TensorBoard的使用有以下注意事项：
 
 此时， ``tf.data`` 的数据集对象为我们提供了 ``Dataset.prefetch()`` 方法，使得我们可以让数据集对象 ``Dataset`` 在训练时预取出若干个元素，使得在GPU训练的同时CPU可以准备数据，从而提升训练流程的效率，如下图所示：
 
-.. figure:: /_static/image/tools/datasets_with_pipelining.png
+.. figure:: /_static/image/tools/datasets_with_pipelining_zh.png
     :width: 100%
     :align: center
     
@@ -355,7 +355,7 @@ TensorBoard的使用有以下注意事项：
 
 其运行过程如下图所示：
 
-.. figure:: /_static/image/tools/datasets_parallel_map.png
+.. figure:: /_static/image/tools/datasets_parallel_map_zh.png
     :width: 100%
     :align: center
 

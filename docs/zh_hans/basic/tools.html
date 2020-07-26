@@ -712,12 +712,12 @@
 <span id="id6"></span><h3>使用 <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 的并行化策略提高训练流程效率<a class="headerlink" href="#zh-hans-prefetch" title="永久链接至标题">¶</a></h3>
 <p>当训练模型时，我们希望充分利用计算资源，减少CPU/GPU的空载时间。然而有时，数据集的准备处理非常耗时，使得我们在每进行一次训练前都需要花费大量的时间准备待训练的数据，而此时GPU只能空载而等待数据，造成了计算资源的浪费，如下图所示：</p>
 <div class="figure align-center" id="id22">
-<a class="reference internal image-reference" href="../../_images/datasets_without_pipelining.png"><img alt="../../_images/datasets_without_pipelining.png" src="../../_images/datasets_without_pipelining.png" style="width: 100%;" /></a>
+<a class="reference internal image-reference" href="../../_images/datasets_without_pipelining_zh.png"><img alt="../../_images/datasets_without_pipelining_zh.png" src="../../_images/datasets_without_pipelining_zh.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">常规训练流程，在准备数据时，GPU只能空载。<a class="reference external" href="https://www.tensorflow.org/guide/data_performance">1图示来源</a> 。</span><a class="headerlink" href="#id22" title="永久链接至图片">¶</a></p>
 </div>
 <p>此时， <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 的数据集对象为我们提供了 <code class="docutils literal notranslate"><span class="pre">Dataset.prefetch()</span></code> 方法，使得我们可以让数据集对象 <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> 在训练时预取出若干个元素，使得在GPU训练的同时CPU可以准备数据，从而提升训练流程的效率，如下图所示：</p>
 <div class="figure align-center" id="id23">
-<a class="reference internal image-reference" href="../../_images/datasets_with_pipelining.png"><img alt="../../_images/datasets_with_pipelining.png" src="../../_images/datasets_with_pipelining.png" style="width: 100%;" /></a>
+<a class="reference internal image-reference" href="../../_images/datasets_with_pipelining_zh.png"><img alt="../../_images/datasets_with_pipelining_zh.png" src="../../_images/datasets_with_pipelining_zh.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">使用 <code class="docutils literal notranslate"><span class="pre">Dataset.prefetch()</span></code> 方法进行数据预加载后的训练流程，在GPU进行训练的同时CPU进行数据预加载，提高了训练效率。 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">2图示来源</a> 。</span><a class="headerlink" href="#id23" title="永久链接至图片">¶</a></p>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">Dataset.prefetch()</span></code> 的使用方法和前节的 <code class="docutils literal notranslate"><span class="pre">Dataset.batch()</span></code> 、 <code class="docutils literal notranslate"><span class="pre">Dataset.shuffle()</span></code> 等非常类似。继续以前节的MNIST数据集为例，若希望开启预加载数据，使用如下代码即可：</p>
@@ -731,7 +731,7 @@
 </div>
 <p>其运行过程如下图所示：</p>
 <div class="figure align-center" id="id24">
-<a class="reference internal image-reference" href="../../_images/datasets_parallel_map.png"><img alt="../../_images/datasets_parallel_map.png" src="../../_images/datasets_parallel_map.png" style="width: 100%;" /></a>
+<a class="reference internal image-reference" href="../../_images/datasets_parallel_map_zh.png"><img alt="../../_images/datasets_parallel_map_zh.png" src="../../_images/datasets_parallel_map_zh.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">通过设置 <code class="docutils literal notranslate"><span class="pre">Dataset.map()</span></code> 的 <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> 参数实现数据转换的并行化。上部分是未并行化的图示，下部分是2核并行的图示。 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">3图示来源</a> 。</span><a class="headerlink" href="#id24" title="永久链接至图片">¶</a></p>
 </div>
 <p>当然，这里同样可以将 <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> 设置为 <code class="docutils literal notranslate"><span class="pre">tf.data.experimental.AUTOTUNE</span></code> 以让TensorFlow自动选择合适的数值。</p>

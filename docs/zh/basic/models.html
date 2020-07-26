@@ -183,29 +183,15 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../en/deployment/export.html">TensorFlow Model Export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/deployment/serving.html">TensorFlow Serving</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/lite.html">TensorFlow Lite (Jinpeng)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/javascript.html">TensorFlow in JavaScript (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Large-scale Training</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../en/appendix/distributed.html">Distributed training with TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tpu.html">Training TensorFlow models with TPU (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Extensions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfhub.html">TensorFlow Hub: Model Reuse (Jinpeng)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Appendix</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/rl.html">Introduction to Reinforcement Learning</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/docker.html">Using Docker to deploy TensorFlow environment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/cloud.html">Using TensorFlow on cloud</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/recommended_books.html">References and Recommendations for Further Reading</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
 </ul>
 
             
@@ -462,7 +448,7 @@
 <div class="section" id="tf-keras-losses-tf-keras-optimizer">
 <h3>模型的训练： <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tf.keras.optimizer</span></code><a class="headerlink" href="#tf-keras-losses-tf-keras-optimizer" title="永久链接至标题">¶</a></h3>
 <p>定义一些模型超参数：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">5</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">num_epochs</span> <span class="o">=</span> <span class="mf">0.1</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span>
 <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.001</span>
 </pre></div>
@@ -632,7 +618,7 @@
 </div>
 <p>进行设置，也可以在调用模型时通过将 <code class="docutils literal notranslate"><span class="pre">training</span></code> 参数设为 <code class="docutils literal notranslate"><span class="pre">True</span></code> 来设置。</p>
 </div>
-<p>以下展示一个例子，使用 <code class="docutils literal notranslate"><span class="pre">MobileNetV2</span></code> 网络在 <code class="docutils literal notranslate"><span class="pre">tf_flowers</span></code> 五分类数据集上进行训练（为了代码的简短高效，在该示例中我们使用了 <a class="reference internal" href="../appendix/tfds.html"><span class="doc">TensorFlow Datasets</span></a> 和 <a class="reference internal" href="tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 载入和预处理数据）。同时将 <code class="docutils literal notranslate"><span class="pre">classes</span></code> 设置为5，对应于5分类的数据集。</p>
+<p>以下展示一个例子，使用 <code class="docutils literal notranslate"><span class="pre">MobileNetV2</span></code> 网络在 <code class="docutils literal notranslate"><span class="pre">tf_flowers</span></code> 五分类数据集上进行训练（为了代码的简短高效，在该示例中我们使用了 <a class="reference internal" href="../appendix/tfds.html"><span class="doc">TensorFlow Datasets</span></a> 和 <a class="reference internal" href="../../zh_hant/basic/tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 载入和预处理数据）。同时将 <code class="docutils literal notranslate"><span class="pre">classes</span></code> 设置为5，对应于5分类的数据集。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
 
@@ -902,8 +888,8 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <li><p>对当前状态 <img class="math" src="../../_images/math/aef454ab9a36bb7c18fa5c3ba6a5b1523c56ddd5.png" alt="s_t"/> 通过矩阵 <img class="math" src="../../_images/math/48d9710a8a12a6209e54e4d872252e9403e78683.png" alt="V"/> 进行线性变换，得到当前时刻的输出 <img class="math" src="../../_images/math/1dcf8af77e86ef764397a8f107aa550c617351c4.png" alt="o_t"/>。</p></li>
 </ul>
 <div class="figure align-center" id="id36">
-<img alt="../../_images/rnn_cell.jpg" src="../../_images/rnn_cell.jpg" />
-<p class="caption"><span class="caption-text">RNN 工作过程图示（来自 <a class="reference external" href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/</a>）</span><a class="headerlink" href="#id36" title="永久链接至图片">¶</a></p>
+<img alt="../../_images/rnn_cell_zh.png" src="../../_images/rnn_cell_zh.png" />
+<p class="caption"><span class="caption-text">RNN 工作过程图示</span><a class="headerlink" href="#id36" title="永久链接至图片">¶</a></p>
 </div>
 <p>我们假设输入向量 <img class="math" src="../../_images/math/80e7212143003eaa2efb31fc9c7aa8f016c3a3dd.png" alt="x_t"/> 、状态 <img class="math" src="../../_images/math/bafbf63de17508c8c25cd882e0178342c193ae0c.png" alt="s"/> 和输出向量 <img class="math" src="../../_images/math/1dcf8af77e86ef764397a8f107aa550c617351c4.png" alt="o_t"/> 的维度分别为 <img class="math" src="../../_images/math/4b59fb8246fb77698911d761c596ef6066458b4c.png" alt="m"/>、<img class="math" src="../../_images/math/1005bf222658283b2edeaaaed3761ce5d5bb3e6c.png" alt="n"/>、<img class="math" src="../../_images/math/8f788889a02d716315011e6c07d3b81cc1cfc419.png" alt="p"/>，则 <img class="math" src="../../_images/math/190195050cecc54ea0ac8083ae0aa6df0b02cf51.png" alt="U \in \mathbb{R}^{m \times n}"/>、<img class="math" src="../../_images/math/c71f85f8dbe403bd5b3d62f4b6f5d5f4544eb8f3.png" alt="W \in \mathbb{R}^{n \times n}"/>、<img class="math" src="../../_images/math/1c78f0e6e369155ac8d9d7f2092f6617dee6c494.png" alt="V \in \mathbb{R}^{n \times p}"/>。</p>
 <p>上述为最基础的 RNN 原理介绍。在实际使用时往往使用一些常见的改进型，如LSTM（长短期记忆神经网络，解决了长序列的梯度消失问题，适用于较长的序列）、GRU等。</p>
@@ -1087,7 +1073,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <li><p><code class="docutils literal notranslate"><span class="pre">validation_data</span></code> ：验证数据，可用于在训练过程中监控模型的性能。</p></li>
 </ul>
 </div></blockquote>
-<p>Keras 支持使用 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 进行训练，详见 <a class="reference internal" href="tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 。</p>
+<p>Keras 支持使用 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 进行训练，详见 <a class="reference internal" href="../../zh_hant/basic/tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 。</p>
 <p>最后，使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model.evaluate</span></code> 评估训练效果，提供测试数据及标签即可：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">,</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">test_label</span><span class="p">))</span>
 </pre></div>

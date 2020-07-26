@@ -183,29 +183,15 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../en/deployment/export.html">TensorFlow Model Export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/deployment/serving.html">TensorFlow Serving</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/lite.html">TensorFlow Lite (Jinpeng)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/javascript.html">TensorFlow in JavaScript (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Large-scale Training</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../en/appendix/distributed.html">Distributed training with TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tpu.html">Training TensorFlow models with TPU (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Extensions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfhub.html">TensorFlow Hub: Model Reuse (Jinpeng)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Appendix</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/rl.html">Introduction to Reinforcement Learning</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/docker.html">Using Docker to deploy TensorFlow environment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/cloud.html">Using TensorFlow on cloud</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/recommended_books.html">References and Recommendations for Further Reading</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
 </ul>
 
             
@@ -501,7 +487,7 @@
     <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">trace_export</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;model_trace&quot;</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">profiler_outdir</span><span class="o">=</span><span class="n">log_dir</span><span class="p">)</span>    <span class="c1"># 保存Trace信息到文件</span>
 </pre></div>
 </div>
-<p>之后，我们就可以在TensorBoard中选择“Profile”，以时间轴的方式查看各操作的耗时情况。如果使用了 <a class="reference internal" href="#tffunction"><span class="std std-ref">tf.function</span></a> 建立了计算图，也可以点击“Graphs”查看图结构。</p>
+<p>之后，我们就可以在TensorBoard中选择“Profile”，以时间轴的方式查看各操作的耗时情况。如果使用了 <a class="reference internal" href="../../zh_hant/basic/tools.html#tffunction"><span class="std std-ref">tf.function</span></a> 建立了计算图，也可以点击“Graphs”查看图结构。</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/profiling.png"><img alt="../../_images/profiling.png" src="../../_images/profiling.png" style="width: 100%;" /></a>
 </div>
@@ -603,7 +589,7 @@
 </div>
 <p>即可快速载入MNIST数据集。</p>
 </div>
-<p>对于特别巨大而无法完整载入内存的数据集，我们可以先将数据集处理为 TFRecord 格式，然后使用 <code class="docutils literal notranslate"><span class="pre">tf.data.TFRocordDataset()</span></code> 进行载入。详情请参考 <a class="reference internal" href="#tfrecord"><span class="std std-ref">后节</span></a>：</p>
+<p>对于特别巨大而无法完整载入内存的数据集，我们可以先将数据集处理为 TFRecord 格式，然后使用 <code class="docutils literal notranslate"><span class="pre">tf.data.TFRocordDataset()</span></code> 进行载入。详情请参考 <a class="reference internal" href="../../zh_hant/basic/tools.html#tfrecord"><span class="std std-ref">后节</span></a>：</p>
 </div>
 <div class="section" id="id5">
 <h3>数据集对象的预处理<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
@@ -688,12 +674,12 @@
 <span id="id6"></span><h3>使用 <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 的并行化策略提高训练流程效率<a class="headerlink" href="#prefetch" title="永久链接至标题">¶</a></h3>
 <p>当训练模型时，我们希望充分利用计算资源，减少CPU/GPU的空载时间。然而有时，数据集的准备处理非常耗时，使得我们在每进行一次训练前都需要花费大量的时间准备待训练的数据，而此时GPU只能空载而等待数据，造成了计算资源的浪费，如下图所示：</p>
 <div class="figure align-center" id="id24">
-<a class="reference internal image-reference" href="../../_images/datasets_without_pipelining.png"><img alt="../../_images/datasets_without_pipelining.png" src="../../_images/datasets_without_pipelining.png" style="width: 100%;" /></a>
+<a class="reference internal image-reference" href="../../_images/datasets_without_pipelining_zh.png"><img alt="../../_images/datasets_without_pipelining_zh.png" src="../../_images/datasets_without_pipelining_zh.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">常规训练流程，在准备数据时，GPU只能空载。<a class="reference external" href="https://www.tensorflow.org/guide/data_performance">1图示来源</a> 。</span><a class="headerlink" href="#id24" title="永久链接至图片">¶</a></p>
 </div>
 <p>此时， <code class="docutils literal notranslate"><span class="pre">tf.data</span></code> 的数据集对象为我们提供了 <code class="docutils literal notranslate"><span class="pre">Dataset.prefetch()</span></code> 方法，使得我们可以让数据集对象 <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> 在训练时预取出若干个元素，使得在GPU训练的同时CPU可以准备数据，从而提升训练流程的效率，如下图所示：</p>
 <div class="figure align-center" id="id25">
-<a class="reference internal image-reference" href="../../_images/datasets_with_pipelining.png"><img alt="../../_images/datasets_with_pipelining.png" src="../../_images/datasets_with_pipelining.png" style="width: 100%;" /></a>
+<a class="reference internal image-reference" href="../../_images/datasets_with_pipelining_zh.png"><img alt="../../_images/datasets_with_pipelining_zh.png" src="../../_images/datasets_with_pipelining_zh.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">使用 <code class="docutils literal notranslate"><span class="pre">Dataset.prefetch()</span></code> 方法进行数据预加载后的训练流程，在GPU进行训练的同时CPU进行数据预加载，提高了训练效率。 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">2图示来源</a> 。</span><a class="headerlink" href="#id25" title="永久链接至图片">¶</a></p>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">Dataset.prefetch()</span></code> 的使用方法和前节的 <code class="docutils literal notranslate"><span class="pre">Dataset.batch()</span></code> 、 <code class="docutils literal notranslate"><span class="pre">Dataset.shuffle()</span></code> 等非常类似。继续以前节的MNIST数据集为例，若希望开启预加载数据，使用如下代码即可：</p>
@@ -707,11 +693,11 @@
 </div>
 <p>其运行过程如下图所示：</p>
 <div class="figure align-center" id="id26">
-<a class="reference internal image-reference" href="../../_images/datasets_parallel_map.png"><img alt="../../_images/datasets_parallel_map.png" src="../../_images/datasets_parallel_map.png" style="width: 100%;" /></a>
+<a class="reference internal image-reference" href="../../_images/datasets_parallel_map_zh.png"><img alt="../../_images/datasets_parallel_map_zh.png" src="../../_images/datasets_parallel_map_zh.png" style="width: 100%;" /></a>
 <p class="caption"><span class="caption-text">通过设置 <code class="docutils literal notranslate"><span class="pre">Dataset.map()</span></code> 的 <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> 参数实现数据转换的并行化。上部分是未并行化的图示，下部分是2核并行的图示。 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">3图示来源</a> 。</span><a class="headerlink" href="#id26" title="永久链接至图片">¶</a></p>
 </div>
 <p>当然，这里同样可以将 <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> 设置为 <code class="docutils literal notranslate"><span class="pre">tf.data.experimental.AUTOTUNE</span></code> 以让TensorFlow自动选择合适的数值。</p>
-<p>除此以外，还有很多提升数据集处理性能的方式，可参考 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">TensorFlow文档</a> 进一步了解。后文的实例中展示了tf.data并行化策略的强大性能，可 <a class="reference internal" href="#tfdata-performance"><span class="std std-ref">点此</span></a> 查看。</p>
+<p>除此以外，还有很多提升数据集处理性能的方式，可参考 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">TensorFlow文档</a> 进一步了解。后文的实例中展示了tf.data并行化策略的强大性能，可 <a class="reference internal" href="../../zh_hant/basic/tools.html#tfdata-performance"><span class="std std-ref">点此</span></a> 查看。</p>
 </div>
 <div class="section" id="id11">
 <h3>数据集元素的获取与使用<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
@@ -853,10 +839,10 @@
 <li><p>通过 <code class="docutils literal notranslate"><span class="pre">tf.data.TFRecordDataset</span></code> 读入原始的 TFRecord 文件（此时文件中的 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 对象尚未被反序列化），获得一个 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 数据集对象；</p></li>
 <li><p>通过 <code class="docutils literal notranslate"><span class="pre">Dataset.map</span></code> 方法，对该数据集对象中的每一个序列化的 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 字符串执行 <code class="docutils literal notranslate"><span class="pre">tf.io.parse_single_example</span></code> 函数，从而实现反序列化。</p></li>
 </ul>
-<p>以下我们通过一个实例，展示将 <a class="reference internal" href="#cats-vs-dogs"><span class="std std-ref">上一节</span></a> 中使用的cats_vs_dogs二分类数据集的训练集部分转换为TFRecord文件，并读取该文件的过程。</p>
+<p>以下我们通过一个实例，展示将 <a class="reference internal" href="../../zh_hant/basic/tools.html#cats-vs-dogs"><span class="std std-ref">上一节</span></a> 中使用的cats_vs_dogs二分类数据集的训练集部分转换为TFRecord文件，并读取该文件的过程。</p>
 <div class="section" id="id14">
 <h3>将数据集存储为 TFRecord 文件<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
-<p>首先，与 <a class="reference internal" href="#cats-vs-dogs"><span class="std std-ref">上一节</span></a> 类似，我们进行一些准备工作，<a class="reference external" href="https://www.floydhub.com/fastai/datasets/cats-vs-dogs">下载数据集</a> 并解压到 <code class="docutils literal notranslate"><span class="pre">data_dir</span></code> ，初始化数据集的图片文件名列表及标签。</p>
+<p>首先，与 <a class="reference internal" href="../../zh_hant/basic/tools.html#cats-vs-dogs"><span class="std std-ref">上一节</span></a> 类似，我们进行一些准备工作，<a class="reference external" href="https://www.floydhub.com/fastai/datasets/cats-vs-dogs">下载数据集</a> 并解压到 <code class="docutils literal notranslate"><span class="pre">data_dir</span></code> ，初始化数据集的图片文件名列表及标签。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">os</span>
 

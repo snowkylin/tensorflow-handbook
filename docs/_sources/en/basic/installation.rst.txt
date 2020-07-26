@@ -12,7 +12,7 @@ General steps for installation
 
 1. Install Python environment. It is suggested to install  `Anaconda <https://www.anaconda.com/>`_ with Python 3.7 x64 version. Anaconda is a open-source Python distribution providing a full environment for scientific computation, including common scientific computation libraries like NumPy and SciPy. Of course, you can also choose your own favourite Python environment. The installation package of Anaconda can be obtained `here <https://www.anaconda.com/products/individual>`_.
 
-2. Use Anaconda's conda package manager to create a Conda virtual environment, activate it and input the following commands:
+2. Use Anaconda's conda package manager to create a Conda virtual environment, activate it and run the following commands:
 
 ::
 
