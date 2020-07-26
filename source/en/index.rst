@@ -24,13 +24,13 @@ This is a concise handbook of TensorFlow 2 based on Keras and Eager Execution mo
 
 The code of this handbook is based on TensorFlow 2.0 and 2.1 stable version. All sample code in this handbook can be found `here <https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/>`_ . This handbook is a project of `Google Summer of Code 2019 <https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/>`_ .
 
-As of April 2020, a comment board has been added at the end of each chapter. You are welcome to discuss, exchange ideas and provide suggestions at the end of the chapters.
+As of April 2020, a discussion board has been added at the end of each chapter. You are welcome to discuss, exchange ideas and provide suggestions at the end of the chapters.
 
-This is still a beta version of this handbook. Your suggestions are important!
+This handbook is still in a beta version. Your suggestions are important!
 
 GitHub： https://github.com/snowkylin/tensorflow-handbook
 
-Q&A: https://discuss.tf.wiki
+Q&A and discussion board: https://discuss.tf.wiki/c/share/handbook-comment-en
 
 .. toctree:: 
     :maxdepth: 2

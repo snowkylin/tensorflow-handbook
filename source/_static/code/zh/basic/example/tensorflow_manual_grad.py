@@ -6,7 +6,8 @@ y_raw = np.array([12000, 14000, 15000, 16500, 17500])
 X = (X_raw - X_raw.min()) / (X_raw.max() - X_raw.min())
 y = (y_raw - y_raw.min()) / (y_raw.max() - y_raw.min())
 
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_eager_execution()
 
 # 定义数据流图
 learning_rate_ = tf.placeholder(dtype=tf.float32)
