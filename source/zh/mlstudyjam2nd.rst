@@ -10,23 +10,23 @@ ML Study Jam 2020
 
 **第一周** 
 
-- `TensorFlow 概述 <https://tf.wiki/zh/introduction.html>`_ 
-- `TensorFlow 安装与环境配置 <https://tf.wiki/zh/basic/installation.html>`_ 
-- `TensorFlow 基础 <https://tf.wiki/zh/basic/basic.html>`_ 
+- `TensorFlow 概述 <https://tf.wiki/zh_hans/introduction.html>`_ 
+- `TensorFlow 安装与环境配置 <https://tf.wiki/zh_hans/basic/installation.html>`_ 
+- `TensorFlow 基础 <https://tf.wiki/zh_hans/basic/basic.html>`_ 
 
 8 月 9 号周日下午 3-4 点，进行第一次的 Office Hours 在线解答，参与方式请关注当天早上公众号 TensorFlow（TensorFlow_official）的推送通知！
 
 **第二周** 
 
-- `TensorFlow 模型建立与训练 <https://tf.wiki/zh/basic/models.html>`_ 
+- `TensorFlow 模型建立与训练 <https://tf.wiki/zh_hans/basic/models.html>`_ 
 
 8 月 16 号周日下午 3-4 点，进行第二次的 Office Hours 在线解答，参与方式请关注当天早上公众号 TensorFlow（TensorFlow_official）的推送通知！
 
 **第三周** 
 
-- `TensorFlow 常用模块 <https://tf.wiki/zh/basic/tools.html>`_ 
-- `TensorFlow 模型导出 <https://tf.wiki/zh/deployment/export.html>`_ 
-- `TensorFlow Serving <https://tf.wiki/zh/deployment/serving.html>`_ 
+- `TensorFlow 常用模块 <https://tf.wiki/zh_hans/basic/tools.html>`_ 
+- `TensorFlow 模型导出 <https://tf.wiki/zh_hans/deployment/export.html>`_ 
+- `TensorFlow Serving <https://tf.wiki/zh_hans/deployment/serving.html>`_ 
 
 在你和你的小队学习接近尾声时，请完成公众号 TensorFlow 将于 8 月 20 号推送的结课小测验。
 谢谢。
