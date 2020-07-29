@@ -144,7 +144,6 @@ TPU 环境配置
 .. code-block:: python
 
     import os
-    import pprint
     import tensorflow as tf
 
     if 'COLAB_TPU_ADDR' not in os.environ:
