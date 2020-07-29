@@ -152,7 +152,10 @@ NumPy下的线性回归
 - 经常需要手工求函数关于参数的偏导数。如果是简单的函数或许还好，但一旦函数的形式变得复杂（尤其是深度学习模型），手工求导的过程将变得非常痛苦，甚至不可行。
 - 经常需要手工根据求导的结果更新参数。这里使用了最基础的梯度下降方法，因此参数的更新还较为容易。但如果使用更加复杂的参数更新方法（例如Adam或者Adagrad），这个更新过程的编写同样会非常繁杂。
 
-而TensorFlow等深度学习框架的出现很大程度上解决了这些痛点，为机器学习模型的实现带来了很大的便利。
+.. role:: raw-html(raw)
+   :format: html
+
+而TensorFlow等深度学习框架的出现很大程度上解决了这些痛点，为机器学习模型的实现带来了很大的便利。 :raw-html:`<img src="/_static/image/mlstudyjam/easter_egg.jpg" style="width: 16px;" title="TensorFlow 首次发布时间为 2015 年 9 月 11 日。" onclick="alert('TensorFlow 首次发布时间为 2015 年 9 月 11 日。');"></img>`
 
 .. _zh_hans_optimizer:
 

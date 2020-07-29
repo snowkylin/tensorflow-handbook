@@ -24,13 +24,19 @@
 
 本手册的所有代码基于 TensorFlow 2.1 和 2.0 正式版。文中的所有示例代码可至 `这里 <https://github.com/snowkylin/tensorflow-handbook/tree/master/source/_static/code/zh>`_ 获得。
 
-本手册正于TensorFlow官方微信公众号（TensorFlow_official）连载，可点此查看 `连载文章目录 <https://mp.weixin.qq.com/s/cvZHUWS3MiGHq3UDynucxw>`_ 。本手册的原始语言为中文，其英文版仍在翻译中。请访问 https://v1.tf.wiki 以查看本手册上一版的英文版。本手册是  `Google Summer of Code 2019 <https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/>`_  项目之一。
+本手册正于TensorFlow官方微信公众号（TensorFlow_official）连载，可点此查看 `连载文章目录 <https://mp.weixin.qq.com/s/cvZHUWS3MiGHq3UDynucxw>`_ 。本手册的原始语言为简体中文，并有 `繁体中文版 </zh_hant>`_ 和 `英文版 </en>`_ 。本手册是  `Google Summer of Code 2019 <https://summerofcode.withgoogle.com/archive/2019/projects/5460192307707904/>`_  项目之一。
 
 自2020年4月起，在每章文末加入了留言区，欢迎有需要的读者在文末讨论交流。
 
 GitHub： https://github.com/snowkylin/tensorflow-handbook
 
 答疑区： https://discuss.tf.wiki
+
+.. toctree:: 
+    :maxdepth: 3
+    :caption: 教学活动
+
+    zh_hans/mlstudyjam2nd
 
 .. toctree:: 
     :maxdepth: 2

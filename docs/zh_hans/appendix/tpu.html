@@ -27,7 +27,7 @@
         <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
-        <script type="text/javascript" src="../../_static/js/custom_20200523.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200730.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -89,7 +89,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam2nd.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
@@ -417,7 +421,6 @@
 <p>在 <a class="reference external" href="https://colab.research.google.com">Google Colab</a> 的 Notebook 界面中，打开界面中，打开主菜单 <cite>Runtime</cite> ，然后选择 <cite>Change runtime type</cite>，会弹出 <cite>Notebook settings</cite> 的窗口。选择里面的 <cite>Hardware accelerator</cite> 为 <cite>TPU</cite> 就可以了。</p>
 <p>为了确认 Colab Notebook 中的确分配了 TPU 资源，我们可以运行以下测试代码。如果输出 ERROR 信息，则表示目前的 Runetime 并没有分配到 TPU；如果输出 TPU 地址及设备列表，则表示 Colab 已经分配了 TPU。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">pprint</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
 
 <span class="k">if</span> <span class="s1">&#39;COLAB_TPU_ADDR&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
