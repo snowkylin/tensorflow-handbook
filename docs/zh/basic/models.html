@@ -843,7 +843,7 @@
 </div>
 <p>通过这种方式进行 “滚雪球” 式的连续预测，即可得到生成文本。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">X_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">get_batch</span><span class="p">(</span><span class="n">seq_length</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">diversity</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">]:</span>      <span class="c1"># 丰富度（即temperture）分别设置为从小到大的 4 个值</span>
+    <span class="k">for</span> <span class="n">diversity</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">]:</span>      <span class="c1"># 丰富度（即temperature）分别设置为从小到大的 4 个值</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">X_</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;diversity </span><span class="si">%f</span><span class="s2">:&quot;</span> <span class="o">%</span> <span class="n">diversity</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">400</span><span class="p">):</span>
