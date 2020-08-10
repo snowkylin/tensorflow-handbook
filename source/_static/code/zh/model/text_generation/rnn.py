@@ -73,7 +73,7 @@ if __name__ == '__main__':
         optimizer.apply_gradients(grads_and_vars=zip(grads, model.variables))
 
     X_, _ = data_loader.get_batch(seq_length, 1)
-    for diversity in [0.2, 0.5, 1.0, 1.2]:      # 丰富度（即temperture）分别设置为从小到大的 4 个值
+    for diversity in [0.2, 0.5, 1.0, 1.2]:      # 丰富度（即temperature）分别设置为从小到大的 4 个值
         X = X_
         print("diversity %f:" % diversity)
         for t in range(400):

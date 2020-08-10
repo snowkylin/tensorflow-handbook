@@ -176,6 +176,12 @@ TensorBoard的使用有以下注意事项：
 
 之后，我们就可以在TensorBoard中选择“Profile”，以时间轴的方式查看各操作的耗时情况。如果使用了 :ref:`tf.function <tffunction>` 建立了计算图，也可以点击“Graphs”查看图结构。
 
+.. hint:: 在 TensorFlow 2.3 及后续版本中，需要使用::
+
+        pip install -U tensorboard-plugin-profile
+
+    安装独立的 TensorBoard Profile 插件以使用 Profile 功能。
+
 .. figure:: /_static/image/tools/profiling.png
     :width: 100%
     :align: center
@@ -207,7 +213,7 @@ TensorBoard的使用有以下注意事项：
 
 ``tf.data`` 的核心是 ``tf.data.Dataset`` 类，提供了对数据集的高层封装。``tf.data.Dataset`` 由一系列的可迭代访问的元素（element）组成，每个元素包含一个或多个张量。比如说，对于一个由图像组成的数据集，每个元素可以是一个形状为 ``长×宽×通道数`` 的图片张量，也可以是由图片张量和图片标签张量组成的元组（Tuple）。
 
-最基础的建立 ``tf.data.Dataset`` 的方法是使用 ``tf.data.Dataset.from_tensor_slices()`` ，适用于数据量较小（能够整个装进内存）的情况。具体而言，如果我们的数据集中的所有元素通过张量的第0维，拼接成一个大的张量（例如，前节的MNIST数据集的训练集即为一个 ``[60000, 28, 28, 1]`` 的张量，表示了60000张28*28的单通道灰度图像），那么我们提供一个这样的张量或者第0维大小相同的多个张量作为输入，即可按张量的第0维展开来构建数据集，数据集的元素数量为张量第0位的大小。具体示例如下：
+最基础的建立 ``tf.data.Dataset`` 的方法是使用 ``tf.data.Dataset.from_tensor_slices()`` ，适用于数据量较小（能够整个装进内存）的情况。具体而言，如果我们的数据集中的所有元素通过张量的第0维，拼接成一个大的张量（例如，前节的MNIST数据集的训练集即为一个 ``[60000, 28, 28, 1]`` 的张量，表示了60000张28*28的单通道灰度图像），那么我们提供一个这样的张量或者第0维大小相同的多个张量作为输入，即可按张量的第0维展开来构建数据集，数据集的元素数量为张量第 0 维的大小。具体示例如下：
 
 .. literalinclude:: /_static/code/zh/tools/tfdata/tutorial.py
     :lines: 1-14
