@@ -15,21 +15,21 @@ class RNN(tf.keras.Model):
 
     def call(self, inputs, from_logits=False):
         inputs = tf.one_hot(inputs, depth=self.num_chars)       # [batch_size, seq_length, num_chars]
-        state = self.cell.get_initial_state(batch_size=self.batch_size, dtype=tf.float32)
+        state = self.cell.get_initial_state(batch_size=self.batch_size, dtype=tf.float32)   # 获得 RNN 的初始状态
         for t in range(self.seq_length):
-            output, state = self.cell(inputs[:, t, :], state)
+            output, state = self.cell(inputs[:, t, :], state)   # 通过当前输入和前一时刻的状态，得到输出和当前时刻的状态
         logits = self.dense(output)
-        if from_logits:
+        if from_logits:                     # from_logits 参数控制输出是否通过 softmax 函数进行归一化
             return logits
         else:
             return tf.nn.softmax(logits)
 
     def predict(self, inputs, temperature=1.):
         batch_size, _ = tf.shape(inputs)
-        logits = self(inputs, from_logits=True)
-        prob = tf.nn.softmax(logits / temperature).numpy()
-        return np.array([np.random.choice(self.num_chars, p=prob[i, :])
-                         for i in range(batch_size.numpy())])
+        logits = self(inputs, from_logits=True)                         # 调用训练好的RNN模型，预测下一个字符的概率分布
+        prob = tf.nn.softmax(logits / temperature).numpy()              # 使用带 temperature 参数的 softmax 函数获得归一化的概率分布值
+        return np.array([np.random.choice(self.num_chars, p=prob[i, :]) # 使用 np.random.choice 函数，
+                         for i in range(batch_size.numpy())])           # 在预测的概率分布 prob 上进行随机取样
 
 
 class DataLoader():
@@ -73,11 +73,11 @@ if __name__ == '__main__':
         optimizer.apply_gradients(grads_and_vars=zip(grads, model.variables))
 
     X_, _ = data_loader.get_batch(seq_length, 1)
-    for diversity in [0.2, 0.5, 1.0, 1.2]:
+    for diversity in [0.2, 0.5, 1.0, 1.2]:      # 丰富度（即temperture）分别设置为从小到大的 4 个值
         X = X_
         print("diversity %f:" % diversity)
         for t in range(400):
-            y_pred = model.predict(X, diversity)
-            print(data_loader.indices_char[y_pred[0]], end='', flush=True)
-            X = np.concatenate([X[:, 1:], np.expand_dims(y_pred, axis=1)], axis=-1)
+            y_pred = model.predict(X, diversity)    # 预测下一个字符的编号
+            print(data_loader.indices_char[y_pred[0]], end='', flush=True)  # 输出预测的字符
+            X = np.concatenate([X[:, 1:], np.expand_dims(y_pred, axis=1)], axis=-1)     # 将预测的字符接在输入 X 的末尾，并截断 X 的第一个字符，以保证 X 的长度不变
         print("\n")
