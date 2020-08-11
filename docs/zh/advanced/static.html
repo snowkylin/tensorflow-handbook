@@ -27,7 +27,7 @@
         <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
-        <script type="text/javascript" src="../../_static/js/custom_20200523.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200812.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -87,7 +87,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/mlstudyjam2nd.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
@@ -258,13 +262,13 @@
             
   <div class="section" id="tensorflow-2">
 <h1>图执行模式下的 TensorFlow 2<a class="headerlink" href="#tensorflow-2" title="永久链接至标题">¶</a></h1>
-<p>尽管 TensorFlow 2 建议以即时执行模式（Eager Execution）作为主要执行模式，然而，图执行模式（Graph Execution）作为 TensorFlow 2 之前的主要执行模式，依旧对于我们理解 TensorFlow 具有重要意义。尤其是当我们需要使用 <a class="reference internal" href="../../zh_hant/basic/tools.html#tffunction"><span class="std std-ref">tf.function</span></a> 时，对图执行模式的理解更是不可或缺。</p>
+<p>尽管 TensorFlow 2 建议以即时执行模式（Eager Execution）作为主要执行模式，然而，图执行模式（Graph Execution）作为 TensorFlow 2 之前的主要执行模式，依旧对于我们理解 TensorFlow 具有重要意义。尤其是当我们需要使用 <a class="reference internal" href="../basic/tools.html#tffunction"><span class="std std-ref">tf.function</span></a> 时，对图执行模式的理解更是不可或缺。</p>
 <p>图执行模式在 TensorFlow 1.X 和 2.X 版本中的 API 不同：</p>
 <ul class="simple">
 <li><p>在 TensorFlow 1.X 中，图执行模式主要通过“直接构建计算图 + <code class="docutils literal notranslate"><span class="pre">tf.Session</span></code>” 进行操作；</p></li>
 <li><p>在 TensorFlow 2 中，图执行模式主要通过 <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 进行操作。</p></li>
 </ul>
-<p>在本章，我们将在 <a class="reference internal" href="../../zh_hant/basic/tools.html#tffunction"><span class="std std-ref">tf.function：图执行模式</span></a> 一节的基础上，进一步对图执行模式的这两种 API 进行对比说明，以帮助已熟悉 TensorFlow 1.X 的用户过渡到 TensorFlow 2。</p>
+<p>在本章，我们将在 <a class="reference internal" href="../basic/tools.html#tffunction"><span class="std std-ref">tf.function：图执行模式</span></a> 一节的基础上，进一步对图执行模式的这两种 API 进行对比说明，以帮助已熟悉 TensorFlow 1.X 的用户过渡到 TensorFlow 2。</p>
 <div class="admonition hint">
 <p class="admonition-title">提示</p>
 <p>TensorFlow 2 依然支持 TensorFlow 1.X 的 API。为了在 TensorFlow 2 中使用 TensorFlow 1.X 的 API ，我们可以使用 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">tensorflow.compat.v1</span> <span class="pre">as</span> <span class="pre">tf</span></code> 导入 TensorFlow，并通过 <code class="docutils literal notranslate"><span class="pre">tf.disable_eager_execution()</span></code> 禁用默认的即时执行模式。</p>

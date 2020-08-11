@@ -27,7 +27,7 @@
         <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
-        <script type="text/javascript" src="../../_static/js/custom_20200523.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200812.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -89,7 +89,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/mlstudyjam2nd.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
@@ -212,29 +216,15 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../en/deployment/export.html">TensorFlow Model Export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/deployment/serving.html">TensorFlow Serving</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/lite.html">TensorFlow Lite (Jinpeng)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/javascript.html">TensorFlow in JavaScript (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Large-scale Training</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../en/appendix/distributed.html">Distributed training with TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tpu.html">Training TensorFlow models with TPU (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Extensions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfhub.html">TensorFlow Hub: Model Reuse (Jinpeng)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Appendix</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/rl.html">Introduction to Reinforcement Learning</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/docker.html">Using Docker to deploy TensorFlow environment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/cloud.html">Using TensorFlow on cloud</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/recommended_books.html">References and Recommendations for Further Reading</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
 </ul>
 
             
@@ -376,7 +366,7 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>這裡，我們沒有顯式宣告 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 兩個變數並寫出 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> 這一線性變換，而是建立了一個繼承了 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的模型類 <code class="docutils literal notranslate"><span class="pre">Linear</span></code> 。這個類別在初始化部分實例了一個 <strong>全連接層</strong> （ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），並在 call 方法中對這個層進行呼叫，實現了線性變換的計算。如果需要顯式宣告自己的變數並使用變數進行自定義運算，或者希望了解 Keras 層的內部原理，請參考 <a class="reference internal" href="#custom-layer"><span class="std std-ref">自定義層</span></a>。</p>
+<p>這裡，我們沒有顯式宣告 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 兩個變數並寫出 <code class="docutils literal notranslate"><span class="pre">y_pred</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code> 這一線性變換，而是建立了一個繼承了 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 的模型類 <code class="docutils literal notranslate"><span class="pre">Linear</span></code> 。這個類別在初始化部分實例了一個 <strong>全連接層</strong> （ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），並在 call 方法中對這個層進行呼叫，實現了線性變換的計算。如果需要顯式宣告自己的變數並使用變數進行自定義運算，或者希望了解 Keras 層的內部原理，請參考 <a class="reference internal" href="../../zh/basic/models.html#custom-layer"><span class="std std-ref">自定義層</span></a>。</p>
 <div class="admonition-keras admonition">
 <p class="admonition-title">Keras 的全連接層：線性變換 + 激活函數</p>
 <p><a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/layers/Dense">全連接層</a> （Fully-connected Layer，<code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ）是 Keras 中最基礎和常用的層之一，對輸入矩陣 <img class="math" src="../../_images/math/b86d9659948ffa756133d580cfc95f923705c2b5.png" alt="A"/> 進行 <img class="math" src="../../_images/math/92bb903eabd575a64bd61bd559678418cda7afb2.png" alt="f(AW + b)"/> 的線性變換 + 激活函數操作。如果不指定激活函數，即是純粹的線性變換 <img class="math" src="../../_images/math/62bbbb16ac53d3269d7aa9fc5a15a986f8f0f08c.png" alt="AW + b"/>。具體而言，給定輸入張量 <code class="docutils literal notranslate"><span class="pre">input</span> <span class="pre">=</span> <span class="pre">[batch_size,</span> <span class="pre">input_dim]</span></code> ，該層對輸入張量首先進行 <code class="docutils literal notranslate"><span class="pre">tf.matmul(input,</span> <span class="pre">kernel)</span> <span class="pre">+</span> <span class="pre">bias</span></code> 的線性變換（ <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 是層中可訓練的變量），然後對線性變換後張量的每個元素通過激活函數 <code class="docutils literal notranslate"><span class="pre">activation</span></code> ，從而輸出形狀為 <code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">units]</span></code> 的二維張量。</p>
@@ -391,7 +381,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">kernel_initializer</span></code> 、 <code class="docutils literal notranslate"><span class="pre">bias_initializer</span></code> ：權重矩陣 <code class="docutils literal notranslate"><span class="pre">kernel</span></code> 和偏移量 <code class="docutils literal notranslate"><span class="pre">bias</span></code> 兩個變數的初始化器。預設為 <code class="docutils literal notranslate"><span class="pre">tf.glorot_uniform_initializer</span></code> <a class="footnote-reference brackets" href="#glorot" id="id3">1</a> 。設置為 <code class="docutils literal notranslate"><span class="pre">tf.zeros_initializer</span></code> 表示將兩個變量均初始化為全 0；</p></li>
 </ul>
 <p>該層包含權重矩陣 <code class="docutils literal notranslate"><span class="pre">kernel</span> <span class="pre">=</span> <span class="pre">[input_dim,</span> <span class="pre">units]</span></code> 和偏移量 <code class="docutils literal notranslate"><span class="pre">bias</span> <span class="pre">=</span> <span class="pre">[units]</span></code> <a class="footnote-reference brackets" href="#broadcast" id="id4">2</a> 兩個可訓練變數，對應於 <img class="math" src="../../_images/math/92bb903eabd575a64bd61bd559678418cda7afb2.png" alt="f(AW + b)"/> 中的 <img class="math" src="../../_images/math/eb33eca75f5d77363c991bf041953da54a858bfb.png" alt="W"/> 和 <img class="math" src="../../_images/math/3de2ed824326dc0eb383a42dd6ec44d3b401047b.png" alt="b"/>。</p>
-<p>這裡著重從數學矩陣運算和線性變換的角度描述了全連接層。基於神經元建模的描述可參考 <a class="reference internal" href="#neuron"><span class="std std-ref">後文介紹</span></a> 。</p>
+<p>這裡著重從數學矩陣運算和線性變換的角度描述了全連接層。基於神經元建模的描述可參考 <a class="reference internal" href="../../zh/basic/models.html#neuron"><span class="std std-ref">後文介紹</span></a> 。</p>
 <dl class="footnote brackets">
 <dt class="label" id="glorot"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
 <dd><p>Keras 中的很多層都預設使用 <code class="docutils literal notranslate"><span class="pre">tf.glorot_uniform_initializer</span></code> 初始化變數，關於該初始化器可參考 <a class="reference external" href="https://www.tensorflow.org/api_docs/python/tf/keras/initializers/GlorotUniform">https://www.tensorflow.org/api_docs/python/tf/keras/initializers/GlorotUniform</a>。</p>
@@ -422,7 +412,7 @@
 <li><p>史丹佛大學課程 <a class="reference external" href="https://cs231n.github.io/">CS231n: Convolutional Neural Networks for Visual Recognition</a> 中的 “Neural Networks Part 1 ~ 3” 部分。</p></li>
 </ul>
 </div>
-<p>這裡，我們使用多層感知器完成 MNIST 手寫體數字圖片資料集 <a class="reference internal" href="#lecun1998" id="id7"><span>[LeCun1998]</span></a> 的分類任務。</p>
+<p>這裡，我們使用多層感知器完成 MNIST 手寫體數字圖片資料集 <a class="reference internal" href="../../zh_hans/basic/models.html#lecun1998" id="id7"><span>[LeCun1998]</span></a> 的分類任務。</p>
 <div class="figure align-center" id="id27">
 <img alt="../../_images/mnist_0-9.png" src="../../_images/mnist_0-9.png" />
 <p class="caption"><span class="caption-text">MNIST 手寫體數字圖片範例</span><a class="headerlink" href="#id27" title="永久链接至图片">¶</a></p>
@@ -508,7 +498,7 @@
 <li><p>將這批資料送入模型，計算出模型的預測值；</p></li>
 <li><p>將模型預測值與真實值進行比較，計算損失函數（loss）。這里使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.losses</span></code> 中的交叉熵函數作為損失函數；</p></li>
 <li><p>計算損失函數關於模型變數的導數；</p></li>
-<li><p>將求出的導數值傳入優化器，使用優化器的 <code class="docutils literal notranslate"><span class="pre">apply_gradients</span></code> 方法更新模型參數以最小化損失函數（優化器的詳細使用方法見 <a class="reference internal" href="basic.html#optimizer"><span class="std std-ref">前章</span></a>  ）。</p></li>
+<li><p>將求出的導數值傳入優化器，使用優化器的 <code class="docutils literal notranslate"><span class="pre">apply_gradients</span></code> 方法更新模型參數以最小化損失函數（優化器的詳細使用方法見 <a class="reference internal" href="../../zh/basic/basic.html#optimizer"><span class="std std-ref">前章</span></a>  ）。</p></li>
 </ul>
 <p>具體代碼實現如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">num_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">num_train_data</span> <span class="o">//</span> <span class="n">batch_size</span> <span class="o">*</span> <span class="n">num_epochs</span><span class="p">)</span>
@@ -593,7 +583,7 @@
 </div>
 <div class="section" id="keras">
 <h3>使用Keras實現卷積神經網路<a class="headerlink" href="#keras" title="永久链接至标题">¶</a></h3>
-<p>卷積神經網路的一個範例實現如下所示，和 <a class="reference internal" href="#mlp-model"><span class="std std-ref">上節中的多層感知器</span></a> 在程式碼結構上很類似，只是新加入了一些卷積層和池化層。這裡的網路結構並不是唯一的，可以增加、刪除或調整 CNN 的網路結構和參數，以達到更好的性能。</p>
+<p>卷積神經網路的一個範例實現如下所示，和 <a class="reference internal" href="../../zh/basic/models.html#mlp-model"><span class="std std-ref">上節中的多層感知器</span></a> 在程式碼結構上很類似，只是新加入了一些卷積層和池化層。這裡的網路結構並不是唯一的，可以增加、刪除或調整 CNN 的網路結構和參數，以達到更好的性能。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CNN</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -656,7 +646,7 @@
 <p>    .. code-block:: python</p>
 <p>        tf.keras.backend.set_learning_phase(True)</p>
 <p>    進行設置，也可以在調用模型時通過將 <code class="docutils literal notranslate"><span class="pre">training</span></code> 參數設為 <code class="docutils literal notranslate"><span class="pre">True</span></code> 來設置。</p>
-<p>以下展示一個例子，使用 <code class="docutils literal notranslate"><span class="pre">MobileNetV2</span></code> 網路在 <code class="docutils literal notranslate"><span class="pre">tf_flowers</span></code> 五種分類數據集上進行訓練（為了程式碼的簡短高效，在該範例中我們使用了 <a class="reference internal" href="../appendix/tfds.html"><span class="doc">TensorFlow Datasets</span></a> 和 <a class="reference internal" href="tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 載入和預處理資料）。通過將 <code class="docutils literal notranslate"><span class="pre">weights</span></code> 設置為 <code class="docutils literal notranslate"><span class="pre">None</span></code> ，我們隨機初始化變數而不使用預訓練權重值。同時將 <code class="docutils literal notranslate"><span class="pre">classes</span></code> 設置為5，對應於5種分類的資料集。</p>
+<p>以下展示一個例子，使用 <code class="docutils literal notranslate"><span class="pre">MobileNetV2</span></code> 網路在 <code class="docutils literal notranslate"><span class="pre">tf_flowers</span></code> 五種分類數據集上進行訓練（為了程式碼的簡短高效，在該範例中我們使用了 <a class="reference internal" href="../appendix/tfds.html"><span class="doc">TensorFlow Datasets</span></a> 和 <a class="reference internal" href="../../zh/basic/tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 載入和預處理資料）。通過將 <code class="docutils literal notranslate"><span class="pre">weights</span></code> 設置為 <code class="docutils literal notranslate"><span class="pre">None</span></code> ，我們隨機初始化變數而不使用預訓練權重值。同時將 <code class="docutils literal notranslate"><span class="pre">classes</span></code> 設置為5，對應於5種分類的資料集。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
 
@@ -684,7 +674,7 @@
 <div class="admonition- admonition">
 <p class="admonition-title">卷積層和池化層的工作原理</p>
 <p>卷積層（Convolutional Layer，以 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Conv2D</span></code> 為代表）是 CNN 的核心組件，其結構與大腦的視覺皮層有相似之處。</p>
-<p>回憶我們之前建立的 <a class="reference internal" href="#neuron"><span class="std std-ref">神經細胞的計算模型</span></a> 以及全連接層，我們預設每個神經元與上一層的所有神經元相連。不過，在視覺皮層的神經元中，情況並不是這樣。你或許在生物課上學習過 <strong>接受區</strong> （Receptive Field）這一概念，即視覺皮層中的神經元並非與前一層的所有神經元相連，而只是感受一片區域內的視覺信號，並只對局部區域的視覺刺激進行反應。CNN 中的卷積層正體現了這一特性。</p>
+<p>回憶我們之前建立的 <a class="reference internal" href="../../zh/basic/models.html#neuron"><span class="std std-ref">神經細胞的計算模型</span></a> 以及全連接層，我們預設每個神經元與上一層的所有神經元相連。不過，在視覺皮層的神經元中，情況並不是這樣。你或許在生物課上學習過 <strong>接受區</strong> （Receptive Field）這一概念，即視覺皮層中的神經元並非與前一層的所有神經元相連，而只是感受一片區域內的視覺信號，並只對局部區域的視覺刺激進行反應。CNN 中的卷積層正體現了這一特性。</p>
 <p>例如，下圖是一個 7×7 的單通道圖片信號輸入：</p>
 <div class="figure align-center">
 <img alt="../../_images/conv_image.png" src="../../_images/conv_image.png" />
@@ -755,7 +745,7 @@
 <p>池化層（Pooling Layer）的理解則簡單得多，其可以理解為對圖片進行下降取樣的過程，對於每一次滑動窗口中的所有值，輸出其中的最大值（MaxPooling）、均值或其他方法產生的值。例如，對於一個三通道的 16×16 圖像（即一個 <code class="docutils literal notranslate"><span class="pre">16*16*3</span></code> 的張量），經過感受野為 2×2，滑動步長為 2 的池化層，則得到一個 <code class="docutils literal notranslate"><span class="pre">8*8*3</span></code> 的張量。</p>
 <dl class="footnote brackets">
 <dt class="label" id="sequential"><span class="brackets"><a class="fn-backref" href="#id16">4</a></span></dt>
-<dd><p>這里使用了較為簡易的Sequential模式建立模型，具體介紹見 <a class="reference internal" href="#sequential-functional"><span class="std std-ref">後文</span></a>  。</p>
+<dd><p>這里使用了較為簡易的Sequential模式建立模型，具體介紹見 <a class="reference internal" href="../../zh/basic/models.html#sequential-functional"><span class="std std-ref">後文</span></a>  。</p>
 </dd>
 </dl>
 </div>
@@ -770,7 +760,7 @@
 <li><p><a class="reference external" href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">Recurrent Neural Networks Tutorial, Part 1 – Introduction to RNNs</a></p></li>
 <li><p>台灣大學李宏毅教授的《機器學習》課程的 <a class="reference external" href="https://www.youtube.com/watch?v=xCGidAeyS4M">Recurrent Neural Network (part 1)</a> <a class="reference external" href="https://www.youtube.com/watch?v=rTqmWlnwz_0">Recurrent Neural Network (part 2)</a> 兩部分。</p></li>
 <li><p>LSTM 原理：<a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></p></li>
-<li><p>RNN 序列生成：<a class="reference internal" href="#graves2013" id="id17"><span>[Graves2013]</span></a></p></li>
+<li><p>RNN 序列生成：<a class="reference internal" href="../../zh_hans/basic/models.html#graves2013" id="id17"><span>[Graves2013]</span></a></p></li>
 </ul>
 </div>
 <p>這裡，我們使用 RNN 來進行尼采風格文本的自動生成。 <a class="footnote-reference brackets" href="#rnn-reference" id="id18">5</a></p>
@@ -955,7 +945,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </pre></div>
 </div>
 <p>那麼，我們的任務就是訓練出一個模型，能夠根據當前的狀態預測出應該進行的一個好的動作。大致上來說，一個好的動作應當能夠最大化整個遊戲過程中獲得的獎勵之和，這也是強化學習的目標。以CartPole遊戲為例，我們的目標是希望做出合適的動作使得桿一直不倒，即遊戲交互的回合數盡可能地多。而回合每進行一次，我們都會獲得一個小的正獎勵，回合數越多則累積的獎勵值也越高。因此，我們最大化遊戲過程中的獎勵之和與我們的最終目標是一致的。</p>
-<p>以下程式碼展示了如何使用深度強化學習中的 Deep Q-Learning 方法 <a class="reference internal" href="#mnih2013" id="id22"><span>[Mnih2013]</span></a> 來訓練模型。首先，我們引入TensorFlow、Gym和一些常用套件，並定義一些模型超參數：</p>
+<p>以下程式碼展示了如何使用深度強化學習中的 Deep Q-Learning 方法 <a class="reference internal" href="../../zh_hans/basic/models.html#mnih2013" id="id22"><span>[Mnih2013]</span></a> 來訓練模型。首先，我們引入TensorFlow、Gym和一些常用套件，並定義一些模型超參數：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">gym</span>
@@ -1107,7 +1097,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 <li><p><code class="docutils literal notranslate"><span class="pre">validation_data</span></code> ：驗證資料，可用於在訓練過程中監控模型的性能。</p></li>
 </ul>
 </div></blockquote>
-<p>Keras 支援使用 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 進行訓練，詳見 <a class="reference internal" href="tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 。</p>
+<p>Keras 支援使用 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 進行訓練，詳見 <a class="reference internal" href="../../zh/basic/tools.html#tfdata"><span class="std std-ref">tf.data</span></a> 。</p>
 <p>最後，使用 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model.evaluate</span></code> 評估訓練效果，提供測試資料及標籤即可：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">data_loader</span><span class="o">.</span><span class="n">test_data</span><span class="p">,</span> <span class="n">data_loader</span><span class="o">.</span><span class="n">test_label</span><span class="p">))</span>
 </pre></div>
@@ -1137,7 +1127,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
         <span class="k">return</span> <span class="n">output</span>
 </pre></div>
 </div>
-<p>例如，如果我們要自己實現一個 <a class="reference internal" href="#linear"><span class="std std-ref">本章第一節</span></a> 中的全連接層（ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），可以按以下方式編寫。此程式碼在 <code class="docutils literal notranslate"><span class="pre">build</span></code> 方法中創建兩個變數，並在 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法中使用創建的變數進行運算：</p>
+<p>例如，如果我們要自己實現一個 <a class="reference internal" href="../../zh/basic/models.html#linear"><span class="std std-ref">本章第一節</span></a> 中的全連接層（ <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Dense</span></code> ），可以按以下方式編寫。此程式碼在 <code class="docutils literal notranslate"><span class="pre">build</span></code> 方法中創建兩個變數，並在 <code class="docutils literal notranslate"><span class="pre">call</span></code> 方法中使用創建的變數進行運算：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LinearLayer</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">units</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>

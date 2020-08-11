@@ -27,7 +27,7 @@
         <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
-        <script type="text/javascript" src="../../_static/js/custom_20200523.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200812.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -87,7 +87,11 @@
               
             
             
-              <p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">教学活动</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/mlstudyjam2nd.html">ML Study Jam 2020</a></li>
+</ul>
+<p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
@@ -183,29 +187,15 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../en/deployment/export.html">TensorFlow Model Export</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/deployment/serving.html">TensorFlow Serving</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/lite.html">TensorFlow Lite (Jinpeng)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/deployment/javascript.html">TensorFlow in JavaScript (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Large-scale Training</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../en/appendix/distributed.html">Distributed training with TensorFlow</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tpu.html">Training TensorFlow models with TPU (Huan)</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Extensions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfhub.html">TensorFlow Hub: Model Reuse (Jinpeng)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/appendix/tfds.html">TensorFlow Datasets: Ready-to-use Datasets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/swift.html">Swift for TensorFlow (S4TF) (Huan)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/appendix/quantum.html">TensorFlow Quantum: Hybrid Quantum-classical Machine Learning *</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Appendix</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/rl.html">Introduction to Reinforcement Learning</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/docker.html">Using Docker to deploy TensorFlow environment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/cloud.html">Using TensorFlow on cloud</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/jupyterlab.html">Deploying Your Own Interactive Python Development Environment, JupyterLab</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/recommended_books.html">References and Recommendations for Further Reading</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/appendix/terms.html">Terminology comparison table between Chinese and English</a></li>
 </ul>
 
             
@@ -300,7 +290,7 @@
 <div class="math">
 <p><img src="../../_images/math/9c16f94d9d892de8b4fdfef6ccb73c13b19c3a9b.png" alt="(p_1, p_2) = \begin{cases}(1, 0), \pi(i, j) = \downarrow \\ (0, 1), \pi(i, j) = \searrow\end{cases}"/></p>
 </div><p>有了上面的铺垫之后，我们要解决的问题就变为了：通过调整智能体在每个坐标(i, j)会选择的动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的组合，使得 <img class="math" src="../../_images/math/22e11389902f7a0d0bf29f604c8732a375e4de76.png" alt="f(0, 0)"/> 的值最大。为了解决这个问题，最粗暴的方法是遍历所有 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的组合，例如在示例图中，我们需要决策 <img class="math" src="../../_images/math/35124c32ff720ff1fc1242d7a744b0b34dad67e3.png" alt="\pi(0, 0)"/> 、 <img class="math" src="../../_images/math/553f0c9a4802c7737b24e0c282660a1f5e960c30.png" alt="\pi(1, 0)"/> 、 <img class="math" src="../../_images/math/9d71ef3e09d377f2f522709c2927af83534cc090.png" alt="\pi(1, 1)"/> 的值，一共有 <img class="math" src="../../_images/math/62206d9285193079dd9d16f641eb66367617027b.png" alt="2^3 = 8"/> 种组合，我们只需要将8种组合逐个代入并计算 <img class="math" src="../../_images/math/22e11389902f7a0d0bf29f604c8732a375e4de76.png" alt="f(0, 0)"/> ，输出最大值及其对应组合即可。</p>
-<p>不过，这样显然效率太低了。于是我们考虑直接计算 <a class="reference internal" href="#equation-eq2">(2)</a> 式关于所有动作 <img class="math" src="../../_images/math/6372d56961ade6dee4839f7dc2442932c68e9360.png" alt="\pi"/> 组合的最大值 <img class="math" src="../../_images/math/e0bee167d4f2fa929721d6a6b539ad5f3359b2c0.png" alt="\max_\pi f(i, j)"/> 。在 <a class="reference internal" href="#equation-eq2">(2)</a> 式中， <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> 与任何动作 <img class="math" src="../../_images/math/6372d56961ade6dee4839f7dc2442932c68e9360.png" alt="\pi"/> 都无关，所以我们只需考虑 <img class="math" src="../../_images/math/b94acb243fa7cb2da10afabcd2c8aa2e97e7e9c1.png" alt="p_1 f(i+1, j) + p_2 f(i+1, j+1)"/> 这个表达式的最大值。于是，我们分别计算 <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> 和 <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/> 时该表达式关于任何动作 <img class="math" src="../../_images/math/6372d56961ade6dee4839f7dc2442932c68e9360.png" alt="\pi"/> 的最大值，并取两个最大值中的较大者，如下所示：</p>
+<p>不过，这样显然效率太低了。于是我们考虑直接计算 <a class="reference internal" href="../../en/appendix/rl.html#equation-eq2">(2)</a> 式关于所有动作 <img class="math" src="../../_images/math/6372d56961ade6dee4839f7dc2442932c68e9360.png" alt="\pi"/> 组合的最大值 <img class="math" src="../../_images/math/e0bee167d4f2fa929721d6a6b539ad5f3359b2c0.png" alt="\max_\pi f(i, j)"/> 。在 <a class="reference internal" href="../../en/appendix/rl.html#equation-eq2">(2)</a> 式中， <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> 与任何动作 <img class="math" src="../../_images/math/6372d56961ade6dee4839f7dc2442932c68e9360.png" alt="\pi"/> 都无关，所以我们只需考虑 <img class="math" src="../../_images/math/b94acb243fa7cb2da10afabcd2c8aa2e97e7e9c1.png" alt="p_1 f(i+1, j) + p_2 f(i+1, j+1)"/> 这个表达式的最大值。于是，我们分别计算 <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> 和 <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/> 时该表达式关于任何动作 <img class="math" src="../../_images/math/6372d56961ade6dee4839f7dc2442932c68e9360.png" alt="\pi"/> 的最大值，并取两个最大值中的较大者，如下所示：</p>
 <div class="math">
 <p><img src="../../_images/math/216c0118c700082f830d23cfcb90c8fc07dd2bf7.png" alt="\max_\pi f(i, j) &amp;= \max_\pi [p_1 f(i+1, j) + p_2 f(i+1, j+1)] + r(i, j) \\
     &amp;= \max [\underbrace{\max_\pi(1 f(i+1, j) + 0 f(i+1, j+1))}_{\pi(i, j) = \downarrow}, \underbrace{\max_\pi(0 f(i+1, j) + 1 f(i+1, j+1))}_{\pi(i, j) = \searrow}] + r(i, j) \\
@@ -323,7 +313,7 @@
 </ul>
 <p>请给出智能体在每个坐标所应该选择的动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> ，使得智能体经过的路径上的数字之和的期望（Expectation） <a class="footnote-reference brackets" href="#f1" id="id6">2</a> 最大。</p>
 </div>
-<p>此时，如果你想直接写出问题的状态转移方程，恐怕就不那么容易了（动作选择和转移结果不是一一对应的！）。但如果类比前节 <a class="reference internal" href="#equation-eq2">(2)</a> 式描述问题的框架，我们会发现问题容易了一些。在这个问题中，我们沿用符号 <img class="math" src="../../_images/math/8706bd19cdb4eb441ec988af7b7de23c8ae50abb.png" alt="f(i, j)"/> 来表示智能体在坐标(i, j)处的“现在及未来将会获得的数字之和的期望”，则有“当前(i, j)坐标的期望 = ‘选择动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 后可获得的数字之和’的期望 + 当前坐标的数字”，如下式</p>
+<p>此时，如果你想直接写出问题的状态转移方程，恐怕就不那么容易了（动作选择和转移结果不是一一对应的！）。但如果类比前节 <a class="reference internal" href="../../en/appendix/rl.html#equation-eq2">(2)</a> 式描述问题的框架，我们会发现问题容易了一些。在这个问题中，我们沿用符号 <img class="math" src="../../_images/math/8706bd19cdb4eb441ec988af7b7de23c8ae50abb.png" alt="f(i, j)"/> 来表示智能体在坐标(i, j)处的“现在及未来将会获得的数字之和的期望”，则有“当前(i, j)坐标的期望 = ‘选择动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 后可获得的数字之和’的期望 + 当前坐标的数字”，如下式</p>
 <div class="math" id="equation-eq3">
 <p><span class="eqno">(3)<a class="headerlink" href="#equation-eq3" title="公式的永久链接">¶</a></span><img src="../../_images/math/9e4c2f6d79f84bc4cefd367c1242fe615dc4a515.png" alt="f(i, j) = [p_1 f(i+1, j) + p_2 f(i+1, j+1)] + r(i, j)"/></p>
 </div><p>其中</p>
@@ -337,7 +327,7 @@
 <img alt="../../_images/value_iteration_case_1.png" src="../../_images/value_iteration_case_1.png" />
 <p class="caption"><span class="caption-text">通过对 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 的值进行三轮迭代计算 <img class="math" src="../../_images/math/8f9f501140c275983bc6e1f0019bb69895cd9cf0.png" alt="g(0, 0)"/> 。在每一轮迭代中，对于坐标(i, j)，分别计算当 <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> 和 <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/> 时的“未来将会获得的数字之和的期望的最大值”（即 <img class="math" src="../../_images/math/40c45fe9dc5f26e8ee4e39f03dcf10d06fc26f0f.png" alt="\frac{3}{4} g(i+1, j) + \frac{1}{4} g(i+1, j+1)"/> 和 <img class="math" src="../../_images/math/79ab58378a2d59655da58a9bca9041242a1e607b.png" alt="\frac{1}{4} g(i+1, j) + \frac{3}{4} g(i+1, j+1)"/> ），取两者中的较大者，并加上当前坐标的数字 <img class="math" src="../../_images/math/8d754507da75dc8e3086a56b49520c3742320c7c.png" alt="r(i, j)"/> 。</span><a class="headerlink" href="#id18" title="永久链接至图片">¶</a></p>
 </div>
-<p>我们也可以从智能体在每个坐标(i, j)所做的动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 出发来观察 <a class="reference internal" href="#equation-eq4">(4)</a> 式。在每一轮迭代中，先分别计算两种动作带来的未来收益期望（策略评估），然后取收益较大的动作作为 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的取值（策略改进），最后根据动作更新 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 。</p>
+<p>我们也可以从智能体在每个坐标(i, j)所做的动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 出发来观察 <a class="reference internal" href="../../en/appendix/rl.html#equation-eq4">(4)</a> 式。在每一轮迭代中，先分别计算两种动作带来的未来收益期望（策略评估），然后取收益较大的动作作为 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的取值（策略改进），最后根据动作更新 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 。</p>
 <div class="figure align-center" id="id19">
 <a class="reference internal image-reference" href="../../_images/policy_iteration_case_1.png"><img alt="../../_images/policy_iteration_case_1.png" src="../../_images/policy_iteration_case_1.png" style="width: 75%;" /></a>
 <p class="caption"><span class="caption-text">策略评估-策略改进框架：通过对 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的值进行迭代来计算 <img class="math" src="../../_images/math/8f9f501140c275983bc6e1f0019bb69895cd9cf0.png" alt="g(0, 0)"/> 。在每一轮迭代中，对于坐标(i, j)，分别计算当 <img class="math" src="../../_images/math/56927dc9e8c09f4585d04aa56ea0b82e7b7af380.png" alt="\pi(i, j) = \downarrow"/> 和 <img class="math" src="../../_images/math/a16bd9b04f8303b6e3b7c63d3f9a5e8b6431263d.png" alt="\pi(i, j) = \searrow"/> 时的“未来将会获得的数字之和的期望”（策略评估），取较大者对应的动作作为 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的取值（策略改进）。然后根据本轮迭代确定的 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 的值更新 <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 。</span><a class="headerlink" href="#id19" title="永久链接至图片">¶</a></p>
@@ -422,7 +412,7 @@
 </div><p>一个更聪明的方法是“渐进”地更新q值。也就是说，我们把旧的q值向当前试验的结果 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> 稍微“牵引”一点，作为新的q值，从而让新的q值更贴近当前试验的结果 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> ，即</p>
 <div class="math" id="equation-eq6">
 <p><span class="eqno">(6)<a class="headerlink" href="#equation-eq6" title="公式的永久链接">¶</a></span><img src="../../_images/math/6713d37848de029074a2e3081fb72a68131e6d02.png" alt="q_{\text{new}}(i, j, a) \leftarrow q_{\text{old}}(i, j, a) + \alpha(\underbrace{\bar{q}(i, j, a)}_{\text{target}} - q_{\text{old}}(i, j, a))"/></p>
-</div><p>其中参数 <img class="math" src="../../_images/math/3929a173b494d403fb588bf98153e3a45dd662fd.png" alt="\alpha"/> 控制牵引的“力度”（牵引力度为1时，就退化为了使用试验结果直接覆盖q值的 <a class="reference internal" href="#equation-eq5">(5)</a> 式，不过我们一般会设一个小一点的数字，比如0.1或0.01）。通过这种方式，我们既加入了新的试验所带来的信息，又保留了部分旧的知识。其实很多迭代算法都有类似的特点。</p>
+</div><p>其中参数 <img class="math" src="../../_images/math/3929a173b494d403fb588bf98153e3a45dd662fd.png" alt="\alpha"/> 控制牵引的“力度”（牵引力度为1时，就退化为了使用试验结果直接覆盖q值的 <a class="reference internal" href="../../en/appendix/rl.html#equation-eq5">(5)</a> 式，不过我们一般会设一个小一点的数字，比如0.1或0.01）。通过这种方式，我们既加入了新的试验所带来的信息，又保留了部分旧的知识。其实很多迭代算法都有类似的特点。</p>
 <p>不过， <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> 的值只有当一次试验完全做完的时候才能获得。也就是说，只有走到了数字三角形的最底层，才能知道路径途中的每个坐标到路径最底端的数字之和（从而更新路径途中的所有坐标的q值）。这在有些场景会造成效率的低下，所以我们在实际更新时往往使用另一种方法，使得我们每走一步都可以更新一次q值。具体地说，假设某一次试验中我们在数字三角形的坐标(i, j)处，通过执行动作 <img class="math" src="../../_images/math/7f91f9da34a27af1b7fec19a4d352b4d0ac7bdf9.png" alt="a = \pi(i, j) + \epsilon"/> （ <img class="math" src="../../_images/math/3bbacb4d6fc6b93009fe733c5fe22be0c81b22c5.png" alt="+ \epsilon"/> 代表加上一些探索扰动）而跳到了坐标(i’,j’)（即“走一步”，可能是(i+1, j)，也可能是(i+1, j+1)），然后又在坐标(i’,j’)执行了动作 <img class="math" src="../../_images/math/3244ef22300f601a72a9f7a861e755d913877aea.png" alt="a' = \pi(i', j') + \epsilon"/> 。这时我们可以用 <img class="math" src="../../_images/math/8513661163d739885dd4b8f73d3567e23ad09b0d.png" alt="r(i', j') + q(i', j', a')"/> 来近似替代之前的 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> ，如下式所示：</p>
 <div class="math" id="equation-eq7">
 <p><span class="eqno">(7)<a class="headerlink" href="#equation-eq7" title="公式的永久链接">¶</a></span><img src="../../_images/math/eda8f480ab4716adfec039807eb8db4756726714.png" alt="q_{\text{new}}(i, j, a) \leftarrow q_{\text{old}}(i, j, a) + \alpha\big(\underbrace{r(i', j') + q(i', j', a')}_{\text{target}} - q_{\text{old}}(i, j, a)\big)"/></p>
@@ -474,7 +464,7 @@
 <li><p>智能体在每个坐标 (i, j) 处会选择的动作 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 被称为策略（Policy），用 <img class="math" src="../../_images/math/13c8755d0351dd7e71503b580fe06497e6e1f5d2.png" alt="\pi(s)"/> 表示。智能体的最优策略用 <img class="math" src="../../_images/math/e0f33310741d626a97a2b4e3eccffa4a4bdaf359.png" alt="\pi^*(s)"/> 表示。</p></li>
 <li><p>第二节中，当策略 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 一定时，智能体在坐标(i, j)处 “现在及未来将会获得的数字之和的期望” <img class="math" src="../../_images/math/8706bd19cdb4eb441ec988af7b7de23c8ae50abb.png" alt="f(i, j)"/> 被称为状态-价值函数（State-Value Function），用 <img class="math" src="../../_images/math/b2e6496d499b73820585b8806e33c026cefdb2f0.png" alt="V^\pi(s)"/> 表示。智能体在坐标(i, j)处“未来将会获得的数字之和的期望的最大值” <img class="math" src="../../_images/math/c059ba683271c7f7c6cf8c822d8a64442eae575e.png" alt="g(i, j)"/> 被称为最优策略下的状态-价值函数，用 <img class="math" src="../../_images/math/b85a2f6015b8b31fee4362c6c3b62c5c94e2f4e7.png" alt="V^*(s)"/> 表示。</p></li>
 <li><p>第三节中，当策略 <img class="math" src="../../_images/math/cff73b35a1e3fa29c23e1596890182b46fabe48a.png" alt="\pi(i, j)"/> 一定时，智能体在坐标(i, j)处选择动作a时 “现在及未来将会获得的数字之和的期望” <img class="math" src="../../_images/math/489caaf14034cf07c03fbd24f8f75b206e4ebc6e.png" alt="q(i, j, a)"/> 被称为动作-价值函数（Action-Value Function），用 <img class="math" src="../../_images/math/6ac6aedc7dbfb0b0a202ca18afaa92601f720663.png" alt="Q^\pi(s, a)"/> 表示。最优策略下的状态-价值函数用 <img class="math" src="../../_images/math/fa7bb286bf0d0d63ee1bc6c1378764e1eee2f314.png" alt="Q^*(s, a)"/> 表示。</p></li>
-<li><p>在第三节和第四节中，使用试验结果直接取均值估计 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> 的方法，称为蒙特卡罗方法。 <a class="reference internal" href="#equation-eq7">(7)</a> 中用 <img class="math" src="../../_images/math/8513661163d739885dd4b8f73d3567e23ad09b0d.png" alt="r(i', j') + q(i', j', a')"/> 来近似替代的 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> 的方法称为时间差分法， <a class="reference internal" href="#equation-eq7">(7)</a> 的q值更新方法本身称为SARSA方法。 <a class="reference internal" href="#equation-eq8">(8)</a> 称之为Q-learning方法。</p></li>
+<li><p>在第三节和第四节中，使用试验结果直接取均值估计 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> 的方法，称为蒙特卡罗方法。 <a class="reference internal" href="../../en/appendix/rl.html#equation-eq7">(7)</a> 中用 <img class="math" src="../../_images/math/8513661163d739885dd4b8f73d3567e23ad09b0d.png" alt="r(i', j') + q(i', j', a')"/> 来近似替代的 <img class="math" src="../../_images/math/5218b00642fa32c6f3ba3d5a9ab6cce06ea36b0d.png" alt="\bar{q}(i, j, a)"/> 的方法称为时间差分法， <a class="reference internal" href="../../en/appendix/rl.html#equation-eq7">(7)</a> 的q值更新方法本身称为SARSA方法。 <a class="reference internal" href="../../en/appendix/rl.html#equation-eq8">(8)</a> 称之为Q-learning方法。</p></li>
 </ul>
 <div class="admonition- admonition">
 <p class="admonition-title">推荐阅读</p>
