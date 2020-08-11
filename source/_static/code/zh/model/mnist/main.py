@@ -5,7 +5,7 @@ from zh.model.utils import MNISTLoader, SparseCategoricalAccuracy
 model = 'CNN'           # 'MLP' or 'CNN'
 mode = 'sequential'     # 'sequential', 'functional' or 'subclassing'
 training_loop = 'custom' # 'keras', 'custom' or 'graph'
-num_epochs = 0.1
+num_epochs = 5
 batch_size = 50
 learning_rate = 0.001
 
