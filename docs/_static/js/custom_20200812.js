@@ -43,7 +43,10 @@ $(document).ready(function(){
         $('.wy-menu').children().slice(0, 26).remove();
         $('.wy-side-nav-search > a').text('A Concise Handbook of TensorFlow 2').attr('href', '/en');
         $('.wy-nav-top > a').text('A Concise Handbook of TensorFlow 2').attr('href', '/en');
-    } else if (window.location.pathname.includes('zh/')) {
-        // window.location.href = window.location.href.replace('zh/', 'zh_hans/');
+    } else if (window.location.pathname == "/" || window.location.pathname == "/index.html" ) {
+        $('.wy-menu').children().remove(); 
+        $('.wy-menu').append('<ul><li class="toctree-l1"><a class="reference internal" href="/zh_hans">简体中文版</a></li><li class="toctree-l1"><a class="reference internal" href="/zh_hant">繁體中文版</a></li><li class="toctree-l1"><a class="reference internal" href="/en">English version</a></li></ul>');
+    } else if (window.location.pathname.includes('zh/') && !(location.hostname === "localhost" || location.hostname === "127.0.0.1")) {
+        window.location.href = window.location.href.replace('zh/', 'zh_hans/');
     }
 });

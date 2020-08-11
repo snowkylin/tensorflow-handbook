@@ -7,7 +7,7 @@
 简单粗暴 TensorFlow 2 | A Concise Handbook of TensorFlow 2
 ==================================================================
 
-*基于Keras和Eager Execution | Based on Keras and Eager Execution*
+*基于Keras和即时执行模式 | Based on Keras and Eager Execution*
 
 .. raw:: html
 
