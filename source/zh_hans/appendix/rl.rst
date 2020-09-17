@@ -267,7 +267,9 @@ q值的渐进性更新
 
     - `SJTU Multi-Agent Reinforcement Learning Tutorial <http://wnzhang.net/tutorials/marl2018/index.html>`_ （简明的强化学习入门幻灯片）
     - `强化学习知识大讲堂 <https://zhuanlan.zhihu.com/sharerl>`_ （内容广泛的中文强化学习专栏）
+    - `RLChina强化学习夏令营 <https://rlchina.org>`_ （包含前沿内容的强化学习课程，课件及视频可在线观看）
     - 郭宪, 方勇纯. 深入浅出强化学习：原理入门. 电子工业出版社, 2018. （较为通俗易懂的中文强化学习入门教程）
+    - `UCL Course on RL <https://www.davidsilver.uk/teaching/>`_ （经典的强化学习课程，课件及视频可在线观看）
     - Richard S. Sutton, Andrew G. Barto. 强化学习（第二版）. 电子工业出版社, 2019. （较为系统理论的经典强化学习教材）
 
 .. [#f0] 所以有时又被称为“记忆化搜索”，或者说记忆化搜索是动态规划的一种具体实现形式。
