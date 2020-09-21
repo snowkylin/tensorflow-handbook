@@ -31,16 +31,16 @@ $(document).ready(function(){
     pangu.spacingElementByClassName('wy-nav-content');
     pangu.spacingElementByClassName('wy-nav-side');
     if (window.location.pathname.includes('zh_hans/')) {
-        $('.wy-menu').children().slice(14, 38).remove();   
+        $('.wy-menu').children().slice(12, 36).remove();   
         $('.wy-side-nav-search > a').attr('href', '/zh_hans');   
         $('.wy-nav-top > a').attr('href', '/zh_hans');   
     } else if (window.location.pathname.includes('zh_hant/')) {
-        $('.wy-menu').children().slice(0, 14).remove();
+        $('.wy-menu').children().slice(0, 12).remove();
         $('.wy-menu').children().slice(12, 24).remove();
         $('.wy-side-nav-search > a').text('簡單粗暴 TensorFlow 2').attr('href', '/zh_hant');
         $('.wy-nav-top > a').text('簡單粗暴 TensorFlow 2').attr('href', '/zh_hant');
     } else if (window.location.pathname.includes('en/')) {
-        $('.wy-menu').children().slice(0, 26).remove();
+        $('.wy-menu').children().slice(0, 24).remove();
         $('.wy-side-nav-search > a').text('A Concise Handbook of TensorFlow 2').attr('href', '/en');
         $('.wy-nav-top > a').text('A Concise Handbook of TensorFlow 2').attr('href', '/en');
     } else if (window.location.pathname == "/" || window.location.pathname == "/index.html" ) {
