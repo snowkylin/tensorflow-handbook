@@ -27,7 +27,7 @@
         <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
-        <script type="text/javascript" src="../../_static/js/custom_20200812.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200921.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -87,11 +87,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">教学活动</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/mlstudyjam2nd.html">ML Study Jam 2020</a></li>
-</ul>
-<p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
@@ -262,7 +258,7 @@
             
   <div class="section" id="tf-gradienttape">
 <h1><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 详解<a class="headerlink" href="#tf-gradienttape" title="永久链接至标题">¶</a></h1>
-<p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的出现是 TensorFlow 2 最大的变化之一。其以一种简洁优雅的方式，为 TensorFlow 的即时执行模式和图执行模式提供了统一的自动求导 API。不过对于从 TensorFlow 1.X 过渡到 TensorFlow 2 的开发人员而言，也增加了一定的学习门槛。本章即在 <a class="reference internal" href="../../zh_hant/basic/basic.html#automatic-derivation"><span class="std std-ref">第一章“自动求导机制”一节</span></a> 的基础上，详细介绍 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的使用方法及机制。</p>
+<p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的出现是 TensorFlow 2 最大的变化之一。其以一种简洁优雅的方式，为 TensorFlow 的即时执行模式和图执行模式提供了统一的自动求导 API。不过对于从 TensorFlow 1.X 过渡到 TensorFlow 2 的开发人员而言，也增加了一定的学习门槛。本章即在 <a class="reference internal" href="../../zh/basic/basic.html#automatic-derivation"><span class="std std-ref">第一章“自动求导机制”一节</span></a> 的基础上，详细介绍 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的使用方法及机制。</p>
 <div class="section" id="id1">
 <h2>基本使用<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 是一个记录器，能够记录在其上下文环境中的计算步骤和操作，并用于自动求导。其使用方法分为两步：</p>
@@ -270,7 +266,7 @@
 <li><p>使用 with 语句，将需要求导的计算步骤封装在 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的上下文中；</p></li>
 <li><p>使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 的 <code class="docutils literal notranslate"><span class="pre">gradient</span></code> 方法计算导数。</p></li>
 </ol>
-<p>回顾 <a class="reference internal" href="../../zh_hant/basic/basic.html#automatic-derivation"><span class="std std-ref">第一章“自动求导机制”一节</span></a> 所举的例子，使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 计算函数 <img class="math" src="../../_images/math/2261dfa63cebc11353c25f3b42ab8812925703e7.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/6242bf7ca264a34d82d13f3307438c9bd77b8e15.png" alt="x = 3"/> 时的导数：</p>
+<p>回顾 <a class="reference internal" href="../../zh/basic/basic.html#automatic-derivation"><span class="std std-ref">第一章“自动求导机制”一节</span></a> 所举的例子，使用 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape()</span></code> 计算函数 <img class="math" src="../../_images/math/2261dfa63cebc11353c25f3b42ab8812925703e7.png" alt="y(x) = x^2"/> 在 <img class="math" src="../../_images/math/6242bf7ca264a34d82d13f3307438c9bd77b8e15.png" alt="x = 3"/> 时的导数：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">initial_value</span><span class="o">=</span><span class="mf">3.</span><span class="p">)</span>

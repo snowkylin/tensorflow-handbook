@@ -201,7 +201,7 @@ IDE设置
 
 对于机器学习的研究者和从业者，建议使用 `PyCharm <http://www.jetbrains.com/pycharm/>`_ 作为Python开发的IDE。
 
-在新建项目时，你需要选定项目的Python Interpreter，也就是用怎样的Python环境来运行你的项目。在安装部分，你所建立的每个Conda虚拟环境其实都有一个自己独立的Python Interpreter，你只需要将它们添加进来即可。选择“Add”，并在接下来的窗口选择“Existing Environment”，在Interpreter处选择 ``Anaconda安装目录/envs/所需要添加的Conda环境名字/python.exe`` （Linux下无 ``.exe`` 后缀）并点击“OK”即可。如果选中了“Make available to all projects”，则在所有项目中都可以选择该Python Interpreter。注意，在Windows下Anaconda的默认安装目录比较特殊，一般为  ``C:\Users\用户名\Anaconda3\`` 或 ``C:\Users\用户名\AppData\Local\Continuum\anaconda3`` 。此处 ``AppData`` 是隐藏文件夹。 :raw-html:`<img src="/_static/image/mlstudyjam/easter_egg.jpg" style="width: 16px;" title="TensorFlow 的前身是 DistBelief。" onclick="alert('TensorFlow 的前身是 DistBelief。');"></img>`
+在新建项目时，你需要选定项目的Python Interpreter，也就是用怎样的Python环境来运行你的项目。在安装部分，你所建立的每个Conda虚拟环境其实都有一个自己独立的Python Interpreter，你只需要将它们添加进来即可。选择“Add”，并在接下来的窗口选择“Existing Environment”，在Interpreter处选择 ``Anaconda安装目录/envs/所需要添加的Conda环境名字/python.exe`` （Linux下无 ``.exe`` 后缀）并点击“OK”即可。如果选中了“Make available to all projects”，则在所有项目中都可以选择该Python Interpreter。注意，在Windows下Anaconda的默认安装目录比较特殊，一般为  ``C:\Users\用户名\Anaconda3\`` 或 ``C:\Users\用户名\AppData\Local\Continuum\anaconda3`` 。此处 ``AppData`` 是隐藏文件夹。
 
 对于TensorFlow开发而言，PyCharm的Professonal版本非常有用的一个特性是 **远程调试** （Remote Debugging）。当你编写程序的终端机性能有限，但又有一台可远程ssh访问的高性能计算机（一般具有高性能GPU）时，远程调试功能可以让你在终端机编写程序的同时，在远程计算机上调试和运行程序（尤其是训练模型）。你在终端机上对代码和数据的修改可以自动同步到远程机，在实际使用的过程中如同在远程机上编写程序一般，与串流游戏有异曲同工之妙。不过远程调试对网络的稳定性要求高，如果需要长时间训练模型，建议登录远程机终端直接训练模型（Linux下可以结合 ``nohup`` 命令 [#nohup]_ ，让进程在后端运行，不受终端退出的影响）。远程调试功能的具体配置步骤见 `PyCharm文档 <https://www.jetbrains.com/help/pycharm/remote-debugging-with-product.html>`_ 。
 

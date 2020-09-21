@@ -27,7 +27,7 @@
         <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
-        <script type="text/javascript" src="../../_static/js/custom_20200812.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200921.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -89,11 +89,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">教学活动</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../mlstudyjam2nd.html">ML Study Jam 2020</a></li>
-</ul>
-<p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">TensorFlow概述</a></li>
@@ -487,7 +483,7 @@
 </div>
 <div class="section" id="tensorboard">
 <h2>TensorBoard：训练过程可视化<a class="headerlink" href="#tensorboard" title="永久链接至标题">¶</a></h2>
-<p>有时，你希望查看模型训练过程中各个参数的变化情况（例如损失函数loss的值）。虽然可以通过命令行输出来查看，但有时显得不够直观。而TensorBoard就是一个能够帮助我们将训练过程可视化的工具。 <span class="raw-html"><img src="/_static/image/mlstudyjam/easter_egg.jpg" style="width: 16px;" title="TensorFlow TPU 首次发布时间为 2016 年 5 月。" onclick="alert('TensorFlow TPU 首次发布时间为 2016 年 5 月。');"></img></span></p>
+<p>有时，你希望查看模型训练过程中各个参数的变化情况（例如损失函数loss的值）。虽然可以通过命令行输出来查看，但有时显得不够直观。而TensorBoard就是一个能够帮助我们将训练过程可视化的工具。</p>
 <div class="section" id="id1">
 <h3>实时查看参数变化情况<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h3>
 <p>首先在代码目录下建立一个文件夹（如 <code class="docutils literal notranslate"><span class="pre">./tensorboard</span></code> ）存放TensorBoard的记录文件，并在代码中实例化一个记录器：</p>
@@ -1258,7 +1254,7 @@
 <h2><code class="docutils literal notranslate"><span class="pre">tf.config</span></code>：GPU的使用与分配 *<a class="headerlink" href="#tf-config-gpu" title="永久链接至标题">¶</a></h2>
 <div class="section" id="gpu">
 <h3>指定当前程序使用的GPU<a class="headerlink" href="#gpu" title="永久链接至标题">¶</a></h3>
-<p>很多时候的场景是：实验室/公司研究组里有许多学生/研究员需要共同使用一台多GPU的工作站，而默认情况下TensorFlow会使用其所能够使用的所有GPU，这时就需要合理分配显卡资源。 <span class="raw-html"><img src="/_static/image/mlstudyjam/easter_egg.jpg" style="width: 16px;" title="TensorFlow 支持的系统平台包括 Linux、macOS、Windows、Android。" onclick="alert('TensorFlow 支持的系统平台包括 Linux、macOS、Windows、Android。');"></img></span></p>
+<p>很多时候的场景是：实验室/公司研究组里有许多学生/研究员需要共同使用一台多GPU的工作站，而默认情况下TensorFlow会使用其所能够使用的所有GPU，这时就需要合理分配显卡资源。</p>
 <p>首先，通过 <code class="docutils literal notranslate"><span class="pre">tf.config.list_physical_devices</span></code> ，我们可以获得当前主机上某种特定运算设备类型（如 <code class="docutils literal notranslate"><span class="pre">GPU</span></code> 或 <code class="docutils literal notranslate"><span class="pre">CPU</span></code> ）的列表，例如，在一台具有4块GPU和一个CPU的工作站上运行以下代码：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gpus</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">list_physical_devices</span><span class="p">(</span><span class="n">device_type</span><span class="o">=</span><span class="s1">&#39;GPU&#39;</span><span class="p">)</span>
 <span class="n">cpus</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">list_physical_devices</span><span class="p">(</span><span class="n">device_type</span><span class="o">=</span><span class="s1">&#39;CPU&#39;</span><span class="p">)</span>

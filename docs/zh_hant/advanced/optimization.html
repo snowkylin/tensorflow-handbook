@@ -27,7 +27,7 @@
         <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
-        <script type="text/javascript" src="../../_static/js/custom_20200812.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200921.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -87,11 +87,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">教学活动</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/mlstudyjam2nd.html">ML Study Jam 2020</a></li>
-</ul>
-<p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
@@ -324,7 +320,7 @@
 </div>
 <div class="section" id="id3">
 <h2>模型訓練：數據預處理和預載入<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
-<p>相對於模型的訓練而言，有時候數據的預處理和載入反而是一件更爲耗時的工作。爲了優化模型的訓練流程，有必要對訓練的全流程做一個時間上的評測（Profiling），以弄清每一步所耗費的時間，並發現性能上的瓶頸。這一步可以使用 TensorBoard 的評測工具（參考前文的 <a class="reference internal" href="../basic/tools.html#graph-profile"><span class="std std-ref">查看Graph和Profile信息</span></a> ），也可以簡單地使用Python的 <code class="docutils literal notranslate"><span class="pre">time</span></code> 庫在終端輸出每一步所需時間。評測完成後，如果發現瓶頸在數據端（例如每一步訓練只花費1秒，而處理數據就花了5秒），我們即需要思考數據端的優化方式。一般而言，可以通過事先預處理好需要傳入模型訓練的數據來提高性能，也可以在模型訓練的時候並行進行數據的讀取和處理。可以參考前文的 <a class="reference internal" href="../basic/tools.html#prefetch"><span class="std std-ref">使用 tf.data 的平行化策略提高訓練流程效率</span></a> 以了解詳情。</p>
+<p>相對於模型的訓練而言，有時候數據的預處理和載入反而是一件更爲耗時的工作。爲了優化模型的訓練流程，有必要對訓練的全流程做一個時間上的評測（Profiling），以弄清每一步所耗費的時間，並發現性能上的瓶頸。這一步可以使用 TensorBoard 的評測工具（參考前文的 <a class="reference internal" href="../../zh/basic/tools.html#graph-profile"><span class="std std-ref">查看Graph和Profile信息</span></a> ），也可以簡單地使用Python的 <code class="docutils literal notranslate"><span class="pre">time</span></code> 庫在終端輸出每一步所需時間。評測完成後，如果發現瓶頸在數據端（例如每一步訓練只花費1秒，而處理數據就花了5秒），我們即需要思考數據端的優化方式。一般而言，可以通過事先預處理好需要傳入模型訓練的數據來提高性能，也可以在模型訓練的時候並行進行數據的讀取和處理。可以參考前文的 <a class="reference internal" href="../../zh/basic/tools.html#prefetch"><span class="std std-ref">使用 tf.data 的并行化策略提高训练流程效率</span></a> 以了解詳情。</p>
 </div>
 <div class="section" id="id4">
 <h2>模型類型與加速潛力的關係<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
@@ -337,12 +333,12 @@
 </pre></div>
 </div>
 <p>以上提示告訴你，你的 CPU 支持 AVX2 指令集，但當前安裝的 TensorFlow 版本並未針對這一指令集進行優化。</p>
-<p>不過，如果你的機器學習任務恰好在 CPU 上訓練更加有效，或者因爲某些原因而必須在 CPU 上訓練，那麼你可以通過開啓這些擴展指令集，來榨乾最後一點 TensorFlow 本體的性能提升空間。一般而言，開啓這些擴展指令集支持必須重新編譯 TensorFlow （這一過程漫長而痛苦，並不推薦一般人嘗試），不過好在有一些第三方編譯的，開啓了擴展指令集的 TensorFlow 版本（例如 GitHub 上的 <a class="reference external" href="https://github.com/fo40225/tensorflow-windows-wheel">fo40225/tensorflow-windows-wheel</a> ）。你可以根據自己的 CPU 支持的擴展指令集，下載並安裝第三方提供的預編譯的 <code class="docutils literal notranslate"><span class="pre">.whl</span></code> 文件來使用開啓了擴展指令集支持的 TensorFlow。此處性能的提升也視應用而定，筆者使用一顆支持 AVX2 指令集的 AMD Ryzen 5 3500U 處理器，使用 <a class="reference internal" href="../basic/tools.html#tffunction"><span class="std std-ref">tf.function ：圖執行模式 *</span></a> 中的 MNIST 分類任務進行測試。針對 AVX2 優化後的 TensorFlow 速度提升約爲5~10%。</p>
+<p>不過，如果你的機器學習任務恰好在 CPU 上訓練更加有效，或者因爲某些原因而必須在 CPU 上訓練，那麼你可以通過開啓這些擴展指令集，來榨乾最後一點 TensorFlow 本體的性能提升空間。一般而言，開啓這些擴展指令集支持必須重新編譯 TensorFlow （這一過程漫長而痛苦，並不推薦一般人嘗試），不過好在有一些第三方編譯的，開啓了擴展指令集的 TensorFlow 版本（例如 GitHub 上的 <a class="reference external" href="https://github.com/fo40225/tensorflow-windows-wheel">fo40225/tensorflow-windows-wheel</a> ）。你可以根據自己的 CPU 支持的擴展指令集，下載並安裝第三方提供的預編譯的 <code class="docutils literal notranslate"><span class="pre">.whl</span></code> 文件來使用開啓了擴展指令集支持的 TensorFlow。此處性能的提升也視應用而定，筆者使用一顆支持 AVX2 指令集的 AMD Ryzen 5 3500U 處理器，使用 <a class="reference internal" href="../../zh/basic/tools.html#tffunction"><span class="std std-ref">tf.function ：图执行模式 *</span></a> 中的 MNIST 分類任務進行測試。針對 AVX2 優化後的 TensorFlow 速度提升約爲5~10%。</p>
 </div>
 <div class="section" id="id5">
 <h2>性能優化策略<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
 <p>從以上介紹可以看出，模型運行效率低，不一定是硬體性能不夠好的緣故。在購買高性能硬體的時候，有必要多思考一下現有硬體的性能是否通過優化而得到了充分應用。如果不能確定，可以借或租一台高性能硬體（如雲服務）並在上面運行模型，觀察性能提升的程度。相對而言，借或租的成本遠低於升級或購買新硬體，對於個人開發者而言是更爲具有性價比的選擇。</p>
-<p>同時，性能優化也存在一個度的問題。一方面，我們有必要在機器學習模型開發的初期就考慮良好的設計和架構，使得模型在高可復用性的基礎上達到較優的運行性能。另一方面，代碼的可讀性在機器學習中尤爲重要。正如軟體工程中的名言，「premature optimization is the root of all evil」 <a class="reference internal" href="#knuth1974" id="id6"><span>[Knuth1974]</span></a> 。直白來說，不要浪費時間做一些提速不大、而且還會嚴重犧牲代碼可讀性的性能優化。</p>
+<p>同時，性能優化也存在一個度的問題。一方面，我們有必要在機器學習模型開發的初期就考慮良好的設計和架構，使得模型在高可復用性的基礎上達到較優的運行性能。另一方面，代碼的可讀性在機器學習中尤爲重要。正如軟體工程中的名言，「premature optimization is the root of all evil」 <a class="reference internal" href="../../zh_hans/advanced/optimization.html#knuth1974" id="id6"><span>[Knuth1974]</span></a> 。直白來說，不要浪費時間做一些提速不大、而且還會嚴重犧牲代碼可讀性的性能優化。</p>
 <dl class="citation">
 <dt class="label" id="knuth1974"><span class="brackets"><a class="fn-backref" href="#id6">Knuth1974</a></span></dt>
 <dd><p>Knuth D E. Structured programming with go to statements[J]. ACM Computing Surveys (CSUR), 1974, 6(4): 261-301.</p>

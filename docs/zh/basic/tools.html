@@ -27,7 +27,7 @@
         <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
-        <script type="text/javascript" src="../../_static/js/custom_20200812.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200921.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -87,11 +87,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">教学活动</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/mlstudyjam2nd.html">ML Study Jam 2020</a></li>
-</ul>
-<p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
@@ -449,7 +445,7 @@
 </div>
 <div class="section" id="tensorboard">
 <h2>TensorBoard：训练过程可视化<a class="headerlink" href="#tensorboard" title="永久链接至标题">¶</a></h2>
-<p>有时，你希望查看模型训练过程中各个参数的变化情况（例如损失函数loss的值）。虽然可以通过命令行输出来查看，但有时显得不够直观。而TensorBoard就是一个能够帮助我们将训练过程可视化的工具。 <span class="raw-html"><img src="/_static/image/mlstudyjam/easter_egg.jpg" style="width: 16px;" title="TensorFlow TPU 首次发布时间为 2016 年 5 月。" onclick="alert('TensorFlow TPU 首次发布时间为 2016 年 5 月。');"></img></span></p>
+<p>有时，你希望查看模型训练过程中各个参数的变化情况（例如损失函数loss的值）。虽然可以通过命令行输出来查看，但有时显得不够直观。而TensorBoard就是一个能够帮助我们将训练过程可视化的工具。</p>
 <div class="section" id="id1">
 <h3>实时查看参数变化情况<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h3>
 <p>首先在代码目录下建立一个文件夹（如 <code class="docutils literal notranslate"><span class="pre">./tensorboard</span></code> ）存放TensorBoard的记录文件，并在代码中实例化一个记录器：</p>
@@ -491,7 +487,7 @@
     <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">trace_export</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;model_trace&quot;</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">profiler_outdir</span><span class="o">=</span><span class="n">log_dir</span><span class="p">)</span>    <span class="c1"># 保存Trace信息到文件</span>
 </pre></div>
 </div>
-<p>之后，我们就可以在TensorBoard中选择“Profile”，以时间轴的方式查看各操作的耗时情况。如果使用了 <a class="reference internal" href="../../zh_hant/basic/tools.html#tffunction"><span class="std std-ref">tf.function</span></a> 建立了计算图，也可以点击“Graphs”查看图结构。</p>
+<p>之后，我们就可以在TensorBoard中选择“Profile”，以时间轴的方式查看各操作的耗时情况。如果使用了 <a class="reference internal" href="#tffunction"><span class="std std-ref">tf.function</span></a> 建立了计算图，也可以点击“Graphs”查看图结构。</p>
 <div class="admonition hint">
 <p class="admonition-title">提示</p>
 <p>在 TensorFlow 2.3 及后续版本中，需要使用:</p>
@@ -601,7 +597,7 @@
 </div>
 <p>即可快速载入MNIST数据集。</p>
 </div>
-<p>对于特别巨大而无法完整载入内存的数据集，我们可以先将数据集处理为 TFRecord 格式，然后使用 <code class="docutils literal notranslate"><span class="pre">tf.data.TFRocordDataset()</span></code> 进行载入。详情请参考 <a class="reference internal" href="../../zh_hant/basic/tools.html#tfrecord"><span class="std std-ref">后节</span></a>：</p>
+<p>对于特别巨大而无法完整载入内存的数据集，我们可以先将数据集处理为 TFRecord 格式，然后使用 <code class="docutils literal notranslate"><span class="pre">tf.data.TFRocordDataset()</span></code> 进行载入。详情请参考 <a class="reference internal" href="#tfrecord"><span class="std std-ref">后节</span></a>：</p>
 </div>
 <div class="section" id="id5">
 <h3>数据集对象的预处理<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
@@ -709,7 +705,7 @@
 <p class="caption"><span class="caption-text">通过设置 <code class="docutils literal notranslate"><span class="pre">Dataset.map()</span></code> 的 <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> 参数实现数据转换的并行化。上部分是未并行化的图示，下部分是2核并行的图示。 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">3图示来源</a> 。</span><a class="headerlink" href="#id26" title="永久链接至图片">¶</a></p>
 </div>
 <p>当然，这里同样可以将 <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> 设置为 <code class="docutils literal notranslate"><span class="pre">tf.data.experimental.AUTOTUNE</span></code> 以让TensorFlow自动选择合适的数值。</p>
-<p>除此以外，还有很多提升数据集处理性能的方式，可参考 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">TensorFlow文档</a> 进一步了解。后文的实例中展示了tf.data并行化策略的强大性能，可 <a class="reference internal" href="../../zh_hant/basic/tools.html#tfdata-performance"><span class="std std-ref">点此</span></a> 查看。</p>
+<p>除此以外，还有很多提升数据集处理性能的方式，可参考 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">TensorFlow文档</a> 进一步了解。后文的实例中展示了tf.data并行化策略的强大性能，可 <a class="reference internal" href="#tfdata-performance"><span class="std std-ref">点此</span></a> 查看。</p>
 </div>
 <div class="section" id="id11">
 <h3>数据集元素的获取与使用<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
@@ -851,10 +847,10 @@
 <li><p>通过 <code class="docutils literal notranslate"><span class="pre">tf.data.TFRecordDataset</span></code> 读入原始的 TFRecord 文件（此时文件中的 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 对象尚未被反序列化），获得一个 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 数据集对象；</p></li>
 <li><p>通过 <code class="docutils literal notranslate"><span class="pre">Dataset.map</span></code> 方法，对该数据集对象中的每一个序列化的 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 字符串执行 <code class="docutils literal notranslate"><span class="pre">tf.io.parse_single_example</span></code> 函数，从而实现反序列化。</p></li>
 </ul>
-<p>以下我们通过一个实例，展示将 <a class="reference internal" href="../../zh_hant/basic/tools.html#cats-vs-dogs"><span class="std std-ref">上一节</span></a> 中使用的cats_vs_dogs二分类数据集的训练集部分转换为TFRecord文件，并读取该文件的过程。</p>
+<p>以下我们通过一个实例，展示将 <a class="reference internal" href="#cats-vs-dogs"><span class="std std-ref">上一节</span></a> 中使用的cats_vs_dogs二分类数据集的训练集部分转换为TFRecord文件，并读取该文件的过程。</p>
 <div class="section" id="id14">
 <h3>将数据集存储为 TFRecord 文件<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
-<p>首先，与 <a class="reference internal" href="../../zh_hant/basic/tools.html#cats-vs-dogs"><span class="std std-ref">上一节</span></a> 类似，我们进行一些准备工作，<a class="reference external" href="https://www.floydhub.com/fastai/datasets/cats-vs-dogs">下载数据集</a> 并解压到 <code class="docutils literal notranslate"><span class="pre">data_dir</span></code> ，初始化数据集的图片文件名列表及标签。</p>
+<p>首先，与 <a class="reference internal" href="#cats-vs-dogs"><span class="std std-ref">上一节</span></a> 类似，我们进行一些准备工作，<a class="reference external" href="https://www.floydhub.com/fastai/datasets/cats-vs-dogs">下载数据集</a> 并解压到 <code class="docutils literal notranslate"><span class="pre">data_dir</span></code> ，初始化数据集的图片文件名列表及标签。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
@@ -1220,7 +1216,7 @@
 <h2><code class="docutils literal notranslate"><span class="pre">tf.config</span></code>：GPU的使用与分配 *<a class="headerlink" href="#tf-config-gpu" title="永久链接至标题">¶</a></h2>
 <div class="section" id="gpu">
 <h3>指定当前程序使用的GPU<a class="headerlink" href="#gpu" title="永久链接至标题">¶</a></h3>
-<p>很多时候的场景是：实验室/公司研究组里有许多学生/研究员需要共同使用一台多GPU的工作站，而默认情况下TensorFlow会使用其所能够使用的所有GPU，这时就需要合理分配显卡资源。 <span class="raw-html"><img src="/_static/image/mlstudyjam/easter_egg.jpg" style="width: 16px;" title="TensorFlow 支持的系统平台包括 Linux、macOS、Windows、Android。" onclick="alert('TensorFlow 支持的系统平台包括 Linux、macOS、Windows、Android。');"></img></span></p>
+<p>很多时候的场景是：实验室/公司研究组里有许多学生/研究员需要共同使用一台多GPU的工作站，而默认情况下TensorFlow会使用其所能够使用的所有GPU，这时就需要合理分配显卡资源。</p>
 <p>首先，通过 <code class="docutils literal notranslate"><span class="pre">tf.config.list_physical_devices</span></code> ，我们可以获得当前主机上某种特定运算设备类型（如 <code class="docutils literal notranslate"><span class="pre">GPU</span></code> 或 <code class="docutils literal notranslate"><span class="pre">CPU</span></code> ）的列表，例如，在一台具有4块GPU和一个CPU的工作站上运行以下代码：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gpus</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">list_physical_devices</span><span class="p">(</span><span class="n">device_type</span><span class="o">=</span><span class="s1">&#39;GPU&#39;</span><span class="p">)</span>
 <span class="n">cpus</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">list_physical_devices</span><span class="p">(</span><span class="n">device_type</span><span class="o">=</span><span class="s1">&#39;CPU&#39;</span><span class="p">)</span>

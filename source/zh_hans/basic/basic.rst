@@ -155,7 +155,7 @@ NumPy下的线性回归
 .. role:: raw-html(raw)
    :format: html
 
-而TensorFlow等深度学习框架的出现很大程度上解决了这些痛点，为机器学习模型的实现带来了很大的便利。 :raw-html:`<img src="/_static/image/mlstudyjam/easter_egg.jpg" style="width: 16px;" title="TensorFlow 首次发布时间为 2015 年 9 月 11 日。" onclick="alert('TensorFlow 首次发布时间为 2015 年 9 月 11 日。');"></img>`
+而TensorFlow等深度学习框架的出现很大程度上解决了这些痛点，为机器学习模型的实现带来了很大的便利。
 
 .. _zh_hans_optimizer:
 

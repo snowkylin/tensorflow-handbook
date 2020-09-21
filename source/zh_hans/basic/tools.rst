@@ -118,7 +118,7 @@ TensorBoard：训练过程可视化
 .. role:: raw-html(raw)
    :format: html
 
-有时，你希望查看模型训练过程中各个参数的变化情况（例如损失函数loss的值）。虽然可以通过命令行输出来查看，但有时显得不够直观。而TensorBoard就是一个能够帮助我们将训练过程可视化的工具。 :raw-html:`<img src="/_static/image/mlstudyjam/easter_egg.jpg" style="width: 16px;" title="TensorFlow TPU 首次发布时间为 2016 年 5 月。" onclick="alert('TensorFlow TPU 首次发布时间为 2016 年 5 月。');"></img>`
+有时，你希望查看模型训练过程中各个参数的变化情况（例如损失函数loss的值）。虽然可以通过命令行输出来查看，但有时显得不够直观。而TensorBoard就是一个能够帮助我们将训练过程可视化的工具。
 
 实时查看参数变化情况
 -------------------------------------------
@@ -755,7 +755,7 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
 指定当前程序使用的GPU
 ------------------------------------------- 
 
-很多时候的场景是：实验室/公司研究组里有许多学生/研究员需要共同使用一台多GPU的工作站，而默认情况下TensorFlow会使用其所能够使用的所有GPU，这时就需要合理分配显卡资源。 :raw-html:`<img src="/_static/image/mlstudyjam/easter_egg.jpg" style="width: 16px;" title="TensorFlow 支持的系统平台包括 Linux、macOS、Windows、Android。" onclick="alert('TensorFlow 支持的系统平台包括 Linux、macOS、Windows、Android。');"></img>`
+很多时候的场景是：实验室/公司研究组里有许多学生/研究员需要共同使用一台多GPU的工作站，而默认情况下TensorFlow会使用其所能够使用的所有GPU，这时就需要合理分配显卡资源。
 
 
 首先，通过 ``tf.config.list_physical_devices`` ，我们可以获得当前主机上某种特定运算设备类型（如 ``GPU`` 或 ``CPU`` ）的列表，例如，在一台具有4块GPU和一个CPU的工作站上运行以下代码：

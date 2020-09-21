@@ -230,7 +230,7 @@ Node.js客户端示例（Ziyang）
 .. role:: raw-html(raw)
    :format: html
 
-可见输出结果符合预期。 :raw-html:`<img src="/_static/image/mlstudyjam/easter_egg.jpg" style="width: 16px;" title="TensorFlow Lite 首次对外公布时间为 2017 年 6 月。" onclick="alert('TensorFlow Lite 首次对外公布时间为 2017 年 6 月。');"></img>`
+可见输出结果符合预期。
 
 .. note:: 如果你不熟悉HTTP POST，可以参考 `这里 <https://www.runoob.com/tags/html-httpmethods.html>`_ 。事实上，当你在用浏览器填写表单（比方说性格测试）并点击“提交”按钮，然后获得返回结果（比如说“你的性格是ISTJ”）时，就很有可能是在向服务器发送一个HTTP POST请求并获得了服务器的回复。
 

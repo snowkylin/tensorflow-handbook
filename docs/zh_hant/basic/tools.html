@@ -27,7 +27,7 @@
         <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
-        <script type="text/javascript" src="../../_static/js/custom_20200812.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200921.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -89,11 +89,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">教学活动</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/mlstudyjam2nd.html">ML Study Jam 2020</a></li>
-</ul>
-<p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
@@ -529,7 +525,7 @@
     <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">trace_export</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;model_trace&quot;</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">profiler_outdir</span><span class="o">=</span><span class="n">log_dir</span><span class="p">)</span>    <span class="c1"># 保存Trace資訊到文件</span>
 </pre></div>
 </div>
-<p>之後，我們就可以在TensorBoard中選擇“Profile”，以時間軸的方式查看各操作的所消耗時間情況。如果使用了 <a class="reference internal" href="#tffunction"><span class="std std-ref">tf.function</span></a> 建立了計算圖，也可以點擊“Graphs”查看圖結構。</p>
+<p>之後，我們就可以在TensorBoard中選擇“Profile”，以時間軸的方式查看各操作的所消耗時間情況。如果使用了 <a class="reference internal" href="../../zh/basic/tools.html#tffunction"><span class="std std-ref">tf.function</span></a> 建立了計算圖，也可以點擊“Graphs”查看圖結構。</p>
 <div class="figure align-center">
 <a class="reference internal image-reference" href="../../_images/profiling.png"><img alt="../../_images/profiling.png" src="../../_images/profiling.png" style="width: 100%;" /></a>
 </div>
@@ -631,7 +627,7 @@
 </div>
 <p>即可快速載入MNIST資料集。</p>
 </div>
-<p>對於特別巨大而無法完整載入內存的資料集，我們可以先將資料集處理為 TFRecord 格式，然後使用 <code class="docutils literal notranslate"><span class="pre">tf.data.TFRocrdDataset()</span></code> 進行載入。詳情請參考 <a class="reference internal" href="#tfrecord"><span class="std std-ref">後節</span></a>：</p>
+<p>對於特別巨大而無法完整載入內存的資料集，我們可以先將資料集處理為 TFRecord 格式，然後使用 <code class="docutils literal notranslate"><span class="pre">tf.data.TFRocrdDataset()</span></code> 進行載入。詳情請參考 <a class="reference internal" href="../../zh/basic/tools.html#tfrecord"><span class="std std-ref">後節</span></a>：</p>
 </div>
 <div class="section" id="id5">
 <h3>資料集對象的預處理<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
@@ -739,7 +735,7 @@
 <p class="caption"><span class="caption-text">通過設置 <code class="docutils literal notranslate"><span class="pre">Dataset.map()</span></code> 的 <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> 參數實現資料轉換的平行化。上部分是未平行化的圖示，下部分是2核平行的圖示。 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">3圖示來源</a> 。</span><a class="headerlink" href="#id26" title="永久链接至图片">¶</a></p>
 </div>
 <p>當然，這裡同樣可以將 <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> 設置為 <code class="docutils literal notranslate"><span class="pre">tf.data.experimental.AUTOTUNE</span></code> 讓TensorFlow自動選擇合適的數值。</p>
-<p>除此以外，還有很多提升資料集處理性能的方式，可參考 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">TensorFlow文件</a> 進一步了解。後文的實例中展示了tf.data平行化策略的強大性能，可 <a class="reference internal" href="#tfdata-performance"><span class="std std-ref">點此</span></a> 查看。</p>
+<p>除此以外，還有很多提升資料集處理性能的方式，可參考 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">TensorFlow文件</a> 進一步了解。後文的實例中展示了tf.data平行化策略的強大性能，可 <a class="reference internal" href="../../zh/basic/tools.html#tfdata-performance"><span class="std std-ref">點此</span></a> 查看。</p>
 </div>
 <div class="section" id="id11">
 <h3>資料集元素的獲取與使用<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
@@ -881,10 +877,10 @@
 <li><p>通過 <code class="docutils literal notranslate"><span class="pre">tf.data.TFRecordDataset</span></code> 讀入原始的 TFRecord 文件（此時文件中的 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 對象尚未被反序列化），獲得一個 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 資料集對象；</p></li>
 <li><p>通過 <code class="docutils literal notranslate"><span class="pre">Dataset.map</span></code> 方法，對該資料集對象中的每一個序列化的 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 字串執行 <code class="docutils literal notranslate"><span class="pre">tf.io.parse_single_example</span></code> 函數，從而實現反序列化。</p></li>
 </ul>
-<p>以下我們通過一個實例，展示將 <a class="reference internal" href="#cats-vs-dogs"><span class="std std-ref">上一節</span></a> 中使用的cats_vs_dogs二分類資料集的訓練集部分轉換為TFRecord文件，並讀取該文件的過程。</p>
+<p>以下我們通過一個實例，展示將 <a class="reference internal" href="../../zh/basic/tools.html#cats-vs-dogs"><span class="std std-ref">上一節</span></a> 中使用的cats_vs_dogs二分類資料集的訓練集部分轉換為TFRecord文件，並讀取該文件的過程。</p>
 <div class="section" id="id14">
 <h3>將資料集存儲為 TFRecord 文件<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
-<p>首先，與 <a class="reference internal" href="#cats-vs-dogs"><span class="std std-ref">上一節</span></a> 類似，我們進行一些準備工作，<a class="reference external" href="https://www.floydhub.com/fastai/datasets/cats-vs-dogs">下載資料集</a> 並解壓到 <code class="docutils literal notranslate"><span class="pre">data_dir</span></code> ，初始化資料集的圖片文件名列表及標籤。</p>
+<p>首先，與 <a class="reference internal" href="../../zh/basic/tools.html#cats-vs-dogs"><span class="std std-ref">上一節</span></a> 類似，我們進行一些準備工作，<a class="reference external" href="https://www.floydhub.com/fastai/datasets/cats-vs-dogs">下載資料集</a> 並解壓到 <code class="docutils literal notranslate"><span class="pre">data_dir</span></code> ，初始化資料集的圖片文件名列表及標籤。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">os</span>
 

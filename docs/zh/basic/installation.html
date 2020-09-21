@@ -27,7 +27,7 @@
         <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
-        <script type="text/javascript" src="../../_static/js/custom_20200812.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200921.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -87,11 +87,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">教学活动</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/mlstudyjam2nd.html">ML Study Jam 2020</a></li>
-</ul>
-<p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
@@ -438,7 +434,7 @@ Mon Jun 10 23:19:54 2019
 <div class="section" id="ide">
 <h2>IDE设置<a class="headerlink" href="#ide" title="永久链接至标题">¶</a></h2>
 <p>对于机器学习的研究者和从业者，建议使用 <a class="reference external" href="http://www.jetbrains.com/pycharm/">PyCharm</a> 作为Python开发的IDE。</p>
-<p>在新建项目时，你需要选定项目的Python Interpreter，也就是用怎样的Python环境来运行你的项目。在安装部分，你所建立的每个Conda虚拟环境其实都有一个自己独立的Python Interpreter，你只需要将它们添加进来即可。选择“Add”，并在接下来的窗口选择“Existing Environment”，在Interpreter处选择 <code class="docutils literal notranslate"><span class="pre">Anaconda安装目录/envs/所需要添加的Conda环境名字/python.exe</span></code> （Linux下无 <code class="docutils literal notranslate"><span class="pre">.exe</span></code> 后缀）并点击“OK”即可。如果选中了“Make available to all projects”，则在所有项目中都可以选择该Python Interpreter。注意，在Windows下Anaconda的默认安装目录比较特殊，一般为  <code class="docutils literal notranslate"><span class="pre">C:\Users\用户名\Anaconda3\</span></code> 或 <code class="docutils literal notranslate"><span class="pre">C:\Users\用户名\AppData\Local\Continuum\anaconda3</span></code> 。此处 <code class="docutils literal notranslate"><span class="pre">AppData</span></code> 是隐藏文件夹。 <span class="raw-html"><img src="/_static/image/mlstudyjam/easter_egg.jpg" style="width: 16px;" title="TensorFlow 的前身是 DistBelief。" onclick="alert('TensorFlow 的前身是 DistBelief。');"></img></span></p>
+<p>在新建项目时，你需要选定项目的Python Interpreter，也就是用怎样的Python环境来运行你的项目。在安装部分，你所建立的每个Conda虚拟环境其实都有一个自己独立的Python Interpreter，你只需要将它们添加进来即可。选择“Add”，并在接下来的窗口选择“Existing Environment”，在Interpreter处选择 <code class="docutils literal notranslate"><span class="pre">Anaconda安装目录/envs/所需要添加的Conda环境名字/python.exe</span></code> （Linux下无 <code class="docutils literal notranslate"><span class="pre">.exe</span></code> 后缀）并点击“OK”即可。如果选中了“Make available to all projects”，则在所有项目中都可以选择该Python Interpreter。注意，在Windows下Anaconda的默认安装目录比较特殊，一般为  <code class="docutils literal notranslate"><span class="pre">C:\Users\用户名\Anaconda3\</span></code> 或 <code class="docutils literal notranslate"><span class="pre">C:\Users\用户名\AppData\Local\Continuum\anaconda3</span></code> 。此处 <code class="docutils literal notranslate"><span class="pre">AppData</span></code> 是隐藏文件夹。</p>
 <p>对于TensorFlow开发而言，PyCharm的Professonal版本非常有用的一个特性是 <strong>远程调试</strong> （Remote Debugging）。当你编写程序的终端机性能有限，但又有一台可远程ssh访问的高性能计算机（一般具有高性能GPU）时，远程调试功能可以让你在终端机编写程序的同时，在远程计算机上调试和运行程序（尤其是训练模型）。你在终端机上对代码和数据的修改可以自动同步到远程机，在实际使用的过程中如同在远程机上编写程序一般，与串流游戏有异曲同工之妙。不过远程调试对网络的稳定性要求高，如果需要长时间训练模型，建议登录远程机终端直接训练模型（Linux下可以结合 <code class="docutils literal notranslate"><span class="pre">nohup</span></code> 命令 <a class="footnote-reference brackets" href="#nohup" id="id13">1</a> ，让进程在后端运行，不受终端退出的影响）。远程调试功能的具体配置步骤见 <a class="reference external" href="https://www.jetbrains.com/help/pycharm/remote-debugging-with-product.html">PyCharm文档</a> 。</p>
 <div class="admonition tip">
 <p class="admonition-title">小技巧</p>
@@ -463,7 +459,7 @@ Mon Jun 10 23:19:54 2019
 </div>
 <p>在很多人的刻板印象中，TensorFlow乃至深度学习是一件非常“吃硬件”的事情，以至于一接触TensorFlow，第一件事情可能就是想如何升级自己的电脑硬件。不过，TensorFlow所需的硬件配置很大程度是视任务和使用环境而定的：</p>
 <ul class="simple">
-<li><p>对于TensorFlow初学者，无需硬件升级也可以很好地学习和掌握TensorFlow。本手册中的大部分教学示例，大部分当前主流的个人电脑（即使没有GPU）均可胜任，无需添置其他硬件设备。对于本手册中部分计算量较大的示例（例如 <a class="reference internal" href="../../zh_hant/basic/tools.html#cats-vs-dogs"><span class="std std-ref">在cats_vs_dogs数据集上训练CNN图像分类</span></a> ），一块主流的NVIDIA GPU会大幅加速训练。如果自己的个人电脑难以胜任，可以考虑在云端（例如 <a class="reference internal" href="../appendix/cloud.html#colab"><span class="std std-ref">免费的 Colab</span></a> ）进行模型训练。</p></li>
+<li><p>对于TensorFlow初学者，无需硬件升级也可以很好地学习和掌握TensorFlow。本手册中的大部分教学示例，大部分当前主流的个人电脑（即使没有GPU）均可胜任，无需添置其他硬件设备。对于本手册中部分计算量较大的示例（例如 <a class="reference internal" href="tools.html#cats-vs-dogs"><span class="std std-ref">在cats_vs_dogs数据集上训练CNN图像分类</span></a> ），一块主流的NVIDIA GPU会大幅加速训练。如果自己的个人电脑难以胜任，可以考虑在云端（例如 <a class="reference internal" href="../appendix/cloud.html#colab"><span class="std std-ref">免费的 Colab</span></a> ）进行模型训练。</p></li>
 <li><p>对于参加数据科学竞赛（比如Kaggle）或者经常在本机进行训练的个人爱好者或开发者，一块高性能的NVIDIA GPU往往是必要的。CUDA核心数和显存大小是决定显卡机器学习性能的两个关键参数，前者决定训练速度，后者决定可以训练多大的模型以及训练时的最大Batch Size，对于较大规模的训练而言尤其敏感。</p></li>
 <li><p>对于前沿的机器学习研究（尤其是计算机视觉和自然语言处理领域），多GPU并行训练是标准配置。为了快速迭代实验结果以及训练更大规模的模型以提升性能，4卡、8卡或更高的GPU数量是常态。</p></li>
 </ul>

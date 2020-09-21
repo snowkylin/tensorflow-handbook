@@ -27,7 +27,7 @@
         <script type="text/javascript" src="../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../_static/js/tw_cn.js"></script>
         <script type="text/javascript" src="../../_static/js/pangu.min.js"></script>
-        <script type="text/javascript" src="../../_static/js/custom_20200812.js"></script>
+        <script type="text/javascript" src="../../_static/js/custom_20200921.js"></script>
         <script type="text/javascript" src="../../_static/translations.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -89,11 +89,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">教学活动</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/mlstudyjam2nd.html">ML Study Jam 2020</a></li>
-</ul>
-<p class="caption"><span class="caption-text">目录</span></p>
+              <p class="caption"><span class="caption-text">目录</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
@@ -476,7 +472,7 @@ Mon Jun 10 23:19:54 2019
 </div>
 <p>在很多人的刻板印象中，TensorFlow 乃至深度學習是一件非常 “吃硬體資源” 的事情，以至於一接觸 TensorFlow，第一件事情可能就是想如何升級自己的電腦硬體。不過，TensorFlow 所需的硬體配置很大程度是依照任務和使用環境而定的：</p>
 <ul class="simple">
-<li><p>對於 TensorFlow 初學者，無需硬體升級也可以很好地的學習和掌握 TensorFlow。本手冊中的大部分教學範例，大部分當前主流的個人電腦（即使沒有 GPU）均可勝任，無需添置其他硬體設備。對於本手冊中部分計算量較大的範例（例如 <a class="reference internal" href="tools.html#cats-vs-dogs"><span class="std std-ref">在cats_vs_dogs資料集上訓練 CNN 圖片分類</span></a> ），一張主流的 NVIDIA GPU 會大幅加速訓練。如果自己的個人電腦難以勝任，可以考慮在雲端（例如 <a class="reference external" href="https://tf.wiki/zh_hant/appendix/cloud.html#tensorflow">免費的 Colab</a> ）進行模型訓練。</p></li>
+<li><p>對於 TensorFlow 初學者，無需硬體升級也可以很好地的學習和掌握 TensorFlow。本手冊中的大部分教學範例，大部分當前主流的個人電腦（即使沒有 GPU）均可勝任，無需添置其他硬體設備。對於本手冊中部分計算量較大的範例（例如 <a class="reference internal" href="../../zh/basic/tools.html#cats-vs-dogs"><span class="std std-ref">在cats_vs_dogs資料集上訓練 CNN 圖片分類</span></a> ），一張主流的 NVIDIA GPU 會大幅加速訓練。如果自己的個人電腦難以勝任，可以考慮在雲端（例如 <a class="reference external" href="https://tf.wiki/zh_hant/appendix/cloud.html#tensorflow">免費的 Colab</a> ）進行模型訓練。</p></li>
 <li><p>對於參加資料科學競賽（比如 Kaggle）或者經常在本機進行訓練的個人愛好者或開發者，一塊高性能的 NVIDIA GPU 往往是必要的。CUDA 核心數和顯示卡內存大小是決定顯卡機器學習性能的兩個關鍵參數，前者決定訓練速度，後者決定可以訓練多大的模型以及訓練時的最大 Batch Size，對於較大規模的訓練而言尤其更為明顯。</p></li>
 <li><p>對於前瞻的機器學習研究（尤其是電腦視覺和自然語言處理領域），多 GPU 平行訓練是標準配置。為了快速疊代實驗結果以及訓練更大規模的模型以提升性能，4 塊顯示卡、8 塊顯示卡或更高的 GPU 數量是常態。</p></li>
 </ul>
