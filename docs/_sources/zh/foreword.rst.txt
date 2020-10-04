@@ -1,8 +1,44 @@
 推荐序
 ======================
 
-Soonson Kwon
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+李双峰（Google TensorFlow 中国研发负责人）
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+**TensorFlow 2 降低机器学习门槛，促进机器学习无处不在** 
+
+深度学习带来了机器学习技术的革命，也让人工智能成为近年来最火爆的话题之一，对研究界、产业界和社会都带来了深远的影响。在学术界，arXiv上的机器学习论文急剧增长，增长速度赶上了摩尔定律；在工业界，深度神经网络技术被大规模地使用在搜索、推荐、广告、翻译、语音、图像和视频等领域；在社会中，公众非常关注人工智能对于社会的影响，如何构建负责的AI成为重要话题。深度学习也在推动一些人类最重大的工程挑战，比如自动驾驶技术、医疗诊断和预测、个性化学习、加速科学发展（比如天文发现）、跨语言的自由交流（比如实时翻译），更通用的人工智能系统（比如AlphaGo）等。
+
+TensorFlow 是开源的端到端的机器学习平台，提供了丰富的工具链，推动了机器学习的前沿研究，支撑了大规模生产使用，支持多平台灵活部署。TensorFlow 有着庞大的社区，目前全球下载量已经超过1亿次，而遍布全球各地的开发者不断为社区做贡献。TensorFlow 推动了很多前沿研究，比如2017年 Google 提出了Transformer 模型，可能是过去几年深度学习最有影响力的成果之一；而 2018 年提出了BERT 模型，带来了 NLP 领域近年来最大的突破，很快在工业界得到广泛使用。TensorFlow 支撑了社区中很多应用，比如环境保护（亚马逊丛林的护林人员使用TensorFlow 来识别丛林中砍树的声音，判断是否有盗伐者）、农业监测（在非洲，开发者使用 TensorFlow 制作出判断植物是否生病的手机应用，只需对植物进行拍照）、文化研究（比如兰州大学使用 TensorFlow 做基于敦煌壁画的服饰生成）和健康保护（比如安徽中医药大学使用 TensorFlow 识别中草药）。在科学计算领域，Summit 是全球领先的超算系统，它利用TensorFlow 来做极端天气的预测。在工业界，很多常见的应用背后都有 TensorFlow 的支持，比如网易严选用 TensorFlow 做销售数据预测，腾讯医疗使用 TensorFlow 做医疗影像处理，英语流利说用 TensorFlow 帮助用户学习英语。大家常见的推荐、搜索、翻译和语音识别产品等，背后很多也都用了TensorFlow。
+
+TensorFlow 2 重点关注易用性，同时兼具可扩展性和高性能，降低了机器学习的门槛。一项技术只有低门槛，才更容易促进大规模的普及，这也是 TensorFlow 的重要目标：促进人人可用的机器学习，帮助构建负责的AI应用（Responsbile AI）。TensorFlow 2 中默认推荐使用 Keras 作为高阶 API，Keras 受到广大开发者的喜爱，简单易用，里面有大量模块可以复用，数行代码就可以构造一个复杂的神经网络。它兼具灵活性，很多部分可以定制，满足多层次的需求（比如研究人员探索不同的模型结构）。TensorFlow 2 中默认为动态图方式执行，便于调试；同时可以轻松使用 tf.function 把静态图转换为动态图，还可打开 XLA 编译优化功能，提高性能。API 一致性和丰富的文档非常重要，TensorFlow 2 对于保持 API 的一致性做了大量工作。TF2 中可轻松使用Distribute Strategy，一行代码就可以实现从单机多卡到多机多卡的切换；提供了 tf.data 提供高性能可扩展性的数据流水线；也在 TensorBoard 中提供了丰富的功能来帮助调试和优化性能。
+
+TensorFlow Lite 加速了端侧机器学习(On-device ML，ODML)的快速发展，让机器学习无处不在。它支持安卓、iOS、嵌入式设备，以及极小的 MCU 平台。全球已经有超过40亿设备部署了TensorFlow Lite，除了Google 的大量应用，国外像Uber、Airbnb，国内像网易、爱奇艺、腾讯的全民K歌等应用都用上了 TensorFlow Lite。TensorFlow Lite 支持多种量化和压缩技巧。我们持续提升性能，支持各种硬件加速器（比如NNAPI、GPU、DSP、CoreML等)。我们持续发布前沿模型（比如EfficientNet-Lite，MobileBERT）和完整参考应用，并提供丰富的工具降低门槛（比如TFLite Model Maker 和 Android Studio ML model binding）。最近的一些突破，比如基于强大的BERT 模型的问题回答系统也可以运行在低端 CPU 上（利用压缩的 MobileBERT），在 MCU 上的简单语音识别模型只需要 20KB，这些给端侧机器学习带来了广阔前景，真正让机器学习无处不在成为可能。
+
+TensorFlow 生态系统还有着丰富的工具链。TFX 支持端到端的复杂的机器学习流程，而其中TF Serving 是广泛使用的高性能的服务器端部署平台。TF.js 支持使用 Javascript 在浏览器端部署，也与微信小程序有很好的集成，是最广大 Javascript 爱好者提供了便利。TensorFlow Hub 提供了丰富的即开即用的上千个预训练模型，覆盖语言、语音、文本等多种应用，方便使用迁移学习，进一步降低机器学习的门槛。众多团队基于 TensorFlow 构建了多元的工具，比如TF Probability （TF和概率模型结合）、TF Federated (联邦学习）、TF Graphics（TF和图形学），甚至TF Quantum（TF和量子计算）。
+
+TensorFlow 开源的目标是促进人人可用的负责任的 AI (Responsible AI)，为此我们提供了一系列的工具加速此过程。我们推荐了最佳实践（如People+AI Guidebook），促进公正性（比 Fairness Indicators），推动模型可解释性（促进相关研究，提供相关工具），关注隐私（比如TF Privacy，TF Federated），以及关注安全。
+
+回到本书，主要作者 Xihan 是 TensorFlow 中国社区最活跃的成员之一，他是中国最早的ML GDE（Google Developer Expert）之一，为无数 TensorFlow 社区成员提供过培训，参与过全球多次的 TensorFlow 活动，为TensorFlow 中文社区作出了巨大贡献。从我3年前开始推动TensorFlow中文社区开始，Xihan 一直是中坚力量，和 TensorFlow 团队协作紧密。而作者之一Zhuohuan 也是非常活跃的 ML GDE，卓有成就的投资者，JS 的狂热爱好者，由他负责的 TF JS 章节自然非常精彩。其他几位对本书有贡献的都为社区作出了巨大贡献，经验丰富。
+
+我有幸见证了本书的完整诞生过程。早期 TensorFlow 社区组织者之一程路和 Xihan 开始周末策划和推进本书，终有收获，发布基于 TF 1.x 的出版时得到了Jeff Dean 在 twitter 的转发推荐。到后来，TensorFlow 2 发布，Xihan、Zhuohuan 等作者基于 TensorFlow 2 重写，TensorFlow 中国团队的工程师比如 Tiezhen 等提供了大量的建议，也将此项目作为 Google Summer of Code （GSoC）项目来支持。在此之后，Xihan 也多次将此教程用于社区培训，同时也在 TensorFlow 官方微信连载，回答了大量社区中的问题。我们不久前还组织了TensorFlow Study Jam，社区集体学习 TensorFlow，正是基于此书，而 Xihan 和 Zhuohuan 也是主讲者之一。
+
+本书简单明了，适合快速上门，是难得的适合 TensorFlow 初学者的好作品，强烈推荐给大家！虽然社区里已有不少 TensorFlow 英文和中文教程，但是本教程历经多次迭代，社区实践中反复锤炼，出自经验丰富的社区专家 ML GDE，同时还有 TensorFlow 团队工程师的建议，这些都让本书别具一格。
+
+TensorFlow 是一个开放的社区，大家总可以在社区中找到自己的兴趣。可以关注各地的TensorFlow User Group（TFUG）活动，大陆地区已有19个城市有 TFUG；如果所在城市没有，你也可以申请组织当地的TFUG。可以从为社区翻译文档，创作教程和分享案例开始。当你学习完此书，胸有成竹时，欢迎报考全球通用的 TensorFlow Developer Certificate，参加 Kaggle 比赛（并享受免费 GPU 和 TPU），为 TensorFlow 贡献模型（TensorFlow Model Garden 特别欢迎大家贡献 TF 2 的模型），或者参加TensorFlow SIG，贡献代码。经验丰富而对社区贡献充满激情的朋友们，欢迎像 Xihan和 Zhuohuan 一样，申请 ML GDE，在社区中发挥更大的影响力。
+
+最后，希望读者享受学习本书的乐趣，将 TensorFlow 应用到研究和产品当中。如果希望了解最新的 TensorFlow消息和丰富的社区应用案例，可以关注TensorFlow微信公众号，或者访问官方网址 tensorFlow.google.cn。
+
+|
+
+李双峰
+
+Google TensorFlow 中国研发负责人
+
+2020-7-6
+
+
+Soonson Kwon (Global ML Ecosystem Programs Lead in Google)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 2017 年暑假的时候，我在韩国济州岛第一次见到了 Xihan，那时他是参加济州机器学习夏令营 [#f0]_ 的学生之一。在此之后，我很高兴能和他继续围绕我在谷歌负责的各种机器学习项目进行持续合作。他是中国的第一批机器学习领域的谷歌开发者专家（Google Developer Expert），且直到现在仍然是活跃的成员。他帮助了谷歌开发者专家项目在全球范围内的推广，同时也是最早编写 TensorFlow 2.X 在线书籍的开发者之一。本书包含了 TensorFlow 的最新信息，并引导读者了解其功能，尤其是使开发者编写代码更加直观的“即时执行模式”（Eager Execution）。本书还包括量子计算等前沿技术的最新信息，并对 TensorFlow 的更多广泛主题进行了介绍。
 
@@ -10,9 +46,11 @@ Soonson Kwon
 
 祝贺 Xihan 和所有在这个项目中提供帮助的人。这是一个富有意义的成果，将为未来的更多开发者们提供一个极好的、有帮助的开发资源。
 
+|
+
 Soonson Kwon
 
-Global ML Ecosystem Programs Lead in Google
+谷歌全球机器学习生态系统项目负责人
 
 |
 
@@ -24,9 +62,33 @@ On top of all the relevant contents that this book contains, all the beautiful c
 
 Congratulations Xihan and everyone who helped on this project. This is a truly meaningful outcome and will remain as a great, helpful resource for many more developers to come.
 
-Soonson Kwon - Global ML Ecosystem Programs Lead in Google
+|
+
+Soonson Kwon
+
+Global ML Ecosystem Programs Lead in Google
 
 |
 
 .. [#f0] `济州机器学习夏令营 <http://jeju.dlcamp.org/2017/>`_ （Machine Learning Camp Jeju）是在2017年7月于韩国济州岛举办的一次为期一个月的机器学习夏令营活动，由 TensorFlow Korea, Kakao, Google 等联合举办并资助。在世界范围内的超过600份申请中选择了20位参与者。笔者在此夏令营活动中 `复现了DeepMind的神经图灵机 <https://github.com/snowkylin/ntm>`_ （Neural Turing Machines）并用于单样本学习（One-shot Learning）任务。该实现的衍生版本 `包含在 TensorFlow 1.14 的源代码中 <https://github.com/tensorflow/tensorflow/blob/e17b7ca1a8745d63ead4f4097d48ef0891b37f0f/tensorflow/contrib/rnn/python/ops/rnn_cell.py##L3422-L3436>`_ 。
 
+童云海（北京大学图书馆副馆长）
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+人工智能技术正加速推进产业变革和社会变革，其引领创新和驱动转型的作用日益凸显。深度学习和特征表示学习作为新一轮人工智能高潮的推进器，受到学术界和产业界的高度关注。我们有理由相信，在未来几年或十几年期间，深度学习和特征表示学习等相关理论和方法研究将会出现更激动人心的进展，在智能制造、智能医疗、智能家居、智能教育和智能机器人等领域将有更多、更深层次的应用落地。
+
+TensorFlow是Google Brain团队推出的一个开源、端到端的机器学习平台，是目前主流的深度学习框架之一。TensorFlow拥有较为全面而灵活的生态系统，可助力研究人员研发新的学习模型和算法，也可以让应用开发人员轻松构建和部署机器学习相关算法，以支持面向应用的开发，大大降低机器学习和深度学习在各个行业中的应用难度。与先前的版本相比，2019年10月发布的TensorFlow 2.0正式版的可用性和成熟度大为加强，适合进行大规模的推广普及。
+
+作为老师和朋友，非常欣喜和荣幸地推荐北京大学智能科学系数据智能实验室2016级校友李锡涵的新书《简明的 TensorFlow 2》。作为国内首批机器学习领域的谷歌开发者专家（Google Developers Expert , GDE），李锡涵在利用TensorFlow开展强化学习相关理论方法研究的同时，也持续跟踪TensorFlow的研发进展。至今已连续三次参加TensorFlow开发者峰会（TensorFlow Dev Summit），多次受到谷歌开发者社群（Google Developers Group）邀请，在GDG DevFest、TensorFlow Day 和Women Techmakers等活动中参与TensorFlow Codelab 教学。本书在简洁高效介绍TensorFlow的相关概念和功能同时，也有其从研究人员和开发人员的角度对TensorFlow自身特点的思考、实践和经验总结。
+
+人工智能技术正处于蓬勃发展的时期，大批优秀的研究员和程序员正加入该行列。如何站在前人的肩膀上，研发更新、更好的机器学习和深度学习算法和应用，是大家普遍关心的问题。TensorFlow是目前主流的学习框架之一，也是开展相关研究和应用开发的基础平台。希望更多人工智能研究人员和开发人员通过阅读本书，成就更好的数据科学家、机器学习算法工程师和人工智能实践者。
+
+|
+
+北京大学信息科学技术学院教授、博士生导师
+
+北京大学图书馆副馆长
+
+童云海
+
+2020年6月28日
