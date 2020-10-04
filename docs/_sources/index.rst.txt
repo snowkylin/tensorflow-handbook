@@ -42,7 +42,7 @@
 
 自2020年4月起，在每章文末加入了留言区，欢迎有需要的读者在文末讨论交流。
 
-GitHub： https://github.com/snowkylin/tensorflow-handbook
+**GitHub：**  https://github.com/snowkylin/tensorflow-handbook
 
 .. raw:: html
 
@@ -50,13 +50,13 @@ GitHub： https://github.com/snowkylin/tensorflow-handbook
 
 |
 
-教程答疑区： https://discuss.tf.wiki
+**教程答疑区：**  https://discuss.tf.wiki
 
 .. raw:: html
 
     <a href="https://discuss.tf.wiki" target="_blank"><img src="https://tfugcs.andfun.cn/original/1X/77cdc4166bb18d58a9c19efde029a215612cb461.png" width="300px"/></a>
 
-纸质完整版：《简明的 TensorFlow 2》
+**纸质完整版：《简明的 TensorFlow 2》** 
 
 .. raw:: html
 
