@@ -67,7 +67,7 @@
                 <img src="/_static/image/index/cover.jpg" width="100%"/>      
             </td>
             <td width=66% style="padding: 20px">
-                <p>本书纸质版《简明的 TensorFlow 2》在本在线手册的基础上进行了细致的编排校对，并增加了若干 TensorFlow 高级专题，全彩印刷，为读者带来更好的阅读体验。</p>
+                <p>本书纸质版《简明的 TensorFlow 2》由人民邮电出版社（图灵社区）出版，在本在线手册的基础上进行了细致的编排校对，并增加了若干 TensorFlow 高级专题，全彩印刷，为读者带来更好的阅读体验。</p>
                 <p>纸质版购买链接：</p>
                 <ul>
                     <li><b><a href="https://item.jd.com/12980534.html">京东</a></b></li>
