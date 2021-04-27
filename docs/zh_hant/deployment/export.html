@@ -91,6 +91,7 @@
             
               <p class="caption"><span class="caption-text">目录</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/foreword.html">推荐序</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
 </ul>
@@ -267,7 +268,7 @@
 <div class="section" id="savedmodel">
 <span id="id1"></span><h2>使用SavedModel完整匯出模型<a class="headerlink" href="#savedmodel" title="永久链接至标题">¶</a></h2>
 <p>在部署模型時，我們的第一步往往是將訓練好的整個模型完整匯出為一系列標準格式的文件，然後即可在不同的平台上部署模型文件。這時，TensorFlow為我們提供了SavedModel這一格式。與前面介紹的Checkpoint不同，SavedModel包含了一個TensorFlow程式的完整資訊： <strong>不僅包含參數的權重值，還包含計算的流程（即計算圖）</strong> 。當模型導出為SavedModel文件時，無需建立模型的原始碼即可再次執行模型，這使得SavedModel非常適用於模型的分享和部署。後文的TensorFlow Serving（伺服器端部署模型）、TensorFlow Lite（可攜式裝置部署模型）以及TensorFlow.js都會用到這種格式。</p>
-<p>Keras模型可以方便的匯出為SavedModel格式。不過需要註意的是，因為SavedModel基於計算圖，所以對於使用繼承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 類建立的Keras模型，其需要匯出到SavedModel格式的方法（比如 <code class="docutils literal notranslate"><span class="pre">call</span></code> ）都需要使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修飾（ <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 的使用方式見 <a class="reference internal" href="../../zh/basic/tools.html#tffunction"><span class="std std-ref">前文</span></a> ）。然後，假設我們有一個名為 <code class="docutils literal notranslate"><span class="pre">model</span></code> 的Keras模型，使用下面的程式碼即可將模型匯出為SavedModel：</p>
+<p>Keras模型可以方便的匯出為SavedModel格式。不過需要註意的是，因為SavedModel基於計算圖，所以對於使用繼承 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 類建立的Keras模型，其需要匯出到SavedModel格式的方法（比如 <code class="docutils literal notranslate"><span class="pre">call</span></code> ）都需要使用 <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 修飾（ <code class="docutils literal notranslate"><span class="pre">&#64;tf.function</span></code> 的使用方式見 <a class="reference internal" href="../basic/tools.html#tffunction"><span class="std std-ref">前文</span></a> ）。然後，假設我們有一個名為 <code class="docutils literal notranslate"><span class="pre">model</span></code> 的Keras模型，使用下面的程式碼即可將模型匯出為SavedModel：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">saved_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;保存的目標資料夾名稱&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -413,11 +414,13 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
+        &copy; Copyright 2018-2021, Xihan Li (snowkylin)
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+  <p><a href="http://www.beian.miit.gov.cn/" target="_blank">沪ICP备13038357号-18</a ></p> 
 
 </footer>
 

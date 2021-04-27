@@ -785,6 +785,12 @@ AutoGraph：将Python控制流转换为TensorFlow计算图
     gpus = tf.config.list_physical_devices(device_type='GPU')
     tf.config.set_visible_devices(devices=gpus[0:2], device_type='GPU')
 
+如果完全不想使用 GPU ，向 ``devices`` 参数传入空列表即可，即
+
+.. code-block:: python
+
+    tf.config.set_visible_devices(devices=[], device_type='GPU')
+
 .. tip:: 使用环境变量 ``CUDA_VISIBLE_DEVICES`` 也可以控制程序所使用的GPU。假设发现四卡的机器上显卡0,1使用中，显卡2,3空闲，Linux终端输入::
 
         export CUDA_VISIBLE_DEVICES=2,3

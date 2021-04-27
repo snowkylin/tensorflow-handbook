@@ -89,6 +89,7 @@
             
               <p class="caption"><span class="caption-text">目录</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/foreword.html">推荐序</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
 </ul>
@@ -487,7 +488,7 @@
     <span class="n">tf</span><span class="o">.</span><span class="n">summary</span><span class="o">.</span><span class="n">trace_export</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;model_trace&quot;</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">profiler_outdir</span><span class="o">=</span><span class="n">log_dir</span><span class="p">)</span>    <span class="c1"># 保存Trace信息到文件</span>
 </pre></div>
 </div>
-<p>之后，我们就可以在TensorBoard中选择“Profile”，以时间轴的方式查看各操作的耗时情况。如果使用了 <a class="reference internal" href="#tffunction"><span class="std std-ref">tf.function</span></a> 建立了计算图，也可以点击“Graphs”查看图结构。</p>
+<p>之后，我们就可以在TensorBoard中选择“Profile”，以时间轴的方式查看各操作的耗时情况。如果使用了 <a class="reference internal" href="../../zh_hant/basic/tools.html#tffunction"><span class="std std-ref">tf.function</span></a> 建立了计算图，也可以点击“Graphs”查看图结构。</p>
 <div class="admonition hint">
 <p class="admonition-title">提示</p>
 <p>在 TensorFlow 2.3 及后续版本中，需要使用:</p>
@@ -597,7 +598,7 @@
 </div>
 <p>即可快速载入MNIST数据集。</p>
 </div>
-<p>对于特别巨大而无法完整载入内存的数据集，我们可以先将数据集处理为 TFRecord 格式，然后使用 <code class="docutils literal notranslate"><span class="pre">tf.data.TFRocordDataset()</span></code> 进行载入。详情请参考 <a class="reference internal" href="#tfrecord"><span class="std std-ref">后节</span></a>：</p>
+<p>对于特别巨大而无法完整载入内存的数据集，我们可以先将数据集处理为 TFRecord 格式，然后使用 <code class="docutils literal notranslate"><span class="pre">tf.data.TFRocordDataset()</span></code> 进行载入。详情请参考 <a class="reference internal" href="../../zh_hant/basic/tools.html#tfrecord"><span class="std std-ref">后节</span></a>：</p>
 </div>
 <div class="section" id="id5">
 <h3>数据集对象的预处理<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
@@ -705,7 +706,7 @@
 <p class="caption"><span class="caption-text">通过设置 <code class="docutils literal notranslate"><span class="pre">Dataset.map()</span></code> 的 <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> 参数实现数据转换的并行化。上部分是未并行化的图示，下部分是2核并行的图示。 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">3图示来源</a> 。</span><a class="headerlink" href="#id26" title="永久链接至图片">¶</a></p>
 </div>
 <p>当然，这里同样可以将 <code class="docutils literal notranslate"><span class="pre">num_parallel_calls</span></code> 设置为 <code class="docutils literal notranslate"><span class="pre">tf.data.experimental.AUTOTUNE</span></code> 以让TensorFlow自动选择合适的数值。</p>
-<p>除此以外，还有很多提升数据集处理性能的方式，可参考 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">TensorFlow文档</a> 进一步了解。后文的实例中展示了tf.data并行化策略的强大性能，可 <a class="reference internal" href="#tfdata-performance"><span class="std std-ref">点此</span></a> 查看。</p>
+<p>除此以外，还有很多提升数据集处理性能的方式，可参考 <a class="reference external" href="https://www.tensorflow.org/guide/data_performance">TensorFlow文档</a> 进一步了解。后文的实例中展示了tf.data并行化策略的强大性能，可 <a class="reference internal" href="../../zh_hant/basic/tools.html#tfdata-performance"><span class="std std-ref">点此</span></a> 查看。</p>
 </div>
 <div class="section" id="id11">
 <h3>数据集元素的获取与使用<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
@@ -847,10 +848,10 @@
 <li><p>通过 <code class="docutils literal notranslate"><span class="pre">tf.data.TFRecordDataset</span></code> 读入原始的 TFRecord 文件（此时文件中的 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 对象尚未被反序列化），获得一个 <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> 数据集对象；</p></li>
 <li><p>通过 <code class="docutils literal notranslate"><span class="pre">Dataset.map</span></code> 方法，对该数据集对象中的每一个序列化的 <code class="docutils literal notranslate"><span class="pre">tf.train.Example</span></code> 字符串执行 <code class="docutils literal notranslate"><span class="pre">tf.io.parse_single_example</span></code> 函数，从而实现反序列化。</p></li>
 </ul>
-<p>以下我们通过一个实例，展示将 <a class="reference internal" href="#cats-vs-dogs"><span class="std std-ref">上一节</span></a> 中使用的cats_vs_dogs二分类数据集的训练集部分转换为TFRecord文件，并读取该文件的过程。</p>
+<p>以下我们通过一个实例，展示将 <a class="reference internal" href="../../zh_hant/basic/tools.html#cats-vs-dogs"><span class="std std-ref">上一节</span></a> 中使用的cats_vs_dogs二分类数据集的训练集部分转换为TFRecord文件，并读取该文件的过程。</p>
 <div class="section" id="id14">
 <h3>将数据集存储为 TFRecord 文件<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
-<p>首先，与 <a class="reference internal" href="#cats-vs-dogs"><span class="std std-ref">上一节</span></a> 类似，我们进行一些准备工作，<a class="reference external" href="https://www.floydhub.com/fastai/datasets/cats-vs-dogs">下载数据集</a> 并解压到 <code class="docutils literal notranslate"><span class="pre">data_dir</span></code> ，初始化数据集的图片文件名列表及标签。</p>
+<p>首先，与 <a class="reference internal" href="../../zh_hant/basic/tools.html#cats-vs-dogs"><span class="std std-ref">上一节</span></a> 类似，我们进行一些准备工作，<a class="reference external" href="https://www.floydhub.com/fastai/datasets/cats-vs-dogs">下载数据集</a> 并解压到 <code class="docutils literal notranslate"><span class="pre">data_dir</span></code> ，初始化数据集的图片文件名列表及标签。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
@@ -1237,6 +1238,10 @@
 <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set_visible_devices</span><span class="p">(</span><span class="n">devices</span><span class="o">=</span><span class="n">gpus</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">device_type</span><span class="o">=</span><span class="s1">&#39;GPU&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>如果完全不想使用 GPU ，向 <code class="docutils literal notranslate"><span class="pre">devices</span></code> 参数传入空列表即可，即</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set_visible_devices</span><span class="p">(</span><span class="n">devices</span><span class="o">=</span><span class="p">[],</span> <span class="n">device_type</span><span class="o">=</span><span class="s1">&#39;GPU&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="admonition tip">
 <p class="admonition-title">小技巧</p>
 <p>使用环境变量 <code class="docutils literal notranslate"><span class="pre">CUDA_VISIBLE_DEVICES</span></code> 也可以控制程序所使用的GPU。假设发现四卡的机器上显卡0,1使用中，显卡2,3空闲，Linux终端输入:</p>
@@ -1326,11 +1331,13 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
+        &copy; Copyright 2018-2021, Xihan Li (snowkylin)
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+  <p><a href="http://www.beian.miit.gov.cn/" target="_blank">沪ICP备13038357号-18</a ></p> 
 
 </footer>
 

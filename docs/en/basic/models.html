@@ -91,6 +91,7 @@
             
               <p class="caption"><span class="caption-text">目录</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../zh_hans/foreword.html">推荐序</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/preface.html">前言</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../zh_hans/introduction.html">TensorFlow概述</a></li>
 </ul>
@@ -408,7 +409,7 @@
 <li><p>“Neural Networks Part 1 ~ 3” section of the Stanford course <a class="reference external" href="http://cs231n.github.io/">CS231n: Convolutional Neural Networks for Visual Recognition</a>.</p></li>
 </ul>
 </div>
-<p>Here, we use a multilayer perceptron to tackle the classification task on the MNIST handwritten digit dataset <a class="reference internal" href="../../zh_hans/basic/models.html#lecun1998" id="id3"><span>[LeCun1998]</span></a>.</p>
+<p>Here, we use a multilayer perceptron to tackle the classification task on the MNIST handwritten digit dataset <a class="reference internal" href="../../zh_hant/basic/models.html#lecun1998" id="id3"><span>[LeCun1998]</span></a>.</p>
 <div class="figure align-center" id="id16">
 <img alt="../../_images/mnist_0-9.png" src="../../_images/mnist_0-9.png" />
 <p class="caption"><span class="caption-text">examples of MNIST handwritten digit</span><a class="headerlink" href="#id16" title="永久链接至图片">¶</a></p>
@@ -759,7 +760,7 @@
 <li><p><a class="reference external" href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">Recurrent Neural Networks Tutorial, Part 1 – Introduction to RNNs</a></p></li>
 <li><p><a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></p></li>
 <li><p><a class="reference external" href="https://d2l.ai/chapter_recurrent-neural-networks/index.html">“Recurrent Neural Networks”</a> in <em>Dive into Deep Learning</em>。</p></li>
-<li><p>RNN sequence generation: <a class="reference internal" href="../../zh_hans/basic/models.html#graves2013" id="id8"><span>[Graves2013]</span></a></p></li>
+<li><p>RNN sequence generation: <a class="reference internal" href="../../zh_hant/basic/models.html#graves2013" id="id8"><span>[Graves2013]</span></a></p></li>
 </ul>
 </div>
 <p>Here, we use RNN to generate Nietzschean-style text automatically. <a class="footnote-reference brackets" href="#rnn-reference" id="id9">5</a></p>
@@ -944,7 +945,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </pre></div>
 </div>
 <p>Now, our task is to train a model that can predict a good move based on the current state. Roughly speaking, a good move should maximize the sum of the rewards earned throughout the game, which is the goal of reinforcement learning. In the CartPole game, the goal is to make the right moves to keep the pole from falling, i.e. as many rounds of game interaction as possible. In each round, we get a small positive bonus, and the more rounds the higher the cumulative bonus value. Thus, maximizing the sum of the rewards is consistent with our ultimate goal.</p>
-<p>The following code shows how to train the model using the Deep Q-Learning method <a class="reference internal" href="../../zh_hans/basic/models.html#mnih2013" id="id10"><span>[Mnih2013]</span></a> , a classical Deep Reinforcement Learning algorithm. First, we import TensorFlow, Gym and some common libraries, and define some model hyperparameters.</p>
+<p>The following code shows how to train the model using the Deep Q-Learning method <a class="reference internal" href="../../zh_hant/basic/models.html#mnih2013" id="id10"><span>[Mnih2013]</span></a> , a classical Deep Reinforcement Learning algorithm. First, we import TensorFlow, Gym and some common libraries, and define some model hyperparameters.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">gym</span>
@@ -962,7 +963,8 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </pre></div>
 </div>
 <p>We then use <code class="docutils literal notranslate"><span class="pre">tf.keras.Model`</span></code> to build a Q-network for fitting the Q functions in Q-Learning algorithm. Here we use a simple multilayered fully connected neural network for fitting. The network use the current state as input and outputs the Q-value for each action (2-dimensional for CartPole, i.e. pushing the cart left and right).</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">QNetwork</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="k">class</span> <span class="nc">QNetwork</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">units</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">)</span>
@@ -977,11 +979,11 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 
     <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
         <span class="n">q_values</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">q_values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Finally, we implement the Q-learning algorithm in the main program.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;CartPole-v1&#39;</span><span class="p">)</span>       <span class="c1"># 实例化一个游戏环境，参数为游戏名称</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">QNetwork</span><span class="p">()</span>
     <span class="n">optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
@@ -1010,16 +1012,13 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
             <span class="n">state</span> <span class="o">=</span> <span class="n">next_state</span>
 
             <span class="k">if</span> <span class="n">done</span><span class="p">:</span>                                    <span class="c1"># 游戏结束则退出本轮循环，进行下一个 episode</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;episode </span><span class="si">%d</span><span class="s2">, epsilon </span><span class="si">%f</span><span class="s2">, score </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">episode_id</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">t</span><span class="p">))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;episode </span><span class="si">%4d</span><span class="s2">, epsilon </span><span class="si">%.4f</span><span class="s2">, score </span><span class="si">%4d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">episode_id</span><span class="p">,</span> <span class="n">epsilon</span><span class="p">,</span> <span class="n">t</span><span class="p">))</span>
                 <span class="k">break</span>
 
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">replay_buffer</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">batch_size</span><span class="p">:</span>
                 <span class="c1"># 从经验回放池中随机取一个批次的四元组，并分别转换为 NumPy 数组</span>
-                <span class="n">batch_state</span><span class="p">,</span> <span class="n">batch_action</span><span class="p">,</span> <span class="n">batch_reward</span><span class="p">,</span> <span class="n">batch_next_state</span><span class="p">,</span> <span class="n">batch_done</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span>
-                    <span class="o">*</span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">replay_buffer</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">))</span>
-                <span class="n">batch_state</span><span class="p">,</span> <span class="n">batch_reward</span><span class="p">,</span> <span class="n">batch_next_state</span><span class="p">,</span> <span class="n">batch_done</span> <span class="o">=</span> \
-                    <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="p">[</span><span class="n">batch_state</span><span class="p">,</span> <span class="n">batch_reward</span><span class="p">,</span> <span class="n">batch_next_state</span><span class="p">,</span> <span class="n">batch_done</span><span class="p">]]</span>
-                <span class="n">batch_action</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">batch_action</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+                <span class="n">batch_state</span><span class="p">,</span> <span class="n">batch_action</span><span class="p">,</span> <span class="n">batch_reward</span><span class="p">,</span> <span class="n">batch_next_state</span><span class="p">,</span> <span class="n">batch_done</span> <span class="o">=</span> \
+                    <span class="nb">map</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">replay_buffer</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)))</span>
 
                 <span class="n">q_value</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">batch_next_state</span><span class="p">)</span>
                 <span class="n">y</span> <span class="o">=</span> <span class="n">batch_reward</span> <span class="o">+</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_max</span><span class="p">(</span><span class="n">q_value</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">batch_done</span><span class="p">)</span>  <span class="c1"># 计算 y 值</span>
@@ -1076,8 +1075,8 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">tf.keras.Model.compile</span></code> accepts three important parameters.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">oplimizer</span></code>: an optimizer, can be selected from <a href="#id11"><span class="problematic" id="id12">``</span></a>tf.keras.optimizers’’.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">loss</span></code>: a loss function, can be selected from <a href="#id13"><span class="problematic" id="id14">``</span></a>tf.keras.loses’’.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">oplimizer</span></code>: an optimizer, can be selected from <a href="#id11"><span class="problematic" id="id12">``</span></a>tf.keras.optimizers’‘.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">loss</span></code>: a loss function, can be selected from <a href="#id13"><span class="problematic" id="id14">``</span></a>tf.keras.loses’‘.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">metrics</span></code>: a metric, can be selected from <code class="docutils literal notranslate"><span class="pre">tf.keras.metrics</span></code>.</p></li>
 </ul>
 <p>Then, the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method of <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> can be used to actually train the model.</p>
@@ -1130,9 +1129,9 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
         <span class="bp">self</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">units</span>
 
     <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">):</span>     <span class="c1"># 这里 input_shape 是第一次运行call()时参数inputs的形状</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_weight</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span>
             <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">input_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">())</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_weight</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span>
             <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">zeros_initializer</span><span class="p">())</span>
 
     <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
@@ -1223,11 +1222,13 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2020, Xihan Li (snowkylin)
+        &copy; Copyright 2018-2021, Xihan Li (snowkylin)
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+  <p><a href="http://www.beian.miit.gov.cn/" target="_blank">沪ICP备13038357号-18</a ></p> 
 
 </footer>
 
