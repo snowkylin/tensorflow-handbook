@@ -13,6 +13,7 @@ gamma = 1.                      # 折扣因子
 initial_epsilon = 1.            # 探索起始时的探索率
 final_epsilon = 0.01            # 探索终止时的探索率
 
+
 class QNetwork(tf.keras.Model):
     def __init__(self):
         super().__init__()
@@ -60,16 +61,13 @@ if __name__ == '__main__':
             state = next_state
 
             if done:                                    # 游戏结束则退出本轮循环，进行下一个 episode
-                print("episode %d, epsilon %f, score %d" % (episode_id, epsilon, t))
+                print("episode %4d, epsilon %.4f, score %4d" % (episode_id, epsilon, t))
                 break
 
             if len(replay_buffer) >= batch_size:
                 # 从经验回放池中随机取一个批次的四元组，并分别转换为 NumPy 数组
-                batch_state, batch_action, batch_reward, batch_next_state, batch_done = zip(
-                    *random.sample(replay_buffer, batch_size))
-                batch_state, batch_reward, batch_next_state, batch_done = \
-                    [np.array(a, dtype=np.float32) for a in [batch_state, batch_reward, batch_next_state, batch_done]]
-                batch_action = np.array(batch_action, dtype=np.int32)
+                batch_state, batch_action, batch_reward, batch_next_state, batch_done = \
+                    map(np.array, zip(*random.sample(replay_buffer, batch_size)))
 
                 q_value = model(batch_next_state)
                 y = batch_reward + (gamma * tf.reduce_max(q_value, axis=1)) * (1 - batch_done)  # 计算 y 值

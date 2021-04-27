@@ -50,7 +50,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = '简单粗暴 TensorFlow 2'
-copyright = '2018-2020, Xihan Li (snowkylin)'
+copyright = '2018-2021, Xihan Li (snowkylin)'
 author = 'Xihan Li (snowkylin)'
 
 # The version info for the project you're documenting, acts as replacement for

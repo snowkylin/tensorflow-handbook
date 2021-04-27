@@ -25,7 +25,7 @@ TensorFlow Quantum: 混合量子-经典机器学习 *
 
     如果你希望更深入地了解量子力学以及量子计算的基本原理，建议可以从以下两本书入手：
 
-    -  `吴飚 <http://www.phy.pku.edu.cn/~wubiao/>`_ ，简明量子力学（简洁明快的量子力学入门教程，即将由北京大学出版社出版，可先行阅读在线版本 http://www.phy.pku.edu.cn/~wubiao/pop_qm_pkupress.pdf ）
+    -  `吴飚 <http://www.phy.pku.edu.cn/~wubiao/>`_ ， `简明量子力学 <https://item.jd.com/12852996.html>`_ ，北京大学出版社，2020（简洁明快的量子力学入门教程）
     - Hidary, Jack D. `Quantum Computing: An Applied Approach <http://link.springer.com/10.1007/978-3-030-23922-0>`_ . Cham: Springer International Publishing, 2019. https://doi.org/10.1007/978-3-030-23922-0. （注重代码实操的量子计算教程，GitHub上有配套源码： https://github.com/JackHidary/quantumcomputingbook ）
 
 

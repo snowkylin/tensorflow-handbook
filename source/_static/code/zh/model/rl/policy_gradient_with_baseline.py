@@ -15,6 +15,12 @@ policy_network = tf.keras.Sequential([
     tf.keras.layers.Dense(units=num_actions, activation=tf.nn.softmax),
 ])
 
+baseline_network = tf.keras.Sequential([
+    tf.keras.layers.Dense(units=24, activation=tf.nn.relu),
+    tf.keras.layers.Dense(units=24, activation=tf.nn.relu),
+    tf.keras.layers.Dense(units=1),
+])
+
 if __name__ == '__main__':
     env = gym.make('CartPole-v1')
     optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
@@ -32,7 +38,7 @@ if __name__ == '__main__':
             state = next_state
 
             if done:
-                print("episode %d, score %d" % (episode_id, t))
+                print("episode %4d, score %4d" % (episode_id, t))
                 break
 
         T = len(trajectory)
@@ -41,11 +47,15 @@ if __name__ == '__main__':
         for t in reversed(range(T)):
             G[t] = (gamma * G[t + 1] if t < T - 1 else 0) + reward[t]
 
-        with tf.GradientTape() as tape:
+        with tf.GradientTape(persistent=True) as tape:
+            b = tf.squeeze(baseline_network(state))
             probs = policy_network(state)
             log_prob = tf.math.log(tf.reduce_sum(
                 tf.one_hot(action, depth=num_actions) * probs, axis=-1
             ))
-            loss = -tf.reduce_mean(G * log_prob)
-        grads = tape.gradient(loss, policy_network.variables)
+            policy_loss = -tf.reduce_mean((G - b) * log_prob)
+            baseline_loss = tf.reduce_mean(tf.square(G - b))
+        grads = tape.gradient(policy_loss, policy_network.variables)
         optimizer.apply_gradients(zip(grads, policy_network.variables))
+        grads = tape.gradient(baseline_loss, baseline_network.variables)
+        optimizer.apply_gradients(zip(grads, baseline_network.variables))
