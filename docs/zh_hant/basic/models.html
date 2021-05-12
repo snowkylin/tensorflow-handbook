@@ -409,7 +409,7 @@
 <li><p>史丹佛大學課程 <a class="reference external" href="https://cs231n.github.io/">CS231n: Convolutional Neural Networks for Visual Recognition</a> 中的 “Neural Networks Part 1 ~ 3” 部分。</p></li>
 </ul>
 </div>
-<p>這裡，我們使用多層感知器完成 MNIST 手寫體數字圖片資料集 <a class="reference internal" href="../../zh_hans/basic/models.html#lecun1998" id="id7"><span>[LeCun1998]</span></a> 的分類任務。</p>
+<p>這裡，我們使用多層感知器完成 MNIST 手寫體數字圖片資料集 <a class="reference internal" href="#lecun1998" id="id7"><span>[LeCun1998]</span></a> 的分類任務。</p>
 <div class="figure align-center" id="id27">
 <img alt="../../_images/mnist_0-9.png" src="../../_images/mnist_0-9.png" />
 <p class="caption"><span class="caption-text">MNIST 手寫體數字圖片範例</span><a class="headerlink" href="#id27" title="永久链接至图片">¶</a></p>
@@ -757,7 +757,7 @@
 <li><p><a class="reference external" href="http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/">Recurrent Neural Networks Tutorial, Part 1 – Introduction to RNNs</a></p></li>
 <li><p>台灣大學李宏毅教授的《機器學習》課程的 <a class="reference external" href="https://www.youtube.com/watch?v=xCGidAeyS4M">Recurrent Neural Network (part 1)</a> <a class="reference external" href="https://www.youtube.com/watch?v=rTqmWlnwz_0">Recurrent Neural Network (part 2)</a> 兩部分。</p></li>
 <li><p>LSTM 原理：<a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a></p></li>
-<li><p>RNN 序列生成：<a class="reference internal" href="../../zh_hans/basic/models.html#graves2013" id="id17"><span>[Graves2013]</span></a></p></li>
+<li><p>RNN 序列生成：<a class="reference internal" href="#graves2013" id="id17"><span>[Graves2013]</span></a></p></li>
 </ul>
 </div>
 <p>這裡，我們使用 RNN 來進行尼采風格文本的自動生成。 <a class="footnote-reference brackets" href="#rnn-reference" id="id18">5</a></p>
@@ -942,7 +942,7 @@ zisternethta simalfule dereeg hesls lang-lyes thas quiin turjentimy; periaspedey
 </pre></div>
 </div>
 <p>那麼，我們的任務就是訓練出一個模型，能夠根據當前的狀態預測出應該進行的一個好的動作。大致上來說，一個好的動作應當能夠最大化整個遊戲過程中獲得的獎勵之和，這也是強化學習的目標。以CartPole遊戲為例，我們的目標是希望做出合適的動作使得桿一直不倒，即遊戲交互的回合數盡可能地多。而回合每進行一次，我們都會獲得一個小的正獎勵，回合數越多則累積的獎勵值也越高。因此，我們最大化遊戲過程中的獎勵之和與我們的最終目標是一致的。</p>
-<p>以下程式碼展示了如何使用深度強化學習中的 Deep Q-Learning 方法 <a class="reference internal" href="../../zh_hans/basic/models.html#mnih2013" id="id22"><span>[Mnih2013]</span></a> 來訓練模型。首先，我們引入TensorFlow、Gym和一些常用套件，並定義一些模型超參數：</p>
+<p>以下程式碼展示了如何使用深度強化學習中的 Deep Q-Learning 方法 <a class="reference internal" href="#mnih2013" id="id22"><span>[Mnih2013]</span></a> 來訓練模型。首先，我們引入TensorFlow、Gym和一些常用套件，並定義一些模型超參數：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">gym</span>

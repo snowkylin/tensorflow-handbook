@@ -28,9 +28,44 @@
 
 自2020年4月起，在每章文末加入了留言區，歡迎有需要的讀者在文末討論交流。
 
-GitHub： https://github.com/snowkylin/tensorflow-handbook
+**GitHub：**  https://github.com/snowkylin/tensorflow-handbook
 
-答疑區： https://discuss.tf.wiki
+.. raw:: html
+
+    <object type="image/svg+xml" data="https://gh-card.dev/repos/snowkylin/tensorflow-handbook.svg?link_target=_blank"></object>
+
+|
+
+**教程答疑區：**  https://discuss.tf.wiki
+
+.. raw:: html
+
+    <a href="https://discuss.tf.wiki" target="_blank"><img src="https://tfugcs.andfun.cn/original/1X/77cdc4166bb18d58a9c19efde029a215612cb461.png" width="300px"/></a>
+
+**紙質完整版：《從來沒有這麼明白過: TensorFlow上車就學會》** 
+
+.. raw:: html
+
+    <table style="width: 100%; margin: 20px 20px">
+        <tbody witth=100%>
+        <tr>
+            <td width=33% style="text-align: center">
+                <img src="/_static/image/index/cover_zh_hant.jpg" width="100%"/>      
+            </td>
+            <td width=66% style="padding: 20px">
+                <p>本書紙質版《從來沒有這麼明白過: TensorFlow上車就學會》由深智數位出版，在本在線手冊的基礎上進行了細緻的編排校對，並增加了若干 TensorFlow 高級專題，為讀者帶來更好的閱讀體驗。</p>
+                <p>紙質版購買鏈接：</p>
+                <ul>
+                    <li><b><a href="https://www.books.com.tw/products/0010891529" target="_blank">博客來</a></b></li>
+                    <li><b><a href="https://www.eslite.com/product/1001313432682014264005" target="_blank">誠品線上</a></b></li>
+                    <li><b><a href="https://www.kingstone.com.tw/basic/2013120586819" target="_blank">金石堂網路書店</a></b></li>
+                    <li><b><a href="https://www.tenlong.com.tw/products/9789865501945" target="_blank">天瓏網路書店</a></b></li>
+                    <li><b><a href="https://deepmind.com.tw/?product=%e5%be%9e%e4%be%86%e6%b2%92%e6%9c%89%e9%80%99%e9%ba%bc%e6%98%8e%e7%99%bd%e9%81%8e%ef%bc%9atensorflow-%e4%b8%8a%e8%bb%8a%e5%b0%b1%e5%ad%b8%e6%9c%83dm2121" target="_blank">深智數位</a></b></li>
+                </ul>                                  
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
 .. toctree:: 
     :maxdepth: 2
