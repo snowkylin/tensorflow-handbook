@@ -4,7 +4,7 @@
  *
  * Sphinx JavaScript utilities for the full-text search.
  *
- * :copyright: Copyright 2007-2019 by the Sphinx team, see AUTHORS.
+ * :copyright: Copyright 2007-2021 by the Sphinx team, see AUTHORS.
  * :license: BSD, see LICENSE for details.
  *
  */
@@ -59,10 +59,15 @@ var Search = {
   _pulse_status : -1,
 
   htmlToText : function(htmlString) {
-      var htmlElement = document.createElement('span');
-      htmlElement.innerHTML = htmlString;
-      $(htmlElement).find('.headerlink').remove();
-      docContent = $(htmlElement).find('[role=main]')[0];
+      var virtualDocument = document.implementation.createHTMLDocument('virtual');
+      var htmlElement = $(htmlString, virtualDocument);
+      htmlElement.find('.headerlink').remove();
+      docContent = htmlElement.find('[role=main]')[0];
+      if(docContent === undefined) {
+          console.warn("Content block not found. Sphinx search tries to obtain it " +
+                       "via '[role=main]'. Could you check your theme or template.");
+          return "";
+      }
       return docContent.textContent || docContent.innerText;
   },
 
@@ -161,8 +166,7 @@ var Search = {
           objectterms.push(tmp[i].toLowerCase());
       }
 
-      if ($u.indexOf(stopwords, tmp[i].toLowerCase()) != -1 || tmp[i].match(/^\d+$/) ||
-          tmp[i] === "") {
+      if ($u.indexOf(stopwords, tmp[i].toLowerCase()) != -1 || tmp[i] === "") {
         // skip this "word"
         continue;
       }
@@ -244,8 +248,10 @@ var Search = {
       // results left, load the summary and display it
       if (results.length) {
         var item = results.pop();
-        var listItem = $('<li style="display:none"></li>');
-        if (DOCUMENTATION_OPTIONS.FILE_SUFFIX === '') {
+        var listItem = $('<li></li>');
+        var requestUrl = "";
+        var linkUrl = "";
+        if (DOCUMENTATION_OPTIONS.BUILDER === 'dirhtml') {
           // dirhtml builder
           var dirname = item[0] + '/';
           if (dirname.match(/\/index\/$/)) {
@@ -253,23 +259,25 @@ var Search = {
           } else if (dirname == 'index/') {
             dirname = '';
           }
-          listItem.append($('<a/>').attr('href',
-            DOCUMENTATION_OPTIONS.URL_ROOT + dirname +
-            highlightstring + item[2]).html(item[1]));
+          requestUrl = DOCUMENTATION_OPTIONS.URL_ROOT + dirname;
+          linkUrl = requestUrl;
+
         } else {
           // normal html builders
-          listItem.append($('<a/>').attr('href',
-            item[0] + DOCUMENTATION_OPTIONS.FILE_SUFFIX +
-            highlightstring + item[2]).html(item[1]));
+          requestUrl = DOCUMENTATION_OPTIONS.URL_ROOT + item[0] + DOCUMENTATION_OPTIONS.FILE_SUFFIX;
+          linkUrl = item[0] + DOCUMENTATION_OPTIONS.LINK_SUFFIX;
         }
+        listItem.append($('<a/>').attr('href',
+            linkUrl +
+            highlightstring + item[2]).html(item[1]));
         if (item[3]) {
           listItem.append($('<span> (' + item[3] + ')</span>'));
           Search.output.append(listItem);
-          listItem.slideDown(5, function() {
+          setTimeout(function() {
             displayNextItem();
-          });
+          }, 5);
         } else if (DOCUMENTATION_OPTIONS.HAS_SOURCE) {
-          $.ajax({url: DOCUMENTATION_OPTIONS.URL_ROOT + item[0] + DOCUMENTATION_OPTIONS.FILE_SUFFIX,
+          $.ajax({url: requestUrl,
                   dataType: "text",
                   complete: function(jqxhr, textstatus) {
                     var data = jqxhr.responseText;
@@ -277,16 +285,16 @@ var Search = {
                       listItem.append(Search.makeSearchSummary(data, searchterms, hlterms));
                     }
                     Search.output.append(listItem);
-                    listItem.slideDown(5, function() {
+                    setTimeout(function() {
                       displayNextItem();
-                    });
+                    }, 5);
                   }});
         } else {
           // no source available, just display title
           Search.output.append(listItem);
-          listItem.slideDown(5, function() {
+          setTimeout(function() {
             displayNextItem();
-          });
+          }, 5);
         }
       }
       // search finished, update title and status message
@@ -372,6 +380,13 @@ var Search = {
   },
 
   /**
+   * See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+   */
+  escapeRegExp : function(string) {
+    return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  },
+
+  /**
    * search for full-text terms in the index
    */
   performTermsSearch : function(searchterms, excluded, terms, titleterms) {
@@ -394,13 +409,14 @@ var Search = {
       ];
       // add support for partial matches
       if (word.length > 2) {
+        var word_regex = this.escapeRegExp(word);
         for (var w in terms) {
-          if (w.match(word) && !terms[word]) {
+          if (w.match(word_regex) && !terms[word]) {
             _o.push({files: terms[w], score: Scorer.partialTerm})
           }
         }
         for (var w in titleterms) {
-          if (w.match(word) && !titleterms[word]) {
+          if (w.match(word_regex) && !titleterms[word]) {
               _o.push({files: titleterms[w], score: Scorer.partialTitle})
           }
         }
@@ -424,7 +440,7 @@ var Search = {
         for (j = 0; j < _files.length; j++) {
           file = _files[j];
           if (!(file in scoreMap))
-            scoreMap[file] = {}
+            scoreMap[file] = {};
           scoreMap[file][word] = o.score;
         }
       });
@@ -432,7 +448,7 @@ var Search = {
       // create the mapping
       for (j = 0; j < files.length; j++) {
         file = files[j];
-        if (file in fileMap)
+        if (file in fileMap && fileMap[file].indexOf(word) === -1)
           fileMap[file].push(word);
         else
           fileMap[file] = [word];
@@ -493,7 +509,7 @@ var Search = {
     var excerpt = ((start > 0) ? '...' : '') +
       $.trim(text.substr(start, 240)) +
       ((start + 240 - text.length) ? '...' : '');
-    var rv = $('<div class="context"></div>').text(excerpt);
+    var rv = $('<p class="context"></p>').text(excerpt);
     $.each(hlwords, function() {
       rv = rv.highlightText(this, 'highlighted');
     });
