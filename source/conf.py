@@ -119,10 +119,10 @@ html_static_path = ['_static']
 # }
 
 def setup(app):
-    app.add_stylesheet( "css/custom.css" )      
-    app.add_javascript( "js/tw_cn.js" )  
-    app.add_javascript( "js/pangu.min.js" )    
-    app.add_javascript( "js/custom_20200921.js" )  
+    app.add_css_file( "css/custom.css" )      
+    app.add_js_file( "js/tw_cn.js" )  
+    app.add_js_file( "js/pangu.min.js" )    
+    app.add_js_file( "js/custom_20200921.js" )  
 
 # -- Options for HTMLHelp output ------------------------------------------
 

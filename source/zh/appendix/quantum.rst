@@ -49,7 +49,7 @@ TensorFlow Quantum: 混合量子-经典机器学习 *
 
 在二进制的经典计算机中，我们有AND（与）、OR（或）、NOT（非）等逻辑门，对输入的比特状态进行变换并输出。在量子计算机中，我们同样有量子逻辑门（Quantum Logic Gate，或简称“量子门”），对量子状态进行变换并输出。如果我们使用向量化的语言来表述量子状态，则量子逻辑门可以看作是一个对状态向量进行变换的矩阵。
 
-例如，量子非门可以表述为 :math:`X = \begin{bmatrix}0 & 1 \\ 1 & 0\end{bmatrix}` ，于是当我们将量子非门作用于基本态 :math:`\ket{0} = \begin{bmatrix}1 \\ 0\end{bmatrix}` 时，我们得到 :math:`X\ket{0} = \begin{bmatrix}0 & 1 \\ 1 & 0\end{bmatrix} \begin{bmatrix}1 \\ 0\end{bmatrix} = \begin{bmatrix}0 \\ 1\end{bmatrix} = \ket{1}`。量子门也可以作用在叠加态，例如 :math:`X\ket{\psi_0} = \begin{bmatrix}0 & 1 \\ 1 & 0\end{bmatrix} \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix} = \ket{\psi_0}` （这说明量子非门没能改变量子态 :math:`\ket{\psi_0} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}` 的状态。事实上，量子非门 :math:`X` 相当于在布洛赫球面上将量子态绕X轴旋转180度。而 :math:`\ket{\psi_0}` 就在X轴上，所以没有变化）。量子与门和或门 [#f2]_ 由于涉及到多个量子位而稍显复杂，但同样可以通过尺寸更大的矩阵实现。
+例如，量子非门可以表述为 :math:`X = \begin{bmatrix}0 & 1 \\ 1 & 0\end{bmatrix}` ，于是当我们将量子非门作用于基本态 :math:`\ket{0} = \begin{bmatrix}1 \\ 0\end{bmatrix}` 时，我们得到 :math:`X\ket{0} = \begin{bmatrix}0 & 1 \\ 1 & 0\end{bmatrix} \begin{bmatrix}1 \\ 0\end{bmatrix} = \begin{bmatrix}0 \\ 1\end{bmatrix} = \ket{1}`。量子门也可以作用在叠加态，例如 :math:`X\ket{\psi_0} = \begin{bmatrix}0 & 1 \\ 1 & 0\end{bmatrix} \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix} = \ket{\psi_0}` （这说明量子非门没能改变量子态 :math:`\ket{\psi_0} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}` 的状态。事实上，量子非门 :math:`X` 相当于在布洛赫球面上将量子态绕X轴旋转180度。而 :math:`\ket{\psi_0}` 就在X轴上，所以没有变化）。量子与门和或门 [#f2]_ 由于涉及到多个量子位而稍显复杂，但同样可以通过尺寸更大的矩阵实现。我们会在后面讨论多量子位的情况。
 
 可能有些读者已经想到了，既然单个量子比特的状态不止 :math:`\ket{0}` 和 :math:`\ket{1}` 两种，那么量子逻辑门作为作为对量子比特的变换，其实也完全可以不局限于与或非。事实上，只要满足一定条件的矩阵 [#f3]_ 都可以作为量子逻辑门。例如，将量子态在布洛赫球面上绕X、Y、Z轴旋转的变换 :math:`Rx(\theta)` 、:math:`Ry(\theta)` 、:math:`Rz(\theta)` （其中 :math:`\theta` 是旋转角度，当 :math:`\theta=180^\circ` 时记为 :math:`X` 、:math:`Y` 、:math:`Z` ）都是量子逻辑门。另外，有一个量子逻辑门“阿达马门”（Hadamard Gate） :math:`H = \frac{1}{\sqrt{2}} \begin{bmatrix}1 & 1 \\ 1 & -1\end{bmatrix}` 可以将量子状态从基本态转换为叠加态，在很多量子计算的场景中占据了重要地位。
 
@@ -80,6 +80,65 @@ TensorFlow Quantum: 混合量子-经典机器学习 *
 
 阿达马门对应的矩阵表示为 :math:`H = \frac{1}{\sqrt{2}} \begin{bmatrix}1 & 1 \\ 1 & -1\end{bmatrix}` ，于是我们可以计算出变换后的量子态为 :math:`H\ket{0} = \frac{1}{\sqrt{2}} \begin{bmatrix}1 & 1 \\ 1 & -1\end{bmatrix}\begin{bmatrix}1 \\ 0\end{bmatrix} = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}\end{bmatrix} = \frac{1}{\sqrt{2}} \ket{0} + \frac{1}{\sqrt{2}} \ket{1}` 。这是一个 :math:`\ket{0}` 和 :math:`\ket{1}` 的叠加态，在观测后会坍缩到基本态，其概率分别为 :math:`|\frac{1}{\sqrt{2}}|^2 = \frac{1}{2}` 。也就是说，这个量子线路的观测结果类似于扔硬币。假若观测20次，则大约10次的结果是 :math:`\ket{0}` ，10次的结果是 :math:`\ket{1}` 。
 
+多比特的量子线路和量子纠缠 *
+-------------------------------------------
+
+..
+    https://hiq.huaweicloud.com/doc/algorithms/QuantumComputingIntro.html
+
+在上节中，我们讨论了基于单量子比特（两个基本态 :math:`\ket{0}` 和 :math:`\ket{1}` 及其叠加）的量子逻辑门和量子线路。事实上，一个量子线路中可以出现多个量子比特，也有一些量子逻辑门能够以两个及以上的量子比特作为输入。
+
+考虑具有两个量子比特的体系。一个量子比特具有2个基本态，则两个量子比特的体系具有 :math:`2^2 = 4` 个基本态。我们可以将其以向量的形式写作
+
+.. math::
+
+    \ket{00} = \begin{bmatrix}1 \\ 0 \\ 0 \\ 0\end{bmatrix}, \ket{01} = \begin{bmatrix}0 \\ 1 \\ 0 \\ 0\end{bmatrix}, \ket{10} = \begin{bmatrix}0 \\ 0 \\ 1 \\ 0\end{bmatrix}, \ket{11} = \begin{bmatrix}0 \\ 0 \\ 0 \\ 1\end{bmatrix}
+
+其中 :math:`\ket{00}` 代表第一和第二个量子比特均为基本态 :math:`\ket{0}` ； :math:`\ket{01}` 代表第一个量子比特为基本态 :math:`\ket{0}` ，第二个量子比特为基本态 :math:`\ket{1}`，以此类推。
+
+假如我们有两个“独立”的量子比特 :math:`\ket{\psi_1} = a_1 \ket{\psi_0} + b_1 \ket{\psi_1}` 和 :math:`\ket{\psi_2} = a_2 \ket{\psi_0} + b_2 \ket{\psi_1}` （:math:`a_1^2 + b_1^2 = 1, a_2^2 + b_2^2 = 1`），则由这两个量子比特组成的体系可以写作
+
+.. math::
+
+    \ket{\psi_1\psi_2} = a_1 a_2 \ket{00} + a_1 b_2 \ket{01} + b_1 a_2 \ket{10} + b_1 b_2 \ket{11}
+
+可以验证，该“联合”量子态坍缩到每个基本态的概率等于各量子比特坍缩到对应基本态的概率的乘积。例如，:math:`\ket{\psi_1\psi_2}` 坍缩到 :math:`\ket{00}` 的概率是 :math:`(a_1a_2)^2 = a_1^2 \times a_2^2` ，等于第一个量子比特坍缩到 :math:`\ket{0}` 的概率 :math:`a_1^2` 和第二个量子比特坍缩到 :math:`\ket{0}` 的概率 :math:`a_2^2` 的乘积。同时，四个基本态的概率之和仍为1，即 :math:`(a_1a_2)^2 + (a_1b_2)^2 + (b_1a_2)^2 + (b_1b_2)^2 = (a_1^2 + b_1^2)(a_2^2 + b_2^2) = 1 \times 1 = 1`。这其实很类似于概率论中，两个独立随机变量的联合概率分布。
+
+当然，正如同概率论中两个随机变量不一定独立，两个量子比特也不一定独立。对于 **任意** 的双量子比特体系 :math:`\ket{\psi_1\psi_2}` ，类似于单量子比特 :math:`\ket{\psi} = a \ket{0} + b \ket{1}` （其中 :math:`|a|^2 + |b|^2 = 1` ），我们可以将其写作
+
+.. math::
+
+    \ket{\psi_1\psi_2} = a \ket{00} + b \ket{01} + c \ket{10} + d \ket{11} = [a, b, c, d]^T
+
+其中 :math:`|a|^2 + |b|^2 + |c|^2 + |d|^2 = 1` 。对于给定的 :math:`a, b, c, d` ，如果我们能找到一组 :math:`a_1, b_1` 和 :math:`a_2, b_2` 的值，使得 :math:`[a, b, c, d]^T = [a_1 a_2, a_1 b_2, b_1 a_2, b_1 b_2]^T` 的话，我们称当前的联合量子态为“直积态”或“可分离态”。但是，这样的对应关系并不是总能建立的。例如，当 :math:`b = c = \frac{1}{\sqrt{2}}, a = d = 0` （即 :math:`[0, \frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}, 0]^T`）时，则无法找到这样的对应关系。此时我们称当前的联合量子态为“纠缠态”。在这个例子中，联合量子态有 :math:`\frac{1}{2}` 的概率坍缩到 :math:`\ket{01}` ，:math:`\frac{1}{2}` 的概率坍缩到 :math:`\ket{10}` ，可见第一个量子比特和第二个量子比特是“纠缠”在一起的，“你坍缩到 :math:`\ket{0}` 则我坍缩到 :math:`\ket{1}` ，你坍缩到 :math:`\ket{1}` 则我坍缩到 :math:`\ket{0}` ”，两者有很强的相关性。
+
+不过，我们是不是真的可以获得这样的纠缠量子态呢？答案是肯定的。接下来，我们介绍一个重要的二元运算符CNOT（控制非门），其矩阵形式表示为
+
+.. math::
+
+    CNOT = \begin{bmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 1 & 0
+    \end{bmatrix}
+
+容易看出，这个运算符对于第一和第二个基本态 :math:`\ket{00}` 和 :math:`\ket{01}` 对应的系数 :math:`a, b` 无作用，但会让第三和第四个基本态 :math:`\ket{10}` 和 :math:`\ket{11}` 对应的系数 :math:`c, d` 相互交换，即 :math:`\begin{bmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 1 \\
+0 & 0 & 1 & 0
+\end{bmatrix}\begin{bmatrix}a \\ b \\ c \\ d\end{bmatrix} = \begin{bmatrix}a \\ b \\ d \\ c\end{bmatrix}` 。例如，容易看出 :math:`CNOT\ket{10} = \ket{11}, CNOT\ket{11} = \ket{10}` ，具体的表现，即“当第一个量子比特为 :math:`\ket{0}` 时，第二个量子比特维持原样；当第一个量子比特为 :math:`\ket{1}` 时，第二个量子比特取反”。这也是这个运算符被叫做“控制非门”的原因。这里，我们将第一个量子比特称作“控制比特”，第二个量子比特称作“目标比特”。
+
+那么，回到之前的问题，如果我们想要制造形如 :math:`[0, \frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}, 0]^T` 的“纠缠”量子态，有了CNOT门之后，我们只需先制造 :math:`[0, \frac{1}{\sqrt{2}}, 0, \frac{1}{\sqrt{2}}]^T` ，然后让其通过CNOT门（即第3和第4个元素交换）即可。而 :math:`[0, \frac{1}{\sqrt{2}}, 0, \frac{1}{\sqrt{2}}]^T` 是一个可分离态。容易验证，其可以通过两个独立的量子比特 :math:`[\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}]^T` 和 :math:`[0, 1]^T` 组合而来。前者可以由基本态 :math:`\ket{0}`
+通过阿达马门获得，后者即为基本态 :math:`\ket{1}` 。由此，我们将第一个和第二个量子比特分别写在上下两条量子线路上，初始基本态分别为 :math:`\ket{0}` 和 :math:`\ket{1}` 。第一个量子比特通过阿达马门，然后作为控制比特（ :math:`\bullet` ）连接到第二个量子比特，即“目标比特”上（ :math:`\bigoplus` ）。这里控制比特（ :math:`\bullet` ），目标比特（ :math:`\bigoplus` ）及其连线即代表了一个CNOT门。
+
+.. figure:: /_static/image/quantum/bell_circuit.png
+    :width: 40%
+    :align: center
+
+    制造纠缠态的的量子线路
+
 实例：使用Cirq建立简单的量子线路
 -------------------------------------------
 
@@ -96,7 +155,23 @@ TensorFlow Quantum: 混合量子-经典机器学习 *
     0: ───H───M───
     0=00100111001111101100
 
-可见第一个量子线路的测量结果始终为1，第二个量子态的20次测量结果中有9次是0，11次是1（如果你多运行几次，会发现0和1出现的概率趋近于 :math:`\frac{1}{2}` ）。可见结果符合我们在上节中的分析。
+可见第一个量子线路的测量结果始终为1，第二个量子态的20次测量结果中有9次是0，11次是1（如果你多运行几次，会发现0和1出现的概率趋近于 :math:`\frac{1}{2}` ）。可见结果符合我们在前节中的分析。
+
+同理，前节中制造纠缠态的双比特量子线路可以写作
+
+.. literalinclude:: /_static/code/zh/appendix/quantum/bell.py
+
+结果如下：
+
+::
+
+    0: ───H───@───M('q_0')───
+              │
+    1: ───X───X───M('q_1')───
+    q_0=11101110111101101101
+    q_1=00010001000010010010
+
+这里由于cirq中的量子比特初始态为基本态 :math:`\ket{0}`，所以第二个量子比特首先通过一个量子非门转换为基本态 :math:`\ket{1}` 。从结果可见，第一个量子比特和第二个量子比特的测量结果始终相反，符合“纠缠”的特点。
 
 混合量子-经典机器学习
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
