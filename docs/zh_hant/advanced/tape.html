@@ -1,23 +1,34 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>tf.GradientTape 詳解 &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -33,13 +44,6 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" /> 
 </head>
@@ -73,7 +77,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -82,6 +86,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -200,6 +205,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -234,19 +240,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li><code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 詳解</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="../../_sources/zh_hant/advanced/tape.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="../../_sources/zh_hant/advanced/tape.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -372,8 +380,8 @@
 <h2>實例：對神經網絡的各層變量獨立求導<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
 <p>在實際的訓練流程中，我們有時需要對 <code class="docutils literal notranslate"><span class="pre">tf.keras.Model</span></code> 模型的部分變量求導，或者對模型不同部分的變量採取不同的優化策略。此時，我們可以通過模型中各個 <code class="docutils literal notranslate"><span class="pre">tf.keras.layers.Layer</span></code> 層的 <code class="docutils literal notranslate"><span class="pre">variables</span></code> 屬性取出層內的部分變量，並對這部分變量單獨應用優化器。以下示例展示了使用一個持久的 <code class="docutils literal notranslate"><span class="pre">tf.GradientTape</span></code> 記錄器，對前節 <a class="reference internal" href="../basic/models.html#mlp"><span class="std std-ref">基礎範例：多層感知器（MLP）</span></a> 中多層感知機的第一層和第二層獨立進行優化的過程。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
-<span class="kn">from</span> <span class="nn">zh.model.mnist.mlp</span> <span class="k">import</span> <span class="n">MLP</span>
-<span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="k">import</span> <span class="n">MNISTLoader</span>
+<span class="kn">from</span> <span class="nn">zh.model.mnist.mlp</span> <span class="kn">import</span> <span class="n">MLP</span>
+<span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="kn">import</span> <span class="n">MNISTLoader</span>
 
 <span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">50</span>
@@ -431,7 +439,6 @@
   </div>
   
 
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
@@ -449,6 +456,7 @@
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
     ga('create', 'UA-40509304-12', 'auto');
+    
     ga('send', 'pageview');
     </script>
 

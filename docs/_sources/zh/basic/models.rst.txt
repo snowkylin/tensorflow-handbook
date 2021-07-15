@@ -554,12 +554,12 @@ Keras 模型以类的形式呈现，我们可以通过继承 ``tf.keras.Model`` 
 然后，我们使用 ``tf.keras.Model`` 建立一个Q函数网络（Q-network），用于拟合Q Learning中的Q函数。这里我们使用较简单的多层全连接神经网络进行拟合。该网络输入当前状态，输出各个动作下的Q-value（CartPole下为2维，即向左和向右推动小车）。
 
 .. literalinclude:: /_static/code/zh/model/rl/qlearning.py
-    :lines: 16-31
+    :lines: 17-32
 
 最后，我们在主程序中实现Q Learning算法。
 
 .. literalinclude:: /_static/code/zh/model/rl/qlearning.py
-    :lines: 34-82
+    :lines: 35-83
 
 对于不同的任务（或者说环境），我们需要根据任务的特点，设计不同的状态以及采取合适的网络来拟合 Q 函数。例如，如果我们考虑经典的打砖块游戏（Gym 环境库中的  `Breakout-v0 <https://gym.openai.com/envs/Breakout-v0/>`_ ），每一次执行动作（挡板向左、向右或不动），都会返回一个 ``210 * 160 * 3`` 的 RGB 图片，表示当前屏幕画面。为了给打砖块游戏这个任务设计合适的状态表示，我们有以下分析：
 

@@ -1,23 +1,34 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>部署自己的交互式Python开发环境JupyterLab &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -33,13 +44,6 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
     <link rel="next" title="参考资料与推荐阅读" href="recommended_books.html" />
@@ -75,7 +79,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -84,6 +88,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -202,6 +207,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -236,19 +242,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>部署自己的交互式Python开发环境JupyterLab</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="../../_sources/zh_hans/appendix/jupyterlab.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="../../_sources/zh_hans/appendix/jupyterlab.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -273,7 +281,7 @@
 </pre></div>
 </div>
 <p>然后使用以下命令运行JupyterLab：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">lab</span> <span class="o">--</span><span class="n">ip</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">lab</span> <span class="o">--</span><span class="n">ip</span><span class="o">=</span><span class="mf">0.0.0.0</span>
 </pre></div>
 </div>
 <p>然后根据输出的提示，使用浏览器访问 <code class="docutils literal notranslate"><span class="pre">http://服务器地址:8888</span></code> ，并使用输出中提供的token直接登录（或设置密码后登录）即可。</p>
@@ -286,7 +294,7 @@
 <p>可以使用 <code class="docutils literal notranslate"><span class="pre">--port</span></code> 参数指定端口号。</p>
 <p>部分云服务（如GCP）的实例默认不开放大多数网络端口。如果使用默认端口号，需要在防火墙设置中打开端口（例如GCP需要在“虚拟机实例详情-网络接口-查看详情”中新建防火墙规则，开放对应端口并应用到当前实例）。</p>
 <p>如果需要在终端退出后仍然持续运行JupyterLab，可以使用 <code class="docutils literal notranslate"><span class="pre">nohup</span></code> 命令及 <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> 放入后台运行，即：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nohup</span> <span class="n">jupyter</span> <span class="n">lab</span> <span class="o">--</span><span class="n">ip</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="o">&amp;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nohup</span> <span class="n">jupyter</span> <span class="n">lab</span> <span class="o">--</span><span class="n">ip</span><span class="o">=</span><span class="mf">0.0.0.0</span> <span class="o">&amp;</span>
 </pre></div>
 </div>
 <p>程序输出可以在当前目录下的 <code class="docutils literal notranslate"><span class="pre">nohup.txt</span></code> 找到。</p>
@@ -326,10 +334,10 @@ ipython kernel install --name 环境名 --user
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="recommended_books.html" class="btn btn-neutral float-right" title="参考资料与推荐阅读" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="recommended_books.html" class="btn btn-neutral float-right" title="参考资料与推荐阅读" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="cloud.html" class="btn btn-neutral float-left" title="在云端使用TensorFlow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="cloud.html" class="btn btn-neutral float-left" title="在云端使用TensorFlow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> 上一页</a>
       
     </div>
   
@@ -356,7 +364,6 @@ ipython kernel install --name 环境名 --user
   </div>
   
 
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
@@ -374,6 +381,7 @@ ipython kernel install --name 环境名 --user
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
     ga('create', 'UA-40509304-12', 'auto');
+    
     ga('send', 'pageview');
     </script>
 

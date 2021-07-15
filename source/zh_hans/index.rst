@@ -11,7 +11,7 @@
                 <b><a href="/zh_hans">简体中文版</a></b>           
             </td>
             <td width=33% style="text-align: center">
-                <b><a href="/zh_hant">繁体中文版</a></b>           
+                <b><a href="/zh_hant">繁體中文版</a></b>           
             </td>
             <td width=33% style="text-align: center">
                 <b><a href="/en">English Version</a></b>

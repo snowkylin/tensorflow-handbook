@@ -1,7 +1,7 @@
 前言
 ======
 
-2018年3月30日，Google在加州山景城举行了第二届TensorFlow Dev Summit开发者峰会，并宣布正式发布TensorFlow 1.8版本。作为国内首批机器学习领域的谷歌开发者专家（ `Google Developers Expert <https://developers.google.cn/community/experts>`_ , GDE），我有幸获得Google的资助亲临峰会现场，见证了这一具有里程碑式意义的新版本发布。众多新功能的加入和支持展示了TensorFlow的雄心壮志，已经酝酿许久的即时执行模式（Eager Execution，或称“动态图模式”）在这一版本中也终于正式得到支持。
+2018年3月30日，Google在加州山景城举行了第二届TensorFlow Dev Summit开发者峰会，并宣布正式发布TensorFlow 1.8版本。作为-{zh-hant:大中華地區;zh-hans:国内;}-首批机器学习领域的谷歌开发者专家（ `Google Developers Expert <https://developers.google.cn/community/experts>`_ , GDE），我有幸获得Google的资助亲临峰会现场，见证了这一具有里程碑式意义的新版本发布。众多新功能的加入和支持展示了TensorFlow的雄心壮志，已经酝酿许久的即时执行模式（Eager Execution，或称“动态图模式”）在这一版本中也终于正式得到支持。
 
 在此之前，TensorFlow 所基于的传统的图执行模式与会话机制（Graph Execution and Session，或称“静态图模式”）的弊端，如入门门槛高、调试困难、灵活性差、无法使用 Python 原生控制语句等，已被开发者诟病许久。一些新的基于即时执行模式的深度学习框架（如 PyTorch）也横空出世，并以其易用性和快速开发的特性而占据了一席之地。尤其是在学术研究等需要快速迭代模型的领域，PyTorch 等新兴深度学习框架已成为主流。我所在的数十人的机器学习实验室中，竟只有我一人“守旧”地使用 TensorFlow。而市面上 TensorFlow 相关的中文技术书以及资料也仍然基于传统的计算图与会话机制，这让不少初学者，尤其是刚学过机器学习课程的大学生望而却步。
 

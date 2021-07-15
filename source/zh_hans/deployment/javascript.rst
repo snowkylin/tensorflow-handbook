@@ -123,7 +123,7 @@ TensorFlow.js 环境配置
 
 如果你看到了上面的 ``tfjs-core``, ``tfjs-data``, ``tfjs-layers`` 和 ``tfjs-converter`` 的输出信息，那么就说明环境配置没有问题了。
 
-然后，在 JavaScript 程序中，通过以下指令，即可引入 TensorFlow.js：
+然後，在 JavaScript 程序中，通过以下指令，即可引入 TensorFlow.js：
 
 .. code-block:: javascript
 

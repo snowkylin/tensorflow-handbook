@@ -1,23 +1,34 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>前言 &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -33,13 +44,6 @@
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="TensorFlow概述" href="introduction.html" />
@@ -75,7 +79,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -84,6 +88,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -207,6 +212,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -241,19 +247,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>前言</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="../_sources/zh_hans/preface.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="../_sources/zh_hans/preface.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -268,7 +276,7 @@
             
   <div class="section" id="id1">
 <h1>前言<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
-<p>2018年3月30日，Google在加州山景城举行了第二届TensorFlow Dev Summit开发者峰会，并宣布正式发布TensorFlow 1.8版本。作为国内首批机器学习领域的谷歌开发者专家（ <a class="reference external" href="https://developers.google.cn/community/experts">Google Developers Expert</a> , GDE），我有幸获得Google的资助亲临峰会现场，见证了这一具有里程碑式意义的新版本发布。众多新功能的加入和支持展示了TensorFlow的雄心壮志，已经酝酿许久的即时执行模式（Eager Execution，或称“动态图模式”）在这一版本中也终于正式得到支持。</p>
+<p>2018年3月30日，Google在加州山景城举行了第二届TensorFlow Dev Summit开发者峰会，并宣布正式发布TensorFlow 1.8版本。作为-{zh-hant:大中華地區;zh-hans:国内;}-首批机器学习领域的谷歌开发者专家（ <a class="reference external" href="https://developers.google.cn/community/experts">Google Developers Expert</a> , GDE），我有幸获得Google的资助亲临峰会现场，见证了这一具有里程碑式意义的新版本发布。众多新功能的加入和支持展示了TensorFlow的雄心壮志，已经酝酿许久的即时执行模式（Eager Execution，或称“动态图模式”）在这一版本中也终于正式得到支持。</p>
 <p>在此之前，TensorFlow 所基于的传统的图执行模式与会话机制（Graph Execution and Session，或称“静态图模式”）的弊端，如入门门槛高、调试困难、灵活性差、无法使用 Python 原生控制语句等，已被开发者诟病许久。一些新的基于即时执行模式的深度学习框架（如 PyTorch）也横空出世，并以其易用性和快速开发的特性而占据了一席之地。尤其是在学术研究等需要快速迭代模型的领域，PyTorch 等新兴深度学习框架已成为主流。我所在的数十人的机器学习实验室中，竟只有我一人“守旧”地使用 TensorFlow。而市面上 TensorFlow 相关的中文技术书以及资料也仍然基于传统的计算图与会话机制，这让不少初学者，尤其是刚学过机器学习课程的大学生望而却步。</p>
 <p>因此，在 TensorFlow 正式支持即时运行模式之际，我认为有必要出现一本全新的入门手册，帮助初学者及需要快速迭代模型的研究者，以“即时执行”的视角快速入门 TensorFlow。这也是我编写本手册的初衷。本手册自2018年春开始编写，并在2018年8月在 GitHub 发布了第一个中英双语版本，很快得到了国内外不少开发者的关注。尤其是 TensorFlow 工程总监 Rajat Monga 、 Google AI 负责人 Jeff Dean 和 TensorFlow 官方在社交媒体上对本手册给予了推荐与关注，这给了我很大的鼓舞。同时，我作为谷歌开发者专家，多次受到谷歌开发者社群（ <a class="reference external" href="https://developers.google.cn/community/gdg">Google Developers Group</a> , GDG）的邀请，在 GDG DevFest、TensorFlow Day 和 Women Techmakers 等活动中使用本手册进行线下的 TensorFlow Codelab 教学，获得了较好的反响，也得到了不少反馈和建议。这些都促进了本手册的更新和质量改进。</p>
 <p>在2019年3月的第三届TensorFlow Dev Summit开发者峰会上，我再次受邀来到谷歌的硅谷总部，见证了 TensorFlow 2.0 alpha 的发布。此时的 TensorFlow 已经形成了一个拥有庞大版图的生态系统。TensorFlow Lite、TensorFlow.js、TensorFlow for Swift、TPU 等各种组件日益成熟，同时 TensorFlow 2 加入了提升易用性的诸多新特性（例如以 <code class="docutils literal notranslate"><span class="pre">tf.keras</span></code> 为核心的统一高层API、使用 <code class="docutils literal notranslate"><span class="pre">tf.function</span></code> 构建图模型、默认使用即时执行模式等）。这使得本手册的大幅扩充更新提上日程。GDE 社群的两位 JavaScript 和 Android 领域的资深专家李卓桓和朱金鹏加入了本手册的编写，使得本手册增加了诸多面向业界的 TensorFlow 模块详解与实例。同时，我在谷歌开发者大使（Developer Advocate） Paige Bailey 的邀请下申请并成功加入了 Google Summer of Code 2019 活动。作为全世界 20 位由 Google TensorFlow 项目资助的学生开发者之一，我在 2019 年的暑期基于 TensorFlow 2.0 Beta 版本，对本手册进行了大幅扩充和可读性上的改进。这使得本手册从 2018 年发布的小型入门指南逐渐成长为一本内容全面的 TensorFlow 技术手册和开发指导。</p>
@@ -328,10 +336,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="introduction.html" class="btn btn-neutral float-right" title="TensorFlow概述" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="introduction.html" class="btn btn-neutral float-right" title="TensorFlow概述" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="foreword.html" class="btn btn-neutral float-left" title="推荐序" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="foreword.html" class="btn btn-neutral float-left" title="推荐序" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> 上一页</a>
       
     </div>
   
@@ -358,7 +366,6 @@
   </div>
   
 
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
@@ -376,6 +383,7 @@
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
     ga('create', 'UA-40509304-12', 'auto');
+    
     ga('send', 'pageview');
     </script>
 

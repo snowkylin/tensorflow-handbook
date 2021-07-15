@@ -1,23 +1,34 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>TensorFlow Serving &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -33,13 +44,6 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" /> 
 </head>
@@ -73,7 +77,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -82,6 +86,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -200,6 +205,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -234,19 +240,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>TensorFlow Serving</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="../../_sources/zh/deployment/serving.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="../../_sources/zh/deployment/serving.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -345,7 +353,7 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MLP</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
     <span class="o">...</span>
 
-<span class="hll">    <span class="nd">@tf.function</span><span class="p">(</span><span class="n">input_signature</span><span class="o">=</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">TensorSpec</span><span class="p">([</span><span class="bp">None</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)])</span>
+<span class="hll">    <span class="nd">@tf</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">input_signature</span><span class="o">=</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">TensorSpec</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)])</span>
 </span>    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
         <span class="o">...</span>
 </pre></div>
@@ -391,7 +399,7 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="k">import</span> <span class="n">MNISTLoader</span>
+<span class="kn">from</span> <span class="nn">zh.model.utils</span> <span class="kn">import</span> <span class="n">MNISTLoader</span>
 
 
 <span class="n">data_loader</span> <span class="o">=</span> <span class="n">MNISTLoader</span><span class="p">()</span>
@@ -428,25 +436,25 @@
 <img alt="../../_images/test_pic_tag_5.png" src="../../_images/test_pic_tag_5.png" />
 <p class="caption"><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">test_pic_tag_5.png</span></code> ：一个由作者手写的数字5。（运行下面的代码时可下载该图片并放在与代码同一目录下）</span><a class="headerlink" href="#id7" title="永久链接至图片">¶</a></p>
 </div>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">Jimp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jimp&#39;</span><span class="p">)</span>
-<span class="kr">const</span> <span class="nx">superagent</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;superagent&#39;</span><span class="p">)</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">Jimp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;jimp&#39;</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">superagent</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;superagent&#39;</span><span class="p">)</span>
 
-<span class="kr">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s1">&#39;http://localhost:8501/v1/models/MLP:predict&#39;</span>
+<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s1">&#39;http://localhost:8501/v1/models/MLP:predict&#39;</span>
 
-<span class="kr">const</span> <span class="nx">getPixelGrey</span> <span class="o">=</span> <span class="p">(</span><span class="nx">pic</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">pointColor</span> <span class="o">=</span> <span class="nx">pic</span><span class="p">.</span><span class="nx">getPixelColor</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span>
-  <span class="kr">const</span> <span class="p">{</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">g</span><span class="p">,</span> <span class="nx">b</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">Jimp</span><span class="p">.</span><span class="nx">intToRGBA</span><span class="p">(</span><span class="nx">pointColor</span><span class="p">)</span>
-  <span class="kr">const</span> <span class="nx">gray</span> <span class="o">=</span>  <span class="o">+</span><span class="p">(</span><span class="nx">r</span> <span class="o">*</span> <span class="mf">0.299</span> <span class="o">+</span> <span class="nx">g</span> <span class="o">*</span> <span class="mf">0.587</span> <span class="o">+</span> <span class="nx">b</span> <span class="o">*</span> <span class="mf">0.114</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-  <span class="k">return</span> <span class="p">[</span> <span class="nx">gray</span> <span class="o">/</span> <span class="mi">255</span> <span class="p">]</span>
+<span class="kd">const</span> <span class="nx">getPixelGrey</span> <span class="o">=</span> <span class="p">(</span><span class="nx">pic</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">pointColor</span> <span class="o">=</span> <span class="nx">pic</span><span class="p">.</span><span class="nx">getPixelColor</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span>
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">g</span><span class="p">,</span> <span class="nx">b</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">Jimp</span><span class="p">.</span><span class="nx">intToRGBA</span><span class="p">(</span><span class="nx">pointColor</span><span class="p">)</span>
+  <span class="kd">const</span> <span class="nx">gray</span> <span class="o">=</span>  <span class="o">+</span><span class="p">(</span><span class="nx">r</span> <span class="o">*</span> <span class="mf">0.299</span> <span class="o">+</span> <span class="nx">g</span> <span class="o">*</span> <span class="mf">0.587</span> <span class="o">+</span> <span class="nx">b</span> <span class="o">*</span> <span class="mf">0.114</span><span class="p">).</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">0</span><span class="p">)</span>
+  <span class="k">return</span> <span class="p">[</span> <span class="nx">gray</span> <span class="o">/</span> <span class="mf">255</span> <span class="p">]</span>
 <span class="p">}</span>
 
-<span class="kr">const</span> <span class="nx">getPicGreyArray</span> <span class="o">=</span> <span class="nx">async</span> <span class="p">(</span><span class="nx">fileName</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">pic</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">Jimp</span><span class="p">.</span><span class="nx">read</span><span class="p">(</span><span class="nx">fileName</span><span class="p">)</span>
-  <span class="kr">const</span> <span class="nx">resizedPic</span> <span class="o">=</span> <span class="nx">pic</span><span class="p">.</span><span class="nx">resize</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
-  <span class="kr">const</span> <span class="nx">greyArray</span> <span class="o">=</span> <span class="p">[]</span>
-  <span class="k">for</span> <span class="p">(</span> <span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span> <span class="mi">28</span><span class="p">;</span> <span class="nx">i</span> <span class="o">++</span> <span class="p">)</span> <span class="p">{</span>
+<span class="kd">const</span> <span class="nx">getPicGreyArray</span> <span class="o">=</span> <span class="k">async</span> <span class="p">(</span><span class="nx">fileName</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">pic</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">Jimp</span><span class="p">.</span><span class="nx">read</span><span class="p">(</span><span class="nx">fileName</span><span class="p">)</span>
+  <span class="kd">const</span> <span class="nx">resizedPic</span> <span class="o">=</span> <span class="nx">pic</span><span class="p">.</span><span class="nx">resize</span><span class="p">(</span><span class="mf">28</span><span class="p">,</span> <span class="mf">28</span><span class="p">)</span>
+  <span class="kd">const</span> <span class="nx">greyArray</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="p">(</span> <span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mf">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span> <span class="mf">28</span><span class="p">;</span> <span class="nx">i</span> <span class="o">++</span> <span class="p">)</span> <span class="p">{</span>
     <span class="kd">let</span> <span class="nx">line</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="mi">28</span><span class="p">;</span> <span class="nx">j</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="mf">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="mf">28</span><span class="p">;</span> <span class="nx">j</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">line</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">getPixelGrey</span><span class="p">(</span><span class="nx">resizedPic</span><span class="p">,</span> <span class="nx">j</span><span class="p">,</span> <span class="nx">i</span><span class="p">))</span>
     <span class="p">}</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">line</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">_</span> <span class="p">=&gt;</span> <span class="nx">_</span> <span class="o">&gt;</span> <span class="mf">0.3</span> <span class="o">?</span> <span class="s1">&#39; &#39;</span> <span class="o">:</span> <span class="s1">&#39;1&#39;</span><span class="p">).</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span>
@@ -455,16 +463,16 @@
   <span class="k">return</span> <span class="nx">greyArray</span>
 <span class="p">}</span>
 
-<span class="kr">const</span> <span class="nx">evaluatePic</span> <span class="o">=</span> <span class="nx">async</span> <span class="p">(</span><span class="nx">fileName</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">arr</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">getPicGreyArray</span><span class="p">(</span><span class="nx">fileName</span><span class="p">)</span>
-  <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">superagent</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">evaluatePic</span> <span class="o">=</span> <span class="k">async</span> <span class="p">(</span><span class="nx">fileName</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">arr</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">getPicGreyArray</span><span class="p">(</span><span class="nx">fileName</span><span class="p">)</span>
+  <span class="kd">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">superagent</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
     <span class="p">.</span><span class="nx">send</span><span class="p">({</span>
       <span class="nx">instances</span><span class="o">:</span> <span class="p">[</span><span class="nx">arr</span><span class="p">]</span>
     <span class="p">})</span>
   <span class="nx">result</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">predictions</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">res</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="nx">sortedRes</span> <span class="o">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">_</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">[</span><span class="nx">_</span><span class="p">,</span> <span class="nx">i</span><span class="p">])</span>
-    <span class="p">.</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="nx">a</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`我们猜这个数字是</span><span class="si">${</span><span class="nx">sortedRes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="sb">，概率是</span><span class="si">${</span><span class="nx">sortedRes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+    <span class="kd">const</span> <span class="nx">sortedRes</span> <span class="o">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">_</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">[</span><span class="nx">_</span><span class="p">,</span> <span class="nx">i</span><span class="p">])</span>
+    <span class="p">.</span><span class="nx">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">b</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span> <span class="o">-</span> <span class="nx">a</span><span class="p">[</span><span class="mf">0</span><span class="p">])</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`我们猜这个数字是</span><span class="si">${</span><span class="nx">sortedRes</span><span class="p">[</span><span class="mf">0</span><span class="p">][</span><span class="mf">1</span><span class="p">]</span><span class="si">}</span><span class="sb">，概率是</span><span class="si">${</span><span class="nx">sortedRes</span><span class="p">[</span><span class="mf">0</span><span class="p">][</span><span class="mf">0</span><span class="p">]</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
   <span class="p">})</span>
 <span class="p">}</span>
 
@@ -553,7 +561,6 @@
   </div>
   
 
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
@@ -571,6 +578,7 @@
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
     ga('create', 'UA-40509304-12', 'auto');
+    
     ga('send', 'pageview');
     </script>
 

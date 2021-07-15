@@ -1,23 +1,34 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>TensorFlow Hub 模型复用（Jinpeng） &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -33,13 +44,6 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
     <link rel="next" title="TensorFlow Datasets 数据集载入" href="tfds.html" />
@@ -75,7 +79,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -84,6 +88,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -208,6 +213,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -242,19 +248,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>TensorFlow Hub 模型复用（Jinpeng）</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="../../_sources/zh_hans/appendix/tfhub.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="../../_sources/zh_hans/appendix/tfhub.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -306,7 +314,7 @@
 <div class="section" id="id2">
 <h2>TF Hub 模型使用样例<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
 <p>TF Hub模型的复用非常简单，代码模式如下：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow_hub</span> <span class="kn">as</span> <span class="nn">hub</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow_hub</span> <span class="k">as</span> <span class="nn">hub</span>
 
 <span class="n">hub_handle</span> <span class="o">=</span> <span class="s1">&#39;https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2&#39;</span>
 <span class="n">hub_model</span> <span class="o">=</span> <span class="n">hub</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">hub_handle</span><span class="p">)</span>
@@ -390,17 +398,17 @@
 <h2>TF Hub 模型retrain样例<a class="headerlink" href="#tf-hub-retrain" title="永久链接至标题">¶</a></h2>
 <p>相信预预训练的模型不一定满足开发者的实际诉求，还需要进行二次训练。针对这种情况，TF Hub提供了很方便的Keras接口 <code class="docutils literal notranslate"><span class="pre">hub.KerasLayer(url)</span></code> ，其可以封装在Keras的 <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> 层状结构中，进而可以针对开发者的需求和数据进行再训练。</p>
 <p>我们以 <code class="docutils literal notranslate"><span class="pre">inception_v3</span></code> 的模型为例，简单介绍 <code class="docutils literal notranslate"><span class="pre">hub.KerasLayer(url)</span></code> 使用的方法：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
-<span class="kn">import</span> <span class="nn">tensorflow_hub</span> <span class="kn">as</span> <span class="nn">hub</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_hub</span> <span class="k">as</span> <span class="nn">hub</span>
 
 <span class="n">num_classes</span> <span class="o">=</span> <span class="mi">10</span>
 
 <span class="c1"># 使用 hub.KerasLayer 组件待训练模型</span>
 <span class="n">new_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
-    <span class="n">hub</span><span class="o">.</span><span class="n">KerasLayer</span><span class="p">(</span><span class="s2">&quot;https://tfhub.dev/google/tf2-preview/inception_v3/feature_vector/4&quot;</span><span class="p">,</span> <span class="n">output_shape</span><span class="o">=</span><span class="p">[</span><span class="mi">2048</span><span class="p">],</span> <span class="n">trainable</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
+    <span class="n">hub</span><span class="o">.</span><span class="n">KerasLayer</span><span class="p">(</span><span class="s2">&quot;https://tfhub.dev/google/tf2-preview/inception_v3/feature_vector/4&quot;</span><span class="p">,</span> <span class="n">output_shape</span><span class="o">=</span><span class="p">[</span><span class="mi">2048</span><span class="p">],</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
     <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">num_classes</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>
 <span class="p">])</span>
-<span class="n">new_model</span><span class="o">.</span><span class="n">build</span><span class="p">([</span><span class="bp">None</span><span class="p">,</span> <span class="mi">299</span><span class="p">,</span> <span class="mi">299</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">new_model</span><span class="o">.</span><span class="n">build</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="mi">299</span><span class="p">,</span> <span class="mi">299</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 
 <span class="c1"># 输出模型结构</span>
 <span class="n">new_model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
@@ -445,10 +453,10 @@ _________________________________________________________________
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="tfds.html" class="btn btn-neutral float-right" title="TensorFlow Datasets 数据集载入" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="tfds.html" class="btn btn-neutral float-right" title="TensorFlow Datasets 数据集载入" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="tpu.html" class="btn btn-neutral float-left" title="使用TPU训练TensorFlow模型（Huan）" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="tpu.html" class="btn btn-neutral float-left" title="使用TPU训练TensorFlow模型（Huan）" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> 上一页</a>
       
     </div>
   
@@ -475,7 +483,6 @@ _________________________________________________________________
   </div>
   
 
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
@@ -493,6 +500,7 @@ _________________________________________________________________
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
     ga('create', 'UA-40509304-12', 'auto');
+    
     ga('send', 'pageview');
     </script>
 

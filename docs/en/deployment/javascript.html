@@ -1,23 +1,34 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>TensorFlow in JavaScript (Huan) &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -33,13 +44,6 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" /> 
 </head>
@@ -73,7 +77,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -82,6 +86,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -200,6 +205,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -234,19 +240,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>TensorFlow in JavaScript (Huan)</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="../../_sources/en/deployment/javascript.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="../../_sources/en/deployment/javascript.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -448,15 +456,15 @@ $ npm install @tensorflow/tfjs-node-gpu
 </pre></div>
 </div>
 <p>然后，我们就可以通过JavaScript来加载Tensorflow模型了！</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">tf</span> <span class="nx">from</span> <span class="s1">&#39;@tensorflow/tfjs&#39;</span><span class="p">;</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">tf</span> <span class="k">from</span> <span class="s1">&#39;@tensorflow/tfjs&#39;</span><span class="p">;</span>
 
-<span class="kr">const</span> <span class="nx">MODEL_URL</span> <span class="o">=</span> <span class="s1">&#39;model_directory/model.json&#39;</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">MODEL_URL</span> <span class="o">=</span> <span class="s1">&#39;model_directory/model.json&#39;</span><span class="p">;</span>
 
-<span class="kr">const</span> <span class="nx">model</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">loadGraphModel</span><span class="p">(</span><span class="nx">MODEL_URL</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">model</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">loadGraphModel</span><span class="p">(</span><span class="nx">MODEL_URL</span><span class="p">);</span>
 <span class="c1">// 对Keras或者tfjs原生的层模型，使用下面的加载函数:</span>
 <span class="c1">// const model = await tf.loadLayersModel(MODEL_URL);</span>
 
-<span class="kr">const</span> <span class="nx">cat</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;cat&#39;</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">cat</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;cat&#39;</span><span class="p">);</span>
 <span class="nx">model</span><span class="p">.</span><span class="nx">execute</span><span class="p">(</span><span class="nx">tf</span><span class="p">.</span><span class="nx">browser</span><span class="p">.</span><span class="nx">fromPixels</span><span class="p">(</span><span class="nx">cat</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -479,42 +487,42 @@ $ npm install @tensorflow/tfjs-node-gpu
 <p>在 TensorFlow 基础章节中，我们已经用 Python 实现过，针对某城市在2013年-2017年的房价的任务，通过对该数据进行线性回归，即使用线性模型 <img class="math" src="../../_images/math/08657936072cefe083681bc78c8c9bcda2c86e2d.png" alt="y = ax + b"/> 来拟合上述数据，此处 <img class="math" src="../../_images/math/c13eacc8d78956859939555ea65552aa2f4f15a5.png" alt="a"/> 和 <img class="math" src="../../_images/math/3de2ed824326dc0eb383a42dd6ec44d3b401047b.png" alt="b"/> 是待求的参数。</p>
 <p>下面我们改用 TensorFlow.js 来实现一个 JavaScript 版本。</p>
 <p>首先，我们定义数据，进行基本的归一化操作。</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">tf</span> <span class="nx">from</span> <span class="s1">&#39;@tensorflow/tfjs&#39;</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">tf</span> <span class="k">from</span> <span class="s1">&#39;@tensorflow/tfjs&#39;</span>
 
-<span class="kr">const</span> <span class="nx">xsRaw</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">tensor</span><span class="p">([</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">2014</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">,</span> <span class="mi">2017</span><span class="p">])</span>
-<span class="kr">const</span> <span class="nx">ysRaw</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">tensor</span><span class="p">([</span><span class="mi">12000</span><span class="p">,</span> <span class="mi">14000</span><span class="p">,</span> <span class="mi">15000</span><span class="p">,</span> <span class="mi">16500</span><span class="p">,</span> <span class="mi">17500</span><span class="p">])</span>
+<span class="kd">const</span> <span class="nx">xsRaw</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">tensor</span><span class="p">([</span><span class="mf">2013</span><span class="p">,</span> <span class="mf">2014</span><span class="p">,</span> <span class="mf">2015</span><span class="p">,</span> <span class="mf">2016</span><span class="p">,</span> <span class="mf">2017</span><span class="p">])</span>
+<span class="kd">const</span> <span class="nx">ysRaw</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">tensor</span><span class="p">([</span><span class="mf">12000</span><span class="p">,</span> <span class="mf">14000</span><span class="p">,</span> <span class="mf">15000</span><span class="p">,</span> <span class="mf">16500</span><span class="p">,</span> <span class="mf">17500</span><span class="p">])</span>
 
 <span class="c1">// 归一化</span>
-<span class="kr">const</span> <span class="nx">xs</span> <span class="o">=</span> <span class="nx">xsRaw</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">xsRaw</span><span class="p">.</span><span class="nx">min</span><span class="p">())</span>
+<span class="kd">const</span> <span class="nx">xs</span> <span class="o">=</span> <span class="nx">xsRaw</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">xsRaw</span><span class="p">.</span><span class="nx">min</span><span class="p">())</span>
                 <span class="p">.</span><span class="nx">div</span><span class="p">(</span><span class="nx">xsRaw</span><span class="p">.</span><span class="nx">max</span><span class="p">().</span><span class="nx">sub</span><span class="p">(</span><span class="nx">xsRaw</span><span class="p">.</span><span class="nx">min</span><span class="p">()))</span>
-<span class="kr">const</span> <span class="nx">ys</span> <span class="o">=</span> <span class="nx">ysRaw</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">ysRaw</span><span class="p">.</span><span class="nx">min</span><span class="p">())</span>
+<span class="kd">const</span> <span class="nx">ys</span> <span class="o">=</span> <span class="nx">ysRaw</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">ysRaw</span><span class="p">.</span><span class="nx">min</span><span class="p">())</span>
                 <span class="p">.</span><span class="nx">div</span><span class="p">(</span><span class="nx">ysRaw</span><span class="p">.</span><span class="nx">max</span><span class="p">().</span><span class="nx">sub</span><span class="p">(</span><span class="nx">ysRaw</span><span class="p">.</span><span class="nx">min</span><span class="p">()))</span>
 </pre></div>
 </div>
 <p>接下来，我们来求线性模型中两个参数 <code class="docutils literal notranslate"><span class="pre">a</span></code> 和 <code class="docutils literal notranslate"><span class="pre">b</span></code> 的值。</p>
 <p>使用 <code class="docutils literal notranslate"><span class="pre">loss()</span></code> 计算损失；
 使用 <code class="docutils literal notranslate"><span class="pre">optimizer.minimize()</span></code> 自动更新模型参数。</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">scalar</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()).</span><span class="nx">variable</span><span class="p">()</span>
-<span class="kr">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">scalar</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()).</span><span class="nx">variable</span><span class="p">()</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">scalar</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()).</span><span class="nx">variable</span><span class="p">()</span>
+<span class="kd">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">scalar</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()).</span><span class="nx">variable</span><span class="p">()</span>
 
 <span class="c1">// y = a * x + b.</span>
-<span class="kr">const</span> <span class="nx">f</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="o">:</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">a</span><span class="p">.</span><span class="nx">mul</span><span class="p">(</span><span class="nx">x</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>
-<span class="kr">const</span> <span class="nx">loss</span> <span class="o">=</span> <span class="p">(</span><span class="nx">pred</span><span class="o">:</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="p">,</span> <span class="nx">label</span><span class="o">:</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">pred</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">label</span><span class="p">).</span><span class="nx">square</span><span class="p">().</span><span class="nx">mean</span><span class="p">()</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Scalar</span>
+<span class="kd">const</span> <span class="nx">f</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="o">:</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">a</span><span class="p">.</span><span class="nx">mul</span><span class="p">(</span><span class="nx">x</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">loss</span> <span class="o">=</span> <span class="p">(</span><span class="nx">pred</span><span class="o">:</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="p">,</span> <span class="nx">label</span><span class="o">:</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">pred</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">label</span><span class="p">).</span><span class="nx">square</span><span class="p">().</span><span class="nx">mean</span><span class="p">()</span> <span class="k">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Scalar</span>
 
-<span class="kr">const</span> <span class="nx">learningRate</span> <span class="o">=</span> <span class="mi">1</span><span class="nx">e</span><span class="o">-</span><span class="mi">3</span>
-<span class="kr">const</span> <span class="nx">optimizer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">train</span><span class="p">.</span><span class="nx">sgd</span><span class="p">(</span><span class="nx">learningRate</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">learningRate</span> <span class="o">=</span> <span class="mf">1e-3</span>
+<span class="kd">const</span> <span class="nx">optimizer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">train</span><span class="p">.</span><span class="nx">sgd</span><span class="p">(</span><span class="nx">learningRate</span><span class="p">)</span>
 
 <span class="c1">// 训练模型</span>
-<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mf">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mf">10000</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
    <span class="nx">optimizer</span><span class="p">.</span><span class="nx">minimize</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="nx">loss</span><span class="p">(</span><span class="nx">f</span><span class="p">(</span><span class="nx">xs</span><span class="p">),</span> <span class="nx">ys</span><span class="p">))</span>
 <span class="p">}</span>
 
 <span class="c1">// 预测</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`a: </span><span class="si">${</span><span class="nx">a</span><span class="p">.</span><span class="nx">dataSync</span><span class="p">()</span><span class="si">}</span><span class="sb">, b: </span><span class="si">${</span><span class="nx">b</span><span class="p">.</span><span class="nx">dataSync</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
-<span class="kr">const</span> <span class="nx">preds</span> <span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="nx">xs</span><span class="p">).</span><span class="nx">dataSync</span><span class="p">()</span> <span class="nx">as</span> <span class="nx">Float32Array</span>
-<span class="kr">const</span> <span class="nx">trues</span> <span class="o">=</span> <span class="nx">ys</span><span class="p">.</span><span class="nx">arraySync</span><span class="p">()</span> <span class="nx">as</span> <span class="nx">number</span><span class="p">[]</span>
+<span class="kd">const</span> <span class="nx">preds</span> <span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="nx">xs</span><span class="p">).</span><span class="nx">dataSync</span><span class="p">()</span> <span class="k">as</span> <span class="nx">Float32Array</span>
+<span class="kd">const</span> <span class="nx">trues</span> <span class="o">=</span> <span class="nx">ys</span><span class="p">.</span><span class="nx">arraySync</span><span class="p">()</span> <span class="k">as</span> <span class="nx">number</span><span class="p">[]</span>
 <span class="nx">preds</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">pred</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`x: </span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb">, pred: </span><span class="si">${</span><span class="nx">pred</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="sb">, true: </span><span class="si">${</span><span class="nx">trues</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`x: </span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb">, pred: </span><span class="si">${</span><span class="nx">pred</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">)</span><span class="si">}</span><span class="sb">, true: </span><span class="si">${</span><span class="nx">trues</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
 <span class="p">})</span>
 </pre></div>
 </div>
@@ -532,35 +540,35 @@ $ npm install @tensorflow/tfjs-node-gpu
   <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;http://unpkg.com/@tensorflow/tfjs/dist/tf.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-      <span class="kr">const</span> <span class="nx">xsRaw</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">tensor</span><span class="p">([</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">2014</span><span class="p">,</span> <span class="mi">2015</span><span class="p">,</span> <span class="mi">2016</span><span class="p">,</span> <span class="mi">2017</span><span class="p">])</span>
-      <span class="kr">const</span> <span class="nx">ysRaw</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">tensor</span><span class="p">([</span><span class="mi">12000</span><span class="p">,</span> <span class="mi">14000</span><span class="p">,</span> <span class="mi">15000</span><span class="p">,</span> <span class="mi">16500</span><span class="p">,</span> <span class="mi">17500</span><span class="p">])</span>
+      <span class="kd">const</span> <span class="nx">xsRaw</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">tensor</span><span class="p">([</span><span class="mf">2013</span><span class="p">,</span> <span class="mf">2014</span><span class="p">,</span> <span class="mf">2015</span><span class="p">,</span> <span class="mf">2016</span><span class="p">,</span> <span class="mf">2017</span><span class="p">])</span>
+      <span class="kd">const</span> <span class="nx">ysRaw</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">tensor</span><span class="p">([</span><span class="mf">12000</span><span class="p">,</span> <span class="mf">14000</span><span class="p">,</span> <span class="mf">15000</span><span class="p">,</span> <span class="mf">16500</span><span class="p">,</span> <span class="mf">17500</span><span class="p">])</span>
 
       <span class="c1">// 归一化</span>
-      <span class="kr">const</span> <span class="nx">xs</span> <span class="o">=</span> <span class="nx">xsRaw</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">xsRaw</span><span class="p">.</span><span class="nx">min</span><span class="p">())</span>
+      <span class="kd">const</span> <span class="nx">xs</span> <span class="o">=</span> <span class="nx">xsRaw</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">xsRaw</span><span class="p">.</span><span class="nx">min</span><span class="p">())</span>
                       <span class="p">.</span><span class="nx">div</span><span class="p">(</span><span class="nx">xsRaw</span><span class="p">.</span><span class="nx">max</span><span class="p">().</span><span class="nx">sub</span><span class="p">(</span><span class="nx">xsRaw</span><span class="p">.</span><span class="nx">min</span><span class="p">()))</span>
-      <span class="kr">const</span> <span class="nx">ys</span> <span class="o">=</span> <span class="nx">ysRaw</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">ysRaw</span><span class="p">.</span><span class="nx">min</span><span class="p">())</span>
+      <span class="kd">const</span> <span class="nx">ys</span> <span class="o">=</span> <span class="nx">ysRaw</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">ysRaw</span><span class="p">.</span><span class="nx">min</span><span class="p">())</span>
                       <span class="p">.</span><span class="nx">div</span><span class="p">(</span><span class="nx">ysRaw</span><span class="p">.</span><span class="nx">max</span><span class="p">().</span><span class="nx">sub</span><span class="p">(</span><span class="nx">ysRaw</span><span class="p">.</span><span class="nx">min</span><span class="p">()))</span>
-      <span class="kr">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">scalar</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()).</span><span class="nx">variable</span><span class="p">()</span>
-      <span class="kr">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">scalar</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()).</span><span class="nx">variable</span><span class="p">()</span>
+      <span class="kd">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">scalar</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()).</span><span class="nx">variable</span><span class="p">()</span>
+      <span class="kd">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">scalar</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()).</span><span class="nx">variable</span><span class="p">()</span>
 
       <span class="c1">// y = a * x + b.</span>
-      <span class="kr">const</span> <span class="nx">f</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">a</span><span class="p">.</span><span class="nx">mul</span><span class="p">(</span><span class="nx">x</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>
-      <span class="kr">const</span> <span class="nx">loss</span> <span class="o">=</span> <span class="p">(</span><span class="nx">pred</span><span class="p">,</span> <span class="nx">label</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">pred</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">label</span><span class="p">).</span><span class="nx">square</span><span class="p">().</span><span class="nx">mean</span><span class="p">()</span>
+      <span class="kd">const</span> <span class="nx">f</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">a</span><span class="p">.</span><span class="nx">mul</span><span class="p">(</span><span class="nx">x</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span>
+      <span class="kd">const</span> <span class="nx">loss</span> <span class="o">=</span> <span class="p">(</span><span class="nx">pred</span><span class="p">,</span> <span class="nx">label</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nx">pred</span><span class="p">.</span><span class="nx">sub</span><span class="p">(</span><span class="nx">label</span><span class="p">).</span><span class="nx">square</span><span class="p">().</span><span class="nx">mean</span><span class="p">()</span>
 
-      <span class="kr">const</span> <span class="nx">learningRate</span> <span class="o">=</span> <span class="mi">1</span><span class="nx">e</span><span class="o">-</span><span class="mi">3</span>
-      <span class="kr">const</span> <span class="nx">optimizer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">train</span><span class="p">.</span><span class="nx">sgd</span><span class="p">(</span><span class="nx">learningRate</span><span class="p">)</span>
+      <span class="kd">const</span> <span class="nx">learningRate</span> <span class="o">=</span> <span class="mf">1e-3</span>
+      <span class="kd">const</span> <span class="nx">optimizer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">train</span><span class="p">.</span><span class="nx">sgd</span><span class="p">(</span><span class="nx">learningRate</span><span class="p">)</span>
 
       <span class="c1">// 训练模型</span>
-      <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10000</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mf">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mf">10000</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
          <span class="nx">optimizer</span><span class="p">.</span><span class="nx">minimize</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="nx">loss</span><span class="p">(</span><span class="nx">f</span><span class="p">(</span><span class="nx">xs</span><span class="p">),</span> <span class="nx">ys</span><span class="p">))</span>
       <span class="p">}</span>
 
       <span class="c1">// 预测</span>
       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`a: </span><span class="si">${</span><span class="nx">a</span><span class="p">.</span><span class="nx">dataSync</span><span class="p">()</span><span class="si">}</span><span class="sb">, b: </span><span class="si">${</span><span class="nx">b</span><span class="p">.</span><span class="nx">dataSync</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
-      <span class="kr">const</span> <span class="nx">preds</span> <span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="nx">xs</span><span class="p">).</span><span class="nx">dataSync</span><span class="p">()</span>
-      <span class="kr">const</span> <span class="nx">trues</span> <span class="o">=</span> <span class="nx">ys</span><span class="p">.</span><span class="nx">arraySync</span><span class="p">()</span>
+      <span class="kd">const</span> <span class="nx">preds</span> <span class="o">=</span> <span class="nx">f</span><span class="p">(</span><span class="nx">xs</span><span class="p">).</span><span class="nx">dataSync</span><span class="p">()</span>
+      <span class="kd">const</span> <span class="nx">trues</span> <span class="o">=</span> <span class="nx">ys</span><span class="p">.</span><span class="nx">arraySync</span><span class="p">()</span>
       <span class="nx">preds</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">pred</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`x: </span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb">, pred: </span><span class="si">${</span><span class="nx">pred</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="sb">, true: </span><span class="si">${</span><span class="nx">trues</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">toFixed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`x: </span><span class="si">${</span><span class="nx">i</span><span class="si">}</span><span class="sb">, pred: </span><span class="si">${</span><span class="nx">pred</span><span class="p">.</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">)</span><span class="si">}</span><span class="sb">, true: </span><span class="si">${</span><span class="nx">trues</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">toFixed</span><span class="p">(</span><span class="mf">2</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
       <span class="p">})</span>
     <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
   <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
@@ -599,7 +607,6 @@ $ npm install @tensorflow/tfjs-node-gpu
   </div>
   
 
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
@@ -617,6 +624,7 @@ $ npm install @tensorflow/tfjs-node-gpu
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
     ga('create', 'UA-40509304-12', 'auto');
+    
     ga('send', 'pageview');
     </script>
 

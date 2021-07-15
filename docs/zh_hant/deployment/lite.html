@@ -1,23 +1,34 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>TensorFlow Lite（Jinpeng） &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -33,13 +44,6 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" />
     <link rel="next" title="TensorFlow in JavaScript（Huan）" href="javascript.html" />
@@ -75,7 +79,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -84,6 +88,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -208,6 +213,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -242,19 +248,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>TensorFlow Lite（Jinpeng）</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="../../_sources/zh_hant/deployment/lite.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="../../_sources/zh_hant/deployment/lite.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -360,14 +368,14 @@ dependencies {
 <p><strong>載入模型</strong></p>
 <p>使用如下指令將 <code class="docutils literal notranslate"><span class="pre">mnist_savedmodel.tflite</span></code> 文件載入到 memory-map 中，作為 Interpreter 實例化的輸入</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/** Memory-map the model file in Assets. */</span>
-<span class="kd">private</span> <span class="n">MappedByteBuffer</span> <span class="nf">loadModelFile</span><span class="o">(</span><span class="n">Activity</span> <span class="n">activity</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
-    <span class="n">AssetFileDescriptor</span> <span class="n">fileDescriptor</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="na">getAssets</span><span class="o">().</span><span class="na">openFd</span><span class="o">(</span><span class="n">mModelPath</span><span class="o">);</span>
-    <span class="n">FileInputStream</span> <span class="n">inputStream</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="n">fileDescriptor</span><span class="o">.</span><span class="na">getFileDescriptor</span><span class="o">());</span>
-    <span class="n">FileChannel</span> <span class="n">fileChannel</span> <span class="o">=</span> <span class="n">inputStream</span><span class="o">.</span><span class="na">getChannel</span><span class="o">();</span>
-    <span class="kt">long</span> <span class="n">startOffset</span> <span class="o">=</span> <span class="n">fileDescriptor</span><span class="o">.</span><span class="na">getStartOffset</span><span class="o">();</span>
-    <span class="kt">long</span> <span class="n">declaredLength</span> <span class="o">=</span> <span class="n">fileDescriptor</span><span class="o">.</span><span class="na">getDeclaredLength</span><span class="o">();</span>
-    <span class="k">return</span> <span class="n">fileChannel</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">FileChannel</span><span class="o">.</span><span class="na">MapMode</span><span class="o">.</span><span class="na">READ_ONLY</span><span class="o">,</span> <span class="n">startOffset</span><span class="o">,</span> <span class="n">declaredLength</span><span class="o">);</span>
-<span class="o">}</span>
+<span class="kd">private</span> <span class="n">MappedByteBuffer</span> <span class="nf">loadModelFile</span><span class="p">(</span><span class="n">Activity</span> <span class="n">activity</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="p">{</span>
+    <span class="n">AssetFileDescriptor</span> <span class="n">fileDescriptor</span> <span class="o">=</span> <span class="n">activity</span><span class="p">.</span><span class="na">getAssets</span><span class="p">().</span><span class="na">openFd</span><span class="p">(</span><span class="n">mModelPath</span><span class="p">);</span>
+    <span class="n">FileInputStream</span> <span class="n">inputStream</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileInputStream</span><span class="p">(</span><span class="n">fileDescriptor</span><span class="p">.</span><span class="na">getFileDescriptor</span><span class="p">());</span>
+    <span class="n">FileChannel</span> <span class="n">fileChannel</span> <span class="o">=</span> <span class="n">inputStream</span><span class="p">.</span><span class="na">getChannel</span><span class="p">();</span>
+    <span class="kt">long</span> <span class="n">startOffset</span> <span class="o">=</span> <span class="n">fileDescriptor</span><span class="p">.</span><span class="na">getStartOffset</span><span class="p">();</span>
+    <span class="kt">long</span> <span class="n">declaredLength</span> <span class="o">=</span> <span class="n">fileDescriptor</span><span class="p">.</span><span class="na">getDeclaredLength</span><span class="p">();</span>
+    <span class="k">return</span> <span class="n">fileChannel</span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">FileChannel</span><span class="p">.</span><span class="na">MapMode</span><span class="p">.</span><span class="na">READ_ONLY</span><span class="p">,</span> <span class="n">startOffset</span><span class="p">,</span> <span class="n">declaredLength</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <div class="admonition hint">
@@ -375,7 +383,7 @@ dependencies {
 <p>memory-map 可以把整個文件映射到虛擬記憶體中，用於提升 tflite 模型的讀取性能。更多請參考： <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/nio/channels/FileChannel.html#map-java.nio.channels.FileChannel.MapMode-long-long-">JDK API介紹</a></p>
 </div>
 <p>實例化 Interpreter，其中 acitivity 是為了從 assets 中獲取模型，因為我們把模型編譯到 assets 中，只能透過 <code class="docutils literal notranslate"><span class="pre">getAssets()</span></code> 打開。</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">mTFLite</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Interpreter</span><span class="o">(</span><span class="n">loadModelFile</span><span class="o">(</span><span class="n">activity</span><span class="o">));</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">mTFLite</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Interpreter</span><span class="p">(</span><span class="n">loadModelFile</span><span class="p">(</span><span class="n">activity</span><span class="p">));</span>
 </pre></div>
 </div>
 <p>memory-map後的 <code class="docutils literal notranslate"><span class="pre">MappedByteBuffer</span></code> 直接作為 <code class="docutils literal notranslate"><span class="pre">Interpreter</span></code> 的輸入， <code class="docutils literal notranslate"><span class="pre">mTFLite</span></code> （ <code class="docutils literal notranslate"><span class="pre">Interpreter</span></code> ）就是轉換後模型的執行載體。</p>
@@ -383,76 +391,76 @@ dependencies {
 <p>我們使用 MNIST test 測試集中的圖片作為輸入，mnist 圖像大小 28*28，單像素，因為我們輸入的資料需要設置成如下格式</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">//Float模型相關參數</span>
 <span class="c1">// com/dpthinker/mnistclassifier/model/FloatSavedModelConfig.java</span>
-<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">setConfigs</span><span class="o">()</span> <span class="o">{</span>
-    <span class="n">setModelName</span><span class="o">(</span><span class="s">&quot;mnist_savedmodel.tflite&quot;</span><span class="o">);</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">setConfigs</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">setModelName</span><span class="p">(</span><span class="s">&quot;mnist_savedmodel.tflite&quot;</span><span class="p">);</span>
 
-    <span class="n">setNumBytesPerChannel</span><span class="o">(</span><span class="mi">4</span><span class="o">);</span>
+    <span class="n">setNumBytesPerChannel</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
 
-    <span class="n">setDimBatchSize</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
-    <span class="n">setDimPixelSize</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+    <span class="n">setDimBatchSize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">setDimPixelSize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 
-    <span class="n">setDimImgWeight</span><span class="o">(</span><span class="mi">28</span><span class="o">);</span>
-    <span class="n">setDimImgHeight</span><span class="o">(</span><span class="mi">28</span><span class="o">);</span>
+    <span class="n">setDimImgWeight</span><span class="p">(</span><span class="mi">28</span><span class="p">);</span>
+    <span class="n">setDimImgHeight</span><span class="p">(</span><span class="mi">28</span><span class="p">);</span>
 
-    <span class="n">setImageMean</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
-    <span class="n">setImageSTD</span><span class="o">(</span><span class="mf">255.0f</span><span class="o">);</span>
-<span class="o">}</span>
+    <span class="n">setImageMean</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="n">setImageSTD</span><span class="p">(</span><span class="mf">255.0f</span><span class="p">);</span>
+<span class="p">}</span>
 
 <span class="c1">// 初始化</span>
 <span class="c1">// com/dpthinker/mnistclassifier/classifier/BaseClassifier.java</span>
-<span class="kd">private</span> <span class="kt">void</span> <span class="nf">initConfig</span><span class="o">(</span><span class="n">BaseModelConfig</span> <span class="n">config</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">this</span><span class="o">.</span><span class="na">mModelConfig</span> <span class="o">=</span> <span class="n">config</span><span class="o">;</span>
-    <span class="k">this</span><span class="o">.</span><span class="na">mNumBytesPerChannel</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="na">getNumBytesPerChannel</span><span class="o">();</span>
-    <span class="k">this</span><span class="o">.</span><span class="na">mDimBatchSize</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="na">getDimBatchSize</span><span class="o">();</span>
-    <span class="k">this</span><span class="o">.</span><span class="na">mDimPixelSize</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="na">getDimPixelSize</span><span class="o">();</span>
-    <span class="k">this</span><span class="o">.</span><span class="na">mDimImgWidth</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="na">getDimImgWeight</span><span class="o">();</span>
-    <span class="k">this</span><span class="o">.</span><span class="na">mDimImgHeight</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="na">getDimImgHeight</span><span class="o">();</span>
-    <span class="k">this</span><span class="o">.</span><span class="na">mModelPath</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="na">getModelName</span><span class="o">();</span>
-<span class="o">}</span>
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">initConfig</span><span class="p">(</span><span class="n">BaseModelConfig</span> <span class="n">config</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="na">mModelConfig</span> <span class="o">=</span> <span class="n">config</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="na">mNumBytesPerChannel</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="na">getNumBytesPerChannel</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="na">mDimBatchSize</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="na">getDimBatchSize</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="na">mDimPixelSize</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="na">getDimPixelSize</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="na">mDimImgWidth</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="na">getDimImgWeight</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="na">mDimImgHeight</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="na">getDimImgHeight</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="na">mModelPath</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="na">getModelName</span><span class="p">();</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>將 MNIST 圖片轉化成 <code class="docutils literal notranslate"><span class="pre">ByteBuffer</span></code> ，並保持到 <code class="docutils literal notranslate"><span class="pre">imgData</span></code> （  <code class="docutils literal notranslate"><span class="pre">ByteBuffer</span></code> ）中</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// 將輸入的Bitmap轉化為Interpreter可以辨識的ByteBuffer</span>
 <span class="c1">// com/dpthinker/mnistclassifier/classifier/BaseClassifier.java</span>
-<span class="kd">protected</span> <span class="n">ByteBuffer</span> <span class="nf">convertBitmapToByteBuffer</span><span class="o">(</span><span class="n">Bitmap</span> <span class="n">bitmap</span><span class="o">)</span> <span class="o">{</span>
-    <span class="kt">int</span><span class="o">[]</span> <span class="n">intValues</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">mDimImgWidth</span> <span class="o">*</span> <span class="n">mDimImgHeight</span><span class="o">];</span>
-    <span class="n">scaleBitmap</span><span class="o">(</span><span class="n">bitmap</span><span class="o">).</span><span class="na">getPixels</span><span class="o">(</span><span class="n">intValues</span><span class="o">,</span>
-            <span class="mi">0</span><span class="o">,</span> <span class="n">bitmap</span><span class="o">.</span><span class="na">getWidth</span><span class="o">(),</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">bitmap</span><span class="o">.</span><span class="na">getWidth</span><span class="o">(),</span> <span class="n">bitmap</span><span class="o">.</span><span class="na">getHeight</span><span class="o">());</span>
+<span class="kd">protected</span> <span class="n">ByteBuffer</span> <span class="nf">convertBitmapToByteBuffer</span><span class="p">(</span><span class="n">Bitmap</span> <span class="n">bitmap</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span><span class="o">[]</span> <span class="n">intValues</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">mDimImgWidth</span> <span class="o">*</span> <span class="n">mDimImgHeight</span><span class="o">]</span><span class="p">;</span>
+    <span class="n">scaleBitmap</span><span class="p">(</span><span class="n">bitmap</span><span class="p">).</span><span class="na">getPixels</span><span class="p">(</span><span class="n">intValues</span><span class="p">,</span>
+            <span class="mi">0</span><span class="p">,</span> <span class="n">bitmap</span><span class="p">.</span><span class="na">getWidth</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bitmap</span><span class="p">.</span><span class="na">getWidth</span><span class="p">(),</span> <span class="n">bitmap</span><span class="p">.</span><span class="na">getHeight</span><span class="p">());</span>
 
-    <span class="n">ByteBuffer</span> <span class="n">imgData</span> <span class="o">=</span> <span class="n">ByteBuffer</span><span class="o">.</span><span class="na">allocateDirect</span><span class="o">(</span>
-            <span class="n">mNumBytesPerChannel</span> <span class="o">*</span> <span class="n">mDimBatchSize</span> <span class="o">*</span> <span class="n">mDimImgWidth</span> <span class="o">*</span> <span class="n">mDimImgHeight</span> <span class="o">*</span> <span class="n">mDimPixelSize</span><span class="o">);</span>
-    <span class="n">imgData</span><span class="o">.</span><span class="na">order</span><span class="o">(</span><span class="n">ByteOrder</span><span class="o">.</span><span class="na">nativeOrder</span><span class="o">());</span>
-    <span class="n">imgData</span><span class="o">.</span><span class="na">rewind</span><span class="o">();</span>
+    <span class="n">ByteBuffer</span> <span class="n">imgData</span> <span class="o">=</span> <span class="n">ByteBuffer</span><span class="p">.</span><span class="na">allocateDirect</span><span class="p">(</span>
+            <span class="n">mNumBytesPerChannel</span> <span class="o">*</span> <span class="n">mDimBatchSize</span> <span class="o">*</span> <span class="n">mDimImgWidth</span> <span class="o">*</span> <span class="n">mDimImgHeight</span> <span class="o">*</span> <span class="n">mDimPixelSize</span><span class="p">);</span>
+    <span class="n">imgData</span><span class="p">.</span><span class="na">order</span><span class="p">(</span><span class="n">ByteOrder</span><span class="p">.</span><span class="na">nativeOrder</span><span class="p">());</span>
+    <span class="n">imgData</span><span class="p">.</span><span class="na">rewind</span><span class="p">();</span>
 
     <span class="c1">// Convert the image toFloating point.</span>
-    <span class="kt">int</span> <span class="n">pixel</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">mDimImgWidth</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">mDimImgHeight</span><span class="o">;</span> <span class="o">++</span><span class="n">j</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">pixel</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">mDimImgWidth</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">mDimImgHeight</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
             <span class="c1">//final int val = intValues[pixel++];</span>
-            <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">intValues</span><span class="o">[</span><span class="n">pixel</span><span class="o">++];</span>
-            <span class="n">mModelConfig</span><span class="o">.</span><span class="na">addImgValue</span><span class="o">(</span><span class="n">imgData</span><span class="o">,</span> <span class="n">val</span><span class="o">);</span> <span class="c1">//添加把Pixel數值轉化並添加到ByteBuffer</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-    <span class="k">return</span> <span class="n">imgData</span><span class="o">;</span>
-<span class="o">}</span>
+            <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">intValues</span><span class="o">[</span><span class="n">pixel</span><span class="o">++]</span><span class="p">;</span>
+            <span class="n">mModelConfig</span><span class="p">.</span><span class="na">addImgValue</span><span class="p">(</span><span class="n">imgData</span><span class="p">,</span> <span class="n">val</span><span class="p">);</span> <span class="c1">//添加把Pixel數值轉化並添加到ByteBuffer</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">imgData</span><span class="p">;</span>
+<span class="p">}</span>
 
 <span class="c1">// mModelConfig.addImgValue定義</span>
 <span class="c1">// com/dpthinker/mnistclassifier/model/FloatSavedModelConfig.java</span>
-<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addImgValue</span><span class="o">(</span><span class="n">ByteBuffer</span> <span class="n">imgData</span><span class="o">,</span> <span class="kt">int</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">imgData</span><span class="o">.</span><span class="na">putFloat</span><span class="o">(((</span><span class="n">val</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="o">)</span> <span class="o">-</span> <span class="n">getImageMean</span><span class="o">())</span> <span class="o">/</span> <span class="n">getImageSTD</span><span class="o">());</span>
-<span class="o">}</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">addImgValue</span><span class="p">(</span><span class="n">ByteBuffer</span> <span class="n">imgData</span><span class="p">,</span> <span class="kt">int</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">imgData</span><span class="p">.</span><span class="na">putFloat</span><span class="p">(((</span><span class="n">val</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">)</span> <span class="o">-</span> <span class="n">getImageMean</span><span class="p">())</span> <span class="o">/</span> <span class="n">getImageSTD</span><span class="p">());</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">convertBitmapToByteBuffer</span></code> 的輸出即為模型執行的輸入。</p>
 <p><strong>執行輸出</strong></p>
 <p>定義一個 1*10 的多維陣列，因為我們只有 10 個 label，具體程式碼如下</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">privateFloat</span><span class="o">[][]</span> <span class="n">mLabelProbArray</span> <span class="o">=</span> <span class="n">newFloat</span><span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="mi">10</span><span class="o">];</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">privateFloat</span><span class="o">[][]</span> <span class="n">mLabelProbArray</span> <span class="o">=</span> <span class="n">newFloat</span><span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="mi">10</span><span class="o">]</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>執行結束後，每個二級元素都是一個label的機率。</p>
 <p><strong>執行及結果處理</strong></p>
 <p>開始執行模型，具體程式碼如下</p>
-<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">mTFLite</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">imgData</span><span class="o">,</span> <span class="n">mLabelProbArray</span><span class="o">);</span>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">mTFLite</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">imgData</span><span class="p">,</span> <span class="n">mLabelProbArray</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>針對某個圖片，執行後 <code class="docutils literal notranslate"><span class="pre">mLabelProbArray</span></code> 的內容就是各個 label 辨識的機率。對他們進行排序，找出機率最高的 label 並顯示辨識結果給用戶.</p>
@@ -527,28 +535,28 @@ open<span class="o">(</span><span class="s2">&quot;mnist_savedmodel_quantized.tf
 <p>具體配置如下：</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// Quantized模型相關參數</span>
 <span class="c1">// com/dpthinker/mnistclassifier/model/QuantSavedModelConfig.java</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">QuantSavedModelConfig</span> <span class="kd">extends</span> <span class="n">BaseModelConfig</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">QuantSavedModelConfig</span> <span class="kd">extends</span> <span class="n">BaseModelConfig</span> <span class="p">{</span>
     <span class="nd">@Override</span>
-    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">setConfigs</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">setModelName</span><span class="o">(</span><span class="s">&quot;mnist_savedmodel_quantized.tflite&quot;</span><span class="o">);</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">setConfigs</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">setModelName</span><span class="p">(</span><span class="s">&quot;mnist_savedmodel_quantized.tflite&quot;</span><span class="p">);</span>
 
-        <span class="n">setNumBytesPerChannel</span><span class="o">(</span><span class="mi">4</span><span class="o">);</span>
+        <span class="n">setNumBytesPerChannel</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
 
-        <span class="n">setDimBatchSize</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
-        <span class="n">setDimPixelSize</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+        <span class="n">setDimBatchSize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="n">setDimPixelSize</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 
-        <span class="n">setDimImgWeight</span><span class="o">(</span><span class="mi">28</span><span class="o">);</span>
-        <span class="n">setDimImgHeight</span><span class="o">(</span><span class="mi">28</span><span class="o">);</span>
+        <span class="n">setDimImgWeight</span><span class="p">(</span><span class="mi">28</span><span class="p">);</span>
+        <span class="n">setDimImgHeight</span><span class="p">(</span><span class="mi">28</span><span class="p">);</span>
 
-        <span class="n">setImageMean</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
-        <span class="n">setImageSTD</span><span class="o">(</span><span class="mf">255.0f</span><span class="o">);</span>
-    <span class="o">}</span>
+        <span class="n">setImageMean</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="n">setImageSTD</span><span class="p">(</span><span class="mf">255.0f</span><span class="p">);</span>
+    <span class="p">}</span>
 
     <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addImgValue</span><span class="o">(</span><span class="n">ByteBuffer</span> <span class="n">imgData</span><span class="o">,</span> <span class="kt">int</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">imgData</span><span class="o">.</span><span class="na">putFloat</span><span class="o">(((</span><span class="n">val</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="o">)</span> <span class="o">-</span> <span class="n">getImageMean</span><span class="o">())</span> <span class="o">/</span> <span class="n">getImageSTD</span><span class="o">());</span>
-    <span class="o">}</span>
-<span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addImgValue</span><span class="p">(</span><span class="n">ByteBuffer</span> <span class="n">imgData</span><span class="p">,</span> <span class="kt">int</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">imgData</span><span class="p">.</span><span class="na">putFloat</span><span class="p">(((</span><span class="n">val</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">)</span> <span class="o">-</span> <span class="n">getImageMean</span><span class="p">())</span> <span class="o">/</span> <span class="n">getImageSTD</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>執行結果如下:</p>
@@ -616,10 +624,10 @@ open<span class="o">(</span><span class="s2">&quot;mnist_savedmodel_quantized.tf
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="javascript.html" class="btn btn-neutral float-right" title="TensorFlow in JavaScript（Huan）" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="javascript.html" class="btn btn-neutral float-right" title="TensorFlow in JavaScript（Huan）" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="serving.html" class="btn btn-neutral float-left" title="TensorFlow Serving" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="serving.html" class="btn btn-neutral float-left" title="TensorFlow Serving" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> 上一页</a>
       
     </div>
   
@@ -646,7 +654,6 @@ open<span class="o">(</span><span class="s2">&quot;mnist_savedmodel_quantized.tf
   </div>
   
 
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
@@ -664,6 +671,7 @@ open<span class="o">(</span><span class="s2">&quot;mnist_savedmodel_quantized.tf
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
     ga('create', 'UA-40509304-12', 'auto');
+    
     ga('send', 'pageview');
     </script>
 

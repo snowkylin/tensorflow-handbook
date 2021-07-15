@@ -1,4 +1,4 @@
-import zhconv
+# import zhconv
 import os
 import re
 
@@ -27,5 +27,6 @@ for path, dir_list, file_list in os.walk('zh'):
         content_zh_hans = re.sub(r':ref:`(.+?) <(.+?)>`', r':ref:`\1 <zh_hans_\2>`', content_zh_hans)
         content_zh_hans = re.sub(r':label: (.+?)', r':label: zh_hans_\1', content_zh_hans)
         content_zh_hans = re.sub(r':eq:`(.+?)`', r':eq:`zh_hans_\1`', content_zh_hans)
-        f_.write(zhconv.convert_for_mw(content_zh_hans, 'zh-hans'))
+        # f_.write(zhconv.convert_for_mw(content_zh_hans, 'zh-hans'))
+        f_.write(content_zh_hans)
         print(src_path + ' -> ' + dst_path)

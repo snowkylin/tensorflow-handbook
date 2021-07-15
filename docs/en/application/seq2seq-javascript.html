@@ -1,23 +1,34 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<html class="writer-html5" lang="zh-CN" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Tensorflow JavaScript Chitchat Model &mdash; 简单粗暴 TensorFlow 2 0.4 beta 文档</title>
   
 
   
-  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -33,13 +44,6 @@
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
     <link rel="index" title="索引" href="../../genindex.html" />
     <link rel="search" title="搜索" href="../../search.html" /> 
 </head>
@@ -73,7 +77,7 @@
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="在文档中搜索" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -82,6 +86,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -200,6 +205,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -234,19 +240,21 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Tensorflow JavaScript Chitchat Model</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
-            
-            <a href="../../_sources/en/application/seq2seq-javascript.rst.txt" rel="nofollow"> View page source</a>
+          
+            <a href="../../_sources/en/application/seq2seq-javascript.rst.txt" rel="nofollow"> 查看页面源码</a>
           
         
       </li>
@@ -287,18 +295,18 @@ you the new guy ?   so they tell me ...
 </pre></div>
 </div>
 <p>我们需要将它转换为 Tensorflow Dataset 格式：</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">tf</span> <span class="nx">from</span> <span class="s1">&#39;@tensorflow/tfjs&#39;</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">import</span> <span class="o">*</span> <span class="k">as</span> <span class="nx">tf</span> <span class="k">from</span> <span class="s1">&#39;@tensorflow/tfjs&#39;</span>
 
 <span class="nx">type</span> <span class="nx">Seq2seqData</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">input</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
   <span class="nx">output</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="kr">const</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s1">&#39;dataset.txt&#39;</span><span class="p">,</span> <span class="p">{</span>
+<span class="kd">const</span> <span class="nx">dataset</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s1">&#39;dataset.txt&#39;</span><span class="p">,</span> <span class="p">{</span>
     <span class="nx">hasHeader</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
     <span class="nx">columnNames</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="s1">&#39;output&#39;</span><span class="p">],</span>
     <span class="nx">delimiter</span><span class="o">:</span> <span class="s1">&#39;\t&#39;</span><span class="p">,</span>
-<span class="p">})</span> <span class="nx">as</span> <span class="nx">any</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">Dataset</span><span class="o">&lt;</span><span class="nx">Seq2seqData</span><span class="o">&gt;</span>
+<span class="p">})</span> <span class="k">as</span> <span class="nx">any</span> <span class="k">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">Dataset</span><span class="o">&lt;</span><span class="nx">Seq2seqData</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>其次，我们还需要基于 <code class="docutils literal notranslate"><span class="pre">Dataset</span></code> 中输入序列和输出序列中的文本数据，建立对应的词汇表 <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code> 来负责管理以下5项任务：</p>
@@ -307,22 +315,22 @@ you the new guy ?   so they tell me ...
 <li><p>记录词汇表大小；</p></li>
 <li><p>建立单词到编码数字，以及编码数字到单词的映射字典；</p></li>
 </ol>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">class</span> <span class="nx">Vocabulary</span> <span class="p">{</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">class</span> <span class="nx">Vocabulary</span> <span class="p">{</span>
   <span class="kr">private</span> <span class="nx">readonly</span> <span class="nx">tokenIndice</span><span class="o">:</span> <span class="nx">Map</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">,</span> <span class="nx">number</span><span class="o">&gt;</span>
   <span class="kr">private</span> <span class="nx">readonly</span> <span class="nx">indiceToken</span><span class="o">:</span> <span class="nx">Map</span><span class="o">&lt;</span><span class="nx">number</span><span class="p">,</span> <span class="nx">string</span><span class="o">&gt;</span>
 
-  <span class="kr">public</span> <span class="nx">maxSeqLength</span><span class="o">:</span> <span class="nx">number</span>
-  <span class="kr">public</span> <span class="nx">size</span><span class="o">:</span> <span class="nx">number</span>
+  <span class="nx">public</span> <span class="nx">maxSeqLength</span><span class="o">:</span> <span class="nx">number</span>
+  <span class="nx">public</span> <span class="nx">size</span><span class="o">:</span> <span class="nx">number</span>
 
   <span class="nx">constructor</span> <span class="p">()</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">tokenIndice</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">,</span> <span class="nx">number</span><span class="o">&gt;</span><span class="p">()</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">indiceToken</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="o">&lt;</span><span class="nx">number</span><span class="p">,</span> <span class="nx">string</span><span class="o">&gt;</span><span class="p">()</span>
 
-    <span class="k">this</span><span class="p">.</span><span class="nx">size</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1">// Including the reserved 0</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">maxSeqLength</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">size</span> <span class="o">=</span> <span class="mf">1</span> <span class="c1">// Including the reserved 0</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">maxSeqLength</span> <span class="o">=</span> <span class="mf">0</span>
   <span class="p">}</span>
 
-  <span class="kr">public</span> <span class="nx">fitToken</span><span class="p">(</span><span class="nx">token</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
+  <span class="nx">public</span> <span class="nx">fitToken</span><span class="p">(</span><span class="nx">token</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">tokenIndice</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">token</span><span class="p">))</span> <span class="p">{</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">tokenIndice</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">token</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">size</span><span class="p">)</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">indiceToken</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">size</span><span class="p">,</span> <span class="nx">token</span><span class="p">)</span>
@@ -330,36 +338,36 @@ you the new guy ?   so they tell me ...
     <span class="p">}</span>
   <span class="p">}</span>
 
-  <span class="kr">public</span> <span class="nx">fitText</span><span class="p">(</span><span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="nx">tokenList</span> <span class="o">=</span> <span class="p">[...</span><span class="nx">text</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="sr">/\s+/</span><span class="p">)]</span>
+  <span class="nx">public</span> <span class="nx">fitText</span><span class="p">(</span><span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">tokenList</span> <span class="o">=</span> <span class="p">[...</span><span class="nx">text</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="sr">/\s+/</span><span class="p">)]</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="nx">tokenList</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">maxSeqLength</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">maxSeqLength</span> <span class="o">=</span> <span class="nx">tokenList</span><span class="p">.</span><span class="nx">length</span>
     <span class="p">}</span>
-    <span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="nx">token</span> <span class="k">of</span> <span class="nx">tokenList</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="nx">token</span> <span class="k">of</span> <span class="nx">tokenList</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">this</span><span class="p">.</span><span class="nx">fitToken</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span>
     <span class="p">}</span>
   <span class="p">}</span>
 
-  <span class="kr">public</span> <span class="nx">token</span><span class="p">(</span><span class="nx">indice</span><span class="o">:</span> <span class="nx">number</span><span class="p">)</span><span class="o">:</span> <span class="nx">string</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">indiceToken</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">indice</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">string</span>
+  <span class="nx">public</span> <span class="nx">token</span><span class="p">(</span><span class="nx">indice</span><span class="o">:</span> <span class="nx">number</span><span class="p">)</span><span class="o">:</span> <span class="nx">string</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">indiceToken</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">indice</span><span class="p">)</span> <span class="k">as</span> <span class="nx">string</span>
   <span class="p">}</span>
 
-  <span class="kr">public</span> <span class="nx">indice</span> <span class="p">(</span><span class="nx">token</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">number</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">tokenIndice</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">number</span>
+  <span class="nx">public</span> <span class="nx">indice</span> <span class="p">(</span><span class="nx">token</span><span class="o">:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">number</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">tokenIndice</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">token</span><span class="p">)</span> <span class="k">as</span> <span class="nx">number</span>
   <span class="p">}</span>
 
-  <span class="kr">public</span> <span class="nx">sequenize</span> <span class="p">(</span>
+  <span class="nx">public</span> <span class="nx">sequenize</span> <span class="p">(</span>
     <span class="nx">text</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
-    <span class="nx">length</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nx">length</span> <span class="o">=</span> <span class="mf">0</span><span class="p">,</span>
   <span class="p">)</span><span class="o">:</span> <span class="nx">number</span><span class="p">[]</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="nx">tokenList</span> <span class="o">=</span> <span class="p">[...</span><span class="nx">text</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="sr">/\s+/</span><span class="p">)]</span>
-    <span class="kr">const</span> <span class="nx">indiceList</span> <span class="o">=</span> <span class="nx">tokenList</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">token</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">indice</span><span class="p">(</span><span class="nx">token</span><span class="p">))</span>
+    <span class="kd">const</span> <span class="nx">tokenList</span> <span class="o">=</span> <span class="p">[...</span><span class="nx">text</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="sr">/\s+/</span><span class="p">)]</span>
+    <span class="kd">const</span> <span class="nx">indiceList</span> <span class="o">=</span> <span class="nx">tokenList</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">token</span> <span class="p">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">indice</span><span class="p">(</span><span class="nx">token</span><span class="p">))</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="nx">length</span> <span class="o">===</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">length</span> <span class="o">===</span> <span class="o">-</span><span class="mf">1</span><span class="p">)</span> <span class="p">{</span>
       <span class="nx">indiceList</span><span class="p">.</span><span class="nx">length</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">maxSeqLength</span>
       <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">maxSeqLength</span> <span class="o">&gt;</span> <span class="nx">tokenList</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nx">indiceList</span><span class="p">.</span><span class="nx">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">tokenList</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+        <span class="nx">indiceList</span><span class="p">.</span><span class="nx">fill</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span> <span class="nx">tokenList</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
       <span class="p">}</span>
     <span class="p">}</span>
 
@@ -369,57 +377,57 @@ you the new guy ?   so they tell me ...
 </pre></div>
 </div>
 <p>接下来，我们将数据集和 <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code> 结合起来，并对数据集进行数据向量化。</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">export</span> <span class="kr">const</span> <span class="nx">START_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;\t&#39;</span>
-<span class="kr">export</span> <span class="kr">const</span> <span class="nx">END_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;\n&#39;</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">export</span> <span class="kd">const</span> <span class="nx">START_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;\t&#39;</span>
+<span class="k">export</span> <span class="kd">const</span> <span class="nx">END_TOKEN</span> <span class="o">=</span> <span class="s1">&#39;\n&#39;</span>
 
-<span class="kr">const</span> <span class="nx">voc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vocabulary</span><span class="p">()</span>
+<span class="kd">const</span> <span class="nx">voc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vocabulary</span><span class="p">()</span>
 
 <span class="nx">voc</span><span class="p">.</span><span class="nx">fitToken</span><span class="p">(</span><span class="nx">START_TOKEN</span><span class="p">)</span>
 <span class="nx">voc</span><span class="p">.</span><span class="nx">fitToken</span><span class="p">(</span><span class="nx">END_TOKEN</span><span class="p">)</span>
 
-<span class="nx">await</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">forEachAsync</span><span class="p">(</span><span class="nx">value</span> <span class="p">=&gt;</span> <span class="p">{</span>
+<span class="k">await</span> <span class="nx">dataset</span><span class="p">.</span><span class="nx">forEachAsync</span><span class="p">(</span><span class="nx">value</span> <span class="p">=&gt;</span> <span class="p">{</span>
   <span class="nx">voc</span><span class="p">.</span><span class="nx">fitText</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">input</span><span class="p">)</span>
   <span class="nx">voc</span><span class="p">.</span><span class="nx">fitText</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">output</span><span class="p">)</span>
 <span class="p">})</span>
 
 <span class="c1">// 额外的 START_TOKEN 和 END_TOKEN</span>
-<span class="nx">voc</span><span class="p">.</span><span class="nx">maxSeqLength</span> <span class="o">+=</span> <span class="mi">2</span>
+<span class="nx">voc</span><span class="p">.</span><span class="nx">maxSeqLength</span> <span class="o">+=</span> <span class="mf">2</span>
 
-<span class="kr">const</span> <span class="nx">seq2seqDataset</span> <span class="o">=</span> <span class="nx">dataset</span>
+<span class="kd">const</span> <span class="nx">seq2seqDataset</span> <span class="o">=</span> <span class="nx">dataset</span>
 <span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">value</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">input</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">tensor</span><span class="p">(</span><span class="nx">voc</span><span class="p">.</span><span class="nx">sequenize</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">input</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+  <span class="kd">const</span> <span class="nx">input</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">tensor</span><span class="p">(</span><span class="nx">voc</span><span class="p">.</span><span class="nx">sequenize</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">input</span><span class="p">,</span> <span class="o">-</span><span class="mf">1</span><span class="p">))</span>
 
-  <span class="kr">const</span> <span class="nx">decoderInputBuf</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">buffer</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R1</span><span class="o">&gt;</span><span class="p">([</span>
+  <span class="kd">const</span> <span class="nx">decoderInputBuf</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">buffer</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R1</span><span class="o">&gt;</span><span class="p">([</span>
     <span class="nx">voc</span><span class="p">.</span><span class="nx">maxSeqLength</span><span class="p">,</span>
   <span class="p">])</span>
-  <span class="kr">const</span> <span class="nx">decoderTargetBuf</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">buffer</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R2</span><span class="o">&gt;</span><span class="p">([</span>
+  <span class="kd">const</span> <span class="nx">decoderTargetBuf</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">buffer</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R2</span><span class="o">&gt;</span><span class="p">([</span>
     <span class="nx">voc</span><span class="p">.</span><span class="nx">maxSeqLength</span><span class="p">,</span>
     <span class="nx">voc</span><span class="p">.</span><span class="nx">size</span><span class="p">,</span>
   <span class="p">])</span>
 
-  <span class="kr">const</span> <span class="nx">outputIndiceList</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="kd">const</span> <span class="nx">outputIndiceList</span> <span class="o">=</span> <span class="p">[</span>
     <span class="nx">voc</span><span class="p">.</span><span class="nx">indice</span><span class="p">(</span><span class="nx">START_TOKEN</span><span class="p">),</span>
     <span class="p">...</span><span class="nx">voc</span><span class="p">.</span><span class="nx">sequenize</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">output</span><span class="p">),</span>
     <span class="nx">voc</span><span class="p">.</span><span class="nx">indice</span><span class="p">(</span><span class="nx">END_TOKEN</span><span class="p">),</span>
   <span class="p">]</span>
 
-  <span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="p">[</span><span class="nx">t</span><span class="p">,</span> <span class="nx">indice</span><span class="p">]</span> <span class="k">of</span> <span class="nx">outputIndiceList</span><span class="p">.</span><span class="nx">entries</span><span class="p">())</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">const</span> <span class="p">[</span><span class="nx">t</span><span class="p">,</span> <span class="nx">indice</span><span class="p">]</span> <span class="k">of</span> <span class="nx">outputIndiceList</span><span class="p">.</span><span class="nx">entries</span><span class="p">())</span> <span class="p">{</span>
     <span class="nx">decoeerInputBuf</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">indice</span><span class="p">,</span> <span class="nx">t</span><span class="p">)</span>
 
     <span class="c1">// shift left for target: not including START_OF_SEQ</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">t</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">decoderTargetBuf</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">t</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">indice</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">t</span> <span class="o">&gt;</span> <span class="mf">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">decoderTargetBuf</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span> <span class="nx">t</span> <span class="o">-</span> <span class="mf">1</span><span class="p">,</span> <span class="nx">indice</span><span class="p">)</span>
     <span class="p">}</span>
   <span class="p">}</span>
 
-  <span class="kr">const</span> <span class="nx">decoderInput</span> <span class="o">=</span> <span class="nx">decoderInputBuf</span><span class="p">.</span><span class="nx">toTensor</span><span class="p">()</span>
-  <span class="kr">const</span> <span class="nx">decoderTarget</span> <span class="o">=</span> <span class="nx">decoderTargetBuf</span><span class="p">.</span><span class="nx">toTensor</span><span class="p">()</span>
+  <span class="kd">const</span> <span class="nx">decoderInput</span> <span class="o">=</span> <span class="nx">decoderInputBuf</span><span class="p">.</span><span class="nx">toTensor</span><span class="p">()</span>
+  <span class="kd">const</span> <span class="nx">decoderTarget</span> <span class="o">=</span> <span class="nx">decoderTargetBuf</span><span class="p">.</span><span class="nx">toTensor</span><span class="p">()</span>
 
-  <span class="kr">const</span> <span class="nx">xs</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">xs</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nx">seq2seqInputs</span><span class="o">:</span> <span class="nx">inputTensor</span><span class="p">,</span>
     <span class="nx">seq2seqDecoderInputs</span><span class="o">:</span> <span class="nx">decoderInput</span><span class="p">,</span>
   <span class="p">}</span>
-  <span class="kr">const</span> <span class="nx">ys</span> <span class="o">=</span> <span class="nx">decoderTarget</span>
+  <span class="kd">const</span> <span class="nx">ys</span> <span class="o">=</span> <span class="nx">decoderTarget</span>
 
   <span class="k">return</span> <span class="p">{</span><span class="nx">xs</span><span class="p">,</span> <span class="nx">ys</span><span class="p">}</span>
 <span class="p">})</span>
@@ -429,12 +437,12 @@ you the new guy ?   so they tell me ...
 <div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
 <span class="cm"> * Encoder Layers</span>
 <span class="cm"> */</span>
-<span class="kr">const</span> <span class="nx">encoderEmbeddingLayer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">embedding</span><span class="p">({</span>
+<span class="kd">const</span> <span class="nx">encoderEmbeddingLayer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">embedding</span><span class="p">({</span>
   <span class="nx">inputDim</span><span class="o">:</span> <span class="nx">voc</span><span class="p">.</span><span class="nx">size</span><span class="p">,</span>
   <span class="nx">outputDim</span><span class="o">:</span> <span class="nx">latentDim</span><span class="p">,</span>
 <span class="p">})</span>
 
-<span class="kr">const</span> <span class="nx">encoderRnnLayer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">gru</span><span class="p">({</span>
+<span class="kd">const</span> <span class="nx">encoderRnnLayer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">gru</span><span class="p">({</span>
   <span class="nx">units</span><span class="o">:</span> <span class="nx">latentDim</span><span class="p">,</span>
   <span class="nx">returnState</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
 <span class="p">})</span>
@@ -442,18 +450,18 @@ you the new guy ?   so they tell me ...
 <span class="cm">/**</span>
 <span class="cm"> * Decoder Layers</span>
 <span class="cm"> */</span>
-<span class="kr">const</span> <span class="nx">decoderEmbeddingLayer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">embedding</span><span class="p">({</span>
+<span class="kd">const</span> <span class="nx">decoderEmbeddingLayer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">embedding</span><span class="p">({</span>
   <span class="nx">inputDim</span><span class="o">:</span> <span class="nx">voc</span><span class="p">.</span><span class="nx">size</span><span class="p">,</span>
   <span class="nx">outputDim</span><span class="o">:</span> <span class="nx">latentDim</span><span class="p">,</span>
 <span class="p">})</span>
 
-<span class="kr">const</span> <span class="nx">decoderRnnLayer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">gru</span><span class="p">({</span>
+<span class="kd">const</span> <span class="nx">decoderRnnLayer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">gru</span><span class="p">({</span>
   <span class="nx">units</span><span class="o">:</span> <span class="nx">latentDim</span><span class="p">,</span>
   <span class="nx">returnSequences</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
   <span class="nx">returnState</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
 <span class="p">})</span>
 
-<span class="kr">const</span> <span class="nx">decoderDenseLayer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">dense</span><span class="p">({</span>
+<span class="kd">const</span> <span class="nx">decoderDenseLayer</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">dense</span><span class="p">({</span>
     <span class="nx">units</span><span class="o">:</span> <span class="nx">voc</span><span class="p">.</span><span class="nx">size</span><span class="p">,</span>
     <span class="nx">activation</span><span class="o">:</span> <span class="s1">&#39;softmax&#39;</span><span class="p">,</span>
 <span class="p">})</span>
@@ -467,33 +475,33 @@ you the new guy ?   so they tell me ...
 </ul>
 <p>请注意这三个模型中，只有第一个模型  <code class="docutils literal notranslate"><span class="pre">seq2seqModel</span></code>  是用来训练参数所需要的，所以训练的的时候使用这个模型。而另外的两个模型 <code class="docutils literal notranslate"><span class="pre">encoderModel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">decoderModel</span></code> ，使我们用来预测的时候需要使用的。这三个模型共享所有的 Layers 参数。</p>
 <p><code class="docutils literal notranslate"><span class="pre">seq2seqModel</span></code> 模型的输入包含两个，一个是 Encoder 的输入，另外一个是 Decoder 的输入。模型的输出是我们数据集的输出。</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">inputs</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">inputs</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
   <span class="nx">shape</span><span class="o">:</span> <span class="p">[</span><span class="kc">null</span><span class="p">],</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;seq2seqInputs&#39;</span><span class="p">,</span>
 <span class="p">})</span>
 
-<span class="kr">const</span> <span class="nx">encoderEmbedding</span> <span class="o">=</span> <span class="nx">encoderEmbeddingLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">inputs</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R3</span><span class="o">&gt;</span>
+<span class="kd">const</span> <span class="nx">encoderEmbedding</span> <span class="o">=</span> <span class="nx">encoderEmbeddingLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">inputs</span><span class="p">)</span> <span class="k">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R3</span><span class="o">&gt;</span>
 
-<span class="kr">const</span> <span class="p">[,</span> <span class="nx">encoderState</span><span class="p">]</span> <span class="o">=</span> <span class="nx">encoderRnnLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">encoderEmbedding</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span><span class="p">[]</span>
+<span class="kd">const</span> <span class="p">[,</span> <span class="nx">encoderState</span><span class="p">]</span> <span class="o">=</span> <span class="nx">encoderRnnLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">encoderEmbedding</span><span class="p">)</span> <span class="k">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span><span class="p">[]</span>
 
-<span class="kr">const</span> <span class="nx">decoderInputs</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
+<span class="kd">const</span> <span class="nx">decoderInputs</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
   <span class="nx">shape</span><span class="o">:</span> <span class="p">[</span><span class="nx">voc</span><span class="p">.</span><span class="nx">maxSeqLength</span><span class="p">],</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;seq2seqDecoderInputs&#39;</span><span class="p">,</span>
 <span class="p">})</span>
 
-<span class="kr">const</span> <span class="nx">decoderEmbedding</span> <span class="o">=</span> <span class="nx">decoderEmbeddingLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">decoderInputs</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span>
+<span class="kd">const</span> <span class="nx">decoderEmbedding</span> <span class="o">=</span> <span class="nx">decoderEmbeddingLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">decoderInputs</span><span class="p">)</span> <span class="k">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span>
 
-<span class="kr">const</span> <span class="p">[</span><span class="nx">decoderOutputs</span><span class="p">,]</span> <span class="o">=</span> <span class="nx">decoderRnnLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span>
+<span class="kd">const</span> <span class="p">[</span><span class="nx">decoderOutputs</span><span class="p">,]</span> <span class="o">=</span> <span class="nx">decoderRnnLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span>
   <span class="p">[</span><span class="nx">decoderEmbedding</span><span class="p">,</span> <span class="nx">encoderState</span><span class="p">],</span>
   <span class="p">{</span>
     <span class="nx">returnSequences</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
     <span class="nx">returnState</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
   <span class="p">},</span>
-<span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span><span class="p">[]</span>
+<span class="p">)</span> <span class="k">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span><span class="p">[]</span>
 
-<span class="kr">const</span> <span class="nx">decoderTargets</span> <span class="o">=</span> <span class="nx">decoderDenseLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">decoderOutputs</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span>
+<span class="kd">const</span> <span class="nx">decoderTargets</span> <span class="o">=</span> <span class="nx">decoderDenseLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">decoderOutputs</span><span class="p">)</span> <span class="k">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span>
 
-<span class="kr">const</span> <span class="nx">seq2seqModel</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">model</span><span class="p">({</span>
+<span class="kd">const</span> <span class="nx">seq2seqModel</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">model</span><span class="p">({</span>
   <span class="nx">inputs</span><span class="o">:</span> <span class="p">[</span><span class="nx">inputs</span><span class="p">,</span> <span class="nx">decoderInputs</span><span class="p">],</span>
   <span class="nx">outputs</span><span class="o">:</span> <span class="nx">decoderTargets</span><span class="p">,</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;seq2seqModel&#39;</span><span class="p">,</span>
@@ -519,14 +527,14 @@ you the new guy ?   so they tell me ...
 <p>然后，为了能够让我们使用训练好的模型，我们还需要基于已经训练好的模型 Layer 参数，构建独立的 <code class="docutils literal notranslate"><span class="pre">encoderModel</span></code> 和 <code class="docutils literal notranslate"><span class="pre">decoderModel</span></code> 。</p>
 <p>Encoder子模型输入 <code class="docutils literal notranslate"><span class="pre">numBatch</span></code> 个由编码后单词和字符组成的，长为 <code class="docutils literal notranslate"><span class="pre">maxLength</span></code> 的序列，输入张量形状为 <code class="docutils literal notranslate"><span class="pre">[numBatch,</span> <span class="pre">maxLength]</span></code> ，输出与这个序列对应的上下文状态张量。</p>
 <p><code class="docutils literal notranslate"><span class="pre">encoderModel</span></code> 的代码实现如下：</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">encoderInputs</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">encoderInputs</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
   <span class="nx">shape</span><span class="o">:</span> <span class="p">[</span><span class="kc">null</span><span class="p">],</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;encoderInputs&#39;</span><span class="p">,</span>
 <span class="p">})</span>
-<span class="kr">const</span> <span class="nx">encoderEmbedding</span> <span class="o">=</span> <span class="nx">encoderEmbeddingLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">encoderInputs</span><span class="p">)</span>
-<span class="kr">const</span> <span class="p">[,</span> <span class="nx">encoderState</span><span class="p">]</span> <span class="o">=</span> <span class="nx">encoderRnnLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">encoderEmbedding</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span><span class="p">[]</span>
+<span class="kd">const</span> <span class="nx">encoderEmbedding</span> <span class="o">=</span> <span class="nx">encoderEmbeddingLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">encoderInputs</span><span class="p">)</span>
+<span class="kd">const</span> <span class="p">[,</span> <span class="nx">encoderState</span><span class="p">]</span> <span class="o">=</span> <span class="nx">encoderRnnLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">encoderEmbedding</span><span class="p">)</span> <span class="k">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span><span class="p">[]</span>
 
-<span class="kr">const</span> <span class="nx">encoderModel</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">model</span><span class="p">({</span>
+<span class="kd">const</span> <span class="nx">encoderModel</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">model</span><span class="p">({</span>
   <span class="nx">inputs</span><span class="o">:</span> <span class="nx">encoderInputs</span><span class="p">,</span>
   <span class="nx">outputs</span><span class="o">:</span> <span class="nx">encoderState</span><span class="p">,</span>
 <span class="p">})</span>
@@ -534,43 +542,43 @@ you the new guy ?   so they tell me ...
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">deocoderModel</span></code> 的输入有两个，分别是 t 时刻的 token indice，和对应的解码器 <code class="docutils literal notranslate"><span class="pre">state</span></code>；输出也有两个，分别是 t+1 时刻的 token 的 voc 分布概率，和对应的解码器 <code class="docutils literal notranslate"><span class="pre">state</span></code> ：</p>
 <p><code class="docutils literal notranslate"><span class="pre">decoderModel</span></code> 子模型具体实现如下：</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">decoderInput</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
-  <span class="nx">shape</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">decoderInput</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
+  <span class="nx">shape</span><span class="o">:</span> <span class="p">[</span><span class="mf">1</span><span class="p">],</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;decoderInputs&#39;</span><span class="p">,</span>
 <span class="p">})</span>
-<span class="kr">const</span> <span class="nx">decoderStateInput</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
+<span class="kd">const</span> <span class="nx">decoderStateInput</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">layers</span><span class="p">.</span><span class="nx">input</span><span class="p">({</span>
   <span class="nx">shape</span><span class="o">:</span> <span class="p">[</span><span class="nx">latentDim</span><span class="p">],</span>
   <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;decoderState&#39;</span><span class="p">,</span>
-<span class="p">})</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span>
+<span class="p">})</span> <span class="k">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span>
 
-<span class="kr">const</span> <span class="nx">decoderEmbedding</span> <span class="o">=</span> <span class="nx">decoderEmbeddingLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">decoderInput</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span>
+<span class="kd">const</span> <span class="nx">decoderEmbedding</span> <span class="o">=</span> <span class="nx">decoderEmbeddingLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">decoderInput</span><span class="p">)</span> <span class="k">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span>
 
-<span class="kr">const</span> <span class="p">[</span><span class="nx">decoderOutputs</span><span class="p">,</span> <span class="nx">decoderStateOutput</span><span class="p">]</span> <span class="o">=</span> <span class="nx">decoderRnnLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span>
+<span class="kd">const</span> <span class="p">[</span><span class="nx">decoderOutputs</span><span class="p">,</span> <span class="nx">decoderStateOutput</span><span class="p">]</span> <span class="o">=</span> <span class="nx">decoderRnnLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span>
   <span class="p">[</span><span class="nx">decoderEmbedding</span><span class="p">,</span> <span class="nx">decoderStateInput</span><span class="p">],</span>
   <span class="p">{</span>
     <span class="nx">returnState</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
   <span class="p">},</span>
-<span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span><span class="p">[]</span>
-<span class="kr">const</span> <span class="nx">decoderDenseOutputs</span> <span class="o">=</span> <span class="nx">decoderDenseLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">decoderOutputs</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span>
+<span class="p">)</span> <span class="k">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span><span class="p">[]</span>
+<span class="kd">const</span> <span class="nx">decoderDenseOutputs</span> <span class="o">=</span> <span class="nx">decoderDenseLayer</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">decoderOutputs</span><span class="p">)</span> <span class="k">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">SymbolicTensor</span>
 
-<span class="kr">const</span> <span class="nx">decoderModel</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">model</span><span class="p">({</span>
+<span class="kd">const</span> <span class="nx">decoderModel</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">model</span><span class="p">({</span>
   <span class="nx">inputs</span><span class="o">:</span> <span class="p">[</span><span class="nx">decoderInput</span><span class="p">,</span> <span class="nx">decoderStateInput</span><span class="p">],</span>
   <span class="nx">outputs</span><span class="o">:</span> <span class="p">[</span><span class="nx">decoderDenseOutputs</span><span class="p">,</span> <span class="nx">decoderStateOutput</span><span class="p">],</span>
 <span class="p">})</span>
 </pre></div>
 </div>
 <p>最后，我们需要一个用来对话的程序。我们建立一个专门用来接收一句话输入，然后通过我们的模型预测，得到序列输出的函数 <code class="docutils literal notranslate"><span class="pre">seq2seqDecoder()</span></code> ：</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">export</span> <span class="nx">async</span> <span class="kd">function</span> <span class="nx">seq2seqDecoder</span> <span class="p">(</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">export</span> <span class="k">async</span> <span class="kd">function</span> <span class="nx">seq2seqDecoder</span> <span class="p">(</span>
   <span class="nx">input</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
   <span class="nx">encoderModel</span><span class="o">:</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">LayersModel</span><span class="p">,</span>
   <span class="nx">decoderModel</span><span class="o">:</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">LayersModel</span><span class="p">,</span>
   <span class="nx">voc</span><span class="o">:</span> <span class="nx">Vocabulary</span><span class="p">,</span>
 <span class="p">)</span><span class="o">:</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">string</span><span class="o">&gt;</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">inputSeq</span> <span class="o">=</span> <span class="nx">voc</span><span class="p">.</span><span class="nx">sequenize</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span>
-  <span class="kr">const</span> <span class="nx">inputTensor</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">tensor</span><span class="p">(</span><span class="nx">inputSeq</span><span class="p">)</span>
+  <span class="kd">const</span> <span class="nx">inputSeq</span> <span class="o">=</span> <span class="nx">voc</span><span class="p">.</span><span class="nx">sequenize</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span>
+  <span class="kd">const</span> <span class="nx">inputTensor</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">tensor</span><span class="p">(</span><span class="nx">inputSeq</span><span class="p">)</span>
 
-  <span class="kr">const</span> <span class="nx">batchedInput</span> <span class="o">=</span> <span class="nx">inputTensor</span><span class="p">.</span><span class="nx">expandDims</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-  <span class="kd">let</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">encoderModel</span><span class="p">.</span><span class="nx">predict</span><span class="p">(</span><span class="nx">batchedInput</span><span class="p">)</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R2</span><span class="o">&gt;</span>
+  <span class="kd">const</span> <span class="nx">batchedInput</span> <span class="o">=</span> <span class="nx">inputTensor</span><span class="p">.</span><span class="nx">expandDims</span><span class="p">(</span><span class="mf">0</span><span class="p">)</span>
+  <span class="kd">let</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">encoderModel</span><span class="p">.</span><span class="nx">predict</span><span class="p">(</span><span class="nx">batchedInput</span><span class="p">)</span> <span class="k">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R2</span><span class="o">&gt;</span>
 
   <span class="kd">let</span> <span class="nx">tokenIndice</span> <span class="o">=</span> <span class="nx">voc</span><span class="p">.</span><span class="nx">indice</span><span class="p">(</span><span class="nx">START_TOKEN</span><span class="p">)</span>
 
@@ -579,22 +587,22 @@ you the new guy ?   so they tell me ...
   <span class="kd">let</span> <span class="nx">decodedTokenList</span> <span class="o">=</span> <span class="p">[]</span>
 
   <span class="k">do</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="nx">decoderInputs</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">tensor</span><span class="p">(</span><span class="nx">tokenIndice</span><span class="p">).</span><span class="nx">reshape</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="nx">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R2</span><span class="o">&gt;</span>
+    <span class="kd">const</span> <span class="nx">decoderInputs</span> <span class="o">=</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">tensor</span><span class="p">(</span><span class="nx">tokenIndice</span><span class="p">).</span><span class="nx">reshape</span><span class="p">([</span><span class="mf">1</span><span class="p">,</span> <span class="mf">1</span><span class="p">])</span> <span class="k">as</span> <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R2</span><span class="o">&gt;</span>
 
     <span class="p">;[</span><span class="nx">decoderOutputs</span><span class="p">,</span> <span class="nx">state</span><span class="p">]</span> <span class="o">=</span> <span class="nx">decoderModel</span><span class="p">.</span><span class="nx">predict</span><span class="p">([</span>
       <span class="nx">decoderInputs</span><span class="p">,</span>
       <span class="nx">state</span><span class="p">,</span>
-    <span class="p">])</span> <span class="nx">as</span> <span class="p">[</span>
+    <span class="p">])</span> <span class="k">as</span> <span class="p">[</span>
       <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R3</span><span class="o">&gt;</span><span class="p">,</span>
       <span class="nx">tf</span><span class="p">.</span><span class="nx">Tensor</span><span class="o">&lt;</span><span class="nx">tf</span><span class="p">.</span><span class="nx">Rank</span><span class="p">.</span><span class="nx">R2</span><span class="o">&gt;</span><span class="p">,</span>
     <span class="p">]</span>
 
-    <span class="kd">let</span> <span class="nx">decodedIndice</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">decoderOutputs</span>
+    <span class="kd">let</span> <span class="nx">decodedIndice</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">decoderOutputs</span>
                                 <span class="p">.</span><span class="nx">squeeze</span><span class="p">()</span>
                                 <span class="p">.</span><span class="nx">argMax</span><span class="p">()</span>
-                                <span class="p">.</span><span class="nx">array</span><span class="p">()</span> <span class="nx">as</span> <span class="nx">number</span>
+                                <span class="p">.</span><span class="nx">array</span><span class="p">()</span> <span class="k">as</span> <span class="nx">number</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="nx">decodedIndice</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">decodedIndice</span> <span class="o">===</span> <span class="mf">0</span><span class="p">)</span> <span class="p">{</span>
       <span class="c1">// 0 for padding, should be treated as END</span>
       <span class="nx">decodedToken</span> <span class="o">=</span> <span class="nx">END_TOKEN</span>
     <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
@@ -617,9 +625,9 @@ you the new guy ?   so they tell me ...
 </pre></div>
 </div>
 <p>最后，我们就可以用我们训练好的Seq2Seq模型，实现我们的 ChitChat 聊天功能了：</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">input</span> <span class="o">=</span> <span class="s1">&#39;how are you ?&#39;</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">input</span> <span class="o">=</span> <span class="s1">&#39;how are you ?&#39;</span>
 
-<span class="kr">const</span> <span class="nx">decodedOutput</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">seq2seqDecoder</span><span class="p">(</span>
+<span class="kd">const</span> <span class="nx">decodedOutput</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">seq2seqDecoder</span><span class="p">(</span>
   <span class="nx">input</span><span class="p">,</span>
   <span class="nx">encoderModel</span><span class="p">,</span>
   <span class="nx">decoderModel</span><span class="p">,</span>
@@ -668,7 +676,6 @@ Decoded setence: &quot;good .&quot;
   </div>
   
 
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
@@ -686,6 +693,7 @@ Decoded setence: &quot;good .&quot;
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
     ga('create', 'UA-40509304-12', 'auto');
+    
     ga('send', 'pageview');
     </script>
 
